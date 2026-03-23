@@ -1,0 +1,29 @@
+[project]
+name = "ms-fde-root"
+version = "0.0.0"
+description = "uv workspace root"
+requires-python = ">=3.12"
+
+[dependency-groups]
+dev = []
+
+[tool.uv]
+required-version = ">=0.9.5"
+
+[tool.uv.workspace]
+members = [
+    # Common libs & apps (synced from fde-libs):
+    # common/
+    #     libs/
+    #     apps/
+    #
+    # Our libs & apps:
+    # libs/
+    #     my-lib/
+    # apps/
+    #     my-app/
+    "common/libs/*",
+    "common/apps/*",
+    "libs/*",
+    "apps/*",
+]
