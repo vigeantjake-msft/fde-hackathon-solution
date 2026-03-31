@@ -560,11 +560,11 @@ register(
         missing_information=[],
         subjects=[
             "(No subject)",
-            "",
+            "(blank)",
             "Untitled",
         ],
         descriptions=[
-            "",
+            "(empty)",
             ".",
             "asdf",
         ],
