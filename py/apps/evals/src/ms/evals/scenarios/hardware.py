@@ -1340,54 +1340,57 @@ register(
 )
 
 # ---------------------------------------------------------------------------
-# hw-026  Laptop screen cracked — no photo evidence
+# hw-026  Docking station intermittently drops display connections
 # ---------------------------------------------------------------------------
 register(
     ScenarioTemplate(
         scenario_id="hw-026",
         category=Category.HARDWARE,
-        priority=Priority.P2,
+        priority=Priority.P3,
         assigned_team=Team.ENDPOINT,
         needs_escalation=False,
         missing_information=[
             MissingInfo.SCREENSHOT_OR_ATTACHMENT,
-            MissingInfo.DEVICE_INFO,
+            MissingInfo.REPRODUCTION_FREQUENCY,
         ],
         subjects=[
-            "Laptop screen is cracked — need a replacement",
-            "Display cracked on my work laptop — can't use it",
-            "Broken laptop screen — requesting repair or replacement",
+            "Docking station keeps dropping my monitors randomly",
+            "Displays disconnect from dock intermittently — no pattern",
+            "Dual monitors flicker off through docking station at random",
         ],
         descriptions=[
-            "My laptop screen is cracked. I think it happened in my bag during my commute. The "
-            "display has a big spiderweb crack on the right side and part of the screen is black. "
-            "I can still see about half the screen but it's unusable for real work. I don't have "
-            "a photo of the damage — I'm submitting this from my phone. I'm in the London office, "
-            "Operations team, and I need a working machine urgently.",
-            "The screen on my laptop is shattered. I opened it this morning and it was already "
-            "cracked — not sure what happened. I can barely make out anything on the display. "
-            "I didn't take a picture because I figured you'd just need my asset tag, but I don't "
-            "know my asset tag either. Can someone come look at it?",
+            "My docking station keeps losing connection to both external monitors. The screens "
+            "go black for a few seconds and then come back, but all my window positions reset "
+            "every time. It happens completely at random — sometimes three times in an hour, "
+            "sometimes not at all for a whole day. I haven't been able to capture a screenshot "
+            "of the display settings when it happens because the screens are off. I'm on the "
+            "London trading floor, Fixed Income desk.",
+            "The Dell WD19 dock at my workstation intermittently drops both display connections. "
+            "I'll be working normally and suddenly both monitors go dark, then reconnect after "
+            "about five seconds. I can't predict when it will happen and I don't know how often "
+            "it occurs — I haven't tracked it. I don't have any screenshots of the Display "
+            "Settings panel during the issue. NYC office, Compliance team.",
         ],
         next_best_actions=[
-            "Request a photo of the damage for the warranty or insurance claim. Identify the "
-            "device model and asset tag, then issue a loaner while the screen is repaired.",
+            "Ask the user to capture a screenshot of Display Settings and Device Manager when "
+            "the monitors are connected. Request they track the frequency over two days to "
+            "identify a pattern.",
         ],
         remediation_steps=[
             [
-                "Ask the user to take a photo of the screen damage and attach it to the ticket",
-                "Identify the device model and asset tag from the CMDB or device label",
-                "Issue a loaner laptop from the local spare pool",
-                "Submit the damaged laptop for screen repair under warranty or accidental damage coverage",
-                "Migrate the user's profile to the loaner via Autopilot and OneDrive",
-                "Track the repair and swap back once the original device is fixed",
+                "Ask the user to screenshot Display Settings and attach it to the ticket",
+                "Request the user log each disconnect with a timestamp for two business days",
+                "Check the dock firmware version and update to the latest release",
+                "Try swapping the display cables and testing each monitor individually",
+                "Test the laptop with a different dock to isolate the faulty component",
+                "If the dock is defective, replace it and update the asset inventory",
             ],
         ],
     )
 )
 
 # ---------------------------------------------------------------------------
-# hw-027  Repeat hardware failure — prior ticket reference
+# hw-027  Conference room AV equipment recurring failures
 # ---------------------------------------------------------------------------
 register(
     ScenarioTemplate(
@@ -1398,43 +1401,46 @@ register(
         needs_escalation=False,
         missing_information=[
             MissingInfo.PREVIOUS_TICKET_ID,
-            MissingInfo.DEVICE_INFO,
+            MissingInfo.CONTACT_INFO,
         ],
         subjects=[
-            "Same laptop issue AGAIN — this was supposedly fixed last month",
-            "Repeat hardware failure — third time reporting this",
-            "Laptop overheating problem is back — had a ticket for this before",
+            "Conference room AV not working again — reported this before",
+            "Meeting room display and speaker system failing repeatedly",
+            "AV equipment in room 4B broken — there was already a ticket",
         ],
         descriptions=[
-            "My laptop is overheating and shutting down randomly again. This is the same problem "
-            "I reported before — IT replaced the thermal paste and cleaned the fans last time, "
-            "but the issue is back after just three weeks. I don't have the old ticket number "
-            "handy. The laptop gets extremely hot on the bottom and then just shuts off without "
-            "warning. I'm losing unsaved work every time. NYC office, Risk team.",
-            "This is the third time I'm reporting the same issue. My laptop randomly freezes and "
-            "then blue-screens. It was sent for repair twice already. I know there are previous "
-            "tickets but I didn't save the numbers. At this point I think the machine needs to be "
-            "fully replaced rather than repaired again.",
+            "The AV system in conference room 4B on the 12th floor is broken again. The ceiling "
+            "speakers have no audio output and the wall-mounted display won't detect the HDMI "
+            "input from the room's Teams device. This same issue was reported a few weeks ago "
+            "and someone from IT came out to fix it, but I don't have that ticket number. The "
+            "room is shared across teams so I'm not sure who the best point of contact is for "
+            "facilities coordination — please reach out to me or the floor receptionist.",
+            "Room 8A's AV setup has failed for the third time this quarter. The wireless "
+            "presentation system doesn't connect and the in-room camera is offline. I know "
+            "there have been previous tickets for this room but I wasn't the one who submitted "
+            "them and don't have the references. Our facilities coordinator might have more "
+            "context but I don't have their contact details handy. Singapore office, Client "
+            "Services floor.",
         ],
         next_best_actions=[
-            "Search for the user's previous hardware tickets to review repair history. If the "
-            "device has had multiple failures, escalate for a full replacement.",
+            "Search for previous AV tickets for the affected conference room. Obtain the "
+            "facilities coordinator's contact information for on-site access and scheduling.",
         ],
         remediation_steps=[
             [
-                "Search the ticketing system for the user's previous hardware repair tickets",
-                "Review the device's repair history in the CMDB or asset management system",
-                "If the device has had three or more repairs, process a full replacement",
-                "Issue a loaner immediately to minimize productivity loss",
-                "Decommission the repeatedly failing device and update asset records",
-                "Provision a new laptop and migrate the user's profile",
+                "Look up prior tickets for the conference room in the ticketing system",
+                "Contact the user to get the facilities coordinator's name and contact info",
+                "Schedule an on-site visit to diagnose the AV hardware during a free slot",
+                "Check all cable connections, firmware versions, and power supplies in the room",
+                "Replace any faulty AV components and test the full setup end-to-end",
+                "Document the fix and update the room's maintenance log in the asset system",
             ],
         ],
     )
 )
 
 # ---------------------------------------------------------------------------
-# hw-028  Remote worker equipment broken — no callback info
+# hw-028  Biometric reader not recognizing fingerprints after update
 # ---------------------------------------------------------------------------
 register(
     ScenarioTemplate(
@@ -1444,135 +1450,143 @@ register(
         assigned_team=Team.ENDPOINT,
         needs_escalation=False,
         missing_information=[
-            MissingInfo.CONTACT_INFO,
-            MissingInfo.DEVICE_INFO,
+            MissingInfo.AUTHENTICATION_METHOD,
+            MissingInfo.SCREENSHOT_OR_ATTACHMENT,
         ],
         subjects=[
-            "Remote worker keyboard and trackpad not working",
-            "Work-from-home setup broken — keyboard died",
-            "Home office equipment failure — need replacement shipped",
+            "Fingerprint reader stopped working after Windows Hello update",
+            "Biometric login broken — fingerprint sensor not recognized",
+            "Can't log in with fingerprint since last Windows update",
         ],
         descriptions=[
-            "I work from home full-time and my laptop keyboard just stopped working. Several keys "
-            "are unresponsive and the trackpad is glitchy. I'm typing this from an old personal "
-            "keyboard I found. I need a repair or replacement shipped to me but I realize you "
-            "might not have my current home address on file — I moved last month. I also don't "
-            "have a direct desk phone since I'm remote.",
-            "My company-issued monitor died — the screen just went black and won't turn back on. "
-            "I'm fully remote so I can't just walk up to the IT desk. I need a replacement "
-            "shipped but I'm not sure if my shipping address in the system is correct. I don't "
-            "have a good phone number for callbacks either since I mostly use Teams, which I "
-            "currently can't access without the second screen.",
+            "My laptop's fingerprint reader stopped working after the latest Windows Hello "
+            "update. It used to recognize my fingerprint instantly but now it just says 'Could "
+            "not recognize your fingerprint. Try another finger.' I've tried all enrolled "
+            "fingers and none work. I'm not sure if I also had a PIN or a security key set up "
+            "as a backup — I've always just used the fingerprint. I don't have a screenshot of "
+            "the error because I can't log in to take one. Chicago office, Wealth Management.",
+            "Since the overnight update my biometric sign-in is completely broken. The fingerprint "
+            "sensor light doesn't even turn on when I place my finger. I had to get a colleague "
+            "to let me use their machine to submit this ticket. I honestly can't remember what "
+            "other authentication methods I have configured — I think maybe a PIN but I haven't "
+            "used it in over a year. No screenshot available since I'm locked out of my own "
+            "laptop.",
         ],
         next_best_actions=[
-            "Verify the remote worker's current shipping address and preferred contact method. "
-            "Arrange equipment replacement via courier to their home office.",
+            "Determine which authentication methods the user has configured in Windows Hello. "
+            "Ask for a phone photo of the error screen to verify the exact error state.",
         ],
         remediation_steps=[
             [
-                "Contact the user via Teams or email to confirm their current mailing address",
-                "Verify the device model and warranty status from the CMDB",
-                "Ship a replacement device via next-day courier to the confirmed address",
-                "Provide remote setup instructions or schedule a remote support session",
-                "Arrange a return shipping label for the defective equipment",
-                "Update the user's contact and address records in the HR and IT systems",
+                "Ask the user to take a phone photo of the error screen and attach it",
+                "Check which Windows Hello methods are enrolled via Intune or AD records",
+                "Help the user sign in via an alternative method (PIN, password, or security key)",
+                "Re-enroll fingerprints in Windows Hello settings after successful sign-in",
+                "Update the fingerprint sensor driver to the latest version",
+                "If the sensor hardware is faulty, schedule a repair or provide a USB reader",
             ],
         ],
     )
 )
 
 # ---------------------------------------------------------------------------
-# hw-029  Monitor color calibration off — no screenshot
+# hw-029  Laptop battery swelling — urgent replacement, user traveling
 # ---------------------------------------------------------------------------
 register(
     ScenarioTemplate(
         scenario_id="hw-029",
         category=Category.HARDWARE,
-        priority=Priority.P4,
+        priority=Priority.P1,
         assigned_team=Team.ENDPOINT,
-        needs_escalation=False,
+        needs_escalation=True,
         missing_information=[
-            MissingInfo.SCREENSHOT_OR_ATTACHMENT,
-            MissingInfo.ENVIRONMENT_DETAILS,
+            MissingInfo.CONTACT_INFO,
+            MissingInfo.DEVICE_INFO,
         ],
         subjects=[
-            "Monitor colors look completely wrong",
-            "External monitor has a yellow/green tint — display is off",
-            "Color calibration on my monitor is way off since this morning",
+            "Laptop battery is swelling — need urgent replacement",
+            "Battery bulging on my laptop — safety concern",
+            "Swollen battery pushing up trackpad — need help ASAP",
         ],
         descriptions=[
-            "My external monitor's colors are completely off. Everything has a yellowish-green "
-            "tint that makes it really hard to work with. Charts and reports look wrong and I "
-            "can't trust what I'm seeing on screen. I don't have a screenshot because a "
-            "screenshot wouldn't show the hardware color issue — it looks fine in the screenshot "
-            "but terrible on the physical screen. I'm in the Singapore office, Design team.",
-            "The monitor at my desk suddenly shifted to very warm, orangey tones. Whites look "
-            "yellow and blues look green. I work with financial dashboards and the color-coding "
-            "is meaningless now. I tried adjusting the monitor's on-screen settings but nothing "
-            "helped. I can't easily photograph it because the camera doesn't capture it well. "
-            "Not sure if it's the cable, the monitor, or a Windows setting.",
+            "The battery on my laptop is visibly swollen — the bottom panel is bulging out and "
+            "the trackpad is being pushed up so it barely clicks. I'm worried this is a safety "
+            "hazard. I need an urgent replacement because I'm traveling to the Singapore office "
+            "next Monday for client meetings and I can't be without a laptop. My manager said "
+            "to reach out but I'm not sure how you'll get the replacement to me — I'll be "
+            "working from home tomorrow and then heading to the airport Friday evening. I don't "
+            "have a desk phone and my mobile number in the system might be outdated.",
+            "My laptop's battery appears to be expanding — the base of the machine no longer "
+            "sits flat on my desk and the keyboard is starting to warp. I've powered it down as "
+            "a precaution. I need a replacement device urgently because I have a client "
+            "presentation next week in London and I'll be unreachable at my usual desk. I'm not "
+            "sure what the best way to contact me is — my Teams status will be offline since "
+            "the laptop is shut down. Please update this ticket and I'll check email from my "
+            "phone.",
         ],
         next_best_actions=[
-            "Ask the user to take a phone photo of the monitor showing the color issue. Check "
-            "whether it's a hardware fault, a cable issue, or a Night Light / color profile setting.",
+            "Confirm the user's current contact method and shipping address for the replacement. "
+            "Identify the device model and asset tag, then expedite a loaner before their travel.",
         ],
         remediation_steps=[
             [
-                "Ask the user to capture a phone photo of the monitor to document the color shift",
-                "Check Windows display settings — verify Night Light and HDR are off",
-                "Reset the color profile to sRGB default in Display Settings > Color Management",
-                "Try a different display cable (HDMI, DisplayPort, or USB-C) to rule out cable faults",
-                "Test the monitor with another laptop to determine if the issue is monitor-specific",
-                "If the monitor is faulty, replace it from inventory and update asset records",
+                "Instruct the user to stop using the laptop immediately and store it away from heat",
+                "Obtain a working phone number or alternate contact method from the user",
+                "Identify the device model and asset tag from the CMDB",
+                "Issue a loaner laptop from the nearest office and arrange same-day courier delivery",
+                "Migrate the user's profile to the loaner via Autopilot and OneDrive sync",
+                "Arrange safe disposal of the swollen battery per hazardous materials policy",
             ],
         ],
     )
 )
 
 # ---------------------------------------------------------------------------
-# hw-030  Second docking station failure — prior ticket reference
+# hw-030  USB-C hub causing kernel panics intermittently
 # ---------------------------------------------------------------------------
 register(
     ScenarioTemplate(
         scenario_id="hw-030",
         category=Category.HARDWARE,
-        priority=Priority.P3,
+        priority=Priority.P2,
         assigned_team=Team.ENDPOINT,
         needs_escalation=False,
         missing_information=[
             MissingInfo.PREVIOUS_TICKET_ID,
-            MissingInfo.SCREENSHOT_OR_ATTACHMENT,
+            MissingInfo.REPRODUCTION_FREQUENCY,
+            MissingInfo.ERROR_MESSAGE,
         ],
         subjects=[
-            "Docking station failed again — same issue as before",
-            "Replacement dock also not working — this is the second one",
-            "Another docking station failure — had a ticket for the first one",
+            "USB-C hub causing kernel panics — had a ticket before",
+            "Laptop crashes when using USB-C hub — intermittent BSODs",
+            "Random blue screens with USB-C hub connected — reported previously",
         ],
         descriptions=[
-            "The replacement docking station I received last month is now having the same issue as "
-            "the original one. It intermittently loses connection to my monitors and Ethernet — "
-            "everything flickers off for a few seconds and comes back. This happened with the "
-            "previous dock too and I had a ticket open for it, but I don't remember the ticket "
-            "number. I didn't capture a video of the flicker because it's unpredictable. London "
-            "office, Equities desk.",
-            "This is my second dock failure in two months. The first one was replaced after I "
-            "reported it but the new one is doing the exact same thing — random disconnects of "
-            "all peripherals. I think there might be a ticket from when the first dock was "
-            "replaced but I can't find the reference. It's hard to capture because it happens "
-            "randomly and only lasts a few seconds.",
+            "My laptop keeps getting blue screen crashes that I believe are caused by my USB-C "
+            "hub. It only seems to happen when the hub is connected, but I can't pin down how "
+            "often — sometimes it's fine for days, other times it crashes twice in one morning. "
+            "I reported this same issue a couple of months ago and someone looked at it but I "
+            "don't have the ticket number anymore. I didn't write down the exact error code from "
+            "the blue screen — it flashes too quickly. NYC office, Quantitative Research team.",
+            "I'm experiencing intermittent kernel panics that appear to be triggered by my USB-C "
+            "hub. When the laptop crashes the screen goes blue for a second and then reboots "
+            "automatically. I can't tell you the exact error message because it disappears before "
+            "I can read it. The frequency is unpredictable — no clear pattern. I'm pretty sure "
+            "there was a previous ticket for this from when it first started happening last "
+            "quarter, but I can't locate it. London office, Market Risk desk.",
         ],
         next_best_actions=[
-            "Look up the user's previous dock-related ticket to review the pattern. Investigate "
-            "whether the issue is the dock model, the laptop's Thunderbolt port, or a driver problem.",
+            "Look up the user's prior ticket about USB-C hub crashes. Ask them to note the exact "
+            "BSOD error code next time and track how often the crashes occur over a week.",
         ],
         remediation_steps=[
             [
-                "Search for the user's prior dock replacement ticket in the ticketing system",
-                "Compare the dock models from both failures to identify a pattern",
-                "Ask the user to capture a short video next time the flicker occurs",
-                "Test the laptop with a different dock model to rule out a laptop port issue",
-                "Update Thunderbolt and dock firmware to the latest versions",
-                "If the laptop port is suspected, schedule a hardware diagnostic",
+                "Search for the user's previous USB-C hub or BSOD ticket in the system",
+                "Ask the user to record the BSOD stop code next time it appears",
+                "Request the user track crash frequency with timestamps for one week",
+                "Pull the minidump files from C:\\Windows\\Minidump to identify the faulting driver",
+                "Update USB-C hub firmware and host controller drivers to the latest versions",
+                "If crashes persist, replace the USB-C hub with a different model for testing",
             ],
         ],
     )
