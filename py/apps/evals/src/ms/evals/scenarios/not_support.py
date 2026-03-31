@@ -1157,3 +1157,194 @@ register(
         ],
     )
 )
+
+# ---------------------------------------------------------------------------
+# ns-031  Personal home printer setup request (boundary: looks like hardware)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="ns-031",
+        category=Category.NOT_SUPPORT,
+        priority=Priority.P4,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[],
+        subjects=[
+            "Need help setting up my home printer",
+            "Can IT help me configure my personal printer at home?",
+            "Home printer won't connect — can you help?",
+        ],
+        descriptions=[
+            "Hey IT, I just bought a new wireless printer for my home office and I can't get it to "
+            "connect to my personal WiFi network. It's a Brother HL-L2350DW — I'm trying to print "
+            "from my personal laptop, not my work machine. Could someone walk me through the setup? "
+            "I've tried following the manual but the wireless setup wizard keeps failing.",
+            "Hi, I'm having trouble setting up my personal printer at home. It's not a company-issued "
+            "device — I bought it myself for my kids' school projects. The printer won't pair with my "
+            "home network and I figured the IT team might know how to fix it. Is this something you "
+            "can help with? I can share the model number if needed.",
+        ],
+        next_best_actions=[
+            "Close — personal equipment setup is outside the scope of corporate IT support.",
+        ],
+        remediation_steps=[
+            [
+                "No action required — personal device, not company equipment; close ticket",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# ns-032  Forwarded phishing simulation test email (boundary: looks like security)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="ns-032",
+        category=Category.NOT_SUPPORT,
+        priority=Priority.P4,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[],
+        subjects=[
+            "Suspicious email — possible phishing attempt",
+            "FW: Urgent — verify your credentials immediately",
+            "I think I received a phishing email",
+        ],
+        descriptions=[
+            "Hi, I just received a really suspicious email asking me to verify my Office 365 "
+            "credentials through an external link. I didn't click anything but I wanted to report it. "
+            "Subject line was 'Action Required: Verify Your Account.' I've attached a screenshot. "
+            "It looks almost identical to a real Microsoft email. Could you investigate?"
+            "\n\n[Note: This email matches the company's scheduled security awareness phishing "
+            "simulation campaign sent by the InfoSec training team.]",
+            "Team, I got an email that looks like a phishing attempt — it's asking me to reset my "
+            "password through a link that doesn't match our company domain. I forwarded it here so "
+            "you can take a look. The sender address looked off and the urgency felt suspicious. "
+            "Wanted to flag it just in case."
+            "\n\n[Note: This is the company's internal phishing simulation exercise run by the "
+            "security training programme.]",
+        ],
+        next_best_actions=[
+            "Close — the reported email is part of the company's scheduled phishing simulation "
+            "campaign, not an actual threat.",
+        ],
+        remediation_steps=[
+            [
+                "No action required — email is a company phishing simulation test, close ticket",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# ns-033  Office coffee machine display fix (boundary: looks like hardware)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="ns-033",
+        category=Category.NOT_SUPPORT,
+        priority=Priority.P4,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[],
+        subjects=[
+            "Coffee machine screen is broken — can IT fix it?",
+            "Kitchen coffee machine display not working",
+        ],
+        descriptions=[
+            "Hey, the coffee machine in the 3rd floor kitchen has a digital display that's been "
+            "flickering and now shows nothing at all. Since it's a 'tech' issue I figured IT might "
+            "handle it. Nobody can select drink options anymore and we're all stuck with whatever "
+            "the default brew is. Can someone take a look?",
+            "Hi team, the touchscreen on the break room coffee machine stopped responding this "
+            "morning — it's completely frozen on the menu screen. A few of us have tried restarting "
+            "it but no luck. Since it's a digital display issue, I thought IT could help. Could you "
+            "send someone to fix it or at least take a look?",
+        ],
+        next_best_actions=[
+            "Close — kitchen appliance maintenance is a facilities issue, not IT.",
+        ],
+        remediation_steps=[
+            [
+                "No action required — not IT equipment; redirect to facilities management and "
+                "close ticket",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# ns-034  Recruiter asking IT to post a job listing (boundary: looks like web request)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="ns-034",
+        category=Category.NOT_SUPPORT,
+        priority=Priority.P4,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[],
+        subjects=[
+            "Please post a job listing on the careers page",
+            "New job opening — need it added to the website",
+            "Can IT update the careers page with a new role?",
+        ],
+        descriptions=[
+            "Hi IT, we just got approval for a new Senior Software Engineer position and I need it "
+            "posted on the company careers page ASAP. I've attached the job description in a Word "
+            "doc. Can you add it to the site? We'd also like it to show up on the internal jobs "
+            "board. Let me know if you need anything else from my end.",
+            "Hello, the hiring manager approved a new Product Manager opening and I'd like to get "
+            "it up on our website's careers section by end of week. I have the job description "
+            "ready to go. Is this something the IT team handles? If so, who should I send the "
+            "details to? Thanks!",
+        ],
+        next_best_actions=[
+            "Close — job postings are managed by HR or the marketing/communications team, not IT.",
+        ],
+        remediation_steps=[
+            [
+                "No action required — redirect to HR or marketing for job postings; close ticket",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# ns-035  Office thermostat / temperature complaint (boundary: looks like building systems)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="ns-035",
+        category=Category.NOT_SUPPORT,
+        priority=Priority.P4,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[],
+        subjects=[
+            "Office is freezing — can IT adjust the thermostat?",
+            "Temperature issue on the 4th floor — thermostat help",
+            "Please fix the AC — it's way too cold in here",
+        ],
+        descriptions=[
+            "Hi, the temperature on the 4th floor has been really cold all week — I think the "
+            "thermostat is set way too low. A few of us have tried pressing the buttons on the "
+            "wall unit but it doesn't respond. Since the thermostat has a digital panel, I "
+            "figured IT might be the right team. Can someone come adjust it or unlock the "
+            "controls? It's affecting productivity.",
+            "Hello, I'm sitting near the server room on the 2nd floor and the AC has been blasting "
+            "non-stop. My desk area feels like it's about 60 degrees. I wasn't sure if this falls "
+            "under IT since the HVAC system might be connected to the building management software. "
+            "Could you either turn it down or let me know who to contact? Thanks.",
+        ],
+        next_best_actions=[
+            "Close — HVAC and thermostat issues are handled by facilities management, not IT.",
+        ],
+        remediation_steps=[
+            [
+                "No action required — temperature control is a facilities concern; close ticket",
+            ],
+        ],
+    )
+)

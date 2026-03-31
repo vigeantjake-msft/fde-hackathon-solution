@@ -1300,3 +1300,219 @@ register(
         ],
     )
 )
+
+# ---------------------------------------------------------------------------
+# gi-031  "Is it normal for my laptop fan to be loud?" (boundary: sounds casual)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="gi-031",
+        category=Category.GENERAL,
+        priority=Priority.P4,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO],
+        subjects=[
+            "Is it normal for my laptop fan to be this loud?",
+            "Laptop fan noise — should I be worried?",
+        ],
+        descriptions=[
+            "Hi, this might be a silly question but my company laptop fan has been running really "
+            "loud for the past few days, even when I only have Outlook and Teams open. It didn't "
+            "used to be this noisy. Is this normal or should I be concerned? I'm not sure if it's "
+            "a hardware issue or just something that happens with these machines over time.",
+            "Hey team, I've noticed my work laptop's fan kicks into high gear as soon as I log in "
+            "and it stays loud all day. My colleague has the same model and hers is quiet. Is this "
+            "something I should worry about or is it just normal wear and tear? I don't want to "
+            "waste your time if it's nothing.",
+        ],
+        next_best_actions=[
+            "Gather device details (make, model, age) and advise whether the behaviour is expected "
+            "or warrants a hardware inspection.",
+            "Provide general guidance on laptop fan behaviour and recommend next steps if the noise "
+            "persists or worsens.",
+        ],
+        remediation_steps=[
+            [
+                "Ask the user for laptop make, model, and approximate age",
+                "Explain common causes of loud fan noise (dust buildup, background processes, thermal "
+                "paste degradation)",
+                "Recommend running a hardware diagnostic if the issue persists and offer to schedule "
+                "an inspection",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# gi-032  BYOD policy question (boundary: sounds administrative)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="gi-032",
+        category=Category.GENERAL,
+        priority=Priority.P4,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO],
+        subjects=[
+            "What is the company's BYOD policy?",
+            "Question about using personal devices for work",
+            "BYOD — what's allowed and what's not?",
+        ],
+        descriptions=[
+            "Hi, I recently got a new personal iPad and I'd like to use it for work — mostly for "
+            "reading emails and joining Teams meetings when I'm away from my desk. Before I set "
+            "anything up, I wanted to understand the company's BYOD policy. Are personal devices "
+            "allowed on the corporate network? Do I need to install any specific software or "
+            "enroll it somewhere?",
+            "Hello, I'm a new employee and a colleague mentioned we have a bring-your-own-device "
+            "policy but I can't find the details on the intranet. I'd like to use my personal "
+            "laptop occasionally when working from home instead of carrying the company one. "
+            "What are the rules around this? Is there an approval process?",
+        ],
+        next_best_actions=[
+            "Direct the user to the company's BYOD policy documentation and explain the enrollment "
+            "requirements.",
+            "Provide a summary of the BYOD policy and confirm which device types are supported.",
+        ],
+        remediation_steps=[
+            [
+                "Share the link to the company's BYOD policy page on the intranet",
+                "Explain enrollment requirements, supported platforms, and any security software "
+                "that must be installed",
+                "Collect device details to confirm eligibility if the user wishes to proceed",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# gi-033  Guest WiFi password request (boundary: sounds trivial)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="gi-033",
+        category=Category.GENERAL,
+        priority=Priority.P3,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[MissingInfo.CONTACT_INFO],
+        subjects=[
+            "What's the WiFi password for visitors?",
+            "Guest WiFi access — need the password",
+        ],
+        descriptions=[
+            "Hi, I have a client visiting our office tomorrow morning for a presentation and they'll "
+            "need WiFi access. What's the current guest network password? Also, is there a time "
+            "limit on the guest connection or any usage restrictions they should know about? I want "
+            "to make sure everything is ready before they arrive.",
+            "Hello, we have several external consultants coming on-site this week and they'll need "
+            "internet access for their work. Could you share the visitor WiFi credentials? Last time "
+            "I had guests the password had changed and nobody at reception knew the new one. I'd "
+            "like to have it ready in advance this time.",
+        ],
+        next_best_actions=[
+            "Provide the current guest WiFi credentials and any relevant usage policies.",
+            "Share the guest network details and confirm whether a temporary access pass is needed "
+            "for the visitors.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the requester's identity and confirm they are authorized to receive guest "
+                "WiFi credentials",
+                "Provide the current guest network name and password",
+                "Inform the user of any time limits, bandwidth restrictions, or acceptable use "
+                "policies for the guest network",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# gi-034  Can I use a personal USB drive? (boundary: sounds like a non-issue)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="gi-034",
+        category=Category.GENERAL,
+        priority=Priority.P4,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO],
+        subjects=[
+            "Can I use a personal USB drive on my work laptop?",
+            "USB drive policy — is it allowed?",
+        ],
+        descriptions=[
+            "Hi, I have a large presentation file that I need to transfer to the conference room "
+            "PC for a meeting tomorrow. The file is too big for email and I'm not sure I'll have "
+            "reliable WiFi in that room. Can I use my personal USB flash drive to transfer it on "
+            "my work laptop, or are USB ports restricted? I don't want to violate any security "
+            "policies.",
+            "Hello, quick question — am I allowed to plug a personal USB thumb drive into my "
+            "company-issued laptop? I want to back up some work files locally as a precaution "
+            "before a system update. I've heard some companies disable USB access for security "
+            "reasons so I figured I'd check first rather than risk getting flagged.",
+        ],
+        next_best_actions=[
+            "Direct the user to the company's removable media policy and explain whether USB drives "
+            "are permitted.",
+            "Provide guidance on the USB device policy and suggest approved alternatives for file "
+            "transfers if USB is restricted.",
+        ],
+        remediation_steps=[
+            [
+                "Share the company's removable media and USB device policy",
+                "Explain whether USB ports are enabled or disabled on company devices",
+                "Suggest approved file transfer alternatives (OneDrive, SharePoint, network shares) "
+                "if USB access is restricted",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# gi-035  Who do I contact about a data breach? (boundary: sounds like incident)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="gi-035",
+        category=Category.GENERAL,
+        priority=Priority.P3,
+        assigned_team=Team.NONE,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.TIMESTAMP],
+        subjects=[
+            "Who do I contact about a data breach?",
+            "Data breach reporting — who should I notify?",
+            "Question about the data breach reporting process",
+        ],
+        descriptions=[
+            "Hi, I have a general question — if I suspect a data breach has occurred, who exactly "
+            "should I notify? I saw something in our security training about an incident response "
+            "process but I can't remember the details and the training material isn't on the "
+            "intranet anymore. I want to know the correct procedure and contacts in case I ever "
+            "need to report something. This is just a general question for now, not an active "
+            "incident.",
+            "Hello, I'd like to understand the proper channel for reporting a potential data breach. "
+            "Is there a specific email address, phone number, or portal I should use? I also want "
+            "to know what information I'd need to gather before making a report. I haven't "
+            "experienced a breach — I just want to be prepared in case I ever encounter one.",
+        ],
+        next_best_actions=[
+            "Provide the data breach reporting procedure, including the correct contacts and any "
+            "forms the user should be aware of.",
+            "Share the incident response policy documentation and confirm the user knows how to "
+            "reach the security team if needed.",
+        ],
+        remediation_steps=[
+            [
+                "Direct the user to the company's incident response policy page",
+                "Provide the security team's contact details (email, phone, portal link)",
+                "Summarise the key information to collect when reporting a suspected breach "
+                "(affected system, timeline, scope of exposure)",
+            ],
+        ],
+    )
+)
