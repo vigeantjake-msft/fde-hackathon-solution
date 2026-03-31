@@ -290,3 +290,30 @@ Original 15 + 5 new: stack_trace, forwarded_email, passive_aggressive, auto_tran
 - Can push to 7,500 or 10,000 tickets if needed
 - May need to add more scenario variants to maintain uniqueness above 95%
 - Consider adding time-series patterns (multiple related tickets from same user)
+
+---
+
+## Iteration 4 Plan — Diversity & Balance Improvements
+
+### Analysis of Iteration 3 Dataset (5,000 tickets, 285 scenarios)
+
+#### Distribution Issues Identified
+1. **Missing info imbalance**: `device_info` (1239) is 4× more than `authentication_method` (314)
+2. **Category skew**: Software & Applications (850) is 1.78× Not a Support Ticket (477)
+3. **No native P4 scenarios**: All scenario templates are P1-P3; P4 generated via remapping
+4. **Team imbalance**: Endpoint (931) is 1.86× Enterprise Apps (500)
+
+#### Planned Improvements
+1. **Add P4 scenarios across all categories** — low-priority cosmetic, feature request, informational tickets
+2. **Add 80+ new scenario templates** targeting underrepresented areas
+3. **Rebalance missing_info distribution** — add more scenarios using `authentication_method`, `network_location`, `steps_to_reproduce`
+4. **New edge case dimensions**:
+   - Tickets with HTML/rich-text noise (email signatures, formatting)
+   - Tickets referencing external systems (third-party, cloud)
+   - Compliance/regulatory-specific tickets for financial services
+   - Cross-office timezone-related issues
+   - Accessibility-related IT requests
+   - Environment-specific issues (dev vs staging vs prod)
+   - Mobile-first scenarios (MDM, MAM, BYOD)
+5. **Increase scenario count to 370+** to support 7,500 unique tickets
+6. **Generate 7,500 tickets** for improved diversity at scale

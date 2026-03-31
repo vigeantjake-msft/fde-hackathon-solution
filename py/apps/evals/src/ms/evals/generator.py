@@ -61,18 +61,35 @@ def _render_description(template: str, rng: random.Random) -> str:
         "{department}": rng.choice([
             "Wealth Management", "Trading", "Compliance", "Finance",
             "Engineering", "Marketing", "Operations", "HR",
+            "Risk Management", "Treasury", "Legal", "Procurement",
+            "Client Services", "Research", "Internal Audit", "DevOps",
+            "Investor Relations", "Corporate Strategy", "Data Science",
+            "Backend Engineering", "Frontend Engineering", "Product Management",
         ]),
         "{app}": rng.choice([
             "Salesforce", "SAP", "Bloomberg Terminal", "Power BI",
             "Concur", "Workday", "ServiceNow", "Azure DevOps",
+            "Jira", "Confluence", "Tableau", "Snowflake",
+            "Databricks", "DocuSign", "Slack", "Zoom",
+            "CrowdStrike", "Splunk", "Datadog", "GitHub Enterprise",
         ]),
-        "{name}": rng.choice(["John", "Sarah", "David", "Lisa", "Mike", "Emma"]),
-        "{name1}": "alice.jones",
-        "{name2}": "bob.smith",
-        "{name3}": "carol.white",
+        "{name}": rng.choice([
+            "John", "Sarah", "David", "Lisa", "Mike", "Emma",
+            "Priya", "Carlos", "Wei", "Fatima", "Ravi", "Sophie",
+            "Ahmed", "Maria", "Yuki", "Hassan", "Nina", "Kofi",
+        ]),
+        "{name1}": rng.choice(["alice.jones", "mark.taylor", "priya.kumar", "chen.wei"]),
+        "{name2}": rng.choice(["bob.smith", "sarah.martinez", "ravi.patel", "emma.wilson"]),
+        "{name3}": rng.choice(["carol.white", "james.garcia", "yuki.tanaka", "fatima.hassan"]),
         "{number}": str(rng.randint(10000, 99999)),
-        "{date}": f"2026-04-{rng.randint(1, 28):02d}",
+        "{date}": f"2026-{rng.randint(1, 12):02d}-{rng.randint(1, 28):02d}",
         "{time}": f"{rng.randint(7, 18):02d}:{rng.randint(0, 59):02d}",
+        "{floor}": str(rng.choice([2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 15, 18, 22])),
+        "{office}": rng.choice(["NYC", "London", "Singapore"]),
+        "{os}": rng.choice(["Windows 11", "Windows 10", "macOS Sonoma", "macOS Ventura"]),
+        "{browser}": rng.choice(["Chrome", "Edge", "Firefox", "Safari"]),
+        "{vpn}": rng.choice(["GlobalProtect", "Cisco AnyConnect", "Zscaler", "Pulse Secure"]),
+        "{error_code}": f"0x{rng.randint(0x80000000, 0x8FFFFFFF):08X}",
     }
     result = template
     for placeholder, value in replacements.items():
@@ -171,8 +188,11 @@ def generate_dataset(
     # Import all scenario modules to populate the registry
     import ms.evals.scenarios.access_auth  # noqa: F401, PLC0415
     import ms.evals.scenarios.data_storage  # noqa: F401, PLC0415
+    import ms.evals.scenarios.edge_cases  # noqa: F401, PLC0415
+    import ms.evals.scenarios.financial_services  # noqa: F401, PLC0415
     import ms.evals.scenarios.general_inquiry  # noqa: F401, PLC0415
     import ms.evals.scenarios.hardware  # noqa: F401, PLC0415
+    import ms.evals.scenarios.low_priority  # noqa: F401, PLC0415
     import ms.evals.scenarios.network  # noqa: F401, PLC0415
     import ms.evals.scenarios.not_support  # noqa: F401, PLC0415
     import ms.evals.scenarios.security  # noqa: F401, PLC0415
@@ -233,7 +253,7 @@ def generate_dataset(
 
         # Ensure uniqueness (regenerate if duplicate)
         attempts = 0
-        while (ticket.subject in seen_subjects or ticket.description in seen_descriptions) and attempts < 5:
+        while (ticket.subject in seen_subjects or ticket.description in seen_descriptions) and attempts < 10:
             ticket, gold, applied_mods = generate_ticket_pair(
                 ticket_id=ticket_id,
                 scenario=scenario,
