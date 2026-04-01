@@ -4,8 +4,8 @@
 
 Contoso Financial Services (∼4,500 employees) is drowning in IT support tickets. Their team of 12 manually triages ∼180 tickets per day across 6 specialist teams. Average time-to-route: 3.4 hours. Misroute rate: 42%. Their VP of IT Operations just got off a call with your manager and wants this fixed.
 
-**Start here — read the customer brief:** [customer_brief.md](customer_brief.md)
-**Then review their routing guide:** [routing_guide.md](routing_guide.md) *(heads up: it's incomplete — some ticket types aren't covered, and some rules contradict each other. Welcome to enterprise IT.)*
+**Start here. Read the customer brief:** [customer_brief.md](customer_brief.md)
+**Then review their routing guide:** [routing_guide.md](routing_guide.md) *(heads up: it's incomplete. Some ticket types aren't covered, and some rules contradict each other. Welcome to enterprise IT.)*
 
 Your job: **build an AI-powered ticket triage API** that Contoso can plug into their ServiceNow workflow.
 
@@ -19,7 +19,7 @@ A deployed API that accepts an IT support ticket and returns a triage decision. 
 
 **Endpoint:** `POST /triage`
 
-**Request body** — a single ticket:
+**Request body** (a single ticket):
 
 ```json
 {
@@ -37,7 +37,7 @@ A deployed API that accepts an IT support ticket and returns a triage decision. 
 }
 ```
 
-**Response body** — your triage decision:
+**Response body** (your triage decision):
 
 ```json
 {
@@ -65,7 +65,7 @@ See [../data/schemas/](../data/schemas/) for the formal JSON schemas.
 
 ### Valid Values for Classification Fields
 
-Your system must use **exactly** these values. The scoring is deterministic — anything not in these lists scores zero.
+Your system must use **exactly** these values. The scoring is deterministic: anything not in these lists scores zero.
 
 **Categories** (8 values):
 
@@ -96,7 +96,7 @@ Your system must use **exactly** these values. The scoring is deterministic — 
 
 ### Missing Information Vocabulary
 
-When identifying missing information, use **only** values from this list. Scoring uses exact set matching — free-text values will not match.
+When identifying missing information, use **only** values from this list. Scoring uses exact set matching, so free-text values will not match.
 
 | Value | What it means |
 |---|---|
@@ -127,11 +127,11 @@ Your service must also respond to `GET /health` with HTTP 200.
 
 | Dataset | Tickets | Where | Purpose |
 |---|---|---|---|
-| **Sample + gold answers** | 25 | [sample.json](../data/tickets/sample.json) + [sample_gold.json](../data/tickets/sample_gold.json) | Iterate locally — compare your output to the correct answers |
+| **Sample + gold answers** | 25 | [sample.json](../data/tickets/sample.json) + [sample_gold.json](../data/tickets/sample_gold.json) | Iterate locally. Compare your output to the correct answers |
 | **Public eval set** | 50 | [public_eval.json](../data/tickets/public_eval.json) | Test at scale before submitting (no gold answers provided) |
-| **Hidden eval set** | 1000+ | Not in this repo | Final scoring — includes edge cases not in the public data |
+| **Hidden eval set** | 1000+ | Not in this repo | Final scoring. Includes edge cases not in the public data |
 
-Tickets vary in quality. Some are clean. Some are vague, contradictory, multi-issue, garbled, or not real support requests at all. That's not a bug in the dataset — that's what enterprise tickets actually look like.
+Tickets vary in quality. Some are clean. Some are vague, contradictory, multi-issue, garbled, or not real support requests at all. That's not a bug in the dataset. That's what enterprise tickets actually look like.
 
 > **Don't overfit.** The hidden set has ticket types you won't see in the public data. Build for the real world, not for 25 specific tickets.
 
@@ -142,7 +142,7 @@ Tickets vary in quality. Some are clean. Some are vague, contradictory, multi-is
 - **One submission.** Make it count.
 - Any language, framework, or AI model.
 - Deployed and callable via HTTPS. Not localhost.
-- AI coding assistants — encouraged. Use everything you've got.
+- AI coding assistants: encouraged. Use everything you've got.
 - All code must be your own work (AI-assisted is fine, copy-pasting someone else's solution is not).
 
 ---
@@ -156,23 +156,23 @@ Your final score is **0–100**. Two halves, equally weighted:
 | **Functional accuracy** | 50 pts | Does your system actually triage correctly? How fast and cheap is it? |
 | **Engineering quality** | 50 pts | How did you build it? Can we read your code? Did you test it? Do your docs tell us *why*? |
 
-### Part 1 — Functional Score (50 pts)
+### Part 1: Functional Score (50 pts)
 
-We call your live endpoint with **1000+ tickets you've never seen**. Every response is scored deterministically against gold answers. **No LLM judges. No vibes. Same logic as the local eval harness** — you can see exactly how you'll be scored before you submit.
+We call your live endpoint with **1000+ tickets you've never seen**. Every response is scored deterministically against gold answers. **No LLM judges. No vibes. Same logic as the local eval harness.** You can see exactly how you'll be scored before you submit.
 
 #### What the platform does when it scores you
 
 Here's exactly what happens when you hit "submit" on the platform:
 
-1. **Health check** — `GET /health` must return 200. If it doesn't, scoring fails immediately.
-2. **Warm-up** — We send 3 throwaway requests first. These don't count toward your score. They exist so your cold start / first-request latency doesn't penalize you unfairly.
-3. **Scoring run** — We send all 1000+ tickets to your `POST /triage` endpoint with **up to 10 requests in parallel**. Your API needs to handle concurrent load — if it can only process one request at a time, you'll hit timeouts.
-4. **Timeout** — Each request has a **30-second timeout**. If your endpoint doesn't respond in 30 seconds, that ticket scores zero on all dimensions.
-5. **Retries** — Transient failures (5xx, timeouts) get **2 automatic retries** with backoff. Don't rely on this — fix your errors instead.
-6. **Latency measurement** — We record the wall-clock time per request. Top and bottom 5% of latencies are trimmed before computing p50/p95 so a single spike doesn't tank your latency score.
-7. **Cost measurement** — We read your `X-Model-Name`, `X-Prompt-Tokens`, and `X-Completion-Tokens` response headers (if present) and compute $/ticket using published model pricing.
+1. **Health check.** `GET /health` must return 200. If it doesn't, scoring fails immediately.
+2. **Warm-up.** We send 3 throwaway requests first. These don't count toward your score. They exist so your cold start / first-request latency doesn't penalize you unfairly.
+3. **Scoring run.** We send all 1000+ tickets to your `POST /triage` endpoint with **up to 10 requests in parallel**. Your API needs to handle concurrent load. If it can only process one request at a time, you'll hit timeouts.
+4. **Timeout.** Each request has a **30-second timeout**. If your endpoint doesn't respond in 30 seconds, that ticket scores zero on all dimensions.
+5. **Retries.** Transient failures (5xx, timeouts) get **2 automatic retries** with backoff. Don't rely on this. Fix your errors instead.
+6. **Latency measurement.** We record the wall-clock time per request. Top and bottom 5% of latencies are trimmed before computing p50/p95 so a single spike doesn't tank your latency score.
+7. **Cost measurement.** We read your `X-Model-Name`, `X-Prompt-Tokens`, and `X-Completion-Tokens` response headers (if present) and compute $/ticket using published model pricing.
 
-**Bottom line:** your API should comfortably handle 10 concurrent requests, respond in under 30 seconds each, and not fall over under sustained load. If you're using an LLM, make sure your model endpoint can handle the throughput — rate limits and cold starts are your problem to solve.
+**Bottom line:** your API should comfortably handle 10 concurrent requests, respond in under 30 seconds each, and not fall over under sustained load. If you're using an LLM, make sure your model endpoint can handle the throughput. Rate limits and cold starts are your problem to solve.
 
 The functional score has two components:
 
@@ -195,7 +195,7 @@ weighted = 0.20×category + 0.20×priority + 0.20×routing + 0.15×missing_info 
 classification_pts = (weighted / 0.85) × 85
 ```
 
-> **Why macro F1 instead of accuracy?** Because accuracy is gameable. If 80% of tickets are "Software & Applications", always predicting that class gets you 80% accuracy — and a terrible macro F1. We want systems that handle *every* class well, including the rare ones like "Not a Support Ticket" that trip people up.
+> **Why macro F1 instead of accuracy?** Because accuracy is gameable. If 80% of tickets are "Software & Applications", always predicting that class gets you 80% accuracy and a terrible macro F1. We want systems that handle *every* class well, including the rare ones like "Not a Support Ticket" that trip people up.
 
 #### Efficiency (max 15 pts)
 
@@ -230,22 +230,22 @@ This 0–100 number is then weighted as 50% of your leaderboard score.
 
 #### What about `next_best_action` and `remediation_steps`?
 
-They're **required** in your response — the schema enforces it. But they're **not part of the functional score**. We look at remediation quality when we review your repo (Part 2). Write good ones anyway — a system that says "investigate the issue" for every ticket is telling us you phoned it in.
+They're **required** in your response (the schema enforces it). But they're **not part of the functional score**. We look at remediation quality when we review your repo (Part 2). Write good ones anyway. A system that says "investigate the issue" for every ticket is telling us you phoned it in.
 
 ---
 
-### Part 2 — Engineering Quality (50 pts)
+### Part 2: Engineering Quality (50 pts)
 
-We review your repo the way a senior engineer reviews a pull request. Not a checkbox exercise — a holistic read of how you think, build, and communicate.
+We review your repo the way a senior engineer reviews a pull request. Not a checkbox exercise, but a holistic read of how you think, build, and communicate.
 
-We're looking for: clean code, good tests, sensible architecture, infrastructure that works, and documentation that shows you *understood* the problem — not just threw tokens at it.
+We're looking for: clean code, good tests, sensible architecture, infrastructure that works, and documentation that shows you *understood* the problem, not just threw tokens at it.
 
 **Three documents are mandatory.** Skip one and you'll feel it in the score.
 
 #### `docs/architecture.md`
 
 - What does your service do? How does it fit into Contoso's world?
-- Draw something — ASCII, Mermaid, napkin sketch, whatever. Show the moving parts.
+- Draw something. ASCII, Mermaid, napkin sketch, whatever. Show the moving parts.
 - Data flow: ticket goes in, triage comes out, what happened in between?
 - AI pipeline: what model(s), why, how do you call them?
 - Tradeoffs: what else did you consider? Why not that?
@@ -263,10 +263,10 @@ We're looking for: clean code, good tests, sensible architecture, infrastructure
 #### `docs/evals.md`
 
 - How did you test? Just the gold set, or did you write your own test cases too?
-- Show us your numbers — per-dimension scores on the sample set.
+- Show us your numbers. Per-dimension scores on the sample set.
 - Which tickets did your system get wrong? Why?
 - What are the hardest ticket types for your system?
-- Where does it break? Be honest — we can tell when you're not.
+- Where does it break? Be honest. We can tell when you're not.
 
 > **Real talk:** a straightforward solution with honest error analysis and clear docs will outscore a complex system with no explanation. Every time. We've seen it.
 

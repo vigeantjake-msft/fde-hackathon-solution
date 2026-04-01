@@ -3,7 +3,7 @@
 This is the same scoring logic the platform uses. Run it locally, see exactly how you'll be scored. No surprises on submission day.
 
 > **What this scores:** The 5 classification dimensions (up to 85 pts).
-> **What it doesn't score:** Efficiency (latency + cost) and engineering quality — those happen after you submit.
+> **What it doesn't score:** Efficiency (latency + cost) and engineering quality. Those happen after you submit.
 
 ## Quick Start
 
@@ -173,7 +173,7 @@ The `eval_results.json` file contains full per-ticket breakdowns for error analy
 
 ## Running the Tests
 
-The scoring functions have their own test suite — 84 tests covering every edge case. Run them if you want to understand exactly how scoring works (or if you've been poking at the harness code):
+The scoring functions have their own test suite (84 tests covering every edge case). Run them if you want to understand exactly how scoring works, or if you've been poking at the harness code:
 
 ```bash
 cd docs/eval
