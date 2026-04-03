@@ -8,7 +8,6 @@ and accidental submissions.
 """
 
 from ms.evals.constants import Category
-from ms.evals.constants import MissingInfo  # noqa: F401 (standard scenario header)
 from ms.evals.constants import Priority
 from ms.evals.constants import Team
 from ms.evals.models import ScenarioTemplate

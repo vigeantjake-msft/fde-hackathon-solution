@@ -25,6 +25,7 @@ from ms.evals.models import Ticket
 from ms.evals.models import TriageGold
 from ms.evals.modifiers import apply_modifier
 from ms.evals.modifiers import select_modifiers
+from ms.evals.scenarios import load_all_scenarios
 from ms.evals.scenarios.registry import pick_scenario
 
 
@@ -185,16 +186,7 @@ def generate_dataset(
     Returns:
         Tuple of (tickets, gold_answers, generation_stats).
     """
-    # Import all scenario modules to populate the registry
-    import ms.evals.scenarios.access_auth  # noqa: F401, PLC0415
-    import ms.evals.scenarios.data_storage  # noqa: F401, PLC0415
-    import ms.evals.scenarios.general_inquiry  # noqa: F401, PLC0415
-    import ms.evals.scenarios.hardware  # noqa: F401, PLC0415
-    import ms.evals.scenarios.low_priority  # noqa: F401, PLC0415
-    import ms.evals.scenarios.network  # noqa: F401, PLC0415
-    import ms.evals.scenarios.not_support  # noqa: F401, PLC0415
-    import ms.evals.scenarios.security  # noqa: F401, PLC0415
-    import ms.evals.scenarios.software  # noqa: F401, PLC0415
+    load_all_scenarios()
 
     rng = random.Random(seed)
     if base_date is None:
