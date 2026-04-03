@@ -1,0 +1,213 @@
+[
+    {
+        "ticket_id": "INC-5001",
+        "subject": "PLEASE HELP - Cannot access SharePoint site for the quarterly report that is due by end of week and my manager Sarah Thompson from the Wealth Management division specifically the portfolio analytics sub-team has been asking me about it every single day for the past three days",
+        "description": "Hi IT Support Team,\n\nI hope this email finds you well. I am writing to you today because I have been experiencing a very frustrating issue with accessing our SharePoint site. I know you are all very busy and I really appreciate everything you do for us, but this is becoming quite urgent.\n\nSo basically what happened is that last Monday (or was it Tuesday? I think it was Monday) I tried to log into the SharePoint site where we keep all of our quarterly financial reports. You know the one - it's the site that has all the Excel spreadsheets and PowerPoint presentations for the wealth management team. Anyway, when I tried to access it, I got an error message. I don't remember exactly what it said but it was something about permissions or access denied or something like that.\n\nI tried again on Tuesday and the same thing happened. Then on Wednesday I asked my colleague Jennifer (jennifer.wu@contoso.com) if she could access it and she said she could access it just fine, so I think it's just my account that has the problem.\n\nI should mention that I recently changed teams - I moved from the Retail Banking division to the Wealth Management division about two weeks ago. Before the transfer I could access all the SharePoint sites I needed without any problems. After the transfer, I noticed that some of my access seemed to change. I can still access the main company intranet and the HR portal and Outlook and Teams all work fine. It's just this one SharePoint site.\n\nI tried a few things to fix it myself:\n1. I cleared my browser cache and cookies (I use Chrome)\n2. I tried using Edge instead of Chrome\n3. I tried using an InPrivate/Incognito window\n4. I restarted my computer\n5. I even tried accessing it from my phone using the SharePoint mobile app\n\nNone of these things worked. I still get the same error every time.\n\nThe reason this is urgent is because we have a quarterly report due by end of day Friday March 21st. The report template and all the source data files are stored on this SharePoint site. Without access, I literally cannot do my job this week. My manager Sarah Thompson has been asking me about the status of the report every day and I keep having to tell her I'm waiting on IT to fix my access.\n\nI know this might be related to my department transfer but I'm not sure who to talk to about getting my permissions updated. Our team admin said she put in a request but nothing has happened yet.\n\nAlso, while I have your attention, I have a couple of other minor things:\n- My OneDrive is showing that I'm almost at my storage limit (it says 95% full). Is there any way to get more storage?\n- The printer on the 2nd floor (the big one near the coffee machine) has been jamming a lot lately. I don't know if that's something you handle or if it's facilities.\n\nBut the SharePoint access is the main urgent thing.\n\nPlease let me know if you need any more information from me. My extension is 4829 and I'm usually at my desk between 8am and 6pm. You can also reach me on Teams.\n\nThank you so much for your help!\n\nBest regards,\nAmanda Foster\nSenior Financial Analyst\nWealth Management Division\nExtension: 4829\nBuilding 3, Floor 2, Desk 2-47\n\nP.S. I forgot to mention - I also can't access the team's shared OneNote notebook that's linked to the same SharePoint site. Not sure if that's related.\n\nP.P.S. Jennifer said she thinks it might be because my account hasn't been fully migrated to the new team's security group. Does that sound right?",
+        "reporter": {
+            "name": "Amanda Foster",
+            "email": "amanda.foster@contoso.com",
+            "department": "Wealth Management"
+        },
+        "created_at": "2026-03-17T09:22:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5002",
+        "subject": "Screenshot of error",
+        "description": "Here's what I see when I try to open the app:\n\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\n\nAnd here's another one from after I restarted:\n\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQDwADhQGAWjR9awAAAABJRU5ErkJggg==data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQDwADhQGAWjR9awAAAABJRU5ErkJggg==data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQDwADhQGAWjR9awAAAABJRU5ErkJggg==\n\nI've been getting this error since yesterday morning on SAP. Can't process any invoices.",
+        "reporter": {
+            "name": "Victor Huang",
+            "email": "victor.huang@contoso.com",
+            "department": "Finance"
+        },
+        "created_at": "2026-03-17T10:15:00Z",
+        "channel": "email",
+        "attachments": [
+            "error_screenshot_1.png",
+            "error_screenshot_2.png"
+        ]
+    },
+    {
+        "ticket_id": "INC-5003",
+        "subject": "Re: Re: Re: Fwd: Re: Fwd: Re: Original ticket about VPN - STILL NOT FIXED",
+        "description": "Adding IT support to this thread.\n\n---------- Forwarded message ----------\nFrom: Mike Santos <mike.santos@contoso.com>\nTo: Lisa Park <lisa.park@contoso.com>\nDate: March 16, 2026\nSubject: Re: Re: Re: Fwd: Re: Original ticket about VPN\n\nLisa, just forward the whole chain to IT. I give up trying to explain it.\n\n> On Mar 15, 2026 Lisa Park wrote:\n> Mike, did you try what IT said last time?\n>\n>> On Mar 14, 2026 Mike Santos wrote:\n>> No, they never actually told me what to do. The ticket just got closed.\n>>\n>>> On Mar 13, 2026 Lisa Park wrote:\n>>> I'll ask my contact in IT. What was the original ticket number?\n>>>\n>>>> On Mar 12, 2026 Mike Santos wrote:\n>>>> I have no idea. It was like two weeks ago. The VPN keeps dropping\n>>>> every time I switch to the guest WiFi network in the London office.\n>>>> I've been here for 3 weeks on the client engagement and it drops\n>>>> at least 4-5 times a day. Makes it impossible to stay on calls.\n>>>>\n>>>>> On Mar 11, 2026 Lisa Park wrote:\n>>>>> Hey Mike, are you still having that VPN issue?\n>>>>>\n>>>>>> On Mar 10, 2026 Mike Santos wrote:\n>>>>>> Yeah, VPN is terrible here in London. Drops constantly.\n>>>>>> Using GlobalProtect 3.2 on my Dell Latitude.\n\nOriginal issue: VPN drops on London office guest WiFi. Been going on for 3 weeks. Previous ticket was apparently closed without resolution.",
+        "reporter": {
+            "name": "Mike Santos",
+            "email": "mike.santos@contoso.com",
+            "department": "Consulting"
+        },
+        "created_at": "2026-03-17T11:05:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5004",
+        "subject": "💻🔥🆘 HELP!!!! 😱😱😱 laptop screen broken 💔💔💔",
+        "description": "OMG 😭😭😭 my laptop screen just cracked!!!!! 💻💥\n\n🚨🚨🚨 EMERGENCY 🚨🚨🚨\n\nI was walking 🚶‍♀️ to the meeting room and dropped it 📉📉📉\n\nThe screen has a big crack ⚡⚡ running from top left ↗️ to bottom right ↘️ and the display is glitching out 🌈🌈🌈 with weird colors\n\n😤😤😤 I have a CLIENT PRESENTATION 🎯 in 2 HOURS!!! ⏰⏰⏰\n\nCan someone PLEASE 🙏🙏🙏🙏🙏 help me ASAP????\n\n📱 Call me: ext 3847\n📍 Location: Building 2, Floor 6\n\n✨ Thanks in advance ✨\n💖💖💖",
+        "reporter": {
+            "name": "Zoe Martinez",
+            "email": "zoe.martinez@contoso.com",
+            "department": "Sales"
+        },
+        "created_at": "2026-03-17T10:30:00Z",
+        "channel": "chat",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5005",
+        "subject": "Issue",
+        "description": "",
+        "reporter": {
+            "name": "Tom Baker",
+            "email": "tom.baker@contoso.com",
+            "department": "Operations"
+        },
+        "created_at": "2026-03-17T14:00:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5006",
+        "subject": "Problema con el acceso al sistema - Access issue with the system",
+        "description": "Hola equipo de IT,\n\nTengo un problema con mi cuenta. No puedo acceder al sistema de trading desde esta mañana. When I try to log in, me sale un error que dice 'Authentication failed - contact your administrator'. \n\nYa intenté cambiar mi contraseña pero el problema sigue. I'm working from the Buenos Aires office this week and I need access urgently para completar las transacciones del día.\n\nMi compañero Carlos (carlos.reyes@contoso.com) tiene el mismo problema. We think it might be related to the office location - maybe the Buenos Aires IP range isn't whitelisted?\n\nPor favor ayúdenme lo antes posible. This is affecting our ability to process trades for LATAM clients.\n\nGracias,\nSofia",
+        "reporter": {
+            "name": "Sofia Morales",
+            "email": "sofia.morales@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-17T08:45:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5007",
+        "subject": "Pasting server logs here - need help diagnosing",
+        "description": "Our monitoring alert fired. Here's the raw output:\n\n2026-03-17T06:00:01Z [ERROR] ConnectionPool::acquire - timeout after 30000ms, pool_size=50, active=50, waiting=127\n2026-03-17T06:00:01Z [ERROR] ConnectionPool::acquire - timeout after 30000ms, pool_size=50, active=50, waiting=128\n2026-03-17T06:00:02Z [ERROR] ConnectionPool::acquire - timeout after 30000ms, pool_size=50, active=50, waiting=129\n2026-03-17T06:00:02Z [WARN] HealthCheck::run - database primary replica unhealthy, consecutive_failures=15\n2026-03-17T06:00:03Z [ERROR] API::handleRequest - 500 Internal Server Error, request_id=a1b2c3, endpoint=/api/v2/accounts, duration=30142ms\n2026-03-17T06:00:03Z [ERROR] API::handleRequest - 500 Internal Server Error, request_id=d4e5f6, endpoint=/api/v2/transactions, duration=30089ms\n2026-03-17T06:00:04Z [ERROR] ConnectionPool::acquire - timeout after 30000ms, pool_size=50, active=50, waiting=134\n2026-03-17T06:00:04Z [WARN] CircuitBreaker::trip - database circuit OPEN, failures=20/20\n2026-03-17T06:00:05Z [ERROR] API::handleRequest - 503 Service Unavailable, request_id=g7h8i9, endpoint=/api/v2/accounts, circuit=OPEN\n2026-03-17T06:00:05Z [ERROR] API::handleRequest - 503 Service Unavailable, request_id=j0k1l2, endpoint=/api/v2/portfolio, circuit=OPEN\n2026-03-17T06:00:06Z [INFO] Failover::initiate - switching to read replica, primary_status=unhealthy\n2026-03-17T06:00:06Z [WARN] ReadReplica::lag - replication_lag=45s, threshold=10s\n2026-03-17T06:00:07Z [ERROR] API::handleRequest - 500 Internal Server Error, request_id=m3n4o5, endpoint=/api/v2/accounts, error=stale_read_replica\n\nThis is the client-facing portfolio management API. Started at 06:00 UTC. ~60% of requests are now failing. Affects all clients trying to view accounts or make transactions. DB is Azure SQL in eastus2. Need DBA support ASAP.",
+        "reporter": {
+            "name": "Derek Johnson",
+            "email": "derek.johnson@contoso.com",
+            "department": "Engineering"
+        },
+        "created_at": "2026-03-17T06:10:00Z",
+        "channel": "portal",
+        "attachments": [
+            "full_error_log_20260317.txt",
+            "grafana_dashboard_screenshot.png"
+        ]
+    },
+    {
+        "ticket_id": "INC-5008",
+        "subject": "    Need    access    to    new    system    ",
+        "description": "     \n\n\n\n     Hi      IT     team,     \n\n\n\n\n     I     need     access     to     the     Bloomberg     Terminal     application.     \n\n\n\n     My     manager     approved     it     last     week.     \n\n\n\n     The     approval     email     reference     is     REQ-2026-0847.     \n\n\n\n\n\n     Thanks,     \n     Kevin     \n\n\n\n\n\n\n\n",
+        "reporter": {
+            "name": "Kevin O'Brien",
+            "email": "kevin.obrien@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-17T09:00:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5009",
+        "subject": "Issue with application",
+        "description": "The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working.\n\nI keep submitting this ticket but nobody responds. The application isn't working. The application isn't working. The application isn't working. The application isn't working. The application isn't working.\n\nIt's Salesforce. It gives error 500 when I try to create a new opportunity. Started after the update last night.",
+        "reporter": {
+            "name": "Patricia Wells",
+            "email": "patricia.wells@contoso.com",
+            "department": "Sales"
+        },
+        "created_at": "2026-03-17T08:20:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5010",
+        "subject": "Fwd: Action Required: Your Microsoft 365 subscription - plus I have a real question",
+        "description": "<html>\n<head><style>body{font-family:Arial;} .header{background:#0078d4;color:white;padding:20px;} .content{padding:20px;} .button{background:#0078d4;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;}</style></head>\n<body>\n<div class=\"header\"><h1>Microsoft 365</h1></div>\n<div class=\"content\">\n<p>Dear User,</p>\n<p>Your Microsoft 365 subscription requires immediate verification. Click the button below to verify your account:</p>\n<p><a href=\"https://totally-not-phishing.example.com/verify\" class=\"button\">Verify Now</a></p>\n<p>If you do not verify within 24 hours, your account will be suspended.</p>\n<p>Best regards,<br>Microsoft 365 Team</p>\n</div>\n</body>\n</html>\n\n---\n\nHey IT, I got this email above. Pretty sure it's phishing but wanted to confirm. The link goes to some weird domain.\n\nAlso, separate question - my actual M365 license seems to be missing the Power BI Pro add-on. I had it before but after the license refresh last week it's gone. I need it for the executive dashboard I maintain. Can you check?",
+        "reporter": {
+            "name": "Rachel Kim",
+            "email": "rachel.kim@contoso.com",
+            "department": "Business Intelligence"
+        },
+        "created_at": "2026-03-17T10:50:00Z",
+        "channel": "email",
+        "attachments": [
+            "suspicious_email.eml"
+        ]
+    },
+    {
+        "ticket_id": "INC-5011",
+        "subject": "M\u00f6nit\u00f6ring \u00e4lert - sÿstem",
+        "description": "{\n  \"alert_id\": \"MON-2026-38847\",\n  \"severity\": \"critical\",\n  \"source\": \"azure-monitor\",\n  \"resource\": \"/subscriptions/abc123/resourceGroups/rg-prod/providers/Microsoft.Compute/virtualMachines/prod-web-frontend-03\",\n  \"condition\": {\n    \"metric\": \"Percentage CPU\",\n    \"operator\": \"GreaterThan\",\n    \"threshold\": 95,\n    \"current_value\": 99.2,\n    \"duration\": \"PT15M\"\n  },\n  \"fired_at\": \"2026-03-17T05:45:00Z\",\n  \"description\": \"CPU usage has exceeded 95% for 15 consecutive minutes on prod-web-frontend-03\",\n  \"action_groups\": [\"oncall-infra\", \"sre-alerts\"],\n  \"additional_context\": {\n    \"vm_size\": \"Standard_D4s_v5\",\n    \"region\": \"eastus2\",\n    \"os\": \"Ubuntu 22.04\",\n    \"tags\": {\n      \"environment\": \"production\",\n      \"service\": \"client-portal\",\n      \"team\": \"platform-engineering\"\n    }\n  }\n}\n\nThis alert was auto-forwarded to the IT ticketing system. The prod-web-frontend-03 VM serving the client portal has been pegging CPU at 99% for 15 minutes. Clients are reporting slow page loads. Two other frontend VMs (01, 02) are fine. Need someone to investigate whether it's a runaway process or if traffic got unevenly distributed.",
+        "reporter": {
+            "name": "Monitoring System",
+            "email": "monitoring@contoso.com",
+            "department": "Engineering"
+        },
+        "created_at": "2026-03-17T05:47:00Z",
+        "channel": "email",
+        "attachments": [
+            "azure_monitor_alert.json"
+        ]
+    },
+    {
+        "ticket_id": "INC-5012",
+        "subject": "see attached",
+        "description": "please see attached screenshots and error logs\n\nthanks\n\n[image001.png]\n[image002.png]\n[image003.png]\n[error_log.txt]\n[network_trace.pcap]",
+        "reporter": {
+            "name": "Ben Crawford",
+            "email": "ben.crawford@contoso.com",
+            "department": "Engineering"
+        },
+        "created_at": "2026-03-17T13:10:00Z",
+        "channel": "email",
+        "attachments": [
+            "image001.png",
+            "image002.png",
+            "image003.png",
+            "error_log.txt",
+            "network_trace.pcap"
+        ]
+    },
+    {
+        "ticket_id": "INC-5013",
+        "subject": "LOGINS BROKEN FOR WHOLE FLOOR",
+        "description": "NOBODY ON THE 7TH FLOOR CAN LOG IN THIS MORNING. WE ALL GET THE SAME ERROR - SOMETHING ABOUT DOMAIN CONTROLLER NOT AVAILABLE. THERE ARE ABOUT 40 PEOPLE HERE AND NONE OF US CAN WORK. THIS HAS BEEN GOING ON SINCE 8 AM AND ITS NOW 8:45. THE TRADING DESK IS DOWN AND WE ARE LOSING MONEY EVERY MINUTE. I ALREADY CALLED THE HELPDESK TWICE AND THEY SAID THEY WOULD LOOK INTO IT. FIX THIS NOW.",
+        "reporter": {
+            "name": "Gregory Stone",
+            "email": "gregory.stone@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-17T08:47:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5014",
+        "subject": "name,department,issue,priority\\nJohn Smith,HR,Password reset,Low\\nJane Doe,Finance,SAP error,High",
+        "description": "Hi, I tried to submit a batch of IT requests through the portal but it didn't let me upload a CSV. So I'm just pasting the data here:\n\nname,department,issue,priority\nJohn Smith,HR,Password reset,Low\nJane Doe,Finance,SAP error 403 on transaction module,High\nBob Wilson,Trading,Bloomberg terminal frozen,Critical\nAlice Chen,Legal,Can't access case management system,Medium\nTom Garcia,Compliance,Need new DLP policy configured,Low\n\nCan you create separate tickets for each? I'm the department coordinator and I collect these from the team weekly. The SAP error and Bloomberg ones are the most urgent.",
+        "reporter": {
+            "name": "Maria Rodriguez",
+            "email": "maria.rodriguez@contoso.com",
+            "department": "HR"
+        },
+        "created_at": "2026-03-17T09:30:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5015",
+        "subject": "Fwd: Fwd: Fwd: Fwd: Fwd: Weekly IT Newsletter - but also my laptop is slow",
+        "description": "---------- Forwarded message (5 of 5) ----------\nFrom: IT Communications <it-comms@contoso.com>\nDate: March 10, 2026\nSubject: Weekly IT Newsletter - March 10\n\n=== CONTOSO IT WEEKLY UPDATE ===\n\nPlanned Maintenance:\n- March 14: SAP system upgrade (2am-6am EST)\n- March 15: Network switch replacement Building 3 (midnight-4am)\n- March 16: Email archive migration (no downtime expected)\n\nTips & Tricks:\n- Did you know you can use Ctrl+Shift+T to reopen closed browser tabs?\n- New self-service password reset portal: https://passwordreset.contoso.com\n- Reminder: All USB drives must be encrypted per policy SEC-2024-003\n\nUpcoming Training:\n- March 20: Cybersecurity Awareness (mandatory)\n- March 25: Advanced Excel for Finance Teams\n- March 28: Azure DevOps for Beginners\n\nContact us: helpdesk@contoso.com | ext. 1000 | Building 1, Floor 1\n=== END NEWSLETTER ===\n\n---------- End forwarded messages ----------\n\nSorry for the long forward chain. But actually I wanted to ask - my laptop has been really slow since the SAP upgrade mentioned in this newsletter (March 14). Everything takes forever to load, especially Outlook and Teams. Restarted multiple times, no improvement. Dell Latitude 5540, Windows 11. Is the SAP upgrade related? It started right after.",
+        "reporter": {
+            "name": "Nathan Price",
+            "email": "nathan.price@contoso.com",
+            "department": "Finance"
+        },
+        "created_at": "2026-03-17T11:40:00Z",
+        "channel": "email",
+        "attachments": []
+    }
+]
