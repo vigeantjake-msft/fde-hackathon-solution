@@ -2258,4 +2258,761 @@ def get_scenarios() -> list[ScenarioDefinition]:
             tags=["data-cleanup", "speech-to-text", "transcription-errors", "voice-transcript"],
             difficulty="hard",
         ),
+        # ── DC-039  Very long email — corporate newsletter with buried issue
+        ScenarioDefinition(
+            scenario_id="DC-039",
+            subject="FW: Contoso Weekly Pulse — March Edition + quick IT question",
+            description=(
+                "Hey IT,\n\n"
+                "Quick question — my Outlook has been crashing every time I try to open "
+                "calendar invites. Started yesterday. Can someone take a look?\n\n"
+                "Thanks,\nSophie\n\n"
+                "---------- Forwarded message ----------\n"
+                "From: Internal Communications <comms@contoso.com>\n"
+                "Date: Monday, March 16, 2026\n"
+                "Subject: Contoso Weekly Pulse — March Edition\n"
+                "To: All Employees <all-staff@contoso.com>\n\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "           CONTOSO WEEKLY PULSE — MARCH 2026\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+                "🏢 FROM THE CEO'S DESK\n"
+                "Dear Contoso family, I am thrilled to share that our Q1 results "
+                "have exceeded expectations across all business units. Revenue grew "
+                "14% year-over-year, driven by exceptional performance in our "
+                "Institutional Trading and Wealth Management divisions. I want to "
+                "personally thank each of you for your dedication and hard work "
+                "during what has been a transformative quarter. Our client "
+                "satisfaction scores reached an all-time high of 94.2%, and we "
+                "onboarded 37 new institutional clients. As we look ahead to Q2, "
+                "I am confident that we will continue this momentum.\n\n"
+                "📅 UPCOMING EVENTS & DEADLINES\n"
+                "• March 20 — Mandatory Compliance Training (all employees)\n"
+                "• March 22 — Annual Charity Gala at The Grand Ballroom (RSVP by 3/18)\n"
+                "• March 25 — Q1 Performance Reviews begin (managers check Workday)\n"
+                "• March 28 — Building 3 elevator maintenance (use stairs, floors 1-4)\n"
+                "• April 1 — Benefits enrollment window opens\n"
+                "• April 3 — Town Hall with CFO Rebecca Martinez (2:00 PM ET, Rm 401)\n"
+                "• April 7 — Earth Day office volunteer signup deadline\n\n"
+                "👥 HR CORNER\n"
+                "Welcome to our newest team members joining this month: Tanya Okafor "
+                "(Risk Analytics), James Whitfield (Private Banking), Maria Souza "
+                "(Client Onboarding), and Vikram Patel (Quantitative Research). "
+                "Please make them feel at home! Reminder: the employee referral bonus "
+                "has been increased to $5,000 for all technology roles. Submit "
+                "referrals through the Workday portal. The annual employee engagement "
+                "survey will be distributed next week — your feedback is invaluable "
+                "in shaping our workplace culture.\n\n"
+                "🏆 EMPLOYEE SPOTLIGHT\n"
+                "Congratulations to Diane Cheng from Equity Research for being named "
+                "Analyst of the Quarter! Diane's coverage of the semiconductor "
+                "sector generated significant alpha for our clients. Her deep-dive "
+                "report on supply chain resilience was featured in Bloomberg Markets. "
+                "Also a shout-out to the Network Operations team for achieving 99.99% "
+                "uptime in February — outstanding work!\n\n"
+                "🏗️ FACILITIES UPDATE\n"
+                "The Building 2 cafeteria renovation is on schedule for completion "
+                "by March 31. Temporary food service is available on the 3rd floor "
+                "of Building 1. New standing desk models are available for order "
+                "through the Facilities portal — please submit requests by end of "
+                "month. Parking garage levels P2 and P3 will undergo restriping "
+                "this weekend. Please relocate vehicles by Friday 5 PM.\n\n"
+                "📊 MARKET INSIGHTS\n"
+                "Our Chief Economist, Dr. Lawrence Kim, published his latest "
+                "outlook this week projecting moderate GDP growth of 2.3% for "
+                "the remainder of 2026. Key themes include the impact of the "
+                "Federal Reserve's rate trajectory, commercial real estate "
+                "stabilization, and the continued expansion of AI-driven "
+                "financial products. The full report is available on the "
+                "Research Portal.\n\n"
+                "💡 TECH TIPS FROM IT\n"
+                "Did you know you can use Ctrl+Shift+V to paste without formatting? "
+                "This week's tip: enable Focus Assist in Windows to mute "
+                "notifications during presentations. Also, remember to restart "
+                "your laptop at least once a week to ensure updates apply "
+                "correctly.\n\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "Contoso Financial Services | 200 Park Avenue, New York, NY 10166\n"
+                "This email is intended for internal distribution only.\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate Outlook crashes when opening calendar invites for Sophie "
+                "Tremblay — started the previous day. Likely a corrupt calendar cache "
+                "or an add-in conflict after a recent update. Ignore the forwarded "
+                "newsletter content."
+            ),
+            remediation_steps=[
+                "Ask the user to confirm the Outlook version (File > Office Account) and whether they are using desktop or New Outlook.",
+                "Launch Outlook in safe mode (outlook.exe /safe) to rule out add-in conflicts.",
+                "Clear the Outlook calendar cache by renaming the local .ost file and letting it rebuild.",
+                "If the issue persists, run the Microsoft Support and Recovery Assistant (SaRA) calendar diagnostic.",
+                "Check for pending Office updates and apply them if available.",
+            ],
+            reporter_name="Sophie Tremblay",
+            reporter_email="sophie.tremblay@contoso.com",
+            reporter_department="Wealth Management",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "very-long-email", "buried-issue", "newsletter"],
+            difficulty="hard",
+        ),
+        # ── DC-040  Base64-encoded PDF content dumped inline ──────────────
+        ScenarioDefinition(
+            scenario_id="DC-040",
+            subject="License renewal needed — see attached PDF",
+            description=(
+                "Hi IT Support,\n\n"
+                "I need to renew my Bloomberg Terminal license. My current license "
+                "expires at the end of this month and I cannot afford any gap in "
+                "access. I attached the approval form from my manager but it looks "
+                "like the PDF got embedded weird. Here it is:\n\n"
+                "JVBERi0xLjQKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAw"
+                "IFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFsz"
+                "IDAgUl0KL0NvdW50IDEKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KPj4KZW5k"
+                "b2JqCjMgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovUmVz"
+                "b3VyY2VzIDw8Ci9Gb250IDw8Ci9GMSAxNiAwIFIKPj4KPj4KL0NvbnRlbnRz"
+                "IDQgMCBSCj4+CmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJl"
+                "bnQgMiAwIFIKL1Jlc291cmNlcyA8PAovRm9udCA8PAovRjEgMTYgMCBSCj4+"
+                "Cj4+Ci9Db250ZW50cyA0IDAgUgo+PgplbmRvYmoKNCAwIG9iago8PAovTGVu"
+                "Z3RoIDQ0Cj4+CnN0cmVhbQpCVAovRjEgMTIgVGYKMTAwIDcwMCBUZAooU29m"
+                "dHdhcmUgTGljZW5zZSBSZW5ld2FsIEZvcm0pIFRqCkVUCmVuZHN0cmVhbQpl"
+                "bmRvYmoKNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHlwZTEK"
+                "L0Jhc2VGb250IC9IZWx2ZXRpY2EKPj4KZW5kb2JqCnhyZWYKMCA2CjAwMDAw"
+                "MDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAwOSAwMDAwMCBuIAowMDAwMDAwMDU4"
+                "IDAwMDAwIG4gCjAwMDAwMDAxMTUgMDAwMDAgbiAKMDAwMDAwMDI2NiAwMMDAwIG4gBiag"
+                "L1R5cGUgL0ZvbnQKL1N1YnR5cGUgL1R5cGUxCi9CYXNlRm9udCAvSGVsdmV0"
+                "aWNhCj4+CmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAw"
+                "MDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDA1OCAwMDAwMCBuIAowMDAwMDAw"
+                "MDAwMDAwMDAwMDAwMDAgbjsgAgMDAwMDAwMDEKPj4Kc3RhcnR4cmVmCjU0OAol"
+                "JUVPRA==\n\n"
+                "Anyway, the license is for Bloomberg Terminal, seat ID BT-4471, "
+                "assigned to me on the trading floor (Building 4, 12th floor). My "
+                "manager David Kowalski already approved the renewal. Can you "
+                "please process this before March 31?\n\n"
+                "Thanks,\nRachel Moreno\nFixed Income Trading"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION],
+            next_best_action=(
+                "Process Bloomberg Terminal license renewal for seat ID BT-4471 "
+                "assigned to Rachel Moreno before the March 31 expiration. Manager "
+                "approval from David Kowalski is referenced. Discard the inline "
+                "base64 PDF content and request a clean copy of the approval form."
+            ),
+            remediation_steps=[
+                "Request Rachel resend the manager approval PDF as a proper email attachment.",
+                "Verify the Bloomberg seat ID BT-4471 in the license management portal and confirm the current expiration date.",
+                "Submit the renewal request through the enterprise software procurement workflow with manager approval attached.",
+                "Confirm with Bloomberg vendor support that the renewal will be processed before month-end cutoff.",
+                "Notify Rachel once the renewal is confirmed and verify terminal connectivity.",
+            ],
+            reporter_name="Rachel Moreno",
+            reporter_email="rachel.moreno@contoso.com",
+            reporter_department="Fixed Income Trading",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "base64", "pdf-inline", "binary-content"],
+            difficulty="hard",
+        ),
+        # ── DC-041  Massive inline CSS/HTML style blocks ──────────────────
+        ScenarioDefinition(
+            scenario_id="DC-041",
+            subject="SharePoint site not loading — just spins",
+            description=(
+                '<style type="text/css">\n'
+                "/* Outlook Web App Reset Styles */\n"
+                "body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; "
+                "-ms-text-size-adjust: 100%; }\n"
+                "table, td { border-collapse: collapse; mso-table-lspace: 0pt; "
+                "mso-table-rspace: 0pt; }\n"
+                "img { border: 0; height: auto; line-height: 100%; outline: none; "
+                "text-decoration: none; -ms-interpolation-mode: bicubic; }\n"
+                ".ExternalClass { width: 100%; }\n"
+                ".ExternalClass, .ExternalClass p, .ExternalClass span, "
+                ".ExternalClass font, .ExternalClass td, .ExternalClass div "
+                "{ line-height: 100%; }\n"
+                ".ReadMsgBody { width: 100%; background-color: #f4f4f4; }\n"
+                "#outlook a { padding: 0; }\n"
+                ".contoso-header { background-color: #003366; color: #ffffff; "
+                "padding: 16px 24px; font-family: Segoe UI, Arial, sans-serif; "
+                "font-size: 18px; font-weight: 600; }\n"
+                ".contoso-body { background-color: #ffffff; padding: 24px; "
+                "font-family: Segoe UI, Arial, sans-serif; font-size: 14px; "
+                "line-height: 1.6; color: #333333; }\n"
+                ".contoso-footer { background-color: #f0f0f0; padding: 12px 24px; "
+                "font-family: Segoe UI, Arial, sans-serif; font-size: 11px; "
+                "color: #999999; }\n"
+                "@media only screen and (max-width: 600px) {\n"
+                "  .contoso-header { font-size: 14px !important; padding: 12px "
+                "16px !important; }\n"
+                "  .contoso-body { padding: 16px !important; font-size: 13px "
+                "!important; }\n"
+                "  .contoso-footer { padding: 8px 16px !important; }\n"
+                "  table[class=container] { width: 100% !important; }\n"
+                "}\n"
+                "@media only screen and (max-width: 480px) {\n"
+                "  .hide-mobile { display: none !important; }\n"
+                "  .full-width { width: 100% !important; }\n"
+                "}\n"
+                "</style>\n"
+                '<div class="contoso-body">\n'
+                "Hi IT team, the Regulatory Filings SharePoint site "
+                "(https://contoso.sharepoint.com/sites/RegulatoryFilings) "
+                "has been stuck on a loading spinner since this morning. I have tried "
+                "Edge and Chrome, cleared my cache, and even tried from my phone on "
+                "cellular data. My colleagues Nadia and Tom in the same department "
+                "are also unable to load it. We have a filing deadline on Thursday "
+                "and all our draft documents are stored there. Please prioritize.\n"
+                "Thanks, Gregory\n"
+                "</div>\n"
+                '<div class="contoso-footer">\n'
+                "Contoso Financial Services | Confidential\n"
+                "</div>"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P3,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.TIMESTAMP],
+            next_best_action=(
+                "Investigate the Regulatory Filings SharePoint site failing to load "
+                "for multiple users — Gregory, Nadia, and Tom in Regulatory Affairs "
+                "are all affected. Filing deadline on Thursday makes this time-sensitive. "
+                "Ignore the CSS/style block noise in the ticket."
+            ),
+            remediation_steps=[
+                "Check the SharePoint admin center for service health alerts affecting the Regulatory Filings site collection.",
+                "Verify site collection storage quota — a full quota can cause infinite loading spinners.",
+                "Review recent changes to site permissions or page customizations that may have broken rendering.",
+                "Test access with a SharePoint admin account to determine if the issue is site-wide or permission-specific.",
+                "If the site collection is corrupted, initiate a restore from the most recent backup and notify affected users.",
+            ],
+            reporter_name="Gregory Ashworth",
+            reporter_email="gregory.ashworth@contoso.com",
+            reporter_department="Regulatory Affairs",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "css-noise", "html-heavy", "style-blocks"],
+            difficulty="medium",
+        ),
+        # ── DC-042  XML/SOAP envelope wrapping the actual issue ───────────
+        ScenarioDefinition(
+            scenario_id="DC-042",
+            subject="[AUTO] Service Alert — AppGateway timeout detected",
+            description=(
+                '<?xml version="1.0" encoding="UTF-8"?>\n'
+                "<soap:Envelope\n"
+                '    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"\n'
+                '    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n'
+                '    xmlns:mon="http://contoso.com/monitoring/v2"\n'
+                '    xmlns:alert="http://contoso.com/alerting/2026">\n'
+                "  <soap:Header>\n"
+                "    <mon:MonitoringContext>\n"
+                "      <mon:CorrelationId>a9f3c7e2-81d4-4b6a-bc0f-3e7d91a24c88"
+                "</mon:CorrelationId>\n"
+                "      <mon:Timestamp>2026-03-17T14:32:08.441Z</mon:Timestamp>\n"
+                "      <mon:Source>PROD-APPGW-East-02</mon:Source>\n"
+                "      <mon:Environment>Production</mon:Environment>\n"
+                "      <mon:Severity>Critical</mon:Severity>\n"
+                "      <mon:ServiceTree>\n"
+                "        <mon:Organization>Contoso Financial Services</mon:Organization>\n"
+                "        <mon:Division>Technology</mon:Division>\n"
+                "        <mon:Team>Platform Engineering</mon:Team>\n"
+                "      </mon:ServiceTree>\n"
+                "    </mon:MonitoringContext>\n"
+                "    <alert:EscalationPolicy>\n"
+                "      <alert:Level>P2</alert:Level>\n"
+                "      <alert:NotifyGroup>enterprise-apps-oncall</alert:NotifyGroup>\n"
+                "      <alert:AutoResolveMinutes>60</alert:AutoResolveMinutes>\n"
+                "    </alert:EscalationPolicy>\n"
+                "  </soap:Header>\n"
+                "  <soap:Body>\n"
+                "    <mon:AlertPayload>\n"
+                "      <mon:AlertType>ServiceTimeout</mon:AlertType>\n"
+                "      <mon:AffectedService>TradeSettlement-API</mon:AffectedService>\n"
+                "      <mon:Endpoint>https://api.contoso.com/v2/trade/settlement"
+                "</mon:Endpoint>\n"
+                "      <mon:Description>The TradeSettlement-API service endpoint "
+                "has exceeded the 30-second response timeout threshold for 12 "
+                "consecutive health checks. Average response time over the last "
+                "15 minutes is 47.3 seconds. Downstream dependencies including "
+                "the clearing house integration and position reconciliation service "
+                "are experiencing cascading failures. 23 pending settlement requests "
+                "are queued and at risk of missing the T+1 settlement window."
+                "</mon:Description>\n"
+                "      <mon:MetricsSummary>\n"
+                "        <mon:AvgResponseMs>47312</mon:AvgResponseMs>\n"
+                "        <mon:ErrorRate>0.34</mon:ErrorRate>\n"
+                "        <mon:ActiveConnections>847</mon:ActiveConnections>\n"
+                "        <mon:QueueDepth>23</mon:QueueDepth>\n"
+                "      </mon:MetricsSummary>\n"
+                "    </mon:AlertPayload>\n"
+                "  </soap:Body>\n"
+                "</soap:Envelope>"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate TradeSettlement-API timeout on PROD-APPGW-East-02 — "
+                "response times averaging 47s (threshold 30s), 34% error rate, "
+                "23 settlement requests at risk of missing the T+1 window. "
+                "Escalate to Platform Engineering immediately."
+            ),
+            remediation_steps=[
+                "Check application gateway and load balancer health for PROD-APPGW-East-02 in the Azure portal.",
+                "Review TradeSettlement-API application logs for the correlation ID a9f3c7e2-81d4-4b6a-bc0f-3e7d91a24c88.",
+                "Investigate downstream clearing house integration for connection pool exhaustion or certificate issues.",
+                "If the API is overloaded, scale out additional instances and drain the pending settlement queue.",
+                "Coordinate with the settlements operations team to manually process any trades at risk of missing T+1 cutoff.",
+            ],
+            reporter_name="PROD-APPGW-East-02 (Automated Monitor)",
+            reporter_email="monitoring-alerts@contoso.com",
+            reporter_department="Platform Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "xml-soap", "envelope-noise", "machine-generated"],
+            difficulty="hard",
+        ),
+        # ── DC-043  Inline SQL query dump from error report ───────────────
+        ScenarioDefinition(
+            scenario_id="DC-043",
+            subject="Production report query keeps timing out",
+            description=(
+                "Hi team,\n\n"
+                "My daily P&L reconciliation report has been timing out since "
+                "Monday morning. The query runs against the production warehouse "
+                "and normally finishes in about 2 minutes, but now it just hangs "
+                "until the 30-minute timeout kills it. Here is the query I'm "
+                "running:\n\n"
+                "SELECT\n"
+                "    t.trade_id,\n"
+                "    t.trade_date,\n"
+                "    t.settlement_date,\n"
+                "    t.counterparty_id,\n"
+                "    cp.counterparty_name,\n"
+                "    cp.lei_code,\n"
+                "    t.instrument_type,\n"
+                "    t.isin,\n"
+                "    sec.security_description,\n"
+                "    sec.currency_code,\n"
+                "    t.quantity,\n"
+                "    t.price,\n"
+                "    t.notional_amount,\n"
+                "    t.accrued_interest,\n"
+                "    t.net_settlement_amount,\n"
+                "    t.trade_status,\n"
+                "    pos.start_of_day_position,\n"
+                "    pos.end_of_day_position,\n"
+                "    pos.realized_pnl,\n"
+                "    pos.unrealized_pnl,\n"
+                "    pos.total_pnl,\n"
+                "    fx.exchange_rate,\n"
+                "    fx.rate_source,\n"
+                "    CASE\n"
+                "        WHEN t.notional_amount > 10000000 THEN 'LARGE'\n"
+                "        WHEN t.notional_amount > 1000000 THEN 'MEDIUM'\n"
+                "        ELSE 'SMALL'\n"
+                "    END AS trade_size_bucket,\n"
+                "    COALESCE(r.regulatory_flag, 'NONE') AS reg_flag\n"
+                "FROM trades t\n"
+                "INNER JOIN counterparties cp ON t.counterparty_id = cp.counterparty_id\n"
+                "INNER JOIN securities sec ON t.isin = sec.isin\n"
+                "LEFT JOIN positions pos ON t.trade_id = pos.trade_id\n"
+                "    AND pos.position_date = t.trade_date\n"
+                "LEFT JOIN fx_rates fx ON sec.currency_code = fx.currency_code\n"
+                "    AND fx.rate_date = t.trade_date\n"
+                "LEFT JOIN regulatory_flags r ON t.trade_id = r.trade_id\n"
+                "WHERE t.trade_date BETWEEN '2026-03-01' AND '2026-03-17'\n"
+                "    AND t.trade_status IN ('CONFIRMED', 'SETTLED', 'PENDING')\n"
+                "    AND t.book_id IN (\n"
+                "        SELECT book_id FROM book_permissions\n"
+                "        WHERE analyst_id = 'HWONG'\n"
+                "    )\n"
+                "ORDER BY t.trade_date DESC, t.notional_amount DESC;\n\n"
+                "Nothing changed on my end — same query I run every day. I suspect "
+                "something happened to the database indexes over the weekend. "
+                "Can someone from the data platform team investigate?\n\n"
+                "Thanks,\nHenry Wong\nPortfolio Analytics, Building 4"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate production data warehouse query timeout for Henry Wong's "
+                "daily P&L reconciliation report — previously ran in ~2 minutes, now "
+                "exceeds the 30-minute timeout. Likely index fragmentation or statistics "
+                "staleness after weekend maintenance."
+            ),
+            remediation_steps=[
+                "Check the data warehouse for any maintenance jobs or schema changes that ran over the weekend.",
+                "Review the query execution plan for missing or fragmented indexes on the trades, positions, and fx_rates tables.",
+                "Rebuild or reorganize indexes on high-traffic tables if fragmentation exceeds 30%.",
+                "Update table statistics for the affected tables and verify the query plan improves.",
+                "If the issue is data volume growth, work with the user to optimize the query or add appropriate covering indexes.",
+            ],
+            reporter_name="Henry Wong",
+            reporter_email="henry.wong@contoso.com",
+            reporter_department="Portfolio Analytics",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "sql-dump", "inline-code", "query-timeout"],
+            difficulty="medium",
+        ),
+        # ── DC-044  Raw markdown source that wasn't rendered ──────────────
+        ScenarioDefinition(
+            scenario_id="DC-044",
+            subject="Teams integration not syncing with calendar",
+            description=(
+                "# Issue Report: Teams Calendar Integration Failure\n\n"
+                "**Reporter:** Amara Osei\n"
+                "**Department:** Client Relations\n"
+                "**Date:** 2026-03-17\n\n"
+                "## Problem Description\n\n"
+                "The Microsoft Teams integration with my Outlook calendar has "
+                "completely stopped working. When I schedule a meeting in "
+                "**Outlook**, it *does not* appear in **Teams**, and vice versa. "
+                "This started after the IT department pushed the latest "
+                "`Teams Desktop Client v24.7.1` update last Thursday.\n\n"
+                "## Steps to Reproduce\n\n"
+                "1. Open **Outlook Desktop** and create a new meeting\n"
+                "2. Add a Teams link by clicking `Add Teams Meeting`\n"
+                "3. Send the invite\n"
+                "4. Open **Microsoft Teams** > Calendar tab\n"
+                "5. Notice the meeting **does not appear**\n\n"
+                "## What I've Tried\n\n"
+                "- [x] Signed out and back into Teams\n"
+                "- [x] Cleared the Teams cache "
+                "(`%appdata%\\Microsoft\\Teams\\Cache`)\n"
+                "- [x] Restarted my laptop\n"
+                "- [ ] Reinstalled Teams (waiting for IT approval)\n\n"
+                "## Expected Behavior\n\n"
+                "Meetings created in Outlook should appear in Teams calendar "
+                "within ~30 seconds, as documented in the "
+                "[Teams admin guide](https://learn.microsoft.com/en-us/microsoftteams"
+                "/exchange-teams-interact).\n\n"
+                "## Impact\n\n"
+                "I have **5+ client meetings daily** and have already missed "
+                "joining two calls because they didn't show in Teams. This is "
+                "affecting client experience.\n\n"
+                "---\n\n"
+                "```\n"
+                "Teams Version: 24.7.1.0\n"
+                "Outlook Version: 16.0.17328.20162\n"
+                "OS: Windows 11 Enterprise 23H2\n"
+                "```\n\n"
+                "Please advise. Thanks!"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate Teams-Outlook calendar sync failure for Amara Osei after "
+                "Teams Desktop Client v24.7.1 update. Meetings created in Outlook do not "
+                "appear in Teams calendar. User has already cleared cache and restarted."
+            ),
+            remediation_steps=[
+                "Verify the Exchange-Teams interop prerequisites are met for the user's mailbox (Exchange Online, not on-prem).",
+                "Check the Teams admin center for known issues with client version 24.7.1 and calendar sync.",
+                "Re-register the Teams Outlook add-in by running the Teams meeting add-in troubleshooter.",
+                "If the add-in is missing, repair the Office installation from Programs and Features.",
+                "As a fallback, approve and perform a clean reinstall of the Teams desktop client.",
+            ],
+            reporter_name="Amara Osei",
+            reporter_email="amara.osei@contoso.com",
+            reporter_department="Client Relations",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "markdown-artifacts", "unrendered-markup"],
+            difficulty="medium",
+        ),
+        # ── DC-045  Email disclaimer in 5 languages ───────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-045",
+            subject="VPN access request for new project",
+            description=(
+                "Hello IT,\n\n"
+                "I have been assigned to the Cross-Border Settlements project and "
+                "need VPN access to the APAC regional network (subnet 10.42.0.0/16). "
+                "My manager Isabelle Fontaine has already approved this. Could you "
+                "please set this up by end of week?\n\n"
+                "Thanks,\nLukas Brenner\nInternational Operations\n\n"
+                "═══════════════════════════════════════════════════════════\n"
+                "CONFIDENTIALITY NOTICE / AVIS DE CONFIDENTIALITÉ / "
+                "VERTRAULICHKEITSHINWEIS / 機密保持に関するご注意 / 保密声明\n"
+                "═══════════════════════════════════════════════════════════\n\n"
+                "ENGLISH: This email message and any attachments are for the sole "
+                "use of the intended recipient(s) and may contain confidential and "
+                "privileged information of Contoso Financial Services. Any unauthorized "
+                "review, use, disclosure, or distribution is strictly prohibited. If "
+                "you are not the intended recipient, please contact the sender by "
+                "reply email and destroy all copies of the original message. Receipt "
+                "by anyone other than the intended recipient is not a waiver of any "
+                "attorney-client, work product, or other applicable privilege.\n\n"
+                "FRANÇAIS : Ce message électronique et toute pièce jointe sont "
+                "destinés exclusivement au(x) destinataire(s) prévu(s) et peuvent "
+                "contenir des informations confidentielles et privilégiées de Contoso "
+                "Services Financiers. Toute consultation, utilisation, divulgation ou "
+                "distribution non autorisée est strictement interdite. Si vous n'êtes "
+                "pas le destinataire prévu, veuillez contacter l'expéditeur par retour "
+                "de courriel et détruire toutes les copies du message original. La "
+                "réception par toute personne autre que le destinataire prévu ne "
+                "constitue pas une renonciation à tout privilège applicable.\n\n"
+                "DEUTSCH: Diese E-Mail-Nachricht und alle Anhänge sind ausschließlich "
+                "für den/die vorgesehenen Empfänger bestimmt und können vertrauliche "
+                "und geschützte Informationen der Contoso Finanzdienstleistungen "
+                "enthalten. Jede unbefugte Überprüfung, Nutzung, Offenlegung oder "
+                "Verbreitung ist strengstens untersagt. Wenn Sie nicht der vorgesehene "
+                "Empfänger sind, kontaktieren Sie bitte den Absender per Antwort-E-Mail "
+                "und vernichten Sie alle Kopien der ursprünglichen Nachricht.\n\n"
+                "日本語：このメールおよび添付ファイルは、意図された受信者のみを対象としており、"
+                "コントソ・ファイナンシャル・サービスの機密情報および特権情報が含まれている"
+                "場合があります。許可なく閲覧、使用、開示、または配布することは固く禁じられて"
+                "います。意図された受信者でない場合は、返信メールにて送信者にご連絡いただき、"
+                "元のメッセージのすべてのコピーを破棄してください。\n\n"
+                "中文：本电子邮件及其附件仅供指定收件人使用，可能包含Contoso金融服务公司的"
+                "机密和特权信息。未经授权的审阅、使用、披露或分发均被严格禁止。如果您不是"
+                "指定的收件人，请通过回复电子邮件联系发件人并销毁原始邮件的所有副本。\n\n"
+                "═══════════════════════════════════════════════════════════"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.NETWORK_LOCATION, MissingInfo.BUSINESS_IMPACT],
+            next_best_action=(
+                "Provision VPN access to the APAC regional network (10.42.0.0/16) for "
+                "Lukas Brenner for the Cross-Border Settlements project. Verify manager "
+                "approval from Isabelle Fontaine and process by end of week."
+            ),
+            remediation_steps=[
+                "Verify the access request approval from Isabelle Fontaine in the access governance portal.",
+                "Create a VPN access profile for the APAC regional network subnet 10.42.0.0/16 in the GlobalProtect admin console.",
+                "Assign the profile to Lukas Brenner's AD account and add him to the Cross-Border Settlements security group.",
+                "Send the user VPN configuration instructions and test connectivity to an APAC host.",
+                "Set a review date for the access in 90 days per the temporary project access policy.",
+            ],
+            reporter_name="Lukas Brenner",
+            reporter_email="lukas.brenner@contoso.com",
+            reporter_department="International Operations",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "multilingual-disclaimer", "legal-boilerplate", "very-long-email"],
+            difficulty="medium",
+        ),
+        # ── DC-046  JSON payload from automated monitoring alert ──────────
+        ScenarioDefinition(
+            scenario_id="DC-046",
+            subject="[ALERT] CRITICAL — disk space threshold exceeded",
+            description=(
+                '{\n'
+                '  "alert_id": "MON-2026-031718-4492",\n'
+                '  "alert_type": "DiskSpaceThresholdExceeded",\n'
+                '  "severity": "CRITICAL",\n'
+                '  "timestamp": "2026-03-17T18:14:33.209Z",\n'
+                '  "source": {\n'
+                '    "hostname": "PROD-SQL-NODE-03.contoso.local",\n'
+                '    "ip_address": "10.20.5.43",\n'
+                '    "datacenter": "US-East-1",\n'
+                '    "rack": "R14-B",\n'
+                '    "os": "Windows Server 2022 Datacenter",\n'
+                '    "role": "SQL Server Production Node"\n'
+                '  },\n'
+                '  "disk_metrics": {\n'
+                '    "drive_letter": "E:",\n'
+                '    "volume_label": "SQLData",\n'
+                '    "total_capacity_gb": 2048,\n'
+                '    "used_gb": 1946.7,\n'
+                '    "free_gb": 101.3,\n'
+                '    "percent_used": 95.06,\n'
+                '    "threshold_percent": 90,\n'
+                '    "growth_rate_gb_per_day": 12.4,\n'
+                '    "estimated_days_until_full": 8.2\n'
+                '  },\n'
+                '  "top_consumers": [\n'
+                '    {"database": "TradeHistory", "size_gb": 743.2, '
+                '"growth_30d_gb": 89.1},\n'
+                '    {"database": "AuditLog", "size_gb": 512.8, '
+                '"growth_30d_gb": 156.3},\n'
+                '    {"database": "MarketData", "size_gb": 398.4, '
+                '"growth_30d_gb": 42.7},\n'
+                '    {"database": "ClientPortfolios", "size_gb": 187.1, '
+                '"growth_30d_gb": 18.9},\n'
+                '    {"database": "TempDB", "size_gb": 105.2, '
+                '"growth_30d_gb": 0.0}\n'
+                '  ],\n'
+                '  "recent_events": [\n'
+                '    {"timestamp": "2026-03-15T02:00:00Z", '
+                '"event": "Nightly backup completed — 1.2TB transferred"},\n'
+                '    {"timestamp": "2026-03-16T02:00:00Z", '
+                '"event": "AuditLog retention job FAILED — old records not purged"},\n'
+                '    {"timestamp": "2026-03-17T02:00:00Z", '
+                '"event": "Nightly backup completed — 1.2TB transferred"}\n'
+                '  ],\n'
+                '  "escalation": {\n'
+                '    "notify_team": "data-platform-oncall",\n'
+                '    "auto_ticket": true,\n'
+                '    "sla_response_minutes": 60\n'
+                '  }\n'
+                '}'
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=True,
+            missing_info=[MissingInfo.PREVIOUS_TICKET_ID],
+            next_best_action=(
+                "Address critical disk space on PROD-SQL-NODE-03 (E: drive at 95% — "
+                "~8 days until full). The AuditLog retention job failed on March 16, "
+                "leaving old records unpurged. This is the most likely cause of "
+                "accelerated growth. Fix the retention job first, then evaluate "
+                "capacity expansion."
+            ),
+            remediation_steps=[
+                "Investigate and fix the failed AuditLog retention job from March 16 — old records are not being purged.",
+                "Manually run the AuditLog purge to reclaim space from records past the retention window.",
+                "Review TempDB sizing and shrink if the 105 GB allocation is excessive for current workload.",
+                "Request an emergency capacity expansion for the E: drive if free space drops below 5% before the retention fix takes effect.",
+                "Set up a recurring disk space trend report and adjust the growth_rate alert threshold to trigger earlier.",
+            ],
+            reporter_name="System Monitor (PROD-SQL-NODE-03)",
+            reporter_email="monitoring-alerts@contoso.com",
+            reporter_department="Infrastructure Operations",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "json-payload", "machine-generated", "monitoring-alerts"],
+            difficulty="hard",
+        ),
+        # ── DC-047  Excessive whitespace and blank lines ──────────────────
+        ScenarioDefinition(
+            scenario_id="DC-047",
+            subject="Printer on 6th floor not working",
+            description=(
+                "Hi   IT    Support,\n\n\n\n\n"
+                "The    printer   on    the   6th   floor    near   conference   "
+                "room   B   is     not     working.\n\n\n\n\n\n\n"
+                "It    is    a    HP    LaserJet    Pro    MFP    M428fdn    and   "
+                "the     display     says     \"Paper   Jam\"     but     I   "
+                "checked     and     there    is    no     paper     stuck   "
+                "anywhere.\n\n\n\n\n\n"
+                "I     tried:\n\n\n"
+                "-     Turning     it     off     and     on     again\n\n\n"
+                "-     Opening     all     the     trays     and     checking   "
+                "for     paper\n\n\n"
+                "-     Removing     the     toner     cartridge     and   "
+                "reinserting     it\n\n\n\n\n\n"
+                "Nothing     worked.     The     paper     jam     error   "
+                "keeps     coming     back.\n\n\n\n\n"
+                "This     is     the     only     printer     on     our   "
+                "floor     and     we     have     a     client     presentation   "
+                "at     3 PM     today     that     we     need     to   "
+                "print     materials     for.\n\n\n\n\n\n\n\n"
+                "Please     send     someone     to     look     at     it   "
+                "ASAP.\n\n\n\n\n"
+                "Thanks,\n\n\n"
+                "Olivia     Santos\n\n\n"
+                "Client     Advisory,     6th     Floor,     Building   1"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Dispatch a technician to inspect the HP LaserJet Pro MFP M428fdn on "
+                "the 6th floor near conference room B, Building 1 — persistent false "
+                "paper jam error. User has a client presentation at 3 PM today."
+            ),
+            remediation_steps=[
+                "Dispatch a technician to the 6th floor, Building 1, to physically inspect the HP LaserJet Pro MFP M428fdn.",
+                "Check the paper path sensors for debris, torn paper fragments, or sensor misalignment causing the false jam.",
+                "Perform a full power cycle with the rear access panel open and inspect the fuser area for obstructions.",
+                "If the sensor is faulty, replace the paper path sensor assembly or swap in a loaner printer before the 3 PM deadline.",
+                "Update the printer asset record with any parts replaced and schedule preventive maintenance.",
+            ],
+            reporter_name="Olivia Santos",
+            reporter_email="olivia.santos@contoso.com",
+            reporter_department="Client Advisory",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "excessive-whitespace", "formatting-noise", "blank-lines"],
+            difficulty="easy",
+        ),
+        # ── DC-048  Corrupted email headers mixed into body ───────────────
+        ScenarioDefinition(
+            scenario_id="DC-048",
+            subject="Account locked out — need urgent help",
+            description=(
+                "Return-Path: <marcus.adeyemi@contoso.com>\n"
+                "Received: from PROD-EXCH-04.contoso.local (10.20.1.44) by\n"
+                " PROD-EXCH-HUB-02.contoso.local (10.20.1.10) with Microsoft SMTP\n"
+                " Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384)\n"
+                " id 15.2.1118.40; Tue, 17 Mar 2026 08:47:12 -0400\n"
+                "Received: from outlook.office365.com (52.97.183.26) by\n"
+                " PROD-EXCH-04.contoso.local (10.20.1.44) with Microsoft SMTP Server\n"
+                " id 15.2.1118.40 via Frontend Transport; Tue, 17 Mar 2026 08:47:11 -0400\n"
+                "DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\n"
+                " d=contoso.com; s=selector1;\n"
+                " h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;\n"
+                " bh=a3f2V8bKz0mNpQ7RtL1cD+eXwJk=;\n"
+                " b=YjQ4NWRlZWI3ZjJhMTk4NzVkNzRiMmQxZGM5OTNmYTBlZjRiMjVhNWFl\n"
+                "   OGEyMTc5ZjRkZGE2MzI0YTVlNWQyZjQ1MzZhMGI3YWIwN2ExMjczNjVk\n"
+                "   MjkwNjg2YTgzZGZhYjNlOGE=\n"
+                "X-Mailer: Microsoft Outlook 16.0\n"
+                "MIME-Version: 1.0\n"
+                "Content-Type: multipart/alternative;\n"
+                ' boundary="----=_NextPart_001_0078_01DAF3B2.7C8E5A30"\n'
+                "X-MS-Exchange-Organization-SCL: -1\n"
+                "X-MS-Exchange-Organization-AuthSource: PROD-EXCH-04.contoso.local\n"
+                "X-MS-Exchange-Organization-AuthAs: Internal\n"
+                "X-MS-Has-Attach:\n"
+                "X-MS-TNEF-Correlator:\n\n"
+                "Hi IT Support,\n\n"
+                "My account has been locked out and I cannot log into anything — "
+                "not my laptop, not Outlook, not any of the internal web apps. "
+                "This happened at around 8:30 AM this morning when I tried to "
+                "sign in after arriving at the office.\n\n"
+                "I did NOT change my password recently and I am certain I am "
+                "entering the correct credentials. I suspect the lockout may be "
+                "related to the MFA push notifications I was getting last night "
+                "around 11 PM that I did not initiate — I denied all of them. "
+                "Someone may be trying to access my account.\n\n"
+                "This is urgent because I have a compliance audit review at "
+                "10 AM and I need access to the Regulatory Reporting portal "
+                "and my email.\n\n"
+                "Please call me at extension 3841.\n\n"
+                "Marcus Adeyemi\n"
+                "Compliance & Regulatory, Building 2, 9th floor"
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            team=Team.IAM,
+            needs_escalation=True,
+            missing_info=[MissingInfo.AUTHENTICATION_METHOD, MissingInfo.TIMESTAMP],
+            next_best_action=(
+                "Immediately investigate account lockout for Marcus Adeyemi — "
+                "unsolicited MFA prompts at 11 PM suggest a possible credential "
+                "compromise attempt. Unlock the account, force a password reset, "
+                "review Azure AD sign-in logs, and revoke active sessions before "
+                "the 10 AM compliance audit."
+            ),
+            remediation_steps=[
+                "Review Azure AD sign-in logs for Marcus Adeyemi's account for failed attempts and the unsolicited MFA prompts from 11 PM.",
+                "Check if the account triggered any Impossible Travel or Unfamiliar Sign-In Properties risk detections in Azure AD Identity Protection.",
+                "Unlock the account in Active Directory and force an immediate password reset via a secure channel (phone verification).",
+                "Revoke all active refresh tokens and sessions (Revoke-AzureADUserAllRefreshToken) to invalidate any compromised sessions.",
+                "If credential compromise is confirmed, escalate to the Security Operations team for a full incident investigation.",
+            ],
+            reporter_name="Marcus Adeyemi",
+            reporter_email="marcus.adeyemi@contoso.com",
+            reporter_department="Compliance & Regulatory",
+            channel=Channel.PHONE,
+            tags=["data-cleanup", "corrupted-headers", "smtp-headers", "raw-email"],
+            difficulty="hard",
+        ),
     ]
