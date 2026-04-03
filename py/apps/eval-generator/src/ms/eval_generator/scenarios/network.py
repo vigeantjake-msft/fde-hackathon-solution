@@ -30,7 +30,8 @@ NETWORK_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "device_info",
             ),
-            next_best_action="Investigate VPN client network roaming behavior and check for known issues with the recent update",
+            next_best_action="Investigate VPN client network roaming behavior and check for known issues with the "
+                "recent update",
             remediation_steps=(
                 "Check VPN client version and compare with known-good configuration",
                 "Verify VPN client roaming settings to maintain connection during network transitions",
@@ -170,7 +171,8 @@ NETWORK_SCENARIOS: list[ScenarioDefinition] = [
                 "network_location",
                 "reproduction_frequency",
             ),
-            next_best_action="Analyze network QoS metrics and check for bandwidth or latency issues on the affected segment",
+            next_best_action="Analyze network QoS metrics and check for bandwidth or latency issues on the affected "
+                "segment",
             remediation_steps=(
                 "Run a network performance test from the affected location",
                 "Check QoS policies for Teams/video conferencing traffic",
@@ -693,7 +695,8 @@ NETWORK_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "configuration_details",
             ),
-            next_best_action="Review bandwidth QoS policies and ensure backup traffic is not throttled during the backup window",
+            next_best_action="Review bandwidth QoS policies and ensure backup traffic is not throttled during the "
+                "backup window",
             remediation_steps=(
                 "Review the QoS/bandwidth policy for Azure backup traffic",
                 "Check if the throttling is per-user or per-application",
@@ -899,7 +902,8 @@ NETWORK_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Network Operations",
             needs_escalation=False,
             missing_information=(),
-            next_best_action="Evaluate the split tunnel VPN request against security policy and submit for SecOps approval",
+            next_best_action="Evaluate the split tunnel VPN request against security policy and submit for SecOps "
+                "approval",
             remediation_steps=(
                 "Review the current VPN tunnel configuration and routing table",
                 "Evaluate the security implications of split tunneling",

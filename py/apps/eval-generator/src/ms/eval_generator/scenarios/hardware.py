@@ -418,7 +418,8 @@ HARDWARE_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "device_info",
             ),
-            next_best_action="Update trackpad drivers and run diagnostics to determine if hardware replacement is needed",
+            next_best_action="Update trackpad drivers and run diagnostics to determine if hardware replacement is "
+                "needed",
             remediation_steps=(
                 "Update the touchpad/trackpad driver to the latest version",
                 "Check touchpad sensitivity and palm rejection settings",
@@ -558,7 +559,8 @@ HARDWARE_SCENARIOS: list[ScenarioDefinition] = [
                 "device_info",
                 "application_version",
             ),
-            next_best_action="Check Intune device compliance and Exchange ActiveSync configuration for the mobile device",
+            next_best_action="Check Intune device compliance and Exchange ActiveSync configuration for the mobile "
+                "device",
             remediation_steps=(
                 "Verify the device compliance status in Intune",
                 "Check Exchange ActiveSync partnership status for the device",
@@ -661,7 +663,8 @@ HARDWARE_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "device_info",
             ),
-            next_best_action="Dispatch immediate on-site support with a backup projector or large display to the boardroom",
+            next_best_action="Dispatch immediate on-site support with a backup projector or large display to the "
+                "boardroom",
             remediation_steps=(
                 "Dispatch on-site technician to the boardroom immediately",
                 "Bring a portable backup projector or large display from IT supply",
@@ -696,7 +699,8 @@ HARDWARE_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "device_info",
             ),
-            next_best_action="Immediately back up all data and run drive diagnostics — clicking indicates imminent drive failure",
+            next_best_action="Immediately back up all data and run drive diagnostics — clicking indicates imminent "
+                "drive failure",
             remediation_steps=(
                 "Immediately back up all user data to OneDrive or external storage",
                 "Run SMART disk diagnostics to check drive health",
@@ -732,7 +736,8 @@ HARDWARE_SCENARIOS: list[ScenarioDefinition] = [
                 "device_info",
                 "affected_users",
             ),
-            next_best_action="Investigate a potential batch defect and coordinate with the vendor for a recall or bulk replacement",
+            next_best_action="Investigate a potential batch defect and coordinate with the vendor for a recall or bulk "
+                "replacement",
             remediation_steps=(
                 "Collect serial numbers and failure details for all affected devices",
                 "Check if all devices are from the same purchase order and manufacturing batch",
@@ -903,7 +908,8 @@ HARDWARE_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "device_info",
             ),
-            next_best_action="Replace the mouse with a new unit from inventory — double-click defect is a known hardware failure",
+            next_best_action="Replace the mouse with a new unit from inventory — double-click defect is a known "
+                "hardware failure",
             remediation_steps=(
                 "Verify the issue is hardware by testing with a different mouse",
                 "Check if the Logitech software has a debounce or click speed setting",

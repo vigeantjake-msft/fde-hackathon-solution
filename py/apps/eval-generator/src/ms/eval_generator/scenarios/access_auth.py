@@ -68,7 +68,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "error_message",
             ),
-            next_best_action="Unlock the user account in Active Directory and verify no suspicious activity caused the lockout",
+            next_best_action="Unlock the user account in Active Directory and verify no suspicious activity caused the "
+                "lockout",
             remediation_steps=(
                 "Check Active Directory for lockout reason and timestamp",
                 "Verify no suspicious login attempts during absence",
@@ -314,7 +315,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "configuration_details",
             ),
-            next_best_action="Re-authenticate the service principal and generate new OAuth tokens for the API integration",
+            next_best_action="Re-authenticate the service principal and generate new OAuth tokens for the API "
+                "integration",
             remediation_steps=(
                 "Identify the expired OAuth token and associated service principal",
                 "Re-authenticate with the third-party API provider",
@@ -416,7 +418,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Identity & Access Management",
             needs_escalation=False,
             missing_information=(),
-            next_best_action="Add user to the shared mailbox with requested permissions after manager approval verification",
+            next_best_action="Add user to the shared mailbox with requested permissions after manager approval "
+                "verification",
             remediation_steps=(
                 "Verify manager approval for shared mailbox access",
                 "Add the user to the shared mailbox in Exchange Online with full access permissions",
@@ -485,7 +488,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
                 "device_info",
                 "affected_system",
             ),
-            next_best_action="Review conditional access and token lifetime policies affecting the user's session duration",
+            next_best_action="Review conditional access and token lifetime policies affecting the user's session "
+                "duration",
             remediation_steps=(
                 "Check Entra ID sign-in logs for session termination reasons",
                 "Review conditional access policies and token lifetime configurations",
@@ -591,7 +595,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "contact_info",
             ),
-            next_best_action="Re-issue B2B guest invitations and verify external collaboration policies allow the partner domain",
+            next_best_action="Re-issue B2B guest invitations and verify external collaboration policies allow the "
+                "partner domain",
             remediation_steps=(
                 "Verify B2B external collaboration settings allow the partner domain",
                 "Check if the guest invitations were accepted or expired",
@@ -657,7 +662,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Identity & Access Management",
             needs_escalation=True,
             missing_information=(),
-            next_best_action="Activate break-glass emergency account and restore admin access to the tenant immediately",
+            next_best_action="Activate break-glass emergency account and restore admin access "
+            "to the tenant immediately",
             remediation_steps=(
                 "Retrieve break-glass account credentials from physical safe",
                 "Sign in with the emergency account to Entra ID portal",
@@ -693,7 +699,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
                 "configuration_details",
                 "affected_users",
             ),
-            next_best_action="Review cross-tenant access settings in both Entra ID tenants and verify trust configuration",
+            next_best_action="Review cross-tenant access settings in both Entra ID tenants and verify trust "
+                "configuration",
             remediation_steps=(
                 "Check cross-tenant access settings in both Entra ID tenants",
                 "Verify inbound and outbound trust policies are correctly configured",
@@ -765,7 +772,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
                 "affected_system",
                 "error_message",
             ),
-            next_best_action="Verify Kerberos SPN configuration and check for issues after the recent domain controller update",
+            next_best_action="Verify Kerberos SPN configuration and check for issues after the recent domain "
+                "controller update",
             remediation_steps=(
                 "Check the SPN registration for the application service account",
                 "Verify the domain controller update didn't change SPN mappings",
@@ -800,7 +808,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
             missing_information=(
                 "timestamp",
             ),
-            next_best_action="Investigate potential account compromise and coordinate with SecOps for incident response",
+            next_best_action="Investigate potential account compromise and coordinate with SecOps "
+            "for incident response",
             remediation_steps=(
                 "Escalate to Security Operations for compromise investigation",
                 "Review sign-in logs and audit trails for suspicious activity",
@@ -833,7 +842,8 @@ ACCESS_AUTH_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=True,
             missing_information=(),
-            next_best_action="Initiate security incident response for suspected account compromise with credential stuffing",
+            next_best_action="Initiate security incident response for suspected account compromise with credential "
+                "stuffing",
             remediation_steps=(
                 "Block the suspicious IP addresses in conditional access",
                 "Force password reset for the affected account",

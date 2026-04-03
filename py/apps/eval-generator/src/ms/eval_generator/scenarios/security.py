@@ -231,7 +231,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=True,
             missing_information=(),
-            next_best_action="IMMEDIATELY disconnect the device from the network and initiate ransomware incident response",
+            next_best_action="IMMEDIATELY disconnect the device from the network and initiate ransomware incident "
+                "response",
             remediation_steps=(
                 "Physically disconnect the device from all networks immediately",
                 "Do NOT restart the device — preserve evidence in memory",
@@ -372,7 +373,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=True,
             missing_information=(),
-            next_best_action="Initiate insider threat investigation — preserve evidence and restrict the employee's access",
+            next_best_action="Initiate insider threat investigation — preserve evidence and restrict the employee's "
+                "access",
             remediation_steps=(
                 "Preserve all access logs and audit trails as evidence",
                 "Restrict the employee's access to sensitive repositories and file shares",
@@ -505,7 +507,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=True,
             missing_information=(),
-            next_best_action="Remove the malicious forwarding rule immediately and initiate a full compromise investigation",
+            next_best_action="Remove the malicious forwarding rule immediately and initiate a full compromise "
+                "investigation",
             remediation_steps=(
                 "Remove the unauthorized forwarding rule immediately",
                 "Disable the forwarding destination at the mail transport level",
@@ -608,7 +611,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=False,
             missing_information=(),
-            next_best_action="Provide data classification guidance and direct user to the classification policy documentation",
+            next_best_action="Provide data classification guidance and direct user to the classification policy "
+                "documentation",
             remediation_steps=(
                 "Share the data classification policy and decision matrix",
                 "For documents with MNPI, classify as Highly Confidential",
@@ -677,7 +681,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=False,
             missing_information=(),
-            next_best_action="Initiate DSAR response process — identify all systems containing the data subject's personal data",
+            next_best_action="Initiate DSAR response process — identify all systems containing the data subject's "
+                "personal data",
             remediation_steps=(
                 "Log the DSAR in the privacy request tracker",
                 "Search all identified data repositories for the subject's personal data",
@@ -781,7 +786,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=True,
             missing_information=(),
-            next_best_action="Block attacking IPs and enforce account lockout protection for admin accounts immediately",
+            next_best_action="Block attacking IPs and enforce account lockout protection "
+            "for admin accounts immediately",
             remediation_steps=(
                 "Block the attacking IP ranges at the firewall and in conditional access",
                 "Enable smart lockout in Entra ID if not already active",
@@ -814,7 +820,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=False,
             missing_information=(),
-            next_best_action="Issue and install a new internal certificate immediately to restore service communication",
+            next_best_action="Issue and install a new internal certificate immediately to restore "
+            "service communication",
             remediation_steps=(
                 "Generate a new certificate from the internal CA",
                 "Install the certificate on the API gateway",
@@ -883,7 +890,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
                 "affected_users",
                 "business_impact",
             ),
-            next_best_action="Assess the risk of the unauthorized SaaS tool and work with the team to find an approved alternative",
+            next_best_action="Assess the risk of the unauthorized SaaS tool and work with the team to find an approved "
+                "alternative",
             remediation_steps=(
                 "Conduct a security assessment of the unauthorized SaaS tool",
                 "Identify what data has been uploaded and assess the risk exposure",
@@ -916,7 +924,8 @@ SECURITY_SCENARIOS: list[ScenarioDefinition] = [
             assigned_team="Security Operations",
             needs_escalation=True,
             missing_information=(),
-            next_best_action="Immediately revoke all access for the former employee and investigate post-termination activity",
+            next_best_action="Immediately revoke all access for the former employee and investigate post-termination "
+                "activity",
             remediation_steps=(
                 "Revoke VPN credentials and all remaining access immediately",
                 "Review VPN logs to determine what was accessed post-termination",
