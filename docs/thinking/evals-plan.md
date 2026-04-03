@@ -2,7 +2,6 @@
 
 ## Problem Statement
 
-<<<<<<< HEAD
 The current evals dataset has only 25 sample tickets (with gold answers) and 50 public eval tickets (no gold). We need 1,000–10,000 unique, diverse test tickets with gold-standard answers to comprehensively evaluate the triage API.
 
 ## Research: Domain Analysis
@@ -311,10 +310,12 @@ email, chat, portal, phone
 - Teams must be one of the 6 valid teams or "None"
 - Categories must be one of the 8 valid categories
 - Priority must be P1-P4
-=======
-The current eval dataset has only **75 total tickets** (25 sample + 50 public eval). We need **1,000–10,000 unique, diverse test cases** that cover the full spectrum of IT support ticket triage scenarios for Contoso Financial Services.
 
-## Approach: Template-Based Parametric Generation
+---
+
+## Alternative Approach: Template-Based Parametric Generation
+
+The current eval dataset has only **75 total tickets** (25 sample + 50 public eval). We need **1,000–10,000 unique, diverse test cases** that cover the full spectrum of IT support ticket triage scenarios for Contoso Financial Services.
 
 We use a **data-driven scenario generator** that combines:
 1. **~300+ unique scenario archetypes** — each representing a distinct IT support situation
@@ -1000,4 +1001,3 @@ Original 15 + 5 new: stack_trace, forwarded_email, passive_aggressive, auto_tran
 - Generate **7,500 tickets** with seed=42
 - Expected uniqueness: >96% unique subjects, >98% unique descriptions
 - All 16 missing_info values represented with better balance
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
