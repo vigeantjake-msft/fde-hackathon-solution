@@ -462,6 +462,7 @@ version = "0.0.0"
 source = { editable = "libs/evals" }
 dependencies = [
     { name = "ms-common-models" },
+    { name = "pydantic" },
 ]
 
 [package.dev-dependencies]
@@ -471,7 +472,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ms-common-models", editable = "common/libs/models" }]
+requires-dist = [
+    { name = "ms-common-models", editable = "common/libs/models" },
+    { name = "pydantic", specifier = ">=2.8.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [
