@@ -1,0 +1,8 @@
+{
+    "venvPath": ".",
+    "venv": ".venv",
+    "extraPaths": [
+        "common/libs/models/src",
+        "common/libs/fastapi/src"
+    ]
+}
