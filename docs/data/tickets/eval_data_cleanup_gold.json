@@ -26,7 +26,7 @@
     "missing_information": [
       "device_info"
     ],
-    "next_best_action": "Troubleshoot Dell U2722D monitor flickering after Windows Update — likely a display driver regression via WD19S dock.",
+    "next_best_action": "Troubleshoot Dell U2722D monitor flickering after Windows Update \u2014 likely a display driver regression via WD19S dock.",
     "remediation_steps": [
       "Roll back the most recent Intel/NVIDIA display driver update from Windows Update.",
       "Check Dell WD19S firmware version and update if behind current release.",
@@ -43,7 +43,7 @@
     "missing_information": [
       "error_message"
     ],
-    "next_best_action": "Investigate 403 Forbidden on SharePoint Compliance Policy Library for user — likely a permission mapping gap from Friday's migration.",
+    "next_best_action": "Investigate 403 Forbidden on SharePoint Compliance Policy Library for user \u2014 likely a permission mapping gap from Friday's migration.",
     "remediation_steps": [
       "Check SharePoint admin center for the Compliance Policy Library site permissions.",
       "Verify user's Azure AD group memberships against the migrated site's access list.",
@@ -60,7 +60,7 @@
     "missing_information": [
       "error_message"
     ],
-    "next_best_action": "Investigate HP LaserJet MFP M634 on 3rd floor producing garbled output — likely a corrupt print driver or PCL/PostScript mismatch.",
+    "next_best_action": "Investigate HP LaserJet MFP M634 on 3rd floor producing garbled output \u2014 likely a corrupt print driver or PCL/PostScript mismatch.",
     "remediation_steps": [
       "Check the print server for driver version and compare against HP's latest release.",
       "Reinstall or update the printer driver on the print server.",
@@ -78,7 +78,7 @@
       "timestamp",
       "error_message"
     ],
-    "next_best_action": "Investigate Slack-Jira integration returning 502 errors in #trading-incidents — blocking incident tracking workflow for Institutional Trading.",
+    "next_best_action": "Investigate Slack-Jira integration returning 502 errors in #trading-incidents \u2014 blocking incident tracking workflow for Institutional Trading.",
     "remediation_steps": [
       "Check the Jira Cloud status page and Slack API status for ongoing incidents.",
       "Verify the Jira for Slack app OAuth tokens have not expired or been revoked.",
@@ -96,7 +96,7 @@
     "missing_information": [
       "steps_to_reproduce"
     ],
-    "next_best_action": "Diagnose Outlook crash (0xc0000005 in mso40uiwin32client.dll) triggered by a specific email — likely a corrupted message or embedded object.",
+    "next_best_action": "Diagnose Outlook crash (0xc0000005 in mso40uiwin32client.dll) triggered by a specific email \u2014 likely a corrupted message or embedded object.",
     "remediation_steps": [
       "Identify the specific email causing the crash from the user's mailbox.",
       "Attempt to open the email in Outlook Web App to confirm it is message-specific.",
@@ -132,7 +132,7 @@
       "network_location",
       "environment_details"
     ],
-    "next_best_action": "Investigate VDI session freezes when user connects to Singapore and London pools — likely WAN latency or VMware Horizon blast protocol issue.",
+    "next_best_action": "Investigate VDI session freezes when user connects to Singapore and London pools \u2014 likely WAN latency or VMware Horizon blast protocol issue.",
     "remediation_steps": [
       "Review VMware Horizon connection server logs for the user's sessions in SG and LDN.",
       "Measure round-trip latency and packet loss from the user's NYC location to SG/LDN.",
@@ -150,7 +150,7 @@
     "missing_information": [
       "environment_details"
     ],
-    "next_best_action": "Urgently resolve SQL Server replication lag on SQLREPLICA-NYC-03 before 16:00 ET EOD NAV calculation — 45-minute data staleness affecting 30 PMs.",
+    "next_best_action": "Urgently resolve SQL Server replication lag on SQLREPLICA-NYC-03 before 16:00 ET EOD NAV calculation \u2014 45-minute data staleness affecting 30 PMs.",
     "remediation_steps": [
       "Check disk subsystem on SQLREPLICA-NYC-03 for I/O bottleneck (48ms write latency).",
       "Review SQL Server replication monitor for error states or suspended subscriptions.",
@@ -168,7 +168,7 @@
     "missing_information": [
       "authentication_method"
     ],
-    "next_best_action": "Restore CTP access for trader locked out after maintenance window — session token or account state likely not migrated correctly.",
+    "next_best_action": "Restore CTP access for trader locked out after maintenance window \u2014 session token or account state likely not migrated correctly.",
     "remediation_steps": [
       "Check CTP identity provider logs for Kenji's failed authentication attempts.",
       "Verify the user's account was not disabled or locked during maintenance.",
@@ -184,7 +184,7 @@
     "assigned_team": "Enterprise Applications",
     "needs_escalation": false,
     "missing_information": [],
-    "next_best_action": "Restore connectivity to integration test database sqltest-nyc-02:1433 — CI/CD pipeline for risk-engine repo blocked since 06:15 AM.",
+    "next_best_action": "Restore connectivity to integration test database sqltest-nyc-02:1433 \u2014 CI/CD pipeline for risk-engine repo blocked since 06:15 AM.",
     "remediation_steps": [
       "Check if sqltest-nyc-02 SQL Server service is running and accepting connections.",
       "Verify network connectivity from the Jenkins agent to 10.42.8.15:1433.",
@@ -202,7 +202,7 @@
     "missing_information": [
       "application_version"
     ],
-    "next_best_action": "Troubleshoot Zoom Phone call routing for ext 5-2201 — incoming calls going directly to voicemail despite available status.",
+    "next_best_action": "Troubleshoot Zoom Phone call routing for ext 5-2201 \u2014 incoming calls going directly to voicemail despite available status.",
     "remediation_steps": [
       "Check Zoom Phone admin portal for call routing rules on extension 5-2201.",
       "Verify there is no call forwarding or after-hours rule overriding the user's status.",
@@ -220,7 +220,7 @@
     "missing_information": [
       "device_info"
     ],
-    "next_best_action": "Replace Dell TB16 dock with WD19S for user on Building 4, 8th floor — known USB-C video dropout issue with Latitude 5550 and TB16 docks.",
+    "next_best_action": "Replace Dell TB16 dock with WD19S for user on Building 4, 8th floor \u2014 known USB-C video dropout issue with Latitude 5550 and TB16 docks.",
     "remediation_steps": [
       "Confirm the user's laptop model and current dock firmware version.",
       "Check if a TB16 firmware update resolves the intermittent video dropout.",
@@ -238,7 +238,7 @@
     "missing_information": [
       "device_info"
     ],
-    "next_best_action": "Investigate badge reader 'Card Read Error' at Building 6 south entrance turnstile — badge works at north entrance, suggesting a reader hardware fault.",
+    "next_best_action": "Investigate badge reader 'Card Read Error' at Building 6 south entrance turnstile \u2014 badge works at north entrance, suggesting a reader hardware fault.",
     "remediation_steps": [
       "Dispatch a facilities technician to inspect the Building 6 south entrance badge reader.",
       "Check the badge reader logs for error patterns and failed card reads.",
@@ -257,7 +257,7 @@
       "affected_users",
       "business_impact"
     ],
-    "next_best_action": "Investigate sqlprod-nyc-04 resource exhaustion — CPU at 100%, memory at 99%, and query queue growing to 400+ since 08:00. Likely a runaway query or batch job.",
+    "next_best_action": "Investigate sqlprod-nyc-04 resource exhaustion \u2014 CPU at 100%, memory at 99%, and query queue growing to 400+ since 08:00. Likely a runaway query or batch job.",
     "remediation_steps": [
       "Identify the top resource-consuming queries on sqlprod-nyc-04 using sys.dm_exec_requests.",
       "Check if a scheduled batch job or report is causing the CPU and memory spike.",
@@ -275,7 +275,7 @@
     "missing_information": [
       "timestamp"
     ],
-    "next_best_action": "Investigate broken links on the compliance intranet site — 12 of 15 links returning errors, likely caused by a content migration or site restructure. Urgent due to upcoming regulatory exam.",
+    "next_best_action": "Investigate broken links on the compliance intranet site \u2014 12 of 15 links returning errors, likely caused by a content migration or site restructure. Urgent due to upcoming regulatory exam.",
     "remediation_steps": [
       "Check the SharePoint or IIS logs for the compliance site to identify the error pattern.",
       "Verify if a recent content migration or URL restructure moved or renamed the documents.",
@@ -293,7 +293,7 @@
     "missing_information": [
       "affected_users"
     ],
-    "next_best_action": "Investigate 2-hour mail delivery delay between edge01 and EX01 for inbound external email — likely a mail queue bottleneck or transport rule processing delay.",
+    "next_best_action": "Investigate 2-hour mail delivery delay between edge01 and EX01 for inbound external email \u2014 likely a mail queue bottleneck or transport rule processing delay.",
     "remediation_steps": [
       "Check the mail queue on edge01.contoso.com for message backlog or throttling.",
       "Review Exchange transport rule processing times for inbound external messages.",
@@ -311,7 +311,7 @@
     "missing_information": [
       "application_version"
     ],
-    "next_best_action": "Investigate SharePoint upload failure caused by invisible Unicode characters (zero-width spaces, RTL/LTR marks) in the file name — user needs to strip hidden characters from the filename.",
+    "next_best_action": "Investigate SharePoint upload failure caused by invisible Unicode characters (zero-width spaces, RTL/LTR marks) in the file name \u2014 user needs to strip hidden characters from the filename.",
     "remediation_steps": [
       "Identify the zero-width and bidirectional Unicode characters in the file name.",
       "Rename the file using only ASCII characters and re-attempt the upload.",
@@ -329,7 +329,7 @@
     "missing_information": [
       "error_message"
     ],
-    "next_best_action": "Investigate intermittent 502 errors on appgw-prod-eus2-01 during morning traffic peak — backend pool timeout of 30s may be too low for the API tier under load.",
+    "next_best_action": "Investigate intermittent 502 errors on appgw-prod-eus2-01 during morning traffic peak \u2014 backend pool timeout of 30s may be too low for the API tier under load.",
     "remediation_steps": [
       "Check Application Gateway access logs for 502 errors and correlate with backend health probe results.",
       "Review backend pool member (10.42.1.10-13) health status during the 09:00-09:30 window.",
@@ -347,7 +347,7 @@
     "missing_information": [
       "device_info"
     ],
-    "next_best_action": "Re-provision expired RSA SecurID soft token for employee E-28491 — token shows 'Disabled' and user needs VPN access for remote work next week.",
+    "next_best_action": "Re-provision expired RSA SecurID soft token for employee E-28491 \u2014 token shows 'Disabled' and user needs VPN access for remote work next week.",
     "remediation_steps": [
       "Look up employee E-28491 in the RSA Authentication Manager console.",
       "Verify the token status and confirm it is disabled/expired.",
@@ -365,7 +365,7 @@
     "missing_information": [
       "environment_details"
     ],
-    "next_best_action": "Provision SAP access (FI, CO, MM modules) for new joiner E-31024 in Finance — request has been circulating for two weeks through a long forward chain. Verify manager approval from Robert Chen.",
+    "next_best_action": "Provision SAP access (FI, CO, MM modules) for new joiner E-31024 in Finance \u2014 request has been circulating for two weeks through a long forward chain. Verify manager approval from Robert Chen.",
     "remediation_steps": [
       "Verify the new joiner's employment and role with HR using employee ID E-31024.",
       "Confirm manager authorization from Robert Chen for SAP FI, CO, and MM access.",
@@ -383,7 +383,7 @@
     "missing_information": [
       "steps_to_reproduce"
     ],
-    "next_best_action": "Investigate corrupted PDF from vendor — user cannot open expense report in Adobe Acrobat Reader DC. May be a file transfer corruption issue or incompatible PDF version. Ignore the base64-encoded raw PDF data in the ticket body.",
+    "next_best_action": "Investigate corrupted PDF from vendor \u2014 user cannot open expense report in Adobe Acrobat Reader DC. May be a file transfer corruption issue or incompatible PDF version. Ignore the base64-encoded raw PDF data in the ticket body.",
     "remediation_steps": [
       "Ask the user to re-download the PDF from the original email or vendor portal.",
       "Test opening the file with an alternative PDF reader (Edge, Chrome built-in).",
@@ -401,7 +401,7 @@
     "missing_information": [
       "business_impact"
     ],
-    "next_best_action": "Investigate Azure SQL DTU quota exhaustion blocking production deployment — subscription prod-sub-001 has 0 DTU remaining. Need to increase the DTU quota or optimize existing database allocations.",
+    "next_best_action": "Investigate Azure SQL DTU quota exhaustion blocking production deployment \u2014 subscription prod-sub-001 has 0 DTU remaining. Need to increase the DTU quota or optimize existing database allocations.",
     "remediation_steps": [
       "Check the current DTU allocation across all databases in subscription prod-sub-001.",
       "Identify databases that are over-provisioned or unused and can be scaled down.",
@@ -420,7 +420,7 @@
     "next_best_action": "URGENT: /data volume on db-prod-03 (production PostgreSQL) is at 99% (475/476GB) and has been filling steadily since 02:15 UTC. Immediate action needed to prevent database crash from disk exhaustion.",
     "remediation_steps": [
       "Immediately check current disk usage on db-prod-03 /data volume.",
-      "Identify the largest consumers — check for WAL file accumulation, old backups, or temp files.",
+      "Identify the largest consumers \u2014 check for WAL file accumulation, old backups, or temp files.",
       "Clear any safe-to-delete files (old WAL segments, pg_dump temp files) to buy time.",
       "Expand the /data volume or add additional storage if on cloud/SAN.",
       "Investigate the root cause of rapid disk growth and set up proactive alerts at 85%."
@@ -451,7 +451,7 @@
     "missing_information": [
       "device_info"
     ],
-    "next_best_action": "Investigate BSOD (IRQL_NOT_LESS_OR_EQUAL) on lobby visitor check-in kiosk in Building 1 — likely a driver or memory issue. Kiosk is blocking all guest sign-ins.",
+    "next_best_action": "Investigate BSOD (IRQL_NOT_LESS_OR_EQUAL) on lobby visitor check-in kiosk in Building 1 \u2014 likely a driver or memory issue. Kiosk is blocking all guest sign-ins.",
     "remediation_steps": [
       "Dispatch a technician to the lobby kiosk to perform a hard restart.",
       "Check the Windows Event Viewer for the IRQL_NOT_LESS_OR_EQUAL crash dump.",
@@ -469,9 +469,9 @@
     "missing_information": [
       "environment_details"
     ],
-    "next_best_action": "Investigate benefits portal blank page — the /api/benefits endpoint returns empty body (200 OK), causing a TypeError when the frontend tries to map over undefined benefits array. Likely a backend deployment or database connectivity issue from last night's maintenance.",
+    "next_best_action": "Investigate benefits portal blank page \u2014 the /api/benefits endpoint returns empty body (200 OK), causing a TypeError when the frontend tries to map over undefined benefits array. Likely a backend deployment or database connectivity issue from last night's maintenance.",
     "remediation_steps": [
-      "Check the backend service for /api/benefits — verify database connectivity.",
+      "Check the backend service for /api/benefits \u2014 verify database connectivity.",
       "Review last night's maintenance changes for anything affecting the benefits API.",
       "Check application logs for errors in the benefits data retrieval path.",
       "If the database is accessible, verify the benefits table has data and is not truncated.",
@@ -485,7 +485,7 @@
     "assigned_team": "Endpoint Engineering",
     "needs_escalation": false,
     "missing_information": [],
-    "next_best_action": "Dispatch technician to repair badge reader BDG-PK-0044 at Building 4 parking garage Gate B — LED showing solid red since 7:30 AM, causing 20-minute entry delays. Reader may need power cycle or replacement.",
+    "next_best_action": "Dispatch technician to repair badge reader BDG-PK-0044 at Building 4 parking garage Gate B \u2014 LED showing solid red since 7:30 AM, causing 20-minute entry delays. Reader may need power cycle or replacement.",
     "remediation_steps": [
       "Dispatch facilities/endpoint technician to Gate B, Building 4 parking garage.",
       "Attempt a power cycle of badge reader BDG-PK-0044.",
@@ -506,7 +506,7 @@
     "next_best_action": "Urgent: Lenovo ThinkPad X1 Carbon Gen 11 completely unresponsive for employee E-20145 on 4th floor, Building 2, London. User has client presentation in 2 hours with locally-stored slides. Prioritize loaner device and data recovery.",
     "remediation_steps": [
       "Immediately dispatch a loaner laptop to the user's location (4th floor, Building 2, London).",
-      "Attempt to recover the dead ThinkPad — try a full battery disconnect/reconnect reset.",
+      "Attempt to recover the dead ThinkPad \u2014 try a full battery disconnect/reconnect reset.",
       "If the laptop powers on, help the user sync the presentation files to OneDrive.",
       "If unrecoverable, pull the NVMe SSD and mount it externally to retrieve the slides.",
       "Log a warranty claim for the ThinkPad X1 Carbon if it is confirmed dead."
@@ -521,7 +521,7 @@
     "missing_information": [
       "error_message"
     ],
-    "next_best_action": "Troubleshoot triple-monitor setup with Lenovo ThinkPad USB-C Dock Gen 2 — Monitor 2 (HDMI) shows no signal, Monitor 3 (USB-C adapter) is flickering. Likely a dock bandwidth or DisplayLink driver limitation with three 2560x1440 monitors.",
+    "next_best_action": "Troubleshoot triple-monitor setup with Lenovo ThinkPad USB-C Dock Gen 2 \u2014 Monitor 2 (HDMI) shows no signal, Monitor 3 (USB-C adapter) is flickering. Likely a dock bandwidth or DisplayLink driver limitation with three 2560x1440 monitors.",
     "remediation_steps": [
       "Check if the dock firmware supports three simultaneous displays at 2560x1440.",
       "Verify the HDMI port on the dock is functional by testing with a known-good cable/monitor.",
@@ -540,7 +540,7 @@
       "affected_system",
       "error_message"
     ],
-    "next_best_action": "Investigate network drive mapping failure for \\\\fs-compliance-01\\shared — user receives a timeout after 30 seconds despite the server responding to ping.  Strip RTF formatting noise to extract the core issue, then check SMB connectivity and credential cache state.",
+    "next_best_action": "Investigate network drive mapping failure for \\\\fs-compliance-01\\shared \u2014 user receives a timeout after 30 seconds despite the server responding to ping.  Strip RTF formatting noise to extract the core issue, then check SMB connectivity and credential cache state.",
     "remediation_steps": [
       "Verify SMB connectivity to fs-compliance-01 on port 445 from the user's subnet.",
       "Check if the user's AD computer account has valid Kerberos tickets for the file server.",
@@ -558,9 +558,9 @@
     "missing_information": [
       "authentication_method"
     ],
-    "next_best_action": "Process password reset for treyes — user reports that the self-service password reset MFA challenge (SMS and Authenticator push) is not arriving, and the current password expires tomorrow.  Ignore earlier VPN and printer issues which the user confirmed are resolved.",
+    "next_best_action": "Process password reset for treyes \u2014 user reports that the self-service password reset MFA challenge (SMS and Authenticator push) is not arriving, and the current password expires tomorrow.  Ignore earlier VPN and printer issues which the user confirmed are resolved.",
     "remediation_steps": [
-      "Verify the user's MFA registration in Azure AD — confirm phone number and Authenticator device.",
+      "Verify the user's MFA registration in Azure AD \u2014 confirm phone number and Authenticator device.",
       "Check Azure MFA service health for any delivery delays on SMS or push notifications.",
       "If MFA is unreachable, perform an admin-assisted password reset with temp password; force change.",
       "Re-register the user's MFA methods if the Authenticator token has drifted or phone number changed.",
@@ -577,7 +577,7 @@
       "affected_users",
       "business_impact"
     ],
-    "next_best_action": "URGENT — db-analytics-07 /data volume is nearly full (~10 MB free of 1 TB).  Expand the volume or purge stale data before the 02:00 UTC batch job.  Ignore the large Prometheus metrics dump and focus on the disk-space issue.",
+    "next_best_action": "URGENT \u2014 db-analytics-07 /data volume is nearly full (~10 MB free of 1 TB).  Expand the volume or purge stale data before the 02:00 UTC batch job.  Ignore the large Prometheus metrics dump and focus on the disk-space issue.",
     "remediation_steps": [
       "SSH into db-analytics-07 and confirm current disk usage with df -h /data.",
       "Identify and remove or archive old analytics temp files under /data/tmp and /data/staging.",
@@ -595,7 +595,7 @@
     "missing_information": [
       "application_version"
     ],
-    "next_best_action": "Renew Bloomberg Terminal B-PIPE license (contract BB-ENT-2024-04871) before April 15, 2026 — expand from 8 to 12 concurrent seats.  Contact Bloomberg account manager Sarah Chen.  Ignore PDF-to-text conversion artifacts (broken ligatures, repeated headers/footers, page numbers).",
+    "next_best_action": "Renew Bloomberg Terminal B-PIPE license (contract BB-ENT-2024-04871) before April 15, 2026 \u2014 expand from 8 to 12 concurrent seats.  Contact Bloomberg account manager Sarah Chen.  Ignore PDF-to-text conversion artifacts (broken ligatures, repeated headers/footers, page numbers).",
     "remediation_steps": [
       "Contact Bloomberg account manager Sarah Chen to initiate renewal of contract BB-ENT-2024-04871.",
       "Confirm the seat count increase from 8 to 12 with the Risk Management budget owner.",
@@ -633,9 +633,9 @@
       "error_message",
       "steps_to_reproduce"
     ],
-    "next_best_action": "Investigate SAP error M7 021 for material 400-117 in plant 2100 — the material master record may have been modified or deleted during the weekend maintenance window.  Restore or re-extend the material to plant 2100 so sales order creation in VA01 works again.",
+    "next_best_action": "Investigate SAP error M7 021 for material 400-117 in plant 2100 \u2014 the material master record may have been modified or deleted during the weekend maintenance window.  Restore or re-extend the material to plant 2100 so sales order creation in VA01 works again.",
     "remediation_steps": [
-      "Check material master for 400-117 in SAP transaction MM03 — verify plant 2100 view exists.",
+      "Check material master for 400-117 in SAP transaction MM03 \u2014 verify plant 2100 view exists.",
       "Review the change log (CDHDR/CDPOS) for material 400-117 to identify recent modifications.",
       "If plant 2100 view was deleted, re-extend material using MM01 with sales, MRP, and purchasing views.",
       "Test sales order creation in VA01 with material 400-117 and plant 2100 to confirm the fix.",
@@ -670,13 +670,198 @@
       "device_info",
       "environment_details"
     ],
-    "next_best_action": "Investigate rapid battery drain and overheating on Jin-Ho Park's laptop — battery goes from 100% to 15% by midday, 'System Interrupts' process at ~30% CPU.  Likely a driver issue introduced by a recent Windows security patch.  Schedule a desk-side visit or ask user to bring the device to the help desk on the 4th floor.",
+    "next_best_action": "Investigate rapid battery drain and overheating on Jin-Ho Park's laptop \u2014 battery goes from 100% to 15% by midday, 'System Interrupts' process at ~30% CPU.  Likely a driver issue introduced by a recent Windows security patch.  Schedule a desk-side visit or ask user to bring the device to the help desk on the 4th floor.",
     "remediation_steps": [
       "Run powercfg /batteryreport and check design capacity vs. full-charge capacity for cell degradation.",
       "Review recently installed Windows updates and cross-reference with known battery-drain issues.",
-      "Investigate high 'System Interrupts' CPU — run LatencyMon or xperf to find the offending driver.",
+      "Investigate high 'System Interrupts' CPU \u2014 run LatencyMon or xperf to find the offending driver.",
       "If a specific driver is the cause, roll it back or install the latest version from the manufacturer.",
       "If battery health shows significant degradation (>20% loss), initiate a warranty battery replacement."
+    ]
+  },
+  {
+    "ticket_id": "INC-5039",
+    "category": "Software & Applications",
+    "priority": "P3",
+    "assigned_team": "Enterprise Applications",
+    "needs_escalation": false,
+    "missing_information": [
+      "application_version",
+      "error_message"
+    ],
+    "next_best_action": "Investigate Outlook crashes when opening calendar invites for Sophie Tremblay \u2014 started the previous day. Likely a corrupt calendar cache or an add-in conflict after a recent update. Ignore the forwarded newsletter content.",
+    "remediation_steps": [
+      "Ask the user to confirm the Outlook version (File > Office Account) and whether they are using desktop or New Outlook.",
+      "Launch Outlook in safe mode (outlook.exe /safe) to rule out add-in conflicts.",
+      "Clear the Outlook calendar cache by renaming the local .ost file and letting it rebuild.",
+      "If the issue persists, run the Microsoft Support and Recovery Assistant (SaRA) calendar diagnostic.",
+      "Check for pending Office updates and apply them if available."
+    ]
+  },
+  {
+    "ticket_id": "INC-5040",
+    "category": "Software & Applications",
+    "priority": "P3",
+    "assigned_team": "Enterprise Applications",
+    "needs_escalation": false,
+    "missing_information": [
+      "application_version"
+    ],
+    "next_best_action": "Process Bloomberg Terminal license renewal for seat ID BT-4471 assigned to Rachel Moreno before the March 31 expiration. Manager approval from David Kowalski is referenced. Discard the inline base64 PDF content and request a clean copy of the approval form.",
+    "remediation_steps": [
+      "Request Rachel resend the manager approval PDF as a proper email attachment.",
+      "Verify the Bloomberg seat ID BT-4471 in the license management portal and confirm the current expiration date.",
+      "Submit the renewal request through the enterprise software procurement workflow with manager approval attached.",
+      "Confirm with Bloomberg vendor support that the renewal will be processed before month-end cutoff.",
+      "Notify Rachel once the renewal is confirmed and verify terminal connectivity."
+    ]
+  },
+  {
+    "ticket_id": "INC-5041",
+    "category": "Data & Storage",
+    "priority": "P3",
+    "assigned_team": "Data Platform",
+    "needs_escalation": false,
+    "missing_information": [
+      "error_message",
+      "timestamp"
+    ],
+    "next_best_action": "Investigate the Regulatory Filings SharePoint site failing to load for multiple users \u2014 Gregory, Nadia, and Tom in Regulatory Affairs are all affected. Filing deadline on Thursday makes this time-sensitive. Ignore the CSS/style block noise in the ticket.",
+    "remediation_steps": [
+      "Check the SharePoint admin center for service health alerts affecting the Regulatory Filings site collection.",
+      "Verify site collection storage quota \u2014 a full quota can cause infinite loading spinners.",
+      "Review recent changes to site permissions or page customizations that may have broken rendering.",
+      "Test access with a SharePoint admin account to determine if the issue is site-wide or permission-specific.",
+      "If the site collection is corrupted, initiate a restore from the most recent backup and notify affected users."
+    ]
+  },
+  {
+    "ticket_id": "INC-5042",
+    "category": "Software & Applications",
+    "priority": "P2",
+    "assigned_team": "Enterprise Applications",
+    "needs_escalation": true,
+    "missing_information": [
+      "steps_to_reproduce"
+    ],
+    "next_best_action": "Investigate TradeSettlement-API timeout on PROD-APPGW-East-02 \u2014 response times averaging 47s (threshold 30s), 34% error rate, 23 settlement requests at risk of missing the T+1 window. Escalate to Platform Engineering immediately.",
+    "remediation_steps": [
+      "Check application gateway and load balancer health for PROD-APPGW-East-02 in the Azure portal.",
+      "Review TradeSettlement-API application logs for the correlation ID a9f3c7e2-81d4-4b6a-bc0f-3e7d91a24c88.",
+      "Investigate downstream clearing house integration for connection pool exhaustion or certificate issues.",
+      "If the API is overloaded, scale out additional instances and drain the pending settlement queue.",
+      "Coordinate with the settlements operations team to manually process any trades at risk of missing T+1 cutoff."
+    ]
+  },
+  {
+    "ticket_id": "INC-5043",
+    "category": "Data & Storage",
+    "priority": "P2",
+    "assigned_team": "Data Platform",
+    "needs_escalation": false,
+    "missing_information": [
+      "error_message",
+      "environment_details"
+    ],
+    "next_best_action": "Investigate production data warehouse query timeout for Henry Wong's daily P&L reconciliation report \u2014 previously ran in ~2 minutes, now exceeds the 30-minute timeout. Likely index fragmentation or statistics staleness after weekend maintenance.",
+    "remediation_steps": [
+      "Check the data warehouse for any maintenance jobs or schema changes that ran over the weekend.",
+      "Review the query execution plan for missing or fragmented indexes on the trades, positions, and fx_rates tables.",
+      "Rebuild or reorganize indexes on high-traffic tables if fragmentation exceeds 30%.",
+      "Update table statistics for the affected tables and verify the query plan improves.",
+      "If the issue is data volume growth, work with the user to optimize the query or add appropriate covering indexes."
+    ]
+  },
+  {
+    "ticket_id": "INC-5044",
+    "category": "Software & Applications",
+    "priority": "P3",
+    "assigned_team": "Enterprise Applications",
+    "needs_escalation": false,
+    "missing_information": [
+      "error_message"
+    ],
+    "next_best_action": "Investigate Teams-Outlook calendar sync failure for Amara Osei after Teams Desktop Client v24.7.1 update. Meetings created in Outlook do not appear in Teams calendar. User has already cleared cache and restarted.",
+    "remediation_steps": [
+      "Verify the Exchange-Teams interop prerequisites are met for the user's mailbox (Exchange Online, not on-prem).",
+      "Check the Teams admin center for known issues with client version 24.7.1 and calendar sync.",
+      "Re-register the Teams Outlook add-in by running the Teams meeting add-in troubleshooter.",
+      "If the add-in is missing, repair the Office installation from Programs and Features.",
+      "As a fallback, approve and perform a clean reinstall of the Teams desktop client."
+    ]
+  },
+  {
+    "ticket_id": "INC-5045",
+    "category": "Network & Connectivity",
+    "priority": "P3",
+    "assigned_team": "Network Operations",
+    "needs_escalation": false,
+    "missing_information": [
+      "network_location",
+      "business_impact"
+    ],
+    "next_best_action": "Provision VPN access to the APAC regional network (10.42.0.0/16) for Lukas Brenner for the Cross-Border Settlements project. Verify manager approval from Isabelle Fontaine and process by end of week.",
+    "remediation_steps": [
+      "Verify the access request approval from Isabelle Fontaine in the access governance portal.",
+      "Create a VPN access profile for the APAC regional network subnet 10.42.0.0/16 in the GlobalProtect admin console.",
+      "Assign the profile to Lukas Brenner's AD account and add him to the Cross-Border Settlements security group.",
+      "Send the user VPN configuration instructions and test connectivity to an APAC host.",
+      "Set a review date for the access in 90 days per the temporary project access policy."
+    ]
+  },
+  {
+    "ticket_id": "INC-5046",
+    "category": "Data & Storage",
+    "priority": "P2",
+    "assigned_team": "Data Platform",
+    "needs_escalation": true,
+    "missing_information": [
+      "previous_ticket_id"
+    ],
+    "next_best_action": "Address critical disk space on PROD-SQL-NODE-03 (E: drive at 95% \u2014 ~8 days until full). The AuditLog retention job failed on March 16, leaving old records unpurged. This is the most likely cause of accelerated growth. Fix the retention job first, then evaluate capacity expansion.",
+    "remediation_steps": [
+      "Investigate and fix the failed AuditLog retention job from March 16 \u2014 old records are not being purged.",
+      "Manually run the AuditLog purge to reclaim space from records past the retention window.",
+      "Review TempDB sizing and shrink if the 105 GB allocation is excessive for current workload.",
+      "Request an emergency capacity expansion for the E: drive if free space drops below 5% before the retention fix takes effect.",
+      "Set up a recurring disk space trend report and adjust the growth_rate alert threshold to trigger earlier."
+    ]
+  },
+  {
+    "ticket_id": "INC-5047",
+    "category": "Hardware & Peripherals",
+    "priority": "P3",
+    "assigned_team": "Endpoint Engineering",
+    "needs_escalation": false,
+    "missing_information": [
+      "device_info"
+    ],
+    "next_best_action": "Dispatch a technician to inspect the HP LaserJet Pro MFP M428fdn on the 6th floor near conference room B, Building 1 \u2014 persistent false paper jam error. User has a client presentation at 3 PM today.",
+    "remediation_steps": [
+      "Dispatch a technician to the 6th floor, Building 1, to physically inspect the HP LaserJet Pro MFP M428fdn.",
+      "Check the paper path sensors for debris, torn paper fragments, or sensor misalignment causing the false jam.",
+      "Perform a full power cycle with the rear access panel open and inspect the fuser area for obstructions.",
+      "If the sensor is faulty, replace the paper path sensor assembly or swap in a loaner printer before the 3 PM deadline.",
+      "Update the printer asset record with any parts replaced and schedule preventive maintenance."
+    ]
+  },
+  {
+    "ticket_id": "INC-5048",
+    "category": "Access & Authentication",
+    "priority": "P2",
+    "assigned_team": "Identity & Access Management",
+    "needs_escalation": true,
+    "missing_information": [
+      "authentication_method",
+      "timestamp"
+    ],
+    "next_best_action": "Immediately investigate account lockout for Marcus Adeyemi \u2014 unsolicited MFA prompts at 11 PM suggest a possible credential compromise attempt. Unlock the account, force a password reset, review Azure AD sign-in logs, and revoke active sessions before the 10 AM compliance audit.",
+    "remediation_steps": [
+      "Review Azure AD sign-in logs for Marcus Adeyemi's account for failed attempts and the unsolicited MFA prompts from 11 PM.",
+      "Check if the account triggered any Impossible Travel or Unfamiliar Sign-In Properties risk detections in Azure AD Identity Protection.",
+      "Unlock the account in Active Directory and force an immediate password reset via a secure channel (phone verification).",
+      "Revoke all active refresh tokens and sessions (Revoke-AzureADUserAllRefreshToken) to invalidate any compromised sessions.",
+      "If credential compromise is confirmed, escalate to the Security Operations team for a full incident investigation."
     ]
   }
 ]
