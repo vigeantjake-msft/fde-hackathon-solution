@@ -46,7 +46,7 @@ class TestResponsibleAiScenarios:
         """Verify expected scenario IDs exist."""
         scenarios = get_scenarios()
         ids = {s.scenario_id for s in scenarios}
-        expected = {f"RAI-{i:03d}" for i in range(1, 31)}
+        expected = {f"RAI-{i:03d}" for i in range(1, 36)}
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_covers_key_attack_categories(self) -> None:
@@ -71,5 +71,10 @@ class TestResponsibleAiScenarios:
             "nested-injection",
             "discriminatory-content",
             "flattery-attack",
+            "weaponized-helpfulness",
+            "evidence-destruction",
+            "harmful-data-generation",
+            "deepfake-request",
+            "supply-chain-attack",
         }
         assert expected_tags.issubset(all_tags), f"Missing attack tags: {expected_tags - all_tags}"

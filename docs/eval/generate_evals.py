@@ -28,6 +28,7 @@ from generator.scenarios.hardware import SCENARIOS as HARDWARE_SCENARIOS
 from generator.scenarios.low_priority import SCENARIOS as LOW_PRIORITY_SCENARIOS
 from generator.scenarios.network import SCENARIOS as NETWORK_SCENARIOS
 from generator.scenarios.not_a_ticket import SCENARIOS as NOT_A_TICKET_SCENARIOS
+from generator.scenarios.responsible_ai import SCENARIOS as RESPONSIBLE_AI_SCENARIOS
 from generator.scenarios.security import SCENARIOS as SECURITY_SCENARIOS
 from generator.scenarios.software import SCENARIOS as SOFTWARE_SCENARIOS
 from generator.validator import validate_dataset
@@ -47,6 +48,7 @@ def collect_all_scenarios() -> list[Scenario]:
     all_scenarios.extend(EDGE_CASE_SCENARIOS)
     all_scenarios.extend(FINANCIAL_SERVICES_SCENARIOS)
     all_scenarios.extend(LOW_PRIORITY_SCENARIOS)
+    all_scenarios.extend(RESPONSIBLE_AI_SCENARIOS)
     return all_scenarios
 
 
