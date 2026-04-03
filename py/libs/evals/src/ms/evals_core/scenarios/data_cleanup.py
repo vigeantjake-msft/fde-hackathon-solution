@@ -1177,10 +1177,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
         # ── DC-021  Enormous forward chain with 10+ participants ─────────────
         ScenarioDefinition(
             scenario_id="DC-021",
-            subject=(
-                "FW: FW: FW: FW: FW: FW: FW: FW: FW: FW: Re: "
-                "SAP access for new joiner"
-            ),
+            subject=("FW: FW: FW: FW: FW: FW: FW: FW: FW: FW: Re: SAP access for new joiner"),
             description=(
                 "--- Latest reply ---\n"
                 "Hi IT, can someone PLEASE just grant the SAP access already? This has "
@@ -1554,7 +1551,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "The minified source at that location is:\n"
                 '!function(e){"use strict";var t=function(e,t){return e.filter(function(e){return'
                 " t.indexOf(e.id)>-1})},n=function(e){return e.benefits.map(function(e){return{"
-                'id:e.id,name:e.name,enrolled:e.enrolled,deductible:e.deductible,copay:e.copay,'
+                "id:e.id,name:e.name,enrolled:e.enrolled,deductible:e.deductible,copay:e.copay,"
                 "premium:e.premium,provider:e.provider,effectiveDate:e.effectiveDate,status:e."
                 "status}})},r=function(e,t){var n=e.querySelector(t);return n?n.textContent:"
                 '""},o=function(e){var t=document.createElement("div");t.className="benefit-card'
@@ -1563,7 +1560,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 'document.createElement("p");o.textContent="Deductible: $"+e.deductible;var i='
                 'document.createElement("span");i.className="status-badge "+e.status;i.textContent='
                 "e.status;t.appendChild(n);t.appendChild(r);t.appendChild(o);t.appendChild(i);"
-                "return t};e.init=function(){var e=document.getElementById(\"benefits-root\");"
+                'return t};e.init=function(){var e=document.getElementById("benefits-root");'
                 'fetch("/api/benefits").then(function(e){return e.json()}).then(function(t){'
                 "var r=n(t);r.forEach(function(t){e.appendChild(o(t))})}).catch(function(e){"
                 'console.error("Failed to load benefits:",e)})}}(window.BenefitsApp=window.'
@@ -1603,7 +1600,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             scenario_id="DC-028",
             subject="Badge reader not working — MIME-encoded email follows",
             description=(
-                "Content-Type: multipart/mixed; boundary=\"----=_Part_8847_1302567890\"\n"
+                'Content-Type: multipart/mixed; boundary="----=_Part_8847_1302567890"\n'
                 "MIME-Version: 1.0\n"
                 "X-Mailer: Lotus Notes 9.0.1\n"
                 "X-MimeOLE: Produced By Microsoft MimeOLE V6.3.9600.20091\n\n"
@@ -1626,16 +1623,16 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "<p>The badge reader at the <b>Building 4 parking garage entrance</b>=\n"
                 " (Gate B) stopped working this morning around 7:30 AM. Employees are=\n"
                 " having to wait for security to manually open the gate, causing a=\n"
-                " <span style=3D\"color:red;font-weight:bold\">20-minute backup</span>=\n"
+                ' <span style=3D"color:red;font-weight:bold">20-minute backup</span>=\n'
                 " during morning rush.</p>\n"
                 "<p>The reader=E2=80=99s LED is solid red instead of the normal blinking=\n"
                 " green. Badge number on the reader unit: <code>BDG-PK-0044</code>.</p>\n"
                 "<p>=E2=80=94 Facilities team</p>\n"
                 "</body></html>\n\n"
                 "------=_Part_8847_1302567890\n"
-                "Content-Type: image/jpeg; name=\"badge_reader_photo.jpg\"\n"
+                'Content-Type: image/jpeg; name="badge_reader_photo.jpg"\n'
                 "Content-Transfer-Encoding: base64\n"
-                "Content-Disposition: attachment; filename=\"badge_reader_photo.jpg\"\n\n"
+                'Content-Disposition: attachment; filename="badge_reader_photo.jpg"\n\n'
                 "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9\n"
                 "PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2f/wAALCABAAEABAREA/8QAHwAA\n"
                 "AQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUF\n\n"
