@@ -1,0 +1,261 @@
+[
+    {
+        "ticket_id": "INC-2001",
+        "category": "Data & Storage",
+        "priority": "P2",
+        "assigned_team": "Data Platform",
+        "needs_escalation": false,
+        "missing_information": [
+            "error_message"
+        ],
+        "next_best_action": "Investigate network drive access permissions for the reporter and verify AD group membership for the finance shared drive.",
+        "remediation_steps": [
+            "Check Active Directory group membership for nina.patel and compare with a working user (e.g., Lisa Park)",
+            "Verify permissions on \\\\contoso-fs01\\finance$ share and NTFS ACLs",
+            "Check if any recent group policy changes affected file share access",
+            "If AD group is correct, check for stale Kerberos tickets and clear cached credentials",
+            "Restore access and confirm with the user"
+        ]
+    },
+    {
+        "ticket_id": "INC-2002",
+        "category": "Software & Applications",
+        "priority": "P3",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "error_message",
+            "application_version"
+        ],
+        "next_best_action": "Investigate SAP application launch failure. Obtain the actual error message from the SAP GUI log.",
+        "remediation_steps": [
+            "Request the actual error message or screenshot from the user (base64 image in email is not viewable)",
+            "Check SAP GUI version and compatibility with current server",
+            "Verify SAP user account is active and not locked",
+            "Check for recent SAP system patches or changes",
+            "If issue persists, collect SAP GUI trace log for analysis"
+        ]
+    },
+    {
+        "ticket_id": "INC-2003",
+        "category": "Hardware & Peripherals",
+        "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Dispatch technician to inspect HP LaserJet Pro (asset tag IT-PRN-0342) paper tray 2 on the 3rd floor near the break room.",
+        "remediation_steps": [
+            "Inspect HP LaserJet Pro (IT-PRN-0342) paper tray 2 mechanism",
+            "Check for paper feed rollers wear or debris",
+            "Test with different paper stock to rule out paper quality issues",
+            "If tray 2 mechanism is damaged, order replacement parts or swap the printer",
+            "Update the ticket trail to close the routing loop between IT and Facilities"
+        ]
+    },
+    {
+        "ticket_id": "INC-2004",
+        "category": "Software & Applications",
+        "priority": "P2",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate Outlook crash linked to KB5034765 Windows update. Check for known compatibility issues with the installed Office version.",
+        "remediation_steps": [
+            "Check Microsoft known issues list for KB5034765 and Office 2402 compatibility",
+            "Collect crash dumps from Windows Event Viewer (Application log)",
+            "If update is confirmed as cause, test rolling back KB5034765 on the affected machine",
+            "Verify Office repair completes successfully with online repair option",
+            "If widespread, escalate to Endpoint Engineering for a broader rollback assessment"
+        ]
+    },
+    {
+        "ticket_id": "INC-2005",
+        "category": "General Inquiry",
+        "priority": "P4",
+        "assigned_team": "None",
+        "needs_escalation": false,
+        "missing_information": [
+            "affected_system",
+            "error_message",
+            "steps_to_reproduce",
+            "contact_info"
+        ],
+        "next_best_action": "Contact the reporter to determine if this was a blank submission or an error, and request details about their actual issue.",
+        "remediation_steps": [
+            "Attempt to contact ghost.user@contoso.com to clarify the blank submission",
+            "If no response within 24 hours, close the ticket as incomplete",
+            "If the user responds, re-triage based on the provided information"
+        ]
+    },
+    {
+        "ticket_id": "INC-2006",
+        "category": "General Inquiry",
+        "priority": "P4",
+        "assigned_team": "None",
+        "needs_escalation": false,
+        "missing_information": [
+            "affected_system",
+            "error_message",
+            "steps_to_reproduce",
+            "contact_info"
+        ],
+        "next_best_action": "Contact the reporter to determine if this was a blank submission or an error, and request details about their actual issue.",
+        "remediation_steps": [
+            "Attempt to contact tab.user@contoso.com to clarify the empty submission",
+            "If no response within 24 hours, close the ticket as incomplete",
+            "If the user responds, re-triage based on the provided information"
+        ]
+    },
+    {
+        "ticket_id": "INC-2007",
+        "category": "Hardware & Peripherals",
+        "priority": "P2",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Dispatch technician to Building 2, Floor 4, Desk 412 with a replacement Dell Latitude or loaner laptop. User has a presentation in 2 hours.",
+        "remediation_steps": [
+            "Dispatch on-site support to Building 2, Floor 4, Desk 412",
+            "Bring a loaner laptop pre-configured with standard image",
+            "Attempt to diagnose the Dell Latitude 5540 — check power adapter, battery, and motherboard indicator LEDs",
+            "If laptop cannot be revived quickly, provision the loaner for immediate use",
+            "Schedule full hardware diagnostic on the original laptop once user is unblocked"
+        ]
+    },
+    {
+        "ticket_id": "INC-2008",
+        "category": "Network & Connectivity",
+        "priority": "P3",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [
+            "network_location"
+        ],
+        "next_best_action": "Investigate daily VPN keepalive timeout pattern around 06:30 UTC. Check ISP routing changes and VPN concentrator health at that time window.",
+        "remediation_steps": [
+            "Review VPN concentrator logs for the 06:30 UTC window for dropped connections",
+            "Check if other remote users in the NJ area experience similar disconnections",
+            "Verify ISP routing stability during the failure window",
+            "Check GlobalProtect v5.3.1 for known keepalive timeout bugs",
+            "If ISP issue, advise user on fallback connectivity; if VPN issue, adjust keepalive timers"
+        ]
+    },
+    {
+        "ticket_id": "INC-2009",
+        "category": "Hardware & Peripherals",
+        "priority": "P2",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": true,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Re-open investigation for VP Samira Al-Rashid's laptop overheating issue (related to INC-1847). This is a repeat ticket from a VIP — escalate to team lead.",
+        "remediation_steps": [
+            "Re-open INC-1847 or link this ticket as a follow-up",
+            "Schedule on-site diagnostic for the laptop — check thermal paste, fans, and ventilation",
+            "Run hardware diagnostics to check CPU/GPU thermal throttling",
+            "If hardware defect confirmed, initiate warranty replacement",
+            "Provide a loaner laptop while the issue is being resolved"
+        ]
+    },
+    {
+        "ticket_id": "INC-2010",
+        "category": "Data & Storage",
+        "priority": "P3",
+        "assigned_team": "Data Platform",
+        "needs_escalation": false,
+        "missing_information": [
+            "environment_details"
+        ],
+        "next_best_action": "Investigate data discrepancy in sp_quarterly_client_report v2.3, specifically for suspended accounts in the SGP region.",
+        "remediation_steps": [
+            "Review recent changes to stored procedure sp_quarterly_client_report v2.3",
+            "Compare current output with last month's output for suspended SGP accounts",
+            "Check if any ETL pipeline changes affected the source data for the SGP region",
+            "Verify data integrity in the source tables for suspended accounts",
+            "If a data issue is confirmed, coordinate with the data owner to correct and re-run the report"
+        ]
+    },
+    {
+        "ticket_id": "INC-2011",
+        "category": "Access & Authentication",
+        "priority": "P2",
+        "assigned_team": "Identity & Access Management",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Reset VPN credentials and verify SSPR portal accessibility for the Montréal remote user. The encoding issues in the ticket are cosmetic — the actual issue is VPN authentication failure and SSPR unavailability.",
+        "remediation_steps": [
+            "Reset the user's VPN/AD password manually",
+            "Verify the SSPR portal is accessible from the Montréal network",
+            "Check if the user's account is locked due to failed authentication attempts",
+            "Confirm VPN connectivity with the new credentials",
+            "Investigate why the SSPR portal is not loading for this user"
+        ]
+    },
+    {
+        "ticket_id": "INC-2012",
+        "category": "Access & Authentication",
+        "priority": "P2",
+        "assigned_team": "Identity & Access Management",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Prioritize the Outlook password prompt and badge access issues. Route the printer issue separately to Endpoint Engineering.",
+        "remediation_steps": [
+            "Investigate Outlook credential prompt — check for expired tokens or Kerberos ticket issues",
+            "Check badge access permissions for Building 5 parking garage",
+            "Verify if recent access system changes affected the user's badge",
+            "Create a separate ticket for the printer color issue (HP-CLJ-5F-01) and route to Endpoint Engineering",
+            "Confirm resolution of badge and Outlook issues with the user"
+        ]
+    },
+    {
+        "ticket_id": "INC-2013",
+        "category": "Not a Support Ticket",
+        "priority": "P4",
+        "assigned_team": "None",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "No action required. This is an automated out-of-office reply to an existing ticket notification, not a new support request.",
+        "remediation_steps": [
+            "Close this ticket as not a support request",
+            "No further action needed — this is an auto-reply to a ticket notification"
+        ]
+    },
+    {
+        "ticket_id": "INC-2014",
+        "category": "Network & Connectivity",
+        "priority": "P3",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate Teams call quality degradation in the London office, Floor 3. Check network bandwidth and QoS settings for real-time media traffic.",
+        "remediation_steps": [
+            "Check network utilization and QoS policies for the London office Floor 3 subnet",
+            "Review Teams call quality dashboard (CQD) for the affected user and time window",
+            "Test with a different headset to rule out hardware issues",
+            "Check if other London Floor 3 users are experiencing similar call quality issues",
+            "If network congestion confirmed, work with Network Operations to prioritize real-time media traffic"
+        ]
+    },
+    {
+        "ticket_id": "INC-2015",
+        "category": "Access & Authentication",
+        "priority": "P2",
+        "assigned_team": "Identity & Access Management",
+        "needs_escalation": true,
+        "missing_information": [
+            "authentication_method"
+        ],
+        "next_best_action": "Investigate repeated account lockouts for j.nakamura — this is the 3rd time this week, suggesting a systemic issue. Check for brute-force indicators and SSPR configuration.",
+        "remediation_steps": [
+            "Reset the user's account and unlock it immediately",
+            "Review AD sign-in logs for the account to identify the lockout source",
+            "Check for brute-force indicators — if suspicious activity detected, alert SecOps",
+            "Verify SSPR security questions are correctly configured for this user",
+            "Create a separate ticket for the monitor flickering issue and route to Endpoint Engineering",
+            "Investigate root cause of repeated lockouts to prevent recurrence"
+        ]
+    }
+]
