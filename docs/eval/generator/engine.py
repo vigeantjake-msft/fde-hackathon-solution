@@ -5,40 +5,38 @@ through parametric variation of reporters, channels, writing styles,
 dates, and cross-cutting modifiers.
 """
 
-from __future__ import annotations
-
 import json
 import random
-from datetime import datetime, timedelta, timezone
+from collections import Counter
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 from pathlib import Path
 
-from generator.models import (
-    CHANNELS,
-    GeneratedTicket,
-    GoldAnswer,
-    Scenario,
-)
-from generator.reporters import REGULAR_REPORTERS, REPORTERS, VIP_REPORTERS
-from generator.text_variation import (
-    apply_auto_translated,
-    apply_base64_content,
-    apply_chat_style,
-    apply_conversation_history,
-    apply_corporate_jargon,
-    apply_email_signature,
-    apply_email_style,
-    apply_extremely_long,
-    apply_form_template,
-    apply_minimal,
-    apply_multilingual_content,
-    apply_panicked_style,
-    apply_passive_aggressive,
-    apply_phone_transcription_style,
-    apply_prompt_injection,
-    apply_stack_trace,
-    apply_typos,
-    apply_verbose_style,
-)
+from generator.models import CHANNELS
+from generator.models import GeneratedTicket
+from generator.models import GoldAnswer
+from generator.models import Scenario
+from generator.reporters import REGULAR_REPORTERS
+from generator.reporters import VIP_REPORTERS
+from generator.text_variation import apply_auto_translated
+from generator.text_variation import apply_base64_content
+from generator.text_variation import apply_chat_style
+from generator.text_variation import apply_conversation_history
+from generator.text_variation import apply_corporate_jargon
+from generator.text_variation import apply_email_signature
+from generator.text_variation import apply_email_style
+from generator.text_variation import apply_extremely_long
+from generator.text_variation import apply_form_template
+from generator.text_variation import apply_minimal
+from generator.text_variation import apply_multilingual_content
+from generator.text_variation import apply_panicked_style
+from generator.text_variation import apply_passive_aggressive
+from generator.text_variation import apply_phone_transcription_style
+from generator.text_variation import apply_prompt_injection
+from generator.text_variation import apply_stack_trace
+from generator.text_variation import apply_typos
+from generator.text_variation import apply_verbose_style
 
 
 class TicketGenerator:
@@ -122,9 +120,8 @@ class TicketGenerator:
             description = apply_phone_transcription_style(description, self.rng)
         elif channel == "chat":
             description = apply_chat_style(description, self.rng)
-        elif channel == "email":
-            if self.rng.random() < 0.6:
-                description = apply_email_style(description, reporter_name, self.rng)
+        elif channel == "email" and self.rng.random() < 0.6:
+            description = apply_email_style(description, reporter_name, self.rng)
 
         # Tag-based modifiers
         if "panicked" in tags:
@@ -135,15 +132,11 @@ class TicketGenerator:
             injection_type = self.rng.choice(["prefix", "suffix", "inline"])
             description = apply_prompt_injection(description, injection_type, self.rng)
         if "conversation_history" in tags:
-            description = apply_conversation_history(
-                description, reporter_name, reporter_email, self.rng
-            )
+            description = apply_conversation_history(description, reporter_name, reporter_email, self.rng)
         if "base64_content" in tags:
             description = apply_base64_content(description, self.rng)
         if "multilingual" in tags:
-            language = self.rng.choice(
-                ["japanese", "korean", "spanish", "french", "german", "portuguese"]
-            )
+            language = self.rng.choice(["japanese", "korean", "spanish", "french", "german", "portuguese"])
             description = apply_multilingual_content(description, language, self.rng)
         if "typos" in tags:
             description = apply_typos(description, self.rng)
@@ -201,9 +194,7 @@ class TicketGenerator:
             tags.extend(extra_tags)
 
         # Apply style modifiers
-        description = self._apply_style_modifiers(
-            description, channel, name, email, tags
-        )
+        description = self._apply_style_modifiers(description, channel, name, email, tags)
 
         # Generate attachments
         attachments = self._generate_attachments(channel)
@@ -345,14 +336,14 @@ class TicketGenerator:
                 golds.append(gold_dict)
 
         # Shuffle final order
-        combined = list(zip(tickets, golds))
+        combined = list(zip(tickets, golds, strict=True))
         self.rng.shuffle(combined)
         tickets = [t for t, _ in combined]
         golds = [g for _, g in combined]
 
         # Re-assign sequential ticket IDs after shuffle
         self.ticket_counter = 2001
-        for ticket, gold in zip(tickets, golds):
+        for ticket, gold in zip(tickets, golds, strict=True):
             new_id = self._next_ticket_id()
             ticket["ticket_id"] = new_id
             gold["ticket_id"] = new_id
@@ -376,23 +367,22 @@ def print_statistics(
     golds: list[dict],
 ) -> None:
     """Print dataset statistics for verification."""
-    from collections import Counter
 
-    print(f"\n{'='*60}")
-    print(f"  DATASET STATISTICS")
-    print(f"{'='*60}\n")
+    print(f"\n{'=' * 60}")
+    print("  DATASET STATISTICS")
+    print(f"{'=' * 60}\n")
     print(f"  Total tickets: {len(tickets)}")
 
     # Category distribution
     cat_counts = Counter(g["category"] for g in golds)
-    print(f"\n  Category distribution:")
+    print("\n  Category distribution:")
     for cat, count in sorted(cat_counts.items()):
         pct = count / len(golds) * 100
         print(f"    {cat:<30s} {count:4d}  ({pct:.1f}%)")
 
     # Priority distribution
     pri_counts = Counter(g["priority"] for g in golds)
-    print(f"\n  Priority distribution:")
+    print("\n  Priority distribution:")
     for pri in ["P1", "P2", "P3", "P4"]:
         count = pri_counts.get(pri, 0)
         pct = count / len(golds) * 100
@@ -400,14 +390,14 @@ def print_statistics(
 
     # Team distribution
     team_counts = Counter(g["assigned_team"] for g in golds)
-    print(f"\n  Team distribution:")
+    print("\n  Team distribution:")
     for team, count in sorted(team_counts.items()):
         pct = count / len(golds) * 100
         print(f"    {team:<35s} {count:4d}  ({pct:.1f}%)")
 
     # Channel distribution
     ch_counts = Counter(t["channel"] for t in tickets)
-    print(f"\n  Channel distribution:")
+    print("\n  Channel distribution:")
     for ch in CHANNELS:
         count = ch_counts.get(ch, 0)
         pct = count / len(tickets) * 100
@@ -416,9 +406,9 @@ def print_statistics(
     # Escalation distribution
     esc_true = sum(1 for g in golds if g["needs_escalation"])
     esc_false = len(golds) - esc_true
-    print(f"\n  Escalation distribution:")
-    print(f"    True:  {esc_true:4d}  ({esc_true/len(golds)*100:.1f}%)")
-    print(f"    False: {esc_false:4d}  ({esc_false/len(golds)*100:.1f}%)")
+    print("\n  Escalation distribution:")
+    print(f"    True:  {esc_true:4d}  ({esc_true / len(golds) * 100:.1f}%)")
+    print(f"    False: {esc_false:4d}  ({esc_false / len(golds) * 100:.1f}%)")
 
     # Missing info vocabulary coverage
     all_missing = set()
@@ -427,4 +417,4 @@ def print_statistics(
     print(f"\n  Missing info vocabulary coverage: {len(all_missing)}/16 values used")
     print(f"    Values: {sorted(all_missing)}")
 
-    print(f"\n{'='*60}\n")
+    print(f"\n{'=' * 60}\n")

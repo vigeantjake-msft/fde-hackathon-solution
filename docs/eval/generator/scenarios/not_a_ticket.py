@@ -1,7 +1,5 @@
 """Not a Support Ticket scenario definitions."""
 
-from __future__ import annotations
-
 from generator.models import Scenario
 
 SCENARIOS: list[Scenario] = [
@@ -19,9 +17,13 @@ SCENARIOS: list[Scenario] = [
             "Out of Office Re: Password Reset Confirmation",
         ],
         descriptions=[
-            "Thank you for your message. I am currently out of the office from October 14–18 with limited access to email. For urgent matters, please contact my colleague Sarah Chen (s.chen@company.com). I will respond to your email upon my return. Best regards, David.",
-            "I am out of the office until Monday, November 4th and will have no access to email. If this is urgent, please reach out to my manager, Tom Briggs, at x4512. Otherwise, I'll reply when I'm back. Thanks!",
-            "Hi, I'm OOO on PTO this week (Oct 21–25). For anything time-sensitive, please contact the IT help desk directly at helpdesk@company.com. I'll get back to you when I return.",
+            "Thank you for your message. I am currently out of the office from October 14–18 with limited access to "
+            "email. For urgent matters, please contact my colleague Sarah Chen (s.chen@company.com). I will respond to "
+            "your email upon my return. Best regards, David.",
+            "I am out of the office until Monday, November 4th and will have no access to email. If this is urgent, "
+            "please reach out to my manager, Tom Briggs, at x4512. Otherwise, I'll reply when I'm back. Thanks!",
+            "Hi, I'm OOO on PTO this week (Oct 21–25). For anything time-sensitive, please contact the IT help desk "
+            "directly at helpdesk@company.com. I'll get back to you when I return.",
         ],
         next_best_actions=[
             "Close ticket — this is an automated out-of-office reply, not a support request.",
@@ -81,9 +83,12 @@ SCENARIOS: list[Scenario] = [
             "Updated: Weekly 1:1 with Manager",
         ],
         descriptions=[
-            "--- Forwarded meeting invitation ---\nTeam Standup\nWhen: Daily, 10:00 AM – 10:15 AM EST\nWhere: Microsoft Teams\nOrganizer: Priya Sharma\n\nHi all, joining link below. See you there!",
-            "You have been invited to the following event:\nQ4 Planning Meeting\nDate: November 5, 2024 2:00 PM – 4:00 PM\nLocation: Conference Room 3B\nOrganizer: James Wilson\n\nPlease confirm your attendance.",
-            "--- Forwarded calendar event ---\nLunch & Learn: Cloud Migration Best Practices\nThursday 12:00 PM — Room 201\nBring your lunch! Pizza provided.\n\n(Accidentally forwarded to IT helpdesk, sorry!)",
+            "--- Forwarded meeting invitation ---\nTeam Standup\nWhen: Daily, 10:00 AM – 10:15 AM EST\nWhere: Microsoft"
+            " Teams\nOrganizer: Priya Sharma\n\nHi all, joining link below. See you there!",
+            "You have been invited to the following event:\nQ4 Planning Meeting\nDate: November 5, 2024 2:00 PM – 4:00 "
+            "PM\nLocation: Conference Room 3B\nOrganizer: James Wilson\n\nPlease confirm your attendance.",
+            "--- Forwarded calendar event ---\nLunch & Learn: Cloud Migration Best Practices\nThursday 12:00 PM — Room "
+            "201\nBring your lunch! Pizza provided.\n\n(Accidentally forwarded to IT helpdesk, sorry!)",
         ],
         next_best_actions=[
             "Close ticket — this is a calendar invitation forwarded in error, not a support request.",
@@ -112,9 +117,15 @@ SCENARIOS: list[Scenario] = [
             "FW: AWS re:Invent Early Bird Registration",
         ],
         descriptions=[
-            "---------- Forwarded message ----------\nTechInsider Weekly Newsletter\n\n🔥 Top 10 Cloud Trends for 2025\n☁️ Is Serverless Really the Future?\n🔒 Zero Trust: Hype or Reality?\n\nRead more at techinsider.com\nUnsubscribe | Manage preferences",
-            "Your Monthly Microsoft 365 Tips!\n\n✅ 5 Teams features you're not using\n✅ How to master Excel pivot tables\n✅ Copilot tips for Outlook\n\nForward to a colleague who needs this!\n\n© 2024 Microsoft Corporation. Unsubscribe here.",
-            "You're invited!\n\nJoin our free webinar: Securing Your Hybrid Workforce in 2025\nDate: November 12, 2024 | 1:00 PM ET\nSpeaker: Jane Smith, CISO @ CloudSecure Inc.\n\nRegister now → [link]\n\nYou're receiving this because you attended our previous webinar.",
+            "---------- Forwarded message ----------\nTechInsider Weekly Newsletter\n\n🔥 Top 10 Cloud Trends for "
+            "2025\n☁️ Is Serverless Really the Future?\n🔒 Zero Trust: Hype or Reality?\n\nRead more at "
+            "techinsider.com\nUnsubscribe | Manage preferences",
+            "Your Monthly Microsoft 365 Tips!\n\n✅ 5 Teams features you're not using\n✅ How to master Excel pivot "
+            "tables\n✅ Copilot tips for Outlook\n\nForward to a colleague who needs this!\n\n© 2024 Microsoft "
+            "Corporation. Unsubscribe here.",
+            "You're invited!\n\nJoin our free webinar: Securing Your Hybrid Workforce in 2025\nDate: November 12, 2024 "
+            "| 1:00 PM ET\nSpeaker: Jane Smith, CISO @ CloudSecure Inc.\n\nRegister now → [link]\n\nYou're receiving "
+            "this because you attended our previous webinar.",
         ],
         next_best_actions=[
             "Close ticket — this is a forwarded newsletter or marketing email, not a support request.",
@@ -142,9 +153,14 @@ SCENARIOS: list[Scenario] = [
             "FW: Office Closure — Thanksgiving Week",
         ],
         descriptions=[
-            "---------- Forwarded message ----------\nFrom: Internal Communications <comms@company.com>\nSubject: All-Hands Meeting This Friday\n\nHi everyone,\n\nPlease join us for the quarterly all-hands this Friday at 3 PM in the main auditorium (or via Teams for remote staff). CEO will be sharing Q3 results and our 2025 roadmap.\n\nSee you there!",
-            "FW: Important update from HR\n\nPlease note the updated holiday schedule for 2025 has been posted on the intranet. Key dates: offices closed Dec 23 – Jan 1. Please plan accordingly.\n\nHR Team",
-            "Forwarding this in case IT needs to know — new CEO starts January 6. Details in the attached press release.\n\n(Note: this was forwarded to IT helpdesk by an employee who thought IT needed to be informed.)",
+            "---------- Forwarded message ----------\nFrom: Internal Communications <comms@company.com>\nSubject: All-H"
+            "ands Meeting This Friday\n\nHi everyone,\n\nPlease join us for the quarterly all-hands this Friday at 3 PM"
+            " in the main auditorium (or via Teams for remote staff). CEO will be sharing Q3 results and our 2025 roadm"
+            "ap.\n\nSee you there!",
+            "FW: Important update from HR\n\nPlease note the updated holiday schedule for 2025 has been posted on the "
+            "intranet. Key dates: offices closed Dec 23 – Jan 1. Please plan accordingly.\n\nHR Team",
+            "Forwarding this in case IT needs to know — new CEO starts January 6. Details in the attached press release"
+            ".\n\n(Note: this was forwarded to IT helpdesk by an employee who thought IT needed to be informed.)",
         ],
         next_best_actions=[
             "Close ticket — this is a forwarded internal company announcement, not a support request.",
@@ -153,7 +169,8 @@ SCENARIOS: list[Scenario] = [
             [
                 "Identify this as a forwarded internal announcement",
                 "Close the ticket with no action required",
-                "If the announcement has IT implications (e.g., office closure), note it for the relevant team internally",
+                "If the announcement has IT implications (e.g., office closure), note it for the relevant team "
+                "internally",
             ],
         ],
         tags=["announcement", "misdirected", "not-actionable"],
@@ -204,10 +221,14 @@ SCENARIOS: list[Scenario] = [
             "Cancel my request — all good now",
         ],
         descriptions=[
-            "Hey, never mind about my earlier ticket — I figured it out. Just needed to restart the app. Thanks anyway!",
-            "Hi, please disregard the ticket I just submitted about Outlook crashing. I found a workaround by clearing the cache. You can close this out.",
-            "Ignore my last message. Turns out I just needed to update the browser. All working now. Sorry for the noise!",
-            "You can close my ticket — the issue resolved itself after I rebooted. Appreciate the quick response though!",
+            "Hey, never mind about my earlier ticket — I figured it out. Just needed to restart"
+            " the app. Thanks anyway!",
+            "Hi, please disregard the ticket I just submitted about Outlook crashing. I found a workaround by clearing "
+            "the cache. You can close this out.",
+            "Ignore my last message. Turns out I just needed to update the browser. All working now. Sorry for the "
+            "noise!",
+            "You can close my ticket — the issue resolved itself after I rebooted. Appreciate the quick response "
+            "though!",
         ],
         next_best_actions=[
             "Close ticket — the user has self-resolved the issue and no further action is needed.",
@@ -236,9 +257,18 @@ SCENARIOS: list[Scenario] = [
             "Partnering on your digital transformation journey",
         ],
         descriptions=[
-            "Hi IT Team,\n\nI'm reaching out from CloudOps Solutions. We help companies like yours reduce IT incidents by 60% using our AI-powered operations platform. I'd love to schedule a 15-minute demo to show you how we can help.\n\nAre you available this Thursday or Friday?\n\nBest,\nMike Johnson\nAccount Executive, CloudOps Solutions\nmike.johnson@cloudops.io",
-            "Dear IT Director,\n\nFor a limited time, we're offering 50% off our Enterprise Security Suite — trusted by 500+ Fortune 1000 companies. Our platform includes SIEM, SOAR, and endpoint protection in a single pane of glass.\n\nLet's connect! Reply to this email or book time directly: calendly.com/vendor-rep\n\nRegards,\nSarah Williams\nSenior Sales Engineer, SecureVault Inc.",
-            "Hi,\n\nI'm following up on the email I sent last week about our IT asset management platform. I know you're busy, so I'll keep this short — we can save your team 20 hours/week on asset tracking.\n\nWould a quick 10-minute call work for you?\n\nThanks,\nChris Park\nBDR, AssetTrack Pro",
+            "Hi IT Team,\n\nI'm reaching out from CloudOps Solutions. We help companies like yours reduce IT incidents "
+            "by 60% using our AI-powered operations platform. I'd love to schedule a 15-minute demo to show you how we "
+            "can help.\n\nAre you available this Thursday or Friday?\n\nBest,\nMike Johnson\nAccount Executive, "
+            "CloudOps Solutions\nmike.johnson@cloudops.io",
+            "Dear IT Director,\n\nFor a limited time, we're offering 50% off our Enterprise"
+            " Security Suite — trusted by 500+ Fortune 1000 companies. Our platform includes SIEM,"
+            " SOAR, and endpoint protection in a single pane of glass.\n\nLet's connect! Reply to"
+            " this email or book time directly: calendly.com/vendor-rep\n\nRegards,\n"
+            "Sarah Williams\nSenior Sales Engineer, SecureVault Inc.",
+            "Hi,\n\nI'm following up on the email I sent last week about our IT asset management platform. I know "
+            "you're busy, so I'll keep this short — we can save your team 20 hours/week on asset tracking.\n\nWould a "
+            "quick 10-minute call work for you?\n\nThanks,\nChris Park\nBDR, AssetTrack Pro",
         ],
         next_best_actions=[
             "Close ticket — this is an unsolicited vendor sales pitch, not a support request.",
@@ -267,10 +297,14 @@ SCENARIOS: list[Scenario] = [
             "Parking lot light is out near entrance B",
         ],
         descriptions=[
-            "Hi, the coffee machine on the 3rd floor near the kitchen has been broken since Monday. It just makes a grinding noise and nothing comes out. Can someone get it fixed? We're all suffering over here lol.",
-            "The air conditioning in section 4B is absolutely freezing. Multiple people on my team are wearing jackets at their desks. Can IT adjust the thermostat? We've complained to facilities but nothing has changed.",
-            "The microwave in the 2nd floor break room is sparking when you turn it on. Pretty sure that's a fire hazard. Not sure if this is an IT thing but I didn't know who else to email.",
-            "The light in parking lot B near the side entrance has been out for a week. It's really dark at night and feels unsafe. Can someone put in a maintenance request?",
+            "Hi, the coffee machine on the 3rd floor near the kitchen has been broken since Monday. It just makes a "
+            "grinding noise and nothing comes out. Can someone get it fixed? We're all suffering over here lol.",
+            "The air conditioning in section 4B is absolutely freezing. Multiple people on my team are wearing jackets "
+            "at their desks. Can IT adjust the thermostat? We've complained to facilities but nothing has changed.",
+            "The microwave in the 2nd floor break room is sparking when you turn it on. Pretty sure that's a fire "
+            "hazard. Not sure if this is an IT thing but I didn't know who else to email.",
+            "The light in parking lot B near the side entrance has been out for a week. It's really dark at night and "
+            "feels unsafe. Can someone put in a maintenance request?",
         ],
         next_best_actions=[
             "Close ticket — this is a facilities/personal request, not an IT support issue. Redirect to Facilities.",
@@ -331,9 +365,15 @@ SCENARIOS: list[Scenario] = [
             "Your PayPal account has been limited — click here",
         ],
         descriptions=[
-            "CONGRATULATIONS!!! You have been selected as the winner of our 2024 Global Email Lottery! You have won $1,000,000.00 USD! To claim your prize, please send your full name, address, phone number, and bank account details to claims@lottery-intl-winners.com. Act now — this offer expires in 48 hours!",
-            "Dear Valued Customer,\n\nWe have detected unusual activity on your account. Your access will be suspended unless you verify your identity within 24 hours.\n\nClick here to verify: http://totally-not-a-scam.xyz/verify\n\nMicrosoft Security Team",
-            "ATTENTION: You have an unclaimed inheritance of £2,500,000 from a distant relative. Our law firm has been trying to reach you. Please reply with your full name and contact details so we can begin the transfer process.\n\nBarrister James Okafor\nOkafor & Associates Legal",
+            "CONGRATULATIONS!!! You have been selected as the winner of our 2024 Global Email Lottery! You have won "
+            "$1,000,000.00 USD! To claim your prize, please send your full name, address, phone number, and bank "
+            "account details to claims@lottery-intl-winners.com. Act now — this offer expires in 48 hours!",
+            "Dear Valued Customer,\n\nWe have detected unusual activity on your account. Your access will be suspended "
+            "unless you verify your identity within 24 hours.\n\nClick here to verify: "
+            "http://totally-not-a-scam.xyz/verify\n\nMicrosoft Security Team",
+            "ATTENTION: You have an unclaimed inheritance of £2,500,000 from a distant relative. Our law firm has been "
+            "trying to reach you. Please reply with your full name and contact details so we can begin the transfer "
+            "process.\n\nBarrister James Okafor\nOkafor & Associates Legal",
         ],
         next_best_actions=[
             "Close ticket — this is spam or a phishing/scam email. Flag for security team awareness if needed.",
@@ -363,9 +403,14 @@ SCENARIOS: list[Scenario] = [
             "Re: Rate your IT support experience",
         ],
         descriptions=[
-            "Rating: 4/5\nComments: The tech who helped me was great and resolved my issue quickly. Only reason it's not a 5 is because the initial wait time was about 20 minutes.\n\n(This was submitted via the post-ticket satisfaction survey.)",
-            "How would you rate your experience? ★★★★★\nWas your issue resolved? Yes\nAdditional comments: Everything was perfect. John on the help desk was very patient and knowledgeable. Thanks!",
-            "Survey response:\n- Ease of reaching IT: 3/5\n- Speed of resolution: 4/5\n- Professionalism: 5/5\n- Overall satisfaction: 4/5\n- Comments: Wish there were more self-service options, but the staff is excellent.",
+            "Rating: 4/5\nComments: The tech who helped me was great and resolved my issue quickly. Only reason it's "
+            "not a 5 is because the initial wait time was about 20 minutes.\n\n(This was submitted via the post-ticket "
+            "satisfaction survey.)",
+            "How would you rate your experience? ★★★★★\nWas your issue resolved? Yes\nAdditional comments: Everything "
+            "was perfect. John on the help desk was very patient and knowledgeable. Thanks!",
+            "Survey response:\n- Ease of reaching IT: 3/5\n- Speed of resolution: 4/5\n- Professionalism: 5/5\n- "
+            "Overall satisfaction: 4/5\n- Comments: Wish there were more self-service options, but the staff is "
+            "excellent.",
         ],
         next_best_actions=[
             "Close ticket — this is a survey response, not a support request. Route to IT management for review.",
@@ -394,9 +439,13 @@ SCENARIOS: list[Scenario] = [
             "Just an FYI — no action needed",
         ],
         descriptions=[
-            "Hi IT, just a heads up that the new Wi-Fi passwords for the guest network have been posted on the bulletin board in the lobby. No action needed from your side, just wanted to keep you in the loop.",
-            "FYI — our team is moving to the 4th floor next Tuesday. Facilities is handling the furniture and I've already coordinated with Network Ops on the phone/data ports. Just wanted IT help desk to be aware in case anyone from my team calls in confused. No action needed.",
-            "Hey, just letting you know that the marketing team wrapped up the software migration over the weekend. Everything seems to be working fine so far. No issues to report — just keeping you informed.",
+            "Hi IT, just a heads up that the new Wi-Fi passwords for the guest network have been posted on the bulletin"
+            " board in the lobby. No action needed from your side, just wanted to keep you in the loop.",
+            "FYI — our team is moving to the 4th floor next Tuesday. Facilities is handling the furniture and I've alre"
+            "ady coordinated with Network Ops on the phone/data ports. Just wanted IT help desk to be aware in case any"
+            "one from my team calls in confused. No action needed.",
+            "Hey, just letting you know that the marketing team wrapped up the software migration over the weekend. "
+            "Everything seems to be working fine so far. No issues to report — just keeping you informed.",
         ],
         next_best_actions=[
             "Close ticket — this is an informational FYI message with no action required.",
@@ -425,10 +474,14 @@ SCENARIOS: list[Scenario] = [
             "How do I submit a time-off request?",
         ],
         descriptions=[
-            "Hi, I'm trying to figure out how many PTO days I have left for the year. The HR portal is showing a different number than what I calculated. Can someone check for me? My employee ID is 10482.",
-            "I need to update my direct deposit information — I switched banks last month. I'm not sure if I do this through Workday or if I need to contact someone. Can you help?",
-            "When is the deadline for open enrollment this year? I want to switch my health plan but I can't find the dates anywhere on the intranet. Also, is there a way to compare plans side by side?",
-            "How do I submit a time-off request in the system? I just joined the company and my manager said to put it in the portal but I can't find where to do it.",
+            "Hi, I'm trying to figure out how many PTO days I have left for the year. The HR portal is showing a "
+            "different number than what I calculated. Can someone check for me? My employee ID is 10482.",
+            "I need to update my direct deposit information — I switched banks last month. I'm not sure if I do this "
+            "through Workday or if I need to contact someone. Can you help?",
+            "When is the deadline for open enrollment this year? I want to switch my health plan but I can't find the "
+            "dates anywhere on the intranet. Also, is there a way to compare plans side by side?",
+            "How do I submit a time-off request in the system? I just joined the company and my manager said to put it "
+            "in the portal but I can't find where to do it.",
         ],
         next_best_actions=[
             "Close ticket — this is an HR question, not an IT support request. Redirect the user to HR.",
@@ -458,10 +511,14 @@ SCENARIOS: list[Scenario] = [
             "Light flickering in conference room 3A",
         ],
         descriptions=[
-            "Hi, the hydraulic cylinder on my desk chair is broken — it keeps slowly sinking down throughout the day. Can I get a replacement? I've been here for three years and this is the original chair.",
-            "I'd like to request a standing desk or a sit-stand converter for my workstation. My doctor recommended it for my back. Is this something I request through IT or through another department?",
-            "The men's bathroom on the 2nd floor has been out of order since yesterday morning. There's a sign on the door but no one seems to be fixing it. Can someone put in a work order?",
-            "The overhead light in conference room 3A is flickering badly. It's giving people headaches during meetings. Can you send someone to fix it?",
+            "Hi, the hydraulic cylinder on my desk chair is broken — it keeps slowly sinking down throughout the day. "
+            "Can I get a replacement? I've been here for three years and this is the original chair.",
+            "I'd like to request a standing desk or a sit-stand converter for my workstation. My doctor recommended it "
+            "for my back. Is this something I request through IT or through another department?",
+            "The men's bathroom on the 2nd floor has been out of order since yesterday morning. There's a sign on the "
+            "door but no one seems to be fixing it. Can someone put in a work order?",
+            "The overhead light in conference room 3A is flickering badly. It's giving people headaches during "
+            "meetings. Can you send someone to fix it?",
         ],
         next_best_actions=[
             "Close ticket — this is a facilities request, not an IT support issue. Redirect to Facilities Management.",
@@ -491,9 +548,15 @@ SCENARIOS: list[Scenario] = [
             "FW: FW: FW: Best joke ever",
         ],
         descriptions=[
-            "---------- Forwarded 47 times ----------\n\nSend this to 10 friends in the next hour and something amazing will happen to you at midnight!!! 🌟✨ If you break the chain, you'll have bad luck for 7 years!!! This has been going around since 1997 and it REALLY WORKS!!!\n\n>> >> >> Don't break the chain!!!",
-            "LOLOL you guys have to read this 😂😂😂\n\nA sysadmin, a developer, and a project manager walk into a bar...\n\n(forwarded to the IT help desk distribution list by accident)",
-            "FW: FW: FW: FW:\nIMPORTANT: Bill Gates is giving away $5,000 to everyone who forwards this email! Microsoft is testing a new email tracking system. I know it sounds fake but my cousin's friend actually got a check!!! Forward to everyone you know!!",
+            "---------- Forwarded 47 times ----------\n\nSend this to 10 friends in the next"
+            " hour and something amazing will happen to you at midnight!!! 🌟✨ If you break the chain,"
+            " you'll have bad luck for 7 years!!! This has been going around since 1997 and it REALLY"
+            " WORKS!!!\n\n>> >> >> Don't break the chain!!!",
+            "LOLOL you guys have to read this 😂😂😂\n\nA sysadmin, a developer, and a project manager walk into a "
+            "bar...\n\n(forwarded to the IT help desk distribution list by accident)",
+            "FW: FW: FW: FW:\nIMPORTANT: Bill Gates is giving away $5,000 to everyone who forwards this email! "
+            "Microsoft is testing a new email tracking system. I know it sounds fake but my cousin's friend actually "
+            "got a check!!! Forward to everyone you know!!",
         ],
         next_best_actions=[
             "Close ticket — this is a chain letter or joke forwarded in error, not a support request.",
@@ -521,10 +584,14 @@ SCENARIOS: list[Scenario] = [
             "+1 to ticket #40987 — experiencing the same thing",
         ],
         descriptions=[
-            "Hi, I'm having the exact same issue as my colleague reported in ticket #41022. Outlook keeps crashing when opening attachments. Can you just add me to that ticket instead of creating a new one?",
-            "Same here — I'm also experiencing the email sync delay that was reported earlier today. I think there's already an open ticket for this. Just wanted IT to know it's affecting me too. My employee ID is 20394.",
-            "Ditto to what Sarah reported about the printer on floor 2. It's not working for me either. I assume this is a known issue? Please add me to the existing ticket. Thanks!",
-            "+1 — I have the same VPN disconnection issue as ticket #40987. Started this morning around 9 AM. Just wanted to be counted so you know it's widespread.",
+            "Hi, I'm having the exact same issue as my colleague reported in ticket #41022. Outlook keeps crashing when"
+            " opening attachments. Can you just add me to that ticket instead of creating a new one?",
+            "Same here — I'm also experiencing the email sync delay that was reported earlier today. I think there's "
+            "already an open ticket for this. Just wanted IT to know it's affecting me too. My employee ID is 20394.",
+            "Ditto to what Sarah reported about the printer on floor 2. It's not working for me either. I assume this "
+            "is a known issue? Please add me to the existing ticket. Thanks!",
+            "+1 — I have the same VPN disconnection issue as ticket #40987. Started this morning around 9 AM. Just "
+            "wanted to be counted so you know it's widespread.",
         ],
         next_best_actions=[
             "Close ticket — this is a duplicate report. Add the user as an affected party to the existing ticket.",
@@ -553,9 +620,15 @@ SCENARIOS: list[Scenario] = [
             "[INFO] Certificate renewal completed for *.company.com",
         ],
         descriptions=[
-            "[AUTOMATED ALERT — INFORMATIONAL]\nSystem: BKUP-PROD-01\nEvent: Nightly backup completed successfully\nTime: 2024-10-14 03:00:15 UTC\nDuration: 2h 14m\nStatus: SUCCESS\nObjects backed up: 1,247\nTotal size: 892 GB\n\nNo action required.",
-            "[MONITORING — OK]\nHost: WEBSRV-03\nCheck: CPU Utilization\nStatus: OK (recovered)\nPrevious: WARNING (87%)\nCurrent: 34%\nTime: 2024-10-14 09:45:22 UTC\n\nThe previous CPU alert has auto-resolved. No action needed.",
-            "[AUTOMATED — INFORMATIONAL]\nService: Certificate Manager\nAction: SSL certificate renewal\nDomain: *.company.com\nNew expiry: 2025-10-14\nStatus: SUCCESS\n\nThis is an automated notification. No action required.",
+            "[AUTOMATED ALERT — INFORMATIONAL]\nSystem: BKUP-PROD-01\nEvent: Nightly backup completed "
+            "successfully\nTime: 2024-10-14 03:00:15 UTC\nDuration: 2h 14m\nStatus: SUCCESS\nObjects backed up: "
+            "1,247\nTotal size: 892 GB\n\nNo action required.",
+            "[MONITORING — OK]\nHost: WEBSRV-03\nCheck: CPU Utilization\nStatus: OK (recovered)\nPrevious: WARNING "
+            "(87%)\nCurrent: 34%\nTime: 2024-10-14 09:45:22 UTC\n\nThe previous CPU alert has auto-resolved. No action "
+            "needed.",
+            "[AUTOMATED — INFORMATIONAL]\nService: Certificate Manager\nAction: SSL certificate renewal\nDomain: "
+            "*.company.com\nNew expiry: 2025-10-14\nStatus: SUCCESS\n\nThis is an automated notification. No action "
+            "required.",
         ],
         next_best_actions=[
             "Close ticket — this is an informational monitoring alert with no action required.",
@@ -584,9 +657,15 @@ SCENARIOS: list[Scenario] = [
             "FW: Team lunch choices — please respond by noon",
         ],
         descriptions=[
-            "Hey, can everyone reply with their lunch choice for Thursday's all-hands meeting?\n\n1. Turkey club sandwich\n2. Veggie wrap\n3. Caesar salad\n4. Pepperoni pizza\n\nPlease respond by Wednesday noon so we can place the order. Thanks!\n\n(Accidentally sent to IT helpdesk)",
-            "---------- Forwarded message ----------\nHi team, we're organizing the holiday lunch for December 20th. Please fill out the Google Form with your meal preference and any allergies: [link]\n\nRSVP by December 10th!\n\n(This was forwarded to IT help desk by mistake.)",
-            "Quick poll — who's interested in attending the AWS Summit in Chicago next March? We have a limited number of free passes. Reply YES if you want to go and I'll add you to the registration list.\n\n(Sent to the wrong distribution list, apologies!)",
+            "Hey, can everyone reply with their lunch choice for Thursday's all-hands meeting?\n\n1. Turkey club "
+            "sandwich\n2. Veggie wrap\n3. Caesar salad\n4. Pepperoni pizza\n\nPlease respond by Wednesday noon so we "
+            "can place the order. Thanks!\n\n(Accidentally sent to IT helpdesk)",
+            "---------- Forwarded message ----------\nHi team, we're organizing the holiday lunch for December 20th. "
+            "Please fill out the Google Form with your meal preference and any allergies: [link]\n\nRSVP by December "
+            "10th!\n\n(This was forwarded to IT help desk by mistake.)",
+            "Quick poll — who's interested in attending the AWS Summit in Chicago next March? We have a limited number "
+            "of free passes. Reply YES if you want to go and I'll add you to the registration list.\n\n(Sent to the "
+            "wrong distribution list, apologies!)",
         ],
         next_best_actions=[
             "Close ticket — this is a social/administrative message sent to IT by mistake.",
@@ -616,8 +695,10 @@ SCENARIOS: list[Scenario] = [
         ],
         descriptions=[
             "Hi, please ignore the email I just sent to this address — it was meant for a colleague. Sorry about that!",
-            "Oops! That last message was supposed to go to my manager, not the IT help desk. Please disregard. Apologies for the confusion.",
-            "Please delete my previous email — I accidentally sent confidential information to the wrong address. I meant to send it to my team's distribution list. Sorry for the mix-up!",
+            "Oops! That last message was supposed to go to my manager, not the IT help desk. Please disregard. "
+            "Apologies for the confusion.",
+            "Please delete my previous email — I accidentally sent confidential information to the wrong address. I "
+            "meant to send it to my team's distribution list. Sorry for the mix-up!",
             "Wrong recipient — that was meant for someone else entirely. Please ignore and delete. Thank you!",
         ],
         next_best_actions=[

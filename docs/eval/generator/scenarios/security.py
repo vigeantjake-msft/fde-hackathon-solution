@@ -1,7 +1,5 @@
 """Security & Compliance scenario definitions."""
 
-from __future__ import annotations
-
 from generator.models import Scenario
 
 SCENARIOS: list[Scenario] = [
@@ -20,13 +18,22 @@ SCENARIOS: list[Scenario] = [
             "Got a weird email pretending to be IT — did NOT click",
         ],
         descriptions=[
-            "I received an email claiming to be from our IT department asking me to verify my credentials via a link. The sender address looked off — it was something like support@contoso-security.net instead of our real domain. I did NOT click the link or download any attachments. I wanted to report it so the security team can investigate.",
-            "Got an email this morning that looks like a phishing attempt. Subject line was 'Urgent: Verify Your Account'. The from address doesn't match our corporate domain. I haven't interacted with it at all — just flagging it for the SOC.",
-            "Reporting a suspicious email that landed in my inbox around 9:15 AM. It asks me to 'confirm my identity' through an external link. The branding looks like ours but the URL is clearly wrong. I did not click anything.",
+            "I received an email claiming to be from our IT department asking me to verify my credentials via a link. "
+            "The sender address looked off — it was something like support@contoso-security.net instead of our real "
+            "domain. I did NOT click the link or download any attachments. I wanted to report it so the security team "
+            "can investigate.",
+            "Got an email this morning that looks like a phishing attempt. Subject line was 'Urgent: Verify Your "
+            "Account'. The from address doesn't match our corporate domain. I haven't interacted with it at all — just "
+            "flagging it for the SOC.",
+            "Reporting a suspicious email that landed in my inbox around 9:15 AM. It asks me to 'confirm my identity' "
+            "through an external link. The branding looks like ours but the URL is clearly wrong. I did not click "
+            "anything.",
         ],
         next_best_actions=[
-            "Acknowledge report and collect the original email headers for analysis. Check if other users received the same message.",
-            "Thank the reporter, extract email headers and URLs for threat intel analysis, and check email gateway logs for campaign scope.",
+            "Acknowledge report and collect the original email headers for analysis. Check if other users received the "
+            "same message.",
+            "Thank the reporter, extract email headers and URLs for threat intel analysis, and check email gateway logs"
+            " for campaign scope.",
         ],
         remediation_steps=[
             [
@@ -55,13 +62,23 @@ SCENARIOS: list[Scenario] = [
             "Phishing email — I entered my username and password before realizing",
         ],
         descriptions=[
-            "I'm really sorry but I clicked a link in an email that looked like it was from our HR department about benefits enrollment. It took me to a page that looked exactly like our login portal and I entered my full credentials before I realized the URL was wrong. I immediately closed the browser. My employee ID handles access to the trading floor reconciliation systems and I have access to client PII in Salesforce.",
-            "I received an email about a mandatory compliance training and clicked the link without checking. It prompted me for my credentials and I entered them. The page then showed an error and redirected me to our real intranet. I think my account may be compromised. I have access to the SOX-regulated financial reporting tools.",
-            "Fell for a phishing email about 30 minutes ago. I entered my AD credentials on a fake page. I have privileged access to several production databases with customer financial data. Please help — I'm worried about a data breach.",
+            "I'm really sorry but I clicked a link in an email that looked like it was from our HR department about "
+            "benefits enrollment. It took me to a page that looked exactly like our login portal and I entered my full "
+            "credentials before I realized the URL was wrong. I immediately closed the browser. My employee ID handles "
+            "access to the trading floor reconciliation systems and I have access to client PII in Salesforce.",
+            "I received an email about a mandatory compliance training and clicked the link without checking. It "
+            "prompted me for my credentials and I entered them. The page then showed an error and redirected me to our "
+            "real intranet. I think my account may be compromised. I have access to the SOX-regulated financial "
+            "reporting tools.",
+            "Fell for a phishing email about 30 minutes ago. I entered my AD credentials on a fake page. I have "
+            "privileged access to several production databases with customer financial data. Please help — I'm worried "
+            "about a data breach.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Force password reset for the compromised account. Revoke all active sessions and MFA tokens. Begin forensic review of account activity since compromise.",
-            "Trigger the credential compromise incident response playbook. Reset credentials, revoke sessions, and check for unauthorized access to sensitive systems.",
+            "IMMEDIATE: Force password reset for the compromised account. Revoke all active sessions and MFA tokens. "
+            "Begin forensic review of account activity since compromise.",
+            "Trigger the credential compromise incident response playbook. Reset credentials, revoke sessions, and "
+            "check for unauthorized access to sensitive systems.",
         ],
         remediation_steps=[
             [
@@ -93,13 +110,21 @@ SCENARIOS: list[Scenario] = [
             "Sign-in from foreign country I've never visited",
         ],
         descriptions=[
-            "I just received an alert from Azure AD that my account was signed into from an IP address in Eastern Europe. I'm currently at our New York office and haven't traveled recently. I don't use a VPN. I have access to the client portfolio management system and several internal financial tools.",
-            "Our SIEM flagged an impossible travel alert for my account — a successful sign-in from Southeast Asia at 3 AM ET last night, followed by a normal login from my home in Connecticut at 7 AM. I definitely wasn't traveling. My account has access to compliance reporting dashboards.",
-            "I received a suspicious sign-in notification for a login from Brazil. I haven't been to Brazil and I don't know anyone there. I'm concerned my account may be compromised. I have read access to several SharePoint sites containing client financial data.",
+            "I just received an alert from Azure AD that my account was signed into from an IP address in Eastern "
+            "Europe. I'm currently at our New York office and haven't traveled recently. I don't use a VPN. I have "
+            "access to the client portfolio management system and several internal financial tools.",
+            "Our SIEM flagged an impossible travel alert for my account — a successful sign-in from Southeast Asia at 3"
+            " AM ET last night, followed by a normal login from my home in Connecticut at 7 AM. I definitely wasn't tra"
+            "veling. My account has access to compliance reporting dashboards.",
+            "I received a suspicious sign-in notification for a login from Brazil. I haven't been to Brazil and I don't"
+            " know anyone there. I'm concerned my account may be compromised. I have read access to several SharePoint "
+            "sites containing client financial data.",
         ],
         next_best_actions=[
-            "Verify with the user that the sign-in was not legitimate. If confirmed suspicious, force password reset and revoke sessions. Investigate sign-in logs for lateral movement.",
-            "Confirm the sign-in is unauthorized, initiate account containment, and correlate the IP with known threat intelligence feeds.",
+            "Verify with the user that the sign-in was not legitimate. If confirmed suspicious, force password reset "
+            "and revoke sessions. Investigate sign-in logs for lateral movement.",
+            "Confirm the sign-in is unauthorized, initiate account containment, and correlate the IP with known threat "
+            "intelligence feeds.",
         ],
         remediation_steps=[
             [
@@ -133,13 +158,21 @@ SCENARIOS: list[Scenario] = [
             "Compliance alert — confidential data shared with external party",
         ],
         descriptions=[
-            "Our DLP system flagged an email sent by a user in the Wealth Management division to a personal Gmail address. The email contained an Excel attachment with client Social Security numbers, account balances, and portfolio details for approximately 200 clients. This is a potential SOX and GDPR violation.",
-            "Microsoft Purview DLP triggered a high-severity alert: a user shared a SharePoint folder containing SEC pre-filing documents with an external collaborator who is not authorized. The folder includes draft 10-K filings and internal audit notes. This could constitute a material information leak.",
-            "DLP alert fired at 2:47 PM — a contractor in the finance department uploaded a file to a personal OneDrive account containing client tax identification numbers and account statements. The file contains records for over 500 clients across three regional offices.",
+            "Our DLP system flagged an email sent by a user in the Wealth Management division to a personal Gmail "
+            "address. The email contained an Excel attachment with client Social Security numbers, account balances, "
+            "and portfolio details for approximately 200 clients. This is a potential SOX and GDPR violation.",
+            "Microsoft Purview DLP triggered a high-severity alert: a user shared a SharePoint folder containing SEC "
+            "pre-filing documents with an external collaborator who is not authorized. The folder includes draft 10-K "
+            "filings and internal audit notes. This could constitute a material information leak.",
+            "DLP alert fired at 2:47 PM — a contractor in the finance department uploaded a file to a personal OneDrive"
+            " account containing client tax identification numbers and account statements. The file contains records fo"
+            "r over 500 clients across three regional offices.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Contain the data exposure by revoking external sharing links and quarantining the email. Begin compliance impact assessment.",
-            "Invoke the data leakage incident response procedure. Revoke access, preserve evidence, and assess regulatory notification requirements.",
+            "IMMEDIATE: Contain the data exposure by revoking external sharing links and quarantining the email. Begin "
+            "compliance impact assessment.",
+            "Invoke the data leakage incident response procedure. Revoke access, preserve evidence, and assess "
+            "regulatory notification requirements.",
         ],
         remediation_steps=[
             [
@@ -170,13 +203,22 @@ SCENARIOS: list[Scenario] = [
             "Ransomware detected — workstation quarantined",
         ],
         descriptions=[
-            "Microsoft Defender for Endpoint just popped up a critical alert on my workstation saying it detected ransomware behavior. Some of my local files have been renamed with a .locked extension. I immediately disconnected from WiFi. I'm in the trading operations group and this machine has cached credentials for Bloomberg and our order management system.",
-            "I opened a file from what I thought was a legitimate vendor email and now Defender is showing multiple critical alerts. My desktop background changed to a ransom note and I can see files being encrypted in real-time. I've unplugged the ethernet cable. This is a workstation on the trading floor network segment.",
-            "Getting multiple Defender alerts about Trojan:Win32/Conti.A on my workstation. Several files are already encrypted. I pulled the network cable immediately. I'm concerned about lateral spread — I was connected to three shared network drives when this started.",
+            "Microsoft Defender for Endpoint just popped up a critical alert on my workstation saying it detected "
+            "ransomware behavior. Some of my local files have been renamed with a .locked extension. I immediately "
+            "disconnected from WiFi. I'm in the trading operations group and this machine has cached credentials for "
+            "Bloomberg and our order management system.",
+            "I opened a file from what I thought was a legitimate vendor email and now Defender is showing multiple "
+            "critical alerts. My desktop background changed to a ransom note and I can see files being encrypted in "
+            "real-time. I've unplugged the ethernet cable. This is a workstation on the trading floor network segment.",
+            "Getting multiple Defender alerts about Trojan:Win32/Conti.A on my workstation. Several files are already e"
+            "ncrypted. I pulled the network cable immediately. I'm concerned about lateral spread — I was connected to "
+            "three shared network drives when this started.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Confirm network isolation of the affected device. Invoke the ransomware incident response playbook. Assess scope of encryption and potential lateral movement.",
-            "Trigger ransomware IR playbook. Verify device isolation, identify patient zero, and assess lateral movement risk across the network segment.",
+            "IMMEDIATE: Confirm network isolation of the affected device. Invoke the ransomware incident response "
+            "playbook. Assess scope of encryption and potential lateral movement.",
+            "Trigger ransomware IR playbook. Verify device isolation, identify patient zero, and assess lateral "
+            "movement risk across the network segment.",
         ],
         remediation_steps=[
             [
@@ -213,13 +255,23 @@ SCENARIOS: list[Scenario] = [
             "URGENT: SharePoint site with client SSNs is accessible to all employees",
         ],
         descriptions=[
-            "During a routine access review, I discovered a SharePoint site in the Wealth Management division that contains spreadsheets with client Social Security numbers, dates of birth, account numbers, and net worth figures. The site permissions are set to 'Everyone except external users' — meaning all 4,000+ Contoso employees can access it. This has been in place since at least Q2 2024.",
-            "A colleague forwarded me a link to a SharePoint document library that contains unencrypted client PII including tax IDs, bank routing numbers, and investment account details. The library is shared with the entire organization. We estimate over 15,000 client records are exposed. This is a serious regulatory concern under GDPR and state privacy laws.",
-            "I found a SharePoint site belonging to the Client Onboarding team that has full client Know Your Customer (KYC) documents — passports, utility bills, tax returns — with permissions open to the entire company. Some of these documents appear to be for European clients which makes this a GDPR issue as well.",
+            "During a routine access review, I discovered a SharePoint site in the Wealth Management division that "
+            "contains spreadsheets with client Social Security numbers, dates of birth, account numbers, and net worth "
+            "figures. The site permissions are set to 'Everyone except external users' — meaning all 4,000+ Contoso "
+            "employees can access it. This has been in place since at least Q2 2024.",
+            "A colleague forwarded me a link to a SharePoint document library that contains unencrypted client PII "
+            "including tax IDs, bank routing numbers, and investment account details. The library is shared with the "
+            "entire organization. We estimate over 15,000 client records are exposed. This is a serious regulatory "
+            "concern under GDPR and state privacy laws.",
+            "I found a SharePoint site belonging to the Client Onboarding team that has full client Know Your Customer "
+            "(KYC) documents — passports, utility bills, tax returns — with permissions open to the entire company. "
+            "Some of these documents appear to be for European clients which makes this a GDPR issue as well.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Restrict SharePoint site permissions to authorized personnel only. Begin data exposure assessment and engage the compliance and legal teams.",
-            "Lock down the SharePoint site permissions immediately. Initiate the data breach response procedure and assess regulatory notification obligations.",
+            "IMMEDIATE: Restrict SharePoint site permissions to authorized personnel only. Begin data exposure "
+            "assessment and engage the compliance and legal teams.",
+            "Lock down the SharePoint site permissions immediately. Initiate the data breach response procedure and "
+            "assess regulatory notification obligations.",
         ],
         remediation_steps=[
             [
@@ -251,13 +303,23 @@ SCENARIOS: list[Scenario] = [
             "External audit flagged critical security control failure",
         ],
         descriptions=[
-            "Our external auditors (Deloitte) identified a critical deficiency during the SOX IT General Controls audit: privileged access reviews for the core banking platform have not been completed for the last two quarters. This is a material weakness finding that must be remediated before the audit report is finalized in 3 weeks. We need IT to provide evidence of completed reviews or perform them immediately.",
-            "The SEC examination team flagged that our production change management process for the trade execution platform does not have documented evidence of segregation of duties. Specifically, the same individuals who develop changes are also approving and deploying them. This needs to be remediated with documented evidence within 10 business days.",
-            "Internal audit completed a PCI-DSS readiness assessment and found that network segmentation between the cardholder data environment and the corporate network is insufficient. We have 30 days to remediate before our official PCI assessment. This requires immediate coordination between network ops and security.",
+            "Our external auditors (Deloitte) identified a critical deficiency during the SOX IT General Controls audit"
+            ": privileged access reviews for the core banking platform have not been completed for the last two quarter"
+            "s. This is a material weakness finding that must be remediated before the audit report is finalized in 3 w"
+            "eeks. We need IT to provide evidence of completed reviews or perform them immediately.",
+            "The SEC examination team flagged that our production change management process for the trade execution "
+            "platform does not have documented evidence of segregation of duties. Specifically, the same individuals "
+            "who develop changes are also approving and deploying them. This needs to be remediated with documented "
+            "evidence within 10 business days.",
+            "Internal audit completed a PCI-DSS readiness assessment and found that network segmentation between the ca"
+            "rdholder data environment and the corporate network is insufficient. We have 30 days to remediate before o"
+            "ur official PCI assessment. This requires immediate coordination between network ops and security.",
         ],
         next_best_actions=[
-            "Engage the relevant IT teams to assess the finding and create a remediation plan with specific deadlines. Coordinate with the compliance team on evidence requirements.",
-            "Assemble a remediation task force, assess the control gap, and establish a timeline that meets audit deadlines.",
+            "Engage the relevant IT teams to assess the finding and create a remediation plan with specific deadlines. "
+            "Coordinate with the compliance team on evidence requirements.",
+            "Assemble a remediation task force, assess the control gap, and establish a timeline that meets audit "
+            "deadlines.",
         ],
         remediation_steps=[
             [
@@ -287,13 +349,21 @@ SCENARIOS: list[Scenario] = [
             "USB device policy violation — need exception or resolution",
         ],
         descriptions=[
-            "I plugged in a USB flash drive to transfer some presentation files to a conference room PC and Defender for Endpoint blocked it with a policy violation. I understand the security policy but I need a way to move these files. Is there an approved process for temporary USB exceptions?",
-            "I received a notification that my USB external hard drive was blocked by company policy. I use this drive to back up large design files that are too big for OneDrive sync. Can IT provide an alternative solution or grant an exception?",
-            "Our team received new USB security tokens from a vendor for a client project, but the endpoint protection is blocking them. We need these devices whitelisted for the project. They're hardware authentication tokens, not storage devices.",
+            "I plugged in a USB flash drive to transfer some presentation files to a conference room PC and Defender fo"
+            "r Endpoint blocked it with a policy violation. I understand the security policy but I need a way to move t"
+            "hese files. Is there an approved process for temporary USB exceptions?",
+            "I received a notification that my USB external hard drive was blocked by company policy. I use this drive "
+            "to back up large design files that are too big for OneDrive sync. Can IT provide an alternative solution "
+            "or grant an exception?",
+            "Our team received new USB security tokens from a vendor for a client project, but the endpoint protection "
+            "is blocking them. We need these devices whitelisted for the project. They're hardware authentication "
+            "tokens, not storage devices.",
         ],
         next_best_actions=[
-            "Review the USB policy violation details and advise the user on approved file transfer alternatives. Evaluate exception request if business-justified.",
-            "Investigate the specific device type and advise on policy-compliant alternatives or the exception request process.",
+            "Review the USB policy violation details and advise the user on approved file transfer alternatives. "
+            "Evaluate exception request if business-justified.",
+            "Investigate the specific device type and advise on policy-compliant alternatives or the exception request "
+            "process.",
         ],
         remediation_steps=[
             [
@@ -325,13 +395,23 @@ SCENARIOS: list[Scenario] = [
             "Suspicious bulk download activity from resigning employee",
         ],
         descriptions=[
-            "HR informed us that a Senior Portfolio Manager in the Equities division submitted their two-week notice yesterday. Our UEBA system is now flagging anomalous behavior: the employee has downloaded over 12 GB of data from SharePoint in the last 8 hours, including client relationship files, proprietary trading strategies, and performance reports. They appear to be syncing everything to a personal device.",
-            "Microsoft Defender for Cloud Apps alerted on a departing VP in Investment Banking who has been mass-downloading files from the M&A deal pipeline SharePoint site. The user is leaving for a competitor next month. The downloaded files include confidential pitch decks, financial models, and client contact lists totaling over 3,000 documents.",
-            "A manager reported that an analyst who resigned last week has been accessing and downloading files they don't normally work with. Our DLP dashboard shows over 500 files downloaded in the past 48 hours from three different confidential project sites. The employee's last day is Friday.",
+            "HR informed us that a Senior Portfolio Manager in the Equities division submitted their two-week notice "
+            "yesterday. Our UEBA system is now flagging anomalous behavior: the employee has downloaded over 12 GB of "
+            "data from SharePoint in the last 8 hours, including client relationship files, proprietary trading "
+            "strategies, and performance reports. They appear to be syncing everything to a personal device.",
+            "Microsoft Defender for Cloud Apps alerted on a departing VP in Investment Banking who has been "
+            "mass-downloading files from the M&A deal pipeline SharePoint site. The user is leaving for a competitor "
+            "next month. The downloaded files include confidential pitch decks, financial models, and client contact "
+            "lists totaling over 3,000 documents.",
+            "A manager reported that an analyst who resigned last week has been accessing and downloading files they "
+            "don't normally work with. Our DLP dashboard shows over 500 files downloaded in the past 48 hours from "
+            "three different confidential project sites. The employee's last day is Friday.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Restrict the employee's access to sensitive repositories. Coordinate with HR and legal for an insider threat investigation. Preserve all audit evidence.",
-            "Invoke the insider threat response procedure. Limit access to sensitive data, coordinate with HR and legal, and preserve forensic evidence.",
+            "IMMEDIATE: Restrict the employee's access to sensitive repositories. Coordinate with HR and legal for an "
+            "insider threat investigation. Preserve all audit evidence.",
+            "Invoke the insider threat response procedure. Limit access to sensitive data, coordinate with HR and "
+            "legal, and preserve forensic evidence.",
         ],
         remediation_steps=[
             [
@@ -367,13 +447,23 @@ SCENARIOS: list[Scenario] = [
             "Critical: TLS certificate for client-facing API expires this weekend",
         ],
         descriptions=[
-            "The SSL/TLS certificate for our production API gateway (api.contoso-fs.com) expires in 48 hours. This gateway handles all client-facing portfolio API calls and is used by our mobile app and third-party integrations. If it expires, all client connections will fail with certificate errors. We need an emergency renewal and deployment.",
-            "Monitoring alerted that the TLS certificate on our production Azure API Management instance for the trading execution API expires on Saturday at midnight. This endpoint processes approximately 50,000 transactions per day. Certificate auto-renewal failed because the certificate authority requires manual domain validation this time.",
-            "The wildcard certificate for *.prod.contoso-financial.com is expiring in 3 days. It covers 14 production services including the client portal, advisor dashboard, and payment processing gateway. Our certificate management tool shows the renewal was not initiated due to a workflow approval stuck in queue.",
+            "The SSL/TLS certificate for our production API gateway (api.contoso-fs.com) expires in 48 hours. This "
+            "gateway handles all client-facing portfolio API calls and is used by our mobile app and third-party "
+            "integrations. If it expires, all client connections will fail with certificate errors. We need an "
+            "emergency renewal and deployment.",
+            "Monitoring alerted that the TLS certificate on our production Azure API Management instance for the "
+            "trading execution API expires on Saturday at midnight. This endpoint processes approximately 50,000 "
+            "transactions per day. Certificate auto-renewal failed because the certificate authority requires manual "
+            "domain validation this time.",
+            "The wildcard certificate for *.prod.contoso-financial.com is expiring in 3 days. It covers 14 production "
+            "services including the client portal, advisor dashboard, and payment processing gateway. Our certificate "
+            "management tool shows the renewal was not initiated due to a workflow approval stuck in queue.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Initiate emergency certificate renewal process. Coordinate with the certificate authority and schedule deployment during the next available maintenance window.",
-            "Fast-track the certificate renewal through the CA. Prepare for off-hours deployment to minimize client impact.",
+            "IMMEDIATE: Initiate emergency certificate renewal process. Coordinate with the certificate authority and "
+            "schedule deployment during the next available maintenance window.",
+            "Fast-track the certificate renewal through the CA. Prepare for off-hours deployment to minimize client "
+            "impact.",
         ],
         remediation_steps=[
             [
@@ -409,13 +499,21 @@ SCENARIOS: list[Scenario] = [
             "Third-party pen test — need environment access set up",
         ],
         descriptions=[
-            "Our annual penetration test is scheduled for next Monday. The third-party firm (CrowdStrike Services) needs VPN access to our staging environment and firewall exceptions for their source IPs. Attached is the signed Statement of Work and Rules of Engagement. Can we get this set up by Friday?",
-            "We're running a targeted pen test on the new client onboarding portal before go-live. The testing firm needs access to the UAT environment at uat.onboarding.contoso-fs.com. They'll be testing from three static IPs that need to be whitelisted. Test window is December 2-6.",
-            "Requesting access provisioning for our quarterly penetration test. The security firm needs a test account with standard user privileges in the production-mirror environment, plus network access from their testing lab IP range. All approvals from the CISO are in place.",
+            "Our annual penetration test is scheduled for next Monday. The third-party firm (CrowdStrike Services) "
+            "needs VPN access to our staging environment and firewall exceptions for their source IPs. Attached is the "
+            "signed Statement of Work and Rules of Engagement. Can we get this set up by Friday?",
+            "We're running a targeted pen test on the new client onboarding portal before go-live. The testing firm nee"
+            "ds access to the UAT environment at uat.onboarding.contoso-fs.com. They'll be testing from three static IP"
+            "s that need to be whitelisted. Test window is December 2-6.",
+            "Requesting access provisioning for our quarterly penetration test. The security firm needs a test account "
+            "with standard user privileges in the production-mirror environment, plus network access from their testing"
+            " lab IP range. All approvals from the CISO are in place.",
         ],
         next_best_actions=[
-            "Verify the signed Rules of Engagement and SOW. Coordinate with network ops to provision VPN access and firewall exceptions within the approved scope.",
-            "Review the engagement documentation, confirm CISO approval, and coordinate access provisioning with a defined start/end window.",
+            "Verify the signed Rules of Engagement and SOW. Coordinate with network ops to provision VPN access and "
+            "firewall exceptions within the approved scope.",
+            "Review the engagement documentation, confirm CISO approval, and coordinate access provisioning with a "
+            "defined start/end window.",
         ],
         remediation_steps=[
             [
@@ -445,13 +543,19 @@ SCENARIOS: list[Scenario] = [
             "Security awareness training — need access to the portal",
         ],
         descriptions=[
-            "I received a reminder that my annual security awareness training is due by end of month but I can't find the link to the training portal. Can someone point me in the right direction? I want to make sure I complete it before the deadline.",
-            "My manager said I need to complete the security awareness training before my compliance certification is renewed. Where do I access this? Is it through the LMS or a separate platform?",
-            "I'm a new hire and was told I need to complete security awareness training within my first 30 days. I don't see it in my onboarding checklist in Workday. Can you help me find it?",
+            "I received a reminder that my annual security awareness training is due by end of month but I can't find "
+            "the link to the training portal. Can someone point me in the right direction? I want to make sure I "
+            "complete it before the deadline.",
+            "My manager said I need to complete the security awareness training before my compliance certification is "
+            "renewed. Where do I access this? Is it through the LMS or a separate platform?",
+            "I'm a new hire and was told I need to complete security awareness training within my first 30 days. I "
+            "don't see it in my onboarding checklist in Workday. Can you help me find it?",
         ],
         next_best_actions=[
-            "Provide the user with the direct link to the security awareness training portal and verify their enrollment status.",
-            "Direct the user to the training platform and confirm their enrollment. Check if there are access issues with the LMS.",
+            "Provide the user with the direct link to the security awareness training portal and verify their "
+            "enrollment status.",
+            "Direct the user to the training platform and confirm their enrollment. Check if there are access issues "
+            "with the LMS.",
         ],
         remediation_steps=[
             [
@@ -482,13 +586,22 @@ SCENARIOS: list[Scenario] = [
             "Antivirus blocking approved internal automation tool",
         ],
         descriptions=[
-            "Microsoft Defender for Endpoint is quarantining our internally developed reconciliation tool (ReconEngine.exe) every time it runs. This tool is used by the operations team daily to reconcile trade settlements. It was working fine until the latest Defender signature update. We need it whitelisted — it's a signed internal binary.",
-            "Defender is blocking a Python script that our quant team uses for portfolio risk calculations. It's flagging it as HackTool:Python/Mimikatz which is clearly a false positive — it's a pandas-based analytics script. This is disrupting our daily risk reporting process.",
-            "Our DevOps team's deployment automation tool is being flagged by Defender as Trojan:Win32/Generic. This is a custom-built tool that's been in use for two years and is digitally signed with our internal certificate. The false positive started after yesterday's definition update.",
+            "Microsoft Defender for Endpoint is quarantining our internally developed reconciliation tool (ReconEngine."
+            "exe) every time it runs. This tool is used by the operations team daily to reconcile trade settlements. It"
+            " was working fine until the latest Defender signature update. We need it whitelisted — it's a signed inter"
+            "nal binary.",
+            "Defender is blocking a Python script that our quant team uses for portfolio risk calculations. It's "
+            "flagging it as HackTool:Python/Mimikatz which is clearly a false positive — it's a pandas-based analytics "
+            "script. This is disrupting our daily risk reporting process.",
+            "Our DevOps team's deployment automation tool is being flagged by Defender as Trojan:Win32/Generic. This is"
+            " a custom-built tool that's been in use for two years and is digitally signed with our internal certificat"
+            "e. The false positive started after yesterday's definition update.",
         ],
         next_best_actions=[
-            "Verify the flagged binary is legitimate by checking its digital signature and hash against known-good versions. If confirmed as false positive, submit to Microsoft and create a targeted exclusion.",
-            "Validate the binary's integrity, submit a false positive report to Microsoft, and create a scoped Defender exclusion for the application.",
+            "Verify the flagged binary is legitimate by checking its digital signature and hash against known-good "
+            "versions. If confirmed as false positive, submit to Microsoft and create a targeted exclusion.",
+            "Validate the binary's integrity, submit a false positive report to Microsoft, and create a scoped Defender"
+            " exclusion for the application.",
         ],
         remediation_steps=[
             [
@@ -518,13 +631,21 @@ SCENARIOS: list[Scenario] = [
             "App Control blocked a program I need for work",
         ],
         descriptions=[
-            "I installed a free PDF editor from the internet because the one we have doesn't support batch processing. Now I'm getting alerts from the endpoint management system saying it's not approved software. I need this for my daily workflow — is there an approved alternative or can this one be added to the whitelist?",
-            "Intune compliance check flagged my workstation for having unauthorized software: a personal cloud sync client (Dropbox) and a remote desktop tool (AnyDesk). I installed them for convenience but I understand they may violate our security policy. What should I do?",
-            "I'm a developer and I need to install Wireshark for network troubleshooting on a client integration project. The software deployment portal says it's restricted. Can I get an exception for this? It's a legitimate business need and our team lead has approved it.",
+            "I installed a free PDF editor from the internet because the one we have doesn't support batch processing. "
+            "Now I'm getting alerts from the endpoint management system saying it's not approved software. I need this "
+            "for my daily workflow — is there an approved alternative or can this one be added to the whitelist?",
+            "Intune compliance check flagged my workstation for having unauthorized software: a personal cloud sync "
+            "client (Dropbox) and a remote desktop tool (AnyDesk). I installed them for convenience but I understand "
+            "they may violate our security policy. What should I do?",
+            "I'm a developer and I need to install Wireshark for network troubleshooting on a client integration "
+            "project. The software deployment portal says it's restricted. Can I get an exception for this? It's a "
+            "legitimate business need and our team lead has approved it.",
         ],
         next_best_actions=[
-            "Review the unauthorized software list, assess risk, and either provide approved alternatives or guide the user through the software exception request process.",
-            "Verify the software detected, assess compliance and security risk, and advise on removal or exception procedures.",
+            "Review the unauthorized software list, assess risk, and either provide approved alternatives or guide the "
+            "user through the software exception request process.",
+            "Verify the software detected, assess compliance and security risk, and advise on removal or exception "
+            "procedures.",
         ],
         remediation_steps=[
             [
@@ -557,13 +678,24 @@ SCENARIOS: list[Scenario] = [
             "Possible compromise of DBA privileged account",
         ],
         descriptions=[
-            "Our SIEM detected highly anomalous activity on a domain admin account (svc-admin-prod): Kerberoasting patterns followed by lateral movement to three domain controllers at 2 AM. No change requests were scheduled. The account has full administrative privileges across all production Active Directory forests including the ones hosting our core banking infrastructure.",
-            "Azure AD Identity Protection flagged our global admin account with a high-risk score. We're seeing sign-ins from TOR exit nodes and the creation of new service principals with Graph API permissions. This account has access to the Azure AD tenant that manages all employee and contractor identities for the firm.",
-            "The database team's privileged admin account for the production SQL cluster is showing login activity outside of normal maintenance windows. Someone used the account at 11 PM to export the entire client transactions table. No DBAs were working and no maintenance was scheduled. This database holds 5 years of regulated financial transaction data.",
+            "Our SIEM detected highly anomalous activity on a domain admin account (svc-admin-prod): Kerberoasting "
+            "patterns followed by lateral movement to three domain controllers at 2 AM. No change requests were "
+            "scheduled. The account has full administrative privileges across all production Active Directory forests "
+            "including the ones hosting our core banking infrastructure.",
+            "Azure AD Identity Protection flagged our global admin account with a high-risk score. We're seeing "
+            "sign-ins from TOR exit nodes and the creation of new service principals with Graph API permissions. This "
+            "account has access to the Azure AD tenant that manages all employee and contractor identities for the "
+            "firm.",
+            "The database team's privileged admin account for the production SQL cluster is showing login activity "
+            "outside of normal maintenance windows. Someone used the account at 11 PM to export the entire client "
+            "transactions table. No DBAs were working and no maintenance was scheduled. This database holds 5 years of "
+            "regulated financial transaction data.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Disable the compromised privileged account and cut active sessions. Invoke the critical incident response playbook. Assess scope of access and potential data exposure.",
-            "Trigger the privileged account compromise incident response procedure. Disable the account, preserve logs, and begin forensic investigation of all systems accessed.",
+            "IMMEDIATE: Disable the compromised privileged account and cut active sessions. Invoke the critical "
+            "incident response playbook. Assess scope of access and potential data exposure.",
+            "Trigger the privileged account compromise incident response procedure. Disable the account, preserve logs,"
+            " and begin forensic investigation of all systems accessed.",
         ],
         remediation_steps=[
             [
@@ -600,13 +732,22 @@ SCENARIOS: list[Scenario] = [
             "CSPM finding — Azure SQL database without encryption",
         ],
         descriptions=[
-            "Microsoft Defender for Cloud flagged a high-severity finding: an Azure Storage Account in the production subscription has anonymous blob access enabled. The storage account name suggests it belongs to the data analytics team and may contain exported client reports. Secure Score dropped from 78% to 71%.",
-            "Our weekly CSPM review identified three Azure SQL databases in the production environment that don't have Transparent Data Encryption (TDE) enabled. These databases are used by the loan origination platform and contain applicant financial data. This likely violates our encryption-at-rest policy and PCI-DSS requirements.",
-            "Defender for Cloud is reporting that several Azure Virtual Machines in our production subscription have public IP addresses with unrestricted NSG rules (0.0.0.0/0 inbound on port 3389). These VMs are running our financial reporting middleware. This is a critical exposure that needs to be locked down.",
+            "Microsoft Defender for Cloud flagged a high-severity finding: an Azure Storage Account in the production "
+            "subscription has anonymous blob access enabled. The storage account name suggests it belongs to the data "
+            "analytics team and may contain exported client reports. Secure Score dropped from 78% to 71%.",
+            "Our weekly CSPM review identified three Azure SQL databases in the production environment that don't have "
+            "Transparent Data Encryption (TDE) enabled. These databases are used by the loan origination platform and "
+            "contain applicant financial data. This likely violates our encryption-at-rest policy and PCI-DSS "
+            "requirements.",
+            "Defender for Cloud is reporting that several Azure Virtual Machines in our production subscription have "
+            "public IP addresses with unrestricted NSG rules (0.0.0.0/0 inbound on port 3389). These VMs are running "
+            "our financial reporting middleware. This is a critical exposure that needs to be locked down.",
         ],
         next_best_actions=[
-            "Assess the finding severity and determine if any data is currently exposed. Remediate the misconfiguration and audit other resources in the same subscription for similar issues.",
-            "Investigate the misconfigured resources, determine data exposure risk, and apply the correct security configurations.",
+            "Assess the finding severity and determine if any data is currently exposed. Remediate the misconfiguration"
+            " and audit other resources in the same subscription for similar issues.",
+            "Investigate the misconfigured resources, determine data exposure risk, and apply the correct security "
+            "configurations.",
         ],
         remediation_steps=[
             [
@@ -640,13 +781,24 @@ SCENARIOS: list[Scenario] = [
             "Client requesting full data deletion under GDPR",
         ],
         descriptions=[
-            "We received a formal GDPR Article 17 (right to erasure) request from a former client based in Germany. They want all their personal data deleted from our systems within the 30-day regulatory window. Their data exists in our CRM (Salesforce), the client portal database, email archives, and potentially in analytics data lakes. We need to coordinate the deletion across all systems.",
-            "A UK-based client has exercised their right to erasure under UK GDPR. They've sent a formal request through our Data Protection Officer. We need to locate and delete their personal data from all systems within the statutory timeframe. The client had an active advisory relationship from 2019-2023 so their data may be in multiple systems.",
-            "The legal team forwarded a GDPR deletion request from a French client. We need to identify all personal data across our systems and execute deletion while preserving any data required for legal holds or regulatory retention requirements. This needs to be carefully handled to balance deletion with our SOX retention obligations.",
+            "We received a formal GDPR Article 17 (right to erasure) request from a former client based in Germany. The"
+            "y want all their personal data deleted from our systems within the 30-day regulatory window. Their data ex"
+            "ists in our CRM (Salesforce), the client portal database, email archives, and potentially in analytics dat"
+            "a lakes. We need to coordinate the deletion across all systems.",
+            "A UK-based client has exercised their right to erasure under UK GDPR. They've sent a formal request "
+            "through our Data Protection Officer. We need to locate and delete their personal data from all systems "
+            "within the statutory timeframe. The client had an active advisory relationship from 2019-2023 so their "
+            "data may be in multiple systems.",
+            "The legal team forwarded a GDPR deletion request from a French client. We need to identify all personal "
+            "data across our systems and execute deletion while preserving any data required for legal holds or "
+            "regulatory retention requirements. This needs to be carefully handled to balance deletion with our SOX "
+            "retention obligations.",
         ],
         next_best_actions=[
-            "Initiate the GDPR data subject request workflow. Identify all systems containing the individual's data and coordinate deletion while respecting legal hold and retention requirements.",
-            "Engage the data privacy team to map all systems containing the subject's data. Begin the deletion process within the regulatory timeframe.",
+            "Initiate the GDPR data subject request workflow. Identify all systems containing the individual's data and"
+            " coordinate deletion while respecting legal hold and retention requirements.",
+            "Engage the data privacy team to map all systems containing the subject's data. Begin the deletion process "
+            "within the regulatory timeframe.",
         ],
         remediation_steps=[
             [
@@ -680,13 +832,24 @@ SCENARIOS: list[Scenario] = [
             "SOX audit prep — need IT controls evidence for financial reporting systems",
         ],
         descriptions=[
-            "During our SOX 404 testing, we found that the access control matrix for the general ledger system (SAP FICO) has not been updated after the last organizational restructuring. Several terminated employees still have active accounts, and three users in the finance team have conflicting roles that violate segregation of duties. This needs immediate remediation before the external auditors begin fieldwork in two weeks.",
-            "Our SOX compliance team identified a gap in the change management controls for the financial reporting platform: 15 production deployments in Q3 were missing documented approval from the change advisory board. We need IT to locate the approval records or document the finding and remediation plan for the external auditors.",
-            "Question from the CFO's office: we're being asked by our external auditors to provide evidence that all access to the financial consolidation system is reviewed quarterly. Can IT provide the last four quarters of access review reports? If they haven't been done, we need to start immediately — this is a SOX material weakness if unaddressed.",
+            "During our SOX 404 testing, we found that the access control matrix for the general ledger system (SAP FIC"
+            "O) has not been updated after the last organizational restructuring. Several terminated employees still ha"
+            "ve active accounts, and three users in the finance team have conflicting roles that violate segregation of"
+            " duties. This needs immediate remediation before the external auditors begin fieldwork in two weeks.",
+            "Our SOX compliance team identified a gap in the change management controls for the financial reporting pla"
+            "tform: 15 production deployments in Q3 were missing documented approval from the change advisory board. We"
+            " need IT to locate the approval records or document the finding and remediation plan for the external audi"
+            "tors.",
+            "Question from the CFO's office: we're being asked by our external auditors to provide evidence that all ac"
+            "cess to the financial consolidation system is reviewed quarterly. Can IT provide the last four quarters of"
+            " access review reports? If they haven't been done, we need to start immediately — this is a SOX material w"
+            "eakness if unaddressed.",
         ],
         next_best_actions=[
-            "Assess the SOX finding, identify the specific control deficiency, and create a remediation plan with deadlines aligned to the audit timeline.",
-            "Engage the IT controls team and compliance to evaluate the finding severity and coordinate immediate remediation actions.",
+            "Assess the SOX finding, identify the specific control deficiency, and create a remediation plan with "
+            "deadlines aligned to the audit timeline.",
+            "Engage the IT controls team and compliance to evaluate the finding severity and coordinate immediate "
+            "remediation actions.",
         ],
         remediation_steps=[
             [
@@ -721,13 +884,24 @@ SCENARIOS: list[Scenario] = [
             "Production server missing critical security patches",
         ],
         descriptions=[
-            "Our weekly Qualys vulnerability scan identified a critical vulnerability (CVE-2024-38077, CVSS 9.8) on a Windows Server hosting the trade matching engine. The vulnerability allows remote code execution without authentication. The server is internet-facing through the DMZ and processes real-time trade executions. Patch is available from Microsoft but requires a reboot.",
-            "Vulnerability scan results show three production Linux servers running the client API layer have OpenSSL versions affected by CVE-2024-5535 (heap buffer overflow). These servers handle TLS termination for all client-facing HTTPS traffic. The vulnerable OpenSSL version needs to be upgraded, which requires a service restart during a maintenance window.",
-            "Tenable scan flagged a critical Apache Struts vulnerability on our financial reporting web application server. This is the same class of vulnerability that caused the Equifax breach. The server hosts our quarterly earnings data during filing periods. We need to patch this immediately but it's currently in the SOX change freeze period.",
+            "Our weekly Qualys vulnerability scan identified a critical vulnerability (CVE-2024-38077, CVSS 9.8) on a "
+            "Windows Server hosting the trade matching engine. The vulnerability allows remote code execution without "
+            "authentication. The server is internet-facing through the DMZ and processes real-time trade executions. "
+            "Patch is available from Microsoft but requires a reboot.",
+            "Vulnerability scan results show three production Linux servers running the client API layer have OpenSSL v"
+            "ersions affected by CVE-2024-5535 (heap buffer overflow). These servers handle TLS termination for all cli"
+            "ent-facing HTTPS traffic. The vulnerable OpenSSL version needs to be upgraded, which requires a service re"
+            "start during a maintenance window.",
+            "Tenable scan flagged a critical Apache Struts vulnerability on our financial reporting web application ser"
+            "ver. This is the same class of vulnerability that caused the Equifax breach. The server hosts our quarterl"
+            "y earnings data during filing periods. We need to patch this immediately but it's currently in the SOX cha"
+            "nge freeze period.",
         ],
         next_best_actions=[
-            "Assess the vulnerability's exploitability and potential impact. Schedule emergency patching within the SLA for critical vulnerabilities. Request change freeze exception if necessary.",
-            "Evaluate the risk, check for active exploitation in the wild, and coordinate emergency patching with a defined rollback plan.",
+            "Assess the vulnerability's exploitability and potential impact. Schedule emergency patching within the SLA"
+            " for critical vulnerabilities. Request change freeze exception if necessary.",
+            "Evaluate the risk, check for active exploitation in the wild, and coordinate emergency patching with a "
+            "defined rollback plan.",
         ],
         remediation_steps=[
             [
@@ -758,13 +932,24 @@ SCENARIOS: list[Scenario] = [
             "Departing employee sending confidential files to personal email",
         ],
         descriptions=[
-            "We have multiple DLP alerts firing for an employee in the Investment Advisory group who submitted their resignation yesterday. The alerts show the employee emailing large attachments containing client portfolio data and proprietary investment research to a personal email address. Over the past 24 hours, they've sent 47 emails with attachments totaling 2.3 GB to three different external addresses.",
-            "A departing Managing Director in the M&A division has triggered 12 DLP alerts in the past 6 hours. The alerts indicate they're uploading confidential deal documents, client financial statements, and revenue projections to a personal cloud storage service. This individual had access to material non-public information for three active acquisitions.",
-            "HR escalated to us that an employee who was terminated this morning (effective immediately) was observed at their desk before the termination meeting sending emails. Our DLP dashboard now shows 23 policy matches in the last 2 hours — all outbound emails with attachments containing client PII and financial data sent to addresses outside our domain.",
+            "We have multiple DLP alerts firing for an employee in the Investment Advisory group who submitted their re"
+            "signation yesterday. The alerts show the employee emailing large attachments containing client portfolio d"
+            "ata and proprietary investment research to a personal email address. Over the past 24 hours, they've sent "
+            "47 emails with attachments totaling 2.3 GB to three different external addresses.",
+            "A departing Managing Director in the M&A division has triggered 12 DLP alerts in the past 6 hours. The "
+            "alerts indicate they're uploading confidential deal documents, client financial statements, and revenue "
+            "projections to a personal cloud storage service. This individual had access to material non-public "
+            "information for three active acquisitions.",
+            "HR escalated to us that an employee who was terminated this morning (effective immediately) was observed a"
+            "t their desk before the termination meeting sending emails. Our DLP dashboard now shows 23 policy matches "
+            "in the last 2 hours — all outbound emails with attachments containing client PII and financial data sent t"
+            "o addresses outside our domain.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Block the employee's outbound email and external sharing capabilities. Preserve all DLP evidence and coordinate with HR and legal for the insider threat investigation.",
-            "Restrict the employee's access to email and external sharing. Invoke the insider threat response procedure with HR and legal involvement.",
+            "IMMEDIATE: Block the employee's outbound email and external sharing capabilities. Preserve all DLP "
+            "evidence and coordinate with HR and legal for the insider threat investigation.",
+            "Restrict the employee's access to email and external sharing. Invoke the insider threat response procedure"
+            " with HR and legal involvement.",
         ],
         remediation_steps=[
             [
@@ -796,13 +981,20 @@ SCENARIOS: list[Scenario] = [
             "Reporting potential phishing email to security team",
         ],
         descriptions=[
-            "I received a suspicious email that claims to be from our benefits provider asking me to update my banking details. I'm pretty sure it's the monthly phishing simulation test but I wanted to report it anyway just in case it's real. I did NOT click any links.",
-            "Got an email asking me to verify my identity for a bonus payout. Looks phishy (pun intended). I used the Report Phishing button in Outlook. If it's a real phish, you're welcome. If it's the simulation test, do I get a gold star?",
-            "Reporting a suspicious email I received about an urgent wire transfer approval. I think this might be the security team's phishing test. Either way, I'm flagging it as suspicious and not interacting with it.",
+            "I received a suspicious email that claims to be from our benefits provider asking me to update my banking "
+            "details. I'm pretty sure it's the monthly phishing simulation test but I wanted to report it anyway just "
+            "in case it's real. I did NOT click any links.",
+            "Got an email asking me to verify my identity for a bonus payout. Looks phishy (pun intended). I used the R"
+            "eport Phishing button in Outlook. If it's a real phish, you're welcome. If it's the simulation test, do I "
+            "get a gold star?",
+            "Reporting a suspicious email I received about an urgent wire transfer approval. I think this might be the "
+            "security team's phishing test. Either way, I'm flagging it as suspicious and not interacting with it.",
         ],
         next_best_actions=[
-            "Acknowledge the report positively. If this was a phishing simulation, record the successful report. If not, escalate to the phishing analysis queue.",
-            "Thank the user for their vigilance, verify if this was a simulation exercise, and record the interaction appropriately.",
+            "Acknowledge the report positively. If this was a phishing simulation, record the successful report. If "
+            "not, escalate to the phishing analysis queue.",
+            "Thank the user for their vigilance, verify if this was a simulation exercise, and record the interaction "
+            "appropriately.",
         ],
         remediation_steps=[
             [
@@ -833,13 +1025,24 @@ SCENARIOS: list[Scenario] = [
             "Defender for Server flagged cryptomining activity",
         ],
         descriptions=[
-            "Microsoft Defender for Servers flagged a cryptomining process (xmrig) running on one of our production application servers in the Azure East US region. The server's CPU has been pegged at 98% for the past 6 hours, which initially appeared as a performance issue. This server hosts a microservice in the payment processing pipeline and has network access to the cardholder data environment.",
-            "Our infrastructure monitoring team noticed abnormal CPU usage on a Linux server in the data center. Investigation revealed an unauthorized process making outbound connections to known cryptomining pools on port 3333. The server runs batch processing for overnight trade settlements. We suspect it was compromised through an unpatched Apache vulnerability we identified in last week's scan.",
-            "During a routine performance investigation, we discovered a hidden cryptomining binary running under a legitimate service account on a production Windows server. The process was disguised as a system service and has been running for approximately 2 weeks based on file timestamps. This server is part of our PCI-DSS scoped environment for card transaction processing.",
+            "Microsoft Defender for Servers flagged a cryptomining process (xmrig) running on one of our production "
+            "application servers in the Azure East US region. The server's CPU has been pegged at 98% for the past 6 "
+            "hours, which initially appeared as a performance issue. This server hosts a microservice in the payment "
+            "processing pipeline and has network access to the cardholder data environment.",
+            "Our infrastructure monitoring team noticed abnormal CPU usage on a Linux server in the data center. Invest"
+            "igation revealed an unauthorized process making outbound connections to known cryptomining pools on port 3"
+            "333. The server runs batch processing for overnight trade settlements. We suspect it was compromised throu"
+            "gh an unpatched Apache vulnerability we identified in last week's scan.",
+            "During a routine performance investigation, we discovered a hidden cryptomining binary running under a "
+            "legitimate service account on a production Windows server. The process was disguised as a system service "
+            "and has been running for approximately 2 weeks based on file timestamps. This server is part of our "
+            "PCI-DSS scoped environment for card transaction processing.",
         ],
         next_best_actions=[
-            "IMMEDIATE: Isolate the compromised server from the network. Determine the initial access vector and assess whether the attacker has moved laterally. This is a confirmed compromise of a production system.",
-            "Invoke the server compromise incident response playbook. Isolate the host, preserve forensic evidence, and determine how the attacker gained access.",
+            "IMMEDIATE: Isolate the compromised server from the network. Determine the initial access vector and assess"
+            " whether the attacker has moved laterally. This is a confirmed compromise of a production system.",
+            "Invoke the server compromise incident response playbook. Isolate the host, preserve forensic evidence, and"
+            " determine how the attacker gained access.",
         ],
         remediation_steps=[
             [
@@ -871,11 +1074,18 @@ SCENARIOS: list[Scenario] = [
             "CEO impersonation email sent to finance leadership",
         ],
         descriptions=[
-            "Our CFO just forwarded me a suspicious email that appeared to come from our CEO asking for an urgent wire transfer of $2.3M to a new vendor. The email came from a lookalike domain (contoso-financial.com instead of contoso.com). The CFO almost approved it before noticing the domain discrepancy. We need to investigate if anyone else received similar emails.",
-            "A highly targeted phishing email was received by three members of the executive team today. The email perfectly mimics our CEO's writing style and references an actual board meeting from last week. It requests approval for a 'confidential acquisition payment.' The email headers show it originated from Eastern Europe.",
+            "Our CFO just forwarded me a suspicious email that appeared to come from our CEO asking for an urgent wire "
+            "transfer of $2.3M to a new vendor. The email came from a lookalike domain (contoso-financial.com instead o"
+            "f contoso.com). The CFO almost approved it before noticing the domain discrepancy. We need to investigate "
+            "if anyone else received similar emails.",
+            "A highly targeted phishing email was received by three members of the executive team today. The email "
+            "perfectly mimics our CEO's writing style and references an actual board meeting from last week. It "
+            "requests approval for a 'confidential acquisition payment.' The email headers show it originated from "
+            "Eastern Europe.",
         ],
         next_best_actions=[
-            "Immediately quarantine the phishing email across all mailboxes. Investigate the extent of the campaign and block the lookalike domain.",
+            "Immediately quarantine the phishing email across all mailboxes. Investigate the extent of the campaign and"
+            " block the lookalike domain.",
         ],
         remediation_steps=[
             [
@@ -904,11 +1114,16 @@ SCENARIOS: list[Scenario] = [
             "Large-scale download of sensitive client data detected",
         ],
         descriptions=[
-            "Our DLP system flagged a user in the Client Services team who downloaded over 10,000 client records including names, SSNs, and account numbers to their local machine today. The user has a 2-week notice period and their last day is next Friday. This could be data exfiltration by a departing employee.",
-            "Microsoft Purview DLP triggered a high-severity alert: a user exported the entire client contact database (12,500 records with PII) from Dynamics CRM to a CSV file. The user is in the Wealth Management division. The download happened at 11 PM last night, which is unusual for this user.",
+            "Our DLP system flagged a user in the Client Services team who downloaded over 10,000 client records "
+            "including names, SSNs, and account numbers to their local machine today. The user has a 2-week notice "
+            "period and their last day is next Friday. This could be data exfiltration by a departing employee.",
+            "Microsoft Purview DLP triggered a high-severity alert: a user exported the entire client contact database "
+            "(12,500 records with PII) from Dynamics CRM to a CSV file. The user is in the Wealth Management division. "
+            "The download happened at 11 PM last night, which is unusual for this user.",
         ],
         next_best_actions=[
-            "Immediately disable the user's data export capabilities and investigate. Determine if this is authorized activity or potential data exfiltration. Preserve forensic evidence.",
+            "Immediately disable the user's data export capabilities and investigate. Determine if this is authorized "
+            "activity or potential data exfiltration. Preserve forensic evidence.",
         ],
         remediation_steps=[
             [
@@ -936,11 +1151,17 @@ SCENARIOS: list[Scenario] = [
             "Emergency patch needed for Exchange zero-day vulnerability",
         ],
         descriptions=[
-            "Microsoft just published CVE-2026-XXXXX, a critical remote code execution vulnerability in Exchange Server that's being actively exploited. Our Exchange hybrid deployment uses on-prem Exchange 2019 servers. The CISA advisory says this is being used in targeted attacks against financial services. We need to patch immediately.",
-            "A critical zero-day was disclosed today affecting Exchange Server 2019 CU14. Active exploitation has been confirmed by multiple security vendors. Our on-prem Exchange servers are potentially vulnerable. The CVE has a CVSS score of 9.8 and doesn't require authentication to exploit.",
+            "Microsoft just published CVE-2026-XXXXX, a critical remote code execution vulnerability in Exchange Server"
+            " that's being actively exploited. Our Exchange hybrid deployment uses on-prem Exchange 2019 servers. The C"
+            "ISA advisory says this is being used in targeted attacks against financial services. We need to patch imme"
+            "diately.",
+            "A critical zero-day was disclosed today affecting Exchange Server 2019 CU14. Active exploitation has been "
+            "confirmed by multiple security vendors. Our on-prem Exchange servers are potentially vulnerable. The CVE "
+            "has a CVSS score of 9.8 and doesn't require authentication to exploit.",
         ],
         next_best_actions=[
-            "Immediately assess exposure to the CVE. Apply emergency mitigations while preparing to deploy the patch. Scan for indicators of compromise.",
+            "Immediately assess exposure to the CVE. Apply emergency mitigations while preparing to deploy the patch. "
+            "Scan for indicators of compromise.",
         ],
         remediation_steps=[
             [
@@ -969,11 +1190,16 @@ SCENARIOS: list[Scenario] = [
             "USB mass storage device detected on managed workstation",
         ],
         descriptions=[
-            "I received an alert that one of my team members plugged a personal USB flash drive into their workstation and copied files to it. Our policy prohibits unauthorized USB storage devices. The employee says they were just transferring a presentation for an off-site meeting. I need guidance on how to handle this.",
-            "Endpoint protection flagged a USB mass storage device connection on a workstation in the Trading department. The user attempted to copy 2.3 GB of data to the drive before the DLP policy blocked it. The user claims it was accidental.",
+            "I received an alert that one of my team members plugged a personal USB flash drive into their workstation "
+            "and copied files to it. Our policy prohibits unauthorized USB storage devices. The employee says they were"
+            " just transferring a presentation for an off-site meeting. I need guidance on how to handle this.",
+            "Endpoint protection flagged a USB mass storage device connection on a workstation in the Trading "
+            "department. The user attempted to copy 2.3 GB of data to the drive before the DLP policy blocked it. The "
+            "user claims it was accidental.",
         ],
         next_best_actions=[
-            "Review the DLP alert details and determine what data was accessed. Verify with the user's manager if the activity was authorized.",
+            "Review the DLP alert details and determine what data was accessed. Verify with the user's manager if the "
+            "activity was authorized.",
         ],
         remediation_steps=[
             [
@@ -1000,11 +1226,17 @@ SCENARIOS: list[Scenario] = [
             "MDE false positive on critical trading desk application",
         ],
         descriptions=[
-            "Microsoft Defender for Endpoint is flagging and quarantining our proprietary trading application (ContosoTrader.exe) as potentially unwanted software. This started after today's signature update. The trading floor is losing the ability to execute trades every time Defender runs a scan. We need an immediate exclusion.",
-            "Defender is blocking our custom-built risk analytics tool as 'Trojan:Win32/Generic'. This is our own internally developed software, not malware. The latest Defender definitions update caused this false positive. 40 traders can't do their jobs.",
+            "Microsoft Defender for Endpoint is flagging and quarantining our proprietary trading application "
+            "(ContosoTrader.exe) as potentially unwanted software. This started after today's signature update. The "
+            "trading floor is losing the ability to execute trades every time Defender runs a scan. We need an "
+            "immediate exclusion.",
+            "Defender is blocking our custom-built risk analytics tool as 'Trojan:Win32/Generic'. This is our own "
+            "internally developed software, not malware. The latest Defender definitions update caused this false "
+            "positive. 40 traders can't do their jobs.",
         ],
         next_best_actions=[
-            "Create an immediate Defender exclusion for the legitimate application while submitting a false positive report to Microsoft.",
+            "Create an immediate Defender exclusion for the legitimate application while submitting a false positive "
+            "report to Microsoft.",
         ],
         remediation_steps=[
             [

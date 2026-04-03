@@ -1,9 +1,7 @@
 """Data models for eval ticket generation."""
 
-from __future__ import annotations
-
-from dataclasses import dataclass, field
-
+from dataclasses import dataclass
+from dataclasses import field
 
 # ── Constrained vocabulary ──────────────────────────────────────────────────
 
@@ -69,9 +67,14 @@ class Scenario:
     next_best_actions: list[str]
     remediation_steps: list[list[str]]
     tags: list[str] = field(default_factory=list)
-    channel_weights: dict[str, float] = field(default_factory=lambda: {
-        "email": 0.30, "chat": 0.25, "portal": 0.25, "phone": 0.20,
-    })
+    channel_weights: dict[str, float] = field(
+        default_factory=lambda: {
+            "email": 0.30,
+            "chat": 0.25,
+            "portal": 0.25,
+            "phone": 0.20,
+        }
+    )
 
 
 @dataclass

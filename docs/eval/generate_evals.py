@@ -10,16 +10,14 @@ Output:
     ../data/tickets/generated_eval_gold.json
 """
 
-from __future__ import annotations
-
 import argparse
+import json
 import sys
 from pathlib import Path
 
-# Add parent to path so generator package is importable
-sys.path.insert(0, str(Path(__file__).parent))
-
-from generator.engine import TicketGenerator, print_statistics, save_dataset
+from generator.engine import TicketGenerator
+from generator.engine import print_statistics
+from generator.engine import save_dataset
 from generator.models import Scenario
 from generator.scenarios.access_auth import SCENARIOS as ACCESS_AUTH_SCENARIOS
 from generator.scenarios.data_storage import SCENARIOS as DATA_STORAGE_SCENARIOS
@@ -53,9 +51,7 @@ def collect_all_scenarios() -> list[Scenario]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Generate eval dataset for IT ticket triage."
-    )
+    parser = argparse.ArgumentParser(description="Generate eval dataset for IT ticket triage.")
     parser.add_argument(
         "--count",
         type=int,
@@ -82,17 +78,12 @@ def main() -> int:
     args = parser.parse_args()
 
     # Resolve output directory
-    if args.output_dir:
-        output_dir = Path(args.output_dir)
-    else:
-        output_dir = Path(__file__).parent.parent / "data" / "tickets"
+    output_dir = Path(args.output_dir) if args.output_dir else Path(__file__).parent.parent / "data" / "tickets"
 
     tickets_path = output_dir / "eval_generated.json"
     golds_path = output_dir / "eval_generated_gold.json"
 
     if args.validate_only:
-        import json
-
         if not tickets_path.exists() or not golds_path.exists():
             print("Error: generated files not found for validation")
             return 1
@@ -137,7 +128,7 @@ def main() -> int:
         print("\nFix validation errors before saving.")
         return 1
 
-    print(f"Validation PASSED")
+    print("Validation PASSED")
 
     # Save
     output_dir.mkdir(parents=True, exist_ok=True)

@@ -1,7 +1,5 @@
 """General Inquiry scenario definitions."""
 
-from __future__ import annotations
-
 from generator.models import Scenario
 
 SCENARIOS: list[Scenario] = [
@@ -19,9 +17,12 @@ SCENARIOS: list[Scenario] = [
             "Where do I go to reserve a room?",
         ],
         descriptions=[
-            "Hi, I just joined the company last week and I need to book a meeting room for a client visit on Thursday. Could someone point me to the right tool or link? I'm not sure if there's a specific app we use.",
-            "Can someone explain how to reserve a conference room? I tried looking on the intranet but the links seem outdated. I need a room that fits 10 people for Friday at 2 PM.",
-            "Is there a meeting room booking system? My manager told me to book Room 4B for our sprint planning but I have no idea where to do that. Any help appreciated!",
+            "Hi, I just joined the company last week and I need to book a meeting room for a client visit on Thursday. "
+            "Could someone point me to the right tool or link? I'm not sure if there's a specific app we use.",
+            "Can someone explain how to reserve a conference room? I tried looking on the intranet but the links seem "
+            "outdated. I need a room that fits 10 people for Friday at 2 PM.",
+            "Is there a meeting room booking system? My manager told me to book Room 4B for our sprint planning but I "
+            "have no idea where to do that. Any help appreciated!",
         ],
         next_best_actions=[
             "Provide link to room booking system and brief instructions for reserving a room.",
@@ -52,9 +53,13 @@ SCENARIOS: list[Scenario] = [
             "IT setup requirements for incoming hire",
         ],
         descriptions=[
-            "We have a new team member starting on the 15th. Could you send me the standard IT onboarding checklist so I can make sure everything is ready? They'll need a laptop, accounts, and building access.",
-            "I'm a hiring manager and I want to prepare for my new hire who starts next Monday. Can I get the full IT onboarding checklist? I need to know what hardware to request, which accounts to provision, and how to get their badge activated.",
-            "Hi IT, I'm onboarding a new analyst on my team in two weeks. What's the standard process for getting them set up with a laptop, email, VPN, and all the usual tools? Is there a checklist I should follow?",
+            "We have a new team member starting on the 15th. Could you send me the standard IT onboarding checklist so "
+            "I can make sure everything is ready? They'll need a laptop, accounts, and building access.",
+            "I'm a hiring manager and I want to prepare for my new hire who starts next Monday. Can I get the full IT o"
+            "nboarding checklist? I need to know what hardware to request, which accounts to provision, and how to get "
+            "their badge activated.",
+            "Hi IT, I'm onboarding a new analyst on my team in two weeks. What's the standard process for getting them "
+            "set up with a laptop, email, VPN, and all the usual tools? Is there a checklist I should follow?",
         ],
         next_best_actions=[
             "Provide standard IT onboarding checklist and initiate hardware/account provisioning workflow.",
@@ -86,9 +91,13 @@ SCENARIOS: list[Scenario] = [
             "How to handle IT offboarding for a resignation?",
         ],
         descriptions=[
-            "One of my direct reports has resigned and their last day is the 28th. What's the IT offboarding process? I want to make sure their accounts are disabled, equipment is returned, and data is backed up properly.",
-            "We have an employee leaving the company next Friday. Can you walk me through the IT steps I need to take? I know their badge and accounts need to be deactivated but I'm not sure about the timeline or who handles what.",
-            "Hi, I need to start the IT offboarding process for a departing contractor. Their engagement ends in two weeks. What forms do I need to fill out and what's the timeline for revoking access?",
+            "One of my direct reports has resigned and their last day is the 28th. What's the IT offboarding process? I"
+            " want to make sure their accounts are disabled, equipment is returned, and data is backed up properly.",
+            "We have an employee leaving the company next Friday. Can you walk me through the IT steps I need to take? "
+            "I know their badge and accounts need to be deactivated but I'm not sure about the timeline or who handles "
+            "what.",
+            "Hi, I need to start the IT offboarding process for a departing contractor. Their engagement ends in two "
+            "weeks. What forms do I need to fill out and what's the timeline for revoking access?",
         ],
         next_best_actions=[
             "Provide IT offboarding checklist and confirm last day to schedule access revocation.",
@@ -120,9 +129,12 @@ SCENARIOS: list[Scenario] = [
             "VPN client installation for new remote worker",
         ],
         descriptions=[
-            "I've been approved for full-time remote work starting next week. Can someone send me the instructions for setting up the VPN on my company laptop? I've never used it before.",
-            "Just moved to a remote role and I need to get VPN access configured. Where do I download the client and what settings do I need? I'm on a Windows 11 laptop.",
-            "Hi, I'll be working from home for the next few months and need VPN access. I have a MacBook Pro issued by IT. Could you point me to the setup guide or walk me through it?",
+            "I've been approved for full-time remote work starting next week. Can someone send me the instructions for "
+            "setting up the VPN on my company laptop? I've never used it before.",
+            "Just moved to a remote role and I need to get VPN access configured. Where do I download the client and "
+            "what settings do I need? I'm on a Windows 11 laptop.",
+            "Hi, I'll be working from home for the next few months and need VPN access. I have a MacBook Pro issued by "
+            "IT. Could you point me to the setup guide or walk me through it?",
         ],
         next_best_actions=[
             "Send VPN setup guide appropriate for the user's operating system and device.",
@@ -154,9 +166,14 @@ SCENARIOS: list[Scenario] = [
             "Help understanding our Microsoft 365 licensing options",
         ],
         descriptions=[
-            "My team is requesting some advanced features in Teams (webinars, advanced analytics). Can someone explain the difference between our current E3 licenses and E5? I want to know if an upgrade is justified.",
-            "I'm trying to understand what's included in our Office 365 plan. Some of my team says they can't access Power BI Pro or advanced compliance features. Is that a license limitation? What would we need to upgrade to?",
-            "Could someone break down what our current Microsoft 365 license includes vs. what we'd get with E5? Specifically interested in security features and advanced analytics. Trying to build a business case for the upgrade.",
+            "My team is requesting some advanced features in Teams (webinars, advanced analytics). Can someone explain "
+            "the difference between our current E3 licenses and E5? I want to know if an upgrade is justified.",
+            "I'm trying to understand what's included in our Office 365 plan. Some of my team says they can't access "
+            "Power BI Pro or advanced compliance features. Is that a license limitation? What would we need to upgrade "
+            "to?",
+            "Could someone break down what our current Microsoft 365 license includes vs. what we'd get with E5? "
+            "Specifically interested in security features and advanced analytics. Trying to build a business case for "
+            "the upgrade.",
         ],
         next_best_actions=[
             "Provide a comparison of the organization's current M365 license tier vs. requested features.",
@@ -187,9 +204,14 @@ SCENARIOS: list[Scenario] = [
             "IT equipment allowance for remote workers",
         ],
         descriptions=[
-            "I recently transitioned to a permanent remote position. What equipment does the company provide for home offices? I'm specifically wondering about a monitor, keyboard, and headset. Is there a stipend or do I request items directly?",
-            "Quick question: what's the company's policy on IT equipment for remote workers? I need a second monitor and a docking station for my home setup. Do I order through IT or is there a self-service catalog?",
-            "Hi, I've been remote for a month now and my setup at home is pretty basic. What's available to remote employees in terms of IT equipment? I've heard some people got standing desks and monitors but I'm not sure what the actual policy covers.",
+            "I recently transitioned to a permanent remote position. What equipment does the company provide for home "
+            "offices? I'm specifically wondering about a monitor, keyboard, and headset. Is there a stipend or do I "
+            "request items directly?",
+            "Quick question: what's the company's policy on IT equipment for remote workers? I need a second monitor "
+            "and a docking station for my home setup. Do I order through IT or is there a self-service catalog?",
+            "Hi, I've been remote for a month now and my setup at home is pretty basic. What's available to remote "
+            "employees in terms of IT equipment? I've heard some people got standing desks and monitors but I'm not "
+            "sure what the actual policy covers.",
         ],
         next_best_actions=[
             "Share the remote work equipment policy document and ordering instructions.",
@@ -220,9 +242,12 @@ SCENARIOS: list[Scenario] = [
             "Need to understand IT budget request process",
         ],
         descriptions=[
-            "I want to purchase a new SaaS tool for my team but I'm not sure how the IT budget approval process works. Do I submit a request through IT or go through my department's budget? Who needs to sign off?",
-            "Hi, my team needs a specialized analytics tool that costs about $15k/year. What's the IT procurement and budget approval process? I want to make sure I follow the right steps so this doesn't get delayed.",
-            "Can someone explain the IT budget request workflow? I've been asked to evaluate a new project management tool and if we go with it, I'll need to get funding approved. Not sure where to start.",
+            "I want to purchase a new SaaS tool for my team but I'm not sure how the IT budget approval process works. "
+            "Do I submit a request through IT or go through my department's budget? Who needs to sign off?",
+            "Hi, my team needs a specialized analytics tool that costs about $15k/year. What's the IT procurement and "
+            "budget approval process? I want to make sure I follow the right steps so this doesn't get delayed.",
+            "Can someone explain the IT budget request workflow? I've been asked to evaluate a new project management "
+            "tool and if we go with it, I'll need to get funding approved. Not sure where to start.",
         ],
         next_best_actions=[
             "Explain the IT budget approval workflow and provide the relevant request forms.",
@@ -253,9 +278,13 @@ SCENARIOS: list[Scenario] = [
             "Software procurement process and timeline question",
         ],
         descriptions=[
-            "We submitted a request for Figma licenses three weeks ago and haven't heard back. Can you give me a general idea of how long the procurement process takes? My design team is blocked waiting for this.",
-            "I'm planning a project that requires a new data visualization tool. If I submit the procurement request today, what's the typical turnaround? I need to factor this into my project timeline.",
-            "Hi, our team submitted a software request last month for a code analysis tool. It's still showing as 'pending review.' Can someone tell me where we are in the process and what the expected timeline looks like?",
+            "We submitted a request for Figma licenses three weeks ago and haven't heard back. Can you give me a "
+            "general idea of how long the procurement process takes? My design team is blocked waiting for this.",
+            "I'm planning a project that requires a new data visualization tool. If I submit the procurement request "
+            "today, what's the typical turnaround? I need to factor this into my project timeline.",
+            "Hi, our team submitted a software request last month for a code analysis tool. It's still showing as "
+            "'pending review.' Can someone tell me where we are in the process and what the expected timeline looks "
+            "like?",
         ],
         next_best_actions=[
             "Provide standard procurement timelines and check the status of any pending requests.",
@@ -264,7 +293,8 @@ SCENARIOS: list[Scenario] = [
         remediation_steps=[
             [
                 "Check the status of any existing procurement requests for the user's team",
-                "Provide the standard procurement timeline (typically 2–6 weeks depending on vendor evaluation and security review)",
+                "Provide the standard procurement timeline (typically 2–6 weeks depending on vendor evaluation and "
+                "security review)",
                 "Explain the stages: request → security review → vendor negotiation → approval → provisioning",
                 "Offer to escalate if the request has been pending longer than expected",
                 "Suggest interim alternatives if the team is blocked",
@@ -286,9 +316,13 @@ SCENARIOS: list[Scenario] = [
             "Help understanding our password policy",
         ],
         descriptions=[
-            "I keep getting my password rejected when I try to change it. Can someone explain exactly what the password requirements are? How many characters, special characters, and how often do I need to change it?",
-            "Quick question: what's our password policy? I want to set a strong password but I keep getting errors about complexity requirements. Also, do passwords still expire every 90 days or has that changed?",
-            "Hi team, I'm updating our department's security documentation and need the current password policy details — minimum length, complexity rules, expiration period, and any restrictions on password reuse. Can you share the official policy?",
+            "I keep getting my password rejected when I try to change it. Can someone explain exactly what the password"
+            " requirements are? How many characters, special characters, and how often do I need to change it?",
+            "Quick question: what's our password policy? I want to set a strong password but I keep getting errors "
+            "about complexity requirements. Also, do passwords still expire every 90 days or has that changed?",
+            "Hi team, I'm updating our department's security documentation and need the current password policy details"
+            " — minimum length, complexity rules, expiration period, and any restrictions on password reuse. Can you sh"
+            "are the official policy?",
         ],
         next_best_actions=[
             "Provide the current password policy details including complexity and expiration rules.",
@@ -319,9 +353,13 @@ SCENARIOS: list[Scenario] = [
             "Intune enrollment — how to get started?",
         ],
         descriptions=[
-            "I just got a new iPhone and I need to enroll it in the company MDM system to access email and Teams. Can you walk me through the process? I had it set up on my old phone but I can't remember the steps.",
-            "I need to enroll my Android phone in Intune so I can get my work email on it. Where do I download the Company Portal app and what steps do I follow? Is there a guide somewhere?",
-            "Hi, I've been asked to enroll my personal phone in the company device management system. Before I do, can you explain exactly what IT will be able to see or control on my phone? And what are the enrollment steps?",
+            "I just got a new iPhone and I need to enroll it in the company MDM system to access email and Teams. Can "
+            "you walk me through the process? I had it set up on my old phone but I can't remember the steps.",
+            "I need to enroll my Android phone in Intune so I can get my work email on it. Where do I download the "
+            "Company Portal app and what steps do I follow? Is there a guide somewhere?",
+            "Hi, I've been asked to enroll my personal phone in the company device management system. Before I do, can "
+            "you explain exactly what IT will be able to see or control on my phone? And what are the"
+            " enrollment steps?",
         ],
         next_best_actions=[
             "Provide MDM enrollment instructions for the user's device platform (iOS/Android).",
@@ -352,9 +390,15 @@ SCENARIOS: list[Scenario] = [
             "Coordinating IT for our department's office move",
         ],
         descriptions=[
-            "Our department (15 people) is moving from the 3rd floor to the 5th floor next month. We need IT to coordinate network drops, phone setups, printer relocation, and make sure everyone's docking stations work at the new desks. Who do I work with to plan this?",
-            "Hi IT team, our group of 20 is relocating to Building B in three weeks. Can we schedule a planning call to go over what's needed? We have specialized equipment (large monitors, label printers) that needs to be moved carefully.",
-            "We've been notified that our team is moving to the new open office space on the 2nd floor. I need to coordinate with IT on desk setups, network access, printer placement, and conference room AV equipment. What's the process for this?",
+            "Our department (15 people) is moving from the 3rd floor to the 5th floor next month. We need IT to coordin"
+            "ate network drops, phone setups, printer relocation, and make sure everyone's docking stations work at the"
+            " new desks. Who do I work with to plan this?",
+            "Hi IT team, our group of 20 is relocating to Building B in three weeks. Can we schedule a planning call to"
+            " go over what's needed? We have specialized equipment (large monitors, label printers) that needs to be mo"
+            "ved carefully.",
+            "We've been notified that our team is moving to the new open office space on the 2nd floor. I need to "
+            "coordinate with IT on desk setups, network access, printer placement, and conference room AV equipment. "
+            "What's the process for this?",
         ],
         next_best_actions=[
             "Schedule a planning meeting with the move coordinator and create a move project ticket.",
@@ -387,9 +431,13 @@ SCENARIOS: list[Scenario] = [
             "Need an ergonomic review of my workspace",
         ],
         descriptions=[
-            "I've been having some wrist and neck pain and my doctor recommended an ergonomic assessment of my workstation. Does IT handle this or do I go through HR? If IT, what's the process to request one?",
-            "Hi, I'd like to request an ergonomic evaluation of my desk setup. I recently got a new monitor and I'm not sure if it's positioned correctly. I've heard IT can help with adjustments to monitor arms, keyboard trays, etc.",
-            "Can someone from IT come take a look at my desk setup? I think my monitors are too low and my keyboard tray doesn't adjust properly. I want to get everything set up ergonomically before the issue gets worse.",
+            "I've been having some wrist and neck pain and my doctor recommended an ergonomic assessment of my "
+            "workstation. Does IT handle this or do I go through HR? If IT, what's the process to request one?",
+            "Hi, I'd like to request an ergonomic evaluation of my desk setup. I recently got a new monitor and I'm not"
+            " sure if it's positioned correctly. I've heard IT can help with adjustments to monitor arms, keyboard tray"
+            "s, etc.",
+            "Can someone from IT come take a look at my desk setup? I think my monitors are too low and my keyboard "
+            "tray doesn't adjust properly. I want to get everything set up ergonomically before the issue gets worse.",
         ],
         next_best_actions=[
             "Schedule an ergonomic assessment and coordinate with HR/Facilities if needed.",
@@ -421,9 +469,12 @@ SCENARIOS: list[Scenario] = [
             "How do I find available IT services?",
         ],
         descriptions=[
-            "I'm new to the organization and someone mentioned there's an IT service catalog where I can request things like software installs, access to systems, hardware, etc. Where do I find it?",
-            "Hi, I've been trying to figure out how to request a new software license but I can't find the service catalog. Is it on the intranet? Can you send me a direct link?",
-            "My manager told me to 'check the IT service catalog' for my request but I have no idea where that is. I've looked on SharePoint and the internal wiki but can't find a current version. Can you help?",
+            "I'm new to the organization and someone mentioned there's an IT service catalog where I can request things"
+            " like software installs, access to systems, hardware, etc. Where do I find it?",
+            "Hi, I've been trying to figure out how to request a new software license but I can't find the service "
+            "catalog. Is it on the intranet? Can you send me a direct link?",
+            "My manager told me to 'check the IT service catalog' for my request but I have no idea where that is. I've"
+            " looked on SharePoint and the internal wiki but can't find a current version. Can you help?",
         ],
         next_best_actions=[
             "Provide a direct link to the IT service catalog and explain how to navigate it.",
@@ -454,9 +505,12 @@ SCENARIOS: list[Scenario] = [
             "Can I get work email on my personal device?",
         ],
         descriptions=[
-            "I'd like to set up my work email on my personal phone so I can check messages when I'm away from my desk. Is that allowed? If so, how do I configure it? I have a Samsung Galaxy S24.",
-            "Can I add my company email to the Outlook app on my personal iPhone? I don't want to enroll my whole phone in MDM if I can avoid it. What are my options?",
-            "Hi, I want to access my work email and calendar on my personal phone. What's the process? Do I need to install Intune or can I just add the account to the built-in mail app?",
+            "I'd like to set up my work email on my personal phone so I can check messages when I'm away from my desk. "
+            "Is that allowed? If so, how do I configure it? I have a Samsung Galaxy S24.",
+            "Can I add my company email to the Outlook app on my personal iPhone? I don't want to enroll my whole phone"
+            " in MDM if I can avoid it. What are my options?",
+            "Hi, I want to access my work email and calendar on my personal phone. What's the process? Do I need to "
+            "install Intune or can I just add the account to the built-in mail app?",
         ],
         next_best_actions=[
             "Explain BYOD email access options and the required MDM enrollment or app protection policy.",
@@ -487,9 +541,12 @@ SCENARIOS: list[Scenario] = [
             "Can I get an asset report for my team?",
         ],
         descriptions=[
-            "We're doing an internal audit and I need a report of all IT assets assigned to my department (Finance). Can you pull a list of laptops, monitors, and any other hardware? I need it by end of week.",
-            "Hi, I'm working on our annual budget planning and I need an up-to-date inventory of IT assets for my team of 30. Can you generate a report showing device model, age, and warranty status?",
-            "Our department is going through a compliance audit and the auditors have asked for a complete inventory of IT assets including serial numbers, assigned users, and purchase dates. Can IT provide this?",
+            "We're doing an internal audit and I need a report of all IT assets assigned to my department (Finance). "
+            "Can you pull a list of laptops, monitors, and any other hardware? I need it by end of week.",
+            "Hi, I'm working on our annual budget planning and I need an up-to-date inventory of IT assets for my team "
+            "of 30. Can you generate a report showing device model, age, and warranty status?",
+            "Our department is going through a compliance audit and the auditors have asked for a complete inventory of"
+            " IT assets including serial numbers, assigned users, and purchase dates. Can IT provide this?",
         ],
         next_best_actions=[
             "Generate an asset inventory report for the requesting department from the CMDB.",
@@ -521,9 +578,13 @@ SCENARIOS: list[Scenario] = [
             "Shared drive access question",
         ],
         descriptions=[
-            "I recently transferred to the Marketing department and I need access to their shared drive on SharePoint. My old department's files I can still see, but I don't have the Marketing team folder. Who approves this?",
-            "Hi, I've been asked to collaborate on a project with the Legal team and I need read access to their shared drive. How do I request this? Is there a form or does someone just add me?",
-            "Can someone help me get access to the \\\\fileserver\\finance\\reports share? I was told I need it for my new role but when I try to browse to it, I get 'access denied.' My manager said IT needs to grant permission.",
+            "I recently transferred to the Marketing department and I need access to their shared drive on SharePoint. "
+            "My old department's files I can still see, but I don't have the Marketing team folder. Who approves this?",
+            "Hi, I've been asked to collaborate on a project with the Legal team and I need read access to their shared"
+            " drive. How do I request this? Is there a form or does someone just add me?",
+            "Can someone help me get access to the \\\\fileserver\\finance\\reports share? I was told I need it for my "
+            "new role but when I try to browse to it, I get 'access denied.' My manager said IT needs to grant "
+            "permission.",
         ],
         next_best_actions=[
             "Verify the access request with the data owner and grant appropriate permissions.",
@@ -554,9 +615,13 @@ SCENARIOS: list[Scenario] = [
             "Need guest network credentials for tomorrow",
         ],
         descriptions=[
-            "I have a client visiting our office tomorrow and they'll need Wi-Fi access for their laptop. How do I set up guest network access? Is there a self-service portal or do I need to request it through IT?",
-            "We're hosting a two-day workshop next week with about 25 external attendees. They'll all need guest Wi-Fi. What's the best way to handle this? Can we get a batch of guest credentials?",
-            "Quick question — how does guest Wi-Fi work in our office? I have a vendor coming in this afternoon and they asked about internet access. Is there a guest network they can just connect to, or do I need to arrange something?",
+            "I have a client visiting our office tomorrow and they'll need Wi-Fi access for their laptop. How do I set "
+            "up guest network access? Is there a self-service portal or do I need to request it through IT?",
+            "We're hosting a two-day workshop next week with about 25 external attendees. They'll all need guest Wi-Fi."
+            " What's the best way to handle this? Can we get a batch of guest credentials?",
+            "Quick question — how does guest Wi-Fi work in our office? I have a vendor coming in this afternoon and "
+            "they asked about internet access. Is there a guest network they can just connect to, or do I need to "
+            "arrange something?",
         ],
         next_best_actions=[
             "Provide guest Wi-Fi instructions and credentials or access to the self-service provisioning portal.",
@@ -588,9 +653,13 @@ SCENARIOS: list[Scenario] = [
             "Does IT back up my files automatically?",
         ],
         descriptions=[
-            "I want to make sure my work files are being backed up properly. Are files on OneDrive automatically backed up? What about files I keep on my local C: drive? I'm worried about losing important documents.",
-            "Hi, I'm creating a data management plan for my team and I need to understand our backup policy. How frequently are backups done, what's the retention period, and how do we request a file restore if something gets deleted?",
-            "Quick question — if I accidentally delete a file from the shared drive, how far back can IT restore it? And is my laptop's local storage backed up at all, or only cloud storage?",
+            "I want to make sure my work files are being backed up properly. Are files on OneDrive automatically backed"
+            " up? What about files I keep on my local C: drive? I'm worried about losing important documents.",
+            "Hi, I'm creating a data management plan for my team and I need to understand our backup policy. How "
+            "frequently are backups done, what's the retention period, and how do we request a file restore if "
+            "something gets deleted?",
+            "Quick question — if I accidentally delete a file from the shared drive, how far back can IT restore it? "
+            "And is my laptop's local storage backed up at all, or only cloud storage?",
         ],
         next_best_actions=[
             "Provide a summary of the data backup policy including schedules, retention, and restore procedures.",

@@ -1,16 +1,12 @@
 """Schema validation for generated tickets and gold answers."""
 
-from __future__ import annotations
-
 import re
 
-from generator.models import (
-    CATEGORIES,
-    CHANNELS,
-    MISSING_INFO_VOCABULARY,
-    PRIORITIES,
-    TEAMS,
-)
+from generator.models import CATEGORIES
+from generator.models import CHANNELS
+from generator.models import MISSING_INFO_VOCABULARY
+from generator.models import PRIORITIES
+from generator.models import TEAMS
 
 
 def validate_ticket(ticket: dict) -> list[str]:
@@ -24,9 +20,8 @@ def validate_ticket(ticket: dict) -> list[str]:
             errors.append(f"{tid}: missing required field '{field}'")
 
     # ticket_id format
-    if "ticket_id" in ticket:
-        if not re.match(r"^INC-\d+$", ticket["ticket_id"]):
-            errors.append(f"{tid}: ticket_id does not match pattern ^INC-\\d+$")
+    if "ticket_id" in ticket and not re.match(r"^INC-\d+$", ticket["ticket_id"]):
+        errors.append(f"{tid}: ticket_id does not match pattern ^INC-\\d+$")
 
     # channel
     if ticket.get("channel") and ticket["channel"] not in CHANNELS:
@@ -58,8 +53,13 @@ def validate_gold(gold: dict) -> list[str]:
 
     # Required fields
     for field in [
-        "ticket_id", "category", "priority", "assigned_team",
-        "needs_escalation", "missing_information", "next_best_action",
+        "ticket_id",
+        "category",
+        "priority",
+        "assigned_team",
+        "needs_escalation",
+        "missing_information",
+        "next_best_action",
         "remediation_steps",
     ]:
         if field not in gold:
@@ -104,9 +104,7 @@ def validate_gold(gold: dict) -> list[str]:
     return errors
 
 
-def validate_dataset(
-    tickets: list[dict], golds: list[dict]
-) -> list[str]:
+def validate_dataset(tickets: list[dict], golds: list[dict]) -> list[str]:
     """Validate an entire dataset. Returns list of errors."""
     errors: list[str] = []
 
@@ -119,17 +117,14 @@ def validate_dataset(
     gold_ids = [g["ticket_id"] for g in golds]
 
     if ticket_ids != gold_ids:
-        mismatches = [
-            (t, g) for t, g in zip(ticket_ids, gold_ids) if t != g
-        ]
+        mismatches = [(t, g) for t, g in zip(ticket_ids, gold_ids, strict=False) if t != g]
         errors.append(
-            f"Ticket ID mismatch at {len(mismatches)} positions. "
-            f"First: {mismatches[0] if mismatches else 'N/A'}"
+            f"Ticket ID mismatch at {len(mismatches)} positions. First: {mismatches[0] if mismatches else 'N/A'}"
         )
 
     # Check uniqueness
     if len(set(ticket_ids)) != len(ticket_ids):
-        errors.append(f"Duplicate ticket IDs found")
+        errors.append("Duplicate ticket IDs found")
 
     # Validate each ticket and gold
     for ticket in tickets:

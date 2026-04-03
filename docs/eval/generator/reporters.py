@@ -3,8 +3,6 @@
 Provides diverse names, emails, and departments for Contoso Financial Services.
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 

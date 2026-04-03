@@ -1,7 +1,5 @@
 """Network & Connectivity scenario definitions."""
 
-from __future__ import annotations
-
 from generator.models import Scenario
 
 SCENARIOS: list[Scenario] = [
@@ -51,14 +49,10 @@ SCENARIOS: list[Scenario] = [
                 "Collect VPN client diagnostic logs from the affected device",
                 "Verify GlobalProtect client version and compare against "
                 "the latest stable release notes for known issues",
-                "Check VPN gateway session persistence and IKE re-key "
-                "settings to ensure seamless roaming is enabled",
-                "Test with a clean VPN profile to rule out corrupted "
-                "local configuration",
-                "If issue persists, roll back the GlobalProtect client to "
-                "the previous stable version and retest",
-                "Follow up with the user to confirm stable connectivity "
-                "after changes",
+                "Check VPN gateway session persistence and IKE re-key settings to ensure seamless roaming is enabled",
+                "Test with a clean VPN profile to rule out corrupted local configuration",
+                "If issue persists, roll back the GlobalProtect client to the previous stable version and retest",
+                "Follow up with the user to confirm stable connectivity after changes",
             ],
         ],
     ),
@@ -106,18 +100,12 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Review wireless controller for Floor 3 AP health, "
-                "client count, and channel utilization",
-                "Identify any APs in degraded or offline state and "
-                "restart or replace as needed",
-                "Check for co-channel interference from neighboring "
-                "floors or rogue access points",
-                "Adjust channel assignments and transmit power based on "
-                "site survey data",
-                "Verify upstream switch port health and PoE power budget "
-                "for Floor 3 APs",
-                "Monitor for 24 hours and confirm with affected users "
-                "that performance has improved",
+                "Review wireless controller for Floor 3 AP health, client count, and channel utilization",
+                "Identify any APs in degraded or offline state and restart or replace as needed",
+                "Check for co-channel interference from neighboring floors or rogue access points",
+                "Adjust channel assignments and transmit power based on site survey data",
+                "Verify upstream switch port health and PoE power budget for Floor 3 APs",
+                "Monitor for 24 hours and confirm with affected users that performance has improved",
             ],
         ],
     ),
@@ -166,18 +154,13 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Check internal DNS server health and service status on "
-                "all DNS servers in the affected site",
-                "Verify the contoso.internal zone is loaded and contains "
-                "the expected records",
+                "Check internal DNS server health and service status on all DNS servers in the affected site",
+                "Verify the contoso.internal zone is loaded and contains the expected records",
                 "Review DNS server event logs for errors related to zone "
                 "loading, replication, or forwarder configuration",
-                "Restart the DNS Server service if the zone is stale or "
-                "unresponsive",
-                "Flush DNS caches on the server and verify resolution "
-                "from a test client",
-                "Confirm resolution is working for affected users and "
-                "monitor for recurrence",
+                "Restart the DNS Server service if the zone is stale or unresponsive",
+                "Flush DNS caches on the server and verify resolution from a test client",
+                "Confirm resolution is working for affected users and monitor for recurrence",
             ],
         ],
     ),
@@ -229,18 +212,12 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Validate the requested source, destination, and port "
-                "details against the network security policy",
-                "Obtain approval from Security Operations for the "
-                "proposed rule change",
-                "Implement the rule in a test or staging firewall first "
-                "and verify connectivity",
-                "Schedule the production change during the maintenance "
-                "window and apply the rule",
-                "Test end-to-end connectivity from the source subnet to "
-                "the vendor endpoint",
-                "Document the rule in the firewall change log and close "
-                "the request",
+                "Validate the requested source, destination, and port details against the network security policy",
+                "Obtain approval from Security Operations for the proposed rule change",
+                "Implement the rule in a test or staging firewall first and verify connectivity",
+                "Schedule the production change during the maintenance window and apply the rule",
+                "Test end-to-end connectivity from the source subnet to the vendor endpoint",
+                "Document the rule in the firewall change log and close the request",
             ],
         ],
     ),
@@ -292,18 +269,12 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Confirm event details: date, time, venue, expected "
-                "attendee count, and bandwidth requirements",
-                "Provision a dedicated guest VLAN isolated from the "
-                "corporate network with internet-only access",
-                "Create a time-limited SSID with WPA3 or captive portal "
-                "authentication",
-                "Configure per-client and aggregate bandwidth limits to "
-                "ensure fair usage",
-                "Test connectivity from the event space and verify "
-                "corporate network isolation",
-                "Provide SSID credentials to the event organizer and "
-                "decommission the SSID after the event",
+                "Confirm event details: date, time, venue, expected attendee count, and bandwidth requirements",
+                "Provision a dedicated guest VLAN isolated from the corporate network with internet-only access",
+                "Create a time-limited SSID with WPA3 or captive portal authentication",
+                "Configure per-client and aggregate bandwidth limits to ensure fair usage",
+                "Test connectivity from the event space and verify corporate network isolation",
+                "Provide SSID credentials to the event organizer and decommission the SSID after the event",
             ],
         ],
     ),
@@ -353,16 +324,11 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Identify the block reason and URL category in the "
-                "proxy admin console (Zscaler/Bluecoat)",
-                "Verify the site's business justification and obtain "
-                "manager approval if not already provided",
-                "Submit a URL recategorization request to the proxy "
-                "vendor if miscategorized",
-                "Add a temporary allow-list entry for the URL or domain "
-                "in the proxy policy",
-                "Confirm the user can access the site and document the "
-                "exception in the proxy change log",
+                "Identify the block reason and URL category in the proxy admin console (Zscaler/Bluecoat)",
+                "Verify the site's business justification and obtain manager approval if not already provided",
+                "Submit a URL recategorization request to the proxy vendor if miscategorized",
+                "Add a temporary allow-list entry for the URL or domain in the proxy policy",
+                "Confirm the user can access the site and document the exception in the proxy change log",
             ],
         ],
     ),
@@ -409,18 +375,12 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Run gpresult /r on the user's workstation to verify "
-                "drive mapping GPO is applying",
-                "Check the file server availability and confirm the "
-                "shared folder path is correct",
-                "Verify DNS resolution for the file server hostname "
-                "from the user's machine",
-                "Check the user's AD group membership to confirm they "
-                "are in the correct security group for the GPO",
-                "If the GPO is not applying, force a group policy "
-                "update with gpupdate /force and retest",
-                "Confirm drives map correctly at next login and "
-                "monitor for recurrence",
+                "Run gpresult /r on the user's workstation to verify drive mapping GPO is applying",
+                "Check the file server availability and confirm the shared folder path is correct",
+                "Verify DNS resolution for the file server hostname from the user's machine",
+                "Check the user's AD group membership to confirm they are in the correct security group for the GPO",
+                "If the GPO is not applying, force a group policy update with gpupdate /force and retest",
+                "Confirm drives map correctly at next login and monitor for recurrence",
             ],
         ],
     ),
@@ -474,21 +434,15 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Verify WAN circuit status on both NYC and London sides "
-                "and contact ISP if circuit is down",
-                "Check VPN concentrator/firewall status and IKE phase 1 "
-                "and phase 2 SA states on both endpoints",
+                "Verify WAN circuit status on both NYC and London sides and contact ISP if circuit is down",
+                "Check VPN concentrator/firewall status and IKE phase 1 and phase 2 SA states on both endpoints",
                 "Review logs for the tunnel tear-down event and identify "
                 "root cause (certificate expiry, config change, hardware "
                 "failure)",
-                "Attempt to re-establish the tunnel manually by clearing "
-                "and re-initiating the IKE SAs",
-                "If the primary tunnel cannot be restored, activate the "
-                "backup VPN path or failover circuit",
-                "Confirm cross-site connectivity is restored and all "
-                "critical services are accessible",
-                "Conduct a post-incident review and document root cause "
-                "and preventive measures",
+                "Attempt to re-establish the tunnel manually by clearing and re-initiating the IKE SAs",
+                "If the primary tunnel cannot be restored, activate the backup VPN path or failover circuit",
+                "Confirm cross-site connectivity is restored and all critical services are accessible",
+                "Conduct a post-incident review and document root cause and preventive measures",
             ],
         ],
     ),
@@ -542,21 +496,15 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Verify the load balancer health monitor configuration "
-                "(URL path, port, expected response code)",
-                "Test connectivity from the LB self-IP to the backend "
-                "health check endpoints using tcpdump or curl",
+                "Verify the load balancer health monitor configuration (URL path, port, expected response code)",
+                "Test connectivity from the LB self-IP to the backend health check endpoints using tcpdump or curl",
                 "Check for recent certificate changes, firewall rule "
                 "modifications, or ACL updates that could block health "
                 "check traffic",
-                "If a configuration change caused the issue, roll back "
-                "and re-test health checks",
-                "Manually force one backend member into the pool to "
-                "restore partial service while troubleshooting",
-                "Confirm all pool members pass health checks and "
-                "customer-facing traffic is restored",
-                "Document root cause and update change management "
-                "procedures to prevent recurrence",
+                "If a configuration change caused the issue, roll back and re-test health checks",
+                "Manually force one backend member into the pool to restore partial service while troubleshooting",
+                "Confirm all pool members pass health checks and customer-facing traffic is restored",
+                "Document root cause and update change management procedures to prevent recurrence",
             ],
         ],
     ),
@@ -606,18 +554,12 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Check the DHCP scope utilization and active lease "
-                "count for the affected subnet",
-                "Identify and remove stale or orphaned DHCP leases "
-                "from decommissioned devices",
-                "Expand the DHCP scope range or add a secondary scope "
-                "to accommodate the increased device count",
-                "Reduce the DHCP lease duration to free addresses more "
-                "quickly if demand is temporary",
-                "Release and renew IP addresses on affected client "
-                "devices to verify they obtain valid leases",
-                "Monitor the scope utilization and plan a subnet "
-                "redesign if the issue is structural",
+                "Check the DHCP scope utilization and active lease count for the affected subnet",
+                "Identify and remove stale or orphaned DHCP leases from decommissioned devices",
+                "Expand the DHCP scope range or add a secondary scope to accommodate the increased device count",
+                "Reduce the DHCP lease duration to free addresses more quickly if demand is temporary",
+                "Release and renew IP addresses on affected client devices to verify they obtain valid leases",
+                "Monitor the scope utilization and plan a subnet redesign if the issue is structural",
             ],
         ],
     ),
@@ -669,19 +611,15 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Review RADIUS/NPS server logs for the specific "
-                "authentication rejection reason and error code",
+                "Review RADIUS/NPS server logs for the specific authentication rejection reason and error code",
                 "Verify the client machine certificate chain is "
                 "complete and the root/intermediate CAs are trusted "
                 "by the NPS server",
                 "Check the NPS network policy for certificate template "
                 "and EKU requirements against the enrolled certificate",
-                "If a recent Windows update changed TLS behavior, "
-                "verify NPS supports the client's TLS version",
-                "Re-enroll the machine certificate via Intune if the "
-                "certificate is corrupted or misconfigured",
-                "Test WiFi authentication and confirm the user can "
-                "connect successfully",
+                "If a recent Windows update changed TLS behavior, verify NPS supports the client's TLS version",
+                "Re-enroll the machine certificate via Intune if the certificate is corrupted or misconfigured",
+                "Test WiFi authentication and confirm the user can connect successfully",
             ],
         ],
     ),
@@ -737,18 +675,13 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Pull call quality data from the Teams Admin Center "
-                "or Zoom dashboard for affected users",
-                "Identify whether the issue is localized to a specific "
-                "office, floor, or network segment",
-                "Check QoS policies to ensure real-time media traffic "
-                "is prioritized (DSCP 46 for voice, 34 for video)",
-                "Review WAN and internet circuit utilization for "
-                "bandwidth saturation during peak hours",
+                "Pull call quality data from the Teams Admin Center or Zoom dashboard for affected users",
+                "Identify whether the issue is localized to a specific office, floor, or network segment",
+                "Check QoS policies to ensure real-time media traffic is prioritized (DSCP 46 for voice, 34 for video)",
+                "Review WAN and internet circuit utilization for bandwidth saturation during peak hours",
                 "If VPN is involved, verify split-tunnel configuration "
                 "allows Teams/Zoom media traffic to bypass the tunnel",
-                "Monitor call quality metrics after changes and confirm "
-                "improvement with affected users",
+                "Monitor call quality metrics after changes and confirm improvement with affected users",
             ],
         ],
     ),
@@ -803,18 +736,12 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Review the split-tunnel request and document the "
-                "business justification and affected user group",
-                "Coordinate with Security Operations to assess risk "
-                "and define an approved split-tunnel policy",
-                "Configure the VPN gateway to exclude approved "
-                "SaaS/cloud IP ranges from the tunnel",
-                "Deploy the updated VPN profile to the requesting "
-                "team via Intune or GPO",
-                "Test split-tunnel behavior and verify internal "
-                "resource access is maintained",
-                "Monitor for security events and confirm performance "
-                "improvement with the requesting team",
+                "Review the split-tunnel request and document the business justification and affected user group",
+                "Coordinate with Security Operations to assess risk and define an approved split-tunnel policy",
+                "Configure the VPN gateway to exclude approved SaaS/cloud IP ranges from the tunnel",
+                "Deploy the updated VPN profile to the requesting team via Intune or GPO",
+                "Test split-tunnel behavior and verify internal resource access is maintained",
+                "Monitor for security events and confirm performance improvement with the requesting team",
             ],
         ],
     ),
@@ -869,18 +796,12 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Document the VLAN requirements: device count, "
-                "connectivity needs, and security policy",
-                "Allocate a VLAN ID and subnet from the IP address "
-                "management system",
-                "Configure the VLAN on the core and access switches "
-                "for the target location",
-                "Create a DHCP scope for the new subnet and configure "
-                "firewall ACLs per the security policy",
-                "Tag the required switch ports to the new VLAN and "
-                "test device connectivity",
-                "Document the VLAN in the network inventory and hand "
-                "off to the requesting team",
+                "Document the VLAN requirements: device count, connectivity needs, and security policy",
+                "Allocate a VLAN ID and subnet from the IP address management system",
+                "Configure the VLAN on the core and access switches for the target location",
+                "Create a DHCP scope for the new subnet and configure firewall ACLs per the security policy",
+                "Tag the required switch ports to the new VLAN and test device connectivity",
+                "Document the VLAN in the network inventory and hand off to the requesting team",
             ],
         ],
     ),
@@ -934,14 +855,10 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Initiate a CDN cache invalidation for all affected "
-                "paths or a wildcard invalidation if needed",
-                "Verify cache-control and surrogate-control headers "
-                "on the origin server for each affected resource",
-                "Confirm edge nodes are serving the updated content "
-                "by testing from multiple geographic locations",
-                "Update the deployment pipeline to include automatic "
-                "CDN cache invalidation on each release",
+                "Initiate a CDN cache invalidation for all affected paths or a wildcard invalidation if needed",
+                "Verify cache-control and surrogate-control headers on the origin server for each affected resource",
+                "Confirm edge nodes are serving the updated content by testing from multiple geographic locations",
+                "Update the deployment pipeline to include automatic CDN cache invalidation on each release",
                 "Review the caching policy to ensure dynamic content "
                 "and API responses have appropriate no-cache headers",
             ],
@@ -997,20 +914,13 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Test the SSL/TLS connection using openssl s_client "
-                "to identify the specific handshake failure reason",
-                "Check the server certificate for validity, expiration, "
-                "and complete chain (root + intermediate CAs)",
-                "Verify the server's TLS configuration supports cipher "
-                "suites compatible with the connecting clients",
-                "If the intermediate certificate is missing, install "
-                "the complete certificate chain on the server",
-                "Restart the affected service to load the corrected "
-                "certificate configuration",
-                "Test HTTPS connectivity from affected clients and "
-                "confirm the handshake succeeds",
-                "Update the certificate management runbook to include "
-                "chain validation as a post-renewal check",
+                "Test the SSL/TLS connection using openssl s_client to identify the specific handshake failure reason",
+                "Check the server certificate for validity, expiration, and complete chain (root + intermediate CAs)",
+                "Verify the server's TLS configuration supports cipher suites compatible with the connecting clients",
+                "If the intermediate certificate is missing, install the complete certificate chain on the server",
+                "Restart the affected service to load the corrected certificate configuration",
+                "Test HTTPS connectivity from affected clients and confirm the handshake succeeds",
+                "Update the certificate management runbook to include chain validation as a post-renewal check",
             ],
         ],
     ),
@@ -1066,18 +976,14 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Run path MTU discovery tests between affected sites "
-                "using ping with DF bit set at varying sizes",
-                "Identify the hop where fragmentation occurs and check "
-                "the MTU setting on that interface",
+                "Run path MTU discovery tests between affected sites using ping with DF bit set at varying sizes",
+                "Identify the hop where fragmentation occurs and check the MTU setting on that interface",
                 "Adjust the MTU on tunnel interfaces to account for "
                 "encapsulation overhead (e.g., 1400 for GRE over IPSec)",
                 "Enable TCP MSS clamping on tunnel endpoints to prevent "
                 "TCP sessions from negotiating too-large segments",
-                "Verify that ICMP 'Fragmentation Needed' (Type 3, "
-                "Code 4) packets are not blocked by firewalls",
-                "Test large file transfers and confirm the issue is "
-                "resolved",
+                "Verify that ICMP 'Fragmentation Needed' (Type 3, Code 4) packets are not blocked by firewalls",
+                "Test large file transfers and confirm the issue is resolved",
             ],
         ],
     ),
@@ -1133,14 +1039,10 @@ SCENARIOS: list[Scenario] = [
                 "Identify the user's switch port and check the "
                 "interface configuration for rate limiting or "
                 "speed/duplex settings",
-                "Verify the VLAN assignment is correct for the user's "
-                "team and location",
-                "Review QoS policies applied to the user's VLAN or "
-                "security group for bandwidth caps",
-                "Check for duplex mismatch (half vs full duplex) on "
-                "the switch port which can cause reduced throughput",
-                "Correct any misconfiguration and test download "
-                "speeds from the user's machine",
+                "Verify the VLAN assignment is correct for the user's team and location",
+                "Review QoS policies applied to the user's VLAN or security group for bandwidth caps",
+                "Check for duplex mismatch (half vs full duplex) on the switch port which can cause reduced throughput",
+                "Correct any misconfiguration and test download speeds from the user's machine",
                 "Confirm with the user that speeds are back to normal",
             ],
         ],
@@ -1193,19 +1095,14 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Review IKE and IPSec logs on both NYC and Denver "
-                "firewalls for the specific failure reason",
+                "Review IKE and IPSec logs on both NYC and Denver firewalls for the specific failure reason",
                 "Compare tunnel configuration on both endpoints to "
                 "verify SA lifetimes, PFS groups, and DPD settings "
                 "are consistent",
-                "Check for recent firewall patches or configuration "
-                "changes that may have altered tunnel parameters",
-                "If DPD timeouts are the cause, increase the DPD "
-                "interval and retry count or tune keepalive settings",
-                "Monitor the tunnel stability for 24 hours to confirm "
-                "the flapping has stopped",
-                "Document the root cause and update the change "
-                "management records for the firewall patch",
+                "Check for recent firewall patches or configuration changes that may have altered tunnel parameters",
+                "If DPD timeouts are the cause, increase the DPD interval and retry count or tune keepalive settings",
+                "Monitor the tunnel stability for 24 hours to confirm the flapping has stopped",
+                "Document the root cause and update the change management records for the firewall patch",
             ],
         ],
     ),
@@ -1263,16 +1160,11 @@ SCENARIOS: list[Scenario] = [
                 "review the logs for NOTIFICATION and error messages",
                 "Verify the BGP configuration (neighbor IP, AS number, "
                 "authentication, timers) matches the ISP's expectations",
-                "Contact the ISP NOC to coordinate troubleshooting and "
-                "confirm their side of the peering session",
-                "If a recent configuration change caused the issue, "
-                "roll back to the previous configuration",
-                "Clear the BGP session and allow it to re-establish; "
-                "verify the full routing table is received",
-                "Monitor routing tables and traffic flow for 24 hours "
-                "to ensure stability",
-                "Document the incident and update the BGP runbook with "
-                "lessons learned",
+                "Contact the ISP NOC to coordinate troubleshooting and confirm their side of the peering session",
+                "If a recent configuration change caused the issue, roll back to the previous configuration",
+                "Clear the BGP session and allow it to re-establish; verify the full routing table is received",
+                "Monitor routing tables and traffic flow for 24 hours to ensure stability",
+                "Document the incident and update the BGP runbook with lessons learned",
             ],
         ],
     ),
@@ -1322,16 +1214,11 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Confirm the printer's current IP address and VLAN "
-                "assignment",
-                "Identify the user's VLAN and verify inter-VLAN "
-                "routing is configured between the two VLANs",
-                "Check firewall ACLs for rules allowing print traffic "
-                "(TCP ports 9100, 631, 515) between the VLANs",
-                "Add or update the ACL to permit print traffic from "
-                "the user's VLAN to the printer VLAN",
-                "Test printing from the user's workstation and confirm "
-                "the printer is reachable",
+                "Confirm the printer's current IP address and VLAN assignment",
+                "Identify the user's VLAN and verify inter-VLAN routing is configured between the two VLANs",
+                "Check firewall ACLs for rules allowing print traffic (TCP ports 9100, 631, 515) between the VLANs",
+                "Add or update the ACL to permit print traffic from the user's VLAN to the printer VLAN",
+                "Test printing from the user's workstation and confirm the printer is reachable",
             ],
         ],
     ),
@@ -1393,21 +1280,15 @@ SCENARIOS: list[Scenario] = [
         ],
         remediation_steps=[
             [
-                "Check the NDES server health and restart the Intune "
-                "SCEP connector service if it is down",
-                "Verify the SCEP enrollment endpoint is responding and "
-                "processing certificate requests",
+                "Check the NDES server health and restart the Intune SCEP connector service if it is down",
+                "Verify the SCEP enrollment endpoint is responding and processing certificate requests",
                 "Provision a temporary PSK-based WiFi SSID with "
                 "internet-only access as a workaround for affected "
                 "users",
-                "Trigger certificate renewal for affected devices via "
-                "Intune sync or manual SCEP enrollment",
-                "Monitor the RADIUS server logs to confirm devices are "
-                "re-authenticating with renewed certificates",
-                "Set up monitoring and alerting on the NDES connector "
-                "service to prevent future silent failures",
-                "Decommission the temporary SSID once all devices have "
-                "renewed certificates",
+                "Trigger certificate renewal for affected devices via Intune sync or manual SCEP enrollment",
+                "Monitor the RADIUS server logs to confirm devices are re-authenticating with renewed certificates",
+                "Set up monitoring and alerting on the NDES connector service to prevent future silent failures",
+                "Decommission the temporary SSID once all devices have renewed certificates",
             ],
         ],
     ),
@@ -1424,11 +1305,17 @@ SCENARIOS: list[Scenario] = [
             "Network latency causing trade execution delays in NYC office",
         ],
         descriptions=[
-            "The trading floor in our NYC office is experiencing significant network latency spikes — ping times to our exchange gateways are jumping from the normal 2ms to over 200ms intermittently. This is causing order execution delays that are costing us money. The latency spikes seem random but are happening every few minutes.",
-            "Our high-frequency trading systems are reporting unacceptable latency on the NYC trading floor network segment. Traceroute shows the bottleneck is between the floor switch and the core router. This started about 90 minutes ago and is getting worse.",
+            "The trading floor in our NYC office is experiencing significant network latency spikes — ping times to our"
+            " exchange gateways are jumping from the normal 2ms to over 200ms intermittently. This is causing order exe"
+            "cution delays that are costing us money. The latency spikes seem random but are happening every few minute"
+            "s.",
+            "Our high-frequency trading systems are reporting unacceptable latency on the NYC trading floor network "
+            "segment. Traceroute shows the bottleneck is between the floor switch and the core router. This started "
+            "about 90 minutes ago and is getting worse.",
         ],
         next_best_actions=[
-            "Immediately investigate the trading floor network segment for congestion, bad cables, or switch issues. Check for broadcast storms or spanning tree reconvergence.",
+            "Immediately investigate the trading floor network segment for congestion, bad cables, or switch issues. "
+            "Check for broadcast storms or spanning tree reconvergence.",
         ],
         remediation_steps=[
             [
@@ -1456,11 +1343,16 @@ SCENARIOS: list[Scenario] = [
             "Private peering to Azure down — all cloud workloads affected",
         ],
         descriptions=[
-            "Our ExpressRoute circuit to Azure is showing 15% packet loss since 7 AM. All cloud-hosted applications (Dynamics, Power BI, internal APIs) are extremely slow or timing out. Both our primary and secondary peering connections seem affected. This is impacting all three offices.",
-            "Azure connectivity through ExpressRoute is severely degraded. BGP session keeps flapping on the primary circuit. Failover to the secondary ISP link isn't happening as expected. Our entire Azure-hosted application stack is affected — roughly 2000 users across the company.",
+            "Our ExpressRoute circuit to Azure is showing 15% packet loss since 7 AM. All cloud-hosted applications "
+            "(Dynamics, Power BI, internal APIs) are extremely slow or timing out. Both our primary and secondary "
+            "peering connections seem affected. This is impacting all three offices.",
+            "Azure connectivity through ExpressRoute is severely degraded. BGP session keeps flapping on the primary "
+            "circuit. Failover to the secondary ISP link isn't happening as expected. Our entire Azure-hosted "
+            "application stack is affected — roughly 2000 users across the company.",
         ],
         next_best_actions=[
-            "Check ExpressRoute circuit health in Azure portal and engage ISP for circuit diagnostics. Verify BGP peering status and failover configuration.",
+            "Check ExpressRoute circuit health in Azure portal and engage ISP for circuit diagnostics. Verify BGP "
+            "peering status and failover configuration.",
         ],
         remediation_steps=[
             [
@@ -1488,11 +1380,17 @@ SCENARIOS: list[Scenario] = [
             "Inter-office video conferencing quality degradation",
         ],
         descriptions=[
-            "Video calls between our NYC and Singapore offices have been terrible for the past week. Video freezes every few seconds and audio cuts in and out. This only happens on cross-office calls — local Teams calls work perfectly. We have daily standups with the Singapore team at 9 PM EST / 9 AM SGT and it's been unusable.",
-            "The video quality on Teams calls between London and Singapore keeps dropping to poor quality. Participants are pixelated and there's a 3-4 second audio delay. We've tried meeting room systems and individual laptops — same issue. Internal calls within each office are fine.",
+            "Video calls between our NYC and Singapore offices have been terrible for the past week. Video freezes "
+            "every few seconds and audio cuts in and out. This only happens on cross-office calls — local Teams calls "
+            "work perfectly. We have daily standups with the Singapore team at 9 PM EST / 9 AM SGT and it's been "
+            "unusable.",
+            "The video quality on Teams calls between London and Singapore keeps dropping to poor quality. Participants"
+            " are pixelated and there's a 3-4 second audio delay. We've tried meeting room systems and individual lapto"
+            "ps — same issue. Internal calls within each office are fine.",
         ],
         next_best_actions=[
-            "Investigate inter-office WAN link utilization and QoS for real-time traffic. Check if MPLS/SD-WAN path between offices is congested or rerouting.",
+            "Investigate inter-office WAN link utilization and QoS for real-time traffic. Check if MPLS/SD-WAN path "
+            "between offices is congested or rerouting.",
         ],
         remediation_steps=[
             [
@@ -1519,11 +1417,17 @@ SCENARIOS: list[Scenario] = [
             "Websites randomly fail to load — DNS issue suspected",
         ],
         descriptions=[
-            "For the past two days, random websites and internal applications fail to load intermittently. Chrome shows DNS_PROBE_FINISHED_NXDOMAIN errors. It happens maybe once every 10-15 minutes and resolves itself after a few seconds. Affects multiple users on the 7th floor. nslookup sometimes returns different results than expected.",
-            "We're getting sporadic DNS failures across the London office. Internal and external name resolution randomly fails and then works again seconds later. It's causing issues with our CI/CD pipelines because API calls to internal services sporadically fail with 'name not resolved' errors.",
+            "For the past two days, random websites and internal applications fail to load intermittently. Chrome shows"
+            " DNS_PROBE_FINISHED_NXDOMAIN errors. It happens maybe once every 10-15 minutes and resolves itself after a"
+            " few seconds. Affects multiple users on the 7th floor. nslookup sometimes returns different results than e"
+            "xpected.",
+            "We're getting sporadic DNS failures across the London office. Internal and external name resolution "
+            "randomly fails and then works again seconds later. It's causing issues with our CI/CD pipelines because "
+            "API calls to internal services sporadically fail with 'name not resolved' errors.",
         ],
         next_best_actions=[
-            "Investigate DNS server health and query logs. Check for DNS server overload, stale records, or DHCP assigning incorrect DNS servers.",
+            "Investigate DNS server health and query logs. Check for DNS server overload, stale records, or DHCP "
+            "assigning incorrect DNS servers.",
         ],
         remediation_steps=[
             [
@@ -1550,11 +1454,16 @@ SCENARIOS: list[Scenario] = [
             "Can't access client's secure file transfer site — Zscaler blocks it",
         ],
         descriptions=[
-            "Zscaler is blocking access to our client's secure file transfer portal (securetransfer.clientname.com). It's being categorized as 'Uncategorized' and getting blocked by our default deny policy. I need access urgently to download documents for a deal closing this week.",
-            "Our web security proxy (Zscaler) is incorrectly blocking a legitimate SaaS application (app.vendorname.com) that our Compliance team needs for regulatory reporting. The site is flagged as 'potentially dangerous' but we've verified it's safe. 15 people in Compliance are blocked.",
+            "Zscaler is blocking access to our client's secure file transfer portal (securetransfer.clientname.com). "
+            "It's being categorized as 'Uncategorized' and getting blocked by our default deny policy. I need access "
+            "urgently to download documents for a deal closing this week.",
+            "Our web security proxy (Zscaler) is incorrectly blocking a legitimate SaaS application "
+            "(app.vendorname.com) that our Compliance team needs for regulatory reporting. The site is flagged as "
+            "'potentially dangerous' but we've verified it's safe. 15 people in Compliance are blocked.",
         ],
         next_best_actions=[
-            "Review the Zscaler URL categorization and create a URL allowlist entry for the legitimate site after security review.",
+            "Review the Zscaler URL categorization and create a URL allowlist entry for the legitimate site after "
+            "security review.",
         ],
         remediation_steps=[
             [
@@ -1581,11 +1490,16 @@ SCENARIOS: list[Scenario] = [
             "Internet outage at Singapore office — SD-WAN didn't switch links",
         ],
         descriptions=[
-            "Our Singapore office experienced an ISP outage this morning and the SD-WAN appliance didn't fail over to the backup 4G link as it should. The entire office was offline for 2 hours until the ISP restored service. The failover worked perfectly in our last DR test a month ago.",
-            "SD-WAN failover from primary MPLS to backup internet link isn't triggering at the London branch. We keep losing connectivity for 5-10 minutes before manual intervention. The SD-WAN dashboard shows the backup link as healthy but the automatic failover policy isn't engaging.",
+            "Our Singapore office experienced an ISP outage this morning and the SD-WAN appliance didn't fail over to t"
+            "he backup 4G link as it should. The entire office was offline for 2 hours until the ISP restored service. "
+            "The failover worked perfectly in our last DR test a month ago.",
+            "SD-WAN failover from primary MPLS to backup internet link isn't triggering at the London branch. We keep "
+            "losing connectivity for 5-10 minutes before manual intervention. The SD-WAN dashboard shows the backup "
+            "link as healthy but the automatic failover policy isn't engaging.",
         ],
         next_best_actions=[
-            "Review SD-WAN failover policy configuration and test health check probes. Verify backup link is properly configured and SLA triggers are set correctly.",
+            "Review SD-WAN failover policy configuration and test health check probes. Verify backup link is properly "
+            "configured and SLA triggers are set correctly.",
         ],
         remediation_steps=[
             [

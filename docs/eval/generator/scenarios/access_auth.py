@@ -1,7 +1,5 @@
 """Access & Authentication scenario definitions."""
 
-from __future__ import annotations
-
 from generator.models import Scenario
 
 SCENARIOS: list[Scenario] = [
@@ -19,9 +17,13 @@ SCENARIOS: list[Scenario] = [
             "Password reset needed — expired",
         ],
         descriptions=[
-            "My password expired this morning and I can't log into my workstation. I've tried the self-service reset portal but it keeps saying 'service unavailable'. Can someone reset it manually? I have a client meeting in 2 hours.",
-            "Tried to log in this morning and got a message that my password has expired. The SSPR portal doesn't seem to be working for me. I need access ASAP to finish a quarterly report.",
-            "Password expiration notice popped up but I couldn't change it in time. Now locked out completely. Self-service portal gives a generic error.",
+            "My password expired this morning and I can't log into my workstation. I've tried the self-service reset "
+            "portal but it keeps saying 'service unavailable'. Can someone reset it manually? I have a client meeting "
+            "in 2 hours.",
+            "Tried to log in this morning and got a message that my password has expired. The SSPR portal doesn't seem "
+            "to be working for me. I need access ASAP to finish a quarterly report.",
+            "Password expiration notice popped up but I couldn't change it in time. Now locked out completely. "
+            "Self-service portal gives a generic error.",
         ],
         next_best_actions=[
             "Verify user identity and initiate manual password reset. Check SSPR portal status for widespread issues.",
@@ -51,9 +53,12 @@ SCENARIOS: list[Scenario] = [
             "MFA verification failing — no push received",
         ],
         descriptions=[
-            "Since this morning I haven't been able to receive MFA push notifications on my phone. I'm using Microsoft Authenticator on an iPhone 15. I've tried restarting the app and my phone but nothing works.",
-            "My MFA push notifications stopped working today. The Authenticator app shows the account but tapping 'approve' doesn't do anything. I can't get into email or Teams.",
-            "Authenticator app on my Android phone isn't sending push notifications anymore. Was fine yesterday. I'm completely locked out of all Microsoft 365 services.",
+            "Since this morning I haven't been able to receive MFA push notifications on my phone. I'm using Microsoft "
+            "Authenticator on an iPhone 15. I've tried restarting the app and my phone but nothing works.",
+            "My MFA push notifications stopped working today. The Authenticator app shows the account but tapping "
+            "'approve' doesn't do anything. I can't get into email or Teams.",
+            "Authenticator app on my Android phone isn't sending push notifications anymore. Was fine yesterday. I'm "
+            "completely locked out of all Microsoft 365 services.",
         ],
         next_best_actions=[
             "Issue temporary access pass and troubleshoot MFA registration. Check for Authenticator service issues.",
@@ -83,13 +88,19 @@ SCENARIOS: list[Scenario] = [
             "Lost device with MFA — can't access any systems",
         ],
         descriptions=[
-            "I lost my phone on the subway this morning and it had my Microsoft Authenticator app on it. I can't log into anything now — email, Teams, VPN, nothing. I have a critical client presentation at 2 PM. Please help urgently.",
-            "My phone was stolen yesterday evening. It has my Authenticator app and I'm completely locked out of all company systems. I need emergency access set up on a new device.",
-            "Left my phone in a taxi. Now I can't pass MFA for any login. I don't have backup codes. This is my only auth method. I need access restored immediately — I'm in the middle of quarter-end close.",
+            "I lost my phone on the subway this morning and it had my Microsoft Authenticator app on it. I can't log in"
+            "to anything now — email, Teams, VPN, nothing. I have a critical client presentation at 2 PM. Please help u"
+            "rgently.",
+            "My phone was stolen yesterday evening. It has my Authenticator app and I'm completely locked out of all "
+            "company systems. I need emergency access set up on a new device.",
+            "Left my phone in a taxi. Now I can't pass MFA for any login. I don't have backup codes. This is my only "
+            "auth method. I need access restored immediately — I'm in the middle of quarter-end close.",
         ],
         next_best_actions=[
-            "Issue Temporary Access Pass immediately. Revoke MFA on lost device and register new MFA method. If phone stolen, initiate remote wipe.",
-            "Provide emergency access via TAP, revoke compromised device MFA registration, and set up replacement authentication method.",
+            "Issue Temporary Access Pass immediately. Revoke MFA on lost device and register new MFA method. If phone "
+            "stolen, initiate remote wipe.",
+            "Provide emergency access via TAP, revoke compromised device MFA registration, and set up replacement "
+            "authentication method.",
         ],
         remediation_steps=[
             [
@@ -116,12 +127,17 @@ SCENARIOS: list[Scenario] = [
             "SSO token error after password reset",
         ],
         descriptions=[
-            "I changed my password yesterday per the quarterly reset policy. Now SSO into Salesforce is completely broken. I get an 'invalid token' error every time. I've cleared cookies and tried incognito mode. I have a critical client demo scheduled for tomorrow.",
-            "After my password change, Salesforce SSO stopped working. I get redirected in a loop between the login page and Salesforce. All other SSO apps work fine — just Salesforce is broken.",
-            "Salesforce SSO has been failing since my password reset. Error says 'SAML assertion invalid'. Other apps using SSO work fine. Need access restored — I manage all our client accounts there.",
+            "I changed my password yesterday per the quarterly reset policy. Now SSO into Salesforce is completely brok"
+            "en. I get an 'invalid token' error every time. I've cleared cookies and tried incognito mode. I have a cri"
+            "tical client demo scheduled for tomorrow.",
+            "After my password change, Salesforce SSO stopped working. I get redirected in a loop between the login "
+            "page and Salesforce. All other SSO apps work fine — just Salesforce is broken.",
+            "Salesforce SSO has been failing since my password reset. Error says 'SAML assertion invalid'. Other apps "
+            "using SSO work fine. Need access restored — I manage all our client accounts there.",
         ],
         next_best_actions=[
-            "Investigate SSO token cache and SAML assertion for Salesforce integration. Clear cached SSO tokens for the user.",
+            "Investigate SSO token cache and SAML assertion for Salesforce integration. Clear cached SSO tokens for the"
+            " user.",
             "Check Azure AD enterprise app configuration for Salesforce and refresh SAML token mappings.",
         ],
         remediation_steps=[
@@ -148,12 +164,16 @@ SCENARIOS: list[Scenario] = [
             "Badge reader keeps saying 'access denied'",
         ],
         descriptions=[
-            "My badge stopped working at the Building 7 main entrance this morning. I've used this entrance every day for 2 years. The security guard let me in but I need this fixed — I work on the 3rd floor secure area too.",
-            "I tried to tap my badge at the Building 7 entrance and got 'Access Denied'. Other people's badges work fine. This started today — no changes to my role or office location.",
-            "My physical access badge is being rejected at Building 7. I haven't had any role changes. The badge works at the parking garage but not the building entrance.",
+            "My badge stopped working at the Building 7 main entrance this morning. I've used this entrance every day f"
+            "or 2 years. The security guard let me in but I need this fixed — I work on the 3rd floor secure area too.",
+            "I tried to tap my badge at the Building 7 entrance and got 'Access Denied'. Other people's badges work "
+            "fine. This started today — no changes to my role or office location.",
+            "My physical access badge is being rejected at Building 7. I haven't had any role changes. The badge works "
+            "at the parking garage but not the building entrance.",
         ],
         next_best_actions=[
-            "Check physical access control system for badge status. Verify no changes to building access groups or badge expiration.",
+            "Check physical access control system for badge status. Verify no changes to building access groups or "
+            "badge expiration.",
             "Investigate access group assignment for Building 7 and check badge reader logs.",
         ],
         remediation_steps=[
@@ -180,12 +200,17 @@ SCENARIOS: list[Scenario] = [
             "New joiner cannot log in — Day 1 issue",
         ],
         descriptions=[
-            "We have a new hire, Jennifer Park, starting this Monday on the Wealth Management team. HR submitted the onboarding request two weeks ago but she still has no AD account, email, or laptop assignment. Her manager is asking daily about this.",
-            "I'm a new employee who started today but there's no account for me in the system. My manager said IT was supposed to set everything up. I've been sitting here for 3 hours with nothing to do. ID: EMP-78432.",
-            "New team member was supposed to start today with full access provisioned. No email, no AD account, no badge. Onboarding ticket was raised 3 weeks ago. The hiring manager is escalating.",
+            "We have a new hire, Jennifer Park, starting this Monday on the Wealth Management team. HR submitted the on"
+            "boarding request two weeks ago but she still has no AD account, email, or laptop assignment. Her manager i"
+            "s asking daily about this.",
+            "I'm a new employee who started today but there's no account for me in the system. My manager said IT was "
+            "supposed to set everything up. I've been sitting here for 3 hours with nothing to do. ID: EMP-78432.",
+            "New team member was supposed to start today with full access provisioned. No email, no AD account, no "
+            "badge. Onboarding ticket was raised 3 weeks ago. The hiring manager is escalating.",
         ],
         next_best_actions=[
-            "Check onboarding request status in HR system. Expedite account provisioning for AD, email, and system access.",
+            "Check onboarding request status in HR system. Expedite account provisioning for AD, email, and system "
+            "access.",
             "Investigate delayed onboarding workflow and provision all required accounts immediately.",
         ],
         remediation_steps=[
@@ -214,12 +239,18 @@ SCENARIOS: list[Scenario] = [
             "Production service account SVC-PAY-001 password expiry imminent",
         ],
         descriptions=[
-            "The service account SVC-PAY-001 that our payment processing system uses has a password expiring in 48 hours. This account handles all client wire transfers. If it expires, the entire payment pipeline stops. We need coordinated password rotation across 5 dependent systems.",
-            "Got an alert that the service account for our core trading platform (SVC-TRADE-MAIN) expires in 2 days. Last time this happened, we had a 4-hour outage. Requesting urgent password rotation coordination.",
-            "Our monitoring detected that service account SVC-RISK-ENGINE will expire in 48 hours. This account is used by our real-time risk calculation engine. Failure would mean we can't process any trades. Need immediate attention.",
+            "The service account SVC-PAY-001 that our payment processing system uses has a password expiring in 48 "
+            "hours. This account handles all client wire transfers. If it expires, the entire payment pipeline stops. "
+            "We need coordinated password rotation across 5 dependent systems.",
+            "Got an alert that the service account for our core trading platform (SVC-TRADE-MAIN) expires in 2 days. "
+            "Last time this happened, we had a 4-hour outage. Requesting urgent password rotation coordination.",
+            "Our monitoring detected that service account SVC-RISK-ENGINE will expire in 48 hours. This account is used"
+            " by our real-time risk calculation engine. Failure would mean we can't process any trades. Need immediate "
+            "attention.",
         ],
         next_best_actions=[
-            "Initiate coordinated service account password rotation. Identify all dependent systems and schedule maintenance window.",
+            "Initiate coordinated service account password rotation. Identify all dependent systems and schedule "
+            "maintenance window.",
             "Plan coordinated password rotation with change management. Update all dependent system configurations.",
         ],
         remediation_steps=[
@@ -248,9 +279,13 @@ SCENARIOS: list[Scenario] = [
             "Add me to the Client Services shared mailbox please",
         ],
         descriptions=[
-            "I recently transferred to the Client Services team and need access to the shared mailbox clientservices@contoso.com. My manager approved this — she's CC'd on this email. I need it for handling client inquiries.",
-            "I've been asked to help with the quarterly investor communications and need access to the IR shared mailbox. My director approved the request. Please add me with send-as permissions.",
-            "Just joined the Legal team and was told I should have access to legal-inbox@contoso.com. I don't see it in Outlook. My manager name is Sandra Williams.",
+            "I recently transferred to the Client Services team and need access to the shared mailbox "
+            "clientservices@contoso.com. My manager approved this — she's CC'd on this email. I need it for handling "
+            "client inquiries.",
+            "I've been asked to help with the quarterly investor communications and need access to the IR shared "
+            "mailbox. My director approved the request. Please add me with send-as permissions.",
+            "Just joined the Legal team and was told I should have access to legal-inbox@contoso.com. I don't see it in"
+            " Outlook. My manager name is Sandra Williams.",
         ],
         next_best_actions=[
             "Verify manager approval and add user to the shared mailbox with appropriate permissions.",
@@ -280,12 +315,18 @@ SCENARIOS: list[Scenario] = [
             "Contractor access request — 3 month engagement",
         ],
         descriptions=[
-            "We need to set up Azure AD B2B guest access for 3 consultants from Deloitte who are doing our annual audit. They need read-only access to SharePoint finance documents and the internal compliance portal. Engagement runs March through May.",
-            "External penetration testing firm needs temporary accounts for a 2-week engagement starting next Monday. They'll need VPN access and limited network scanning permissions. SOW is signed — attaching approval from CISO.",
-            "A contractor from McKinsey is joining our strategy team for 3 months. She needs email, Teams, and access to our strategic planning SharePoint site. Her laptop will be personal — not company-managed.",
+            "We need to set up Azure AD B2B guest access for 3 consultants from Deloitte who are doing our annual "
+            "audit. They need read-only access to SharePoint finance documents and the internal compliance portal. "
+            "Engagement runs March through May.",
+            "External penetration testing firm needs temporary accounts for a 2-week engagement starting next Monday. "
+            "They'll need VPN access and limited network scanning permissions. SOW is signed — attaching approval from "
+            "CISO.",
+            "A contractor from McKinsey is joining our strategy team for 3 months. She needs email, Teams, and access "
+            "to our strategic planning SharePoint site. Her laptop will be personal — not company-managed.",
         ],
         next_best_actions=[
-            "Create guest accounts with appropriate Conditional Access policies. Ensure time-bound access with automatic expiry.",
+            "Create guest accounts with appropriate Conditional Access policies. Ensure time-bound access with "
+            "automatic expiry.",
             "Provision B2B guest accounts with minimum required permissions and set access review schedule.",
         ],
         remediation_steps=[
@@ -314,12 +355,17 @@ SCENARIOS: list[Scenario] = [
             "Remote access broken — certificate authentication failure",
         ],
         descriptions=[
-            "My VPN client is showing a certificate error when I try to connect from home. The error says 'certificate has expired or is not yet valid'. I need remote access for the rest of this week — I'm working from home due to a family situation.",
-            "Can't connect to the corporate VPN. Getting a cert validation error. I'm a remote employee in Denver and this is my only way to access internal systems. Last connected successfully on Friday.",
-            "VPN certificate-based authentication failing since this morning. Error code 0x80090328. I'm working remotely and need immediate access to internal resources.",
+            "My VPN client is showing a certificate error when I try to connect from home. The error says 'certificate "
+            "has expired or is not yet valid'. I need remote access for the rest of this week — I'm working from home "
+            "due to a family situation.",
+            "Can't connect to the corporate VPN. Getting a cert validation error. I'm a remote employee in Denver and "
+            "this is my only way to access internal systems. Last connected successfully on Friday.",
+            "VPN certificate-based authentication failing since this morning. Error code 0x80090328. I'm working "
+            "remotely and need immediate access to internal resources.",
         ],
         next_best_actions=[
-            "Issue new VPN client certificate. Check if this is an isolated expiry or part of a batch certificate renewal issue.",
+            "Issue new VPN client certificate. Check if this is an isolated expiry or part of a batch certificate "
+            "renewal issue.",
             "Re-issue user VPN certificate and verify certificate authority chain.",
         ],
         remediation_steps=[
@@ -346,9 +392,12 @@ SCENARIOS: list[Scenario] = [
             "Please add me to the Financial Systems access group",
         ],
         descriptions=[
-            "I need to be added to the AD group 'reporting-analysts-global' to access the financial reporting dashboards in Power BI. My manager approved this change. Group owner is Raj Mehta in IT.",
-            "Requesting membership in the 'risk-analytics-users' AD group. I've been assigned to a new project that requires access to the risk analytics platform. Manager approval email attached.",
-            "Please add my account to the 'trading-floor-apps' security group. I transferred from the London office and my group memberships didn't follow. Need access to trading tools.",
+            "I need to be added to the AD group 'reporting-analysts-global' to access the financial reporting "
+            "dashboards in Power BI. My manager approved this change. Group owner is Raj Mehta in IT.",
+            "Requesting membership in the 'risk-analytics-users' AD group. I've been assigned to a new project that "
+            "requires access to the risk analytics platform. Manager approval email attached.",
+            "Please add my account to the 'trading-floor-apps' security group. I transferred from the London office and"
+            " my group memberships didn't follow. Need access to trading tools.",
         ],
         next_best_actions=[
             "Verify approval and add user to the requested AD group after confirming group owner consent.",
@@ -378,12 +427,17 @@ SCENARIOS: list[Scenario] = [
             "Azure AD blocking login — compliant device required",
         ],
         descriptions=[
-            "I got a new personal laptop and I can't access my Contoso email through the browser. I get a message saying 'Your sign-in was blocked' and something about conditional access policy. I've always been able to check email from personal devices before.",
-            "I'm trying to log in from my home desktop and getting blocked by Conditional Access. The error says my device isn't registered. I work remotely 3 days a week — this used to work. Something changed recently.",
-            "After traveling to our Singapore office, I can't log into Teams or Outlook from the office workstation here. Getting a Conditional Access block. The Singapore team says they don't have this issue.",
+            "I got a new personal laptop and I can't access my Contoso email through the browser. I get a message "
+            "saying 'Your sign-in was blocked' and something about conditional access policy. I've always been able to "
+            "check email from personal devices before.",
+            "I'm trying to log in from my home desktop and getting blocked by Conditional Access. The error says my "
+            "device isn't registered. I work remotely 3 days a week — this used to work. Something changed recently.",
+            "After traveling to our Singapore office, I can't log into Teams or Outlook from the office workstation "
+            "here. Getting a Conditional Access block. The Singapore team says they don't have this issue.",
         ],
         next_best_actions=[
-            "Review Conditional Access policy triggers for the user's sign-in attempt. Determine if device compliance or location policy is the blocker.",
+            "Review Conditional Access policy triggers for the user's sign-in attempt. Determine if device compliance "
+            "or location policy is the blocker.",
             "Check sign-in logs to identify which CA policy blocked access and determine appropriate remediation.",
         ],
         remediation_steps=[
@@ -410,12 +464,18 @@ SCENARIOS: list[Scenario] = [
             "Company-wide self-service password reset failure",
         ],
         descriptions=[
-            "Multiple users on our floor are reporting that the self-service password reset portal is giving a 500 error. At least 8 people can't reset their passwords this morning. This seems like a systemic issue, not individual.",
-            "The SSPR portal has been down since 8 AM. I've had 12 users call me directly because they can't reset their passwords. The portal just spins and then shows 'Service unavailable'. This is impacting productivity across the organization.",
-            "Self-service password reset is broken for the entire Finance department. Every attempt returns an error. We have 15+ users locked out and unable to work. Needs immediate attention.",
+            "Multiple users on our floor are reporting that the self-service password reset portal is giving a 500 "
+            "error. At least 8 people can't reset their passwords this morning. This seems like a systemic issue, not "
+            "individual.",
+            "The SSPR portal has been down since 8 AM. I've had 12 users call me directly because they can't reset "
+            "their passwords. The portal just spins and then shows 'Service unavailable'. This is impacting "
+            "productivity across the organization.",
+            "Self-service password reset is broken for the entire Finance department. Every attempt returns an error. "
+            "We have 15+ users locked out and unable to work. Needs immediate attention.",
         ],
         next_best_actions=[
-            "Investigate SSPR service health in Azure AD. Check for service incidents or configuration changes. Set up manual reset queue for affected users.",
+            "Investigate SSPR service health in Azure AD. Check for service incidents or configuration changes. Set up "
+            "manual reset queue for affected users.",
             "Check Azure AD service health for SSPR outage. Establish manual reset process while investigating.",
         ],
         remediation_steps=[
@@ -444,12 +504,19 @@ SCENARIOS: list[Scenario] = [
             "PIM elevation request denied — Error activating role",
         ],
         descriptions=[
-            "I'm trying to activate my Global Reader role through PIM for an audit that starts in 1 hour, but the activation keeps failing with a vague error. I'm an eligible member — used this role last month without issues. The Azure portal just shows 'activation failed'.",
-            "Need to activate my Security Administrator PIM role to investigate a potential incident but PIM is throwing errors. Activation request was submitted 30 minutes ago and is stuck in 'Pending' state. This is time-sensitive.",
-            "PIM role activation for Exchange Administrator is failing. Error message says 'approval workflow error'. I've been eligible for this role for 6 months and activated it successfully many times before. Need it for an email migration starting today.",
+            "I'm trying to activate my Global Reader role through PIM for an audit that starts in 1 hour, but the "
+            "activation keeps failing with a vague error. I'm an eligible member — used this role last month without "
+            "issues. The Azure portal just shows 'activation failed'.",
+            "Need to activate my Security Administrator PIM role to investigate a potential incident but PIM is "
+            "throwing errors. Activation request was submitted 30 minutes ago and is stuck in 'Pending' state. This is "
+            "time-sensitive.",
+            "PIM role activation for Exchange Administrator is failing. Error message says 'approval workflow error'. I"
+            "'ve been eligible for this role for 6 months and activated it successfully many times before. Need it for "
+            "an email migration starting today.",
         ],
         next_best_actions=[
-            "Check PIM activation workflow status and approval chain. Investigate any recent PIM policy changes or Azure AD service issues.",
+            "Check PIM activation workflow status and approval chain. Investigate any recent PIM policy changes or "
+            "Azure AD service issues.",
             "Review PIM audit logs for activation failure reason and manually approve if blocked by workflow.",
         ],
         remediation_steps=[
@@ -477,12 +544,17 @@ SCENARIOS: list[Scenario] = [
             "Can't log in — account disabled error message",
         ],
         descriptions=[
-            "I came in this morning and my account is disabled. I can't log into my computer, email, or anything. I haven't violated any policies. My manager didn't get any notification about this. I've been with the company for 5 years. Is this a mistake?",
-            "My Active Directory account was disabled overnight. When I try to log in I get 'your account has been disabled, contact your administrator'. I'm not on any PIP or leave. This seems like an error.",
-            "Got a call from a team member that they can't reach me — turns out my account is disabled. I was working late last night and everything was fine at 11 PM. Something happened between then and this morning.",
+            "I came in this morning and my account is disabled. I can't log into my computer, email, or anything. I "
+            "haven't violated any policies. My manager didn't get any notification about this. I've been with the "
+            "company for 5 years. Is this a mistake?",
+            "My Active Directory account was disabled overnight. When I try to log in I get 'your account has been "
+            "disabled, contact your administrator'. I'm not on any PIP or leave. This seems like an error.",
+            "Got a call from a team member that they can't reach me — turns out my account is disabled. I was working "
+            "late last night and everything was fine at 11 PM. Something happened between then and this morning.",
         ],
         next_best_actions=[
-            "Investigate why the account was disabled by checking audit logs. Determine if it was automated (security trigger) or manual action.",
+            "Investigate why the account was disabled by checking audit logs. Determine if it was automated (security "
+            "trigger) or manual action.",
             "Check AD audit logs for who/what disabled the account and re-enable if appropriate.",
         ],
         remediation_steps=[
@@ -510,12 +582,19 @@ SCENARIOS: list[Scenario] = [
             "Can't authorize Figma — needs admin approval",
         ],
         descriptions=[
-            "I'm trying to use Figma for our new design project but when I sign in with my Contoso account, it says 'Approval required — an admin must grant consent for this app'. Our design team of 12 people needs this tool for the rebrand project.",
-            "A new analytics tool (Mixpanel) requires OAuth consent from an Azure AD admin. The entire product team is blocked — we purchased licenses already but can't actually use the service. Requesting admin consent for the app.",
-            "Trying to connect a project management tool to our Azure AD for SSO but getting blocked by admin consent policy. We've completed the security review and got CISO approval — just need the technical consent granted.",
+            "I'm trying to use Figma for our new design project but when I sign in with my Contoso account, it says "
+            "'Approval required — an admin must grant consent for this app'. Our design team of 12 people needs this "
+            "tool for the rebrand project.",
+            "A new analytics tool (Mixpanel) requires OAuth consent from an Azure AD admin. The entire product team is "
+            "blocked — we purchased licenses already but can't actually use the service. Requesting admin consent for "
+            "the app.",
+            "Trying to connect a project management tool to our Azure AD for SSO but getting blocked by admin consent "
+            "policy. We've completed the security review and got CISO approval — just need the technical consent "
+            "granted.",
         ],
         next_best_actions=[
-            "Review the app's requested permissions. If approved through procurement/security review, grant admin consent in Azure AD.",
+            "Review the app's requested permissions. If approved through procurement/security review, grant admin "
+            "consent in Azure AD.",
             "Check if the app has been through security review and grant admin consent if approved.",
         ],
         remediation_steps=[
@@ -543,12 +622,17 @@ SCENARIOS: list[Scenario] = [
             "Internal finance app keeps asking for credentials — Kerberos broken",
         ],
         descriptions=[
-            "Our legacy finance reconciliation system (on-prem, Windows Server 2016) is failing Kerberos authentication for my team. We keep getting prompted for credentials. The SPN might be misconfigured — we had a server migration last week.",
-            "The old FinRecon application that runs on-premises is throwing Kerberos errors. It was working fine until the domain controller maintenance last weekend. About 15 users in Finance are affected.",
-            "Getting repeated credential prompts when accessing the on-prem risk management system. Kerberos ticket seems to be expiring immediately. Event logs show KRB_AP_ERR_MODIFIED errors.",
+            "Our legacy finance reconciliation system (on-prem, Windows Server 2016) is failing Kerberos authentication"
+            " for my team. We keep getting prompted for credentials. The SPN might be misconfigured — we had a server m"
+            "igration last week.",
+            "The old FinRecon application that runs on-premises is throwing Kerberos errors. It was working fine until "
+            "the domain controller maintenance last weekend. About 15 users in Finance are affected.",
+            "Getting repeated credential prompts when accessing the on-prem risk management system. Kerberos ticket "
+            "seems to be expiring immediately. Event logs show KRB_AP_ERR_MODIFIED errors.",
         ],
         next_best_actions=[
-            "Check SPN registration for the application service account. Verify domain controller replication and Kerberos ticket issuance.",
+            "Check SPN registration for the application service account. Verify domain controller replication and "
+            "Kerberos ticket issuance.",
             "Investigate SPN configuration and recent DC changes that may have broken Kerberos authentication.",
         ],
         remediation_steps=[
@@ -576,9 +660,13 @@ SCENARIOS: list[Scenario] = [
             "Access denied on Azure resource group — need role assignment",
         ],
         descriptions=[
-            "I need Contributor role on the 'rg-prod-trading-eastus' resource group to deploy our new microservice. Currently getting 403 Forbidden when running our CI/CD pipeline. My manager (Kevin O'Brien) approved this — he's the resource group owner.",
-            "Requesting Reader access to the production Azure subscription for monitoring purposes. I'm on the SRE team and need to view resource health and metrics. Approved by our team lead.",
-            "I can't access the Azure Key Vault in our staging environment. Getting 'AuthorizationFailed'. I need to configure secrets for our new application deployment. Manager has already approved.",
+            "I need Contributor role on the 'rg-prod-trading-eastus' resource group to deploy our new microservice. "
+            "Currently getting 403 Forbidden when running our CI/CD pipeline. My manager (Kevin O'Brien) approved this "
+            "— he's the resource group owner.",
+            "Requesting Reader access to the production Azure subscription for monitoring purposes. I'm on the SRE team"
+            " and need to view resource health and metrics. Approved by our team lead.",
+            "I can't access the Azure Key Vault in our staging environment. Getting 'AuthorizationFailed'. I need to "
+            "configure secrets for our new application deployment. Manager has already approved.",
         ],
         next_best_actions=[
             "Verify manager approval and assign the requested Azure RBAC role with appropriate scope.",
@@ -608,13 +696,21 @@ SCENARIOS: list[Scenario] = [
             "Shared channels with Meridian Partners not accessible",
         ],
         descriptions=[
-            "We set up shared Teams channels with Meridian Partners for a joint deal, but their users can't access our shared channels. They get a 'your organization doesn't allow external access' error. Our side looks configured correctly.",
-            "B2B collaboration with our legal partner firm is broken. Their attorneys need access to a shared SharePoint site for the merger documents but invitations keep failing. Cross-tenant access policy might be the issue.",
-            "I'm trying to invite external collaborators from our partner bank into a shared Teams workspace. The invitations go out but when they try to accept, they get an access policy error. Both orgs supposedly have B2B enabled.",
+            "We set up shared Teams channels with Meridian Partners for a joint deal, but their users can't access our "
+            "shared channels. They get a 'your organization doesn't allow external access' error. Our side looks "
+            "configured correctly.",
+            "B2B collaboration with our legal partner firm is broken. Their attorneys need access to a shared SharePoin"
+            "t site for the merger documents but invitations keep failing. Cross-tenant access policy might be the issu"
+            "e.",
+            "I'm trying to invite external collaborators from our partner bank into a shared Teams workspace. The invit"
+            "ations go out but when they try to accept, they get an access policy error. Both orgs supposedly have B2B "
+            "enabled.",
         ],
         next_best_actions=[
-            "Review cross-tenant access settings for both organizations. Check Teams external access policies and SharePoint sharing settings.",
-            "Verify Azure AD cross-tenant access policy configuration and ensure both tenant admins have approved the B2B relationship.",
+            "Review cross-tenant access settings for both organizations. Check Teams external access policies and "
+            "SharePoint sharing settings.",
+            "Verify Azure AD cross-tenant access policy configuration and ensure both tenant admins have approved the "
+            "B2B relationship.",
         ],
         remediation_steps=[
             [
@@ -641,13 +737,20 @@ SCENARIOS: list[Scenario] = [
             "Continuous account lockout loop",
         ],
         descriptions=[
-            "My account has been locking out every 15 minutes since yesterday. I unlock it, work for 15 minutes, then get locked out again. I've changed my password twice but it keeps happening. I think something is using my old credentials somewhere.",
-            "I've been locked out 8 times today. Each time I reset my password, it locks again within minutes. I'm worried there might be a saved password somewhere that's trying the old one. Or worse — someone is trying to get into my account.",
-            "Account lockout happening repeatedly. Changed password 3 times. IT unlocks me, then within 10-15 minutes I'm locked again. There might be a stale credential on a service or cached password somewhere.",
+            "My account has been locking out every 15 minutes since yesterday. I unlock it, work for 15 minutes, then g"
+            "et locked out again. I've changed my password twice but it keeps happening. I think something is using my "
+            "old credentials somewhere.",
+            "I've been locked out 8 times today. Each time I reset my password, it locks again within minutes. I'm "
+            "worried there might be a saved password somewhere that's trying the old one. Or worse — someone is trying "
+            "to get into my account.",
+            "Account lockout happening repeatedly. Changed password 3 times. IT unlocks me, then within 10-15 minutes "
+            "I'm locked again. There might be a stale credential on a service or cached password somewhere.",
         ],
         next_best_actions=[
-            "Investigate account lockout source by checking DC security logs. Look for stale credentials on services, scheduled tasks, or mapped drives.",
-            "Analyze authentication logs to find the source of repeated lockouts. Check for compromised credential indicators.",
+            "Investigate account lockout source by checking DC security logs. Look for stale credentials on services, "
+            "scheduled tasks, or mapped drives.",
+            "Analyze authentication logs to find the source of repeated lockouts. Check for compromised credential "
+            "indicators.",
         ],
         remediation_steps=[
             [
@@ -675,12 +778,18 @@ SCENARIOS: list[Scenario] = [
             "HR system LDAP authentication broken",
         ],
         descriptions=[
-            "Our legacy HR system (PeopleSoft) stopped authenticating users via LDAP this morning. The LDAP bind is failing with 'invalid credentials' even though the service account password hasn't changed. About 200 HR users can't log in.",
-            "After the domain controller update last weekend, our legacy payroll application can no longer perform LDAP binds. We're getting connection refused errors. This is affecting the entire payroll team — payday is Friday.",
-            "The LDAP integration for our on-prem CRM system broke after the DC patching. LDAP simple bind is being rejected — the error indicates the server requires LDAPS now. This was a surprise change for our team.",
+            "Our legacy HR system (PeopleSoft) stopped authenticating users via LDAP this morning. The LDAP bind is "
+            "failing with 'invalid credentials' even though the service account password hasn't changed. About 200 HR "
+            "users can't log in.",
+            "After the domain controller update last weekend, our legacy payroll application can no longer perform LDAP"
+            " binds. We're getting connection refused errors. This is affecting the entire payroll team — payday is Fri"
+            "day.",
+            "The LDAP integration for our on-prem CRM system broke after the DC patching. LDAP simple bind is being "
+            "rejected — the error indicates the server requires LDAPS now. This was a surprise change for our team.",
         ],
         next_best_actions=[
-            "Check DC LDAP binding requirements post-update. Verify if LDAP channel binding or signing policy changed. Check service account status.",
+            "Check DC LDAP binding requirements post-update. Verify if LDAP channel binding or signing policy changed. "
+            "Check service account status.",
             "Investigate DC LDAP policy changes and update legacy application LDAP configuration accordingly.",
         ],
         remediation_steps=[
@@ -708,11 +817,15 @@ SCENARIOS: list[Scenario] = [
             "SSO keeps bouncing between IdP and Workday — never logs in",
         ],
         descriptions=[
-            "When I try to log into Workday through SSO, the browser just keeps bouncing between the Microsoft login page and Workday without ever completing. I've cleared cookies and tried multiple browsers. My colleague next to me can log in fine.",
-            "Getting stuck in a redirect loop trying to SSO into Workday. Chrome DevTools shows a 302 redirect chain between login.microsoftonline.com and sso.workday.com that never ends. Started this morning.",
+            "When I try to log into Workday through SSO, the browser just keeps bouncing between the Microsoft login "
+            "page and Workday without ever completing. I've cleared cookies and tried multiple browsers. My colleague "
+            "next to me can log in fine.",
+            "Getting stuck in a redirect loop trying to SSO into Workday. Chrome DevTools shows a 302 redirect chain "
+            "between login.microsoftonline.com and sso.workday.com that never ends. Started this morning.",
         ],
         next_best_actions=[
-            "Check SAML configuration for Workday SSO enterprise application. Verify user is assigned to the app in Entra ID and claims mapping is correct.",
+            "Check SAML configuration for Workday SSO enterprise application. Verify user is assigned to the app in "
+            "Entra ID and claims mapping is correct.",
         ],
         remediation_steps=[
             [
@@ -739,11 +852,15 @@ SCENARIOS: list[Scenario] = [
             "Privileged Identity Management role request stuck",
         ],
         descriptions=[
-            "I'm trying to activate my Cloud Application Administrator role through PIM for a critical deployment, but it keeps erroring out with a generic 'request could not be processed' message. I've been approved by my manager already. Deployment deadline is in 3 hours.",
-            "PIM activation for my Azure subscription Owner role is failing. The request shows as 'pending' but never transitions to 'active'. I need this for a production hotfix deployment today.",
+            "I'm trying to activate my Cloud Application Administrator role through PIM for a critical deployment, but "
+            "it keeps erroring out with a generic 'request could not be processed' message. I've been approved by my "
+            "manager already. Deployment deadline is in 3 hours.",
+            "PIM activation for my Azure subscription Owner role is failing. The request shows as 'pending' but never "
+            "transitions to 'active'. I need this for a production hotfix deployment today.",
         ],
         next_best_actions=[
-            "Check PIM service health and verify the role assignment eligibility. If PIM is degraded, consider direct role assignment as temporary workaround.",
+            "Check PIM service health and verify the role assignment eligibility. If PIM is degraded, consider direct "
+            "role assignment as temporary workaround.",
         ],
         remediation_steps=[
             [
@@ -770,11 +887,16 @@ SCENARIOS: list[Scenario] = [
             "Internal web app can't authenticate to backend SQL via Kerberos",
         ],
         descriptions=[
-            "Our internal web application on IIS can't authenticate to the backend SQL Server using Kerberos constrained delegation. Users get an 'access denied' when the app tries to query SQL on behalf of the user. SPNs are configured but something seems off.",
-            "We're hitting the classic Kerberos double-hop problem with our internal portal. The web tier can't pass through user credentials to the database tier. This was working before we migrated to new web servers last month.",
+            "Our internal web application on IIS can't authenticate to the backend SQL Server using Kerberos "
+            "constrained delegation. Users get an 'access denied' when the app tries to query SQL on behalf of the "
+            "user. SPNs are configured but something seems off.",
+            "We're hitting the classic Kerberos double-hop problem with our internal portal. The web tier can't pass th"
+            "rough user credentials to the database tier. This was working before we migrated to new web servers last m"
+            "onth.",
         ],
         next_best_actions=[
-            "Verify SPN registration, delegation settings on service accounts, and KCD configuration in AD for the web and SQL service accounts.",
+            "Verify SPN registration, delegation settings on service accounts, and KCD configuration in AD for the web "
+            "and SQL service accounts.",
         ],
         remediation_steps=[
             [
@@ -801,11 +923,16 @@ SCENARIOS: list[Scenario] = [
             "Directory sync failed — Entra Connect showing export errors",
         ],
         descriptions=[
-            "Our Entra Connect server hasn't synced in over 6 hours. New hires who started today have no cloud accounts and can't access M365 services. The sync status dashboard shows multiple export errors. We have 15 new joiners starting today across all three offices.",
-            "Entra Connect delta sync is failing with 'stopped-server-down' status. Password hash sync and passthrough auth are also affected. Multiple users reporting they can't reset passwords via SSPR. This is impacting all 4500 employees.",
+            "Our Entra Connect server hasn't synced in over 6 hours. New hires who started today have no cloud accounts"
+            " and can't access M365 services. The sync status dashboard shows multiple export errors. We have 15 new jo"
+            "iners starting today across all three offices.",
+            "Entra Connect delta sync is failing with 'stopped-server-down' status. Password hash sync and passthrough "
+            "auth are also affected. Multiple users reporting they can't reset passwords via SSPR. This is impacting "
+            "all 4500 employees.",
         ],
         next_best_actions=[
-            "Immediately investigate Entra Connect server health and sync status. Check for expired certificates, service account issues, or server resource exhaustion.",
+            "Immediately investigate Entra Connect server health and sync status. Check for expired certificates, "
+            "service account issues, or server resource exhaustion.",
         ],
         remediation_steps=[
             [
@@ -834,11 +961,15 @@ SCENARIOS: list[Scenario] = [
             "Hardware security key authentication failing",
         ],
         descriptions=[
-            "My YubiKey 5 NFC that I use for passwordless sign-in to Microsoft 365 stopped working today. When I tap it during sign-in, nothing happens — the browser doesn't detect it. I've tested the key on a different computer and it works, so the key itself seems fine.",
-            "FIDO2 passwordless sign-in with my security key isn't working anymore. Chrome says 'Security key not detected' but the key lights up when I touch it. Was working perfectly until yesterday.",
+            "My YubiKey 5 NFC that I use for passwordless sign-in to Microsoft 365 stopped working today. When I tap it"
+            " during sign-in, nothing happens — the browser doesn't detect it. I've tested the key on a different compu"
+            "ter and it works, so the key itself seems fine.",
+            "FIDO2 passwordless sign-in with my security key isn't working anymore. Chrome says 'Security key not "
+            "detected' but the key lights up when I touch it. Was working perfectly until yesterday.",
         ],
         next_best_actions=[
-            "Check WebAuthn/FIDO2 browser support and driver status. Verify the FIDO2 key registration in Entra ID is still active.",
+            "Check WebAuthn/FIDO2 browser support and driver status. Verify the FIDO2 key registration in Entra ID is "
+            "still active.",
         ],
         remediation_steps=[
             [
@@ -865,11 +996,16 @@ SCENARIOS: list[Scenario] = [
             "Application requires permissions I can't grant",
         ],
         descriptions=[
-            "I'm trying to connect Miro to my Microsoft 365 account for a project collaboration board, but I'm getting a message that says 'Need admin approval — this app requires permissions that only an admin can grant.' My team needs this for a client presentation on Friday.",
-            "When I try to sign into a vendor's project management portal using my Contoso SSO, I get an 'admin consent required' error. The app is requesting Calendar.Read and User.Read permissions. Our vendor says all their other clients approved it easily.",
+            "I'm trying to connect Miro to my Microsoft 365 account for a project collaboration board, but I'm getting "
+            "a message that says 'Need admin approval — this app requires permissions that only an admin can grant.' My"
+            " team needs this for a client presentation on Friday.",
+            "When I try to sign into a vendor's project management portal using my Contoso SSO, I get an 'admin consent"
+            " required' error. The app is requesting Calendar.Read and User.Read permissions. Our vendor says all their"
+            " other clients approved it easily.",
         ],
         next_best_actions=[
-            "Review the OAuth application consent request and determine if the requested permissions are acceptable per security policy. If approved, grant admin consent.",
+            "Review the OAuth application consent request and determine if the requested permissions are acceptable per"
+            " security policy. If approved, grant admin consent.",
         ],
         remediation_steps=[
             [
@@ -896,11 +1032,16 @@ SCENARIOS: list[Scenario] = [
             "Can't log in from client site in Tokyo — geo-restriction",
         ],
         descriptions=[
-            "I'm currently at a client site in Tokyo for business meetings and I'm completely blocked from accessing my email and Teams. The error says something about conditional access policy blocking sign-ins from this location. I have critical client meetings all week and need access immediately.",
-            "Traveling for work in Germany and conditional access is blocking all my Microsoft 365 access. I filed a travel notice with HR last week but apparently IT wasn't notified. I need this resolved ASAP — I have a board presentation tomorrow morning.",
+            "I'm currently at a client site in Tokyo for business meetings and I'm completely blocked from accessing my"
+            " email and Teams. The error says something about conditional access policy blocking sign-ins from this loc"
+            "ation. I have critical client meetings all week and need access immediately.",
+            "Traveling for work in Germany and conditional access is blocking all my Microsoft 365 access. I filed a "
+            "travel notice with HR last week but apparently IT wasn't notified. I need this resolved ASAP — I have a "
+            "board presentation tomorrow morning.",
         ],
         next_best_actions=[
-            "Add temporary location exception to conditional access policy for the user's travel destination. Verify travel request was filed and approved.",
+            "Add temporary location exception to conditional access policy for the user's travel destination. Verify "
+            "travel request was filed and approved.",
         ],
         remediation_steps=[
             [
@@ -926,11 +1067,16 @@ SCENARIOS: list[Scenario] = [
             "Azure service principal auth failing across multiple applications",
         ],
         descriptions=[
-            "Our CI/CD pipeline stopped deploying about an hour ago. After investigating, we found that the service principal secret used by our Azure DevOps pipeline expired today. This is blocking all deployments to production, staging, and dev environments. Multiple teams are affected.",
-            "The Entra ID app registration for our data ingestion service has an expired client secret. Our entire ETL pipeline is down and no data is flowing into the data warehouse. Finance team needs their morning reports which depend on this pipeline.",
+            "Our CI/CD pipeline stopped deploying about an hour ago. After investigating, we found that the service "
+            "principal secret used by our Azure DevOps pipeline expired today. This is blocking all deployments to "
+            "production, staging, and dev environments. Multiple teams are affected.",
+            "The Entra ID app registration for our data ingestion service has an expired client secret. Our entire ETL "
+            "pipeline is down and no data is flowing into the data warehouse. Finance team needs their morning reports "
+            "which depend on this pipeline.",
         ],
         next_best_actions=[
-            "Immediately generate a new client secret for the service principal and update all dependent applications and pipelines.",
+            "Immediately generate a new client secret for the service principal and update all dependent applications "
+            "and pipelines.",
         ],
         remediation_steps=[
             [
@@ -958,11 +1104,16 @@ SCENARIOS: list[Scenario] = [
             "Widespread account lockout event across multiple departments",
         ],
         descriptions=[
-            "We're seeing a mass account lockout event across the trading floor. At least 40 traders have been locked out in the last 15 minutes. This is happening during market hours and we're losing millions in missed trades. Security team suspects it might be a credential stuffing attack or a misconfigured service.",
-            "Approximately 50-60 user accounts got locked out simultaneously starting around 10:30 AM. It's affecting people across Trading, Operations, and Settlement teams. Some accounts are getting re-locked within minutes of being unlocked. We need to identify the source immediately.",
+            "We're seeing a mass account lockout event across the trading floor. At least 40 traders have been locked "
+            "out in the last 15 minutes. This is happening during market hours and we're losing millions in missed "
+            "trades. Security team suspects it might be a credential stuffing attack or a misconfigured service.",
+            "Approximately 50-60 user accounts got locked out simultaneously starting around 10:30 AM. It's affecting "
+            "people across Trading, Operations, and Settlement teams. Some accounts are getting re-locked within "
+            "minutes of being unlocked. We need to identify the source immediately.",
         ],
         next_best_actions=[
-            "Immediately investigate lockout source by reviewing DC security event logs. Determine if this is an attack or misconfigured service account. Unlock affected accounts in parallel.",
+            "Immediately investigate lockout source by reviewing DC security event logs. Determine if this is an attack"
+            " or misconfigured service account. Unlock affected accounts in parallel.",
         ],
         remediation_steps=[
             [
