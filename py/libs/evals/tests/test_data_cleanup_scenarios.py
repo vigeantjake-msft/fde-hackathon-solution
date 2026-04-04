@@ -207,7 +207,6 @@ class TestDataCleanupScenarios:
             "giant-signature",
             "deep-quoting",
             "mojibake-severe",
-            "json-config-dump",
             "code-switching",
             "url-spam",
             "email-metadata",

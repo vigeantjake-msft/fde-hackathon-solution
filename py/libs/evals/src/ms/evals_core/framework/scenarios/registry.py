@@ -1,8 +1,8 @@
 # Copyright (c) Microsoft. All rights reserved.
 """Central registry for evaluation scenarios."""
 
-from ms.evals.models.scenario import EvalScenario
-from ms.evals.models.scenario import ScenarioCategory
+from ms.evals_core.framework.models.scenario import EvalScenario
+from ms.evals_core.framework.models.scenario import ScenarioCategory
 
 
 class ScenarioRegistry:

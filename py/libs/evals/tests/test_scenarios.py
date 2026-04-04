@@ -1,10 +1,10 @@
 # Copyright (c) Microsoft. All rights reserved.
 """Tests for scenario definitions — verify all registered scenarios are well-formed."""
 
-import ms.evals.scenarios.data_cleanup  # noqa: F401
-import ms.evals.scenarios.responsible_ai  # noqa: F401
-from ms.evals.models.scenario import ScenarioCategory
-from ms.evals.scenarios.registry import default_registry
+import ms.evals_core.framework.scenarios.data_cleanup  # noqa: F401
+import ms.evals_core.framework.scenarios.responsible_ai  # noqa: F401
+from ms.evals_core.framework.models.scenario import ScenarioCategory
+from ms.evals_core.framework.scenarios.registry import default_registry
 
 
 class TestDefaultRegistryPopulation:

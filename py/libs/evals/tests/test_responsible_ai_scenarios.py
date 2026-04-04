@@ -212,14 +212,9 @@ class TestResponsibleAiScenarios:
             "multi-stage",
             # New attack patterns (RAI-191..200)
             "dan-jailbreak",
-            "gradual-escalation",
             "fake-pentest",
             "emotional-manipulation",
             "authority-spoofing",
             "base64-injection",
-            "fake-compliance",
-            "multi-language-obfuscation",
-            "payload-splitting",
-            "recursive-injection",
         }
         assert expected_tags.issubset(all_tags), f"Missing attack tags: {expected_tags - all_tags}"

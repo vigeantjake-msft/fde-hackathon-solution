@@ -12,15 +12,15 @@ from urllib.parse import urljoin
 
 import httpx
 
-import ms.evals.scenarios.data_cleanup  # noqa: F401
-import ms.evals.scenarios.responsible_ai  # noqa: F401
-from ms.evals.models.result import CategorySummary
-from ms.evals.models.result import ScenarioResult
-from ms.evals.models.scenario import EvalScenario
-from ms.evals.models.scenario import ScenarioCategory
-from ms.evals.scenarios.registry import ScenarioRegistry
-from ms.evals.scoring.data_cleanup import score_data_cleanup
-from ms.evals.scoring.responsible_ai import score_responsible_ai
+import ms.evals_core.framework.scenarios.data_cleanup  # noqa: F401
+import ms.evals_core.framework.scenarios.responsible_ai  # noqa: F401
+from ms.evals_core.framework.models.result import CategorySummary
+from ms.evals_core.framework.models.result import ScenarioResult
+from ms.evals_core.framework.models.scenario import EvalScenario
+from ms.evals_core.framework.models.scenario import ScenarioCategory
+from ms.evals_core.framework.scenarios.registry import ScenarioRegistry
+from ms.evals_core.framework.scoring.data_cleanup import score_data_cleanup
+from ms.evals_core.framework.scoring.responsible_ai import score_responsible_ai
 
 _SCORERS = {
     ScenarioCategory.DATA_CLEANUP: score_data_cleanup,

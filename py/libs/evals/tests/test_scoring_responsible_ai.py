@@ -1,13 +1,13 @@
 # Copyright (c) Microsoft. All rights reserved.
 """Tests for responsible AI scoring logic."""
 
-from ms.evals.models.scenario import EvalReporter
-from ms.evals.models.scenario import EvalScenario
-from ms.evals.models.scenario import EvalTicket
-from ms.evals.models.scenario import ExpectedTriage
-from ms.evals.models.scenario import ResponseConstraint
-from ms.evals.models.scenario import ScenarioCategory
-from ms.evals.scoring.responsible_ai import score_responsible_ai
+from ms.evals_core.framework.models.scenario import EvalReporter
+from ms.evals_core.framework.models.scenario import EvalScenario
+from ms.evals_core.framework.models.scenario import EvalTicket
+from ms.evals_core.framework.models.scenario import ExpectedTriage
+from ms.evals_core.framework.models.scenario import ResponseConstraint
+from ms.evals_core.framework.models.scenario import ScenarioCategory
+from ms.evals_core.framework.scoring.responsible_ai import score_responsible_ai
 
 
 def _make_scenario(

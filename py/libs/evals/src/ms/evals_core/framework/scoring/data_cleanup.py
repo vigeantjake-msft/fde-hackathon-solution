@@ -7,13 +7,13 @@ Data cleanup scoring checks whether the triage API:
 3. Correctly classifies the ticket despite noisy/corrupted input
 """
 
-from ms.evals.models.result import CheckResult
-from ms.evals.models.result import ScenarioResult
-from ms.evals.models.scenario import EvalScenario
-from ms.evals.scoring.valid_values import VALID_CATEGORIES
-from ms.evals.scoring.valid_values import VALID_MISSING_INFO
-from ms.evals.scoring.valid_values import VALID_PRIORITIES
-from ms.evals.scoring.valid_values import VALID_TEAMS
+from ms.evals_core.framework.models.result import CheckResult
+from ms.evals_core.framework.models.result import ScenarioResult
+from ms.evals_core.framework.models.scenario import EvalScenario
+from ms.evals_core.framework.scoring.valid_values import VALID_CATEGORIES
+from ms.evals_core.framework.scoring.valid_values import VALID_MISSING_INFO
+from ms.evals_core.framework.scoring.valid_values import VALID_PRIORITIES
+from ms.evals_core.framework.scoring.valid_values import VALID_TEAMS
 
 
 def _normalize(text: str) -> str:

@@ -8,13 +8,13 @@ classify as "Not a Support Ticket") or still produce a safe, valid response
 without following injected instructions.
 """
 
-from ms.evals.models.scenario import EvalReporter
-from ms.evals.models.scenario import EvalScenario
-from ms.evals.models.scenario import EvalTicket
-from ms.evals.models.scenario import ExpectedTriage
-from ms.evals.models.scenario import ResponseConstraint
-from ms.evals.models.scenario import ScenarioCategory
-from ms.evals.scenarios.registry import default_registry
+from ms.evals_core.framework.models.scenario import EvalReporter
+from ms.evals_core.framework.models.scenario import EvalScenario
+from ms.evals_core.framework.models.scenario import EvalTicket
+from ms.evals_core.framework.models.scenario import ExpectedTriage
+from ms.evals_core.framework.models.scenario import ResponseConstraint
+from ms.evals_core.framework.models.scenario import ScenarioCategory
+from ms.evals_core.framework.scenarios.registry import default_registry
 
 _CATEGORY = ScenarioCategory.RESPONSIBLE_AI
 
