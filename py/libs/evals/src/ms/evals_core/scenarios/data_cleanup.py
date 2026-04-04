@@ -6367,4 +6367,813 @@ def get_scenarios() -> list[ScenarioDefinition]:
             ],
             difficulty="hard",
         ),
+        # ── DC-101  GraphQL introspection query dump ─────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-101",
+            subject="SharePoint site permissions broken - can't access Regulatory Filings library",
+            description=(
+                "Hi Support,\n\n"
+                "I can't access the Regulatory Filings document library on SharePoint. I keep getting "
+                "a 403 error. I tried to debug this myself using our internal GraphQL API and here's "
+                "what I got back — maybe it helps?\n\n"
+                '{"data":{"__schema":{"queryType":{"name":"Query"},"mutationType":{"name":"Mutation"},'
+                '"subscriptionType":null,"types":[{"kind":"OBJECT","name":"Query","description":null,'
+                '"fields":[{"name":"sitePermissions","description":"Retrieve SharePoint site permissions",'
+                '"args":[{"name":"siteUrl","description":null,"type":{"kind":"NON_NULL","name":null,'
+                '"ofType":{"kind":"SCALAR","name":"String","ofType":null}},"defaultValue":null},'
+                '{"name":"principalId","description":null,"type":{"kind":"SCALAR","name":"Int",'
+                '"ofType":null},"defaultValue":null}],"type":{"kind":"LIST","name":null,"ofType":'
+                '{"kind":"OBJECT","name":"PermissionEntry","ofType":null}},"isDeprecated":false,'
+                '"deprecationReason":null},{"name":"userProfile","description":"Get user profile by UPN",'
+                '"args":[{"name":"upn","description":null,"type":{"kind":"NON_NULL","name":null,'
+                '"ofType":{"kind":"SCALAR","name":"String","ofType":null}},"defaultValue":null}],'
+                '"type":{"kind":"OBJECT","name":"UserProfile","ofType":null},"isDeprecated":false,'
+                '"deprecationReason":null},{"name":"groupMembership","description":"List group memberships",'
+                '"args":[{"name":"groupId","description":null,"type":{"kind":"NON_NULL","name":null,'
+                '"ofType":{"kind":"SCALAR","name":"ID","ofType":null}},"defaultValue":null}],"type":'
+                '{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"GroupMember","ofType":null}},'
+                '"isDeprecated":false,"deprecationReason":null},{"name":"auditLog","description":'
+                '"Query audit log entries","args":[{"name":"startDate","description":null,"type":'
+                '{"kind":"SCALAR","name":"DateTime","ofType":null},"defaultValue":null},{"name":"endDate",'
+                '"description":null,"type":{"kind":"SCALAR","name":"DateTime","ofType":null},'
+                '"defaultValue":null},{"name":"operation","description":null,"type":{"kind":"SCALAR",'
+                '"name":"String","ofType":null},"defaultValue":null}],"type":{"kind":"LIST","name":null,'
+                '"ofType":{"kind":"OBJECT","name":"AuditEntry","ofType":null}},"isDeprecated":false,'
+                '"deprecationReason":null}],"inputFields":null,"interfaces":[],"enumValues":null,'
+                '"possibleTypes":null},{"kind":"OBJECT","name":"PermissionEntry","description":null,'
+                '"fields":[{"name":"principalName","type":{"kind":"SCALAR","name":"String","ofType":null}},'
+                '{"name":"roleDefinition","type":{"kind":"SCALAR","name":"String","ofType":null}},'
+                '{"name":"scope","type":{"kind":"SCALAR","name":"String","ofType":null}}],'
+                '"inputFields":null,"interfaces":[],"enumValues":null,"possibleTypes":null}],'
+                '"directives":[{"name":"include","description":""},{"name":"skip","description":""}]}}}\n\n'
+                "I don't understand any of this GraphQL stuff. The point is: I need access to the "
+                "Regulatory Filings library at https://contoso.sharepoint.com/sites/RegulatoryFilings/"
+                "Shared%20Documents. My manager Priya Sharma already approved my access two weeks ago "
+                "in ServiceNow ticket REQ-20260301-0042 but nothing happened.\n\n"
+                "Thanks,\nAlex Chen\nCompliance Analyst, Regulatory Affairs\n"
+                "Desk 4-217, NYC Office"
+            ),
+            category=Category.DATA,
+            priority=Priority.P3,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.PREVIOUS_TICKET_ID],
+            next_best_action=(
+                "Ignore the GraphQL introspection dump and investigate the SharePoint "
+                "permissions issue — verify whether the access grant from REQ-20260301-0042 "
+                "was actually applied to the Regulatory Filings site."
+            ),
+            remediation_steps=[
+                "Check ServiceNow ticket REQ-20260301-0042 to confirm approval status and fulfilment.",
+                "Verify the reporter's AD group membership against the SharePoint site's permission groups.",
+                "If the access grant was not applied, manually add the user to the appropriate SP group.",
+                "Clear any cached permission tokens and ask the user to re-authenticate.",
+                "Confirm the user can access the Regulatory Filings document library.",
+            ],
+            reporter_name="Alex Chen",
+            reporter_email="alex.chen@contoso.com",
+            reporter_department="Regulatory Affairs",
+            channel=Channel.EMAIL,
+            tags=[
+                "data-cleanup",
+                "graphql-introspection",
+                "schema-dump",
+                "permission-grant-pending",
+                "json-schema-noise",
+            ],
+            difficulty="medium",
+        ),
+        # ── DC-102  Windows crash dump / minidump output ─────────────────
+        ScenarioDefinition(
+            scenario_id="DC-102",
+            subject="Laptop keeps blue screening - BSOD every 2 hours - URGENT",
+            description=(
+                "My laptop (asset tag NYC-LT-4892) has been blue screening roughly every 2 hours "
+                "since Monday. I lose all my unsettled trade confirmations each time. I managed to "
+                "pull this from the minidump file before it crashed again:\n\n"
+                "*** STOP 0x0000009F (0x0000000000000003, 0xFFFFE10B3A4C7060, 0xFFFFF8076C9E1B40, "
+                "0xFFFFE10B3A832010)\n"
+                "DRIVER_POWER_STATE_FAILURE\n\n"
+                "STACK_TEXT:\n"
+                "fffff807`6c9e1b40 fffff807`6b2a4f21 : 00000000`0000009f 00000000`00000003 "
+                "ffffe10b`3a4c7060 fffff807`6c9e1b40 : nt!KeBugCheckEx\n"
+                "fffff807`6c9e1b48 fffff807`6b2a4ad0 : 00000000`00000000 ffffe10b`3a4c7060 "
+                "00000000`00000000 fffff807`6b1e34a2 : nt!PopIrpWatchdogBugcheck+0x131\n"
+                "fffff807`6c9e1bb0 fffff807`6b1d8e46 : ffffe10b`00000003 ffffe10b`3a4c7000 "
+                "00000000`00000000 00000000`00000000 : nt!PopIrpWatchdog+0x70\n"
+                "fffff807`6c9e1c00 fffff807`6b0d7115 : ffffe10b`37629040 fffff807`6b1e3440 "
+                "00000000`00000000 00000000`00000022 : nt!KiProcessExpiredTimerList+0x1d6\n\n"
+                "REGISTER STATE:\n"
+                "rax=0000000000000003 rbx=ffffe10b3a4c7060 rcx=000000000000009f\n"
+                "rdx=0000000000000003 rsi=fffff8076c9e1b40 rdi=ffffe10b3a832010\n"
+                "rip=fffff8076b2a5c10 rsp=fffff8076c9e1b40 rbp=fffff8076c9e1c60\n"
+                " r8=fffff8076c9e1b40  r9=ffffe10b3a832010 r10=0000000000000000\n"
+                "r11=fffff8076c9e19f0 r12=0000000000000000 r13=0000000000000000\n"
+                "r14=ffffe10b3a4c7060 r15=0000000000000003\n"
+                "cs=0010 ss=0018 ds=002b es=002b fs=0053 gs=002b efl=00040202\n\n"
+                "MODULE_NAME: Wdf01000\n"
+                "IMAGE_NAME: Wdf01000.sys\n"
+                "BUCKET_ID_FUNC_OFFSET: 2a4f21\n"
+                "FAILURE_BUCKET_ID: 0x9F_3_IMAGE_Wdf01000.sys\n"
+                "OS_VERSION: 10.0.22631.1\n"
+                "BUILDLAB_STR: ni_release\n\n"
+                "I have no idea what any of this means. I just need my laptop to stop crashing. "
+                "I'm in the middle of quarter-end reconciliation and can't afford downtime. "
+                "My dock is a Lenovo ThinkPad USB-C Dock Gen 2 and I'm running Windows 11 23H2. "
+                "Is it the dock driver? Please help ASAP.\n\n"
+                "- Raj Kapoor, Fixed Income Trading, Desk 7-103"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P2,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Analyze the BSOD minidump pointing to Wdf01000.sys / DRIVER_POWER_STATE_FAILURE "
+                "— likely a dock or USB driver issue. Prioritize because quarter-end reconciliation "
+                "is impacted."
+            ),
+            remediation_steps=[
+                "Collect the full minidump files from C:\\Windows\\Minidump on the affected laptop.",
+                "Update the Lenovo ThinkPad USB-C Dock Gen 2 firmware and WDF/USB drivers.",
+                "Check Windows Update history for any recently installed driver updates that correlate with the issue.",
+                "If BSOD persists after driver updates, test without the dock to isolate the failure.",
+                "Provide a loaner laptop if the issue cannot be resolved within 4 hours given quarter-end urgency.",
+            ],
+            reporter_name="Raj Kapoor",
+            reporter_email="raj.kapoor@contoso.com",
+            reporter_department="Fixed Income Trading",
+            channel=Channel.EMAIL,
+            tags=[
+                "data-cleanup",
+                "bsod-minidump",
+                "register-state-dump",
+                "kernel-bugcheck",
+                "driver-power-failure",
+            ],
+            difficulty="medium",
+        ),
+        # ── DC-103  Slack/Teams webhook payload noise ────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-103",
+            subject="Teams connector integration stopped posting to Risk Alerts channel",
+            description=(
+                "Hi IT,\n\n"
+                "Our Risk Alerts channel in Teams stopped receiving automated notifications from "
+                "the webhook connector about 3 days ago. I tried to debug it and captured these "
+                "webhook payloads that are failing. Can you figure out what's wrong?\n\n"
+                'POST https://contoso.webhook.office.com/webhookb2/7c8d9e0f-1a2b-3c4d-5e6f-7a8b9c0d1e2f'
+                '@72f988bf-86f1-41af-91ab-2d7cd011db47/IncomingWebhook/a1b2c3d4e5f6/g7h8i9j0-k1l2-'
+                "m3n4-o5p6-q7r8s9t0u1v2\n"
+                'Content-Type: application/json\n\n'
+                '{"@type":"MessageCard","@context":"http://schema.org/extensions","themeColor":"FF0000",'
+                '"summary":"Risk Threshold Breach - Portfolio ALPHA-7","sections":[{"activityTitle":'
+                '"⚠️ VaR Limit Breach","activitySubtitle":"Portfolio ALPHA-7 | Desk: Macro Trading",'
+                '"activityImage":"https://contoso.sharepoint.com/sites/RiskOps/icons/alert-red.png",'
+                '"facts":[{"name":"Portfolio","value":"ALPHA-7"},{"name":"Current VaR","value":'
+                '"$14.2M"},{"name":"VaR Limit","value":"$12.0M"},{"name":"Breach %","value":"18.3%"},'
+                '{"name":"As-of Date","value":"2026-03-18"},{"name":"Risk Engine","value":'
+                '"risk-calc-v3.2.1"},{"name":"Calculation Time","value":"08:15:22 UTC"}],'
+                '"markdown":true}],"potentialAction":[{"@type":"OpenUri","name":"View in Risk Dashboard",'
+                '"targets":[{"os":"default","uri":"https://risk.contoso.com/portfolio/ALPHA-7/var"}]},'
+                '{"@type":"OpenUri","name":"Acknowledge","targets":[{"os":"default","uri":'
+                '"https://risk.contoso.com/api/alerts/ack/2026-03-18/ALPHA-7"}]}]}\n\n'
+                "Response: 400 Bad Request\n"
+                '{"error":{"code":"WebhookUrlExpired","message":"The webhook URL has expired. '
+                'Please regenerate the connector URL.","innerError":{"date":"2026-03-18T08:15:23",'
+                '"request-id":"e4f5a6b7-c8d9-0e1f-2a3b-4c5d6e7f8a9b","client-request-id":'
+                '"e4f5a6b7-c8d9-0e1f-2a3b-4c5d6e7f8a9b"}}}\n\n'
+                "I also captured like 50 more of these payloads with different portfolio alerts "
+                "(BETA-3, GAMMA-12, DELTA-9, etc.) but they all fail the same way. The webhook "
+                "was working fine until March 15. We need these alerts — they're critical for "
+                "real-time risk monitoring across all trading desks.\n\n"
+                "Marcus Webb\nRisk Operations\nExt 4-7891"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.CONFIGURATION_DETAILS, MissingInfo.TIMESTAMP],
+            next_best_action=(
+                "The webhook URL has expired per the 400 error response — regenerate the "
+                "Teams incoming webhook connector URL and update the risk alerting system's "
+                "configuration with the new endpoint."
+            ),
+            remediation_steps=[
+                "Navigate to the Risk Alerts channel in Teams and regenerate the incoming webhook connector URL.",
+                "Update the risk alerting system's webhook endpoint configuration with the new URL.",
+                "Test with a sample MessageCard payload to confirm delivery.",
+                "Set a calendar reminder for the next webhook expiry window to proactively rotate.",
+                "Verify that queued alerts from the last 3 days are replayed or re-sent.",
+            ],
+            reporter_name="Marcus Webb",
+            reporter_email="marcus.webb@contoso.com",
+            reporter_department="Risk Operations",
+            channel=Channel.EMAIL,
+            tags=[
+                "data-cleanup",
+                "webhook-payload",
+                "teams-connector",
+                "messagecard-json",
+                "expired-webhook-url",
+            ],
+            difficulty="medium",
+        ),
+        # ── DC-104  PowerShell mixed error/verbose/warning streams ───────
+        ScenarioDefinition(
+            scenario_id="DC-104",
+            subject="Deploy-ContosoApp.ps1 failing on prod app servers since last Friday",
+            description=(
+                "The automated deployment script Deploy-ContosoApp.ps1 has been failing on all "
+                "production app servers (APP-PROD-01 through APP-PROD-06) since Friday. Here's "
+                "the full output I captured with -Verbose and $ErrorActionPreference = 'Continue':\n\n"
+                "VERBOSE: [2026-03-15 18:30:01] Starting deployment of ContosoExpensePortal v4.7.2\n"
+                "VERBOSE: [2026-03-15 18:30:01] Target servers: APP-PROD-01, APP-PROD-02, APP-PROD-03, "
+                "APP-PROD-04, APP-PROD-05, APP-PROD-06\n"
+                "VERBOSE: [2026-03-15 18:30:02] Connecting to APP-PROD-01 via WinRM...\n"
+                "VERBOSE: [2026-03-15 18:30:03] Connected. Session ID: PSSession-7a8b9c\n"
+                "VERBOSE: [2026-03-15 18:30:03] Stopping IIS Application Pool 'ContosoExpensePool'...\n"
+                "VERBOSE: [2026-03-15 18:30:04] Application Pool stopped.\n"
+                "VERBOSE: [2026-03-15 18:30:04] Backing up current deployment to D:\\Backups\\v4.7.1_20260315...\n"
+                "VERBOSE: [2026-03-15 18:30:08] Backup complete. 847 files copied.\n"
+                "VERBOSE: [2026-03-15 18:30:08] Extracting package ContosoExpensePortal.4.7.2.nupkg...\n"
+                "VERBOSE: [2026-03-15 18:30:12] Extraction complete. Applying transforms for PROD environment...\n"
+                "WARNING: [2026-03-15 18:30:12] Config transform: ConnectionStrings.config — key "
+                "'ReportingDB' not found in transform file. Using base value.\n"
+                "WARNING: [2026-03-15 18:30:12] Config transform: AppSettings.config — key "
+                "'FeatureFlag.NewDashboard' not found in transform file. Using base value.\n"
+                "VERBOSE: [2026-03-15 18:30:13] Transforms applied. Starting file deployment...\n"
+                "VERBOSE: [2026-03-15 18:30:15] Deployed 312/847 files...\n"
+                "VERBOSE: [2026-03-15 18:30:17] Deployed 624/847 files...\n"
+                "VERBOSE: [2026-03-15 18:30:19] Deployed 847/847 files.\n"
+                "VERBOSE: [2026-03-15 18:30:19] Running post-deploy health check...\n"
+                "Write-Error: [2026-03-15 18:30:22] Health check FAILED on APP-PROD-01.\n"
+                "Write-Error: HTTP GET https://app-prod-01.contoso.local/health returned 503\n"
+                "Write-Error: Response body: {\"status\":\"unhealthy\",\"checks\":{\"database\":{\"status\":"
+                "\"degraded\",\"description\":\"Connection timeout after 30s\"},\"redis\":{\"status\":"
+                "\"healthy\"},\"blobStorage\":{\"status\":\"healthy\"}}}\n"
+                "WARNING: [2026-03-15 18:30:22] Rolling back APP-PROD-01 to v4.7.1...\n"
+                "VERBOSE: [2026-03-15 18:30:28] Rollback complete on APP-PROD-01.\n"
+                "Write-Error: [2026-03-15 18:30:28] Deployment FAILED. 0 of 6 servers updated.\n"
+                "Write-Error: Reason: Health check failure — database connection timeout.\n\n"
+                "I ran the same script last Thursday for v4.7.1 and it worked perfectly. Something "
+                "changed with the database or network over the weekend. Can you check?\n\n"
+                "- Naomi Okafor, DevOps Engineering"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "The deployment health check reveals a database connection timeout — investigate "
+                "the production database server connectivity from the app tier rather than the "
+                "deployment script itself."
+            ),
+            remediation_steps=[
+                "Check the production database server for connectivity issues or recent configuration changes.",
+                "Verify firewall rules between the app tier and database tier haven't been modified.",
+                "Test direct SQL connectivity from APP-PROD-01 to the ReportingDB instance.",
+                "Review any weekend maintenance or patching that may have affected the database.",
+                "Once database connectivity is restored, re-run Deploy-ContosoApp.ps1 for v4.7.2.",
+            ],
+            reporter_name="Naomi Okafor",
+            reporter_email="naomi.okafor@contoso.com",
+            reporter_department="DevOps Engineering",
+            channel=Channel.CHAT,
+            tags=[
+                "data-cleanup",
+                "powershell-streams",
+                "verbose-error-interleave",
+                "deployment-health-check",
+                "iis-rollback",
+            ],
+            difficulty="medium",
+        ),
+        # ── DC-105  Docker Compose YAML flood ────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-105",
+            subject="Containerized reconciliation app won't start after infra migration",
+            description=(
+                "Hi team,\n\n"
+                "Since the infrastructure team migrated us to the new Docker hosts last week, "
+                "our Trade Reconciliation app won't start. I've attached all three of our "
+                "docker-compose files below. Can someone tell me what's wrong?\n\n"
+                "=== docker-compose.yml (base) ===\n"
+                "version: '3.8'\n"
+                "services:\n"
+                "  recon-api:\n"
+                "    image: contosoacr.azurecr.io/trade-recon-api:4.1.0\n"
+                "    ports:\n"
+                "      - '8080:8080'\n"
+                "    environment:\n"
+                "      - ASPNETCORE_ENVIRONMENT=Production\n"
+                "      - ConnectionStrings__ReconDB=Server=sqlprod-03.contoso.local;Database=TradeRecon;"
+                "Trusted_Connection=true\n"
+                "      - Redis__Endpoint=redis-cluster.contoso.local:6379\n"
+                "      - Kafka__BootstrapServers=kafka-01.contoso.local:9092,kafka-02.contoso.local:9092\n"
+                "    depends_on:\n"
+                "      - recon-worker\n"
+                "      - redis\n"
+                "    networks:\n"
+                "      - recon-net\n"
+                "    deploy:\n"
+                "      resources:\n"
+                "        limits:\n"
+                "          memory: 2G\n"
+                "          cpus: '1.0'\n"
+                "    healthcheck:\n"
+                "      test: ['CMD', 'curl', '-f', 'http://localhost:8080/health']\n"
+                "      interval: 30s\n"
+                "      timeout: 10s\n"
+                "      retries: 3\n\n"
+                "  recon-worker:\n"
+                "    image: contosoacr.azurecr.io/trade-recon-worker:4.1.0\n"
+                "    environment:\n"
+                "      - WORKER_CONCURRENCY=8\n"
+                "      - ConnectionStrings__ReconDB=Server=sqlprod-03.contoso.local;Database=TradeRecon;"
+                "Trusted_Connection=true\n"
+                "      - Kafka__BootstrapServers=kafka-01.contoso.local:9092,kafka-02.contoso.local:9092\n"
+                "      - Kafka__ConsumerGroup=recon-worker-prod\n"
+                "    networks:\n"
+                "      - recon-net\n"
+                "    deploy:\n"
+                "      replicas: 3\n"
+                "      resources:\n"
+                "        limits:\n"
+                "          memory: 4G\n"
+                "          cpus: '2.0'\n\n"
+                "  redis:\n"
+                "    image: redis:7.2-alpine\n"
+                "    ports:\n"
+                "      - '6379:6379'\n"
+                "    volumes:\n"
+                "      - redis-data:/data\n"
+                "    networks:\n"
+                "      - recon-net\n\n"
+                "volumes:\n"
+                "  redis-data:\n\n"
+                "networks:\n"
+                "  recon-net:\n"
+                "    driver: bridge\n\n"
+                "=== docker-compose.override.yml ===\n"
+                "version: '3.8'\n"
+                "services:\n"
+                "  recon-api:\n"
+                "    ports:\n"
+                "      - '8443:8443'\n"
+                "    environment:\n"
+                "      - ASPNETCORE_URLS=https://+:8443;http://+:8080\n"
+                "      - ASPNETCORE_Kestrel__Certificates__Default__Path=/certs/contoso-recon.pfx\n"
+                "      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}\n"
+                "    volumes:\n"
+                "      - /etc/contoso/certs:/certs:ro\n\n"
+                "=== docker-compose.monitoring.yml ===\n"
+                "version: '3.8'\n"
+                "services:\n"
+                "  prometheus:\n"
+                "    image: prom/prometheus:v2.51.0\n"
+                "    volumes:\n"
+                "      - ./prometheus.yml:/etc/prometheus/prometheus.yml\n"
+                "    ports:\n"
+                "      - '9090:9090'\n"
+                "    networks:\n"
+                "      - recon-net\n\n"
+                "The error when I run docker compose up is:\n"
+                "Error response from daemon: pull access denied for contosoacr.azurecr.io/"
+                "trade-recon-api, repository does not exist or may require 'docker login'\n\n"
+                "The images definitely exist in our ACR — I can see them in the Azure portal. "
+                "I think the new Docker hosts aren't authenticated to our container registry.\n\n"
+                "This is blocking the entire Trade Ops team from running end-of-day reconciliation.\n\n"
+                "Kevin Nguyen\nTrade Operations Technology\nExt 3-2198"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "The Docker error indicates the new hosts lack ACR authentication — configure "
+                "docker login or managed identity credentials for contosoacr.azurecr.io on the "
+                "migrated Docker hosts."
+            ),
+            remediation_steps=[
+                "Run 'az acr login --name contosoacr' or configure a service principal for ACR pull access on each new host.",
+                "Verify the managed identity or service principal has AcrPull role on the contosoacr registry.",
+                "Test pulling the image manually: docker pull contosoacr.azurecr.io/trade-recon-api:4.1.0.",
+                "Once authenticated, re-run docker compose up and verify all services start healthy.",
+                "Document the ACR authentication step in the infrastructure migration runbook for future hosts.",
+            ],
+            reporter_name="Kevin Nguyen",
+            reporter_email="kevin.nguyen@contoso.com",
+            reporter_department="Trade Operations Technology",
+            channel=Channel.CHAT,
+            tags=[
+                "data-cleanup",
+                "docker-compose-flood",
+                "yaml-config-dump",
+                "acr-authentication",
+                "container-registry-pull",
+            ],
+            difficulty="medium",
+        ),
+        # ── DC-106  PDF OCR with table misalignment and number corruption ─
+        ScenarioDefinition(
+            scenario_id="DC-106",
+            subject="Report generation app producing garbled PDF output for quarterly NAV reports",
+            description=(
+                "The ContosoReportEngine application is producing corrupted PDF output when "
+                "generating quarterly NAV (Net Asset Value) reports. When I try to copy-paste "
+                "the table data from the PDF, this is what I get — the columns are completely "
+                "misaligned and the numbers are garbled:\n\n"
+                "CONTOSO FINANCIAL SERVICES — Q1 2026 NAV REPORT\n"
+                "Fund Name                NAV/Share    AUM ($M)     YTD Return   Sharpe   Benchmark\n"
+                "Contoso Growth Eq        $142.87      3,2l7.4      +8.37%       1.42     S&P 500\n"
+                "Contoso Fixed Inc                     $98.23       1,876.O      +2.91%            0.87     "
+                "BBG Agg\n"
+                "Contoso Balanced    $ll5.6O           2,O43.8      +5.12%                1.15     60/40 Blend\n"
+                "Contoso Em Mkt Eq   $67.34                         897.2        +12.4l%  1.03     MSCI EM\n"
+                "Contoso Real Asset       $83.9l       654.3                     +3.78%   0.92     "
+                "CPI+3%\n"
+                "Contoso HY Credit        $lO1.22      1,1O9.7      +6.54%       1.28     ICE HY\n"
+                "Contoso Quant Alph  $178.45      4,567.l      +15.23%      1.89     HFRX\n"
+                "Contoso Pvt Credit       $95.OO       2,334.6      +7.8O%       1.34     "
+                "CDLI\n\n"
+                "                    TOTAL AUM:   $l6,72O.l M\n\n"
+                "PERFORMANCE ATTRIBUTION (Contoso Growth Equity)\n"
+                "Sector               Weight    Contrib    S&P Wt    Active     Selection\n"
+                "Technology            28.3%     +3.2l%     3l.7%     -3.4%      +O.87%\n"
+                "Healthcare            l5.7%     +l.O3%     l2.4%     +3.3%      +O.42%\n"
+                "Financials            l8.2%     +l.56%     l3.l%     +5.l%      +O.3l%\n"
+                "Consumer Disc         l2.l%     +O.98%     lO.5%     +l.6%      +O.22%\n"
+                "lndustrials            9.4%     +O.7l%      8.7%     +O.7%      +O.l8%\n"
+                "Energy                 6.8%     +O.43%      3.9%     +2.9%      -O.O5%\n"
+                "Other                  9.5%     +O.45%     l9.7%    -lO.2%      -O.l2%\n"
+                "TOTAL               lOO.O%     +8.37%    lOO.O%      O.O%      +l.83%\n\n"
+                "As you can see, zeros are showing as capital O, ones and lowercase L are confused, "
+                "columns bleed into each other, and some cells shifted rows. The raw data in our "
+                "database is correct — I've verified that. The problem is the PDF rendering engine. "
+                "This started after the ContosoReportEngine was upgraded to v3.5.0 last Tuesday.\n\n"
+                "This is blocking our quarterly client reporting — we have 230+ institutional "
+                "clients waiting for these reports.\n\n"
+                "Diane Kowalski\nClient Reporting, Portfolio Analytics\nExt 5-3344"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "The OCR-like corruption (O/0 and l/1 confusion, column misalignment) started "
+                "after ContosoReportEngine v3.5.0 upgrade — investigate the PDF rendering library "
+                "change in that version."
+            ),
+            remediation_steps=[
+                "Compare ContosoReportEngine v3.5.0 release notes for changes to the PDF rendering library.",
+                "Test rolling back to v3.4.x to confirm the regression.",
+                "Check if font embedding settings changed — O/0 and l/1 confusion suggests a font substitution issue.",
+                "Generate a test NAV report and compare PDF text extraction output against the database source.",
+                "If v3.5.0 font rendering is confirmed buggy, deploy v3.4.x as hotfix while the vendor investigates.",
+            ],
+            reporter_name="Diane Kowalski",
+            reporter_email="diane.kowalski@contoso.com",
+            reporter_department="Client Reporting",
+            channel=Channel.PORTAL,
+            tags=[
+                "data-cleanup",
+                "ocr-number-corruption",
+                "table-column-misalignment",
+                "pdf-rendering-regression",
+                "font-substitution-artifact",
+            ],
+            difficulty="hard",
+        ),
+        # ── DC-107  Quoted-printable email encoding artifacts ────────────
+        ScenarioDefinition(
+            scenario_id="DC-107",
+            subject="SSO login failing for Contoso Trade Portal - getting infinite redirect loop",
+            description=(
+                "Hi IT Support,\n\n"
+                "I can=E2=80=99t log into the Contoso Trade Portal (https://trade.contoso.c=\n"
+                "om/portal) since this morning. It just keeps redirecting me in a loop and =\n"
+                "eventually shows =E2=80=9CThis page isn=E2=80=99t working =E2=80=94 trade.contoso.com =\n"
+                "redirected you too many times.=E2=80=9D\n\n"
+                "I=E2=80=99ve tried the following:\n"
+                "=E2=80=A2 Cleared all cookies and cache in Edge and Chrome\n"
+                "=E2=80=A2 Tried InPrivate/Incognito browsing =E2=80=94 same result\n"
+                "=E2=80=A2 Asked my colleague David (david.park@contoso.com) =E2=80=94 he ca=\n"
+                "n log in fine\n"
+                "=E2=80=A2 Tried from my phone on cellular (not VPN) =E2=80=94 still fails\n"
+                "=E2=80=A2 Checked https://myaccount.microsoft.com =E2=80=94 my account looks=\n"
+                " fine there\n\n"
+                "The URL it keeps bouncing between is:\n"
+                "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/o=\n"
+                "auth2/v2.0/authorize?client_id=3Da8c7e4f2-91b5-4d3a-b6c8-f0e2d4a6b8c0&r=\n"
+                "edirect_uri=3Dhttps%3A%2F%2Ftrade.contoso.com%2F.auth%2Flogin%2Faad%2Fcal=\n"
+                "lback&response_type=3Dcode&scope=3Dopenid%20profile%20email&state=3DeyJub=\n"
+                "25jZSI6IjVhNGIzYzJkMWU2ZiJ9\n\n"
+                "And then it redirects to:\n"
+                "https://trade.contoso.com/.auth/login/aad/callback?code=3D0.AYIA-4j5cv=\n"
+                "GBr0GRqy180BHbR_LE...\n\n"
+                "This is=20really urgent =E2=80=94 I have 47 pending trade confirmations that =\n"
+                "need to be approved by 4 PM ET today. If I miss the cutoff the trades go =\n"
+                "to exception processing which costs the firm $2,300 per ticket.\n\n"
+                "Can someone look at my Azure AD / SSO configuration? Maybe my conditional=\n"
+                " access policy changed?\n\n"
+                "Thanks,\n"
+                "Elena Vasquez\n"
+                "Trade Confirmation Analyst\n"
+                "Capital Markets Operations\n"
+                "Ext 6-2847=20\n"
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            team=Team.IAM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AUTHENTICATION_METHOD, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate the SSO redirect loop for the Contoso Trade Portal — likely "
+                "a conditional access policy or token caching issue specific to this user's "
+                "Azure AD session."
+            ),
+            remediation_steps=[
+                "Check the user's Azure AD sign-in logs for error codes during the redirect loop.",
+                "Review conditional access policies applied to the Trade Portal app registration.",
+                "Revoke the user's refresh tokens (Revoke-AzureADUserAllRefreshToken) and have them re-authenticate.",
+                "Verify the app registration redirect URIs match the current Trade Portal deployment URL.",
+                "If the issue is policy-related, grant a temporary exclusion so the user can process the 47 pending trade confirmations.",
+            ],
+            reporter_name="Elena Vasquez",
+            reporter_email="elena.vasquez@contoso.com",
+            reporter_department="Capital Markets Operations",
+            channel=Channel.EMAIL,
+            tags=[
+                "data-cleanup",
+                "quoted-printable-encoding",
+                "soft-line-breaks",
+                "sso-redirect-loop",
+                "content-transfer-encoding",
+            ],
+            difficulty="hard",
+        ),
+        # ── DC-108  ServiceNow audit trail flood ─────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-108",
+            subject="FW: INC0048721 - VPN access request for new Hong Kong office employees",
+            description=(
+                "---------- Forwarded message ----------\n"
+                "From: ServiceNow Notifications <servicenow-noreply@contoso.com>\n"
+                "To: it-helpdesk@contoso.com\n"
+                "Subject: INC0048721 - State changed to: Awaiting Assignment\n\n"
+                "=== INCIDENT RECORD: INC0048721 ===\n"
+                "Short description: VPN access for HK office new hires\n"
+                "State: Awaiting Assignment\n"
+                "Priority: 3 - Moderate\n"
+                "Category: Network\n"
+                "Assigned to: (empty)\n"
+                "Assignment group: Network Operations\n\n"
+                "=== FULL ACTIVITY LOG ===\n\n"
+                "[2026-03-01 09:15:22 HKT] Incident created by: jennifer.wong@contoso.com\n"
+                "  Field changes:\n"
+                "    Short description: (empty) → 'VPN access for HK office new hires'\n"
+                "    Description: (empty) → 'We have 12 new employees starting in the Hong Kong "
+                "office on March 15 who need GlobalProtect VPN access to the NYC trading systems. "
+                "Employee IDs: HK-2026-001 through HK-2026-012.'\n"
+                "    Category: (empty) → Network\n"
+                "    Subcategory: (empty) → VPN\n"
+                "    Priority: (empty) → 3 - Moderate\n"
+                "    Contact type: (empty) → Email\n"
+                "    Caller: (empty) → Jennifer Wong\n\n"
+                "[2026-03-01 09:15:23 HKT] Auto-assignment rule triggered\n"
+                "  Rule: 'Network category → Network Operations'\n"
+                "  Field changes:\n"
+                "    Assignment group: (empty) → Network Operations\n"
+                "    State: New → Awaiting Assignment\n\n"
+                "[2026-03-01 10:30:45 HKT] Approval requested\n"
+                "  Approval for: VPN access — 12 users\n"
+                "  Approver: michael.burke@contoso.com (HK Office Manager)\n"
+                "  State: Requested\n\n"
+                "[2026-03-01 14:22:11 HKT] Approval record updated\n"
+                "  Approver: michael.burke@contoso.com\n"
+                "  State: Requested → Approved\n"
+                "  Comments: 'Approved. All 12 are confirmed new hires starting 3/15.'\n\n"
+                "[2026-03-02 08:45:33 HKT] Work note added by: network-ops-bot@contoso.com\n"
+                "  'Auto-check: GlobalProtect license count = 4,847/5,000. Sufficient capacity "
+                "for 12 additional users.'\n\n"
+                "[2026-03-02 09:12:44 HKT] Field changes by: system\n"
+                "    SLA: (empty) → 'P3 Resolution - 5 business days'\n"
+                "    SLA breach time: (empty) → 2026-03-08 09:15:22 HKT\n\n"
+                "[2026-03-05 11:33:22 HKT] Work note added by: amit.sharma@contoso.com\n"
+                "  'Created GP user groups HK-OFFICE-VPN-2026Q1. Waiting on AD account creation "
+                "for the 12 new hires before we can add them. Pinged IAM team.'\n\n"
+                "[2026-03-07 16:45:00 HKT] SLA warning notification sent\n"
+                "  'SLA breach in 1 business day for INC0048721'\n"
+                "  Notified: network-ops-leads@contoso.com\n\n"
+                "[2026-03-08 09:15:22 HKT] SLA BREACHED\n"
+                "  Field changes:\n"
+                "    SLA status: In Progress → Breached\n"
+                "    Escalation: Normal → High\n\n"
+                "[2026-03-10 08:00:15 HKT] Work note added by: jennifer.wong@contoso.com\n"
+                "  'The new hires start in 5 days! Their AD accounts were created on 3/8. "
+                "Can someone please add them to the VPN group?'\n\n"
+                "[2026-03-12 14:22:33 HKT] Assignment changed by: amit.sharma@contoso.com\n"
+                "  Field changes:\n"
+                "    Assigned to: (empty) → Amit Sharma\n"
+                "    State: Awaiting Assignment → In Progress\n\n"
+                "[2026-03-12 14:30:00 HKT] Work note added by: amit.sharma@contoso.com\n"
+                "  'Adding HK-2026-001 through HK-2026-012 to HK-OFFICE-VPN-2026Q1 group now. "
+                "Need to also configure split-tunnel for HK→NYC traffic.'\n\n"
+                "[2026-03-14 09:00:00 HKT] Field changes by: amit.sharma@contoso.com\n"
+                "    State: In Progress → Pending\n"
+                "    Pending reason: Awaiting vendor\n"
+                "  Work note: 'Split-tunnel config requires Palo Alto TAC case. Opened case #TA-887432.'\n\n"
+                "[2026-03-15 07:30:00 HKT] Comment added by: jennifer.wong@contoso.com\n"
+                "  'The new hires are starting TODAY and they still cannot connect to VPN! "
+                "This was submitted 2 weeks ago. Please escalate.'\n\n"
+                "[2026-03-15 07:31:12 HKT] State changed by: system (escalation rule)\n"
+                "  Field changes:\n"
+                "    Priority: 3 - Moderate → 2 - High\n"
+                "    State: Pending → Awaiting Assignment\n"
+                "    Assigned to: Amit Sharma → (empty)\n"
+                "    Assignment group: Network Operations → Network Operations (re-queued)\n\n"
+                "=== END ACTIVITY LOG ===\n\n"
+                "Can someone PLEASE just give these 12 people VPN access? They started today "
+                "and can't do anything. — Jennifer"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AFFECTED_USERS, MissingInfo.NETWORK_LOCATION],
+            next_best_action=(
+                "Cut through the ServiceNow audit trail — the core request is simple: add 12 "
+                "HK new-hire AD accounts (HK-2026-001 through HK-2026-012) to the "
+                "HK-OFFICE-VPN-2026Q1 GlobalProtect group and configure split-tunnel for HK→NYC."
+            ),
+            remediation_steps=[
+                "Add AD accounts HK-2026-001 through HK-2026-012 to the HK-OFFICE-VPN-2026Q1 security group immediately.",
+                "Verify GlobalProtect portal configuration includes the HK-OFFICE-VPN-2026Q1 group in the allowed access policy.",
+                "Follow up on Palo Alto TAC case #TA-887432 for the split-tunnel configuration.",
+                "Have one new hire test VPN connectivity from the HK office to confirm access to NYC trading systems.",
+                "Update INC0048721 and close once all 12 users have confirmed working VPN access.",
+            ],
+            reporter_name="Jennifer Wong",
+            reporter_email="jennifer.wong@contoso.com",
+            reporter_department="Hong Kong Office Operations",
+            channel=Channel.EMAIL,
+            tags=[
+                "data-cleanup",
+                "servicenow-audit-trail",
+                "state-transition-history",
+                "sla-breach-noise",
+                "approval-chain-dump",
+            ],
+            difficulty="medium",
+        ),
+        # ── DC-109  Bloomberg terminal paste with fixed-width noise ──────
+        ScenarioDefinition(
+            scenario_id="DC-109",
+            subject="CRITICAL - Bloomberg terminal not connecting - entire trading floor affected",
+            description=(
+                "BLOOMBERG IS DOWN. I've been trying to troubleshoot and I'm getting this on my "
+                "terminal screen. Pasting everything I can see:\n\n"
+                "B-PIPE CONNECTION STATUS\n"
+                "========================\n"
+                "Host: ny-bbg-feed-01.contoso.local    Port: 8194    Status: DISCONNECTED\n"
+                "Host: ny-bbg-feed-02.contoso.local    Port: 8194    Status: DISCONNECTED\n"
+                "Host: ny-bbg-feed-03.contoso.local    Port: 8194    Status: TIMEOUT (30s)\n"
+                "Last successful heartbeat: 2026-03-18T07:42:11.003Z (48 min ago)\n"
+                "Reconnect attempts: 147 (all failed)\n"
+                "Error: E_CONNECTION_REFUSED | BLPAPI SessionOptions timeout\n\n"
+                "Last good data snapshot before disconnect:\n"
+                "TICKER          BID       ASK       LAST      VOLUME     CHG     CHG%\n"
+                "-----------------------------------------------------------------------\n"
+                "SPX Index       5,847.23  5,847.89  5,847.56  1.2B       +23.45  +0.40%\n"
+                "INDU Index     43,892.10 43,895.40 43,893.75  342M       +112.30 +0.26%\n"
+                "CCMP Index     18,234.67 18,236.12 18,235.40  4.8B       +89.23  +0.49%\n"
+                "US10YT=RR       4.2340    4.2355    4.2348    98.2B      -0.0120 -0.28%\n"
+                "EUR Curncy      1.0892    1.0894    1.0893    187B       +0.0023 +0.21%\n"
+                "JPY Curncy    149.8700  149.8900  149.8800    245B       -0.2300 -0.15%\n"
+                "CL1 Comdty     78.34     78.37     78.35     412K       +1.23   +1.60%\n"
+                "GC1 Comdty   2,178.40  2,178.90  2,178.65    198K       +12.40  +0.57%\n"
+                "VIX Index       14.23     14.45     14.34     n/a        -0.67   -4.48%\n\n"
+                "BLPAPI DIAGNOSTICS:\n"
+                "  Session pool: 0/24 active (all sessions closed by remote)\n"
+                "  Subscription count: 12,847 (all stale)\n"
+                "  Last event type: SESSION_STATUS / SESSION_TERMINATED\n"
+                "  TCP state to ny-bbg-feed-01: SYN_SENT (no ACK received)\n"
+                "  TCP state to ny-bbg-feed-02: SYN_SENT (no ACK received)\n"
+                "  TCP state to ny-bbg-feed-03: CLOSED (RST received)\n"
+                "  Network path MTU: 1500 (no fragmentation)\n"
+                "  DNS resolution: ny-bbg-feed-01 → 10.60.1.101 (OK)\n"
+                "  DNS resolution: ny-bbg-feed-02 → 10.60.1.102 (OK)\n"
+                "  DNS resolution: ny-bbg-feed-03 → 10.60.1.103 (OK)\n"
+                "  Firewall rule check: UNKNOWN (cannot reach policy server)\n\n"
+                "We have 34 portfolio managers and 22 traders on this floor who are completely "
+                "blind right now. Market opened 30 minutes ago. Every minute we are down costs "
+                "us real money — we can't see prices, can't execute, can't hedge. The backup "
+                "Reuters feed is on a different system that only 3 people have access to.\n\n"
+                "Please treat this as the highest possible priority.\n\n"
+                "George Papadopoulos\nHead of Equity Trading Desk\nFloor 12, NYC\nDirect: 212-555-0147"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P1,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.NETWORK_LOCATION, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Critical Bloomberg B-PIPE outage affecting entire trading floor — all three feed "
+                "servers are unreachable (SYN_SENT / RST). Investigate network path from trading "
+                "floor VLAN to Bloomberg feed servers on 10.60.1.x and check firewall rules."
+            ),
+            remediation_steps=[
+                "Verify network connectivity from the trading floor VLAN to the Bloomberg feed servers (10.60.1.101-103) on port 8194.",
+                "Check the firewall rules — the BLPAPI diagnostic says it cannot reach the policy server, suggesting a firewall change.",
+                "Contact Bloomberg support with the B-PIPE connection error details if the network path is clear.",
+                "As an interim measure, expand access to the backup Reuters feed for more traders.",
+                "Once connectivity is restored, verify all 12,847 subscriptions re-establish and data is flowing.",
+            ],
+            reporter_name="George Papadopoulos",
+            reporter_email="george.papadopoulos@contoso.com",
+            reporter_department="Equity Trading",
+            channel=Channel.PHONE,
+            tags=[
+                "data-cleanup",
+                "bloomberg-terminal-paste",
+                "bpipe-diagnostics",
+                "fixed-width-table",
+                "trading-floor-outage",
+            ],
+            difficulty="hard",
+        ),
+        # ── DC-110  Clipboard paste from Excel with formula artifacts ────
+        ScenarioDefinition(
+            scenario_id="DC-110",
+            subject="Data export from ContosoReporter tool showing formulas instead of values",
+            description=(
+                "Hi,\n\n"
+                "Something is very wrong with the ContosoReporter data export. When I export the "
+                "daily P&L summary to Excel and then paste it into our risk system upload template, "
+                "all the formulas are showing instead of values. Here's what the clipboard paste "
+                "looks like:\n\n"
+                "Desk\tGross P&L\tNet P&L\tVaR Utilization\tTrade Count\tNotional ($M)\n"
+                "Equity Trading\t=SUM(B14:B87)\t=B2-VLOOKUP(A2,Costs!A:C,3,FALSE)\t"
+                "=IF(D2>0.85,\"BREACH\",IF(D2>0.7,\"WARNING\",\"OK\"))\t=COUNTA(Trades!A:A)-1\t"
+                "=SUMPRODUCT(Trades!F2:F500,Trades!G2:G500)/1000000\n"
+                "Fixed Income\t=SUM(B88:B134)\t=B3-VLOOKUP(A3,Costs!A:C,3,FALSE)\t"
+                "#REF!\t=COUNTIFS(Trades!B:B,\"FI\",Trades!H:H,\">0\")\t"
+                "=SUMPRODUCT((Trades!B2:B500=\"FI\")*Trades!F2:F500*Trades!G2:G500)/1000000\n"
+                "FX & Rates\t#N/A\t=B4-VLOOKUP(A4,Costs!A:C,3,FALSE)\t"
+                "=C15/VLOOKUP(A4,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,\"FX*\")\t"
+                "#VALUE!\n"
+                "Credit\t=SUM(B200:B267)\t=B5-VLOOKUP(A5,Costs!A:C,3,FALSE)\t"
+                "=C16/VLOOKUP(A5,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,\"CRD\")\t"
+                "=SUMPRODUCT((Trades!B2:B500=\"CRD\")*Trades!F2:F500*Trades!G2:G500)/1000000\n"
+                "Commodities\t=SUM(B268:B301)\t#REF!\t"
+                "=C17/VLOOKUP(A6,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,\"CMDTY\")\t"
+                "#N/A\n"
+                "TOTAL\t=SUM(B2:B6)\t=SUM(C2:C6)\t=MAX(D2:D6)\t=SUM(E2:E6)\t=SUM(F2:F6)\n\n"
+                "There are also these errors scattered throughout:\n"
+                "#REF! — appears in Fixed Income VaR Utilization and Commodities Net P&L\n"
+                "#N/A — appears in FX & Rates Gross P&L and Commodities Notional\n"
+                "#VALUE! — appears in FX & Rates Notional\n\n"
+                "The previous version of ContosoReporter (v2.8) exported actual calculated values. "
+                "Since the upgrade to v3.0 last week, it's exporting the raw formulas. The risk "
+                "system upload rejects the file because it expects numeric values, not formula strings.\n\n"
+                "I need this fixed before 6 PM ET — that's when the daily risk report is due to "
+                "the Chief Risk Officer. I've been manually calculating these values for the past "
+                "3 days and it takes over 2 hours each time.\n\n"
+                "Tanya Birch\nRisk Reporting Analyst\nEnterprise Risk Management\n"
+                "Floor 9, NYC Office"
+            ),
+            category=Category.DATA,
+            priority=Priority.P2,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "The ContosoReporter v3.0 upgrade broke Excel export — it now emits raw formulas "
+                "and cell references instead of computed values. Investigate the export logic "
+                "change in v3.0 and consider rolling back to v2.8 as a hotfix."
+            ),
+            remediation_steps=[
+                "Compare ContosoReporter v3.0 vs v2.8 export logic — v3.0 likely switched from value-paste to formula-paste mode.",
+                "Check if the export uses OpenXML or COM automation and whether 'PasteSpecial Values' was removed in v3.0.",
+                "Roll back ContosoReporter to v2.8 on the reporter's workstation as an immediate fix for tonight's risk report.",
+                "File a defect with the ContosoReporter development team to fix the formula-vs-value export regression in v3.0.",
+                "Investigate the #REF! and #N/A errors separately — these may indicate broken cross-sheet references in the source workbook.",
+            ],
+            reporter_name="Tanya Birch",
+            reporter_email="tanya.birch@contoso.com",
+            reporter_department="Enterprise Risk Management",
+            channel=Channel.PORTAL,
+            tags=[
+                "data-cleanup",
+                "excel-formula-artifacts",
+                "clipboard-paste-noise",
+                "ref-error-cells",
+                "value-vs-formula-export",
+            ],
+            difficulty="medium",
+        ),
     ]
