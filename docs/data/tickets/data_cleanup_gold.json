@@ -1,0 +1,261 @@
+[
+    {
+        "ticket_id": "INC-5001",
+        "category": "Network & Connectivity",
+        "priority": "P3",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Investigate VPN disconnection on GlobalProtect 3.2.1-5 triggered by Ethernet-to-WiFi switch after a Windows update. Check for known compatibility issues between the GlobalProtect version and recent Windows patches.",
+        "remediation_steps": [
+            "Check for known issues between GlobalProtect 3.2.x and recent Windows updates",
+            "Test VPN reconnection behavior on a reference device with the same GlobalProtect version",
+            "Verify WiFi network configuration on NYC office Floor 4",
+            "If issue is version-specific, plan an upgrade to a patched GlobalProtect release"
+        ]
+    },
+    {
+        "ticket_id": "INC-5002",
+        "category": "Hardware & Peripherals",
+        "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Investigate monitor flickering connected via docking station. Cable swap did not resolve — likely a monitor hardware fault or docking station issue.",
+        "remediation_steps": [
+            "Test with a replacement monitor to isolate whether the issue is the display or the dock",
+            "Test the current monitor with a direct connection (bypass docking station)",
+            "If flickering persists with direct connection, schedule monitor replacement",
+            "If dock-only, replace or update docking station firmware"
+        ]
+    },
+    {
+        "ticket_id": "INC-5003",
+        "category": "Access & Authentication",
+        "priority": "P2",
+        "assigned_team": "Identity & Access Management",
+        "needs_escalation": false,
+        "missing_information": [
+            "affected_users"
+        ],
+        "next_best_action": "Investigate AADSTS50076 error affecting multiple users. A recent Conditional Access or MFA policy change is blocking SSO access to Salesforce, SAP, and the HR portal. Check for recent Entra ID policy modifications.",
+        "remediation_steps": [
+            "Review recent Conditional Access policy changes in Entra ID admin center",
+            "Identify which policy is enforcing MFA for these applications",
+            "Determine if the policy change was intentional or accidental",
+            "If accidental, revert the policy; if intentional, communicate the change and help users enroll in MFA",
+            "Verify SSO access is restored for affected users across all applications"
+        ]
+    },
+    {
+        "ticket_id": "INC-5004",
+        "category": "Data & Storage",
+        "priority": "P3",
+        "assigned_team": "Data Platform",
+        "needs_escalation": false,
+        "missing_information": [
+            "error_message",
+            "environment_details"
+        ],
+        "next_best_action": "Investigate SharePoint upload failure for a 45MB Excel file. Check SharePoint upload size limits, network throttling, and whether the file exceeds the tenant's file size policy.",
+        "remediation_steps": [
+            "Verify the SharePoint site's upload size limit and tenant-level file size restrictions",
+            "Check if the 45MB file exceeds the configured maximum for the document library",
+            "Test uploading a smaller file to isolate size as the cause",
+            "If size limit is the issue, adjust the site collection settings or use OneDrive sync as an alternative",
+            "Check for any SharePoint throttling or network proxy issues on the user's connection"
+        ]
+    },
+    {
+        "ticket_id": "INC-5005",
+        "category": "Software & Applications",
+        "priority": "P2",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "environment_details"
+        ],
+        "next_best_action": "Restore SAP FI module authorization for Linda Park after her role change. The role change was approved on March 10 but SAP role assignments were not updated. Time-sensitive due to month-end close starting March 28.",
+        "remediation_steps": [
+            "Verify the role change from Finance Analyst to Senior Finance Analyst was processed in SAP",
+            "Check SAP role assignments for Linda Park — ensure FI module authorizations (FB50, F110, FAGLL03) are included in the new role",
+            "If role mapping is missing, update the SAP authorization profile for Senior Finance Analyst",
+            "Confirm Linda Park can access the required transaction codes",
+            "Review the role change provisioning workflow to prevent authorization gaps during future role changes"
+        ]
+    },
+    {
+        "ticket_id": "INC-5006",
+        "category": "Network & Connectivity",
+        "priority": "P3",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info",
+            "network_location"
+        ],
+        "next_best_action": "Investigate WiFi connectivity issue on Contoso-Corp network in the London office, 3rd floor. User can connect but has no internet. Guest network works fine, suggesting a corporate network authentication or VLAN issue.",
+        "remediation_steps": [
+            "Check the user's device certificate and 802.1X authentication status for Contoso-Corp",
+            "Verify DHCP lease and DNS resolution on the corporate network",
+            "Check if the user's device is compliant with the Conditional Access policy for corporate WiFi",
+            "Test connectivity from another device on the same floor to isolate user vs. network issue",
+            "If user-specific, re-register the device for corporate WiFi access"
+        ]
+    },
+    {
+        "ticket_id": "INC-5007",
+        "category": "Data & Storage",
+        "priority": "P1",
+        "assigned_team": "Data Platform",
+        "needs_escalation": true,
+        "missing_information": [],
+        "next_best_action": "Production SQL Server connection pool exhaustion — all 100 connections consumed with 52 requests queued. Client-facing APIs are failing. Investigate connection leaks and consider increasing pool size as immediate mitigation.",
+        "remediation_steps": [
+            "Identify and terminate long-running or leaked database connections on sql-prod-eastus2",
+            "Investigate the login failure for 'svc-app-prod' — possible credential expiry or lockout",
+            "Increase connection pool size temporarily or restart the application to clear stale connections",
+            "Check Azure SQL DTU/vCore utilization for resource contention",
+            "Post-incident: add connection pool monitoring alerts and review connection lifecycle management"
+        ]
+    },
+    {
+        "ticket_id": "INC-5008",
+        "category": "General Inquiry",
+        "priority": "P4",
+        "assigned_team": "None",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Guide the user on how to search for meeting room resources in Outlook. The room names may differ from what the user expects. This is a usage question, not a technical issue.",
+        "remediation_steps": [
+            "Reply with the correct room resource names as configured in Exchange/Outlook",
+            "Provide instructions on using the Room Finder feature in Outlook calendar",
+            "If the room genuinely does not appear, verify the room mailbox exists in Exchange admin",
+            "Direct catering questions to Office Management, not IT"
+        ]
+    },
+    {
+        "ticket_id": "INC-5009",
+        "category": "Security & Compliance",
+        "priority": "P3",
+        "assigned_team": "Security Operations",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate phishing email from outlook-verify.com impersonating Microsoft. User did not click the link. Analyze the email headers and URL, block the sender domain, and check if other users received the same campaign.",
+        "remediation_steps": [
+            "Confirm user did not click the link or enter any credentials",
+            "Analyze the phishing email headers and malicious URL",
+            "Block the sender domain (outlook-verify.com) in the email gateway",
+            "Search email logs for other recipients of the same campaign",
+            "If other users received it, send a company-wide phishing alert"
+        ]
+    },
+    {
+        "ticket_id": "INC-5010",
+        "category": "Not a Support Ticket",
+        "priority": "P4",
+        "assigned_team": "None",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Close — this is an automated daily health check report with all systems showing healthy status. No issues detected, no action required.",
+        "remediation_steps": [
+            "No action required — automated health report showing all systems nominal, close ticket"
+        ]
+    },
+    {
+        "ticket_id": "INC-5011",
+        "category": "Security & Compliance",
+        "priority": "P2",
+        "assigned_team": "Security Operations",
+        "needs_escalation": true,
+        "missing_information": [
+            "timestamp"
+        ],
+        "next_best_action": "Investigate a coordinated phishing campaign impersonating Contoso across at least 3 domains. Multiple users affected. Analyze the emails, block the sender domains, and scan the organization for other recipients.",
+        "remediation_steps": [
+            "Analyze all three phishing emails — extract IOCs (sender domains, redirect URLs, tracking pixels)",
+            "Block sender domains in the email gateway: contoso-special-offers.com, contoso-security-update.net, contoso-benefits-enrollment.org",
+            "Search email logs for all recipients of emails from these domains",
+            "Send organization-wide phishing alert if the campaign is widespread",
+            "Verify no users clicked the links — if any did, initiate credential reset and endpoint scan"
+        ]
+    },
+    {
+        "ticket_id": "INC-5012",
+        "category": "Software & Applications",
+        "priority": "P3",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info",
+            "application_version"
+        ],
+        "next_best_action": "Investigate Teams desktop app crash on meeting join in the Singapore office. Cache clear and reinstall did not help. Web version works, suggesting a local app or GPU rendering issue.",
+        "remediation_steps": [
+            "Check Teams desktop app version and ensure it is the latest supported build",
+            "Disable GPU hardware acceleration in Teams settings",
+            "Check Windows Event Viewer for application crash details",
+            "If GPU-related, update the graphics driver",
+            "If crash persists, collect Teams diagnostic logs and escalate to Microsoft support"
+        ]
+    },
+    {
+        "ticket_id": "INC-5013",
+        "category": "Hardware & Peripherals",
+        "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info",
+            "error_message",
+            "steps_to_reproduce",
+            "environment_details"
+        ],
+        "next_best_action": "Contact the user to gather details about the laptop model, what happens when they press the power button (no LEDs, beeps, partial boot), and when it last worked.",
+        "remediation_steps": [
+            "Contact user to determine the laptop model and asset tag",
+            "Ask what happens when the power button is pressed — any LEDs, fan noise, or beeps",
+            "Check if the laptop charges (LED on power adapter)",
+            "If no signs of power, try a hard reset (remove battery if possible, hold power 30 seconds)",
+            "If still unresponsive, schedule hardware replacement or depot repair"
+        ]
+    },
+    {
+        "ticket_id": "INC-5014",
+        "category": "Data & Storage",
+        "priority": "P2",
+        "assigned_team": "Data Platform",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "ADF pipeline prod-client-ingest failing with PathNotFound — the date partition directory (raw/clients/2026/03/18/) does not exist in contosodatalake. Create the missing path and investigate why auto-partition creation failed.",
+        "remediation_steps": [
+            "Create the missing directory path raw/clients/2026/03/18/ in the contosodatalake storage account",
+            "Re-run the prod-client-ingest pipeline and verify successful execution",
+            "Investigate why the auto-partition creation step failed — check ADF linked service permissions",
+            "Verify the service principal has Storage Blob Data Contributor on the container",
+            "Add pre-pipeline validation to create date partition directories before copy activities run"
+        ]
+    },
+    {
+        "ticket_id": "INC-5015",
+        "category": "Access & Authentication",
+        "priority": "P3",
+        "assigned_team": "Identity & Access Management",
+        "needs_escalation": false,
+        "missing_information": [
+            "authentication_method"
+        ],
+        "next_best_action": "Investigate MFA TOTP token not refreshing in the Authenticator app (v6.8.4) on iPhone 15. The time-based code is stuck, suggesting a clock sync issue on the device or a corrupted token seed.",
+        "remediation_steps": [
+            "Verify the device clock is synced to automatic time (Settings > General > Date & Time)",
+            "In the Authenticator app, remove and re-add the Contoso account to regenerate the token seed",
+            "Check Entra ID for the user's MFA registration status and reset if needed",
+            "Confirm TOTP codes rotate correctly after re-registration",
+            "If issue persists, check for Authenticator app updates or test with a different MFA method"
+        ]
+    }
+]

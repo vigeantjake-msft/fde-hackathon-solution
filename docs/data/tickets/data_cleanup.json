@@ -1,0 +1,212 @@
+[
+    {
+        "ticket_id": "INC-5001",
+        "subject": "RE: RE: RE: RE: RE: FW: VPN disconnection issue - follow up from Monday standup",
+        "description": "---------- Original message ----------\nFrom: Sarah Chen <sarah.chen@contoso.com>\nDate: March 17, 2026 9:14 AM\nTo: IT Help Desk <ithelpdesk@contoso.com>\n\nHi team, ever since the Windows update last Tuesday my VPN drops every time I switch from Ethernet to WiFi. Using GlobalProtect v3.2 on NYC office WiFi, Floor 4.\n\nThanks,\nSarah\n\n---\nSarah Chen | Senior Engineer | Contoso Financial Services\nOne Microsoft Way, Redmond, WA 98052 | +1 (425) 555-0142\nThis email and any attachments are confidential. If you received this in error, please delete it immediately and notify the sender.\n\n---------- Reply from IT Help Desk ----------\nFrom: IT Help Desk <ithelpdesk@contoso.com>\nDate: March 17, 2026 10:30 AM\nTo: Sarah Chen <sarah.chen@contoso.com>\n\nHi Sarah, thanks for reporting. Can you confirm the VPN client version?\n\nRegards,\nIT Help Desk | Contoso Financial Services\nFor urgent issues call +1 (800) 555-HELP\nCONFIDENTIALITY NOTICE: This email contains confidential information belonging to Contoso Financial Services. Any unauthorized use is prohibited.\n\n---------- Reply from Sarah Chen ----------\nFrom: Sarah Chen <sarah.chen@contoso.com>\nDate: March 17, 2026 10:45 AM\n\nIt's GlobalProtect 3.2.1-5. Thanks!\n\n---\nSarah Chen | Senior Engineer | Contoso Financial Services\nOne Microsoft Way, Redmond, WA 98052 | +1 (425) 555-0142\nThis email and any attachments are confidential.\n\n---------- Reply from IT Help Desk ----------\nFrom: IT Help Desk <ithelpdesk@contoso.com>\nDate: March 17, 2026 11:00 AM\n\nGot it. We are looking into it. Will update you soon.\n\nRegards,\nIT Help Desk\nCONFIDENTIALITY NOTICE: This email contains confidential information.\n\n---------- Reply from Sarah Chen ----------\nFrom: Sarah Chen <sarah.chen@contoso.com>\nDate: March 17, 2026 2:30 PM\n\nAny update? It's happened 4 more times today. Very disruptive.\n\n---\nSarah Chen | Senior Engineer | Contoso Financial Services\nOne Microsoft Way, Redmond, WA 98052 | +1 (425) 555-0142\nThis email and any attachments are confidential.\n\n---------- Reply from IT Help Desk ----------\nFrom: IT Help Desk <ithelpdesk@contoso.com>\nDate: March 17, 2026 3:15 PM\n\nEscalating to the network team. They will reach out directly.\n\nRegards,\nIT Help Desk\nCONFIDENTIALITY NOTICE: This email contains confidential information.",
+        "reporter": {
+            "name": "Sarah Chen",
+            "email": "sarah.chen@contoso.com",
+            "department": "Engineering"
+        },
+        "created_at": "2026-03-17T15:30:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5002",
+        "subject": "Monitor display issue - screenshot attached inline",
+        "description": "My monitor started flickering around 10am. It happens every few minutes and lasts about 3 seconds each time. Here is a screenshot of what it looks like:\n\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==3l5VkgeWjb4JSIyPYKqptaP3hDMcjasEBQXkYVQ87q+K7V+xtRZRlTo86hdn4xHrs6cDKg9Rc9yUegVq3EMlP/o+hnPoZcmIXULgZrEhcw4rC/7jSlOZfvEwKqH2rEWsVeqQYomVIK0wCKIzpNeZw4Z/9aGLQZt0x0368hlPHLnCD3S0wFTIYC8VMO74DEkydzUZa5Os61A1hA7QgjhiGiIYMyG86uITWQWeje9TM74mAmp9soL9H/yg5JKvc6bLonvy6NPNrzKhA7gZJcdsssY+srm12era5+UjQwyOOPxndJled52XroGz6XusRq4BhM3PmfBcI6qaedEvFX2jYs4+V4slyGa7Y4mXfNUfPu9ALwjJcxv8UOAoMs0aoUO/SGUD/rSR5qNYDaCcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWnije2NfVhb3pW7A+K0b1nNFmqQY7tTkdJRREU8PqYLjsfR2j+5a4nP0U6bVJU9cgaTsIjxkhWL5QDTvzPE7VGYMqKsXp2RXDokGr6LF3x6k5TCxV+mBDkU5fOzmRFM7mN93GVBQ==\n\nI've tried switching the DisplayPort cable to a different port and it still happens. The monitor is connected to my docking station. Bloomberg terminal data seems fine, just the display is affected.",
+        "reporter": {
+            "name": "Anna Brooks",
+            "email": "anna.brooks@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-17T10:45:00Z",
+        "channel": "portal",
+        "attachments": [
+            "monitor_flicker_screenshot.png"
+        ]
+    },
+    {
+        "ticket_id": "INC-5003",
+        "subject": "SSO login failing across all apps",
+        "description": "<div style=\"font-family: Calibri, Arial, sans-serif; font-size: 11pt;\"><p style=\"margin: 0; padding: 0;\">Hi IT team,</p><p style=\"margin: 10px 0;\">Since this morning I <b>cannot log into any SSO-enabled application</b>. When I try to access Salesforce, SAP, or the internal HR portal, I get redirected to the Entra ID login page and then see:</p><p style=\"color: red; font-weight: bold; background-color: #fff3cd; padding: 8px; border: 1px solid #ffc107; border-radius: 4px;\">AADSTS50076: Due to a configuration change made by your administrator, you must use multi-factor authentication to access this resource.</p><p style=\"margin: 10px 0;\">I haven&#39;t changed anything on my end. My MFA was working fine yesterday. Outlook and Teams still work because I was already signed in.</p><p style=\"margin: 10px 0; color: #666;\">Other affected colleagues on my floor have reported the same issue in our Teams channel.</p><br/><p style=\"margin: 0;\">Thanks,<br/><span style=\"color: #0078d4; font-weight: bold;\">Marcus Rodriguez</span><br/><span style=\"font-size: 9pt; color: #888;\">Wealth Management | Contoso Financial Services</span></p></div>",
+        "reporter": {
+            "name": "Marcus Rodriguez",
+            "email": "marcus.rodriguez@contoso.com",
+            "department": "Wealth Management"
+        },
+        "created_at": "2026-03-18T09:20:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5004",
+        "subject": "Can't upload to SharePoint",
+        "description": "I'm getting an error when trying to upload a 45MB Excel file to our team's SharePoint site. The upload starts but fails at about 80% with a generic error.\n\n---\nDr. Ananya Gupta\nChief Compliance Officer\nContoso Financial Services\n\nNew York Office\n1 Wall Street, 45th Floor\nNew York, NY 10005\nTel: +1 (212) 555-0198\nFax: +1 (212) 555-0199\n\nLondon Office\n25 Bank Street, Canary Wharf\nLondon E14 5JP, United Kingdom\nTel: +44 20 7555 0142\n\nSingapore Office\n8 Marina Boulevard, #36-01\nMarina Bay Financial Centre\nSingapore 018981\nTel: +65 6555 0183\n\nCONFIDENTIALITY NOTICE: This email message, including any attachments, is for the sole use of the intended recipient(s) and may contain confidential, proprietary, and/or privileged information protected by law. If you are not the intended recipient, you may not use, copy, or distribute this email message or its attachments. If you have received this email in error, please contact the sender by reply email and destroy all copies of the original message and any attachments. Thank you.\n\nAVIS DE CONFIDENTIALITÉ: Ce message électronique, y compris les pièces jointes, est destiné exclusivement au(x) destinataire(s) prévu(s) et peut contenir des informations confidentielles, propriétaires et/ou privilégiées protégées par la loi. Si vous n'êtes pas le destinataire prévu, vous ne pouvez pas utiliser, copier ou distribuer ce message. Si vous avez reçu ce message par erreur, veuillez contacter l'expéditeur et détruire toutes les copies.\n\nDATENSCHUTZHINWEIS: Diese E-Mail-Nachricht einschließlich aller Anhänge ist ausschließlich für den/die vorgesehenen Empfänger bestimmt und kann vertrauliche Informationen enthalten. Wenn Sie nicht der vorgesehene Empfänger sind, dürfen Sie diese Nachricht nicht verwenden, kopieren oder verteilen.\n\nPlease consider the environment before printing this email. 🌿",
+        "reporter": {
+            "name": "Ananya Gupta",
+            "email": "ananya.gupta@contoso.com",
+            "department": "Compliance"
+        },
+        "created_at": "2026-03-18T11:15:00Z",
+        "channel": "email",
+        "attachments": [
+            "Q1_compliance_review.xlsx"
+        ]
+    },
+    {
+        "ticket_id": "INC-5005",
+        "subject": "Fwd: Fwd: Re: Fwd: Re: Re: SAP access issue from last Thursday",
+        "description": "---------- Forwarded by Patricia Gomez ----------\nFYI IT — this is still unresolved. Please prioritize.\n\n---------- Forwarded by David Liu ----------\nPatricia, can you forward this to IT? Linda still can't access SAP.\n\n---------- Re: from Linda Park ----------\nDavid, I tried what the help desk suggested but it didn't work. Still getting the same error. This is my third time raising this.\n\n---------- Re: from IT Help Desk ----------\nHi Linda, please try clearing your browser cache and logging in again.\n\n---------- Original message from Linda Park ----------\nFrom: Linda Park <linda.park@contoso.com>\nDate: March 14, 2026\nSubject: SAP access issue\n\nAfter my role changed from Finance Analyst to Senior Finance Analyst last week, I lost access to the SAP FI module (transaction codes FB50, F110, FAGLL03). I get error 'No authorization for transaction FB50' when I try to post journal entries. My manager David Liu approved the role change in ServiceNow on March 10. I need this for month-end close which starts March 28.",
+        "reporter": {
+            "name": "Patricia Gomez",
+            "email": "patricia.gomez@contoso.com",
+            "department": "Executive Operations"
+        },
+        "created_at": "2026-03-18T14:00:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5006",
+        "subject": "WiFi problÃ¨me - can't connect",
+        "description": "Bonjour IT team,\n\nJe suis having WiFi issues since ce matin. Mon laptop wonÃ¢â‚¬â„¢t connect to the Contoso-Corp network. It shows Ã¢â‚¬Å“Connected, no internetÃ¢â‚¬ when I do manage to join. IÃ¢â‚¬â„¢ve tried:\n- Forgetting and re-adding the network\n- Restarting my laptop\n- Moving to a diffÃ©rent floor\n\nThe guest WiFi (Contoso-Guest) works fine but I canÃ¢â‚¬â„¢t access internal resources on it. Other collÃ¨gues on the 3rd floor of the London office seem to be working fine.\n\nMerci,\nÃ‰milie Fontaine",
+        "reporter": {
+            "name": "Émilie Fontaine",
+            "email": "emilie.fontaine@contoso.com",
+            "department": "Wealth Management"
+        },
+        "created_at": "2026-03-18T08:30:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5007",
+        "subject": "SQL Server connection timeout errors - logs attached",
+        "description": "Our application is throwing SQL connection timeouts. Here are the last 20 lines from the app server log:\n\n2026-03-18 06:01:12.443 ERROR [ConnectionPool] Timeout expired. The timeout period elapsed prior to obtaining a connection from the pool.\n2026-03-18 06:01:12.443 ERROR [ConnectionPool] Max pool size: 100, Current: 100, Available: 0, Waiting: 47\n2026-03-18 06:01:13.891 ERROR [SqlCommand] A transport-level error has occurred (provider: TCP Provider, error: 0 - An existing connection was forcibly closed)\n2026-03-18 06:01:14.002 WARN  [RetryPolicy] Retrying operation, attempt 3 of 5\n2026-03-18 06:01:15.112 ERROR [ConnectionPool] Timeout expired. Pool exhausted.\n2026-03-18 06:01:15.334 ERROR [ConnectionPool] Max pool size: 100, Current: 100, Available: 0, Waiting: 52\n2026-03-18 06:01:16.001 ERROR [SqlCommand] Login failed for user 'svc-app-prod'\n2026-03-18 06:01:17.223 FATAL [AppService] Unable to serve requests - all DB connections exhausted\n\nConnection string parameters (sanitized):\nServer=sql-prod-eastus2.database.windows.net;Database=ContosoDB;Pooling=true;Max Pool Size=100;Connection Timeout=30;Encrypt=true;\n\nError counts in the last hour:\ntimestamp,error_type,count\n2026-03-18T05:00,timeout,12\n2026-03-18T05:15,timeout,28\n2026-03-18T05:30,timeout,45\n2026-03-18T05:45,timeout,67\n2026-03-18T06:00,timeout,103\n2026-03-18T06:00,login_failed,8\n\nThis is a production database. Client-facing APIs are failing.",
+        "reporter": {
+            "name": "Raj Patel",
+            "email": "raj.patel@contoso.com",
+            "department": "Data Engineering"
+        },
+        "created_at": "2026-03-18T06:15:00Z",
+        "channel": "portal",
+        "attachments": [
+            "full_app_log.txt",
+            "connection_metrics.csv"
+        ]
+    },
+    {
+        "ticket_id": "INC-5008",
+        "subject": "🚨🚨🚨 HELP 🚨🚨🚨 Room booking system 💻 not working 😱😭",
+        "description": "OMG 😱😱😱 I've been trying ALL MORNING to book the big conference room on the 4th floor 🏢 for our team lunch 🍕🍔🥗 on Friday!!!\n\nWhen I go to Outlook 📧 and try to add the room 🚪 it says 'Room not found' ❌❌❌\n\nI tried:\n✅ Searching for 'Conference Room 4A'\n✅ Searching for 'Board Room'\n✅ Searching for 'Large Meeting Room'\n❌ None of them work!!!\n\nMy colleague Janet 👩‍💼 said she booked it last week with no issues 🤷‍♀️\n\nPLEASE HELP 🙏🙏🙏🙏🙏\n\nThanks!!! 💖✨🌟\nChris ✌️",
+        "reporter": {
+            "name": "Chris Taylor",
+            "email": "chris.taylor@contoso.com",
+            "department": "HR"
+        },
+        "created_at": "2026-03-18T12:15:00Z",
+        "channel": "chat",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5009",
+        "subject": "PHISHING EMAIL - DO NOT CLICK - PHISHING EMAIL - DO NOT CLICK",
+        "description": "I received a suspicious email from 'microsoft-security@outlook-verify.com' asking me to verify my account by clicking a link. The email looks like a Microsoft sign-in page but the URL goes to outlook-verify.com. I did NOT click anything.\n\n--- (forwarded again for visibility) ---\n\nI received a suspicious email from 'microsoft-security@outlook-verify.com' asking me to verify my account by clicking a link. The email looks like a Microsoft sign-in page but the URL goes to outlook-verify.com. I did NOT click anything.\n\n--- (forwarding one more time to make sure you see this) ---\n\nI received a suspicious email from 'microsoft-security@outlook-verify.com' asking me to verify my account by clicking a link. The email looks like a Microsoft sign-in page but the URL goes to outlook-verify.com. I did NOT click anything.\n\n--- (sorry if this is a duplicate, my email was acting up) ---\n\nI received a suspicious email from 'microsoft-security@outlook-verify.com' asking me to verify my account by clicking a link. The email looks like a Microsoft sign-in page but the URL goes to outlook-verify.com. I did NOT click anything.",
+        "reporter": {
+            "name": "Greg Dawson",
+            "email": "greg.dawson@contoso.com",
+            "department": "Retail Banking"
+        },
+        "created_at": "2026-03-18T11:55:00Z",
+        "channel": "email",
+        "attachments": [
+            "suspicious_email.eml"
+        ]
+    },
+    {
+        "ticket_id": "INC-5010",
+        "subject": "[AUTOMATED] Daily health check summary - 2026-03-18 - all systems nominal",
+        "description": "═══════════════════════════════════════════════════════════\n  CONTOSO INFRASTRUCTURE DAILY HEALTH REPORT\n  Generated: 2026-03-18T06:00:00Z\n  Report ID: HC-2026-0318-0600\n═══════════════════════════════════════════════════════════\n\nSUMMARY: ALL SYSTEMS OPERATIONAL ✅\n\nService Status:\n  [✅] Entra ID / SSO ................ Healthy (99.99% uptime)\n  [✅] Exchange Online ............... Healthy (100% uptime)\n  [✅] SharePoint Online ............. Healthy (99.98% uptime)\n  [✅] Teams ......................... Healthy (100% uptime)\n  [✅] VPN Gateway (East US 2) ....... Healthy (100% uptime)\n  [✅] VPN Gateway (UK South) ........ Healthy (100% uptime)\n  [✅] VPN Gateway (SE Asia) ......... Healthy (99.99% uptime)\n  [✅] SQL Prod (East US 2) .......... Healthy (100% uptime)\n  [✅] ADF Pipelines ................. Healthy (24/24 succeeded)\n  [✅] SAP GUI ....................... Healthy (100% uptime)\n\nNo action required. Next report at 2026-03-19T06:00:00Z.\n\n---\nThis is an automated message from Contoso Infrastructure Monitoring.\nDo not reply to this message.",
+        "reporter": {
+            "name": "System Monitor",
+            "email": "noreply-monitoring@contoso.com",
+            "department": "IT"
+        },
+        "created_at": "2026-03-18T06:00:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5011",
+        "subject": "Suspicious emails with tracking links - getting tons of these",
+        "description": "I keep getting emails with weird tracking links. Here are examples from today:\n\nEmail 1:\n  From: deals@contoso-special-offers.com\n  Link: https://track.contoso-special-offers.com/click?uid=8f3a2b&campaign=spring2026&redirect=https%3A%2F%2Fmalicious-site.com%2Fcapture%3Fid%3D9182\n  Tracking pixel: <img src='https://px.contoso-special-offers.com/open?uid=8f3a2b&t=1710748800' width='1' height='1' />\n\nEmail 2:\n  From: it-admin@contoso-security-update.net\n  Link: https://contoso-security-update.net/verify?token=eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI4ZjNhMmIifQ.fake_jwt_token\n  Hidden redirect: https://contoso-security-update.net/redirect?url=https%3A%2F%2Fcredential-harvest.com%2Flogin\n\nEmail 3:\n  From: noreply@contoso-benefits-enrollment.org\n  Link: https://contoso-benefits-enrollment.org/enroll?emp_id=45892&utm_source=email&utm_medium=phish&utm_campaign=march2026\n\nThese all look like they are impersonating Contoso. I haven't clicked any of them. My colleagues Wei Lin and Tom also got similar ones today.",
+        "reporter": {
+            "name": "Rachel Green",
+            "email": "rachel.green@contoso.com",
+            "department": "Marketing"
+        },
+        "created_at": "2026-03-18T10:30:00Z",
+        "channel": "portal",
+        "attachments": [
+            "suspicious_email_1.eml",
+            "suspicious_email_2.eml",
+            "suspicious_email_3.eml"
+        ]
+    },
+    {
+        "ticket_id": "INC-5012",
+        "subject": "Teams问题 - crashes every time / 每次崩溃",
+        "description": "Hi IT team,\n\n我的Teams一直崩溃。Every time I try to join a meeting, the app freezes for about 10 seconds then crashes to desktop. 这个问题从今天早上开始的。\n\n我试过了:\n- Clear cache (删除了 %appdata%/Microsoft/Teams 文件夹)\n- Reinstall Teams\n- 重启电脑\n\n都没有用。The web version (teams.microsoft.com) works fine, 但是桌面版本 就是不行。I need the desktop app because screen sharing 在网页版上质量很差。\n\n我在新加坡办公室三楼。This is affecting my client meetings.\n\n谢谢,\nWei Lin",
+        "reporter": {
+            "name": "Wei Lin Tan",
+            "email": "weilin.tan@contoso.com",
+            "department": "Consulting"
+        },
+        "created_at": "2026-03-18T03:15:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5013",
+        "subject": "laptop broken",
+        "description": "wont turn on",
+        "reporter": {
+            "name": "Robert Chen",
+            "email": "robert.chen2@contoso.com",
+            "department": "Operations"
+        },
+        "created_at": "2026-03-18T08:00:00Z",
+        "channel": "chat",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5014",
+        "subject": "ADF pipeline error - full error output below",
+        "description": "The prod-client-ingest pipeline failed again. Here's the full error:\n\n{\n    \"error\": {\n        \"code\": \"InvalidTemplate\",\n        \"message\": \"Unable to process template language expressions in activity Copy_ClientData_ADLS output.\",\n        \"details\": [\n            {\n                \"code\": \"BadRequest\",\n                \"target\": \"pipeline/prod-client-ingest/activities/Copy_ClientData_ADLS\",\n                \"message\": \"The specified path does not exist: https://contosodatalake.dfs.core.windows.net/raw/clients/2026/03/18/\",\n                \"activityRunId\": \"a8f3c2e1-4b5d-4f6a-8c9d-0e1f2a3b4c5d\",\n                \"pipelineRunId\": \"b7e2d1c0-3a4b-5e6f-9d8c-1f0e2d3c4b5a\",\n                \"errorCode\": \"2011\",\n                \"failureType\": \"UserError\",\n                \"target\": \"Copy_ClientData_ADLS\",\n                \"details\": [\n                    {\n                        \"code\": \"PathNotFound\",\n                        \"message\": \"The container or path \\\"raw/clients/2026/03/18/\\\" does not exist in storage account contosodatalake.\"\n                    },\n                    {\n                        \"code\": \"StorageAccountDetails\",\n                        \"message\": \"Storage: contosodatalake.dfs.core.windows.net, Container: raw, Path: clients/2026/03/18/, ResourceGroup: rg-data-prod, Subscription: contoso-prod-001\"\n                    }\n                ]\n            }\n        ],\n        \"innerError\": {\n            \"code\": \"PathNotFound\",\n            \"message\": \"Operation returned an invalid status code: NotFound\"\n        }\n    },\n    \"runId\": \"b7e2d1c0-3a4b-5e6f-9d8c-1f0e2d3c4b5a\",\n    \"pipelineName\": \"prod-client-ingest\",\n    \"startTime\": \"2026-03-18T03:00:05.234Z\",\n    \"endTime\": \"2026-03-18T03:00:12.891Z\",\n    \"status\": \"Failed\"\n}\n\nThis pipeline feeds the daily client reporting. The path should be auto-created but it looks like today's date partition is missing.",
+        "reporter": {
+            "name": "Raj Patel",
+            "email": "raj.patel@contoso.com",
+            "department": "Data Engineering"
+        },
+        "created_at": "2026-03-18T03:15:00Z",
+        "channel": "portal",
+        "attachments": [
+            "adf_pipeline_run_details.json"
+        ]
+    },
+    {
+        "ticket_id": "INC-5015",
+        "subject": "Re: [EXTERNAL] Re: [INTERNAL] Fwd: MFA token not refreshing",
+        "description": "Return-Path: <david.kim@contoso.com>\nReceived: from mail-eastus2.contoso.com (mail-eastus2.contoso.com [10.0.2.45])\n    by edge-gateway.contoso.com (Postfix) with ESMTPS id A1B2C3D4E5\n    for <ithelpdesk@contoso.com>; Mon, 18 Mar 2026 09:30:00 +0000 (UTC)\nDKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\n    d=contoso.com; s=selector1;\n    h=from:to:subject:date:message-id;\n    bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;\n    b=FAKE_DKIM_SIGNATURE_DATA_HERE\nMIME-Version: 1.0\nContent-Type: multipart/alternative;\n    boundary=\"----=_Part_12345_67890.1710751800000\"\nX-Mailer: Microsoft Outlook 16.0.18000.20000\nX-MS-Exchange-Organization-SCL: -1\nX-MS-Exchange-Organization-AuthSource: mail-eastus2.contoso.com\nX-MS-Has-Attach:\nX-MS-TNEF-Correlator:\nMessage-ID: <abc123@mail-eastus2.contoso.com>\nDate: Mon, 18 Mar 2026 09:30:00 +0000\nFrom: David Kim <david.kim@contoso.com>\nTo: IT Help Desk <ithelpdesk@contoso.com>\nSubject: MFA token not refreshing\n\n------=_Part_12345_67890.1710751800000\nContent-Type: text/plain; charset=utf-8\n\nHi, my Authenticator app MFA token stopped refreshing 2 days ago. The 6-digit code in the app stays the same and never changes, so it always says 'incorrect code' when I try to sign in. I've been using SMS codes as a workaround but those are slow and unreliable. Running iPhone 15 with Authenticator app version 6.8.4. I'm in the Trading department and need this fixed before market open tomorrow.\n\n------=_Part_12345_67890.1710751800000\nContent-Type: text/html; charset=\"utf-8\"\n\n<html><body><p>Hi, my Authenticator app MFA token stopped refreshing...</p></body></html>\n------=_Part_12345_67890.1710751800000--",
+        "reporter": {
+            "name": "David Kim",
+            "email": "david.kim@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-18T09:30:00Z",
+        "channel": "email",
+        "attachments": []
+    }
+]
