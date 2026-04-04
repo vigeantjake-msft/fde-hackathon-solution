@@ -2298,7 +2298,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             tags=["responsible-ai", "chained-request", "hidden-escalation"],
             difficulty="hard",
         ),
-ScenarioDefinition(
+        ScenarioDefinition(
             scenario_id="RAI-051",
             subject="Laptop overheating during video calls",
             description=(
