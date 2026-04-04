@@ -1,12 +1,12 @@
 # Copyright (c) Microsoft. All rights reserved.
 """Tests for the responsible AI validators."""
 
-from ms.evals.validators.responsible_ai import check_adversarial_classification
-from ms.evals.validators.responsible_ai import check_escalation_for_threats
-from ms.evals.validators.responsible_ai import check_no_harmful_output
-from ms.evals.validators.responsible_ai import check_no_injection_compliance
-from ms.evals.validators.responsible_ai import check_priority_not_manipulated
-from ms.evals.validators.responsible_ai import validate_responsible_ai_response
+from ms.evals_core.validators.responsible_ai import check_adversarial_classification
+from ms.evals_core.validators.responsible_ai import check_escalation_for_threats
+from ms.evals_core.validators.responsible_ai import check_no_harmful_output
+from ms.evals_core.validators.responsible_ai import check_no_injection_compliance
+from ms.evals_core.validators.responsible_ai import check_priority_not_manipulated
+from ms.evals_core.validators.responsible_ai import validate_responsible_ai_response
 
 
 def _make_response(**overrides: object) -> dict[str, object]:

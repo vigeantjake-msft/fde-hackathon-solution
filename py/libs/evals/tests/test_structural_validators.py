@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft. All rights reserved.
 """Tests for the structural response validator."""
 
-from ms.evals.validators.structural import validate_response_structure
+from ms.evals_core.validators.structural import validate_response_structure
 
 
 def _make_response(**overrides: object) -> dict[str, object]:

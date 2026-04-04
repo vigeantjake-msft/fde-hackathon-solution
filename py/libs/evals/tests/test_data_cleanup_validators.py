@@ -1,10 +1,10 @@
 # Copyright (c) Microsoft. All rights reserved.
 """Tests for the data cleanup validators."""
 
-from ms.evals.validators.data_cleanup import check_classification_despite_noise
-from ms.evals.validators.data_cleanup import check_enum_values_clean
-from ms.evals.validators.data_cleanup import check_output_not_contaminated
-from ms.evals.validators.data_cleanup import validate_data_cleanup_response
+from ms.evals_core.validators.data_cleanup import check_classification_despite_noise
+from ms.evals_core.validators.data_cleanup import check_enum_values_clean
+from ms.evals_core.validators.data_cleanup import check_output_not_contaminated
+from ms.evals_core.validators.data_cleanup import validate_data_cleanup_response
 
 
 def _make_response(**overrides: object) -> dict[str, object]:

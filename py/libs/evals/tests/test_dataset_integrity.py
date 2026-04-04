@@ -10,14 +10,14 @@ Validates that all datasets conform to the expected schemas:
 
 import pytest
 
-from ms.evals.constants import Category
-from ms.evals.constants import Channel
-from ms.evals.constants import MissingInfoField
-from ms.evals.constants import Priority
-from ms.evals.constants import Team
-from ms.evals.datasets.data_cleanup import DATA_CLEANUP_DATASET
-from ms.evals.datasets.responsible_ai import RESPONSIBLE_AI_DATASET
-from ms.evals.models import EvalDataset
+from ms.evals_core.constants import Category
+from ms.evals_core.constants import Channel
+from ms.evals_core.constants import MissingInfoField
+from ms.evals_core.constants import Priority
+from ms.evals_core.constants import Team
+from ms.evals_core.eval_datasets.data_cleanup import DATA_CLEANUP_DATASET
+from ms.evals_core.eval_datasets.responsible_ai import RESPONSIBLE_AI_DATASET
+from ms.evals_core.eval_models import EvalDataset
 
 _ALL_DATASETS = [
     pytest.param(DATA_CLEANUP_DATASET, id="data_cleanup"),
