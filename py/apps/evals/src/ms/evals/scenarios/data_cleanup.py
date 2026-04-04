@@ -6697,3 +6697,884 @@ register(
         ],
     )
 )
+
+# ---------------------------------------------------------------------------
+# dc-111  Raw SQL query results pasted with column misalignment
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-111",
+        category=Category.DATA,
+        priority=Priority.P2,
+        assigned_team=Team.DATA_PLATFORM,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "Pasted SQL query output is misaligned — can't read the data",
+            "Raw SQL results in ticket — columns jumbled and unreadable",
+            "Database query dump pasted into ticket with broken formatting",
+        ],
+        descriptions=[
+            "I ran a query to show the affected user accounts and pasted it here "
+            "but the columns got mangled:\n\n"
+            "user_id    |  display_name           | dept        | last_login          | status  |  lockout_count\n"
+            "-----------+-------------------------+-------------+---------------------+---------+---------------\n"
+            "40291      |{name}                   |{department} | 2026-04-12 08:14:22 | LOCKED  |            5\n"
+            "40292      |R. Montoya                |Finance     | 2026-04-11 17:02:55 | LOCKED  |            3\n"
+            "40293      |K. Okonkwo               |{department}| 2026-04-12 09:45:01 | LOCKED  |            8\n"
+            "40294      |S. Vasquez                |Legal       | 2026-04-10 11:30:44 | LOCKED  |           12\n"
+            "40295      |D. Chen-Ramirez           |{department}| 2026-04-12 10:01:33 | LOCKED  |            4\n"
+            "(5 rows affected)\n\n"
+            "Query execution time: 0.042s\n"
+            "Server: SQLPROD-04.contoso.local\\MSSQLSERVER\n"
+            "Database: IdentityStore_Prod\n\n"
+            "These 5 accounts are all locked out since this morning. We think it's "
+            "related to the password policy change that {department} pushed. They are "
+            "all on Floor {floor}. Can someone bulk-unlock them and investigate the "
+            "root cause?\n\n{name}, {department}",
+            "Pasting the query output from our DB — sorry if the formatting is ugly:\n\n"
+            "SELECT s.server_name, s.env, d.db_name, d.size_gb, d.growth_pct, d.last_backup\n"
+            "FROM servers s JOIN databases d ON s.id = d.server_id\n"
+            "WHERE d.growth_pct > 20 ORDER BY d.growth_pct DESC;\n\n"
+            "server_name       env   db_name              size_gb  growth_pct  last_backup\n"
+            "SQLPROD-04        PROD  IdentityStore_Prod   842.6    47.2        2026-04-10 02:00\n"
+            "SQLPROD-04        PROD  AuditLog_2026        1204.3   38.9        2026-04-09 02:00\n"
+            "SQLPROD-07        PROD  TicketingDB_Main     567.1    29.4        2026-04-11 02:00\n"
+            "SQLSTG-02         STG   IdentityStore_Stg    312.8    24.6        2026-04-08 02:00\n"
+            "SQLDEV-01         DEV   TestHarness          89.4     22.1        NULL\n\n"
+            "(5 rows)\n\n"
+            "These databases are growing way too fast. The IdentityStore_Prod on "
+            "SQLPROD-04 has grown 47% in one month. The audit log is even worse. "
+            "We need someone from the data team to investigate before we run out of "
+            "disk. I'm in {office}, Floor {floor}.\n\n{name}, {department}",
+        ],
+        next_best_actions=[
+            "Address the underlying database issue — the pasted SQL output is context. "
+            "For the account lockout variant, bulk-unlock the 5 affected accounts and "
+            "investigate the password policy change. For the disk growth variant, "
+            "investigate rapid database growth on SQLPROD-04.",
+            "Extract the actionable request from the raw SQL dump. The user needs "
+            "either account lockouts resolved or database growth investigated — the "
+            "query output is supporting evidence, not the issue itself.",
+        ],
+        remediation_steps=[
+            [
+                "Parse the pasted SQL output to identify the affected systems and scope of impact",
+                "For account lockouts: bulk-unlock affected accounts and audit the recent password policy change",
+                "For database growth: review table-level space usage and identify the largest consumers",
+                "Check for missing maintenance jobs (index rebuilds, log truncation, backup schedules)",
+                "Set up alerts for abnormal growth rates to catch issues before disk exhaustion",
+                "Follow up with the user to confirm resolution and provide a summary of findings",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-112  Embedded Mermaid/PlantUML diagram text
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-112",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.STEPS_TO_REPRODUCE],
+        subjects=[
+            "Ticket has diagram code instead of an image — Mermaid/PlantUML text",
+            "Pasted flowchart markup instead of screenshot of workflow",
+            "Can't read the diagram — it's raw Mermaid syntax in the ticket",
+        ],
+        descriptions=[
+            "I'm trying to show the authentication flow that's broken. Here's the "
+            "diagram:\n\n"
+            "```mermaid\n"
+            "sequenceDiagram\n"
+            "    participant U as User ({name})\n"
+            "    participant APP as {app}\n"
+            "    participant IDP as Azure AD\n"
+            "    participant MFA as MFA Service\n"
+            "    U->>APP: Login request\n"
+            "    APP->>IDP: Redirect to /authorize\n"
+            "    IDP->>U: Prompt credentials\n"
+            "    U->>IDP: Submit credentials\n"
+            "    IDP->>MFA: Trigger MFA challenge\n"
+            "    MFA-->>IDP: TIMEOUT (no response after 60s)\n"
+            "    IDP->>APP: Error: MFA_TIMEOUT\n"
+            "    APP->>U: \"Authentication failed — contact IT\"\n"
+            "```\n\n"
+            "The MFA step keeps timing out. It worked fine until last week. I'm in "
+            "{department} on Floor {floor} and about 15 people on our team are "
+            "hitting this same issue. The MFA push notifications never arrive on "
+            "our phones.\n\n{name}, {department}",
+            "Our deployment pipeline is failing and I mapped it out:\n\n"
+            "@startuml\n"
+            "start\n"
+            ":Developer pushes to main;\n"
+            ":Azure DevOps triggers build;\n"
+            "if (Build succeeds?) then (yes)\n"
+            "  :Run unit tests;\n"
+            "  if (Tests pass?) then (yes)\n"
+            "    :Deploy to staging;\n"
+            "    :Run integration tests;\n"
+            "    if (Integration tests pass?) then (yes)\n"
+            "      :Deploy to production;\n"
+            "      note right: **THIS STEP FAILS**\\n"
+            "      Error: ARM deployment timeout\\n"
+            "      Resource group: rg-prod-{department}\n"
+            "    else (no)\n"
+            "      :Rollback staging;\n"
+            "    endif\n"
+            "  else (no)\n"
+            "    :Notify developer;\n"
+            "  endif\n"
+            "else (no)\n"
+            "  :Notify developer;\n"
+            "endif\n"
+            "stop\n"
+            "@enduml\n\n"
+            "The production deployment step keeps timing out with an ARM template "
+            "error. This has blocked all releases for {department} since Monday. "
+            "The staging deploy works fine. We think it's a resource quota issue "
+            "in the prod subscription. Office is on Floor {floor}.\n\n{name}",
+        ],
+        next_best_actions=[
+            "Interpret the embedded diagram markup to understand the reported issue. "
+            "The MFA variant describes push notification timeouts; the pipeline "
+            "variant describes an ARM deployment timeout in production.",
+            "The user included a text-based diagram to illustrate their problem. "
+            "Extract the failure point and address the underlying issue — MFA "
+            "timeout or ARM deployment failure.",
+        ],
+        remediation_steps=[
+            [
+                "Parse the diagram text to identify the failure point in the described flow",
+                "For MFA timeout: check Azure AD MFA service health and push notification delivery status",
+                "For ARM deployment timeout: review resource quotas and deployment logs in the production subscription",
+                "Verify recent configuration changes that may have introduced the failure",
+                "Test the fix in a lower environment before applying to production",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-113  Windows BSOD crash dump with driver stack
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-113",
+        category=Category.HARDWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.REPRODUCTION_FREQUENCY],
+        subjects=[
+            "Laptop keeps blue-screening — pasted the crash dump info",
+            "BSOD with DRIVER_IRQL_NOT_LESS_OR_EQUAL — full dump details inside",
+            "Repeated blue screen crashes — driver stack trace attached",
+        ],
+        descriptions=[
+            "My laptop blue-screened again this morning. I wrote down everything "
+            "from the screen and the crash dump viewer:\n\n"
+            "*** STOP: 0x000000D1 (DRIVER_IRQL_NOT_LESS_OR_EQUAL)\n"
+            "*** Faulting module: e1d65x64.sys (Intel Ethernet adapter driver)\n\n"
+            "BugCheck D1, {0x0000000000000028, 0x0000000000000002, "
+            "0x0000000000000000, 0xFFFFF80B4C2A1E40}\n\n"
+            "Stack trace:\n"
+            "fffff80b`4c2a1e40 e1d65x64!EthSendPacket+0x140\n"
+            "fffff80b`4c2a2200 e1d65x64!EthTransmit+0x80\n"
+            "fffff808`05c31a00 NDIS!NdisMIndicateReceiveNetBufferLists+0x120\n"
+            "fffff808`05c41f90 NDIS!ndisInterruptDpc+0x1a0\n"
+            "fffff808`02e8b100 nt!KiInterruptDispatchNoLockNoEtw+0xb0\n"
+            "fffff808`02e66340 nt!KiPageFault+0x440\n\n"
+            "DRIVER_INFO:\n"
+            "  Driver: e1d65x64.sys\n"
+            "  Version: 12.18.9.23\n"
+            "  Date: 2024-06-15\n"
+            "  Publisher: Intel Corporation\n\n"
+            "SYSTEM_INFO:\n"
+            "  OS: Windows 11 Enterprise 23H2 (Build 22631.4890)\n"
+            "  RAM: 32 GB\n"
+            "  Uptime before crash: 2d 14h 22m\n\n"
+            "This is the 4th time this week. It always happens when I'm on a Teams "
+            "call and docked. I'm on Floor {floor} in {office}.\n\n{name}, {department}",
+            "Keeping getting BSODs. Here's what I pulled from Event Viewer and "
+            "the minidump:\n\n"
+            "Event ID: 1001 (BugCheck)\n"
+            "Source: Microsoft-Windows-WER-SystemErrorReporting\n"
+            "Parameter 1: 0x0000003b (SYSTEM_SERVICE_EXCEPTION)\n"
+            "Parameter 2: 0xFFFFF80B12345678\n"
+            "Parameter 3: 0xFFFF920087654321\n"
+            "Parameter 4: 0x0000000000000000\n\n"
+            "!analyze -v output:\n"
+            "MODULE_NAME: nvlddmkm\n"
+            "IMAGE_NAME: nvlddmkm.sys\n"
+            "IMAGE_VERSION: 31.0.15.5265\n"
+            "FAILURE_BUCKET_ID: 0x3B_nvlddmkm!_TDR_TIMEOUT\n"
+            "PROCESS_NAME: dwm.exe\n\n"
+            "Dump file: C:\\Windows\\Minidump\\041226-14828-01.dmp\n"
+            "Dump size: 1,247,632 bytes\n\n"
+            "This happens every time I connect to my external monitor through the "
+            "dock. The NVIDIA driver seems to crash. I've tried updating the driver "
+            "but it still happens. I'm in {department} on Floor {floor}, {office}. "
+            "This is seriously affecting my work.\n\n{name}, {department}",
+        ],
+        next_best_actions=[
+            "The user is experiencing repeated BSODs caused by a driver fault. "
+            "The crash dump points to either the Intel Ethernet driver (e1d65x64.sys) "
+            "or NVIDIA display driver (nvlddmkm.sys). Schedule a driver update or "
+            "rollback.",
+            "Analyze the BSOD details — the faulting driver is identified in the "
+            "crash dump. Update or roll back the offending driver and check for "
+            "known firmware/docking station compatibility issues.",
+        ],
+        remediation_steps=[
+            [
+                "Identify the faulting driver from the crash dump (e1d65x64.sys or nvlddmkm.sys)",
+                "Check for newer driver versions from the hardware vendor's support site",
+                "If the latest driver is already installed, roll back to the previous stable version",
+                "Update the docking station firmware if applicable",
+                "Run Windows Memory Diagnostic to rule out faulty RAM",
+                "If crashes continue after driver remediation, schedule hardware diagnostics on the device",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-114  Kubernetes pod describe + events flood
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-114",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.CONFIGURATION_DETAILS],
+        subjects=[
+            "App keeps crashing in Kubernetes — pasted pod describe output",
+            "K8s pod in CrashLoopBackOff — full kubectl output inside",
+            "Kubernetes deployment failing — events and pod details attached",
+        ],
+        descriptions=[
+            "Our {app} service is down in production. Here's the kubectl output:\n\n"
+            "$ kubectl describe pod {app}-api-7b8c4d5f6-x9k2m -n prod\n"
+            "Name:         {app}-api-7b8c4d5f6-x9k2m\n"
+            "Namespace:    prod\n"
+            "Node:         aks-nodepool1-38291045-vmss000004/10.240.0.7\n"
+            "Status:       Running\n"
+            "IP:           10.244.3.28\n"
+            "Containers:\n"
+            "  api:\n"
+            "    Image:          contosoacr.azurecr.io/{app}-api:v2.14.3\n"
+            "    State:          Waiting\n"
+            "      Reason:       CrashLoopBackOff\n"
+            "    Last State:     Terminated\n"
+            "      Reason:       OOMKilled\n"
+            "      Exit Code:    137\n"
+            "    Limits:\n"
+            "      cpu:     500m\n"
+            "      memory:  512Mi\n"
+            "    Requests:\n"
+            "      cpu:     250m\n"
+            "      memory:  256Mi\n"
+            "Events:\n"
+            "  Type     Reason     Age                From               Message\n"
+            "  ----     ------     ---                ----               -------\n"
+            "  Normal   Scheduled  12m                default-scheduler  Successfully assigned\n"
+            "  Normal   Pulled     10m (x4 over 12m)  kubelet            Container image pulled\n"
+            "  Normal   Created    10m (x4 over 12m)  kubelet            Created container api\n"
+            "  Normal   Started    10m (x4 over 12m)  kubelet            Started container api\n"
+            "  Warning  BackOff    2m (x28 over 11m)  kubelet            Back-off restarting failed container\n"
+            "  Warning  OOMKilled  3m                 kubelet            Container was OOM killed\n\n"
+            "The pod keeps getting OOMKilled after the v2.14.3 deployment. The previous "
+            "version (v2.14.2) was fine. This is blocking {department}. I'm {name}, "
+            "Floor {floor}.\n\n{name}, {department}",
+            "Kubernetes is a mess right now — the new deployment won't come up:\n\n"
+            "$ kubectl get pods -n prod -l app={app}\n"
+            "NAME                              READY   STATUS             RESTARTS   AGE\n"
+            "{app}-web-6f9a8b7c5-abc12         0/1     ImagePullBackOff   0          45m\n"
+            "{app}-web-6f9a8b7c5-def34         0/1     ImagePullBackOff   0          45m\n"
+            "{app}-web-6f9a8b7c5-ghi56         0/1     ImagePullBackOff   0          45m\n"
+            "{app}-web-85d4c6e3f-jkl78         1/1     Running            0          3d\n"
+            "{app}-web-85d4c6e3f-mno90         1/1     Running            0          3d\n\n"
+            "$ kubectl describe pod {app}-web-6f9a8b7c5-abc12 -n prod\n"
+            "Events:\n"
+            "  Warning  Failed     2m (x15 over 44m)  kubelet  Failed to pull image "
+            "\"contosoacr.azurecr.io/{app}-web:v3.1.0\": unauthorized: authentication "
+            "required\n"
+            "  Warning  Failed     2m (x15 over 44m)  kubelet  Error: ImagePullBackOff\n\n"
+            "The old pods (v3.0.9) are still running but the new ones can't pull the "
+            "image. We think the ACR token expired. This is for the {department} app. "
+            "Someone on Floor {floor} needs this ASAP.\n\n{name}",
+        ],
+        next_best_actions=[
+            "The Kubernetes pod output shows the root cause — either OOMKilled "
+            "(memory limit too low for v2.14.3) or ImagePullBackOff (expired ACR "
+            "credentials). Address the specific failure rather than the noisy kubectl "
+            "output.",
+            "Extract the failure reason from the pod events: OOMKilled means the "
+            "container needs more memory; ImagePullBackOff means the registry "
+            "credentials have expired. Fix the underlying issue.",
+        ],
+        remediation_steps=[
+            [
+                "Identify the root cause from the pod events (OOMKilled vs ImagePullBackOff)",
+                "For OOMKilled: increase the container memory limit in the deployment manifest and redeploy",
+                "For ImagePullBackOff: refresh the Azure Container Registry pull secret in the cluster",
+                "Verify the fix by checking pod status transitions to Running",
+                "If the issue was introduced by a new version, review the release notes for memory regression",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-115  Email with very long URL tracking parameters
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-115",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.STEPS_TO_REPRODUCE],
+        subjects=[
+            "Link in ticket is incredibly long — can't tell what it points to",
+            "URL with massive tracking parameters — is this link safe to click?",
+            "Ticket has a URL that's 2000+ characters with tracking garbage",
+        ],
+        descriptions=[
+            "I got this link from a vendor and when I click it I get an error. "
+            "Can you check if it's safe and why it's not working?\n\n"
+            "https://portal.vendor-saas.com/dashboard/reports/quarterly?"
+            "utm_source=email&utm_medium=notification&utm_campaign=Q3-2026-"
+            "executive-summary&utm_content=cta-button-primary&utm_term="
+            "quarterly-report&mkt_tok=NTg2LVFIRy0yNjEAAAGSx1234567890abcdef"
+            "ghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ&"
+            "tracking_id=a1b2c3d4-e5f6-7890-abcd-ef1234567890&session_ref="
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkw"
+            "IiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSM"
+            "eKKF2QT4fwpMeJf36POk6yJV_adQssw5c&redirect_uri=https%3A%2F%2F"
+            "contoso.sharepoint.com%2Fsites%2F{department}%2FShared%2520"
+            "Documents%2FReports&nonce=8f14e45fceea167a5a36dedd4bea2543&"
+            "state=prod-westus2-{number}\n\n"
+            "I need access to the Q3 report for {department}. The link was in an "
+            "email from our BI vendor. I'm on Floor {floor}, {office}.\n\n"
+            "{name}, {department}",
+            "This link keeps breaking when I paste it into our {app} ticketing form. "
+            "It gets truncated and then nothing works:\n\n"
+            "https://sso.contoso.com/adfs/ls/?wa=wsignin1.0&wtrealm=urn%3A"
+            "appproxy%3A{app}&wctx=https%3A%2F%2F{app}.contoso.com%2Fapi%2F"
+            "v2%2Fworkflows%2F{number}%2Fsteps%3Fassignee%3D{name}%26"
+            "status%3Dpending%26department%3D{department}%26floor%3D{floor}"
+            "%26priority%3Dhigh%26include_sub_tasks%3Dtrue%26expand%3D"
+            "comments%2Cattachments%2Caudit_trail%26page_size%3D50%26"
+            "sort_by%3Dcreated_desc%26filter_date_from%3D2026-01-01%26"
+            "filter_date_to%3D2026-04-12%26client_request_id%3D"
+            "f47ac10b-58cc-4372-a567-0e02b2c3d479\n\n"
+            "Every time I click it the page just shows 'Bad Request — URL too "
+            "long'. I need to get to the workflow page for my pending tasks. "
+            "This is urgent because I have approvals waiting.\n\n"
+            "{name}, {department}",
+        ],
+        next_best_actions=[
+            "The ticket contains extremely long URLs with tracking and session "
+            "parameters. Strip the noise to identify the actual destination and "
+            "diagnose the access error — likely a URL length limit or truncation issue.",
+            "Extract the base URL and essential parameters from the bloated link. "
+            "The user needs access to a report or workflow page — the tracking "
+            "parameters are irrelevant to the issue.",
+        ],
+        remediation_steps=[
+            [
+                "Extract the base URL by stripping tracking parameters (utm_*, mkt_tok, tracking_id)",
+                "Test the simplified URL to verify access works without the extra parameters",
+                "If the URL exceeds server limits (usually 2048 chars), work with the vendor to provide shorter links",
+                "Check if the ADFS or SSO relay is enforcing a URL length limit and adjust if needed",
+                "Provide the user with a clean, working link to the resource they need",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-116  Pasted Teams/Slack chat log with timestamps
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-116",
+        category=Category.NETWORK,
+        priority=Priority.P3,
+        assigned_team=Team.NETWORK,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_USERS, MissingInfo.NETWORK_LOCATION],
+        subjects=[
+            "Pasted Teams chat as evidence of network issue — wall of messages",
+            "Chat transcript from outage — timestamps and all",
+            "Copied our Teams channel thread about the Wi-Fi problem",
+        ],
+        descriptions=[
+            "Here's the Teams chat from this morning when the Wi-Fi went down — "
+            "wanted to show it's not just me:\n\n"
+            "[09:01 AM] {name}: Is the Wi-Fi down for anyone else on Floor {floor}?\n"
+            "[09:01 AM] R. Montoya: Yeah, just dropped off a call\n"
+            "[09:02 AM] K. Okonkwo: Same here, {office} area. Can't connect at all\n"
+            "[09:02 AM] {name}: I'm getting 'No internet, secured' on my laptop\n"
+            "[09:03 AM] S. Vasquez: Floor {floor} east wing too. All our devices dropped\n"
+            "[09:04 AM] D. Chen: My phone is on Wi-Fi fine but laptop won't connect\n"
+            "[09:05 AM] {name}: Tried forgetting the network and reconnecting — no luck\n"
+            "[09:06 AM] R. Montoya: Same. Also tried hotspot — that works fine\n"
+            "[09:07 AM] K. Okonkwo: The SSID 'Contoso-Corp' doesn't even show up anymore\n"
+            "[09:08 AM] L. Johansson: I'm on Floor {floor} too, west wing is fine for me\n"
+            "[09:09 AM] {name}: So it's just the east side? {office} and nearby?\n"
+            "[09:10 AM] S. Vasquez: Looks like it. Started right at 9 AM\n"
+            "[09:12 AM] D. Chen: I rebooted my laptop, still nothing\n"
+            "[09:15 AM] {name}: OK I'm submitting a ticket. About 5-6 of us affected\n\n"
+            "So the Contoso-Corp SSID is down on Floor {floor}, east wing, around "
+            "{office}. Started at 9 AM. About 5-6 people affected. Our hotspots "
+            "work fine so it's definitely the office Wi-Fi.\n\n{name}, {department}",
+            "Copying the Slack thread from our channel so you can see the timeline:\n\n"
+            "[2026-04-12 14:22] {name}: Teams calls keep dropping. Anyone else?\n"
+            "[2026-04-12 14:23] A. Williams: Yes! I've been kicked from 3 calls today\n"
+            "[2026-04-12 14:24] {name}: Running a speed test... 2 Mbps down, 0.5 up. "
+            "Should be 100+\n"
+            "[2026-04-12 14:25] M. Petrov: Same from my desk. Terrible latency too\n"
+            "[2026-04-12 14:27] {name}: tracert to teams.microsoft.com shows 400ms "
+            "hops inside our own network\n"
+            "[2026-04-12 14:28] A. Williams: Wired is just as bad. Not a Wi-Fi issue\n"
+            "[2026-04-12 14:30] {name}: Checked with Floor {floor} south — they're fine. "
+            "It's just our segment\n"
+            "[2026-04-12 14:33] M. Petrov: Started around 2 PM. Right after that "
+            "maintenance window maybe?\n"
+            "[2026-04-12 14:35] {name}: Yeah the network team had a change window "
+            "12-2 PM today\n\n"
+            "We're getting terrible throughput and latency on our network segment "
+            "since the maintenance window today. Floor {floor}, {office} area, "
+            "both wired and wireless. Teams calls are unusable.\n\n"
+            "{name}, {department}",
+        ],
+        next_best_actions=[
+            "The chat log shows a localized network outage. For the Wi-Fi variant, "
+            "the Contoso-Corp SSID is down on one wing of Floor {floor}. For the "
+            "throughput variant, a maintenance window may have misconfigured the "
+            "network segment.",
+            "Extract the network issue from the chat noise: either a Wi-Fi access "
+            "point failure on the east wing or post-maintenance throughput "
+            "degradation on a specific floor segment.",
+        ],
+        remediation_steps=[
+            [
+                "Identify the affected network segment from the user-reported location (floor, wing, office)",
+                "Check access point status for the affected area — look for offline or degraded APs",
+                "If a recent maintenance window occurred, review the change log for misconfigurations",
+                "Test connectivity from the affected segment to rule out upstream switch or VLAN issues",
+                "Restore service and notify affected users once the issue is resolved",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-117  LaTeX/math notation in technical request
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-117",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.APPLICATION_VERSION, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "Ticket has LaTeX math formulas — hard to read the actual request",
+            "Technical request with math notation mixed in",
+            "Request buried in LaTeX equations and symbols",
+        ],
+        descriptions=[
+            "We need to update the scoring algorithm in {app}. The current formula "
+            "is wrong. Here's what it should be:\n\n"
+            "The risk score $R$ for each asset should be computed as:\n\n"
+            "$$R_i = \\sum_{{j=1}}^{{n}} w_j \\cdot f_j(x_{{ij}}) + "
+            "\\lambda \\|\\mathbf{{w}}\\|_2^2$$\n\n"
+            "where $f_j$ is the feature transform:\n\n"
+            "$$f_j(x) = \\frac{{1}}{{1 + e^{{-\\alpha_j(x - \\mu_j)}}}}$$\n\n"
+            "Currently the system uses a simple linear model:\n\n"
+            "$$R_i^{{\\text{{old}}}} = \\sum_{{j=1}}^{{n}} w_j \\cdot x_{{ij}}$$\n\n"
+            "which doesn't account for the nonlinear relationship between "
+            "vulnerability count ($x_1$), exposure time ($x_2 \\in [0, \\infty)$), "
+            "and CVSS score ($x_3 \\in [0, 10]$).\n\n"
+            "The regularization parameter $\\lambda = 0.01$ prevents overfitting. "
+            "We validated this on the {department} dataset and the RMSE dropped from "
+            "$4.23$ to $1.87$.\n\n"
+            "Can the {app} team implement this? We need it for the Q3 security "
+            "review. I'm on Floor {floor}, {office}.\n\n{name}, {department}",
+            "The threshold calculation in our monitoring tool is wrong. It should "
+            "use exponential smoothing, not a simple average:\n\n"
+            "$$\\hat{{y}}_{{t+1}} = \\alpha y_t + (1 - \\alpha) \\hat{{y}}_t, "
+            "\\quad \\alpha \\in (0, 1]$$\n\n"
+            "For anomaly detection, flag when:\n\n"
+            "$$|y_t - \\hat{{y}}_t| > k \\cdot \\sigma_t$$\n\n"
+            "where $\\sigma_t$ is the rolling standard deviation:\n\n"
+            "$$\\sigma_t = \\sqrt{{\\frac{{1}}{{N-1}} \\sum_{{i=t-N}}^{{t-1}} "
+            "(y_i - \\bar{{y}})^2}}$$\n\n"
+            "Right now {app} just uses $|y_t - \\bar{{y}}| > 2\\sigma$ with a "
+            "global mean $\\bar{{y}}$ and a fixed $\\sigma$, which misses trends "
+            "and causes false alerts. We're getting ~200 false positives per day "
+            "in {department}.\n\n"
+            "Please update the alerting engine. Contact me at Floor {floor}, "
+            "{office}.\n\n{name}, {department}",
+        ],
+        next_best_actions=[
+            "The user is requesting an algorithm change in the application. The "
+            "LaTeX notation describes the desired formula. Translate the math into "
+            "a product feature request and route to the development team.",
+            "Extract the feature request from the mathematical notation: the user "
+            "wants a more sophisticated scoring/alerting algorithm. This is a "
+            "development request, not a break-fix issue.",
+        ],
+        remediation_steps=[
+            [
+                "Translate the LaTeX formulas into a clear product requirement specification",
+                "Create a feature request or change request in the backlog for the application team",
+                "Validate the mathematical approach with the data science or engineering team",
+                "Plan implementation with appropriate testing on staging before production rollout",
+                "Follow up with the requester to confirm the specification matches their intent",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-118  ARM template / Bicep JSON config dump
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-118",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "ARM template deployment failing — full JSON config inside",
+            "Bicep/ARM config dump pasted — deployment error somewhere in here",
+            "Azure deployment broken — pasted the entire ARM template",
+        ],
+        descriptions=[
+            "Our ARM template deployment keeps failing. Here's the template — can "
+            "someone spot what's wrong?\n\n"
+            "{{\n"
+            "  \"$schema\": \"https://schema.management.azure.com/schemas/"
+            "2019-04-01/deploymentTemplate.json#\",\n"
+            "  \"contentVersion\": \"1.0.0.0\",\n"
+            "  \"parameters\": {{\n"
+            "    \"appServicePlanName\": {{ \"type\": \"string\", "
+            "\"defaultValue\": \"asp-{app}-prod\" }},\n"
+            "    \"webAppName\": {{ \"type\": \"string\", "
+            "\"defaultValue\": \"{app}-webapp-prod\" }},\n"
+            "    \"location\": {{ \"type\": \"string\", "
+            "\"defaultValue\": \"[resourceGroup().location]\" }},\n"
+            "    \"sku\": {{ \"type\": \"string\", \"defaultValue\": \"P1v3\" }}\n"
+            "  }},\n"
+            "  \"resources\": [\n"
+            "    {{\n"
+            "      \"type\": \"Microsoft.Web/serverfarms\",\n"
+            "      \"apiVersion\": \"2022-09-01\",\n"
+            "      \"name\": \"[parameters('appServicePlanName')]\",\n"
+            "      \"location\": \"[parameters('location')]\",\n"
+            "      \"sku\": {{ \"name\": \"[parameters('sku')]\" }},\n"
+            "      \"kind\": \"linux\",\n"
+            "      \"properties\": {{ \"reserved\": true }}\n"
+            "    }},\n"
+            "    {{\n"
+            "      \"type\": \"Microsoft.Web/sites\",\n"
+            "      \"apiVersion\": \"2022-09-01\",\n"
+            "      \"name\": \"[parameters('webAppName')]\",\n"
+            "      \"location\": \"[parameters('location')]\",\n"
+            "      \"dependsOn\": [\n"
+            "        \"[resourceId('Microsoft.Web/serverfarms', "
+            "parameters('appServicePlanName'))]\"\n"
+            "      ],\n"
+            "      \"properties\": {{\n"
+            "        \"serverFarmId\": \"[resourceId('Microsoft.Web/serverfarms', "
+            "parameters('appServicePlanName'))]\",\n"
+            "        \"siteConfig\": {{\n"
+            "          \"linuxFxVersion\": \"PYTHON|3.11\",\n"
+            "          \"alwaysOn\": true,\n"
+            "          \"appSettings\": [\n"
+            "            {{ \"name\": \"SCM_DO_BUILD_DURING_DEPLOYMENT\", "
+            "\"value\": \"true\" }}\n"
+            "          ]\n"
+            "        }}\n"
+            "      }}\n"
+            "    }}\n"
+            "  ]\n"
+            "}}\n\n"
+            "The deployment error says: 'InvalidTemplateDeployment — The template "
+            "deployment failed because of policy violation.' We're trying to deploy "
+            "the {app} app for {department}. I'm on Floor {floor}.\n\n"
+            "{name}, {department}",
+            "Bicep deployment is broken. Here's the relevant section:\n\n"
+            "param location string = resourceGroup().location\n"
+            "param envName string = 'prod'\n\n"
+            "@description('Storage account for {app} application data')\n"
+            "resource storageAccount 'Microsoft.Storage/storageAccounts@"
+            "2023-01-01' = {{\n"
+            "  name: 'st{app}${{envName}}001'\n"
+            "  location: location\n"
+            "  kind: 'StorageV2'\n"
+            "  sku: {{ name: 'Standard_LRS' }}\n"
+            "  properties: {{\n"
+            "    minimumTlsVersion: 'TLS1_2'\n"
+            "    supportsHttpsTrafficOnly: true\n"
+            "    allowBlobPublicAccess: false\n"
+            "    networkAcls: {{\n"
+            "      defaultAction: 'Deny'\n"
+            "      bypass: 'AzureServices'\n"
+            "    }}\n"
+            "  }}\n"
+            "}}\n\n"
+            "resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {{\n"
+            "  name: 'kv-{app}-${{envName}}'\n"
+            "  location: location\n"
+            "  properties: {{\n"
+            "    sku: {{ family: 'A', name: 'standard' }}\n"
+            "    tenantId: subscription().tenantId\n"
+            "    enableSoftDelete: true\n"
+            "    softDeleteRetentionInDays: 90\n"
+            "    enablePurgeProtection: true\n"
+            "  }}\n"
+            "}}\n\n"
+            "Error: 'StorageAccountNameTooLong — Storage account name must be "
+            "between 3 and 24 characters.' Also getting a policy violation on the "
+            "Key Vault — something about missing private endpoint. This is for "
+            "{department}'s environment. Floor {floor}, {office}.\n\n{name}",
+        ],
+        next_best_actions=[
+            "The user pasted infrastructure-as-code templates with deployment errors. "
+            "The ARM template has a policy violation; the Bicep template has a naming "
+            "length issue and missing private endpoint. Focus on the deployment errors.",
+            "Diagnose the infrastructure deployment failures from the pasted config: "
+            "check Azure Policy compliance, resource naming conventions, and required "
+            "networking configurations.",
+        ],
+        remediation_steps=[
+            [
+                "Review the deployment error messages for specific policy violations or validation failures",
+                "For naming errors, ensure resource names comply with Azure naming rules and length limits",
+                "Check Azure Policy assignments on the target subscription for compliance requirements",
+                "For private endpoint violations, add the required private endpoint and DNS zone resources",
+                "Test the corrected template in a development resource group before deploying to production",
+                "Share the corrected template with the user and confirm successful deployment",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-119  Git merge conflict markers in pasted code
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-119",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.STEPS_TO_REPRODUCE, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "Code has merge conflict markers — can't tell which version is correct",
+            "Git conflict markers in pasted config — need help resolving",
+            "Pasted code with <<<<<<< and >>>>>>> conflict markers",
+        ],
+        descriptions=[
+            "Our {app} deployment config broke after a merge. I'm not sure which "
+            "version is correct — here's what's in the file:\n\n"
+            "# {app} production configuration\n"
+            "server:\n"
+            "  host: 0.0.0.0\n"
+            "<<<<<<< HEAD\n"
+            "  port: 8443\n"
+            "  ssl: true\n"
+            "  cert_path: /etc/ssl/{app}/prod.crt\n"
+            "  key_path: /etc/ssl/{app}/prod.key\n"
+            "  tls_version: '1.3'\n"
+            "=======\n"
+            "  port: 8080\n"
+            "  ssl: false\n"
+            "  # SSL terminated at load balancer\n"
+            ">>>>>>> feature/lb-ssl-offload\n"
+            "database:\n"
+            "  host: sqlprod-{number}.contoso.local\n"
+            "<<<<<<< HEAD\n"
+            "  pool_size: 20\n"
+            "  timeout: 30\n"
+            "  ssl_mode: require\n"
+            "=======\n"
+            "  pool_size: 50\n"
+            "  timeout: 60\n"
+            "  ssl_mode: verify-full\n"
+            "  ssl_ca: /etc/ssl/db-ca.crt\n"
+            ">>>>>>> feature/db-pool-increase\n\n"
+            "The app won't start because the YAML is invalid with these conflict "
+            "markers in it. Someone merged without resolving them. We need the right "
+            "config for production — the app has been down for 20 minutes. "
+            "Floor {floor}, {office}.\n\n{name}, {department}",
+            "I'm getting errors in our CI/CD pipeline and the config file has merge "
+            "conflicts nobody resolved:\n\n"
+            "// {app} API route configuration\n"
+            "const routes = {{\n"
+            "  auth: {{\n"
+            "<<<<<<< HEAD\n"
+            "    endpoint: '/api/v2/auth',\n"
+            "    timeout: 5000,\n"
+            "    retries: 3,\n"
+            "    provider: 'azure-ad',\n"
+            "=======\n"
+            "    endpoint: '/api/v3/auth',\n"
+            "    timeout: 10000,\n"
+            "    retries: 5,\n"
+            "    provider: 'okta',\n"
+            ">>>>>>> feature/okta-migration\n"
+            "  }},\n"
+            "  data: {{\n"
+            "<<<<<<< HEAD\n"
+            "    endpoint: '/api/v2/data',\n"
+            "    cache_ttl: 300,\n"
+            "=======\n"
+            "    endpoint: '/api/v3/data',\n"
+            "    cache_ttl: 600,\n"
+            "    compression: true,\n"
+            ">>>>>>> feature/api-v3-upgrade\n"
+            "  }}\n"
+            "}};\n\n"
+            "The build is failing because of the conflict markers. This is blocking "
+            "all deployments for {department}. We need someone who knows the intended "
+            "config to fix this.\n\n{name}, {department}",
+        ],
+        next_best_actions=[
+            "The pasted code contains unresolved Git merge conflict markers causing "
+            "build/startup failures. Determine the correct resolution for each "
+            "conflict block and apply the fix to unblock the deployment.",
+            "Resolve the merge conflicts in the configuration file. Identify the "
+            "intended production values by consulting the team or reviewing the "
+            "feature branch purposes, then commit the corrected file.",
+        ],
+        remediation_steps=[
+            [
+                "Identify all conflict markers (<<<<<<, =======, >>>>>>>) in the affected files",
+                "Consult with the development team to determine the correct resolution for each conflict",
+                "Remove the conflict markers and apply the correct configuration values",
+                "Validate the resolved file (YAML lint, JSON parse, or syntax check as appropriate)",
+                "Commit the resolved file and redeploy the application",
+                "Add branch protection rules or pre-merge checks to prevent unresolved conflicts in the future",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-120  macOS crash report (CrashReporter format)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-120",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.REPRODUCTION_FREQUENCY],
+        subjects=[
+            "macOS app keeps crashing — pasted the crash report",
+            "CrashReporter log from Mac — app quits unexpectedly every time",
+            "Repeated macOS crash — full crash report inside",
+        ],
+        descriptions=[
+            "{app} keeps crashing on my Mac. Here's the crash report that pops up:\n\n"
+            "Process:               {app} [1842]\n"
+            "Path:                  /Applications/{app}.app/Contents/MacOS/{app}\n"
+            "Identifier:            com.contoso.{app}\n"
+            "Version:               4.2.1 (4210)\n"
+            "Code Type:             ARM-64 (Native)\n"
+            "Parent Process:        launchd [1]\n\n"
+            "Date/Time:             2026-04-12 10:23:45.123 -0400\n"
+            "OS Version:            macOS 15.4 (24E248)\n"
+            "Report Version:        12\n\n"
+            "Exception Type:        EXC_BAD_ACCESS (SIGSEGV)\n"
+            "Exception Codes:       KERN_INVALID_ADDRESS at 0x0000000000000010\n"
+            "Exception Note:        EXC_CORPSE_NOTIFY\n\n"
+            "Termination Reason:    Namespace SIGNAL, Code 11 Segmentation fault: 11\n\n"
+            "Thread 0 Crashed:\n"
+            "0   libsqlite3.dylib                0x1a2b3c4d5 sqlite3_step + 124\n"
+            "1   com.contoso.{app}               0x1001a2b3c "
+            "-[DBManager executeQuery:] + 88\n"
+            "2   com.contoso.{app}               0x1001b4c5d "
+            "-[SyncEngine performSync:] + 244\n"
+            "3   com.contoso.{app}               0x1001c6d7e "
+            "-[AppDelegate applicationDidBecomeActive:] + 56\n"
+            "4   AppKit                           0x1a3b4c5d6 "
+            "-[NSApplication _handleApplicationActivation:] + 180\n\n"
+            "Thread 1:\n"
+            "0   libsystem_kernel.dylib           0x1a4c5d6e7 __psynch_cvwait + 8\n"
+            "1   libsystem_pthread.dylib          0x1a5d6e7f8 _pthread_cond_wait + 64\n\n"
+            "Binary Images:\n"
+            "       0x100000000 -        0x1003fffff  com.contoso.{app} (4.2.1) "
+            "</usr/local/bin/{app}>\n"
+            "       0x1a0000000 -        0x1a00ffffff  libsqlite3.dylib (*) "
+            "<...>\n\n"
+            "It crashes every time I open the app. The sync runs on launch and "
+            "immediately segfaults. I'm in {department}, Floor {floor}, {office}. "
+            "I need this app for my daily work.\n\n{name}, {department}",
+            "My Mac keeps showing the crash reporter for {app}. Pasting the key "
+            "parts:\n\n"
+            "Process:               {app} Helper (Renderer) [2456]\n"
+            "Path:                  /Applications/{app}.app/Contents/Frameworks/"
+            "{app} Helper (Renderer).app/Contents/MacOS/{app} Helper (Renderer)\n"
+            "Identifier:            com.contoso.{app}.helper.renderer\n"
+            "Version:               4.2.1 (4210)\n"
+            "Code Type:             ARM-64 (Native)\n\n"
+            "Date/Time:             2026-04-12 14:10:33.456 -0400\n"
+            "OS Version:            macOS 15.4 (24E248)\n\n"
+            "Exception Type:        EXC_RESOURCE (RESOURCE_TYPE_MEMORY)\n"
+            "Exception Subtype:     MEMORY_LIMIT_EXCEEDED\n"
+            "Exception Note:        EXC_CORPSE_NOTIFY\n"
+            "Termination Reason:    Jetsam — per-process memory limit exceeded\n\n"
+            "Memory footprint at termination: 4.1 GB (limit: 4.0 GB)\n"
+            "Memory pages:\n"
+            "  Resident: 1,048,576 pages (4.0 GB)\n"
+            "  Swapped:  262,144 pages (1.0 GB)\n\n"
+            "Largest allocations:\n"
+            "  com.contoso.{app}.helper.renderer: 3.2 GB\n"
+            "    - ImageCache:        1.8 GB\n"
+            "    - DOM:               0.9 GB\n"
+            "    - JavaScript heap:   0.5 GB\n\n"
+            "This happens after {app} has been open for about 2 hours. It uses "
+            "more and more memory until macOS kills it. I have 16 GB RAM but the "
+            "app alone takes 4+ GB. I'm in {department}, Floor {floor}.\n\n"
+            "{name}, {department}",
+        ],
+        next_best_actions=[
+            "The macOS crash report identifies the failure: either a segfault in "
+            "the SQLite sync path or a memory limit exceeded in the renderer. "
+            "Escalate to the application team with the crash details.",
+            "Analyze the CrashReporter output to identify the root cause — a null "
+            "pointer dereference during sync or a memory leak in the renderer — "
+            "and work with the app vendor on a fix or workaround.",
+        ],
+        remediation_steps=[
+            [
+                "Extract the crash type and faulting module from the crash report",
+                "For segfault crashes: check if the local database is corrupted and attempt a rebuild",
+                "For memory limit crashes: clear the application cache and restart to reclaim memory",
+                "Check for available application updates that address the specific crash signature",
+                "If no update is available, report the crash to the application vendor with the full crash log",
+                "Provide the user with a workaround (restart app periodically, disable auto-sync on launch)",
+            ],
+        ],
+    )
+)
