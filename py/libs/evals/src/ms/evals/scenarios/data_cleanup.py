@@ -915,3 +915,710 @@ default_registry.register(
         ),
     )
 )
+
+
+# ---------------------------------------------------------------------------
+# dc-021: XML/SOAP payload dump
+# ---------------------------------------------------------------------------
+_SOAP_FAULT_DUMP = (
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    "<soap:Envelope\n"
+    '  xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"\n'
+    '  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n'
+    '  xmlns:xsd="http://www.w3.org/2001/XMLSchema">\n'
+    "  <soap:Header>\n"
+    "    <wsse:Security\n"
+    '      xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">\n'
+    "      <wsse:UsernameToken>\n"
+    "        <wsse:Username>svc_invoice_proc</wsse:Username>\n"
+    "      </wsse:UsernameToken>\n"
+    "    </wsse:Security>\n"
+    "  </soap:Header>\n"
+    "  <soap:Body>\n"
+    "    <soap:Fault>\n"
+    "      <faultcode>soap:Server</faultcode>\n"
+    "      <faultstring>System.NullReferenceException: Object reference not set to an "
+    "instance of an object.\n"
+    "   at Contoso.Invoice.Service.ProcessInvoiceBatch(InvoiceBatch batch) in "
+    "D:\\Build\\src\\InvoiceService\\InvoiceProcessor.cs:line 247\n"
+    "   at Contoso.Invoice.Service.InvoiceEndpoint.Submit(SubmitRequest request) in "
+    "D:\\Build\\src\\InvoiceService\\Endpoints\\InvoiceEndpoint.cs:line 89\n"
+    "   at System.ServiceModel.Dispatcher.SyncMethodInvoker.Invoke(Object instance, "
+    "Object[] inputs, Object[]&amp; outputs)\n"
+    "   at System.ServiceModel.Dispatcher.DispatchOperationRuntime.InvokeBegin("
+    "MessageRpc&amp; rpc)</faultstring>\n"
+    "      <detail>\n"
+    '        <ErrorInfo xmlns="http://contoso.com/invoice/errors">\n'
+    "          <ErrorCode>INV-5001</ErrorCode>\n"
+    "          <Timestamp>2026-03-18T11:23:47.882Z</Timestamp>\n"
+    "          <CorrelationId>a3f7c291-04be-4e6f-b8a2-91d3e5f7a012</CorrelationId>\n"
+    "          <ServiceVersion>4.7.2.1834</ServiceVersion>\n"
+    "        </ErrorInfo>\n"
+    "      </detail>\n"
+    "    </soap:Fault>\n"
+    "  </soap:Body>\n"
+    "</soap:Envelope>"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-021",
+        name="XML/SOAP payload dump",
+        description="Ticket with raw XML/SOAP error output from a web service failure. "
+        "The real issue is buried among verbose XML stack traces and SOAP envelopes.",
+        category=_CATEGORY,
+        tags=["xml", "payload_dump", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5021",
+            subject="Invoice processing web service returning errors since this morning",
+            description=(
+                "Hi support, our invoice processing integration has been failing all morning "
+                "and the finance close deadline is tomorrow. When we submit invoice batches "
+                "through the SOAP endpoint the service returns 500 errors. I captured the raw "
+                "response below.\n\n"
+                f"{_SOAP_FAULT_DUMP}\n\n"
+                "We also tried resubmitting the same batch three more times and got "
+                "similar responses each time:\n\n"
+                f"{_SOAP_FAULT_DUMP}\n\n"
+                "This started after the weekend deployment. Batches of 50 or fewer invoices "
+                "seem to work but anything over 50 triggers the NullReferenceException. "
+                "We have about 1,200 invoices that need to be processed before end of day "
+                "Tuesday. Can someone from the applications team look into the "
+                "InvoiceProcessor service urgently? The endpoint URL is "
+                "https://invoicesvc.contoso.com/v2/submit and we are authenticating with the "
+                "svc_invoice_proc service account."
+            ),
+            reporter=_reporter("David Chen", "d.chen@contoso.com", "Finance"),
+            created_at="2026-03-18T11:45:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-022: Screenshot OCR artifacts
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-022",
+        name="Screenshot OCR artifacts",
+        description="Ticket created from OCR of a screenshot with many recognition errors. "
+        "The actual issue is a monitor display problem obscured by garbled text.",
+        category=_CATEGORY,
+        tags=["ocr", "garbled_text", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5022",
+            subject="M0nitor d1splay issue - fl1ckering and c0lor problems",
+            description=(
+                "Th1s t1cket was cr3ated from a scr33nshot of my m0nitor.\n\n"
+                "H3llo IT supp0rt,\n\n"
+                "My ext3rnal m0n1tor (D3ll U2723QE) has b33n fl1cker1ng and sh0wing "
+                "w31rd c0lor art1facts s1nce y3sterday m0rn1ng. Th3 scr33n g0es p1nk "
+                "f0r ab0ut 2-3 s3conds 3very f3w m1nutes, th3n r3turns t0 n0rmal. "
+                "S0met1mes th3re ar3 h0r1zontal l1nes acr0ss th3 t0p th1rd 0f th3 "
+                "d1splay.\n\n"
+                "I'v3 tr13d:\n"
+                "- Sw4pp1ng th3 USB-C c4bl3 w1th 4 n3w 0ne fr0m supp1y cl0set\n"
+                "- C0nnect1ng v14 HDMI 1nste4d - s4me 1ssue\n"
+                "- Us1ng 4 d1fferent p0rt 0n my d0ck1ng st4t10n (L3n0v0 ThunkP4d "
+                "USB-C D0ck G3n 2)\n"
+                "- Upd4t1ng th3 d1spl4y dr1vers thr0ugh D3v1c3 M4nag3r\n\n"
+                "N0ne 0f th3se f1xed 1t. |t's m4k1ng 1t r34lly h4rd t0 d0 my "
+                "gr4ph1c d3s1gn w0rk b3c4use th3 c0l0rs 4re unreli4ble. "
+                "I'm 0n Fl00r 12, D3sk 12-47B. My l4pt0p 1s 4 L3n0v0 Th1nkP4d X1 "
+                "C4rb0n G3n 11 runn1ng W1nd0ws 11 Ent3rpr1se. Th3 m0n1tor w4s "
+                "w0rk1ng f1ne unt1l l4st w33k.\n\n"
+                "Pl34se s3nd s0me0ne t0 t4ke 4 l00k 0r pr0v1de 4 r3pl4cement "
+                "m0n1tor. Th1s 1s urg3nt f0r my pr0ject d34dl1ne."
+            ),
+            reporter=_reporter("Lisa Park", "l.park@contoso.com", "Marketing"),
+            created_at="2026-03-18T10:22:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-023: Automated monitoring alert flood
+# ---------------------------------------------------------------------------
+_ALERT_TEMPLATE = (
+    "=== ALERT: CRITICAL ===\n"
+    "Source: AzureMonitor / NetworkWatcher\n"
+    "Rule: core-switch-health-check\n"
+    "Resource: /subscriptions/9a3f7e12-bc84-4d6f-a321-7e8f9b0c1d2e"
+    "/resourceGroups/rg-network-prod/providers/Microsoft.Network"
+    "/virtualNetworkGateways/gw-core-east-02\n"
+    "Severity: Sev0\n"
+    "Condition: Network device gw-core-east-02 is unreachable. "
+    "ICMP probe failed for 5 consecutive checks.\n"
+    "Metric: DeviceAvailability < 1 for last 5 minutes\n"
+    "Fired at: {ts}\n"
+    "Affected Region: East US 2\n"
+    "Impact: Potential loss of connectivity for subnets 10.42.0.0/16 "
+    "and 10.43.0.0/16 (Building 7 and Building 9 campus networks)\n"
+    "Runbook: https://runbooks.contoso.com/network/core-switch-failover\n"
+    "Action Group: NetworkOps-Critical-OnCall\n"
+    "=== END ALERT ===\n"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-023",
+        name="Automated monitoring alert flood",
+        description="Ticket containing multiple copy-pasted automated monitoring alerts "
+        "for the same underlying network switch failure.",
+        category=_CATEGORY,
+        tags=["alert_flood", "automated", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5023",
+            subject="CRITICAL: Core network switch gw-core-east-02 down - multiple alerts firing",
+            description=(
+                "Opening this ticket because our monitoring is going crazy. "
+                "gw-core-east-02 appears to be completely down and we are getting "
+                "flooded with alerts. Buildings 7 and 9 are reporting total loss of "
+                "network connectivity. Here are the alerts we have received so far:\n\n"
+                + _ALERT_TEMPLATE.format(ts="2026-03-18T06:02:14Z")
+                + "\n"
+                + _ALERT_TEMPLATE.format(ts="2026-03-18T06:07:19Z")
+                + "\n"
+                + _ALERT_TEMPLATE.format(ts="2026-03-18T06:12:22Z")
+                + "\n"
+                + _ALERT_TEMPLATE.format(ts="2026-03-18T06:17:27Z")
+                + "\n"
+                + _ALERT_TEMPLATE.format(ts="2026-03-18T06:22:31Z")
+                + "\n"
+                + _ALERT_TEMPLATE.format(ts="2026-03-18T06:27:35Z")
+                + "\n"
+                "We have tried remotely rebooting the switch via the out-of-band "
+                "management interface but it is not responding either. The redundant "
+                "switch gw-core-east-01 has taken over some traffic but is showing "
+                "85% CPU utilization and packet loss is climbing. Approximately 400 "
+                "users across Buildings 7 and 9 are impacted. We need a network "
+                "engineer dispatched to the East data center immediately. This is "
+                "a P1 situation as trading floor operations in Building 7 are halted."
+            ),
+            reporter=_reporter("Marcus Webb", "m.webb@contoso.com", "Infrastructure"),
+            created_at="2026-03-18T06:35:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P1",
+            assigned_team="Network Operations",
+            needs_escalation=True,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-024: URL-encoded content
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-024",
+        name="URL-encoded content in ticket",
+        description="Ticket where the description contains URL-encoded strings from a web "
+        "form that did not decode properly, mixed with readable text.",
+        category=_CATEGORY,
+        tags=["url_encoded", "encoding", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5024",
+            subject="Web app form submission error - CRM portal",
+            description=(
+                "I was trying to submit a new customer record in the CRM portal "
+                "(https://crm.contoso.com/customers/new) and after clicking Save the "
+                "page showed a raw error. I copied the page content below.\n\n"
+                "Error%20Details%3A%0A%0AForm%20submission%20failed%20for%20endpoint"
+                "%20%2Fapi%2Fv3%2Fcustomers%0AStatus%3A%20422%20Unprocessable%20Entity"
+                "%0ARequest%20ID%3A%20req_8f7a3b21-c4e9-4d12-b5a6-2e1f0c9d8b7a%0A%0A"
+                "Validation%20Errors%3A%0A%20%20-%20field%20%22company_name%22%3A%20"
+                "value%20exceeds%20maximum%20length%20of%20255%20characters%20%28got%20"
+                "312%29%0A%20%20-%20field%20%22billing_address.postal_code%22%3A%20"
+                "invalid%20format%20for%20region%20%22US%22%0A%20%20-%20field%20"
+                "%22primary_contact.phone%22%3A%20must%20match%20pattern%20%5E%5C%2B"
+                "%5B1-9%5D%5Cd%7B1%2C14%7D%24%0A%0ASubmitted%20Payload%3A%0A%7B%22"
+                "company_name%22%3A%22Contoso%20International%20Holdings%20Group%20"
+                "Limited%20Partnership%20%28formerly%20doing%20business%20as%20Northwind"
+                "%20Traders%20Incorporated%20and%20Subsidiaries%29%20-%20Asia%20Pacific"
+                "%20Division%20Regional%20Office%20%E2%80%93%20Customer%20Account%22"
+                "%2C%22billing_address%22%3A%7B%22postal_code%22%3A%22APAC-2026%22%7D"
+                "%2C%22primary_contact%22%3A%7B%22phone%22%3A%22(425)%20555-0199%22%7D"
+                "%7D\n\n"
+                "I have been trying to enter this customer for three days now. The "
+                "company name field won't accept the full legal name of the customer and "
+                "I cannot figure out the right phone number format. Our sales team needs "
+                "this record created ASAP because we have a contract signing on Thursday. "
+                "Also the postal code field rejects non-US formats even though this is "
+                "an APAC customer. Could someone look at the field validation rules in "
+                "the CRM or increase the character limits?"
+            ),
+            reporter=_reporter("Rachel Torres", "r.torres@contoso.com", "Sales"),
+            created_at="2026-03-19T14:10:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-025: Massive CC recipient list
+# ---------------------------------------------------------------------------
+_CC_LIST = "; ".join(
+    [
+        f"user{i:03d}@contoso.com"
+        for i in range(1, 61)
+    ]
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-025",
+        name="Massive CC recipient list",
+        description="Email-channel ticket where a huge CC list dominates the content "
+        "before the actual password expiration issue is described.",
+        category=_CATEGORY,
+        tags=["cc_list", "email_noise", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5025",
+            subject="URGENT: Department-wide password expiration - 200+ users affected",
+            description=(
+                "From: Patricia Nguyen <p.nguyen@contoso.com>\n"
+                "To: IT Help Desk <helpdesk@contoso.com>\n"
+                f"CC: {_CC_LIST}\n"
+                "Date: Wed, 18 Mar 2026 08:05:00 +0000\n"
+                "Subject: URGENT: Department-wide password expiration\n"
+                "Importance: High\n\n"
+                "--- CC list truncated; 60 of 214 recipients shown above ---\n\n"
+                "Hello IT Support,\n\n"
+                "This morning approximately 200 employees across the entire HR department "
+                "(including Benefits, Recruiting, Payroll, and Employee Relations) were "
+                "locked out of their accounts due to simultaneous password expirations. "
+                "It appears that when the HR department was migrated to the new Azure AD "
+                "organizational unit last quarter, the password policy was set with a "
+                "90-day expiration starting from the migration date rather than preserving "
+                "each user's original expiration schedule. Since the migration happened "
+                "exactly 90 days ago, everyone's password expired at once.\n\n"
+                "This is critically impacting our operations: payroll processing for the "
+                "March cycle is due by end of day Wednesday, benefits enrollment changes "
+                "need to be submitted by Friday, and we have 15 interviews scheduled "
+                "today that require access to our applicant tracking system.\n\n"
+                "We need either a bulk password reset or a temporary extension of the "
+                "password expiration policy for the HR OU. I have CC'd the team leads "
+                "from each sub-department so they can confirm impact on their teams.\n\n"
+                "Thank you,\nPatricia Nguyen\nHR Operations Director"
+            ),
+            reporter=_reporter("Patricia Nguyen", "p.nguyen@contoso.com", "HR"),
+            created_at="2026-03-18T08:05:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-026: RTF formatting artifacts
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-026",
+        name="RTF formatting artifacts",
+        description="Ticket with remnants of RTF control words mixed into the actual text "
+        "about a corrupted Word document template.",
+        category=_CATEGORY,
+        tags=["rtf", "formatting", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5026",
+            subject="Word template corrupted - Legal department",
+            description=(
+                "{\\rtf1\\ansi\\ansicpg1252\\deff0\\nouicompat{\\fonttbl{\\f0\\fswiss"
+                "\\fprq2\\fcharset0 Calibri;}{\\f1\\froman\\fprq2\\fcharset0 "
+                "Times New Roman;}}\n"
+                "{\\colortbl ;\\red0\\green0\\blue0;\\red5\\green99\\blue193;}\n"
+                "{\\*\\generator Riched20 10.0.19041}\\viewkind4\\uc1\n"
+                "\\pard\\widctlpar\\sa160\\sl252\\slmult1\\f0\\fs22\\lang9\n\n"
+                "\\b Hello IT Support,\\b0\\par\n"
+                "\\par\n"
+                "\\pard\\widctlpar\\fi720\\sa160\\sl252\\slmult1\n"
+                "Our standard legal contract template (\\f1 Contoso_Master_Agreement"
+                "_v4.2.dotx\\f0 ) has become corrupted and is causing serious problems. "
+                "When anyone in the Legal department tries to create a new document from "
+                "this template, they get a \\b 'The document template is not valid' "
+                "\\b0 error in Word.\\par\n"
+                "\\par\n"
+                "This template is stored on the SharePoint document library at "
+                "\\cf2\\ul https://contoso.sharepoint.com/sites/Legal/Templates"
+                "\\cf1\\ulnone  and is used by all 35 attorneys and 20 paralegals in "
+                "the department. The template includes custom macros for auto-populating "
+                "client information, clause libraries, and formatting standards that are "
+                "required for regulatory compliance.\\par\n"
+                "\\par\n"
+                "The issue started after someone tried to edit the template directly "
+                "instead of creating a document from it. We have a backup from two weeks "
+                "ago but it is missing the latest clause updates that were added last "
+                "Monday. We need someone to either repair the current template or help us "
+                "merge the recent clause changes into the backup copy.\\par\n"
+                "\\par\n"
+                "\\pard\\widctlpar\\sa160\\sl252\\slmult1 This is blocking contract "
+                "preparation for three active deals with a combined value over $12M. "
+                "Please treat this as high priority.\\par\n"
+                "\\par\n"
+                "\\b Thank you,\\par\n"
+                "Kevin Brooks\\par\n"
+                "Senior Paralegal\\b0\\par\n"
+                "}"
+            ),
+            reporter=_reporter("Kevin Brooks", "k.brooks@contoso.com", "Legal"),
+            created_at="2026-03-19T09:30:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-027: Raw CSV/table data dump
+# ---------------------------------------------------------------------------
+_CSV_ROWS = "timestamp,username,source_ip,action,result,location\n" + "\n".join(
+    [
+        f"2026-03-{15 + i // 24:02d}T{i % 24:02d}:{(i * 7) % 60:02d}:00Z,"
+        f"{'svc_backup' if i % 5 == 0 else 'admin_' + str(i % 4)},"
+        f"10.{40 + i % 3}.{i % 256}.{(i * 3) % 256},"
+        f"{'file_download' if i % 3 == 0 else 'login' if i % 3 == 1 else 'query'},"
+        f"{'success' if i % 7 != 0 else 'failed'},"
+        f"{'East US' if i % 2 == 0 else 'West Europe'}"
+        for i in range(80)
+    ]
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-027",
+        name="Raw CSV table data dump",
+        description="Ticket with raw CSV data pasted into the description along with a "
+        "request to investigate suspicious login patterns in the data.",
+        category=_CATEGORY,
+        tags=["csv", "table_data", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5027",
+            subject="Suspicious login patterns found in database audit log export",
+            description=(
+                "Hi Data Platform team,\n\n"
+                "I ran an audit log export from our production SQL Server and found some "
+                "patterns that concern me. There are logins from the svc_backup service "
+                "account at unusual hours and from IP addresses that don't match our "
+                "known backup infrastructure. I also see an admin_3 account making "
+                "file_download actions that I don't recognize.\n\n"
+                "Here is the full export so you can see what I mean:\n\n"
+                f"{_CSV_ROWS}\n\n"
+                "Specifically I am worried about:\n"
+                "1. The svc_backup account logging in from 10.42.x.x addresses - our "
+                "backup servers are all on 10.50.x.x\n"
+                "2. The admin_3 account - we only have admin_0 through admin_2 in our "
+                "records. Who created admin_3?\n"
+                "3. The file_download actions from West Europe - we don't have any "
+                "infrastructure in that region\n\n"
+                "Could someone investigate whether these represent unauthorized access? "
+                "If so we may need to involve Security Operations as well. Please review "
+                "the data and let me know what you find."
+            ),
+            reporter=_reporter("Samantha Lee", "s.lee@contoso.com", "Analytics"),
+            created_at="2026-03-20T16:40:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Data & Storage",
+            priority="P3",
+            assigned_team="Data Platform",
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-028: Calendar invite iCal metadata
+# ---------------------------------------------------------------------------
+_ICAL_BLOCK = (
+    "BEGIN:VCALENDAR\n"
+    "VERSION:2.0\n"
+    "PRODID:-//Microsoft Corporation//Outlook 16.0 MIMEDIR//EN\n"
+    "METHOD:REQUEST\n"
+    "BEGIN:VTIMEZONE\n"
+    "TZID:Eastern Standard Time\n"
+    "BEGIN:STANDARD\n"
+    "DTSTART:16011104T020000\n"
+    "RRULE:FREQ=YEARLY;BYDAY=1SU;BYMONTH=11\n"
+    "TZOFFSETFROM:-0400\n"
+    "TZOFFSETTO:-0500\n"
+    "END:STANDARD\n"
+    "BEGIN:DAYLIGHT\n"
+    "DTSTART:16010311T020000\n"
+    "RRULE:FREQ=YEARLY;BYDAY=2SU;BYMONTH=3\n"
+    "TZOFFSETFROM:-0500\n"
+    "TZOFFSETTO:-0400\n"
+    "END:DAYLIGHT\n"
+    "END:VTIMEZONE\n"
+    "BEGIN:VEVENT\n"
+    "ORGANIZER;CN=Jonathan Meyer:mailto:j.meyer@contoso.com\n"
+    "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;"
+    "CN=Board Room A:mailto:boardroom.a@contoso.com\n"
+    "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;"
+    "CN=Emily Crawford:mailto:e.crawford@contoso.com\n"
+    "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;"
+    "CN=Robert Kim:mailto:r.kim@contoso.com\n"
+    "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;"
+    "CN=Diana Patel:mailto:d.patel@contoso.com\n"
+    "ATTENDEE;ROLE=OPT-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;"
+    "CN=Exec Assistants DL:mailto:exec.assistants@contoso.com\n"
+    "DTSTART;TZID=Eastern Standard Time:20260323T090000\n"
+    "DTEND;TZID=Eastern Standard Time:20260323T100000\n"
+    "RRULE:FREQ=WEEKLY;BYDAY=MO;COUNT=52\n"
+    "LOCATION:Board Room A - 25th Floor\n"
+    "SUMMARY:Executive Leadership Sync\n"
+    "DESCRIPTION:Weekly sync for executive leadership team.\n"
+    "UID:040000008200E00074C5B7101A82E00800000000B0A52F30\n"
+    "SEQUENCE:3\n"
+    "PRIORITY:5\n"
+    "CLASS:CONFIDENTIAL\n"
+    "STATUS:CONFIRMED\n"
+    "TRANSP:OPAQUE\n"
+    "X-MICROSOFT-CDO-BUSYSTATUS:BUSY\n"
+    "X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY\n"
+    "X-MICROSOFT-CDO-IMPORTANCE:1\n"
+    "X-MICROSOFT-DISALLOW-COUNTER:FALSE\n"
+    "X-MS-OLK-CONFTYPE:0\n"
+    "BEGIN:VALARM\n"
+    "TRIGGER:-PT15M\n"
+    "ACTION:DISPLAY\n"
+    "DESCRIPTION:Reminder\n"
+    "END:VALARM\n"
+    "END:VEVENT\n"
+    "END:VCALENDAR"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-028",
+        name="Calendar invite iCal metadata",
+        description="Ticket containing forwarded calendar invite data with full iCal "
+        "headers mixed with an actual support request about meeting delivery.",
+        category=_CATEGORY,
+        tags=["ical", "calendar", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5028",
+            subject="Recurring meeting invites not being received by some attendees",
+            description=(
+                "Hi IT,\n\n"
+                "I'm the EA for the CEO and I manage the Executive Leadership Sync "
+                "meeting that happens every Monday at 9 AM. For the past three weeks, "
+                "two of the four required attendees (Emily Crawford and Robert Kim) have "
+                "not been receiving the meeting updates. When I modify the meeting (e.g., "
+                "change the conference bridge or add agenda notes), the updates are "
+                "delivered to Diana Patel and the Board Room A resource but Emily and "
+                "Robert never get them.\n\n"
+                "I forwarded the calendar invite to this ticket so you can see the "
+                "details. Here is the raw invite data:\n\n"
+                f"{_ICAL_BLOCK}\n\n"
+                "I have already tried:\n"
+                "- Removing Emily and Robert and re-adding them\n"
+                "- Creating a brand new meeting series (same problem)\n"
+                "- Having Emily check her junk folder (nothing there)\n"
+                "- Confirming both Emily and Robert have sufficient mailbox storage\n\n"
+                "Both Emily and Robert were recently migrated to Exchange Online from "
+                "our on-prem Exchange server. Diana was migrated at the same time and "
+                "her invites work fine, so I don't think it's purely a migration issue. "
+                "Could someone look into their Exchange transport rules or mailbox "
+                "configuration? This is a high-visibility meeting and missing updates "
+                "has caused scheduling conflicts twice already."
+            ),
+            reporter=_reporter("Jonathan Meyer", "j.meyer@contoso.com", "Executive"),
+            created_at="2026-03-20T11:15:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-029: Terminal ANSI escape codes
+# ---------------------------------------------------------------------------
+_ANSI_OUTPUT = (
+    "\\033[1;34m===== Deployment Pipeline: prod-release-4.7.3 =====\\033[0m\n"
+    "\\033[0;32m[STEP 1/6]\\033[0m Pulling latest images... \\033[0;32mOK\\033[0m\n"
+    "\\033[0;32m[STEP 2/6]\\033[0m Running database migrations... \\033[0;32mOK\\033[0m\n"
+    "\\033[0;32m[STEP 3/6]\\033[0m Validating configuration... \\033[0;32mOK\\033[0m\n"
+    "\\033[0;32m[STEP 4/6]\\033[0m Deploying to canary nodes (3/50)... \\033[0;32mOK\\033[0m\n"
+    "\\033[0;33m[STEP 5/6]\\033[0m Rolling out to production fleet...\n"
+    "  \\033[0;32m[batch 1/10]\\033[0m nodes prod-web-001 through prod-web-005: "
+    "\\033[0;32mhealthy\\033[0m\n"
+    "  \\033[0;32m[batch 2/10]\\033[0m nodes prod-web-006 through prod-web-010: "
+    "\\033[0;32mhealthy\\033[0m\n"
+    "  \\033[0;31m[batch 3/10]\\033[0m nodes prod-web-011 through prod-web-015: "
+    "\\033[1;31mFAILED\\033[0m\n"
+    "    \\033[0;31mError:\\033[0m Container health check failed on prod-web-012\n"
+    "    \\033[0;31mError:\\033[0m Container health check failed on prod-web-013\n"
+    "    \\033[0;31mError:\\033[0m OOMKilled: container exceeded 4Gi memory limit on "
+    "prod-web-014\n"
+    "    \\033[0;33mWarning:\\033[0m Readiness probe timeout on prod-web-011 (retrying...)\n"
+    "    \\033[0;31mError:\\033[0m Readiness probe failed after 3 retries on prod-web-011\n"
+    "  \\033[1;31m*** ROLLBACK TRIGGERED ***\\033[0m\n"
+    "  \\033[0;33m[rollback]\\033[0m Reverting batch 3 to previous image "
+    "prod-release-4.7.2... \\033[0;32mOK\\033[0m\n"
+    "  \\033[0;33m[rollback]\\033[0m Reverting batch 2 to previous image "
+    "prod-release-4.7.2... \\033[0;32mOK\\033[0m\n"
+    "  \\033[0;33m[rollback]\\033[0m Reverting batch 1 to previous image "
+    "prod-release-4.7.2... \\033[0;32mOK\\033[0m\n"
+    "\\033[1;31m[STEP 5/6] FAILED - Automatic rollback completed\\033[0m\n"
+    "\\033[0;31m[STEP 6/6]\\033[0m Post-deployment validation... "
+    "\\033[1;33mSKIPPED\\033[0m\n"
+    "\\033[1;31m===== DEPLOYMENT FAILED =====\\033[0m\n"
+    "\\033[0;36mDuration: 14m 32s | Started: 2026-03-19T02:00:00Z | "
+    "Ended: 2026-03-19T02:14:32Z\\033[0m\n"
+    "\\033[0;36mPipeline ID: deploy-7f3a9b2c | Trigger: scheduled\\033[0m"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-029",
+        name="Terminal ANSI escape codes",
+        description="Ticket with terminal output containing ANSI escape codes for colors "
+        "and formatting, describing a failed production deployment.",
+        category=_CATEGORY,
+        tags=["ansi", "terminal", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5029",
+            subject="Production deployment failed overnight - rollback completed but need RCA",
+            description=(
+                "The scheduled production deployment for release 4.7.3 failed last night "
+                "during the rolling update phase. The pipeline automatically rolled back "
+                "so we are still on 4.7.2 and users are not impacted right now, but we "
+                "need to understand what went wrong before attempting the release again.\n\n"
+                "Here is the full pipeline output from our deploy tool:\n\n"
+                f"{_ANSI_OUTPUT}\n\n"
+                "Key issues from the output:\n"
+                "1. Three nodes (prod-web-012, 013, 014) failed container health checks\n"
+                "2. prod-web-014 was OOMKilled - the new release may have a memory leak\n"
+                "3. prod-web-011 had readiness probe timeouts followed by failure\n\n"
+                "I suspect the memory issue is related to the new caching layer that was "
+                "added in 4.7.3 - the PR mentioned increasing the default cache size but "
+                "the memory limit wasn't updated in the Kubernetes manifests. Can someone "
+                "from the applications team review the deployment config and the memory "
+                "profile of the 4.7.3 release? We need to get this deployed by end of "
+                "week for the client demo on Monday."
+            ),
+            reporter=_reporter("Alex Romero", "a.romero@contoso.com", "DevOps"),
+            created_at="2026-03-19T07:20:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-030: PGP/S-MIME encrypted email wrapper
+# ---------------------------------------------------------------------------
+_PGP_BLOCK = (
+    "-----BEGIN PGP MESSAGE-----\n"
+    "Version: GnuPG v2.3.4 (GNU/Linux)\n"
+    "Comment: Contoso Secure Email Gateway\n\n"
+    "hQIMA7R9YkKf4WbZAQ//cJ1V8sHDqK5mP3kBvLz9nR2xYhG4TqN+wE6fA3vRmUj\n"
+    "K8dL0pFxN7qBtH2yW5sV9cXiO3mAeU0dPjQ6rK1bY4wJnE8hL2fC7xS9gMaD5tR\n"
+    "qH0oI3kPuW6eN1bYzA4vGjF8cL0dS9nPxR5mJ3kUfE2wT7iO6qHbN0aYsV1gDcK\n"
+    "pM4rL8eJ5nWbI2xA7tF0vR3cYsH9dPkG6mUqE1oN4jS7fW8lT5aDBnC0iKxVgMr\n"
+    "uQ2wP6hO9eY3bJ4nL1sF7vK0tA8mRdX5cIgGfE2jW9qUlH3oDpN6aTbYkS0rMiC\n"
+    "nX1wV7eL4fJ8gA2mK5qR0tH9sP3bYdO6cUxIiN7jE4lW8aFvT0rS5nMkG2hDpBc\n"
+    "QyJ6oU9iL3eW1tA7xP4fS8nR5vK0mHbN2dYgCqE9jO3lU6kF7aTcMsI0wDiG4hV\n"
+    "rB1eX5nP8fJ2qL4sW7dA0tK3vRmO6cYgNbH9iU0jE5lS7aTkF8wM2nDpGhCxIiQ\n"
+    "oV1eJ4fL8gA3mK6qR0tH9sP4bYdO7cUxIiN8jE5lW9aFvT1rS6nMkG3hDpBcQyJ\n"
+    "7oU0iL4eW2tA8xP5fS9nR6vK1mHbN3dYgCqF0jO4lU7kF8aTcMsI1wDiG5hVrB2\n"
+    "=Kf7D\n"
+    "-----END PGP MESSAGE-----"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-030",
+        name="PGP/S-MIME encrypted email wrapper",
+        description="Ticket containing PGP encryption blocks and cleartext describing "
+        "email encryption configuration problems.",
+        category=_CATEGORY,
+        tags=["encrypted", "pgp", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5030",
+            subject="Email encryption not working correctly - recipients cannot decrypt",
+            description=(
+                "Hi Security team,\n\n"
+                "We have been having problems with our PGP email encryption setup for "
+                "the past week. When our compliance team sends encrypted emails to "
+                "external partners, the recipients report that they cannot decrypt the "
+                "messages. I tested this myself by sending an encrypted email to our "
+                "partner at Fabrikam and they sent back the raw content they received, "
+                "which I am pasting below:\n\n"
+                f"{_PGP_BLOCK}\n\n"
+                "The Fabrikam team says their PGP client (Kleopatra 3.1.28) reports "
+                "'No secret key found' when trying to decrypt, even though we exchanged "
+                "public keys last month and encryption was working fine until recently.\n\n"
+                "I checked our Contoso Secure Email Gateway logs and noticed that the "
+                "gateway was updated to version 5.2.1 on March 12th. I believe the update "
+                "may have rotated our organization's PGP keys without notifying external "
+                "partners. The old public key fingerprint was 4A2B 8C3D 9E1F 0A5B 7C6D "
+                "and the current one appears to be different.\n\n"
+                "Additionally, two internal users (compliance@contoso.com and "
+                "legal.notices@contoso.com) are also having S/MIME issues - their digital "
+                "signatures are showing as invalid to internal recipients. The S/MIME "
+                "certificates for these mailboxes may have expired during the gateway "
+                "update.\n\n"
+                "Can someone from Security Operations review the email gateway "
+                "configuration, verify the PGP key distribution, and check the S/MIME "
+                "certificate status? We have regulatory deadlines that require encrypted "
+                "communication with our partners and this is blocking several active "
+                "compliance matters."
+            ),
+            reporter=_reporter("Theresa Walsh", "t.walsh@contoso.com", "Security"),
+            created_at="2026-03-20T13:50:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Security & Compliance",
+            priority="P2",
+            assigned_team="Security Operations",
+        ),
+    )
+)
