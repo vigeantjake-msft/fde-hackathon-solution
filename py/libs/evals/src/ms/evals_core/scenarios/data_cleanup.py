@@ -8979,7 +8979,8 @@ def get_scenarios() -> list[ScenarioDefinition]:
             remediation_steps=[
                 "Check if a Group Policy or Intune policy is overriding the static IP with DHCP on reboot.",
                 "Verify the network adapter driver is up to date for the Intel I225-V.",
-                "Reconfigure the static IP via the Network Connections GUI rather than registry to ensure proper persistence.",
+                "Reconfigure the static IP via the Network Connections GUI rather than registry to ensure"
+                " proper persistence.",
                 "Check for conflicting DHCP reservations on the DHCP server for this MAC address.",
                 "Test whether the issue persists after disabling the DHCP Client service.",
             ],
@@ -9107,7 +9108,8 @@ def get_scenarios() -> list[ScenarioDefinition]:
             ),
             remediation_steps=[
                 "Start the VM using 'az vm start -g rg-analytics-prod -n vm-analytics-01'.",
-                "Check Azure Activity Log to determine why the VM was stopped (auto-shutdown policy, billing, or manual action).",
+                "Check Azure Activity Log to determine why the VM was stopped"
+                " (auto-shutdown policy, billing, or manual action).",
                 "Verify SSH connectivity once the VM is running.",
                 "Check if an auto-shutdown schedule is configured that needs adjustment.",
                 "Consider setting up Azure alerts for unexpected VM deallocations.",
@@ -9215,7 +9217,8 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "10.0.2.0/24 subnets, but the user is on 10.0.3.0/24."
             ),
             remediation_steps=[
-                "Verify the change request through proper approval channels before modifying production firewall rules.",
+                "Verify the change request through proper approval channels before modifying production"
+                " firewall rules.",
                 "Add an iptables rule: iptables -I INPUT 6 -s 10.0.3.0/24 -p tcp --dport 8443 -j ACCEPT.",
                 "Save the iptables configuration to persist across reboots.",
                 "Verify connectivity from the user's workstation (10.0.3.45) after the rule change.",
@@ -9465,9 +9468,11 @@ def get_scenarios() -> list[ScenarioDefinition]:
             ),
             remediation_steps=[
                 "Check if a newer version of @contoso/legacy-charts supports React 18.",
-                "If no update is available, contact the internal package team to request a React 18-compatible release.",
+                "If no update is available, contact the internal package team to request a React"
+                " 18-compatible release.",
                 "As a short-term workaround, use npm install --legacy-peer-deps (but document this technical debt).",
-                "Consider replacing @contoso/legacy-charts with an alternative charting library compatible with React 18.",
+                "Consider replacing @contoso/legacy-charts with an alternative charting library compatible"
+                " with React 18.",
                 "Update the project documentation to note the peer dependency constraint.",
             ],
             reporter_name="Maya Johansson",

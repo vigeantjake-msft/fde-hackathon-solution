@@ -3598,3 +3598,4 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         ),
         tags=("data-cleanup", "monitoring-flood", "alert-noise"),
     ),
+]
