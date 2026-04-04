@@ -5915,7 +5915,39 @@ register(
             "it\u200b doesn\u200b't\u200b work\u200b,\u200b but\u200b when\u200b I\u200b "
             "manually\u200b type\u200b it\u200b,\u200b it\u200b sometimes\u200b does\u200b.\u200b "
             "Very\u200b confusing\u200b.\n\n"
-            "Please\u200b help\u200b
+            "Please\u200b help\u200b,\u200b this\u200b is\u200b urgent\u200b.\n\n"
+            "{name}\u200b,\u200b {department}",
+            "Hi\u200b,\n\n"
+            "I\u200b can\u200b't\u200b log\u200b in\u200b to\u200b {app}\u200b.\u200b "
+            "Every\u200b time\u200b I\u200b enter\u200b my\u200b password\u200b "
+            "it\u200b says\u200b '\u200bAuthentication\u200b failed\u200b'\u200b.\n\n"
+            "I\u200b've\u200b tried\u200b resetting\u200b my\u200b password\u200b "
+            "through\u200b the\u200b self\u200b-\u200bservice\u200b portal\u200b "
+            "but\u200b that\u200b also\u200b gives\u200b me\u200b an\u200b error\u200b.\n\n"
+            "I\u200b think\u200b there\u200b might\u200b be\u200b invisible\u200b "
+            "characters\u200b in\u200b my\u200b username\u200b from\u200b "
+            "copy\u200b-\u200bpasting\u200b.\n\n"
+            "{name}\u200b,\u200b {department}",
+        ],
+        next_best_actions=[
+            "Strip zero-width Unicode characters from the text and process the "
+            "underlying SSO / authentication issue. The user is locked out and "
+            "copy-pasted usernames may contain invisible characters.",
+            "Investigate the authentication failure — the ticket contains zero-width "
+            "Unicode artifacts that may also be present in the user's credentials.",
+        ],
+        remediation_steps=[
+            [
+                "Check the user's Active Directory account status and unlock if locked",
+                "Verify the SSO / IdP configuration for the target application",
+                "Advise the user to manually type credentials rather than copy-pasting to avoid invisible characters",
+                "Check if the self-service password reset portal is functioning correctly",
+                "Review authentication logs for the specific error details",
+            ],
+        ],
+    )
+)
+
 register(
     ScenarioTemplate(
         scenario_id="dc-101",
