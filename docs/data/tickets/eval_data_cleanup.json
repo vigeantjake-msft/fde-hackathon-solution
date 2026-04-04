@@ -622,5 +622,161 @@
     "created_at": "2026-03-18T09:00:00Z",
     "channel": "phone",
     "attachments": []
+  },
+  {
+    "ticket_id": "INC-5049",
+    "subject": "Teams meeting keeps dropping \u2014 need to reschedule bridge",
+    "description": "Hi IT Support,\n\nOur daily stand-up Teams meeting keeps dropping participants after about 15 minutes. Everyone gets the 'reconnecting\u2026' spinner and then gets kicked out. This has been happening since Monday.\n\nHere is the calendar invite for reference:\n\nBEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Microsoft Corporation//Outlook 16.0 MIMEDIR//EN\nMETHOD:REQUEST\nBEGIN:VTIMEZONE\nTZID:Eastern Standard Time\nBEGIN:STANDARD\nDTSTART:16011104T020000\nRRULE:FREQ=YEARLY;BYDAY=1SU;BYMONTH=11\nTZOFFSETFROM:-0400\nTZOFFSETTO:-0500\nEND:STANDARD\nBEGIN:DAYLIGHT\nDTSTART:16010311T020000\nRRULE:FREQ=YEARLY;BYDAY=2SU;BYMONTH=3\nTZOFFSETFROM:-0500\nTZOFFSETTO:-0400\nEND:DAYLIGHT\nEND:VTIMEZONE\nBEGIN:VEVENT\nDTSTART;TZID=Eastern Standard Time:20260316T093000\nDTEND;TZID=Eastern Standard Time:20260316T094500\nRRULE:FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR\nUID:040000008200E00074C5B7101A82E00800000000B0A5F912\nSUMMARY:Daily Stand-up \u2014 Platform Engineering\nORGANIZER;CN=Rachel Torres:mailto:rachel.torres@contoso.com\nATTENDEE;ROLE=REQ-PARTICIPANT;CN=Dev Team:mailto:dev-team@contoso.com\nLOCATION:Microsoft Teams Meeting\nDESCRIPTION:Join link: https://teams.microsoft.com/l/meetup-join/19%3ameeting_NjQ4YzM2ZDAtOGUwNi00MmQ3LThlMjctNDg5ZjYxNWQyMzIy%40thread.v2/0?context=%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%7d\nX-MICROSOFT-CDO-BUSYSTATUS:BUSY\nX-MICROSOFT-CDO-IMPORTANCE:1\nX-MICROSOFT-DISALLOW-COUNTER:FALSE\nBEGIN:VALARM\nTRIGGER:-PT15M\nACTION:DISPLAY\nDESCRIPTION:Reminder\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR\n\nThe meeting ID is 234 567 890# and the passcode is 2xJk94. We have about 12 people on the call each day. A few of us are in the London office and the rest are in New York. Thanks.",
+    "reporter": {
+      "name": "Rachel Torres",
+      "email": "rachel.torres@contoso.com",
+      "department": "Platform Engineering"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "email",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5050",
+    "subject": "Shared drive corrupted file \u2014 hex dump attached",
+    "description": "Hi,\n\nA critical Excel file on the shared drive (\\\\NYC-FS-01\\Finance\\Q1-Reports\\revenue_summary.xlsx) seems to be corrupted. When I try to open it, Excel says the file format is not valid. I ran hexdump on it and the header doesn't look right:\n\n00000000  50 4b 03 04 14 00 06 00  08 00 00 00 21 00 b5 55  |PK..........!..U|\n00000010  30 23 f4 00 00 00 4c 02  00 00 13 00 08 02 5b 43  |0#....L.......[C|\n00000020  6f 6e 74 65 6e 74 5f 54  79 70 65 73 5d 2e 78 6d  |ontent_Types].xm|\n00000030  6c 20 a2 04 02 28 a0 00  02 00 00 00 00 00 00 00  |l ...(.........|\n00000040  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|\n*\n00000100  00 00 00 00 00 00 00 00  ff ff ff ff ff ff ff ff  |................|\n00000110  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|\n*\n00000200  3c 3f 78 6d 6c 20 76 65  72 73 69 6f 6e 3d 22 31  |<?xml version=\"1|\n00000210  2e 30 22 20 65 6e 63 6f  64 69 6e 67 3d 22 55 54  |.0\" encoding=\"UT|\n00000220  46 2d 38 22 3f 3e 0d 0a  00 00 00 00 00 00 00 00  |F-8\"?>..........|\n00000230  00 00 00 00 00 00 00 00  ff ff ff ff ff ff ff ff  |................|\n00000240  00 00 00 00 00 00 00 00  3c 54 79 70 65 73 20 78  |........<Types x|\n00000250  6d 6c 6e 73 3d 22 68 74  74 70 3a 2f 2f 73 63 68  |mlns=\"http://sch|\n00000260  65 6d 61 73 2e 6f 70 65  6e 78 6d 6c 66 6f 72 6d  |emas.openxmlform|\n00000270  61 74 73 2e 6f 72 67 2f  70 61 63 6b 61 67 65 2f  |ats.org/package/|\n00000280  32 30 30 36 2f 63 6f 6e  74 65 6e 74 2d 74 79 70  |2006/content-typ|\n00000290  65 73 22 3e 0d 0a 00 00  00 00 00 00 00 00 00 00  |es\">............|\n\nThe file was last modified yesterday at 4:47 PM by an automated ETL process that runs on PROD-ETL-03. The file is about 2.4 MB and contains Q1 revenue data that we need for the board presentation tomorrow morning. Other files in the same directory seem fine.\n\nThanks,\nAisha Rahman\nFinance, Building 1, 7th floor",
+    "reporter": {
+      "name": "Aisha Rahman",
+      "email": "aisha.rahman@contoso.com",
+      "department": "Finance"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "email",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5051",
+    "subject": "Login page shows garbled text &amp;mdash; can&amp;#39;t sign in",
+    "description": "Hi IT,\n\nWhen I go to the internal portal at https://portal.contoso.com, the login page is showing garbled text. The page title shows:\n\n  &amp;ldquo;Contoso&amp;nbsp;Financial&amp;nbsp;Services &amp;mdash;&amp;nbsp;Sign&amp;nbsp;In&amp;rdquo;\n\nAnd the form labels say:\n  &amp;bull; &amp;ldquo;Username&amp;rdquo;\n  &amp;bull; &amp;ldquo;Password&amp;rdquo;\n  &amp;bull; &amp;ldquo;Remember&amp;nbsp;Me&amp;rdquo;\n\nThe &amp;ldquo;Sign In&amp;rdquo; button text shows as &amp;quot;Sign&amp;nbsp;In&amp;quot; and when I click it, I get an error:\n\n  &amp;lt;div class=&amp;quot;error&amp;quot;&amp;gt;\n    &amp;lt;p&amp;gt;Authentication failed: invalid token&amp;lt;/p&amp;gt;\n  &amp;lt;/div&amp;gt;\n\nI&amp;#39;ve tried clearing my cache and using a different browser (Chrome &amp;amp; Edge) but the issue persists. I&amp;#39;m on Windows 11 in the New York office, Building 2.\n\nThis is blocking me from accessing the compliance reporting dashboard.\n\nThanks,\nVictor Okafor\nCompliance &amp;amp; Regulatory",
+    "reporter": {
+      "name": "Victor Okafor",
+      "email": "victor.okafor@contoso.com",
+      "department": "Compliance & Regulatory"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "portal",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5052",
+    "subject": "Slack to Teams migration \u2014 pasted chat history for context",
+    "description": "[2026-03-16 14:23:01] @jennifer.walsh: hey can anyone help? my laptop keeps blue-screening\n[2026-03-16 14:23:05] \ud83e\udd16 ContosBot: Hi Jennifer! I see you might have a technical issue. Would you like me to create a support ticket? React with \ud83d\udc4d to confirm or \ud83d\udc4e to dismiss.\n[2026-03-16 14:23:12] @jennifer.walsh reacted with \ud83d\udc4d\n[2026-03-16 14:23:15] \ud83e\udd16 ContosBot: Great! Ticket INC-TEMP-8834 created. A technician will reach out shortly.\n[2026-03-16 14:24:30] @mike.chen: @jennifer.walsh what's the error code on the blue screen?\n[2026-03-16 14:25:01] @jennifer.walsh: it says KERNEL_DATA_INPAGE_ERROR and then restarts\n[2026-03-16 14:25:45] @mike.chen: that's usually a disk issue. how old is your laptop?\n[2026-03-16 14:26:10] @jennifer.walsh: it's a Lenovo ThinkPad X1 Carbon Gen 11, got it about 18 months ago\n[2026-03-16 14:26:30] \ud83e\udd16 ContosBot: \ud83d\udcca Daily standup reminder: Your standup is in 4 minutes! Don't forget to post your update in #platform-standup.\n[2026-03-16 14:27:00] @jennifer.walsh: also it's been running really slow lately and I can hear the fan going crazy even when I'm just in Outlook\n[2026-03-16 14:27:30] @mike.chen: definitely sounds like the SSD might be failing. @jennifer.walsh you should ask IT to run diagnostics\n[2026-03-16 14:28:00] \ud83e\udd16 ContosBot: \ud83c\udf89 Kudos! @sarah.park just received a kudos from @david.kim: 'Great work on the Q1 dashboard!'\n[2026-03-16 14:28:15] @jennifer.walsh: ok forwarding this chat to IT. the blue screen happens 2-3 times a day, always when I have lots of tabs open in Chrome and am running Excel with large spreadsheets.\n[2026-03-16 14:28:30] @jennifer.walsh: I'm on the 4th floor Building 1, New York\n[2026-03-16 14:28:45] \ud83e\udd16 ContosBot: \ud83d\udcc5 Meeting update: 'Client Review Call' has been moved to 3:30 PM today.",
+    "reporter": {
+      "name": "Jennifer Walsh",
+      "email": "jennifer.walsh@contoso.com",
+      "department": "Data Science"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "chat",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5053",
+    "subject": "Outlook keeps resetting default signature \u2014 registry export included",
+    "description": "Hi IT,\n\nEvery time I restart Outlook, my email signature resets to the old one from 2024 instead of my updated signature. I export the registry key to show you what it looks like:\n\nWindows Registry Editor Version 5.00\n\n[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Profiles\\Outlook\\9375CFF0413111d3B88A00104B2A6676\\00000002]\n\"Account Name\"=\"corporate.email@contoso.com\"\n\"New Signature\"=\"Contoso_Corporate_2024\"\n\"Reply-Forward Signature\"=\"Contoso_Corporate_2024\"\n\"Identity Eid\"=hex:00,00,00,00,dc,a7,40,c8,c0,42,10,1a,b4,b9,08,00,2b,2f,e1,82,\\\n  01,00,00,00,03,00,00,00\n\"Identity Search Key\"=hex:dc,a7,40,c8,c0,42,10,1a,b4,b9,08,00,2b,2f,e1,82,01,\\\n  00,00,00,03,00,00,00\n\n[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Common\\MailSettings]\n\"NewSignature\"=\"Contoso_Corporate_2024\"\n\"ReplySignature\"=\"Contoso_Corporate_2024\"\n\"Stationery\"=\"\"\n\"ComposeFontComplex\"=hex:3c,68,74,6d,6c,3e,0d,0a,0d,0a,3c,68,65,61,64,3e,0d,\\\n  0a,3c,73,74,79,6c,65,3e,0d,0a\n\"ReplyFontComplex\"=hex:3c,68,74,6d,6c,3e,0d,0a,0d,0a,3c,68,65,61,64,3e,0d,0a,\\\n  3c,73,74,79,6c,65,3e,0d,0a\n\n[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Setup]\n\"First-Run\"=dword:00000001\n\"ImportPRF\"=\"\"\n\"CreateWelcome\"=dword:00000000\n\nAs you can see, the registry still points to 'Contoso_Corporate_2024' but my updated signature is called 'Contoso_Corporate_2026'. I think the Group Policy is pushing the old signature name. I've tried manually editing the registry but it gets overwritten on restart.\n\nI'm running Outlook version 16.0.18025.20160 on Windows 11 Enterprise.\n\nThanks,\nKenichi Tanaka\nClient Services",
+    "reporter": {
+      "name": "Kenichi Tanaka",
+      "email": "kenichi.tanaka@contoso.com",
+      "department": "Client Services"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "email",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5054",
+    "subject": "Internal API returning 502 \u2014 full request/response dump",
+    "description": "Hi team,\n\nThe internal pricing API (pricing-api.contoso.internal) is returning 502 Bad Gateway errors intermittently. I captured the full request and response with curl -v:\n\n> GET /api/v2/pricing/equity/MSFT HTTP/1.1\n> Host: pricing-api.contoso.internal\n> User-Agent: curl/8.4.0\n> Accept: application/json\n> Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1USTFNakExTkRNMk9EazJNVGMxTnpNNE5ETXlPVEExTlRjM1FqZEdPVUZDTlRVM05qVTROdyJ9.eyJpc3MiOiJodHRwczovL2NvbnRvc28uYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYxNTQ5ZjBjODQ2ZDYzMDA2OWQwNzJhMyIsImF1ZCI6WyJodHRwczovL3ByaWNpbmctYXBpLmNvbnRvc28uaW50ZXJuYWwiXX0.fakesignature\n> X-Request-ID: 7f3a2b4c-9d1e-4f5a-b6c8-3e2d1f0a9b8c\n> X-Correlation-ID: trade-exec-20260317-001\n> Cache-Control: no-cache\n> Connection: keep-alive\n>\n< HTTP/1.1 502 Bad Gateway\n< Server: nginx/1.24.0\n< Date: Tue, 17 Mar 2026 14:23:45 GMT\n< Content-Type: text/html\n< Content-Length: 166\n< Connection: keep-alive\n< X-Request-ID: 7f3a2b4c-9d1e-4f5a-b6c8-3e2d1f0a9b8c\n< X-Upstream-Status: failed\n< X-Upstream-Addr: 10.30.2.15:8080, 10.30.2.16:8080, 10.30.2.17:8080\n< X-Upstream-Response-Time: 30.001, 30.002, 30.003\n< X-Cache-Status: BYPASS\n< Strict-Transport-Security: max-age=31536000; includeSubDomains\n< X-Content-Type-Options: nosniff\n< X-Frame-Options: DENY\n< Content-Security-Policy: default-src 'none'\n< Referrer-Policy: no-referrer\n<\n< <html>\n< <head><title>502 Bad Gateway</title></head>\n< <body>\n< <center><h1>502 Bad Gateway</h1></center>\n< <hr><center>nginx/1.24.0</center>\n< </body>\n< </html>\n\nThe upstream response times are all ~30s which looks like a timeout. All three backend nodes (10.30.2.15-17) are failing. This is affecting our trading desk because they can't get real-time equity pricing. It started about 30 minutes ago.\n\nBen Hartley\nEquity Trading, NYC",
+    "reporter": {
+      "name": "Ben Hartley",
+      "email": "ben.hartley@contoso.com",
+      "department": "Equity Trading"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "chat",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5055",
+    "subject": "Desktop icons rearranged after reboot \u2014 screenshots inline",
+    "description": "Hi IT Support,\n\nEvery time I restart my computer, all my desktop icons get rearranged into a random order. I spent 20 minutes organizing them and then after a Windows Update reboot they're all scrambled again.\n\nHere's what it looks like before (organized):\n<img src=\"cid:image001.png@01DAF2B3.A1B2C3D4\" alt=\"Before\" width=\"1920\" height=\"1080\">\n[cid:image001.png@01DAF2B3.A1B2C3D4 \u2014 image not displayed]\n\nAnd after the reboot (scrambled):\n<img src=\"cid:image002.png@01DAF2B3.E5F6A7B8\" alt=\"After\" width=\"1920\" height=\"1080\">\n[cid:image002.png@01DAF2B3.E5F6A7B8 \u2014 image not displayed]\n\nI also noticed the icon cache seems broken because some icons show as generic white rectangles:\n<img src=\"cid:image003.png@01DAF2B3.C9D0E1F2\" alt=\"Broken Icons\" width=\"800\" height=\"600\">\n[cid:image003.png@01DAF2B3.C9D0E1F2 \u2014 image not displayed]\n\n------=_Part_12345_67890.1710680400000\nContent-Type: image/png; name=\"image001.png\"\nContent-Transfer-Encoding: base64\nContent-ID: <image001.png@01DAF2B3.A1B2C3D4>\nContent-Disposition: inline; filename=\"image001.png\"\n\n[base64 data stripped by mail gateway]\n\n------=_Part_12345_67890.1710680400000\nContent-Type: image/png; name=\"image002.png\"\nContent-Transfer-Encoding: base64\nContent-ID: <image002.png@01DAF2B3.E5F6A7B8>\nContent-Disposition: inline; filename=\"image002.png\"\n\n[base64 data stripped by mail gateway]\n\nI'm on Windows 11 Enterprise, Lenovo ThinkPad T14s, Building 3, 5th floor.\n\nThanks,\nPriya Mehta\nPortfolio Management",
+    "reporter": {
+      "name": "Priya Mehta",
+      "email": "priya.mehta@contoso.com",
+      "department": "Portfolio Management"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "email",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5056",
+    "subject": "API error with nested JSON \u2014 can't parse response",
+    "description": "Our integration with the compliance reporting API is failing. The API returns an error response, but the error body contains triple-escaped JSON that's nearly impossible to read. Here's the raw response:\n\n{\"status\":\"error\",\"code\":500,\"message\":\"Internal processing failure\",\"details\":\"{\\\"pipeline\\\":\\\"compliance-etl-v2\\\",\\\"stage\\\":\\\"transform\\\",\\\"error\\\":{\\\"type\\\":\\\"SchemaValidationError\\\",\\\"message\\\":\\\"Field \\\\\\\\\\\\\\\"transaction_id\\\\\\\\\\\\\\\" expected type \\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\\" but received \\\\\\\\\\\\\\\"null\\\\\\\\\\\\\\\"\\\",\\\"context\\\":{\\\"record_number\\\":45892,\\\"batch_id\\\":\\\"BATCH-20260317-0923\\\",\\\"source_table\\\":\\\"dbo.RawTransactions\\\",\\\"target_schema\\\":\\\"{\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"fields\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\":[{\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"name\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"transaction_id\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"type\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"}]}\\\"}}}\"\n\nThe actual issue is that null transaction_id values are getting through from the RawTransactions table in batch BATCH-20260317-0923, which started at 9:23 AM today. This is breaking the compliance ETL pipeline and we can't generate the daily regulatory report.\n\nThe pipeline runs on our Azure Data Factory instance (adf-contoso-prod-eastus2). We need this fixed before the 5 PM regulatory filing deadline.\n\nJames O'Brien\nRegulatory Affairs",
+    "reporter": {
+      "name": "James O'Brien",
+      "email": "james.obrien@contoso.com",
+      "department": "Regulatory Affairs"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "portal",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5057",
+    "subject": "VPN users table \u2014 some accounts are locked",
+    "description": "Hi IT,\n\nSeveral VPN users are getting locked out of their accounts. I pulled a report from our VPN concentrator and pasted it here. The users marked 'LOCKED' in the Status column need to be unlocked:\n\nUsername\tFull Name\tDepartment\tLast Login\tStatus\tIP Address\tVPN Client\tOS\njsmith01\tJohn Smith\tTrading\t2026-03-17 08:12:04\tACTIVE\t10.100.5.23\tGlobalProtect 6.1\tWindows 11\nmchen02\tMei Chen\tCompliance\t2026-03-17 08:14:22\tLOCKED\t10.100.5.45\tGlobalProtect 6.1\tWindows 11\nagarcia03\tAna Garcia\tFinance\t2026-03-17 08:15:01\tACTIVE\t10.100.5.67\tGlobalProtect 6.0\tmacOS 14.4\nbwilson04\tBen Wilson\tEngineering\t2026-03-17 08:16:33\tLOCKED\t10.100.5.89\tGlobalProtect 6.1\tWindows 11\ncpatel05\tChitra Patel\tRisk Management\t2026-03-17 08:17:15\tACTIVE\t10.100.5.101\tGlobalProtect 6.1\tWindows 11\ndkimura06\tDaichi Kimura\tData Engineering\t2026-03-16 17:42:08\tLOCKED\t10.100.5.123\tGlobalProtect 6.1\tWindows 10\nefernandez07\tElena Fernandez\tHR\t2026-03-17 08:19:44\tACTIVE\t10.100.5.145\tGlobalProtect 6.0\tmacOS 14.4\nfjohansson08\tFreya Johansson\tLegal\t2026-03-16 16:30:12\tLOCKED\t10.100.5.167\tGlobalProtect 6.1\tWindows 11\ngthompson09\tGrace Thompson\tWealth Management\t2026-03-17 08:22:55\tACTIVE\t10.100.5.189\tGlobalProtect 6.1\tWindows 11\nhsingh10\tHarpreet Singh\tIT Security\t2026-03-17 08:23:30\tACTIVE\t10.100.5.201\tGlobalProtect 6.1\tWindows 11\niali11\tIbrahim Ali\tFixed Income\t2026-03-16 15:55:00\tLOCKED\t10.100.5.223\tGlobalProtect 5.3\tWindows 10\njnovak12\tJana Novak\tClient Services\t2026-03-17 08:25:10\tACTIVE\t10.100.5.245\tGlobalProtect 6.1\tWindows 11\n\nSo that's 5 locked accounts (mchen02, bwilson04, dkimura06, fjohansson08, iali11). They all seem to have been locked out this morning. We think it might be related to the password policy change that was pushed last night. These users are all remote today and can't work without VPN.\n\nKevin Abrams\nNetwork Operations",
+    "reporter": {
+      "name": "Kevin Abrams",
+      "email": "kevin.abrams@contoso.com",
+      "department": "Network Operations"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "email",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5058",
+    "subject": "Badge reader on Floor 8 not recognizing my card",
+    "description": "Hi,\n\nThe badge reader on the main entrance to Floor 8, Building 2 is not recognizing my access card. I tap it and the light stays red \u2014 no beep, nothing. I've been piggybacking through with colleagues all day. My badge number is CF-2026-8841. Other people's badges seem to work fine on the same reader.\n\nI got a new badge issued two weeks ago because my old one cracked. The new one works on the ground floor and parking garage readers, just not on Floor 8.\n\nBest regards,\n\nBEGIN:VCARD\nVERSION:3.0\nN:Bergstrom;Henrik;;Mr.;\nFN:Henrik Bergstrom\nORG:Contoso Financial Services;Institutional Trading\nTITLE:Senior Trader\nTEL;TYPE=WORK,VOICE:+1-212-555-0147\nTEL;TYPE=CELL:+1-917-555-0293\nTEL;TYPE=WORK,FAX:+1-212-555-0148\nADR;TYPE=WORK:;;One Contoso Plaza, Floor 8;New York;NY;10001;USA\nEMAIL;TYPE=PREF,INTERNET:henrik.bergstrom@contoso.com\nURL:https://www.contoso.com/people/hbergstrom\nPHOTO;TYPE=JPEG;ENCODING=BASE64:/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAg\n GBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDA\n xNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjI\n yMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAQABADASIAAh\nNOTE:Bloomberg: HBERG <GO>\\nReuters: henrik.bergstrom.contoso\nREV:20260301T120000Z\nEND:VCARD\n\nCONFIDENTIALITY NOTICE: This email and any attachments are for the exclusive and confidential use of the intended recipient. If you are not the intended recipient, please do not read, distribute, or take action based on this message.",
+    "reporter": {
+      "name": "Henrik Bergstrom",
+      "email": "henrik.bergstrom@contoso.com",
+      "department": "Institutional Trading"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "email",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5059",
+    "subject": "FW: Cron job failures on PROD-RPT-01 \u2014 overnight batch report",
+    "description": "IT team \u2014 forwarding the output from our overnight batch reporting server. Reports haven't been generated since Saturday. The full cron output is below:\n\nCRON JOB EXECUTION LOG \u2014 PROD-RPT-01\n======================================\nHost: PROD-RPT-01.contoso.local\nRun date: 2026-03-17 02:00:00 EST\nJob: /opt/contoso/reports/generate_daily_reports.sh\nSchedule: 0 2 * * * (daily at 02:00)\nUser: svc_reports\nPID: 28451\n\n[02:00:01] Starting daily report generation...\n[02:00:01] Connecting to database server PROD-SQL-03.contoso.local:1433...\n[02:00:02] Connection established. Authenticating as svc_reports...\n[02:00:02] Authentication successful.\n[02:00:03] Executing report: P&L Daily Summary (report_id: RPT-001)...\n[02:00:03] Query: SELECT * FROM dbo.vw_PnL_Daily WHERE trade_date = '2026-03-16'\n[02:00:04] Rows returned: 1,247\n[02:00:04] Generating PDF... OK (2.3 MB)\n[02:00:05] Uploading to SharePoint /sites/finance/reports/daily/... OK\n[02:00:06] Executing report: Risk Exposure Summary (report_id: RPT-002)...\n[02:00:06] Query: EXEC dbo.sp_RiskExposure @date='2026-03-16'\n[02:00:06] ERROR: Execution Timeout Expired. The timeout period elapsed prior to completion of the operation or the server is not responding.\n[02:00:06] SQL State: HYT00, Native Error: 0\n[02:00:06] Connection to PROD-SQL-03.contoso.local lost.\n[02:00:07] Attempting reconnection (1/3)...\n[02:00:37] Reconnection attempt 1 failed: Connection timed out.\n[02:00:37] Attempting reconnection (2/3)...\n[02:01:07] Reconnection attempt 2 failed: Connection timed out.\n[02:01:07] Attempting reconnection (3/3)...\n[02:01:37] Reconnection attempt 3 failed: Connection timed out.\n[02:01:37] FATAL: All reconnection attempts exhausted. Aborting remaining reports.\n[02:01:37] Reports NOT generated: RPT-002, RPT-003, RPT-004, RPT-005, RPT-006\n[02:01:37] Exit code: 1\n[02:01:37] Notification sent to: ops-alerts@contoso.com\n\nSame failure repeated on 2026-03-15 and 2026-03-16 logs. The first report (P&L Daily) always succeeds but the Risk Exposure stored proc kills the connection. We need these reports for the morning risk committee meeting at 8 AM.\n\nSophie Laurent\nRisk Management",
+    "reporter": {
+      "name": "Sophie Laurent",
+      "email": "sophie.laurent@contoso.com",
+      "department": "Risk Management"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "email",
+    "attachments": []
+  },
+  {
+    "ticket_id": "INC-5060",
+    "subject": "FW: FW: FW: Batch of issues from London office \u2014 please triage",
+    "description": "Hi team,\n\nOur London office manager forwarded a batch of issues that were collected at this morning's all-hands. I'm dumping them all into one ticket because our portal was down earlier. Please split these out as needed.\n\n=== ISSUE 1 (from Tom Bradley, Settlements) ===\nThe settlement reconciliation app crashes every time I try to export to CSV. Error: 'System.OutOfMemoryException'. It started after the latest update on Friday. Machine: LDN-WS-1147.\n\n=== ISSUE 2 (from Amara Osei, Client Services) ===\nWiFi in the London office 3rd floor conference rooms A, B, and C has been extremely slow since they installed the new partitions last week. Video calls keep freezing. We have client meetings there daily.\n\n=== ISSUE 3 (from Liam McDonnell, Compliance) ===\nI need access to the GDPR Data Subject Request portal. I transferred from the Dublin office last month and my access was supposed to follow me but it didn't. My manager is Fiona O'Leary.\n\n=== ISSUE 4 (from Yuki Sato, Quantitative Analysis) ===\nOur Bloomberg Terminal (serial: BT-LDN-0093) has been showing 'Connection to B-PIPE lost' intermittently. The data feed drops for 30-60 seconds every hour or so. We're in the middle of model validation and need reliable market data.\n\n=== ISSUE 5 (from Grace Nkomo, HR) ===\nThe HR shared mailbox (hr-london@contoso.com) is bouncing incoming emails with 'Mailbox full' errors. We've already archived everything older than 6 months but it's still at 49.8 GB of the 50 GB limit.\n\nSorry for the messy format \u2014 our portal should be back up now.\n\nDaniel Fischer\nFacilities, London Office",
+    "reporter": {
+      "name": "Daniel Fischer",
+      "email": "daniel.fischer@contoso.com",
+      "department": "Facilities"
+    },
+    "created_at": "2026-03-18T09:00:00Z",
+    "channel": "email",
+    "attachments": []
   }
 ]
