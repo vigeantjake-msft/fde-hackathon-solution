@@ -955,8 +955,7 @@ SCENARIOS: list[Scenario] = [
         next_best_actions=[
             "Ignore the base64-encoded PDF data and focus on the SharePoint Online PDF rendering "
             "issue. Check file size limits for the browser-based PDF previewer.",
-            "Verify the PDF file size against SharePoint Online preview limits and test with a "
-            "different browser.",
+            "Verify the PDF file size against SharePoint Online preview limits and test with a different browser.",
         ],
         remediation_steps=[
             [
