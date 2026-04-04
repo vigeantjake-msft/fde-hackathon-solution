@@ -6111,7 +6111,8 @@ register(
                 "Capture a SAML trace (Fiddler or browser dev tools) to identify where authentication fails",
                 "Check the IdP federation metadata — certificates may have expired",
                 "Verify the SAML assertion consumer service URL matches the app's configuration",
-                "Immediately stop the shared account usage and provide the user with temporary access via an alternative method",
+                "Immediately stop the shared account usage and provide the user"
+                " with temporary access via an alternative method",
             ],
         ],
     )
@@ -6178,7 +6179,8 @@ register(
                 "Verify connectivity to Bloomberg's data center endpoints from the trading floor network segment",
                 "Restart the B-PIPE service on the Bloomberg server appliance",
                 "Contact Bloomberg support if the connection cannot be re-established",
-                "This is high-priority for the trading desk — escalate to network team immediately if not resolved in 30 minutes",
+                "This is high-priority for the trading desk — escalate to network"
+                " team immediately if not resolved in 30 minutes",
             ],
         ],
     )

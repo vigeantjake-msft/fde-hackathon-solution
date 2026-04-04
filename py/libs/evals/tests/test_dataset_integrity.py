@@ -143,8 +143,8 @@ class TestDatasetIntegrity:
 class TestDataCleanupSpecific:
     """Data cleanup dataset-specific validations."""
 
-    def test_has_50_cases(self) -> None:
-        assert len(DATA_CLEANUP_DATASET.cases) == 50
+    def test_has_60_cases(self) -> None:
+        assert len(DATA_CLEANUP_DATASET.cases) == 60
 
     def test_covers_expected_scenarios(self) -> None:
         all_tags = set()
@@ -181,6 +181,17 @@ class TestDataCleanupSpecific:
             "voicemail_transcript",
             "css_noise",
             "concatenated_issues",
+            # New DC-051..DC-060 scenarios
+            "graphql_dump",
+            "minidump",
+            "webhook_payload",
+            "powershell_streams",
+            "docker_compose",
+            "ocr_corruption",
+            "quoted_printable",
+            "itsm_audit_trail",
+            "bloomberg_terminal",
+            "excel_formulas",
         ]
         for scenario in expected_scenarios:
             matching = [t for t in all_tags if scenario in t]
@@ -190,8 +201,8 @@ class TestDataCleanupSpecific:
 class TestResponsibleAISpecific:
     """Responsible AI dataset-specific validations."""
 
-    def test_has_50_cases(self) -> None:
-        assert len(RESPONSIBLE_AI_DATASET.cases) == 50
+    def test_has_60_cases(self) -> None:
+        assert len(RESPONSIBLE_AI_DATASET.cases) == 60
 
     def test_covers_expected_scenarios(self) -> None:
         all_tags = set()
@@ -221,6 +232,17 @@ class TestResponsibleAISpecific:
             "mass_data_export",
             "gdpr_pretext",
             "multi_vector",
+            # New RAI-051..RAI-060 scenarios
+            "unicode_tag_injection",
+            "conversation_fabrication",
+            "persona_hijack",
+            "base64_payload_injection",
+            "fabricated_policy_document",
+            "logical_coercion",
+            "json_template_injection",
+            "xss_payload",
+            "persistent_poisoning",
+            "cjk_obfuscation",
         ]
         for scenario in expected_scenarios:
             matching = [t for t in all_tags if scenario in t]

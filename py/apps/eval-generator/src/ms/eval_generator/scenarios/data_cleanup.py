@@ -2365,7 +2365,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 "Check the Teams admin center for any connector policy changes or deprecation notices",
                 "Verify the webhook URL is still valid and the target channel/team has not been modified",
                 "Test with a minimal MessageCard payload to isolate whether the schema or the connector is at fault",
-                "Migrate from legacy Office 365 connectors to the Workflows-based webhook if connectors were deprecated",
+                "Migrate from legacy Office 365 connectors to the Workflows-based"
+                " webhook if connectors were deprecated",
                 "Set up a fallback notification channel (email or secondary webhook) until the primary is restored",
             ),
         ),
@@ -2434,11 +2435,13 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " additional E3 licenses, clean up conflicting/duplicate accounts,"
             " and re-run the script before Monday onboarding",
             remediation_steps=(
-                "Request additional E3 licenses or reclaim unused licenses from disabled accounts to replenish the pool",
+                "Request additional E3 licenses or reclaim unused licenses from"
+                " disabled accounts to replenish the pool",
                 "Resolve the james.obrien username conflict by removing or permanently renaming the disabled account",
                 "Investigate and remove the duplicate AD object for carlos.mendoza before re-provisioning",
                 "Verify the missing security group SG-Engineering-BuildAccess and create it if needed",
-                "Re-run the provisioning script for the 11 incomplete users and confirm all accounts are ready before Monday",
+                "Re-run the provisioning script for the 11 incomplete users and"
+                " confirm all accounts are ready before Monday",
             ),
         ),
         tags=("data-cleanup", "powershell-streams", "mixed-output"),
@@ -2635,7 +2638,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " a post-processing script to fix common l/1 and O/0 substitutions"
             " is likely the fastest path",
             remediation_steps=(
-                "Develop or provide a post-processing script to fix common OCR substitutions (l→1, O→0) in numeric fields",
+                "Develop or provide a post-processing script to fix common OCR"
+                " substitutions (l→1, O→0) in numeric fields",
                 "Run the corrected output through ERP import validation in a staging environment first",
                 "Investigate higher-quality OCR software or settings that handle dot-matrix print better",
                 "Validate the corrected financial figures against a known summary before final ERP import",
@@ -2691,7 +2695,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " quoted-printable encoding — likely an Outlook or Exchange"
             " transport rule stripping Content-Transfer-Encoding headers",
             remediation_steps=(
-                "Check Exchange transport rules for any that modify or strip email headers including Content-Transfer-Encoding",
+                "Check Exchange transport rules for any that modify or strip"
+                " email headers including Content-Transfer-Encoding",
                 "Verify the user's Outlook client is up to date and not using a legacy rendering mode",
                 "Provide the user with a decoded version of the email content as an immediate workaround",
                 "Test inbound email rendering from the same sender with a clean message to isolate the issue",
@@ -2838,7 +2843,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " active trading, affecting trading decisions",
             remediation_steps=(
                 "Restart the Bloomberg Terminal application and re-authenticate the B-PIPE connection",
-                "Check the local network connection and switch ports — other users are unaffected so this may be workstation-specific",
+                "Check the local network connection and switch ports"
+                " — other users are unaffected so this may be workstation-specific",
                 "Verify the Bloomberg Anywhere license and B-PIPE entitlements are active for this user",
                 "Contact Bloomberg Technical Support if the reconnection continues to fail after restart",
                 "Provide the user with Bloomberg web access as a temporary workaround for live market data",

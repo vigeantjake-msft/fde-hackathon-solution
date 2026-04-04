@@ -46,13 +46,13 @@ class TestDataCleanupScenarios:
         """Verify expected scenario IDs exist."""
         scenarios = get_scenarios()
         ids = {s.scenario_id for s in scenarios}
-        expected = {f"DC-{i:03d}" for i in range(1, 91)}
+        expected = {f"DC-{i:03d}" for i in range(1, 111)}
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Data cleanup should have at least 90 scenarios."""
+        """Data cleanup should have at least 110 scenarios."""
         scenarios = get_scenarios()
-        assert len(scenarios) >= 90, f"Expected >= 90 DC scenarios, got {len(scenarios)}"
+        assert len(scenarios) >= 110, f"Expected >= 110 DC scenarios, got {len(scenarios)}"
 
     def test_covers_key_cleanup_categories(self) -> None:
         """Verify that key data cleanup noise types are covered."""
@@ -153,5 +153,16 @@ class TestDataCleanupScenarios:
             "rtl-ltr-mixed",
             "arabic-english",
             "unicode-control",
+            # New tags from DC-101..DC-110
+            "graphql-introspection",
+            "bsod-minidump",
+            "webhook-payload",
+            "powershell-streams",
+            "docker-compose-flood",
+            "ocr-number-corruption",
+            "quoted-printable-encoding",
+            "servicenow-audit-trail",
+            "bloomberg-terminal-paste",
+            "excel-formula-artifacts",
         }
         assert expected_tags.issubset(all_tags), f"Missing cleanup tags: {expected_tags - all_tags}"

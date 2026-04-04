@@ -3439,13 +3439,752 @@ def _dc050_screen_reader_artifacts() -> EvalCase:
     )
 
 
+def _dc051_graphql_introspection_dump() -> EvalCase:
+    """GraphQL introspection query response dumped into ticket description."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-051",
+            subject="Cannot access shared folder in SharePoint — permissions error",
+            description=(
+                "Hi,\n\n"
+                "I'm unable to access the Q1 Earnings Reports folder on SharePoint. "
+                "I get a 403 Forbidden error. I ran a GraphQL query against our internal "
+                "API to check my permissions, and here's the full introspection response:\n\n"
+                '{"data":{"__schema":{"queryType":{"name":"Query"},"mutationType":{"name":"Mutation"},'
+                '"subscriptionType":null,"types":[{"kind":"OBJECT","name":"Query","description":null,'
+                '"fields":[{"name":"user","description":"Fetch user by ID","args":[{"name":"id",'
+                '"description":null,"type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR",'
+                '"name":"ID","ofType":null}},"defaultValue":null}],"type":{"kind":"OBJECT",'
+                '"name":"User","ofType":null},"isDeprecated":false,"deprecationReason":null},'
+                '{"name":"permissions","description":"List permissions for a resource","args":'
+                '[{"name":"resourceId","description":null,"type":{"kind":"NON_NULL","name":null,'
+                '"ofType":{"kind":"SCALAR","name":"String","ofType":null}},"defaultValue":null}],'
+                '"type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"Permission",'
+                '"ofType":null}},"isDeprecated":false,"deprecationReason":null},{"name":"sharePointSite",'
+                '"description":"Get SharePoint site metadata","args":[{"name":"siteUrl","type":'
+                '{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"String","ofType":'
+                'null}}}],"type":{"kind":"OBJECT","name":"SharePointSite","ofType":null},'
+                '"isDeprecated":false,"deprecationReason":null}],"inputFields":null,"interfaces":[],'
+                '"enumValues":null,"possibleTypes":null},{"kind":"OBJECT","name":"User","description":'
+                '"A user in the directory","fields":[{"name":"id","args":[],"type":{"kind":"NON_NULL",'
+                '"name":null,"ofType":{"kind":"SCALAR","name":"ID","ofType":null}}},{"name":"email",'
+                '"args":[],"type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"groups",'
+                '"args":[],"type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"Group",'
+                '"ofType":null}}}],"inputFields":null,"interfaces":[],"enumValues":null,'
+                '"possibleTypes":null}]}}}}\n\n'
+                "As you can see, I should have the 'Contributor' role on that site but it "
+                "seems like my group membership isn't propagating. Can you check?\n\n"
+                "Thanks,\nRobert Kim\nEquity Research"
+            ),
+            reporter=Reporter(
+                name="Robert Kim",
+                email="robert.kim@contoso.com",
+                department="Equity Research",
+            ),
+            created_at="2026-03-17T10:30:00Z",
+            channel=Channel.PORTAL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-051",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P3,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.ERROR_MESSAGE],
+            next_best_action=(
+                "Check the reporter's SharePoint group membership and permissions "
+                "for the Q1 Earnings Reports folder. Verify that group membership "
+                "changes have propagated through Azure AD."
+            ),
+            remediation_steps=[
+                "Verify the reporter's Azure AD group memberships include the appropriate SharePoint group.",
+                "Check if there is a sync delay between Azure AD and SharePoint Online.",
+                "If permissions are correct, investigate whether a conditional access policy is blocking access.",
+                "Grant the reporter explicit access to the folder as a temporary workaround.",
+            ],
+        ),
+        tags=["data-cleanup", "graphql_dump", "schema_noise", "json_payload"],
+        description=(
+            "Tests handling of a massive GraphQL introspection JSON response "
+            "embedded in the ticket description."
+        ),
+    )
+
+
+def _dc052_windows_minidump_output() -> EvalCase:
+    """Windows BSOD minidump with hex addresses and register states."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-052",
+            subject="Laptop blue screens twice daily — DRIVER_IRQL_NOT_LESS_OR_EQUAL",
+            description=(
+                "My ThinkPad X1 Carbon keeps crashing with a blue screen. It happens about "
+                "twice a day, usually when I have Teams, Bloomberg, and Excel open. I managed "
+                "to capture the minidump output from WinDbg:\n\n"
+                "Microsoft (R) Windows Debugger Version 10.0.22621.1 AMD64\n"
+                "Copyright (c) Microsoft Corporation. All rights reserved.\n\n"
+                "Loading Dump File [C:\\Windows\\Minidump\\031726-15890-01.dmp]\n"
+                "Mini Kernel Dump File: Only registers and stack trace are available\n\n"
+                "*******************************************************************************\n"
+                "*                                                                             *\n"
+                "*                        Bugcheck Analysis                                    *\n"
+                "*                                                                             *\n"
+                "*******************************************************************************\n\n"
+                "DRIVER_IRQL_NOT_LESS_OR_EQUAL (d1)\n"
+                "An attempt was made to access a pageable (or completely invalid) address at an\n"
+                "interrupt request level (IRQL) that is too high.\n"
+                "Arguments:\n"
+                "Arg1: ffffab0812345678, memory referenced\n"
+                "Arg2: 0000000000000002, IRQL\n"
+                "Arg3: 0000000000000000, value 0 = read operation, 1 = write operation\n"
+                "Arg4: fffff80712a4b230, address which referenced memory\n\n"
+                "CONTEXT:  ffffab08123c0000 -- (.cxr 0xffffab08123c0000)\n"
+                "rax=0000000000000000 rbx=ffffab0812340100 rcx=ffffab0812345678\n"
+                "rdx=0000000000000000 rsi=fffff80712a4b000 rdi=ffffab08123d0000\n"
+                "rip=fffff80712a4b230 rsp=ffffab08123bfe00 rbp=ffffab08123bfe80\n"
+                " r8=0000000000000002  r9=0000000000000000 r10=fffff80700000000\n"
+                "r11=ffffab08123bfd50 r12=0000000000000000 r13=ffffab08123e0000\n"
+                "r14=fffff80712a00000 r15=0000000000000001\n"
+                "iopl=0         nv up ei pl zr na po nc\n"
+                "cs=0010  ss=0018  ds=002b  es=002b  fs=0053  gs=002b\n\n"
+                "STACK_TEXT:\n"
+                "ffffab08`123bfe00 fffff807`12a4b230 : ndis!NdisMIndicateReceiveNetBufferLists+0x120\n"
+                "ffffab08`123bfe80 fffff807`0fa23100 : tcpip!FlReceiveNetBufferListChain+0x200\n"
+                "ffffab08`123bff00 fffff807`0fa1e450 : tcpip!IppReceiveHeaderBatch+0x310\n"
+                "ffffab08`123bff80 fffff807`0f8a1230 : NETIO!NetioCompleteCloneNetBufferListChain+0x1a0\n"
+                "ffffab08`123c0000 fffff807`0060a4c0 : nt!KiPageFault+0x370\n\n"
+                "MODULE_NAME: ndis\n"
+                "IMAGE_NAME:  ndis.sys\n"
+                "FAILURE_BUCKET_ID:  AV_ndis!NdisMIndicateReceiveNetBufferLists\n\n"
+                "Can you please help? This is seriously impacting my work.\n"
+                "Mark Jensen, Fixed Income Trading"
+            ),
+            reporter=Reporter(
+                name="Mark Jensen",
+                email="mark.jensen@contoso.com",
+                department="Fixed Income Trading",
+            ),
+            created_at="2026-03-17T14:22:00Z",
+            channel=Channel.EMAIL,
+            attachments=["031726-15890-01.dmp"],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-052",
+            category=Category.HARDWARE,
+            priority=Priority.P2,
+            assigned_team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.DEVICE_INFO, MissingInfoField.APPLICATION_VERSION],
+            next_best_action=(
+                "Investigate recurring BSOD (DRIVER_IRQL_NOT_LESS_OR_EQUAL) on the reporter's "
+                "ThinkPad X1 Carbon. The crash is in ndis.sys, suggesting a network driver issue."
+            ),
+            remediation_steps=[
+                "Collect the full minidump file and analyze with WinDbg for root cause.",
+                "Update the network adapter driver (ndis.sys crash points to NIC driver issue).",
+                "Check if a recent Windows or Intune update changed network stack components.",
+                "If driver updates don't resolve, schedule hardware diagnostics to check NIC.",
+                "Provide a loaner device if crashes continue to impact trading operations.",
+            ],
+        ),
+        tags=["data-cleanup", "minidump", "crash_dump", "hex_addresses", "debug_output"],
+        description=(
+            "Tests handling of Windows BSOD minidump output with hex addresses, "
+            "register states, and kernel stack traces."
+        ),
+    )
+
+
+def _dc053_webhook_payload_noise() -> EvalCase:
+    """Multiple webhook notification payloads filling the description."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-053",
+            subject="Teams connector not posting build notifications",
+            description=(
+                "Our Teams channel stopped receiving build notifications from the CI/CD pipeline. "
+                "I checked the webhook endpoint and it seems to be returning errors. Here are the "
+                "last several payloads that were attempted:\n\n"
+                "POST https://contoso.webhook.office.com/webhookb2/7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d\n"
+                'Content-Type: application/json\n\n'
+                '{"@type":"MessageCard","@context":"http://schema.org/extensions","themeColor":"FF0000",'
+                '"summary":"Build Failed: trading-engine #4521","sections":[{"activityTitle":"Build '
+                'Failed","activitySubtitle":"trading-engine #4521","activityImage":"https://ci.contoso'
+                '.com/img/fail.png","facts":[{"name":"Branch","value":"release/v2.4.1"},{"name":"Commit",'
+                '"value":"a1b2c3d4e5f6"},{"name":"Author","value":"Sarah.Chen@contoso.com"},{"name":'
+                '"Duration","value":"12m 34s"},{"name":"Failed Stage","value":"integration-tests"},'
+                '{"name":"Error","value":"Connection timeout to market-data-service:8443"}],"markdown":'
+                'true}],"potentialAction":[{"@type":"OpenUri","name":"View Build","targets":[{"os":'
+                '"default","uri":"https://ci.contoso.com/builds/4521"}]}]}\n\n'
+                "---\n\n"
+                'HTTP/1.1 400 Bad Request\n'
+                '{"error":{"code":"WebhookUrlNotFound","message":"The webhook URL was not found or '
+                'has been removed.","innerError":{"date":"2026-03-17T09:15:32","request-id":'
+                '"4a5b6c7d-8e9f-0a1b-2c3d-4e5f6a7b8c9d"}}}\n\n'
+                "This has been happening since yesterday morning. We rely on these notifications for "
+                "release coordination. Can someone check if the Teams connector was deleted or expired?\n\n"
+                "Jason Park, DevOps Engineering"
+            ),
+            reporter=Reporter(
+                name="Jason Park",
+                email="jason.park@contoso.com",
+                department="DevOps Engineering",
+            ),
+            created_at="2026-03-17T09:30:00Z",
+            channel=Channel.CHAT,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-053",
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Investigate the Teams connector webhook returning WebhookUrlNotFound errors. "
+                "The connector may have been deleted or the webhook URL may have expired."
+            ),
+            remediation_steps=[
+                "Check if the Teams connector for the channel is still active in Teams admin.",
+                "Verify the webhook URL has not expired (connectors have a limited lifespan).",
+                "If the connector was removed, recreate it and update the CI/CD pipeline config.",
+                "Test the new webhook URL with a manual POST request to confirm it works.",
+            ],
+        ),
+        tags=["data-cleanup", "webhook_payload", "connector_noise", "json_payload"],
+        description=(
+            "Tests handling of multiple webhook notification JSON payloads "
+            "and HTTP request/response dumps in the description."
+        ),
+    )
+
+
+def _dc054_powershell_mixed_streams() -> EvalCase:
+    """PowerShell verbose/debug/error/warning streams interleaved."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-054",
+            subject="Automated deployment script failing on production servers",
+            description=(
+                "Our nightly deployment script is failing. Here's the full PowerShell output "
+                "with all streams enabled:\n\n"
+                "VERBOSE: [2026-03-17 02:00:01] Starting deployment pipeline v3.2.1\n"
+                "VERBOSE: [2026-03-17 02:00:01] Connecting to deployment server prod-deploy-01.contoso.com\n"
+                "VERBOSE: [2026-03-17 02:00:02] Authentication successful via managed identity\n"
+                "VERBOSE: [2026-03-17 02:00:02] Loading deployment manifest from "
+                "\\\\fileserver\\deploys\\manifest.json\n"
+                "DEBUG: Manifest hash: SHA256:a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\n"
+                "DEBUG: Target servers: [prod-app-01, prod-app-02, prod-app-03, prod-app-04]\n"
+                "VERBOSE: [2026-03-17 02:00:03] Phase 1: Pre-deployment health checks\n"
+                "VERBOSE: [2026-03-17 02:00:03] Checking prod-app-01... OK\n"
+                "VERBOSE: [2026-03-17 02:00:04] Checking prod-app-02... OK\n"
+                "WARNING: prod-app-03 disk space below 15% threshold (12.4% free)\n"
+                "VERBOSE: [2026-03-17 02:00:05] Checking prod-app-04... OK\n"
+                "VERBOSE: [2026-03-17 02:00:06] Phase 2: Stopping application pools\n"
+                "VERBOSE: [2026-03-17 02:00:06] Stopping TradingEngine pool on prod-app-01\n"
+                "VERBOSE: [2026-03-17 02:00:07] Stopping TradingEngine pool on prod-app-02\n"
+                "ERROR: Failed to stop application pool 'TradingEngine' on prod-app-03\n"
+                "ERROR: Exception: System.Runtime.InteropServices.COMException (0x80070005)\n"
+                "ERROR:    Access is denied.\n"
+                "ERROR:    at Microsoft.Web.Administration.Interop.IAppHostProperty.set_Value(Object value)\n"
+                "ERROR:    at Deploy-Application.ps1:line 247\n"
+                "WARNING: Deployment aborted due to errors. Rolling back changes.\n"
+                "VERBOSE: [2026-03-17 02:00:08] Rolling back prod-app-01... done\n"
+                "VERBOSE: [2026-03-17 02:00:09] Rolling back prod-app-02... done\n"
+                "VERBOSE: [2026-03-17 02:00:10] Rollback complete. No servers were updated.\n\n"
+                "The script has been working fine for months. I think the service account password "
+                "was changed and not updated in our deployment config.\n\n"
+                "Amit Patel, Platform Engineering"
+            ),
+            reporter=Reporter(
+                name="Amit Patel",
+                email="amit.patel@contoso.com",
+                department="Platform Engineering",
+            ),
+            created_at="2026-03-17T06:15:00Z",
+            channel=Channel.EMAIL,
+            attachments=["deploy-log-20260317.txt"],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-054",
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.AUTHENTICATION_METHOD, MissingInfoField.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Investigate the Access Denied error when stopping the TradingEngine application "
+                "pool on prod-app-03. Likely a service account credential issue."
+            ),
+            remediation_steps=[
+                "Verify the deployment service account credentials are current and not expired.",
+                "Check if a recent password rotation affected the managed identity or service account.",
+                "Test the service account permissions on prod-app-03 specifically.",
+                "Update the deployment configuration with the new credentials if changed.",
+                "Re-run the deployment script and monitor for successful completion.",
+            ],
+        ),
+        tags=["data-cleanup", "powershell_streams", "mixed_output", "deployment_log"],
+        description=(
+            "Tests handling of PowerShell verbose/debug/error/warning streams "
+            "interleaved in the ticket description."
+        ),
+    )
+
+
+def _dc055_docker_compose_flood() -> EvalCase:
+    """Multiple docker-compose.yml configurations dumped in description."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-055",
+            subject="Trading platform containers failing to start after update",
+            description=(
+                "After the platform update last night, our containerised trading services won't start. "
+                "Here are the relevant docker-compose files:\n\n"
+                "# docker-compose.trading.yml\n"
+                "version: '3.8'\n"
+                "services:\n"
+                "  order-gateway:\n"
+                "    image: contoso.azurecr.io/trading/order-gateway:2.4.1\n"
+                "    ports:\n"
+                "      - '8443:8443'\n"
+                "    environment:\n"
+                "      - MARKET_DATA_URL=https://market-data.internal:9443\n"
+                "      - FIX_ENGINE_HOST=fix-engine\n"
+                "      - FIX_ENGINE_PORT=9878\n"
+                "      - DB_CONNECTION=Server=sql-prod-01;Database=TradingDB;Trusted_Connection=true\n"
+                "    depends_on:\n"
+                "      - fix-engine\n"
+                "      - market-data\n"
+                "    deploy:\n"
+                "      resources:\n"
+                "        limits:\n"
+                "          cpus: '4.0'\n"
+                "          memory: 8G\n"
+                "    healthcheck:\n"
+                "      test: ['CMD', 'curl', '-f', 'http://localhost:8443/health']\n"
+                "      interval: 10s\n"
+                "      timeout: 5s\n"
+                "      retries: 3\n\n"
+                "  fix-engine:\n"
+                "    image: contoso.azurecr.io/trading/fix-engine:4.1.0\n"
+                "    ports:\n"
+                "      - '9878:9878'\n"
+                "    volumes:\n"
+                "      - fix-logs:/var/log/fix\n"
+                "    environment:\n"
+                "      - FIX_VERSION=4.4\n"
+                "      - SENDER_COMP_ID=CONTOSO\n"
+                "      - TARGET_COMP_ID=NYSE\n\n"
+                "  market-data:\n"
+                "    image: contoso.azurecr.io/trading/market-data:3.0.2\n"
+                "    ports:\n"
+                "      - '9443:9443'\n"
+                "    environment:\n"
+                "      - BLOOMBERG_API_KEY=${BLOOMBERG_KEY}\n"
+                "      - REUTERS_ENDPOINT=wss://reuters-feed.contoso.com/ws\n\n"
+                "volumes:\n"
+                "  fix-logs:\n\n"
+                "---\n\n"
+                "The error I get is:\n"
+                "ERROR: for order-gateway  Container 'a1b2c3d4' is unhealthy.\n"
+                "ERROR: Encountered errors while bringing up the project.\n\n"
+                "The health check on the order-gateway keeps failing. I think the market-data "
+                "service isn't responding on port 9443, which causes the gateway to fail startup. "
+                "This is blocking our morning trading session.\n\n"
+                "Yuki Tanaka, Electronic Trading"
+            ),
+            reporter=Reporter(
+                name="Yuki Tanaka",
+                email="yuki.tanaka@contoso.com",
+                department="Electronic Trading",
+            ),
+            created_at="2026-03-17T05:45:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-055",
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.ERROR_MESSAGE, MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate why the market-data container is not responding on port 9443, "
+                "causing the order-gateway health check to fail after the platform update."
+            ),
+            remediation_steps=[
+                "Check the market-data container logs for startup errors.",
+                "Verify the Bloomberg API key and Reuters endpoint are still valid after the update.",
+                "Test connectivity from the order-gateway container to market-data:9443.",
+                "Check if the container image versions are compatible with the updated platform.",
+                "Restart the docker-compose stack with verbose logging enabled.",
+            ],
+        ),
+        tags=["data-cleanup", "docker_compose", "yaml_flood", "container_config"],
+        description=(
+            "Tests handling of multiple docker-compose YAML configurations "
+            "dumped into the ticket description."
+        ),
+    )
+
+
+def _dc056_ocr_financial_report() -> EvalCase:
+    """OCR'd financial report with scrambled numbers and misaligned columns."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-056",
+            subject="PDF generator producing corrupted quarterly reports",
+            description=(
+                "The automated PDF report generator for our quarterly earnings summaries is "
+                "producing garbled output. When I OCR the PDFs, this is what comes out:\n\n"
+                "CONT0SO F1NANCIAL SERV1CES — Q1 2O26 EARN1NGS SUMMARY\n"
+                "=======================================================\n\n"
+                "Segment         Revenue    Net lncome    Marg1n    YoY Growth\n"
+                "---------       --------   ----------    ------    ----------\n"
+                "Wealth Mgmt     $2,4S7M    $3B7M         15.B%     +12.3%\n"
+                "lnst. Trading   $1,B92M    $2B1M         l4.9%     +8.7%\n"
+                "Ret. Banking    $B43M      $ll2M         l3.3%     +5.l%\n"
+                "Corp Finance    $l,2O5M    $lB9M         l5.7%     +lO.2%\n"
+                "Risk Mgmt       $43lM      $72M          l6.7%     +3.4%\n\n"
+                "T0TAL           $6,B28M    $l,O2lM       l5.O%     +8.9%\n\n"
+                "N0TE: Numbers shown in mi11ions. A11 figures are pre1iminary and\n"
+                "subject to audit rev1ew. Pr1or per1od comparab1es have been\n"
+                "restated to ref1ect the new segment report1ng structure.\n\n"
+                "The numbers are completely wrong — 'l' and '1' are getting confused, "
+                "'B' is replacing '8', 'O' and '0' are swapped. This is not just a display "
+                "issue; the underlying PDF generation engine seems to be using the wrong "
+                "font mapping. We need this fixed before the board presentation on Friday.\n\n"
+                "Diana Morales, Financial Reporting"
+            ),
+            reporter=Reporter(
+                name="Diana Morales",
+                email="diana.morales@contoso.com",
+                department="Financial Reporting",
+            ),
+            created_at="2026-03-17T11:00:00Z",
+            channel=Channel.PORTAL,
+            attachments=["Q1_2026_earnings_garbled.pdf"],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-056",
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.APPLICATION_VERSION, MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate the PDF report generator's font mapping issue causing character "
+                "confusion (l/1, B/8, O/0) in quarterly earnings reports."
+            ),
+            remediation_steps=[
+                "Check the PDF generation engine configuration for font mapping changes.",
+                "Compare the current font files with the previous working version.",
+                "Verify the report template has not been corrupted.",
+                "Regenerate a test report and validate the output against known values.",
+                "Roll back the PDF engine to the last known working version if needed.",
+            ],
+        ),
+        tags=["data-cleanup", "ocr_corruption", "financial_report", "number_scramble", "font_confusion"],
+        description=(
+            "Tests handling of OCR-corrupted financial report data with "
+            "character confusion (l/1, B/8, O/0) and misaligned columns."
+        ),
+    )
+
+
+def _dc057_quoted_printable_encoding() -> EvalCase:
+    """Email body with quoted-printable encoding artifacts."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-057",
+            subject="SSO login failing after IdP migration =?UTF-8?Q?=E2=80=94?= urgent",
+            description=(
+                "Hi IT Support,\n\n"
+                "Since the IdP migration last weekend, I can=E2=80=99t log in to any SSO-=\n"
+                "protected applications. When I try to authenticate, the Okta page shows =\n"
+                "=E2=80=9CAuthentication Failed =E2=80=93 Error Code: AUTH_ERR_0x4F21=E2=80=9D =\n"
+                "and then redirects me back to the login screen.\n\n"
+                "I=E2=80=99ve tried:\n"
+                "=E2=80=A2 Clearing browser cache and cookies\n"
+                "=E2=80=A2 Using Chrome, Edge, and Firefox\n"
+                "=E2=80=A2 Connecting from both office Wi-Fi and VPN\n"
+                "=E2=80=A2 Resetting my password via the self-service portal\n\n"
+                "None of these worked. My colleague Sarah on the same team can log in =\n"
+                "fine, so it=E2=80=99s specific to my account.\n\n"
+                "This is blocking all my work =E2=80=93 I can=E2=80=99t access Jira, Confl=\n"
+                "uence, Salesforce, or the internal HR portal.\n\n"
+                "Thanks,=20\n"
+                "Olivia Martinez=20\n"
+                "Client Relations=20\n"
+                "\n"
+                "--=20\n"
+                "Contoso Financial Services=20\n"
+                "200 Park Avenue, New York, NY 10166=20\n"
+                "Tel: +1 (212) 555-0234=20\n"
+            ),
+            reporter=Reporter(
+                name="Olivia Martinez",
+                email="olivia.martinez@contoso.com",
+                department="Client Relations",
+            ),
+            created_at="2026-03-17T08:45:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-057",
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            assigned_team=Team.IAM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.AUTHENTICATION_METHOD, MissingInfoField.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate the SSO authentication failure (AUTH_ERR_0x4F21) for this user "
+                "after the IdP migration. The issue is user-specific since colleagues can log in."
+            ),
+            remediation_steps=[
+                "Check the user's account status in Okta after the IdP migration.",
+                "Verify the user's SAML assertions are correctly mapped in the new IdP configuration.",
+                "Check if the user's account was fully migrated or if there is a sync issue.",
+                "Review Okta system logs for the specific AUTH_ERR_0x4F21 error details.",
+                "If the migration is incomplete, manually re-provision the user's SSO profile.",
+            ],
+        ),
+        tags=["data-cleanup", "quoted_printable", "content_encoding", "email_encoding"],
+        description=(
+            "Tests handling of quoted-printable encoding artifacts (=E2=80=99, "
+            "=20, soft line breaks) in the ticket description."
+        ),
+    )
+
+
+def _dc058_servicenow_audit_trail() -> EvalCase:
+    """Auto-generated ServiceNow ticket with full audit trail."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-058",
+            subject="FW: INC0045672 — VPN access request for new Singapore office",
+            description=(
+                "---------- Forwarded from ServiceNow ----------\n"
+                "Incident: INC0045672\n"
+                "State: Awaiting Assignment\n"
+                "Created: 2026-03-14 09:00:00 SGT\n"
+                "Updated: 2026-03-17 07:30:00 SGT\n\n"
+                "=== ACTIVITY LOG ===\n\n"
+                "[2026-03-17 07:30:00] System — State changed from 'Pending Approval' to "
+                "'Awaiting Assignment'\n"
+                "[2026-03-17 07:30:00] System — Approval granted by: Regional IT Manager "
+                "(approval_id: APR-2026-0892)\n"
+                "[2026-03-16 14:22:00] Sarah Lim — Additional Information: 'We need VPN "
+                "access for the entire Singapore office (15 users). The office opens on "
+                "March 24th. We need GlobalProtect profiles configured for the SG-NET-01 "
+                "VLAN. Please refer to the attached network diagram.'\n"
+                "[2026-03-16 10:05:00] System — Assigned to group: 'Network Operations — APAC'\n"
+                "[2026-03-16 10:05:00] System — Priority changed from P4 to P3 (business "
+                "justification provided)\n"
+                "[2026-03-15 16:45:00] Auto-Router — Category set to 'Network & Connectivity'\n"
+                "[2026-03-15 16:45:00] Auto-Router — Subcategory set to 'VPN Access'\n"
+                "[2026-03-15 09:30:00] System — Approval requested from: Regional IT Manager\n"
+                "[2026-03-15 09:30:00] System — State changed from 'New' to 'Pending Approval'\n"
+                "[2026-03-14 09:00:00] Sarah Lim — 'Need VPN access for Singapore office'\n\n"
+                "=== FIELD CHANGES ===\n\n"
+                "assignment_group: '' → 'Network Operations — APAC'\n"
+                "priority: '4 - Low' → '3 - Moderate'\n"
+                "state: 'New' → 'Pending Approval' → 'Awaiting Assignment'\n"
+                "subcategory: '' → 'VPN Access'\n"
+                "approval: 'not requested' → 'requested' → 'approved'\n\n"
+                "=== ORIGINAL DESCRIPTION ===\n\n"
+                "We are opening a new office in Singapore and need VPN access configured "
+                "for 15 staff members. The office will be operational from March 24, 2026. "
+                "Please set up GlobalProtect VPN profiles for all users on the SG-NET-01 "
+                "network segment.\n\n"
+                "---------- End ServiceNow Forward ----------\n"
+            ),
+            reporter=Reporter(
+                name="Sarah Lim",
+                email="sarah.lim@contoso.com",
+                department="Operations — APAC",
+            ),
+            created_at="2026-03-17T07:45:00Z",
+            channel=Channel.EMAIL,
+            attachments=["sg_office_network_diagram.pdf"],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-058",
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            assigned_team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.NETWORK_LOCATION, MissingInfoField.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Configure GlobalProtect VPN profiles for 15 users at the new Singapore "
+                "office on the SG-NET-01 VLAN before the March 24 opening date."
+            ),
+            remediation_steps=[
+                "Review the attached network diagram for the Singapore office layout.",
+                "Create GlobalProtect VPN profiles for the SG-NET-01 VLAN segment.",
+                "Provision VPN access for the 15 users listed in the request.",
+                "Test VPN connectivity from the Singapore network before the office opens.",
+                "Provide onboarding documentation for VPN setup to the Singapore team.",
+            ],
+        ),
+        tags=["data-cleanup", "itsm_audit_trail", "state_transitions", "servicenow_forward"],
+        description=(
+            "Tests handling of a forwarded ServiceNow ticket with full audit trail, "
+            "state transitions, field changes, and approval chain."
+        ),
+    )
+
+
+def _dc059_bloomberg_terminal_paste() -> EvalCase:
+    """Bloomberg terminal fixed-width output pasted into description."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-059",
+            subject="URGENT — Bloomberg DL not connecting to market data feed",
+            description=(
+                "Bloomberg Desktop is not connecting to the live market data feed since "
+                "this morning. I need this fixed ASAP — morning trading session starts at 9:30.\n\n"
+                "Here is what I see on my Bloomberg terminal (copied the screen output):\n\n"
+                "BLOOMBERG PROFESSIONAL SERVICE\n"
+                "============================================================\n"
+                "CONNECTION STATUS: DISCONNECTED\n"
+                "Last Connected: 2026-03-16 16:32:00 EST\n"
+                "Error: FEED_TIMEOUT_ERR (0x7E01) — Market data subscription timed out\n\n"
+                "SECURITY        LAST     CHG      %CHG     BID      ASK      VOL\n"
+                "-----------------------------------------------------------------------\n"
+                "SPX Index       5,247.83 ---.--   --.--    ---.--   ---.--   ---\n"
+                "ES1 Index       5,251.50 ---.--   --.--    ---.--   ---.--   ---\n"
+                "NQ1 Index      18,432.75 ---.--   --.--    ---.--   ---.--   ---\n"
+                "VIX Index          14.23 ---.--   --.--    ---.--   ---.--   ---\n"
+                "UST 10Y            4.287 ---.--   --.--    ---.--   ---.--   ---\n"
+                "EUR Curncy         1.0842 ---.--  --.--    ---.--   ---.--   ---\n"
+                "GBP Curncy         1.2734 ---.--  --.--    ---.--   ---.--   ---\n"
+                "CL1 Comdty        78.43  ---.--   --.--    ---.--   ---.--   ---\n"
+                "GC1 Comdty     2,178.50  ---.--   --.--    ---.--   ---.--   ---\n"
+                "-----------------------------------------------------------------------\n"
+                "ALL SUBSCRIPTIONS STALE — NO LIVE DATA\n\n"
+                "BLP API STATUS:\n"
+                "  blpapi-cpp: v3.19.1.1\n"
+                "  Session: INACTIVE\n"
+                "  Service: //blp/mktdata — NOT_AVAILABLE\n"
+                "  Service: //blp/refdata — NOT_AVAILABLE\n\n"
+                "I already restarted Bloomberg and rebooted my workstation. The connection "
+                "test (PCNT <GO>) says 'External connectivity OK' but the data feed still "
+                "shows stale. Other traders on the floor have the same issue.\n\n"
+                "Marcus Whitfield, Equities Trading Desk"
+            ),
+            reporter=Reporter(
+                name="Marcus Whitfield",
+                email="marcus.whitfield@contoso.com",
+                department="Equities Trading",
+            ),
+            created_at="2026-03-17T08:15:00Z",
+            channel=Channel.PHONE,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-059",
+            category=Category.SOFTWARE,
+            priority=Priority.P1,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=True,
+            missing_information=[MissingInfoField.AFFECTED_USERS, MissingInfoField.NETWORK_LOCATION],
+            next_best_action=(
+                "Urgently investigate the Bloomberg market data feed outage affecting the "
+                "trading floor. Multiple traders impacted before market open."
+            ),
+            remediation_steps=[
+                "Contact Bloomberg support to check if the FEED_TIMEOUT_ERR is on their end.",
+                "Verify network connectivity between the trading floor and Bloomberg data centers.",
+                "Check if firewall rules or proxy settings were changed affecting Bloomberg ports.",
+                "Determine the scope of impact — how many traders and desks are affected.",
+                "Escalate to network operations if the issue is on Contoso's network infrastructure.",
+            ],
+        ),
+        tags=["data-cleanup", "bloomberg_terminal", "fixed_width_data", "financial_terminal", "market_data"],
+        description=(
+            "Tests handling of Bloomberg terminal fixed-width output with "
+            "financial data grids and API status information."
+        ),
+    )
+
+
+def _dc060_excel_formula_artifacts() -> EvalCase:
+    """Clipboard paste from Excel showing raw formulas instead of values."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-060",
+            subject="Internal reporting tool export showing formulas instead of values",
+            description=(
+                "The export function in our internal reporting tool (FinReport v5.2) is broken. "
+                "When I export the monthly P&L summary to Excel, the cells show formulas instead "
+                "of calculated values. Here's what the export looks like when I paste from "
+                "the clipboard:\n\n"
+                "Department\tRevenue\tExpenses\tNet Income\tMargin\n"
+                "Equities\t=SUM(B2:B13)\t=SUM(C2:C13)\t=B14-C14\t=D14/B14\n"
+                "Fixed Income\t=VLOOKUP(\"FI\",DataSource!A:D,2,FALSE)\t"
+                "=VLOOKUP(\"FI\",DataSource!A:D,3,FALSE)\t=B15-C15\t=D15/B15\n"
+                "Derivatives\t=INDEX(Revenue,MATCH(\"DRV\",Segments,0))\t"
+                "=INDEX(Expenses,MATCH(\"DRV\",Segments,0))\t=B16-C16\t#REF!\n"
+                "Wealth Mgmt\t$2,457,000\t$1,893,000\t=B17-C17\t=D17/B17\n"
+                "Corporate\t#N/A\t#N/A\t#VALUE!\t#DIV/0!\n"
+                "TOTAL\t=SUM(B14:B18)\t=SUM(C14:C18)\t=SUM(D14:D18)\t=D19/B19\n\n"
+                "As you can see, some cells have actual values, some show the underlying "
+                "formulas, and some show Excel errors (#REF!, #N/A, #VALUE!, #DIV/0!). The "
+                "DataSource worksheet reference is breaking because the export doesn't include "
+                "the linked workbook.\n\n"
+                "This report needs to go to the CFO by end of day Wednesday. Please fix the "
+                "export function so it outputs values, not formulas.\n\n"
+                "Karen Liu, Financial Planning & Analysis"
+            ),
+            reporter=Reporter(
+                name="Karen Liu",
+                email="karen.liu@contoso.com",
+                department="Financial Planning & Analysis",
+            ),
+            created_at="2026-03-17T13:20:00Z",
+            channel=Channel.PORTAL,
+            attachments=["PL_summary_broken_export.xlsx"],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-060",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.APPLICATION_VERSION, MissingInfoField.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate the FinReport v5.2 export function that is outputting raw "
+                "Excel formulas and broken references instead of calculated values."
+            ),
+            remediation_steps=[
+                "Check the FinReport export configuration for formula vs. value output settings.",
+                "Verify the DataSource worksheet link is included in the export template.",
+                "Test the export function with a smaller dataset to isolate the issue.",
+                "If a bug, file a defect with the FinReport development team for a hotfix.",
+                "As a workaround, manually copy-paste values from the live workbook for the CFO report.",
+            ],
+        ),
+        tags=["data-cleanup", "excel_formulas", "clipboard_artifacts", "formula_noise", "spreadsheet_errors"],
+        description=(
+            "Tests handling of Excel clipboard paste showing raw formulas "
+            "(=SUM, =VLOOKUP, =INDEX) and errors (#REF!, #N/A, #VALUE!, #DIV/0!)."
+        ),
+    )
+
+
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
 
 def build_dataset() -> EvalDataset:
-    """Build and return the data-cleanup evaluation dataset (50 cases)."""
+    """Build and return the data-cleanup evaluation dataset (60 cases)."""
     return EvalDataset(
         name="data_cleanup",
         description=(
@@ -3453,7 +4192,10 @@ def build_dataset() -> EvalDataset:
             "system can correctly process tickets despite real-world data quality issues such "
             "as long email chains, embedded base64, HTML markup, mojibake, excessive whitespace, "
             "mixed languages, container logs, invisible Unicode, MIME boundaries, calendar "
-            "metadata, NDR bounce-backs, PII leakage, and other artefacts."
+            "metadata, NDR bounce-backs, PII leakage, GraphQL dumps, crash dumps, webhook "
+            "payloads, PowerShell streams, Docker configs, OCR corruption, quoted-printable "
+            "encoding, ITSM audit trails, Bloomberg terminal output, Excel formula artifacts, "
+            "and other artefacts."
         ),
         cases=[
             _dc001_very_long_email(),
@@ -3506,6 +4248,16 @@ def build_dataset() -> EvalDataset:
             _dc048_financial_ticker_confusion(),
             _dc049_tcpdump_output(),
             _dc050_screen_reader_artifacts(),
+            _dc051_graphql_introspection_dump(),
+            _dc052_windows_minidump_output(),
+            _dc053_webhook_payload_noise(),
+            _dc054_powershell_mixed_streams(),
+            _dc055_docker_compose_flood(),
+            _dc056_ocr_financial_report(),
+            _dc057_quoted_printable_encoding(),
+            _dc058_servicenow_audit_trail(),
+            _dc059_bloomberg_terminal_paste(),
+            _dc060_excel_formula_artifacts(),
         ],
     )
 

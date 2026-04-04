@@ -6413,7 +6413,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Thanks,\nAlex Chen\nCompliance Analyst, Regulatory Affairs\n"
                 "Desk 4-217, NYC Office"
             ),
-            category=Category.DATA,
+            category=Category.DATA_STORAGE,
             priority=Priority.P3,
             team=Team.DATA_PLATFORM,
             needs_escalation=False,
@@ -6758,7 +6758,8 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "migrated Docker hosts."
             ),
             remediation_steps=[
-                "Run 'az acr login --name contosoacr' or configure a service principal for ACR pull access on each new host.",
+                "Run 'az acr login --name contosoacr' or configure a service principal "
+                "for ACR pull access on each new host.",
                 "Verify the managed identity or service principal has AcrPull role on the contosoacr registry.",
                 "Test pulling the image manually: docker pull contosoacr.azurecr.io/trade-recon-api:4.1.0.",
                 "Once authenticated, re-run docker compose up and verify all services start healthy.",
@@ -6899,9 +6900,12 @@ def get_scenarios() -> list[ScenarioDefinition]:
             remediation_steps=[
                 "Check the user's Azure AD sign-in logs for error codes during the redirect loop.",
                 "Review conditional access policies applied to the Trade Portal app registration.",
-                "Revoke the user's refresh tokens (Revoke-AzureADUserAllRefreshToken) and have them re-authenticate.",
-                "Verify the app registration redirect URIs match the current Trade Portal deployment URL.",
-                "If the issue is policy-related, grant a temporary exclusion so the user can process the 47 pending trade confirmations.",
+                "Revoke the user's refresh tokens (Revoke-AzureADUserAllRefreshToken) "
+                "and have them re-authenticate.",
+                "Verify the app registration redirect URIs match the current "
+                "Trade Portal deployment URL.",
+                "If the issue is policy-related, grant a temporary exclusion so the user "
+                "can process the 47 pending trade confirmations.",
             ],
             reporter_name="Elena Vasquez",
             reporter_email="elena.vasquez@contoso.com",
@@ -7011,10 +7015,13 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "HK-OFFICE-VPN-2026Q1 GlobalProtect group and configure split-tunnel for HK→NYC."
             ),
             remediation_steps=[
-                "Add AD accounts HK-2026-001 through HK-2026-012 to the HK-OFFICE-VPN-2026Q1 security group immediately.",
-                "Verify GlobalProtect portal configuration includes the HK-OFFICE-VPN-2026Q1 group in the allowed access policy.",
+                "Add AD accounts HK-2026-001 through HK-2026-012 to the "
+                "HK-OFFICE-VPN-2026Q1 security group immediately.",
+                "Verify GlobalProtect portal configuration includes the "
+                "HK-OFFICE-VPN-2026Q1 group in the allowed access policy.",
                 "Follow up on Palo Alto TAC case #TA-887432 for the split-tunnel configuration.",
-                "Have one new hire test VPN connectivity from the HK office to confirm access to NYC trading systems.",
+                "Have one new hire test VPN connectivity from the HK office "
+                "to confirm access to NYC trading systems.",
                 "Update INC0048721 and close once all 12 users have confirmed working VPN access.",
             ],
             reporter_name="Jennifer Wong",
@@ -7087,9 +7094,12 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "floor VLAN to Bloomberg feed servers on 10.60.1.x and check firewall rules."
             ),
             remediation_steps=[
-                "Verify network connectivity from the trading floor VLAN to the Bloomberg feed servers (10.60.1.101-103) on port 8194.",
-                "Check the firewall rules — the BLPAPI diagnostic says it cannot reach the policy server, suggesting a firewall change.",
-                "Contact Bloomberg support with the B-PIPE connection error details if the network path is clear.",
+                "Verify network connectivity from the trading floor VLAN to the "
+                "Bloomberg feed servers (10.60.1.101-103) on port 8194.",
+                "Check the firewall rules — the BLPAPI diagnostic says it cannot "
+                "reach the policy server, suggesting a firewall change.",
+                "Contact Bloomberg support with the B-PIPE connection error details "
+                "if the network path is clear.",
                 "As an interim measure, expand access to the backup Reuters feed for more traders.",
                 "Once connectivity is restored, verify all 12,847 subscriptions re-establish and data is flowing.",
             ],
@@ -7146,7 +7156,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Tanya Birch\nRisk Reporting Analyst\nEnterprise Risk Management\n"
                 "Floor 9, NYC Office"
             ),
-            category=Category.DATA,
+            category=Category.DATA_STORAGE,
             priority=Priority.P2,
             team=Team.DATA_PLATFORM,
             needs_escalation=False,
@@ -7157,11 +7167,16 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "change in v3.0 and consider rolling back to v2.8 as a hotfix."
             ),
             remediation_steps=[
-                "Compare ContosoReporter v3.0 vs v2.8 export logic — v3.0 likely switched from value-paste to formula-paste mode.",
-                "Check if the export uses OpenXML or COM automation and whether 'PasteSpecial Values' was removed in v3.0.",
-                "Roll back ContosoReporter to v2.8 on the reporter's workstation as an immediate fix for tonight's risk report.",
-                "File a defect with the ContosoReporter development team to fix the formula-vs-value export regression in v3.0.",
-                "Investigate the #REF! and #N/A errors separately — these may indicate broken cross-sheet references in the source workbook.",
+                "Compare ContosoReporter v3.0 vs v2.8 export logic — v3.0 likely "
+                "switched from value-paste to formula-paste mode.",
+                "Check if the export uses OpenXML or COM automation and whether "
+                "'PasteSpecial Values' was removed in v3.0.",
+                "Roll back ContosoReporter to v2.8 on the reporter's workstation "
+                "as an immediate fix for tonight's risk report.",
+                "File a defect with the ContosoReporter development team to fix "
+                "the formula-vs-value export regression in v3.0.",
+                "Investigate the #REF! and #N/A errors separately — these may "
+                "indicate broken cross-sheet references in the source workbook.",
             ],
             reporter_name="Tanya Birch",
             reporter_email="tanya.birch@contoso.com",
