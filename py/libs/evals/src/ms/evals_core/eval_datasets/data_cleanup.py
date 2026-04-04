@@ -1966,20 +1966,770 @@ def _dc030_concatenated_tickets() -> EvalCase:
     )
 
 
+def _dc031_mime_boundaries() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-031",
+            subject="FW: SAP GUI login error after patch — MIME conversion issue?",
+            description=(
+                "This is a multi-part message in MIME format.\n"
+                "------=_Part_12345_987654321.1712000000000\n"
+                "Content-Type: text/plain; charset=UTF-8\n"
+                "Content-Transfer-Encoding: quoted-printable\n\n"
+                "Hi IT Support,\n\n"
+                "Since last Thursday's SAP GUI patch (version 8.00 PL4), I'm getting a "
+                "persistent error every time I try to log in to our ECC production system "
+                "(SID: PRD, client 100). The login dialog appears, I enter my credentials, "
+                "and after about 15 seconds I get: =E2=80=9CICE_LOGON_FAIL: SSO ticket "
+                "validation failed=E2=80=9D. This is blocking all my month-end closing "
+                "activities in FI/CO. I've cleared my SSO cache and regenerated my SNC "
+                "certificate via the SAP Logon Pad but the issue persists. Our team lead "
+                "Karen Walsh is also seeing the same error on her machine.\n\n"
+                "Thanks,\nMichael Torres\nFinancial Control\n\n"
+                "------=_Part_12345_987654321.1712000000000\n"
+                "Content-Type: text/html; charset=UTF-8\n"
+                "Content-Transfer-Encoding: quoted-printable\n\n"
+                "<html><body><p>Hi IT Support,</p><p>Since last Thursday=E2=80=99s SAP GUI "
+                "patch (version 8.00 PL4)...</p></body></html>\n"
+                "------=_Part_12345_987654321.1712000000000--\n"
+            ),
+            reporter=Reporter(
+                name="Michael Torres",
+                email="michael.torres@contoso.com",
+                department="Financial Control",
+            ),
+            created_at="2026-04-07T09:15:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-031",
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.APPLICATION_VERSION],
+            next_best_action=(
+                "Investigate SAP GUI SSO login failure (ICE_LOGON_FAIL) on ECC production "
+                "system PRD/100 after SAP GUI 8.00 PL4 patch — likely an SSO ticket "
+                "validation regression introduced by the patch."
+            ),
+            remediation_steps=[
+                "Verify SAP GUI 8.00 PL4 release notes for known SSO ticket validation issues.",
+                "Compare SNC/SSO configuration on the affected workstations against a working baseline.",
+                "Test login with explicit user/password (bypassing SSO) to confirm the SAP backend is reachable.",
+                "Roll back SAP GUI to PL3 on a test machine to confirm the patch is the root cause.",
+                "If confirmed, open an SAP support incident and apply a targeted hotfix or workaround.",
+            ],
+        ),
+        tags=["data-cleanup", "mime-boundaries"],
+        description="Ticket body contains raw MIME multipart boundary markers and quoted-printable encoding artifacts.",
+    )
+
+
+def _dc032_multiple_base64_images() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-032",
+            subject="Network switch on floor 3 dropping packets — screenshots inline",
+            description=(
+                "Hi Network Team,\n\n"
+                "The Cisco Catalyst 9300-48P switch in IDF closet 3-B (hostname: CHI-IDF3B-SW01) "
+                "has been intermittently dropping packets since Monday morning. Users on VLANs 310 "
+                "and 312 are experiencing 30-40% packet loss during peak hours (10 AM - 2 PM). "
+                "I ran a continuous ping to the core switch (10.40.1.1) and captured these:\n\n"
+                "Screenshot 1 — ping results:\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccq"
+                "FnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF8WlUWHRYTUw6Y29tLmFkb2JlLn"
+                "htcAAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlI"
+                "enJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5z"
+                "Om1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA3LjItYzAwMCA3OS5m"
+                "\n\n"
+                "Screenshot 2 — switch port errors on Gi1/0/24:\n"
+                "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAA"
+                "AABAAEAAAICRAEAOw==ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop"
+                "qrstuvwxyz0123456789+/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn"
+                "opqrstuvwxyz0123456789+/ABCDEFGHIJKLMNOPQRSTUVWXYZ\n\n"
+                "Screenshot 3 — Spanning Tree topology showing reconvergence:\n"
+                "data:image/png;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcG"
+                "BQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAx"
+                "NDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIy"
+                "\n\n"
+                "I suspect a bad GBIC in slot 1 port 24 or possibly a spanning tree loop "
+                "caused by someone patching an unauthorized switch on VLAN 310. The MAC "
+                "address table is showing 3x the expected entries. Can you investigate "
+                "before the trading floor opens tomorrow?\n\n"
+                "Regards,\nSarah Kim\nNetwork Infrastructure"
+            ),
+            reporter=Reporter(
+                name="Sarah Kim",
+                email="sarah.kim@contoso.com",
+                department="Network Infrastructure",
+            ),
+            created_at="2026-04-07T16:45:00Z",
+            channel=Channel.PORTAL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-032",
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            assigned_team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.NETWORK_LOCATION],
+            next_best_action=(
+                "Investigate intermittent packet loss (30-40%) on Cisco Catalyst 9300 "
+                "switch CHI-IDF3B-SW01 affecting VLANs 310 and 312 — possible bad GBIC "
+                "on Gi1/0/24 or spanning tree loop from an unauthorized switch."
+            ),
+            remediation_steps=[
+                "Check Gi1/0/24 for CRC errors, input/output errors, and GBIC diagnostics (show interfaces transceiver).",
+                "Review the MAC address table on VLANs 310 and 312 for unexpected entries indicating a rogue switch.",
+                "Inspect Spanning Tree topology for recent reconvergence events (show spanning-tree detail).",
+                "If a rogue switch is found, shut the offending port and enable BPDU Guard on all access ports.",
+                "Replace the GBIC in Gi1/0/24 if diagnostics indicate failure.",
+            ],
+        ),
+        tags=["data-cleanup", "multiple-base64", "inline-images"],
+        description="Ticket contains three separate base64-encoded inline images interspersed with network issue details.",
+    )
+
+
+def _dc033_ics_calendar_metadata() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-033",
+            subject="RE: Calendar sync broken — invite data pasted below",
+            description=(
+                "Hi team,\n\n"
+                "My Outlook calendar has completely stopped syncing with my iPhone (iOS 17.4). "
+                "Meetings I accept on the desktop don't show up on my phone, and vice versa. "
+                "This started two days ago after I accepted a recurring board meeting invite. "
+                "I exported the problematic invite — here's the raw data:\n\n"
+                "BEGIN:VCALENDAR\n"
+                "VERSION:2.0\n"
+                "PRODID:-//Microsoft Corporation//Outlook 16.0 MIMEDIR//EN\n"
+                "METHOD:REQUEST\n"
+                "BEGIN:VTIMEZONE\n"
+                "TZID:Eastern Standard Time\n"
+                "BEGIN:STANDARD\n"
+                "DTSTART:16011104T020000\n"
+                "RRULE:FREQ=YEARLY;BYDAY=1SU;BYMONTH=11\n"
+                "TZOFFSETFROM:-0400\n"
+                "TZOFFSETTO:-0500\n"
+                "END:STANDARD\n"
+                "END:VTIMEZONE\n"
+                "BEGIN:VEVENT\n"
+                "DTSTART;TZID=Eastern Standard Time:20260415T090000\n"
+                "DTEND;TZID=Eastern Standard Time:20260415T110000\n"
+                "RRULE:FREQ=MONTHLY;BYDAY=3WE;COUNT=12\n"
+                "SUMMARY:Q2 Board of Directors Meeting\n"
+                "LOCATION:Executive Conference Room 22-A\n"
+                "ORGANIZER;CN=CEO Office:mailto:ceo.office@contoso.com\n"
+                "ATTENDEE;ROLE=REQ-PARTICIPANT;RSVP=TRUE:mailto:robert.chen@contoso.com\n"
+                "ATTENDEE;ROLE=REQ-PARTICIPANT;RSVP=TRUE:mailto:cfo@contoso.com\n"
+                "STATUS:CONFIRMED\n"
+                "SEQUENCE:3\n"
+                "END:VEVENT\n"
+                "END:VCALENDAR\n\n"
+                "After accepting this invite the sync just died. All other Exchange features "
+                "(email, contacts) work fine on the phone. I've already tried removing and "
+                "re-adding my Exchange account on iOS but the calendar still won't sync.\n\n"
+                "Robert Chen\nChief Risk Officer"
+            ),
+            reporter=Reporter(
+                name="Robert Chen",
+                email="robert.chen@contoso.com",
+                department="Executive Management",
+            ),
+            created_at="2026-04-08T08:00:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-033",
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.DEVICE_INFO],
+            next_best_action=(
+                "Investigate Outlook-to-iOS calendar sync failure triggered by a recurring "
+                "board meeting invite (RRULE with SEQUENCE:3) — likely a corrupted calendar "
+                "item blocking the Exchange ActiveSync sync state."
+            ),
+            remediation_steps=[
+                "Check Exchange ActiveSync device partnership status for the user's iPhone.",
+                "Examine the problematic calendar item server-side using MFCMAPI or EWS to identify corruption.",
+                "Delete and recreate the recurring board meeting invite if the item is corrupted.",
+                "Reset the ActiveSync sync state on the server for the calendar folder.",
+                "Verify calendar sync resumes on the iPhone after the fix.",
+            ],
+        ),
+        tags=["data-cleanup", "calendar-metadata", "ics"],
+        description="Ticket body contains raw ICS/vCalendar data mixed with a calendar sync failure complaint.",
+    )
+
+
+def _dc034_buried_issue_long_email() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-034",
+            subject="Quick question from the 7th floor",
+            description=(
+                "Hi IT,\n\n"
+                "Hope you're all doing well! I know you guys have been super busy lately with "
+                "the data center migration and everything. I saw the update email from Marcus in "
+                "Infrastructure about the weekend maintenance window — sounds like a big effort. "
+                "Kudos to everyone involved!\n\n"
+                "Anyway, I wanted to give you a bit of context before I get to my question. So "
+                "last week our team had an offsite at the Grand Hyatt downtown for the annual "
+                "strategic planning session. It was actually a great event — we finalized the "
+                "new product roadmap for Q3/Q4 and there were some really interesting "
+                "presentations from the London office about their FX derivatives platform "
+                "rewrite. Patricia from Compliance also gave a talk about the new SEC "
+                "reporting requirements that are coming in September, which is going to affect "
+                "how we handle client data in the warehouse.\n\n"
+                "Speaking of the London office, I've been working pretty closely with James "
+                "Whitfield and his team on the cross-border settlement engine. They're using "
+                "some new containerized microservices architecture that's honestly pretty "
+                "impressive. We had a three-hour workshop about their CI/CD pipeline and how "
+                "they've managed to get deployment times down to under 8 minutes for the full "
+                "stack. I think we could learn a lot from their approach. I'm going to set up "
+                "a knowledge-sharing session with our DevOps team when I get a chance.\n\n"
+                "On a totally different note, did you hear that the cafeteria on 3 is getting "
+                "renovated? Apparently they're adding a sushi bar and a proper espresso station. "
+                "The current coffee situation on our floor is pretty dire — the Keurig machine "
+                "has been making these weird gurgling noises for weeks. Not an IT issue, I know, "
+                "but I figured someone might know who to contact about facilities stuff.\n\n"
+                "Oh, and before I forget — I ran into Dave Kowalski from Accounting in the "
+                "elevator yesterday and he mentioned that his team is having trouble with the "
+                "new SAP Concur integration for expense reports. Apparently the receipts aren't "
+                "syncing from the mobile app. I told him to open a ticket but you know how it "
+                "is — he'll probably just email you guys directly.\n\n"
+                "Also, I've been meaning to ask — is there any update on the VDI refresh "
+                "project? We were told back in January that we'd be getting Citrix upgrades "
+                "by end of Q1 but I haven't heard anything since. The current VDI performance "
+                "is pretty sluggish, especially when running Bloomberg and Excel simultaneously. "
+                "My team has been complaining about 5-10 second lag when switching between "
+                "worksheets on large models. Not urgent, just wondering about the timeline.\n\n"
+                "Alright, here's the actual reason I'm writing. I was reviewing my authentication "
+                "logs this morning in the Azure AD portal (I have read access for our team's "
+                "service accounts) and I noticed something alarming. Our production service "
+                "account svc-tradecapture-prod had a successful interactive login at 03:42 AM "
+                "EST on Saturday April 5th from an IP address geolocated to Vladivostok, Russia "
+                "(IP: 91.243.xx.xx). This account should ONLY authenticate via non-interactive "
+                "service principal flows from our Azure East US 2 datacenter. There should be "
+                "absolutely no interactive logins, and certainly not from a Russian IP address. "
+                "I think this may be a compromised credential and needs immediate investigation.\n\n"
+                "Thanks!\nAisha Patel\nSenior Quantitative Developer\nElectronic Trading"
+            ),
+            reporter=Reporter(
+                name="Aisha Patel",
+                email="aisha.patel@contoso.com",
+                department="Electronic Trading",
+            ),
+            created_at="2026-04-07T10:30:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-034",
+            category=Category.SECURITY,
+            priority=Priority.P1,
+            assigned_team=Team.SECURITY_OPS,
+            needs_escalation=True,
+            missing_information=[MissingInfoField.TIMESTAMP, MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Immediately investigate the unauthorized interactive login to production "
+                "service account svc-tradecapture-prod from a Russian IP address (91.243.xx.xx) "
+                "at 03:42 AM EST on April 5th — this indicates a potential credential compromise "
+                "of a critical trading system."
+            ),
+            remediation_steps=[
+                "Immediately rotate the credentials for svc-tradecapture-prod and revoke all active sessions.",
+                "Review Azure AD sign-in logs for the service account over the past 30 days for additional anomalous logins.",
+                "Check whether the IP 91.243.xx.xx appears in threat intelligence feeds.",
+                "Audit what resources the account accessed during the suspicious session.",
+                "Enable Conditional Access policies to block interactive logins and restrict to Azure East US 2 IP ranges.",
+                "Engage the Security Incident Response team for a full investigation.",
+            ],
+        ),
+        tags=["data-cleanup", "buried-issue", "very-long-email"],
+        description=(
+            "Very long email with extensive background chatter where the critical security "
+            "alert is buried at the end of the message."
+        ),
+    )
+
+
+def _dc035_multilingual_disclaimers() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-035",
+            subject="Keyboard not working — keys unresponsive",
+            description=(
+                "Hello IT,\n\n"
+                "The built-in keyboard on my Dell Latitude 7440 has stopped responding. The "
+                "entire top row of keys (F1 through F12, Escape, and the number row) are "
+                "completely dead. The trackpad works fine and I can type using an external USB "
+                "keyboard. The issue started this morning after I spilled a small amount of "
+                "water near the laptop — I wiped it up immediately but the top row keys have "
+                "been unresponsive ever since. I've tried restarting and running the Dell "
+                "built-in diagnostics (ePSA) but the keyboard test fails for the affected "
+                "keys. My asset tag is CONT-L7440-2847.\n\n"
+                "Thanks,\nNadia Kowalski\nFixed Income Trading\n\n"
+                "---\n\n"
+                "CONFIDENTIALITY NOTICE: This e-mail message, including any attachments, is "
+                "for the sole use of the intended recipient(s) and may contain confidential and "
+                "privileged information. Any unauthorized review, use, disclosure, or distribution "
+                "is prohibited. If you are not the intended recipient, please contact the sender "
+                "by reply e-mail and destroy all copies of the original message.\n\n"
+                "AVIS DE CONFIDENTIALITÉ : Ce message électronique, y compris les pièces "
+                "jointes, est destiné exclusivement à l'usage du ou des destinataires prévus "
+                "et peut contenir des informations confidentielles et protégées. Toute "
+                "consultation, utilisation, divulgation ou distribution non autorisée est "
+                "interdite. Si vous n'êtes pas le destinataire prévu, veuillez contacter "
+                "l'expéditeur par e-mail et détruire toutes les copies du message original.\n\n"
+                "VERTRAULICHKEITSHINWEIS: Diese E-Mail-Nachricht einschließlich aller Anhänge "
+                "ist ausschließlich für den/die vorgesehenen Empfänger bestimmt und kann "
+                "vertrauliche und geschützte Informationen enthalten. Jede unbefugte Überprüfung, "
+                "Nutzung, Offenlegung oder Verbreitung ist untersagt. Wenn Sie nicht der "
+                "vorgesehene Empfänger sind, wenden Sie sich bitte per E-Mail an den Absender "
+                "und vernichten Sie alle Kopien der Originalnachricht.\n\n"
+                "AVISO DE CONFIDENCIALIDAD: Este mensaje de correo electrónico, incluidos los "
+                "archivos adjuntos, es para uso exclusivo del destinatario o destinatarios "
+                "previstos y puede contener información confidencial y privilegiada. Queda "
+                "prohibida cualquier revisión, uso, divulgación o distribución no autorizados. "
+                "Si usted no es el destinatario previsto, comuníquese con el remitente por "
+                "correo electrónico y destruya todas las copias del mensaje original.\n\n"
+                "AVVISO DI RISERVATEZZA: Questo messaggio di posta elettronica, inclusi gli "
+                "allegati, è destinato esclusivamente all'uso del destinatario o dei destinatari "
+                "previsti e può contenere informazioni riservate e privilegiate. È vietato "
+                "qualsiasi esame, utilizzo, divulgazione o distribuzione non autorizzati.\n\n"
+                "AVISO DE CONFIDENCIALIDADE: Esta mensagem de e-mail, incluindo quaisquer "
+                "anexos, é para uso exclusivo do(s) destinatário(s) pretendido(s) e pode conter "
+                "informações confidenciais e privilegiadas. Qualquer revisão, uso, divulgação "
+                "ou distribuição não autorizada é proibida.\n\n"
+                "機密保持に関するお知らせ：この電子メールメッセージは、添付ファイルを含め、"
+                "意図された受信者のみを対象としており、機密情報および特権情報が含まれている"
+                "可能性があります。不正な閲覧、使用、開示、または配布は禁止されています。\n\n"
+                "保密声明：本电子邮件及其附件仅供预期收件人使用，可能包含机密和特权信息。"
+                "未经授权的审查、使用、披露或分发均被禁止。如果您不是预期收件人，请通过"
+                "回复电子邮件联系发件人并销毁原始邮件的所有副本。\n\n"
+                "Contoso Financial Services | 200 Park Avenue, New York, NY 10166\n"
+            ),
+            reporter=Reporter(
+                name="Nadia Kowalski",
+                email="nadia.kowalski@contoso.com",
+                department="Fixed Income Trading",
+            ),
+            created_at="2026-04-08T11:20:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-035",
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.DEVICE_INFO],
+            next_best_action=(
+                "Arrange hardware repair or replacement for Dell Latitude 7440 (asset tag "
+                "CONT-L7440-2847) with non-functional top-row keyboard keys after a liquid "
+                "spill incident."
+            ),
+            remediation_steps=[
+                "Confirm the affected keys via Dell ePSA diagnostics report.",
+                "Check Dell warranty status for asset tag CONT-L7440-2847.",
+                "If under warranty, open a Dell ProSupport case for keyboard replacement.",
+                "Provide the user with a loaner laptop or external keyboard while repair is pending.",
+                "Once repaired, verify all keys function and update the asset record.",
+            ],
+        ),
+        tags=["data-cleanup", "multilingual-disclaimers"],
+        description=(
+            "Short hardware issue buried under legal disclaimers repeated in eight languages."
+        ),
+    )
+
+
+def _dc036_ndr_bounce() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-036",
+            subject="Undeliverable: RE: Q2 forecast data file for compliance",
+            description=(
+                "This is an automatically generated Delivery Status Notification.\n\n"
+                "Delivery to the following recipients failed permanently:\n\n"
+                "    compliance-reports@contoso.com\n\n"
+                "Technical details of permanent failure:\n"
+                "550 5.1.1 The email account that you tried to reach does not exist. Please "
+                "try double-checking the recipient's email address for typos or unnecessary "
+                "spaces. Learn more at https://support.contoso.com/mail/answer/550\n\n"
+                "Diagnostic-Code: smtp; 550-5.1.1 The email account that you tried to reach "
+                "does not exist.\n"
+                "Remote-MTA: dns; mail.contoso.com (10.50.2.14)\n"
+                "Reporting-MTA: dns; smtp-relay-chi-01.contoso.com\n"
+                "X-Contoso-MailScanner-ID: MS-20260408-0923-BNC-44821\n"
+                "Received-From-MTA: dns; edge-gw-02.contoso.com (10.50.1.3)\n"
+                "Arrival-Date: Wed, 08 Apr 2026 09:23:15 -0400\n"
+                "Final-Recipient: rfc822; compliance-reports@contoso.com\n"
+                "Action: failed\n"
+                "Status: 5.1.1\n"
+                "Last-Attempt-Date: Wed, 08 Apr 2026 09:23:16 -0400\n\n"
+                "--- Below this line is a copy of the original message ---\n\n"
+                "From: Kevin Okafor <kevin.okafor@contoso.com>\n"
+                "To: compliance-reports@contoso.com\n"
+                "Date: Wed, 08 Apr 2026 09:22:58 -0400\n"
+                "Subject: Q2 forecast data file for compliance\n\n"
+                "Hi Compliance team,\n\n"
+                "I've been trying to send the Q2 forecast data file to the compliance-reports "
+                "shared mailbox for the past three days and every time it bounces back with a "
+                "550 error. This mailbox was working fine last week — I successfully sent the "
+                "March month-end package to it on Friday March 28th. Our regulatory filing "
+                "deadline is April 10th and I need to get this data to the compliance team "
+                "ASAP. I've verified the address is correct (compliance-reports@contoso.com). "
+                "Can someone check if the shared mailbox was accidentally deleted or disabled "
+                "during the Exchange migration last weekend?\n\n"
+                "Thanks,\nKevin Okafor\nRegulatory Reporting"
+            ),
+            reporter=Reporter(
+                name="Kevin Okafor",
+                email="kevin.okafor@contoso.com",
+                department="Regulatory Reporting",
+            ),
+            created_at="2026-04-08T09:30:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-036",
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            assigned_team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.PREVIOUS_TICKET_ID],
+            next_best_action=(
+                "Investigate the 550 5.1.1 bounce for the compliance-reports shared mailbox "
+                "— likely deleted or disabled during the Exchange migration last weekend — "
+                "with an April 10th regulatory filing deadline."
+            ),
+            remediation_steps=[
+                "Check Exchange Admin Center for the compliance-reports shared mailbox status (active, soft-deleted, or disabled).",
+                "If soft-deleted, recover the mailbox from the Exchange retention hold.",
+                "If the mailbox was not migrated, recreate it and restore from the latest backup.",
+                "Verify SMTP routing on smtp-relay-chi-01 to ensure the mailbox is reachable.",
+                "Confirm the user can successfully deliver email to compliance-reports@contoso.com.",
+            ],
+        ),
+        tags=["data-cleanup", "ndr", "bounce-back"],
+        description=(
+            "Non-Delivery Report wrapping the original email about a shared mailbox delivery failure."
+        ),
+    )
+
+
+def _dc037_regex_code_patterns() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-037",
+            subject="Internal app crashing on special characters in search — regex and SQL details",
+            description=(
+                "Hi Enterprise Apps team,\n\n"
+                "Our internal trade reconciliation tool (TradeRecon v3.8.1) is crashing every "
+                "time a user enters certain characters in the search field. I've been debugging "
+                "it and traced the problem to unescaped regex patterns being passed directly to "
+                "the SQL query engine. Here are the specific inputs that cause crashes:\n\n"
+                "1. Regex used for trade ID matching:\n"
+                r"   ^(?:TRD|SWP|FUT)-\d{4}-[A-Z]{2,4}\/\d{2,6}(?:\.\d+)?$" "\n"
+                "2. The SQL query that fails (from the app logs):\n"
+                "   SELECT t.trade_id, t.counterparty, t.notional FROM trades t\n"
+                "   WHERE t.trade_id ~ '^(?:TRD|SWP|FUT)-\\d{4}' AND t.status <> 'CANCELLED'\n"
+                "   AND t.book_date BETWEEN '2026-01-01' AND '2026-04-07'\n"
+                "   ORDER BY t.book_date DESC LIMIT 500;\n"
+                "3. Characters that trigger the crash: backslash (\\), pipe (|), curly "
+                "braces ({}), and the caret (^) when combined with brackets []\n"
+                "4. Stack trace excerpt:\n"
+                "   java.util.regex.PatternSyntaxException: Unclosed group near index 42\n"
+                r"     ^(?:TRD|SWP|FUT)-\d{4}-[A-Z]{2,4}\/\d{2,6}(?:\.\d+" "\n"
+                "     at java.util.regex.Pattern.error(Pattern.java:1969)\n"
+                "     at com.contoso.traderecon.search.RegexSearchParser.compile(RegexSearchParser.java:147)\n\n"
+                "This is affecting about 20 users in the settlements team who use this tool "
+                "daily for trade matching. They're having to use manual Excel-based matching "
+                "as a workaround which is error-prone and slow.\n\n"
+                "Thanks,\nLiam O'Donnell\nTechnology — Trading Systems"
+            ),
+            reporter=Reporter(
+                name="Liam O'Donnell",
+                email="liam.odonnell@contoso.com",
+                department="Trading Systems",
+            ),
+            created_at="2026-04-09T14:10:00Z",
+            channel=Channel.PORTAL,
+            attachments=["traderecon_crash_log.txt"],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-037",
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.AFFECTED_USERS, MissingInfoField.APPLICATION_VERSION],
+            next_best_action=(
+                "Fix the input sanitization bug in TradeRecon v3.8.1 where unescaped special "
+                "characters in the search field are passed directly to the regex engine and SQL "
+                "query, causing PatternSyntaxException crashes for settlements users."
+            ),
+            remediation_steps=[
+                "Review the RegexSearchParser.compile() method at line 147 to add proper input escaping.",
+                "Implement Pattern.quote() or equivalent to sanitize user input before regex compilation.",
+                "Add parameterized queries to prevent special characters from breaking the SQL layer.",
+                "Deploy a hotfix to TradeRecon and verify with the problematic inputs (backslash, pipe, curly braces, caret).",
+                "Notify the settlements team once the fix is deployed.",
+            ],
+        ),
+        tags=["data-cleanup", "regex", "code-patterns"],
+        description=(
+            "Ticket body contains raw regex patterns, SQL queries, and stack traces with special "
+            "characters that could confuse text parsers."
+        ),
+    )
+
+
+def _dc038_contradictory_replies() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-038",
+            subject="RE: RE: RE: Laptop screen flickering — RESOLVED? or not?",
+            description=(
+                "--- Reply from: Hannah Bergström (2026-04-09 16:40) ---\n"
+                "Update: Nope, the screen is flickering AGAIN. The docking station swap did "
+                "not fix it. It was fine for about two hours after Carlos swapped the dock "
+                "and then the flickering came back, this time even worse. Now the entire "
+                "display goes black for 2-3 seconds every few minutes. I can't work like "
+                "this. I have a client presentation tomorrow morning and I need this fixed "
+                "TODAY.\n\n"
+                "--- Reply from: Carlos Mendez, Endpoint Support (2026-04-09 14:15) ---\n"
+                "Hi Hannah, I swapped out your docking station (old: Lenovo ThinkPad USB-C "
+                "Dock Gen 2, serial LNVO-D2-8834; new: serial LNVO-D2-9917) and the "
+                "flickering appears to be resolved. I tested it for 15 minutes with dual "
+                "monitors and saw no issues. Marking this as RESOLVED. Please reopen if the "
+                "issue recurs.\n\n"
+                "--- Reply from: Hannah Bergström (2026-04-09 11:00) ---\n"
+                "Actually the external monitor IS also flickering now, not just the laptop "
+                "screen. I think it might be the docking station after all, not the laptop. "
+                "Both my Dell U2722D monitors are affected.\n\n"
+                "--- Reply from: Carlos Mendez, Endpoint Support (2026-04-09 09:30) ---\n"
+                "Hi Hannah, based on your description this sounds like a display driver issue. "
+                "The ThinkPad X1 Carbon Gen 11 had a known Intel Iris Xe driver regression "
+                "in the March update. I'll schedule a time to come to your desk and roll back "
+                "the driver. The external monitor is probably fine.\n\n"
+                "--- Original ticket from: Hannah Bergström (2026-04-08 17:20) ---\n"
+                "Hi IT,\n\n"
+                "The screen on my ThinkPad X1 Carbon Gen 11 has been flickering intermittently "
+                "since this morning. It happens every 5-10 minutes and lasts about 3-4 seconds. "
+                "The external monitor connected via my Lenovo USB-C dock seems fine. I'm in "
+                "Building 2, Floor 5, desk 5-218. Running Windows 11 23H2.\n\n"
+                "Thanks,\nHannah Bergström\nWealth Management"
+            ),
+            reporter=Reporter(
+                name="Hannah Bergström",
+                email="hannah.bergstrom@contoso.com",
+                department="Wealth Management",
+            ),
+            created_at="2026-04-08T17:20:00Z",
+            channel=Channel.PORTAL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-038",
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.DEVICE_INFO, MissingInfoField.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Re-investigate the ThinkPad X1 Carbon Gen 11 screen flickering issue — the "
+                "docking station swap did not resolve it, and the symptom has worsened to "
+                "full display blackouts. Likely a laptop hardware issue (display cable or GPU) "
+                "rather than dock or driver."
+            ),
+            remediation_steps=[
+                "Test the laptop display without any dock connected to isolate the laptop hardware.",
+                "Run Lenovo built-in display diagnostics to check for panel or cable faults.",
+                "Roll back the Intel Iris Xe driver to the pre-March version to rule out the driver regression.",
+                "If the issue persists without dock and with rolled-back drivers, arrange a hardware repair for the laptop.",
+                "Provide a loaner laptop before the client presentation tomorrow.",
+            ],
+        ),
+        tags=["data-cleanup", "contradictory", "email-thread"],
+        description=(
+            "Email thread with contradictory status updates — marked resolved then reopened — "
+            "requiring identification of the latest state."
+        ),
+    )
+
+
+def _dc039_accidental_pii() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-039",
+            subject="MFA enrollment failing — error with authenticator app",
+            description=(
+                "Hi Security team,\n\n"
+                "I've been trying to enroll in MFA for the new Azure AD Conditional Access "
+                "policy that was announced last week, but the enrollment keeps failing. When "
+                "I go to https://aka.ms/mfasetup and scan the QR code with Microsoft "
+                "Authenticator on my iPhone 15 Pro (iOS 17.4.1), the app shows "
+                "'Registration failed — server error' after about 30 seconds.\n\n"
+                "Here's my info for troubleshooting:\n"
+                "- Employee ID: EMP-204857\n"
+                "- UPN: thomas.reeves@contoso.com\n"
+                "- Phone: (212) 555-0187\n"
+                "- Personal cell (backup): (917) 555-0342\n"
+                "- Last 4 of corporate card: 4832\n"
+                "- I think my SSN might be in the HR system as 4XX-XX-8891 (I noticed the "
+                "enrollment form pre-populated some identity fields and I'm not sure what it "
+                "pulled)\n"
+                "- Home address: 445 East 86th St, Apt 12C, New York, NY 10028\n\n"
+                "I also tried the SMS-based MFA option and entered my phone number but got "
+                "'Verification code expired' even though I entered the code within 10 seconds "
+                "of receiving it. I attempted enrollment five times total between 8:00 AM and "
+                "9:30 AM this morning.\n\n"
+                "The deadline to enroll is this Friday and I won't be able to access any "
+                "internal systems after that if I don't complete it. Can someone please help "
+                "me get this sorted out?\n\n"
+                "Thanks,\nThomas Reeves\nClient Relationship Management"
+            ),
+            reporter=Reporter(
+                name="Thomas Reeves",
+                email="thomas.reeves@contoso.com",
+                department="Client Relationship Management",
+            ),
+            created_at="2026-04-09T09:45:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-039",
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            assigned_team=Team.IAM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.ERROR_MESSAGE, MissingInfoField.AUTHENTICATION_METHOD],
+            next_best_action=(
+                "Troubleshoot repeated MFA enrollment failure for thomas.reeves@contoso.com — "
+                "both Authenticator app and SMS methods are failing — and flag the ticket for "
+                "PII redaction as the user included sensitive personal information."
+            ),
+            remediation_steps=[
+                "Reset the user's MFA registration state in Azure AD to clear any corrupted enrollment data.",
+                "Verify the user's phone number is correctly registered in Azure AD for SMS-based MFA.",
+                "Attempt enrollment with the user in a screen-share session to observe the exact error.",
+                "Check Azure AD MFA server logs for the five failed attempts between 08:00 and 09:30.",
+                "Redact the PII (SSN-like pattern, home address, personal phone) from the ticket and notify the user about safe data practices.",
+            ],
+        ),
+        tags=["data-cleanup", "pii-patterns", "accidental-pii"],
+        description=(
+            "MFA enrollment ticket containing accidentally included PII-like data (SSN pattern, "
+            "home address, personal phone, partial card number)."
+        ),
+    )
+
+
+def _dc040_base64_pdf_inline() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-040",
+            subject="Report generation failing — pasted the PDF output here",
+            description=(
+                "Hi Data Platform team,\n\n"
+                "The nightly P&L report generation job (job ID: RPT-PNL-DAILY-2026040) has "
+                "been failing for the past two nights. The job runs at 02:00 AM EST via "
+                "Airflow DAG 'daily_pnl_report' and is supposed to generate a PDF summary "
+                "of the trading desk P&L and push it to the compliance SharePoint. On both "
+                "April 7th and April 8th, the DAG completed with status 'success' but the "
+                "PDF output was corrupt. I tried to open the generated file and got a blank "
+                "page. I converted it to base64 to paste it here so you can see the raw data:\n\n"
+                "JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAw"
+                "IFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFsz"
+                "IDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1Bh"
+                "Z2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSAvQ29u"
+                "dGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAwIFIg"
+                "Pj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA0NCA+PgpzdHJl"
+                "YW0KQlQgL0YxIDI0IFRmIDEwMCAyMDAgVGQgKEhlbGxvIFdvcmxkISkgVGoK"
+                "RVQKZW5kc3RyZWFtCmVuZG9iago1IDAgb2JqCjw8IC9UeXBlIC9Gb250IC9T"
+                "dWJ0eXBlIC9UeXBlMSAvQmFzZUZvbnQgL0hlbHZldGljYSA+PgplbmRvYmoK"
+                "eHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMMDCD"
+                "BiBlZmYwMDAwMDAwMDU4IDAwMDAwIG4gCjAwMDAwMDAxMTUgMDAwMDAgbiAK"
+                "MDAwMDAwMDMwNiAwMDAwMCBuIAowMDAwMDAwNDAxIDAwMDAwIG4gCnRyYWls"
+                "ZXIgPDwgL1NpemUgNiAvUm9vdCAxIDAgUiA+PgpzdGFydHhyZWYKNDkyCiUl"
+                "RU9GCg==\n\n"
+                "As you can see it's basically a minimal/empty PDF. The actual P&L data is "
+                "not making it into the report. I checked the Airflow logs and the upstream "
+                "SQL query against the trade_pnl_summary table returns the correct data (I "
+                "verified this manually in DBeaver), so the issue is somewhere in the PDF "
+                "rendering step. We use ReportLab 4.1.0 for PDF generation. The report "
+                "template was last updated on March 28th by our intern — I suspect that "
+                "commit may have introduced a regression.\n\n"
+                "This is blocking the daily compliance reporting cycle.\n\n"
+                "Thanks,\nYuki Tanaka\nData Engineering"
+            ),
+            reporter=Reporter(
+                name="Yuki Tanaka",
+                email="yuki.tanaka@contoso.com",
+                department="Data Engineering",
+            ),
+            created_at="2026-04-09T07:15:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-040",
+            category=Category.DATA,
+            priority=Priority.P2,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.CONFIGURATION_DETAILS, MissingInfoField.APPLICATION_VERSION],
+            next_best_action=(
+                "Investigate the nightly P&L report generation failure in Airflow DAG "
+                "'daily_pnl_report' — the PDF output is blank despite correct upstream "
+                "SQL data — likely a regression in the ReportLab template updated March 28th."
+            ),
+            remediation_steps=[
+                "Review the March 28th commit to the report template for changes that could break PDF rendering.",
+                "Compare the ReportLab template before and after the commit using git diff.",
+                "Run the DAG manually in a staging environment with debug logging enabled on the PDF generation step.",
+                "If the March 28th commit is the root cause, revert it and regenerate the reports for April 7th and 8th.",
+                "Push the regenerated P&L reports to the compliance SharePoint to unblock the reporting cycle.",
+            ],
+        ),
+        tags=["data-cleanup", "base64-pdf", "large-payload"],
+        description=(
+            "Ticket contains a large base64-encoded PDF blob pasted inline instead of attached, "
+            "with the actual report generation issue described around it."
+        ),
+    )
+
+
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
 
 def build_dataset() -> EvalDataset:
-    """Build and return the data-cleanup evaluation dataset (30 cases)."""
+    """Build and return the data-cleanup evaluation dataset (40 cases)."""
     return EvalDataset(
         name="data_cleanup",
         description=(
             "Tickets with noisy, malformed, or dirty input data.  Tests whether the triage "
             "system can correctly process tickets despite real-world data quality issues such "
             "as long email chains, embedded base64, HTML markup, mojibake, excessive whitespace, "
-            "mixed languages, container logs, invisible Unicode, and other artefacts."
+            "mixed languages, container logs, invisible Unicode, MIME boundaries, calendar "
+            "metadata, NDR bounce-backs, PII leakage, and other artefacts."
         ),
         cases=[
             _dc001_very_long_email(),
@@ -2012,6 +2762,16 @@ def build_dataset() -> EvalDataset:
             _dc028_voicemail_transcript(),
             _dc029_css_dark_mode_noise(),
             _dc030_concatenated_tickets(),
+            _dc031_mime_boundaries(),
+            _dc032_multiple_base64_images(),
+            _dc033_ics_calendar_metadata(),
+            _dc034_buried_issue_long_email(),
+            _dc035_multilingual_disclaimers(),
+            _dc036_ndr_bounce(),
+            _dc037_regex_code_patterns(),
+            _dc038_contradictory_replies(),
+            _dc039_accidental_pii(),
+            _dc040_base64_pdf_inline(),
         ],
     )
 
