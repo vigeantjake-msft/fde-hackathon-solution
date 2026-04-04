@@ -997,6 +997,741 @@ def _legal_disclaimer_email() -> EvalScenario:
     )
 
 
+def _pdf_text_extraction() -> EvalScenario:
+    """Ticket description contains PDF-to-text extraction artifacts."""
+    description = (
+        "Hi IT,\n\n"
+        "I\u2019m having issues with our CRM. Pasting the error from the PDF report our vendor "
+        "sent:\n\n"
+        "C u s t o m e r   R e l a t i o n s h i p   M a n a g e m e n t\n"
+        "E r r o r   R e p o r t   \u2014   M a r c h   2 0 2 6\n\n"
+        "Page 1 of 3\n\n"
+        "                                              \n"
+        "Er ror  Co de:  CRM -40 3- RE FRESH\n"
+        "Aff ect ed  Mo dul e:  Da sh bo ard  Syn c\n"
+        "Ti me sta mp:  20 26- 03- 18 T0 8: 30 :0 0Z\n\n"
+        "De scr ipt ion:  Th e  da sh bo ard  fa il ed  to  re fr es h\n"
+        "af te r  th e  la te st  da ta ba se  mi gr at io n.  Us er s\n"
+        "re po rt  st al e  da ta  fr om  Ma rc h  15 th.\n\n"
+        "\x0c"  # form feed character
+        "Page 2 of 3\n\n"
+        "Re com me nd at ion:  Cl ea r  ca ch e  an d  re -i ni ti al iz e\n"
+        "da sh bo ard  co nn ec ti on  po ol.\n\n"
+        "\x0c"
+        "Page 3 of 3\n\n"
+        "--- END OF REPORT ---\n\n"
+        "Basically our CRM dashboard hasn\u2019t refreshed since the database migration on the 15th. "
+        "The whole sales team is seeing stale data. Can someone look at this?"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9201",
+            subject="CRM dashboard stale after migration — vendor error report attached",
+            description=description,
+            reporter=Reporter(
+                name="Diana Morales",
+                email="diana.morales@contoso.com",
+                department="Sales",
+            ),
+            created_at="2026-03-18T09:00:00Z",
+            channel=TicketChannel.EMAIL,
+            attachments=["vendor_error_report.pdf"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9201",
+            category=TicketCategory.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=AssignedTeam.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.AFFECTED_USERS,
+            ],
+            next_best_action=(
+                "Investigate CRM dashboard refresh failure after database migration. "
+                "Error CRM-403-REFRESH indicates a stale connection pool. Clear cache and "
+                "re-initialize dashboard connections."
+            ),
+            remediation_steps=[
+                "Clear the CRM dashboard cache and re-initialize the connection pool",
+                "Verify database migration completed successfully and data integrity is intact",
+                "Test dashboard refresh with a sample user account",
+                "Confirm the full sales team can see current data after the fix",
+            ],
+        ),
+        tag=_TAG,
+        test_name="pdf_text_extraction",
+        test_description=(
+            "Tests handling of PDF-to-text extraction artifacts: spaced-out characters, "
+            "form feed characters, page headers, and broken word boundaries. The actual "
+            "issue is a CRM dashboard refresh failure after a database migration."
+        ),
+    )
+
+
+def _screenshot_ocr_errors() -> EvalScenario:
+    """Ticket description created from OCR of a screenshot with recognition errors."""
+    description = (
+        "[Transcribed from screenshot via OCR]\n\n"
+        "H1 IT Supp0rt,\n\n"
+        "l\u2019m gett1ng an err0r when I try t0 0pen Micr0s0ft Teams. "
+        "The err0r message says:\n\n"
+        "\"We\u2019re s0rry\u2014we\u2019ve run int0 an 1ssue.\n"
+        "Err0r c0de: CAA2000B\n"
+        "C0rrelati0n lD: 8f3a2b1c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\n"
+        "Timestarnp: 2O26-O3-18TO9:45:OOZ\"\n\n"
+        "l\u2019ve tried:\n"
+        "- Ciearing the Teams cache (de1eted %appdata%\\Micr0s0ft\\Tearns)\n"
+        "- Reinstal1ing Tearns\n"
+        "- Restarting rny c0rnputer\n\n"
+        "N0thing w0rks. l need Teams f0r a cl1ent call at 2 PM.\n\n"
+        "Thanks,\n"
+        "Rache1 Kim\n"
+        "Acc0unt Management"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9202",
+            subject="Teams err0r — CAA2000B — cant j0in meetings",
+            description=description,
+            reporter=Reporter(
+                name="Rachel Kim",
+                email="rachel.kim@contoso.com",
+                department="Account Management",
+            ),
+            created_at="2026-03-18T10:00:00Z",
+            channel=TicketChannel.PORTAL,
+            attachments=["teams_error_screenshot.png"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9202",
+            category=TicketCategory.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=AssignedTeam.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.DEVICE_INFO,
+                MissingInfoField.APPLICATION_VERSION,
+            ],
+            next_best_action=(
+                "Investigate Microsoft Teams error CAA2000B. This error typically indicates "
+                "an authentication or conditional access issue. Check Azure AD sign-in logs "
+                "and Conditional Access policies."
+            ),
+            remediation_steps=[
+                "Check Azure AD sign-in logs for the user to identify authentication failures",
+                "Verify Conditional Access policies are not blocking the Teams desktop client",
+                "Clear cached credentials from Windows Credential Manager in addition to Teams cache",
+                "If CAA2000B persists, check for proxy or firewall rules blocking Teams auth endpoints",
+            ],
+        ),
+        tag=_TAG,
+        test_name="screenshot_ocr_errors",
+        test_description=(
+            "Tests handling of OCR-transcribed text with systematic recognition errors: "
+            "0/O confusion, l/1/I swaps, rn/m substitutions. The model must parse through "
+            "OCR noise to extract the real error code and issue."
+        ),
+    )
+
+
+def _powerpoint_clipboard_paste() -> EvalScenario:
+    """Ticket created by pasting from PowerPoint with formatting artifacts."""
+    description = (
+        "\u2022 SLIDE 1 OF 12\n"
+        "Q1 Infrastructure Review\n"
+        "Contoso Financial Services \u2014 IT Operations\n"
+        "CONFIDENTIAL\n\n"
+        "Click to edit Master title style\n"
+        "Click to edit Master subtitle style\n\n"
+        "\u2022 SLIDE 4 OF 12\n"
+        "Issue: Shared Drive Performance\n\n"
+        "\t\u25ba Response times on \\\\contoso-fs01\\shared have degraded from <100ms to >3s\n"
+        "\t\u25ba Affecting ~150 users in the London and Singapore offices\n"
+        "\t\u25ba Started after the storage array firmware update on March 14\n"
+        "\t\u25ba Finance team cannot open large Excel models (>50MB) from the share\n\n"
+        "Speaker Notes: Ask IT to check if the NetApp firmware update caused a regression "
+        "on the CIFS shares. Bob mentioned something about jumbo frames being disabled.\n\n"
+        "\u2022 SLIDE 5 OF 12\n"
+        "Impact Assessment\n\n"
+        "\t\u25ba Business impact: HIGH \u2014 month-end close delayed\n"
+        "\t\u25ba Users affected: Finance (London), Risk (Singapore)\n"
+        "\t\u25ba Workaround: Copy files locally first (not ideal for 50MB+ files)\n\n"
+        "Click to add notes\n\n"
+        "\u2022 SLIDE 12 OF 12\n"
+        "Thank You\n"
+        "Questions?\n"
+        "Contact: infrastructure@contoso.com\n"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9203",
+            subject="Shared drive performance — see attached deck",
+            description=description,
+            reporter=Reporter(
+                name="Tom Bradley",
+                email="tom.bradley@contoso.com",
+                department="IT Operations",
+            ),
+            created_at="2026-03-18T11:30:00Z",
+            channel=TicketChannel.EMAIL,
+            attachments=["Q1_Infrastructure_Review.pptx"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9203",
+            category=TicketCategory.DATA_STORAGE,
+            priority=Priority.P2,
+            assigned_team=AssignedTeam.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.CONFIGURATION_DETAILS,
+            ],
+            next_best_action=(
+                "Investigate shared drive performance degradation on \\\\contoso-fs01\\shared "
+                "after the NetApp storage array firmware update on March 14. Check CIFS share "
+                "configuration and jumbo frame settings."
+            ),
+            remediation_steps=[
+                "Review NetApp firmware update changelog for known CIFS performance regressions",
+                "Check if jumbo frames were disabled during the firmware update and re-enable if appropriate",
+                "Monitor CIFS response times on contoso-fs01 and compare with pre-update baseline",
+                "If firmware-related, consider rolling back or applying a hotfix from NetApp",
+                "Confirm Finance and Risk teams can open large files with acceptable performance",
+            ],
+        ),
+        tag=_TAG,
+        test_name="powerpoint_clipboard_paste",
+        test_description=(
+            "Tests handling of content pasted from a PowerPoint presentation: slide headers, "
+            "placeholder text ('Click to edit Master title style'), speaker notes, and bullet "
+            "formatting artifacts. The real issue is buried across multiple slides."
+        ),
+    )
+
+
+def _auto_translation_artifacts() -> EvalScenario:
+    """Ticket run through machine translation with awkward phrasing and artifacts."""
+    description = (
+        "[Auto-translated from Japanese by Google Translate]\n\n"
+        "The printer of our floor does not do printing. When the document is sent to the "
+        "printer, the work enters the queue but it is stuck in the state of \"sending\". "
+        "The printer display says \"Ready\" but it is lying.\n\n"
+        "Things we have already tried to do:\n"
+        "- The restart of the printer (the power was turned off and on again)\n"
+        "- The deletion of all works from the print queue\n"
+        "- The reinstallation of the driver of the printer\n"
+        "- The connection of the USB cable was confirmed to be tight\n\n"
+        "The model of the printer: HP LaserJet Enterprise M507dn\n"
+        "The location: Tokyo office, 4th floor, near to the pantry\n"
+        "The IP address of the printer: 10.20.4.100\n\n"
+        "This printer is used by approximately 40 persons of the team. "
+        "Since yesterday\u2019s afternoon, nobody has been able to make printing. "
+        "We are now going to the 3rd floor to use their printer but it is very "
+        "inconvenient because of the distance.\n\n"
+        "Please do the investigation with urgency. Thank you for your cooperation.\n\n"
+        "[Original language: \u65e5\u672c\u8a9e / End of translation]"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9204",
+            subject="[Translated] The printer does not do printing — Tokyo 4F",
+            description=description,
+            reporter=Reporter(
+                name="Takeshi Yamamoto",
+                email="takeshi.yamamoto@contoso.com",
+                department="Operations",
+            ),
+            created_at="2026-03-18T01:30:00Z",
+            channel=TicketChannel.PORTAL,
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9204",
+            category=TicketCategory.HARDWARE,
+            priority=Priority.P3,
+            assigned_team=AssignedTeam.ENDPOINT_ENG,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.ERROR_MESSAGE,
+            ],
+            next_best_action=(
+                "Investigate HP LaserJet Enterprise M507dn print queue stuck in 'sending' state "
+                "at the Tokyo office 4th floor. Printer reports ready but jobs are not printing. "
+                "Affects ~40 users."
+            ),
+            remediation_steps=[
+                "Check network connectivity to the printer at 10.20.4.100 (ping, SNMP status)",
+                "Review the print server spooler for stuck jobs and clear the queue",
+                "Verify the print driver is compatible and check for firmware updates on the HP M507dn",
+                "Test printing directly via USB to isolate network vs. printer hardware issue",
+                "If network-related, check the switch port and VLAN configuration for the printer",
+            ],
+        ),
+        tag=_TAG,
+        test_name="auto_translation_artifacts",
+        test_description=(
+            "Tests handling of machine-translated text with awkward phrasing, over-literal "
+            "translations ('does not do printing', 'the restart of the printer'), and "
+            "translation metadata tags. The technical details are present but linguistically garbled."
+        ),
+    )
+
+
+def _voice_dictation_errors() -> EvalScenario:
+    """Ticket dictated via speech-to-text with homophones and punctuation errors."""
+    description = (
+        "hey so i need to report a nit work issue um our sails force application "
+        "is loading really slow like takes about too minutes just too see the home "
+        "page and its been like this for a weak now i think sense the last up date "
+        "um my colleagues are having the same issue to so its not just me\n\n"
+        "eye tried clearing the cash and using in cog neat oh mode in chrome but "
+        "it didnt help the loading bar gets to about a tea percent and then just "
+        "sits their four ever\n\n"
+        "were in the new york office on the ate floor and we all use chrome version "
+        "won twenty too i think the i tea team pushed some kind of proxy change last "
+        "weak that mite be related\n\n"
+        "this is really affecting hour productivity because we cant log client in "
+        "her actions in a timely manor please look in two this as soon as possible\n\n"
+        "thanks mike davis sails department"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9205",
+            subject="sails force loading slow — new york office",
+            description=description,
+            reporter=Reporter(
+                name="Mike Davis",
+                email="mike.davis@contoso.com",
+                department="Sales",
+            ),
+            created_at="2026-03-18T10:15:00Z",
+            channel=TicketChannel.PHONE,
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9205",
+            category=TicketCategory.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=AssignedTeam.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.APPLICATION_VERSION,
+            ],
+            next_best_action=(
+                "Investigate Salesforce slow loading (~2 minutes to homepage) affecting "
+                "multiple users on Floor 8 of the New York office. Likely related to a "
+                "recent proxy configuration change. Check proxy and network settings."
+            ),
+            remediation_steps=[
+                "Check the recent proxy configuration change for any impact on Salesforce traffic",
+                "Test Salesforce loading times from the New York office with and without the proxy",
+                "Verify Salesforce is on the proxy bypass list if applicable",
+                "Check Salesforce status page for any ongoing performance incidents",
+                "If proxy-related, update the configuration to restore normal Salesforce performance",
+            ],
+        ),
+        tag=_TAG,
+        test_name="voice_dictation_errors",
+        test_description=(
+            "Tests handling of speech-to-text dictation errors: homophones (too/to/two, "
+            "their/there, eye/I, weak/week), missing punctuation, and phonetic misspellings "
+            "(nit work, sails force, in cog neat oh). The underlying issue is clear but "
+            "heavily garbled."
+        ),
+    )
+
+
+def _sms_chat_shorthand() -> EvalScenario:
+    """Ultra-terse SMS/chat-style ticket with abbreviations and shorthand."""
+    description = (
+        "yo vpn ded again lol\n"
+        "cant connect 2 anything\n"
+        "err msg says smth abt cert expired??\n"
+        "tried reboot no luck\n"
+        "need asap got demo @ 3\n"
+        "thx"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9206",
+            subject="vpn broke",
+            description=description,
+            reporter=Reporter(
+                name="Jake Torres",
+                email="jake.torres@contoso.com",
+                department="Engineering",
+            ),
+            created_at="2026-03-18T13:45:00Z",
+            channel=TicketChannel.CHAT,
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9206",
+            category=TicketCategory.NETWORK,
+            priority=Priority.P3,
+            assigned_team=AssignedTeam.NETWORK_OPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.DEVICE_INFO,
+                MissingInfoField.ERROR_MESSAGE,
+                MissingInfoField.APPLICATION_VERSION,
+            ],
+            next_best_action=(
+                "Investigate VPN connection failure with possible certificate expiry error. "
+                "Check VPN gateway certificate status and client configuration."
+            ),
+            remediation_steps=[
+                "Check VPN gateway certificate expiry status",
+                "If certificate is expired, renew and deploy the updated certificate",
+                "Verify the VPN client has the correct root CA certificates installed",
+                "Test VPN connectivity after certificate remediation",
+            ],
+        ),
+        tag=_TAG,
+        test_name="sms_chat_shorthand",
+        test_description=(
+            "Tests handling of ultra-terse SMS/chat-style input with abbreviations "
+            "(2=to, abt=about, smth=something, thx=thanks, ded=dead, asap, @=at). "
+            "Minimal punctuation and maximum brevity."
+        ),
+    )
+
+
+def _sql_result_dump() -> EvalScenario:
+    """User pasted raw SQL query results into the ticket description."""
+    sql_output = (
+        "mysql> SELECT id, status, error_msg, created_at FROM sync_jobs "
+        "WHERE status = 'FAILED' ORDER BY created_at DESC LIMIT 20;\n"
+        "+-------+--------+------------------------------------------+---------------------+\n"
+        "| id    | status | error_msg                                | created_at          |\n"
+        "+-------+--------+------------------------------------------+---------------------+\n"
+        "| 10842 | FAILED | ORA-01017: invalid username/password     | 2026-03-18 08:00:01 |\n"
+        "| 10841 | FAILED | ORA-01017: invalid username/password     | 2026-03-18 07:00:01 |\n"
+        "| 10840 | FAILED | ORA-01017: invalid username/password     | 2026-03-18 06:00:01 |\n"
+        "| 10839 | FAILED | ORA-01017: invalid username/password     | 2026-03-18 05:00:01 |\n"
+        "| 10838 | FAILED | ORA-01017: invalid username/password     | 2026-03-18 04:00:01 |\n"
+        "| 10837 | FAILED | ORA-01017: invalid username/password     | 2026-03-18 03:00:01 |\n"
+        "| 10836 | FAILED | ORA-01017: invalid username/password     | 2026-03-18 02:00:01 |\n"
+        "| 10835 | FAILED | ORA-01017: invalid username/password     | 2026-03-18 01:00:01 |\n"
+        "| 10834 | FAILED | ORA-01017: invalid username/password     | 2026-03-17 23:00:01 |\n"
+        "| 10833 | FAILED | ORA-01017: invalid username/password     | 2026-03-17 22:00:01 |\n"
+        "+-------+--------+------------------------------------------+---------------------+\n"
+        "10 rows in set (0.03 sec)\n"
+    )
+
+    description = (
+        "Our Oracle-to-Snowflake data sync has been failing since last night. "
+        "Here are the last 10 failures:\n\n"
+        + sql_output
+        + "\n"
+        "All failures show the same Oracle auth error. I suspect the service account "
+        "password was rotated by the DBA team without updating our sync config. "
+        "The sync job runs hourly and feeds our BI dashboards — the dashboards are now "
+        "12+ hours stale.\n\n"
+        "Service account: svc_oracle_sync\n"
+        "Source: Oracle DB (ora-prod-01.contoso.com)\n"
+        "Target: Snowflake (contoso.snowflakecomputing.com)"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9207",
+            subject="Oracle sync job failing — ORA-01017 auth errors since last night",
+            description=description,
+            reporter=Reporter(
+                name="Priya Sharma",
+                email="priya.sharma@contoso.com",
+                department="Data Engineering",
+            ),
+            created_at="2026-03-18T08:30:00Z",
+            channel=TicketChannel.PORTAL,
+            attachments=["sync_job_full_log.txt"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9207",
+            category=TicketCategory.ACCESS_AUTH,
+            priority=Priority.P2,
+            assigned_team=AssignedTeam.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[],
+            next_best_action=(
+                "Investigate ORA-01017 authentication failure for service account svc_oracle_sync. "
+                "Likely caused by a password rotation. Update sync configuration with the new "
+                "credentials to restore the hourly Oracle-to-Snowflake data pipeline."
+            ),
+            remediation_steps=[
+                "Confirm with the DBA team whether the svc_oracle_sync password was recently rotated",
+                "Update the Oracle sync job configuration with the current service account credentials",
+                "Test connectivity from the sync server to ora-prod-01.contoso.com with the new credentials",
+                "Trigger a manual sync run to backfill the 12+ hours of stale data",
+                "Verify BI dashboards are displaying current data after the sync completes",
+            ],
+        ),
+        tag=_TAG,
+        test_name="sql_result_dump",
+        test_description=(
+            "Tests handling of raw SQL query output (mysql CLI format with ASCII table borders) "
+            "pasted into the ticket description. The model must parse through the tabular output "
+            "to identify the repeated ORA-01017 error pattern."
+        ),
+    )
+
+
+def _webpack_build_output() -> EvalScenario:
+    """Developer pasted webpack/npm build output as the ticket description."""
+    build_output = (
+        "$ npm run build\n\n"
+        "> contoso-portal@4.2.1 build\n"
+        "> webpack --config webpack.prod.js\n\n"
+        "asset main.8a3f2b1c.js 2.4 MiB [emitted] [minimized] (name: main) 1 related asset\n"
+        "asset vendors.3d5e7f9a.js 1.8 MiB [emitted] [minimized] (name: vendors)\n"
+        "asset styles.b2c4d6e8.css 342 KiB [emitted] (name: styles)\n"
+        "asset runtime.f0a1b2c3.js 12.4 KiB [emitted] [minimized] (name: runtime)\n"
+        "Entrypoint main [big] 4.5 MiB (5.2 MiB) = runtime.f0a1b2c3.js 12.4 KiB "
+        "vendors.3d5e7f9a.js 1.8 MiB styles.b2c4d6e8.css 342 KiB main.8a3f2b1c.js 2.4 MiB\n\n"
+        "WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).\n"
+        "  main.8a3f2b1c.js (2.4 MiB)\n"
+        "  vendors.3d5e7f9a.js (1.8 MiB)\n\n"
+        "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds "
+        "the recommended limit (244 KiB).\n"
+        "  main (4.5 MiB)\n\n"
+        "ERROR in ./src/components/ClientDashboard/index.tsx 47:12\n"
+        "Module not found: Error: Can't resolve '@contoso/shared-auth' in "
+        "'/app/src/components/ClientDashboard'\n\n"
+        "ERROR in ./src/services/api.ts 3:0-52\n"
+        "Module not found: Error: Can't resolve '@contoso/shared-auth' in "
+        "'/app/src/services'\n\n"
+        "webpack 5.91.0 compiled with 2 errors and 2 warnings in 45230 ms\n"
+    )
+
+    description = (
+        "The internal client portal build is broken on the CI/CD pipeline. Full output:\n\n"
+        + build_output
+        + "\nThis started after the shared-auth package was moved to a new npm registry "
+        "yesterday. The build worked fine on Monday. We can\u2019t deploy the hotfix for the "
+        "client dashboard bug (INC-9150) until this is resolved.\n\n"
+        "Build pipeline: Azure DevOps > contoso-portal > main branch\n"
+        "Last successful build: #4217 (2026-03-17T16:00:00Z)"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9208",
+            subject="CI/CD build broken — client portal can't resolve @contoso/shared-auth",
+            description=description,
+            reporter=Reporter(
+                name="Alex Chen",
+                email="alex.chen@contoso.com",
+                department="Engineering",
+            ),
+            created_at="2026-03-18T10:45:00Z",
+            channel=TicketChannel.PORTAL,
+            attachments=["build_log_4218.txt"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9208",
+            category=TicketCategory.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=AssignedTeam.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.CONFIGURATION_DETAILS,
+            ],
+            next_best_action=(
+                "Investigate CI/CD build failure caused by unresolvable @contoso/shared-auth "
+                "package after npm registry migration. Update the .npmrc or package registry "
+                "configuration to point to the new registry location."
+            ),
+            remediation_steps=[
+                "Verify the @contoso/shared-auth package is published to the new npm registry",
+                "Update the .npmrc or pipeline configuration with the new registry URL",
+                "Clear the npm cache in the CI/CD pipeline and re-run the build",
+                "Verify build #4219 completes successfully with no module resolution errors",
+                "Deploy the pending client dashboard hotfix (INC-9150) once the build is green",
+            ],
+        ),
+        tag=_TAG,
+        test_name="webpack_build_output",
+        test_description=(
+            "Tests handling of raw webpack/npm build output with asset listings, size warnings, "
+            "and module resolution errors. The model must identify the actual errors (missing "
+            "@contoso/shared-auth) amid verbose build noise."
+        ),
+    )
+
+
+def _macos_crash_report() -> EvalScenario:
+    """User pasted a macOS crash report with stack traces into the ticket."""
+    crash_report = (
+        "Process:               Microsoft Outlook [12847]\n"
+        "Path:                  /Applications/Microsoft Outlook.app/Contents/MacOS/Microsoft Outlook\n"
+        "Identifier:            com.microsoft.Outlook\n"
+        "Version:               16.83 (24031820)\n"
+        "Code Type:             ARM-64 (Native)\n"
+        "Parent Process:        launchd [1]\n\n"
+        "Date/Time:             2026-03-18 08:12:33.482 +0000\n"
+        "OS Version:            macOS 14.4 (23E214)\n\n"
+        "Exception Type:        EXC_CRASH (SIGABRT)\n"
+        "Exception Codes:       0x0000000000000000, 0x0000000000000000\n\n"
+        "Termination Reason:    Namespace SIGNAL, Code 6 Abort trap: 6\n\n"
+        "Thread 0 Crashed:\n"
+        "0   libsystem_kernel.dylib        0x1a2b3c4d5 __pthread_kill + 8\n"
+        "1   libsystem_pthread.dylib       0x1a2b3c4d6 pthread_kill + 288\n"
+        "2   libsystem_c.dylib             0x1a2b3c4d7 abort + 128\n"
+        "3   com.microsoft.Outlook         0x1001a2b3c -[MSOutlookDatabase openMailbox:] + 412\n"
+        "4   com.microsoft.Outlook         0x1001a2b3d -[MSOutlookSyncEngine startSync:] + 248\n"
+        "5   com.microsoft.Outlook         0x1001a2b3e -[MSOutlookAppDelegate applicationDidFinishLaunching:] + 1024\n"
+        "6   AppKit                        0x1a3b4c5d6 -[NSApplication _sendFinishLaunchingNotification] + 208\n\n"
+        "Thread 1:\n"
+        "0   libsystem_kernel.dylib        0x1a2b3c4d8 __workq_kernreturn + 8\n"
+        "1   libsystem_pthread.dylib       0x1a2b3c4d9 _pthread_wqthread + 364\n\n"
+        "Binary Images:\n"
+        "0x100000000 - 0x10234ffff  com.microsoft.Outlook (16.83) <ABC12345-DEF6-7890-ABCD-EF1234567890> /Applications/Microsoft Outlook.app/Contents/MacOS/Microsoft Outlook\n"
+    )
+
+    description = (
+        "Outlook crashes every time I open it on my MacBook. It opens for about 2 seconds "
+        "then immediately closes. I\u2019ve tried reinstalling but the same thing happens. "
+        "Here\u2019s the crash report:\n\n"
+        + crash_report
+        + "\nThis started today. I have a Board of Directors meeting at 1 PM and all my "
+        "prep emails are in Outlook. Using OWA as a workaround for now but it\u2019s not ideal.\n\n"
+        "Device: MacBook Pro M3, macOS 14.4\n"
+        "Outlook version: 16.83"
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9209",
+            subject="Outlook crashing on launch — macOS crash report inside",
+            description=description,
+            reporter=Reporter(
+                name="Margaret Chen",
+                email="margaret.chen@contoso.com",
+                department="Executive Office",
+            ),
+            created_at="2026-03-18T08:30:00Z",
+            channel=TicketChannel.EMAIL,
+            attachments=["outlook_crash_report.txt"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9209",
+            category=TicketCategory.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=AssignedTeam.ENDPOINT_ENG,
+            needs_escalation=False,
+            missing_information=[],
+            next_best_action=(
+                "Investigate Outlook 16.83 crash on launch on macOS 14.4 (MacBook Pro M3). "
+                "Crash occurs in MSOutlookDatabase openMailbox during sync engine startup. "
+                "Likely a corrupt mailbox database — rebuild the Outlook profile."
+            ),
+            remediation_steps=[
+                "Remove and rebuild the Outlook profile to clear a potentially corrupt local database",
+                "If rebuild fails, delete the Outlook data in ~/Library/Group Containers and re-add the account",
+                "Check for Outlook updates — 16.83 may have a known crash bug fixed in a newer build",
+                "Verify the user can access emails in OWA as a temporary workaround before the 1 PM meeting",
+                "If issue persists after profile rebuild, collect a sysdiagnose and escalate to Microsoft support",
+            ],
+        ),
+        tag=_TAG,
+        test_name="macos_crash_report",
+        test_description=(
+            "Tests handling of a macOS crash report with full stack traces, binary image "
+            "listings, and kernel exception details pasted into the description. The model "
+            "must extract the crashing application and relevant crash context from low-level "
+            "system diagnostics."
+        ),
+    )
+
+
+def _browser_console_dump() -> EvalScenario:
+    """User pasted browser DevTools console output into the ticket."""
+    console_output = (
+        "[HMR] Waiting for update signal from WDS...\n"
+        "react-dom.development.js:86 Warning: ReactDOM.render is no longer supported in React 18.\n"
+        "auth.js:142 POST https://api.contoso.com/v2/auth/token 401 (Unauthorized)\n"
+        "auth.js:143 Error: Authentication failed: Token refresh returned 401\n"
+        "    at refreshToken (auth.js:142:15)\n"
+        "    at async handleApiCall (api-client.js:87:22)\n"
+        "    at async loadDashboard (dashboard.js:34:18)\n"
+        "auth.js:156 Retry 1/3: Attempting token refresh...\n"
+        "auth.js:142 POST https://api.contoso.com/v2/auth/token 401 (Unauthorized)\n"
+        "auth.js:156 Retry 2/3: Attempting token refresh...\n"
+        "auth.js:142 POST https://api.contoso.com/v2/auth/token 401 (Unauthorized)\n"
+        "auth.js:156 Retry 3/3: Attempting token refresh...\n"
+        "auth.js:142 POST https://api.contoso.com/v2/auth/token 401 (Unauthorized)\n"
+        "auth.js:161 Error: All token refresh attempts failed. Redirecting to login.\n"
+        "    at handleRefreshFailure (auth.js:161:11)\n"
+        "    at async refreshToken (auth.js:155:5)\n"
+        "navigation.js:23 Navigating to /login?reason=token_expired&redirect=/dashboard\n"
+        "index.js:44 [Sentry] Captured exception: AuthenticationError: Token refresh failed\n"
+        "index.js:44 [Sentry] Event ID: a1b2c3d4e5f6\n"
+        "favicon.ico:1 GET https://portal.contoso.com/favicon.ico 404 (Not Found)\n"
+        "manifest.json:1 Manifest: Line: 1, column: 1, Syntax error.\n"
+    )
+
+    description = (
+        "The internal portal keeps logging me out every 5 minutes. I log in, use it for "
+        "a few minutes, then get bounced back to the login page. Happening all day. "
+        "Opened the browser console and this is what I see:\n\n"
+        + console_output
+        + "\nLooks like the token refresh is failing? Multiple people on my team are seeing "
+        "the same thing. We\u2019re all on Chrome 122 in the NYC office. The portal worked "
+        "fine yesterday.\n\n"
+        "This is blocking our client onboarding work \u2014 we can\u2019t stay logged in long "
+        "enough to complete a single form."
+    )
+
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9210",
+            subject="Portal keeps logging us out — console errors inside",
+            description=description,
+            reporter=Reporter(
+                name="Jason Park",
+                email="jason.park@contoso.com",
+                department="Client Services",
+            ),
+            created_at="2026-03-18T14:30:00Z",
+            channel=TicketChannel.PORTAL,
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9210",
+            category=TicketCategory.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=AssignedTeam.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[],
+            next_best_action=(
+                "Investigate token refresh failure (401 Unauthorized) on the internal portal "
+                "at api.contoso.com/v2/auth/token. Affecting multiple users in Client Services. "
+                "Check the authentication service and token signing configuration."
+            ),
+            remediation_steps=[
+                "Check the auth token service at api.contoso.com/v2/auth/token for errors or misconfigurations",
+                "Verify the token signing key or certificate has not expired or been rotated without updating the portal",
+                "Review recent deployments or configuration changes to the auth service",
+                "Check Sentry for the captured AuthenticationError events for additional context",
+                "Confirm the portal maintains sessions correctly after the fix is applied",
+            ],
+        ),
+        tag=_TAG,
+        test_name="browser_console_dump",
+        test_description=(
+            "Tests handling of raw browser DevTools console output with JavaScript errors, "
+            "network request failures, stack traces, HMR noise, and Sentry logs. The model "
+            "must identify the auth token refresh failure as the root cause."
+        ),
+    )
+
+
 def get_data_cleanup_scenarios() -> list[EvalScenario]:
     """Return all data cleanup evaluation scenarios."""
     return [
@@ -1015,4 +1750,14 @@ def get_data_cleanup_scenarios() -> list[EvalScenario]:
         _multi_language_ticket(),
         _url_heavy_description(),
         _legal_disclaimer_email(),
+        _pdf_text_extraction(),
+        _screenshot_ocr_errors(),
+        _powerpoint_clipboard_paste(),
+        _auto_translation_artifacts(),
+        _voice_dictation_errors(),
+        _sms_chat_shorthand(),
+        _sql_result_dump(),
+        _webpack_build_output(),
+        _macos_crash_report(),
+        _browser_console_dump(),
     ]

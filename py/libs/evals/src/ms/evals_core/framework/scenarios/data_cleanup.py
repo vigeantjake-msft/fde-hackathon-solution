@@ -2026,3 +2026,447 @@ default_registry.register(
         ),
     )
 )
+
+
+# ---------------------------------------------------------------------------
+# dc-041: PDF-to-text extraction artifacts
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-041",
+        name="PDF-to-text extraction artifacts in SAP ticket",
+        description="Tests triage when PDF-to-text conversion leaves ligature fragments, "
+        "broken columns, and header/footer repetition throughout the description.",
+        category=_CATEGORY,
+        tags=["pdf_extraction", "ocr_artifacts", "garbled_text"],
+        ticket=EvalTicket(
+            ticket_id="INC-5041",
+            subject="SAP GUI crashes on transaction MB52",
+            description=(
+                "— Page 1 of 3 — Contoso Financial Services — Conﬁdential —\n\n"
+                "Hi IT,\n\n"
+                "SAP GUI crashes when I run transaction MB52 (warehouse stock list). "
+                "The applica\xadtion freezes for ~30 seconds then throws a DBIF_RSQL_SQL_ERROR "
+                "short dump. This aﬀects our end-of-day inventory reconciliation.\n\n"
+                "— Page 2 of 3 — Contoso Financial Services — Conﬁdential —\n\n"
+                "Error details from ST22:\n"
+                "Runtime Errors: DBIF_RSQL_SQL_ERROR\n"
+                "Date and Time: 18.03.2026 / 14:32:17\n"
+                "ﬁle: /usr/sap/PRD/DVEBMGS00/work/dev_w3\n"
+                "Theconnectiontotheunderlyingdatabasewaslost.\n\n"
+                "— Page 3 of 3 — Contoso Financial Services — Conﬁdential —\n\n"
+                "SAP GUI 8.00 PL4, Windows 11, server: sap-prd-01. "
+                "Works ﬁne for smaller queries. Only crashes on MB52 with full plant scope.\n\n"
+                "Thanks,\nHiroshi Tanaka\nOperations"
+            ),
+            reporter=_reporter("Hiroshi Tanaka", "hiroshi.tanaka@contoso.com", "Operations"),
+            created_at="2026-03-18T14:32:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-042: OCR'd screenshot with recognition errors
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-042",
+        name="OCR'd screenshot text with recognition errors",
+        description="Tests triage when a user OCR'd a screenshot of a printer error panel, "
+        "introducing character substitutions and spacing errors.",
+        category=_CATEGORY,
+        tags=["ocr_errors", "screenshot_text", "recognition_noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5042",
+            subject="Printer error — OCR of display panel attached",
+            description=(
+                "Hi, the printer on Floor 5 is showing an error. I took a photo of the "
+                "display and used my phone's OCR to copy the text:\n\n"
+                "HP C0l0r LaserJet Enterpr1se MFP M776\n"
+                "Err0r: 49.4C.O2 — F1rmware Err0r\n"
+                "T0 c0ntinue turn 0ff then 0n\n"
+                "lP: 1O.O.5.38 | H0stname: prn-f1r5-O5\n\n"
+                "I tried p0wer cycling but the err0r came 8ack after printing ~1O pages. "
+                "Tray 2 pu11s paper at an ang1e. This is the 0nly c0lor printer on our "
+                "f1oor and we need it for c1ient presentations.\n\n"
+                "Thanks,\nAmara Osei\nClient Services, Floor 5"
+            ),
+            reporter=_reporter("Amara Osei", "amara.osei@contoso.com", "Client Services"),
+            created_at="2026-03-18T10:50:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-043: PowerPoint clipboard paste artifacts
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-043",
+        name="Clipboard paste artifacts from PowerPoint in Teams ticket",
+        description="Tests triage when the user pasted from a PowerPoint slide, bringing "
+        "along bullet markers, layout text, and slide metadata.",
+        category=_CATEGORY,
+        tags=["clipboard_artifacts", "paste_noise", "formatting_corruption"],
+        ticket=EvalTicket(
+            ticket_id="INC-5043",
+            subject="Teams screen sharing broken since update",
+            description=(
+                "\uf0a7 Q2 Strategy Review — DRAFT — Slide 14 of 38\n"
+                "\uf0a7 Click to edit Master title style\n"
+                "\uf0a7 Click to edit Master subtitle style\n\n"
+                "Hi IT — sorry about the formatting, I was copying notes from my "
+                "presentation and it pasted the slide template too.\n\n"
+                "\uf0a7 Issue: Teams screen sharing shows a black screen to attendees "
+                "since the app updated to version 24345.1234.3456.7890 last night. "
+                "I can see my own screen fine but participants see nothing.\n\n"
+                "\uf0a7 Agenda Item 3 — Technology Refresh\n"
+                "\uf0a7 [Presenter: J. Rivera]\n\n"
+                "Audio and video work. It's only the screen sharing / presentation "
+                "mode that's broken. Tried both 'Window' and 'Desktop' sharing. "
+                "ThinkPad X1 Carbon Gen 11, Windows 11, dual monitor setup.\n\n"
+                "\uf0a7 Appendix — Disclosures — Not for distribution\n\n"
+                "Thanks,\nJulia Rivera"
+            ),
+            reporter=_reporter("Julia Rivera", "julia.rivera@contoso.com", "Strategy"),
+            created_at="2026-03-18T09:10:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-044: Auto-translated Japanese with artifacts
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-044",
+        name="Auto-translated Japanese ticket with translation artifacts",
+        description="Tests triage when a Japanese ticket was auto-translated with "
+        "garbled placeholders, untranslated fragments, and grammar artifacts.",
+        category=_CATEGORY,
+        tags=["auto_translation", "japanese", "translation_artifacts"],
+        ticket=EvalTicket(
+            ticket_id="INC-5044",
+            subject="[Auto-Translated] VPN connection of problem / VPN\u63a5\u7d9a\u306e\u554f\u984c",
+            description=(
+                "[This message was automatically translated from Japanese]\n\n"
+                "Good morning IT team,\n\n"
+                "The VPN is <<\u63a5\u7d9a\u5931\u6557>> disconnection repeatedly making. "
+                "Since from Monday of morning, Cisco AnyConnect is \"connection has been "
+                "unexpectedly lost\" the error <<\u30a8\u30e9\u30fc\u30b3\u30fc\u30c9>> GP-4022 "
+                "to display doing.\n\n"
+                "The Tokyo office <<\u6771\u4eac\u30aa\u30d5\u30a3\u30b9>> of 12th floor "
+                "<<12\u968e>> from working I am. The internet connection itself <<\u30a4\u30f3\u30bf"
+                "\u30fc\u30cd\u30c3\u30c8\u63a5\u7d9a>> is problem <<\u554f\u984c>> none, "
+                "VPN only <<VPN\u306e\u307f>> is failing.\n\n"
+                "Computer: ThinkPad T14s, Windows 11\n"
+                "AnyConnect version: 5.0.03072\n\n"
+                "<<\u3088\u308d\u3057\u304f\u304a\u9858\u3044\u3057\u307e\u3059>>\n"
+                "Kenji Watanabe"
+            ),
+            reporter=_reporter("Kenji Watanabe", "kenji.watanabe@contoso.com", "Equity Research"),
+            created_at="2026-03-18T01:30:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-045: Voice dictation errors
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-045",
+        name="Voice dictation transcription errors in password reset",
+        description="Tests triage when a ticket was submitted via voice dictation "
+        "with numerous speech-to-text misrecognitions and missing punctuation.",
+        category=_CATEGORY,
+        tags=["voice_dictation", "speech_to_text", "transcription_errors"],
+        ticket=EvalTicket(
+            ticket_id="INC-5045",
+            subject="Password reset needed",
+            description=(
+                "hey i t this is marcus from the wealth management floor i need a "
+                "passed word ree set for my add account because i got locked out this "
+                "mourning after entering the wrong passed word tree times my user name "
+                "is marcus dot williams at could tow so dot com and im on the forth "
+                "floor in the new york office i tried the self sir vis portal but it "
+                "says my security questions are wrong witch is weird because i definitely "
+                "know my mothers maiden name please help a sap because i have a client "
+                "coil at ten thirty and i cant access any think right now also my manager "
+                "is tom brennan he can very phi my eye dee if needed thanks"
+            ),
+            reporter=_reporter("Marcus Williams", "marcus.williams@contoso.com", "Wealth Management"),
+            created_at="2026-03-18T09:45:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Access & Authentication",
+            priority="P3",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-046: SMS/chat ultra-terse shorthand
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-046",
+        name="Ultra-terse SMS shorthand in access request",
+        description="Tests triage of an extremely abbreviated SMS-style message "
+        "with texting shorthand, missing vowels, and no punctuation.",
+        category=_CATEGORY,
+        tags=["sms_shorthand", "abbreviations", "ultra_terse"],
+        ticket=EvalTicket(
+            ticket_id="INC-5046",
+            subject="cant login pls hlp",
+            description=(
+                "yo IT\n"
+                "cnt gt into shrpnt since ths morn. gts err 403 evry time. "
+                "nd access 4 the Q1 rpts folder asap, big mtg @ 2pm w/ client. "
+                "uname: d.kim. tried clrng cache + diff browser, same thng. "
+                "pls fix b4 lunch thx\n"
+                "- DK"
+            ),
+            reporter=_reporter("Daniel Kim", "d.kim@contoso.com", "Sales"),
+            created_at="2026-03-18T10:20:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Access & Authentication",
+            priority="P3",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-047: SQL query result dump in ticket
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-047",
+        name="SQL query result dump in database connectivity ticket",
+        description="Tests triage when a DBA pasted raw SQL query output and error traces "
+        "alongside a description of intermittent database connectivity failures.",
+        category=_CATEGORY,
+        tags=["sql_dump", "query_output", "database_noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5047",
+            subject="Intermittent DB connection failures — prod cluster",
+            description=(
+                "Getting intermittent connection drops to the prod PostgreSQL cluster. "
+                "Here's what I captured:\n\n"
+                "sql> SELECT pid, state, query, wait_event_type FROM pg_stat_activity "
+                "WHERE state != 'idle';\n"
+                " pid  |  state  |              query              | wait_event_type\n"
+                "------+---------+---------------------------------+----------------\n"
+                " 4821 | active  | SELECT * FROM trades WHERE ...  | Client\n"
+                " 4903 | active  | UPDATE positions SET mark=...   | Lock\n"
+                " 5017 | active  | INSERT INTO audit_log (even...  | IO\n"
+                " 5102 | active  | VACUUM ANALYZE risk_metrics     | IO\n"
+                " 5234 | idle in | BEGIN; SELECT portfolio_id,...  | Client\n"
+                "(5 rows)\n\n"
+                "ERROR: could not connect to server: Connection timed out\n"
+                "\tIs the server running on host \"prod-db-03.contoso.internal\" "
+                "(10.2.8.43) and accepting TCP/IP connections on port 5432?\n\n"
+                "Happens ~every 15 min, lasts 30-60 sec. Started after the "
+                "network maintenance window Saturday night. Cluster: prod-db-01 "
+                "through prod-db-04, pgBouncer in front. No disk or CPU alerts."
+            ),
+            reporter=_reporter("Nikolai Petrov", "nikolai.petrov@contoso.com", "Database Administration"),
+            created_at="2026-03-18T07:15:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Data & Storage",
+            priority="P2",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-048: Webpack build output pasted inline
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-048",
+        name="Webpack build output in deployment ticket",
+        description="Tests triage when a developer pasted extensive webpack build "
+        "output and chunk hashes into a deployment failure ticket.",
+        category=_CATEGORY,
+        tags=["build_output", "webpack_noise", "deployment_issue"],
+        ticket=EvalTicket(
+            ticket_id="INC-5048",
+            subject="Staging deployment failed — webpack build output",
+            description=(
+                "Staging deploy pipeline failed at the build step. Webpack output:\n\n"
+                "asset main.8a3f2c1d.js 1.42 MiB [emitted] [minimized] (name: main)\n"
+                "asset vendor.7b9e4f0a.js 892 KiB [emitted] [minimized] (name: vendor)\n"
+                "asset styles.3d2e1f0b.css 234 KiB [emitted] (name: styles)\n"
+                "asset runtime.c4d5e6f7.js 12.4 KiB [emitted] (name: runtime)\n"
+                "asset images/logo.a1b2c3d4.svg 8.42 KiB [emitted]\n"
+                "Entrypoint main [big] 2.34 MiB = runtime.c4d5e6f7.js vendor.7b9e4f0a.js "
+                "styles.3d2e1f0b.css main.8a3f2c1d.js\n"
+                "orphan modules 1.82 MiB [orphan] 487 modules\n"
+                "webpack 5.91.0 compiled with 3 errors in 47832 ms\n\n"
+                "ERROR in ./src/components/TradeBlotter.tsx\n"
+                "Module build failed: SyntaxError: Unexpected token (line 142)\n\n"
+                "ERROR in ./src/api/marketData.ts\n"
+                "Module not found: Can't resolve '@contoso/market-feed' in '/app/src/api'\n\n"
+                "The '@contoso/market-feed' package was removed from our internal "
+                "registry during last week's npm audit cleanup. Deployment to "
+                "staging (deploy-stg-04) has been blocked since Friday.\n\n"
+                "— Priya Sharma, Platform Engineering"
+            ),
+            reporter=_reporter("Priya Sharma", "priya.sharma@contoso.com", "Platform Engineering"),
+            created_at="2026-03-18T15:00:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-049: macOS crash report with stack traces
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-049",
+        name="macOS crash report with stack traces in app crash ticket",
+        description="Tests triage when a user pasted a full macOS crash report "
+        "including thread stacks, binary images, and exception details.",
+        category=_CATEGORY,
+        tags=["crash_report", "stack_trace", "macos"],
+        ticket=EvalTicket(
+            ticket_id="INC-5049",
+            subject="Bloomberg Terminal app crashes every morning",
+            description=(
+                "Bloomberg Terminal crashes daily around 08:30 when loading market data. "
+                "macOS crash report:\n\n"
+                "Process:         BloombergTerminal [48291]\n"
+                "Path:            /Applications/Bloomberg/BloombergTerminal.app\n"
+                "Identifier:      com.bloomberg.terminal\n"
+                "Version:         2026.3.14 (build 14823)\n"
+                "Code Type:       ARM-64 (Native)\n"
+                "Parent Process:  launchd [1]\n\n"
+                "Date/Time:       2026-03-18 08:31:42.817 +0000\n"
+                "OS Version:      macOS 15.3 (24D5034f)\n\n"
+                "Exception Type:  EXC_BAD_ACCESS (SIGSEGV)\n"
+                "Exception Codes: KERN_INVALID_ADDRESS at 0x0000000000000010\n\n"
+                "Thread 0 Crashed:\n"
+                "0   libsystem_platform.dylib   0x1a0734f28 _platform_memmove + 312\n"
+                "1   BloombergTerminal          0x104a2f1c0 MarketDataCache::refresh + 448\n"
+                "2   BloombergTerminal          0x104a31240 SessionManager::onOpen + 192\n"
+                "3   libdispatch.dylib          0x1a06e4a10 _dispatch_call_block + 32\n\n"
+                "Binary Images:\n"
+                "0x104800000 - 0x106ffffff BloombergTerminal ARM-64\n"
+                "0x1a06e0000 - 0x1a0720fff libdispatch.dylib ARM-64\n\n"
+                "MacBook Pro 16\" M3 Pro. Happens only at market open. "
+                "Reinstalled twice, same crash. Other apps fine."
+            ),
+            reporter=_reporter("Elena Vasquez", "elena.vasquez@contoso.com", "Equity Trading"),
+            created_at="2026-03-18T08:35:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-050: Browser console log dump
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-050",
+        name="Browser console log dump in authentication failure ticket",
+        description="Tests triage when a user dumped browser DevTools console output "
+        "full of JavaScript errors, network traces, and CORS warnings.",
+        category=_CATEGORY,
+        tags=["console_log", "browser_debug", "auth_failure"],
+        ticket=EvalTicket(
+            ticket_id="INC-5050",
+            subject="Can't log in to internal portal — console errors",
+            description=(
+                "I can't log in to the risk dashboard at https://risk.contoso.com. "
+                "Gets stuck on the login redirect. IT told me to open the browser "
+                "console so here's what I see:\n\n"
+                "[09:14:22.341] Navigating to https://risk.contoso.com/auth/callback\n"
+                "[09:14:22.587] GET https://login.contoso.com/oauth2/token 401 (Unauthorized)\n"
+                "[09:14:22.589] Access to XMLHttpRequest at 'https://login.contoso.com/oauth2/"
+                "token' from origin 'https://risk.contoso.com' has been blocked by CORS policy: "
+                "No 'Access-Control-Allow-Origin' header is present.\n"
+                "[09:14:22.612] Uncaught (in promise) Error: Token refresh failed\n"
+                "    at AuthModule.refreshToken (auth.bundle.js:1423:17)\n"
+                "    at async SessionManager.init (session.bundle.js:87:9)\n"
+                "[09:14:23.001] [React] Warning: Cannot update during existing state transition\n"
+                "[09:14:23.150] POST https://api.contoso.com/graphql 403 (Forbidden)\n"
+                "[09:14:23.200] Error: ChunkLoadError: Loading chunk 'vendors-risk' failed.\n\n"
+                "Chrome 122.0.6261.112, Windows 11, Contoso VPN connected. "
+                "Colleague next to me can log in fine on her machine.\n\n"
+                "— Tariq Hassan, Risk Management"
+            ),
+            reporter=_reporter("Tariq Hassan", "tariq.hassan@contoso.com", "Risk Management"),
+            created_at="2026-03-18T09:15:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+        ),
+    )
+)
