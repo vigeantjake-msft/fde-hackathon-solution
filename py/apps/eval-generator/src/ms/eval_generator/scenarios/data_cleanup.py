@@ -4046,38 +4046,42 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
     ScenarioDefinition(
         scenario_id="dc-gen-069",
         subjects=(
-            "ProblÃ¨me avec l'application â€" erreur d'authentification",
-            "Application login failure â€" mojibake in error message",
+            "Probl\u00c3\u00a8me avec l\u2019application \u2013 erreur d\u2019authentification",
+            "Application login failure \u2013 mojibake in error message",
         ),
         descriptions=(
-            "Bonjour Ã©quipe IT,\n\n"
-            "Je nâ€™arrive plus Ã\xa0 me connecter Ã\xa0 l'application Contoso"
-            " ExpenseTracker depuis ce matin. Quand jâ€™entre mes identifiants,"
-            " je reÃ§ois le message dâ€™erreur suivant :\n\n"
-            "â€˜Authentification Ã©chouÃ©e â€\" votre jeton de session a expirÃ©."
-            " Veuillez contacter votre administrateur.â€™\n\n"
-            "Jâ€™ai essayÃ© de vider le cache du navigateur, dâ€™utiliser un"
-            " autre navigateur (Chrome, Firefox, Edge) et de rÃ©initialiser"
-            " mon mot de passe via le portail self-service. Rien ne fonctionne."
-            " Mes collÃ¨gues dans le mÃªme bureau nâ€™ont pas ce problÃ¨me.\n\n"
-            "Mon poste : WIN-PC-5523, Windows 11, connectÃ© au rÃ©seau filaire"
-            " du bureau de MontrÃ©al.\n\nMerci,\nÃ‰milie DuprÃ©",
+            "Bonjour \u00c3\u00a9quipe IT,\n\n"
+            "Je n\u2019arrive plus \u00c3\u00a0 me connecter \u00c3\u00a0"
+            " l\u2019application Contoso ExpenseTracker depuis ce matin. Quand"
+            " j\u2019entre mes identifiants, je re\u00c3\u00a7ois le message"
+            " d\u2019erreur suivant :\n\n"
+            "\u2018Authentification \u00c3\u00a9chou\u00c3\u00a9e \u2013 votre"
+            " jeton de session a expir\u00c3\u00a9. Veuillez contacter votre"
+            " administrateur.\u2019\n\n"
+            "J\u2019ai essay\u00c3\u00a9 de vider le cache du navigateur,"
+            " d\u2019utiliser un autre navigateur (Chrome, Firefox, Edge) et de"
+            " r\u00c3\u00a9initialiser mon mot de passe via le portail"
+            " self-service. Rien ne fonctionne. Mes coll\u00c3\u00a8gues dans"
+            " le m\u00c3\u00aame bureau n\u2019ont pas ce probl\u00c3\u00a8me.\n\n"
+            "Mon poste : WIN-PC-5523, Windows 11, connect\u00c3\u00a9 au"
+            " r\u00c3\u00a9seau filaire du bureau de Montr\u00c3\u00a9al.\n\n"
+            "Merci,\n\u00c3\u2030milie Dupr\u00c3\u00a9",
             "Hi team,\n\n"
-            "Something is wrong with the encoding in Contoso ExpenseTracker â€\""
-            " but also I canâ€™t log in at all. The error says"
-            " â€˜Authentication failed â€\" session token expiredâ€™. I have"
-            " tried:\n"
+            "Something is wrong with the encoding in Contoso ExpenseTracker"
+            " \u2013 but also I can\u2019t log in at all. The error says"
+            " \u2018Authentication failed \u2013 session token expired\u2019."
+            " I have tried:\n"
             "- Clearing browser cache and cookies\n"
             "- Trying Chrome, Edge, and Firefox\n"
             "- Resetting my password via the self-service portal\n"
             "- Using InPrivate/Incognito mode\n\n"
-            "Nothing works. I suspect thereâ€™s a backend issue because the"
-            " error page itself is rendering with garbled characters (Ã©"
-            " instead of Ã©, â€" instead of â€\", etc.), which suggests a"
-            " double-encoding problem on the server side.\n\n"
+            "Nothing works. I suspect there\u2019s a backend issue because the"
+            " error page itself is rendering with garbled characters (\u00c3\u00a9"
+            " instead of \u00e9, \u00c3\u00a8 instead of \u00e8, etc.), which"
+            " suggests a double-encoding problem on the server side.\n\n"
             "Account: e.dupre@contoso.com\n"
             "Device: WIN-PC-5523, Windows 11 23H2\n"
-            "Location: MontrÃ©al office, wired LAN\n\n"
+            "Location: Montr\u00c3\u00a9al office, wired LAN\n\n"
             "This is blocking my expense reports for month-end.\nThanks, Emilie",
         ),
         gold=ScenarioGold(

@@ -11348,7 +11348,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 '"status":"Alert","threshold":5,"current_value":23,'
                 '"tags":["env:production","service:trading-portal",'
                 '"team:enterprise-apps","region:us-east"],'
-                '"message":"AppPool \\'ContosoTradingPortal\\' has recycled 23 '
+                '"message":"AppPool \'ContosoTradingPortal\' has recycled 23 '
                 'times in the last hour (threshold: 5). Likely memory leak or '
                 'unhandled exception causing repeated crashes.",'
                 '"host":"webprod-app-07.contoso.com",'
@@ -11402,7 +11402,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "(Contoso Financial Reporter v4.2).\n\n"
                 "Quand j'essaie de gÃ©nÃ©rer le rapport trimestriel Q1 2026, "
                 "l'application affiche une erreur: Â«Ã‰chec de la gÃ©nÃ©ration "
-                "du rapport â€" connexion Ã  la base de donnÃ©es interrompueÂ».\n\n"
+                "du rapport \u2014 connexion Ã\u00a0 la base de donnÃ©es interrompueÂ».\n\n"
                 "The error started this morning. I can log into the application "
                 "fine but any report that queries the financial data warehouse "
                 "fails with what appears to be a database connection timeout. "
