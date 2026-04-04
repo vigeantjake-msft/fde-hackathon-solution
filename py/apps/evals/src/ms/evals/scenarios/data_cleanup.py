@@ -4451,3 +4451,327 @@ register(
         ],
     )
 )
+
+# ---------------------------------------------------------------------------
+# dc-061  Very long email with buried issue
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-061",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.STEPS_TO_REPRODUCE],
+        subjects=[
+            "Various things — also my {app} is broken",
+            "Quick note + question + issue + follow-up on lunch order",
+            "RE: Team outing — oh and my laptop has an issue too",
+        ],
+        descriptions=[
+            "Hi IT,\n\n"
+            "Hope you're all doing well! I wanted to first say thanks for fixing the "
+            "printer last week — that was super quick. Also, did anyone figure out the "
+            "lunch order for the {department} team outing next Friday? I think we said "
+            "Mediterranean but some people wanted sushi. Anyway, totally unrelated, but "
+            "I was chatting with {name1} about the new onboarding flow and we both agree "
+            "the new portal looks great. Oh, and I forgot to mention — I ran into {name1} "
+            "at the coffee machine and they said the {office} office is getting renovated? "
+            "That's exciting.\n\n"
+            "Also, I've been meaning to ask about the parking situation. My badge doesn't "
+            "open the gate to Lot B anymore. Not sure if that's related to the system "
+            "change last month. Speaking of which, is the old VPN client being retired? "
+            "I saw an email but I wasn't sure if it applied to our department.\n\n"
+            "OH WAIT — the actual reason I'm writing. My {app} has been crashing every "
+            "time I try to open the quarterly {department} report. It freezes for about "
+            "10 seconds and then just closes. This started on Monday. I've tried "
+            "restarting my laptop and it didn't help. I'm on {os}.\n\n"
+            "Also, is there cake in the break room? Someone said there was cake.\n\n"
+            "Thanks!\n{name}",
+            "Hey team,\n\n"
+            "So I have a bunch of things to share and I figured I'd just put them all "
+            "in one email rather than sending five separate ones.\n\n"
+            "First, the holiday schedule — did we finalize whether the office is closed "
+            "the week between Christmas and New Year? I need to book flights.\n\n"
+            "Second, the coffee machine on Floor {floor} is making a weird noise again. "
+            "I know that's not IT but I don't know who else to tell.\n\n"
+            "Third, I lost my badge last week and got a replacement, but now my old badge "
+            "shows as active too. Security concern maybe?\n\n"
+            "Fourth — and this is the real issue — {app} crashes immediately when I try "
+            "to generate the monthly compliance report. No error message, it just "
+            "disappears. This is blocking my end-of-month deliverables. I'm running "
+            "version {version} on {os}. It worked fine until the last update.\n\n"
+            "Fifth, does anyone have a spare USB-C dongle?\n\n"
+            "Cheers,\n{name}\n{department}",
+        ],
+        next_best_actions=[
+            "Investigate {app} crash when opening large reports — the actual issue is "
+            "buried in a rambling email. Ignore unrelated topics (lunch orders, parking, "
+            "coffee machines).",
+            "Troubleshoot {app} crash on report generation — user reports the app closes "
+            "without an error after a recent update.",
+        ],
+        remediation_steps=[
+            [
+                "Extract the core issue from the rambling email: {app} crashes on report generation",
+                "Check for recent updates to {app} that may have introduced a regression",
+                "Collect crash logs or application event logs from the user's machine",
+                "Test generating the same report on a different machine to isolate the issue",
+                "If a recent update is the cause, roll back or apply the latest patch",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-062  Massive base64 PDF inline (compliance scanner output)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-062",
+        category=Category.SECURITY,
+        priority=Priority.P2,
+        assigned_team=Team.SECOPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "Compliance scan results — see attached inline data",
+            "Nessus scan output for {department} servers — URGENT findings",
+            "Quarterly vulnerability scan — inline PDF export",
+        ],
+        descriptions=[
+            "Hi Security team,\n\n"
+            "Here are the results from last night's compliance scan. Our export tool is "
+            "down so I'm pasting the base64-encoded PDF inline.\n\n"
+            "--- BEGIN COMPLIANCE REPORT PDF (base64) ---\n"
+            "JVBERi0xLjcKCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIg"
+            "MCBSCJ4+CmVuZG9iagoKMiAwIG9iago8PAovVHlwZSAvUGFnZXMKL0tpZHMg"
+            "WzMgMCBSXQovQ291bnQgMQo+PgplbmRvYmoKCjMgMCBvYmoKPDwKL1R5cGUg"
+            "L1BhZ2UKL1BhcmVudCAyIDAgUgovTWVkaWFCb3ggWzAgMCA2MTIgNzkyXQov"
+            "Q29udGVudHMgNCAwIFIKL1Jlc291cmNlcyA8PAovRm9udCA8PAovRjEgNSAw"
+            "IFIKPj4KPj4KPj4KZW5kb2JqCgo0IDAgb2JqCjw8Ci9MZW5ndGggNDQKPj4K"
+            "c3RyZWFtCkJUCi9GMSAxMiBUZgo1MCA3MDAgVGQKKENvbXBsaWFuY2UgU2Nh"
+            "biBSZXBvcnQpIFRqCkVUCmVuZHN0cmVhbQplbmRvYmoK\n"
+            "[... approximately 847 more lines of base64 data omitted for brevity ...]\n"
+            "--- END COMPLIANCE REPORT PDF ---\n\n"
+            "Summary of critical findings:\n"
+            "- 3 servers with unpatched CVEs rated CRITICAL\n"
+            "- 7 endpoints missing disk encryption\n"
+            "- 2 service accounts with passwords last rotated 400+ days ago\n\n"
+            "Please review and advise on remediation priority.\n\n"
+            "{name}\n{department}",
+            "Attaching the Nessus vulnerability scan export for the {department} "
+            "environment. The file upload was rejected (>25 MB) so I've base64-encoded "
+            "the PDF and pasted it below.\n\n"
+            "BEGIN BASE64 ENCODED SCAN REPORT:\n"
+            "JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAw"
+            "IFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFsz"
+            "IDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1Bh"
+            "Z2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSA+Pgpl"
+            "bmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5"
+            "IDAwMDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAwMDAgbiAKMDAwMDAwMDEx"
+            "NSAwMDAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIg"
+            "Pj4Kc3RhcnR4cmVmCjIxNAolJUVPRgo=\n"
+            "[... 1200+ additional lines of base64 omitted ...]\n"
+            "END BASE64\n\n"
+            "Key findings: 12 critical vulnerabilities, 34 high, 89 medium across "
+            "47 scanned hosts. Need remediation plan by EOW.\n\n"
+            "{name}, {department}",
+        ],
+        next_best_actions=[
+            "Review the compliance scan summary findings — ignore the inline base64 "
+            "data and focus on the critical vulnerabilities listed in the plain-text "
+            "summary section.",
+            "Prioritize remediation for the critical Nessus findings — request the "
+            "report as a proper attachment or shared drive link instead of inline base64.",
+        ],
+        remediation_steps=[
+            [
+                "Request the full scan report as a proper file attachment or shared drive link",
+                "Prioritize the critical CVE findings — identify which servers are affected",
+                "Address the unrotated service account passwords immediately (400+ days is a policy violation)",
+                "Schedule emergency patching for the servers with critical unpatched CVEs",
+                "Create a remediation tracker and assign owners for each finding category",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-063  Mobile autocorrect mangling technical terms
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-063",
+        category=Category.NETWORK,
+        priority=Priority.P2,
+        assigned_team=Team.NETWORK,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.DEVICE_INFO],
+        subjects=[
+            "VPN keeps disconnecting plz help",
+            "Cant connect to the network URGENT",
+            "Wifi issues — sending from my phone sorry for typos",
+        ],
+        descriptions=[
+            "hey sorry typing this from my phone bc my laptop wont connect\n\n"
+            "so the VPN keeps saying \"authentication failed\" but my password is "
+            "defintely right. i tried the global protect client and also the "
+            "cisco anyconnect one. the error says something about a \"certificate "
+            "validation\" but autocorrect keeps changing it lol\n\n"
+            "my laptops ethernet port isnt working either — i think the docking "
+            "station died. model is a \"dell latitudes\" (thats what autocorrect "
+            "wants to call it 🙄) — its actually a Dell Latitude 5540.\n\n"
+            "im on floor {floor} of the {office} office. been trying since 8am. "
+            "my manager {name1} needs me online for a client call at 10.\n\n"
+            "also tried the \"alternate DNS\" thing someone told me about but i "
+            "think i typed the address wrong bc now nothing works at all. i "
+            "changed it to 8.8.8.8 but maybe i shouldnt have??\n\n"
+            "pls help asap 🙏\n\n"
+            "{name}\nSent from my iPhone",
+            "sry for the typos on mobile rn\n\n"
+            "the wifi keeps dropping every few mins. when it does work its super "
+            "slow like 2-3 mbps. im usually on the \"contoso-corp\" ssid but my "
+            "phone keeps autoconnecting to \"contoso-guest\" instead\n\n"
+            "i tried forgetting the network and reconnecting but it asks for a "
+            "\"certificate\" that i dont have?? IT setup this laptop last month "
+            "and wifi worked fine until today\n\n"
+            "also the \"global protect\" vpn (autocorrect wants to call it "
+            "\"global protect agency\" lmao) wont connect at all. just spins "
+            "and says \"gateway not found\"\n\n"
+            "im in bldg 3 floor {floor}, the {office} office. need this fixed "
+            "before my 2pm presentation plsss\n\n"
+            "{name} — {department}\nSent from mobile",
+        ],
+        next_best_actions=[
+            "Troubleshoot VPN and network connectivity for user on Floor {floor} "
+            "— parse through mobile autocorrect artifacts to identify the certificate "
+            "validation error and potential DNS misconfiguration.",
+            "Investigate wireless connectivity issues — user's laptop may have a "
+            "certificate or profile problem preventing connection to the corporate SSID.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the user's VPN certificate is valid and not expired",
+                "Check if the user manually changed DNS settings and revert to DHCP-assigned DNS",
+                "Re-push the corporate wireless profile to ensure proper SSID and certificate configuration",
+                "Test the docking station Ethernet port — replace if faulty",
+                "Confirm VPN gateway is reachable from the user's network segment",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-064  Auto-translated email with translation artifacts
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-064",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.APPLICATION_VERSION],
+        subjects=[
+            "The program of accounting does not function — translated by Google",
+            "Application of enterprise makes error — please excuse translation",
+            "Financial system is doing the crash — auto-translated from Japanese",
+        ],
+        descriptions=[
+            "[This message was auto-translated from Japanese by Microsoft Translator]\n\n"
+            "Respectful IT team of support,\n\n"
+            "The program of accounting (SAP Concur) is making the error when I am "
+            "trying to submit the report of expenses. When I am pushing the button "
+            "of 'submit', the screen becomes the white color and the circle of loading "
+            "is turning forever without stopping.\n\n"
+            "I have already made the attempt of:\n"
+            "- Making the cache of browser to be cleared\n"
+            "- Using the browser of different type (the Chrome of Google and the Edge "
+            "of Microsoft)\n"
+            "- Making the computer to restart\n\n"
+            "The report of expenses has the value of ¥847,000 and must be submitted "
+            "before the deadline of end of month. My department of {department} has "
+            "the policy of strict deadline.\n\n"
+            "元のメッセージ: 経費精算システムが送信ボタンを押すと固まります。\n"
+            "至急対応をお願いします。\n\n"
+            "With respectful regards,\n{name}\n{department} — {office} Office",
+            "[Auto-translated from Korean — original below]\n\n"
+            "Hello the team of IT,\n\n"
+            "The application of {app} is making crash when I am opening the file of "
+            "large size. The message of error says 'the memory is not sufficient' but "
+            "my computer of laptop has the RAM of 32 gigabytes.\n\n"
+            "This problem started after the update of automatic that happened in the "
+            "night of last Tuesday. Before the update, everything was working with "
+            "the normality.\n\n"
+            "The file I am trying to open has the size of approximately 2 gigabytes. "
+            "It is the data of financial modeling for the quarter of Q3.\n\n"
+            "원본 메시지: {app}에서 대용량 파일을 열 때 크래시가 발생합니다. "
+            "메모리 부족 오류가 나옵니다.\n\n"
+            "{name}\n{department}",
+        ],
+        next_best_actions=[
+            "Investigate SAP Concur submission failure — the user reports the page "
+            "hangs on submit. Look past the machine-translation artifacts to identify "
+            "the core issue.",
+            "Troubleshoot {app} crash on large file open — reported after a recent "
+            "automatic update. The memory error may indicate a regression in the update.",
+        ],
+        remediation_steps=[
+            [
+                "Reproduce the issue in the same application version and browser combination",
+                "Check for known issues with the latest application update",
+                "Verify server-side logs for errors during the submission or file open operation",
+                "If the update introduced a regression, coordinate with the vendor for a hotfix",
+                "Follow up with the user in their preferred language if possible",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-065  Extremely terse ticket with minimal context
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-065",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[
+            MissingInfo.ERROR_MESSAGE,
+            MissingInfo.AFFECTED_SYSTEM,
+            MissingInfo.STEPS_TO_REPRODUCE,
+            MissingInfo.DEVICE_INFO,
+            MissingInfo.ENVIRONMENT_DETAILS,
+        ],
+        subjects=[
+            "broken",
+            "not working",
+            "help",
+        ],
+        descriptions=[
+            "it's broken again",
+            "doesn't work. fix pls",
+            "{app} down",
+        ],
+        next_best_actions=[
+            "Gather basic information from the reporter — the ticket provides almost "
+            "no context. Ask for the application name, error messages, what they were "
+            "trying to do, and when it started.",
+            "Request clarification — ticket is too vague to triage. Need affected "
+            "system, error details, and steps to reproduce.",
+        ],
+        remediation_steps=[
+            [
+                "Contact the reporter to collect basic information: what application, "
+                "what error, what were they trying to do",
+                "Ask for screenshots or screen recordings if the user cannot articulate the issue",
+                "Check for any ongoing incidents or outages that may match the vague report",
+                "Once sufficient information is gathered, re-triage with the correct category and priority",
+                "Update the ticket with the clarified details for proper tracking",
+            ],
+        ],
+    )
+)

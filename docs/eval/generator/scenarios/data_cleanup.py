@@ -856,4 +856,267 @@ SCENARIOS: list[Scenario] = [
         ],
         tags=["data-cleanup", "corrupted-headers", "smtp-headers", "raw-email"],
     ),
+    # ──────────────────────────────────────────────────────────────────
+    # 18. Very long email with actual issue buried at the end
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-very-long-buried-issue",
+        category="Network & Connectivity",
+        priority="P2",
+        assigned_team="Network Operations",
+        needs_escalation=False,
+        missing_information=["error_message", "network_location"],
+        subjects=[
+            "FW: FW: RE: RE: Office network issues — adding more context (LONG)",
+            "RE: RE: RE: Network outage this morning — scroll to the bottom for details",
+            "Re: Multiple issues — the VPN one is at the end of this email",
+        ],
+        descriptions=[
+            "Hi IT,\n\n"
+            "First, I want to mention that last month we had a similar situation when the Wi-Fi in "
+            "Building C went down for a few hours and nobody could print. That was resolved by Dave "
+            "in networking. Also, a few weeks before that, we had the badge readers fail during a "
+            "power blip, which caused a lot of confusion at reception. And of course there was the "
+            "time the VoIP phones dropped calls for an entire afternoon — I think that was a switch "
+            "firmware issue. Oh, and we also had a problem with the guest Wi-Fi SSID not broadcasting "
+            "in the lobby, but that turned out to be an AP that needed a reboot.\n\n"
+            "Anyway, the reason I'm writing today is completely different. Since about 8 AM this "
+            "morning, the VPN connection drops every 15-20 minutes for everyone on the Minneapolis "
+            "office subnet (10.45.x.x). When it drops, users get a 'TLS handshake failed' error "
+            "and have to reconnect manually. About 30 people are affected and most of our finance "
+            "team is remote today.",
+            "--- Forwarded message (4th time) ---\n"
+            "This email chain started two weeks ago about a different issue that is now resolved. "
+            "I'm reusing the thread because I couldn't find the help desk email address.\n\n"
+            "Previous topic: printer toner replacement for 3rd floor HP LaserJet — RESOLVED.\n"
+            "Previous previous topic: request for a second monitor — COMPLETED.\n"
+            "Previous previous previous topic: Adobe Acrobat license renewal — DONE.\n\n"
+            "==== ACTUAL NEW ISSUE BELOW ====\n\n"
+            "The Minneapolis office VPN concentrator appears to be dropping TLS sessions "
+            "intermittently since this morning. Approximately 30 remote finance users are unable "
+            "to maintain a stable connection for more than 15 minutes. The GlobalProtect client "
+            "shows 'Gateway unreachable' after each disconnect.",
+        ],
+        next_best_actions=[
+            "Extract the actual issue buried in the message: VPN dropping every 15-20 minutes for "
+            "the Minneapolis subnet. Investigate the VPN concentrator and TLS configuration.",
+            "Check the VPN concentrator health and session limits for the 10.45.x.x subnet.",
+        ],
+        remediation_steps=[
+            [
+                "Check the VPN concentrator logs for TLS handshake failures and session drops",
+                "Verify the concentrator is not exceeding its maximum concurrent session limit",
+                "Review recent certificate or firmware changes on the VPN gateway",
+                "Restart the VPN gateway service if logs indicate a memory or process issue",
+                "If the issue persists, fail over to the backup VPN concentrator",
+            ],
+        ],
+        tags=["data-cleanup", "buried-issue", "long-email", "irrelevant-context"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 19. Massive base64-encoded PDF in email body
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-base64-pdf-inline",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["application_version", "steps_to_reproduce"],
+        subjects=[
+            "Cannot open quarterly report — pasting PDF contents here",
+            "PDF rendering issue in SharePoint — raw file data below",
+        ],
+        descriptions=[
+            "Hi team,\n\n"
+            "I'm trying to open the quarterly budget report in SharePoint Online but it just shows "
+            "a blank page. I exported the PDF and I'm pasting the raw contents here so you can see "
+            "the file:\n\n"
+            "JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5k"
+            "b2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4K"
+            "ZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3gg"
+            "WzAgMCA2MTIgNzkyXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAv"
+            "RjEgNSAwIFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA0NCA+PgpzdHJl"
+            "YW0KQlQKL0YxIDE4IFRmCjEwMCA3MDAgVGQKKEZBS0UgQkFTRTY0IFBERikgVGoKRVQKZW5k"
+            "c3RyZWFtCmVuZG9iagpGQUtFX0JBU0U2NF9EQVRBX1JFUEVBVEVEX1RPX1NJTVVMQVRFX0xB"
+            "UkdFX1BERl9GSUxFX0NPTlRFTlQ=\n"
+            "[...approximately 2 MB of base64 data truncated...]\n\n"
+            "The report was created in Adobe Acrobat and uploaded to our team SharePoint site. "
+            "Other PDFs seem to render fine, but this particular file always shows blank.",
+            "SharePoint document library won't preview a specific PDF — the quarterly financials "
+            "report (Q3-2026-Budget-Final.pdf, about 48 pages). I tried downloading and opening "
+            "locally in Adobe Reader and it works fine, so the PDF itself isn't corrupt.\n\n"
+            "I attempted to paste the file contents below for reference:\n"
+            "data:application/pdf;base64,JVBERi0xLjcNCjEgMCBvYmoNCjw8IC9UeXBlIC9DYXRhbG9n"
+            "IEZBQ0VJTE9OR0JBU0U2NERBVEFCTE9DS1RIQVRHT0VTT05GT1JNQUdFUw=="
+            "\n[...base64 data continues for thousands of lines...]\n\n"
+            "This only affects the one file. Could it be a file size limit in SharePoint preview?",
+        ],
+        next_best_actions=[
+            "Ignore the base64-encoded PDF data and focus on the SharePoint Online PDF rendering "
+            "issue. Check file size limits for the browser-based PDF previewer.",
+            "Verify the PDF file size against SharePoint Online preview limits and test with a "
+            "different browser.",
+        ],
+        remediation_steps=[
+            [
+                "Check the PDF file size against SharePoint Online's browser preview limit (typically 100 MB)",
+                "Test the preview in a different browser (Edge, Chrome) to rule out client-side issues",
+                "Clear the SharePoint document library cache and re-upload the file",
+                "If the file exceeds preview limits, advise the user to download and open locally",
+                "Check if the PDF contains non-standard fonts or features unsupported by the web viewer",
+            ],
+        ],
+        tags=["data-cleanup", "base64", "pdf-inline", "large-payload"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 20. Mobile keyboard autocorrect mangling technical terms
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-mobile-autocorrect",
+        category="Network & Connectivity",
+        priority="P2",
+        assigned_team="Network Operations",
+        needs_escalation=False,
+        missing_information=["error_message", "network_location"],
+        subjects=[
+            "VPN not conmecting — sent from my iPhoone",
+            "WiFi authentification faliure on laptoop — plz help",
+        ],
+        descriptions=[
+            "Sent form my iPhoen\n\n"
+            "Hi IT Im havng truoble with the VPN. It says authentification faled when I try "
+            "to conect to the Globl Protect clint. I thinck my pasword is corect because I can "
+            "log into the emial just fine.\n\n"
+            "The eror messge says somthing about a certificat missmatch but I cant coppy the "
+            "exact mesage becuz Im on my fone rigt now.\n\n"
+            "Im workng remotly from a coffe shop and I need to get onto the corprate netwrk "
+            "for a clent call in 30 minits.\n\n"
+            "Pleaz help asap\n"
+            "Thx\nMarcus",
+            "Sendign from mobil — soryr for typoes\n\n"
+            "The wifi in the Cihcago offce keeps disconecting. Every 5-10 minuts it drops and "
+            "I have to reconect manualy. The SSID is CORP-WIFI-5G and my laptpo is a Dlle "
+            "Lattitude 5540. It startd after the weekedn maintnance.\n\n"
+            "Othr poeple on the flor are havng the smae isue so I dont thnik its just my mahcine.\n\n"
+            "Thankss\nPreya S.",
+        ],
+        next_best_actions=[
+            "Interpret through autocorrect errors: VPN certificate mismatch on GlobalProtect "
+            "client. Verify client certificate and user credentials.",
+            "Investigate Wi-Fi disconnections on CORP-WIFI-5G in Chicago office after weekend "
+            "maintenance — likely AP configuration or channel issue.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the user's VPN credentials and certificate validity in the authentication server",
+                "Check if the GlobalProtect client has the latest gateway certificate installed",
+                "Test connectivity to the VPN gateway from an external network",
+                "If certificate mismatch, push the updated root CA certificate to the client",
+                "Confirm access by having the user test the VPN connection after remediation",
+            ],
+        ],
+        tags=["data-cleanup", "mobile-autocorrect", "typos", "garbled-text"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 21. Auto-translated email with translation artifacts
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-auto-translated-email",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["application_version", "steps_to_reproduce"],
+        subjects=[
+            "The Excel makes the freezing of itself — translated by machine",
+            "Application of SAP is presenting error of grave type [auto-translated]",
+        ],
+        descriptions=[
+            "[This message was automatically translated from Japanese]\n\n"
+            "Dear IT support team of the company,\n\n"
+            "The application of spreadsheet (Excel) is making the freezing of itself when "
+            "the pivot table is being rotated on the data of large size. The file has the "
+            "rows of 500,000 and the columns of 45. When I am pressing the button of "
+            "'Refresh All' the application becomes the state of 'Not Responding' and the "
+            "waiting is required of 10 minutes or the killing of the process is necessary.\n\n"
+            "The version of Office is the 365 of enterprise and the Windows is the 11 of "
+            "professional. The memory RAM is 16 gigabytes.\n\n"
+            "The gratitude is extended,\n"
+            "Takeshi Yamamoto\nDepartment of Financial Analysis\n\n"
+            "[Original language: 日本語 — confidence: 78%]",
+            "[Translated automatically from Portuguese — some terms may be inaccurate]\n\n"
+            "Good morning support of TI,\n\n"
+            "The SAP system is presenting the error of type 'ABAP runtime error — "
+            "TSV_TNEW_PAGE_ALLOC_FAILED' when the report of monthly closing is being "
+            "executed. The transaction of code MB52 is the one that fails. The error makes "
+            "the appearance after the processing of approximately 2 minutes.\n\n"
+            "We have already made the attempt of increasing the parameter of memory in the "
+            "profile of instance but the problem makes the persistence. The team of basis "
+            "says that the quotas of memory are the correct ones.\n\n"
+            "This is blocking the closing of financial month.\n\n"
+            "Regards of cordiality,\n"
+            "Ana Beatriz Costa\nControllership\n\n"
+            "[Idioma original: Português — confiança: 82%]",
+        ],
+        next_best_actions=[
+            "Parse through machine translation artifacts: Excel 365 freezing on large pivot "
+            "table refresh (500K rows). Check memory and suggest data model optimization.",
+            "Investigate SAP ABAP memory allocation failure on transaction MB52 during month-end "
+            "close — likely needs memory parameter tuning or report optimization.",
+        ],
+        remediation_steps=[
+            [
+                "Check available system memory and close unnecessary applications before pivot refresh",
+                "Recommend converting the data range to a Power Pivot data model for large datasets",
+                "Verify that 64-bit Office is installed for handling files with 500K+ rows",
+                "If the issue persists, suggest breaking the dataset into smaller pivot table sources",
+                "Test with hardware acceleration disabled in Excel options",
+            ],
+        ],
+        tags=["data-cleanup", "auto-translation", "translation-artifacts", "garbled-grammar"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 22. Extremely short ticket with almost no context
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-terse-no-context",
+        category="General Inquiry",
+        priority="P4",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=[
+            "affected_system",
+            "error_message",
+            "steps_to_reproduce",
+            "device_info",
+            "business_impact",
+        ],
+        subjects=[
+            "help",
+            "it's broken",
+            "not working",
+        ],
+        descriptions=[
+            "it doesnt work",
+            "broken. pls fix asap",
+            "Can someone help? Thing I use every day stopped. Thx.",
+        ],
+        next_best_actions=[
+            "Reply to the reporter requesting basic details: what application or system is "
+            "affected, what error they see, and when the issue started.",
+            "Ask the reporter to clarify what is broken, what device they are using, and "
+            "whether anyone else is affected.",
+        ],
+        remediation_steps=[
+            [
+                "Respond to the reporter requesting clarification on the affected system or application",
+                "Ask for the specific error message or behavior they are experiencing",
+                "Request device and operating system details",
+                "Ask when the issue started and whether it affects other users",
+                "Once details are provided, re-triage and route to the appropriate team",
+            ],
+        ],
+        tags=["data-cleanup", "terse-ticket", "no-context", "ambiguous"],
+    ),
 ]
