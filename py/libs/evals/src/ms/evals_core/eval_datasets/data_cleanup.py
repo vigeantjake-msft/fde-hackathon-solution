@@ -2093,8 +2093,7 @@ def _dc032_multiple_base64_images() -> EvalCase:
         ),
         tags=["data-cleanup", "multiple-base64", "inline-images"],
         description=(
-            "Ticket contains three separate base64-encoded inline images "
-            "interspersed with network issue details."
+            "Ticket contains three separate base64-encoded inline images interspersed with network issue details."
         ),
     )
 
@@ -2355,9 +2354,7 @@ def _dc035_multilingual_disclaimers() -> EvalCase:
             ],
         ),
         tags=["data-cleanup", "multilingual-disclaimers"],
-        description=(
-            "Short hardware issue buried under legal disclaimers repeated in eight languages."
-        ),
+        description=("Short hardware issue buried under legal disclaimers repeated in eight languages."),
     )
 
 
@@ -2432,9 +2429,7 @@ def _dc036_ndr_bounce() -> EvalCase:
             ],
         ),
         tags=["data-cleanup", "ndr", "bounce-back"],
-        description=(
-            "Non-Delivery Report wrapping the original email about a shared mailbox delivery failure."
-        ),
+        description=("Non-Delivery Report wrapping the original email about a shared mailbox delivery failure."),
     )
 
 
@@ -2450,7 +2445,8 @@ def _dc037_regex_code_patterns() -> EvalCase:
                 "it and traced the problem to unescaped regex patterns being passed directly to "
                 "the SQL query engine. Here are the specific inputs that cause crashes:\n\n"
                 "1. Regex used for trade ID matching:\n"
-                r"   ^(?:TRD|SWP|FUT)-\d{4}-[A-Z]{2,4}\/\d{2,6}(?:\.\d+)?$" "\n"
+                r"   ^(?:TRD|SWP|FUT)-\d{4}-[A-Z]{2,4}\/\d{2,6}(?:\.\d+)?$"
+                "\n"
                 "2. The SQL query that fails (from the app logs):\n"
                 "   SELECT t.trade_id, t.counterparty, t.notional FROM trades t\n"
                 "   WHERE t.trade_id ~ '^(?:TRD|SWP|FUT)-\\d{4}' AND t.status <> 'CANCELLED'\n"
@@ -2460,7 +2456,8 @@ def _dc037_regex_code_patterns() -> EvalCase:
                 "braces ({}), and the caret (^) when combined with brackets []\n"
                 "4. Stack trace excerpt:\n"
                 "   java.util.regex.PatternSyntaxException: Unclosed group near index 42\n"
-                r"     ^(?:TRD|SWP|FUT)-\d{4}-[A-Z]{2,4}\/\d{2,6}(?:\.\d+" "\n"
+                r"     ^(?:TRD|SWP|FUT)-\d{4}-[A-Z]{2,4}\/\d{2,6}(?:\.\d+"
+                "\n"
                 "     at java.util.regex.Pattern.error(Pattern.java:1969)\n"
                 "     at com.contoso.traderecon.search.RegexSearchParser.compile(RegexSearchParser.java:147)\n\n"
                 "This is affecting about 20 users in the settlements team who use this tool "
@@ -2726,13 +2723,729 @@ def _dc040_base64_pdf_inline() -> EvalCase:
     )
 
 
+def _dc041_zalgo_text() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-041",
+            subject=(
+                "C\u0338\u0321\u0328\u031b\u0309\u0332\u0319\u0326\u031c"
+                "\u0317\u032c\u031c\u0319\u0300\u0313\u0304\u0308\u0357"
+                "\u0305\u0315o\u0335\u0327\u0322\u031b\u031b\u031d\u0323"
+                "\u0326\u0332\u031c\u033a\u0318\u033c\u0309\u0319\u0319"
+                "\u0308\u0303\u033e\u0314\u0313\u031am\u0334\u0327\u0322"
+                "\u031b\u0324\u032f\u032b\u032f\u0331\u0339\u0323\u0308"
+                "\u033d\u0313\u030a\u033f\u030c\u0308\u0315\u035dp\u0336"
+                "\u0322\u0327\u0326\u0325\u032b\u032a\u0324\u0319\u0319"
+                "\u031d\u030e\u030e\u030a\u0304\u0307\u0306\u0305\u0304"
+                "\u031au\u0335\u0327\u0322\u0328\u0328\u0329\u0326\u032d"
+                "\u0324\u033a\u0339\u0325\u030a\u030b\u0308\u0306\u030e"
+                "\u0308t\u0334\u0321\u0328\u0322\u031c\u0324\u0318\u0324"
+                "\u032e\u033b\u032b\u032b\u030d\u030e\u030d\u0302\u0303"
+                "\u0314\u0309\u031ae\u0335\u0328\u032c\u0339\u031f\u031d"
+                "\u0331\u0326\u0330\u032c\u0311\u030a\u033f\u033f\u0303"
+                "\u0308\u033d\u0313\u0306r\u0335\u0321\u0322\u0322\u031b"
+                "\u031b\u032b\u0324\u033c\u0317\u032b\u032b\u0308\u0307"
+                "\u0308\u030c\u0308\u0351 not working"
+            ),
+            description=(
+                "H\u0335e\u0336l\u0334l\u0335o\u0336 IT support,\n\n"
+                "M\u0334y\u0335 l\u0336a\u0334p\u0335t\u0336o\u0334p "
+                "i\u0335s\u0336 r\u0334u\u0335n\u0336n\u0334i\u0335n"
+                "\u0336g\u0334 extremely slow. The CPU usage is sitting "
+                "at 100% constantly and the fans are spinning at full "
+                "speed. I can barely open any applications without the "
+                "machine freezing for 30-60 seconds. Task Manager shows "
+                "a process called 'WMI Provider Host' consuming around "
+                "85% CPU. This started after last Tuesday's Windows "
+                "update (KB5034441). I've tried rebooting multiple "
+                "times but the issue persists.\n\n"
+                "I\u0335 n\u0336e\u0334e\u0335d\u0336 t\u0334h\u0335"
+                "i\u0336s\u0334 f\u0335i\u0336x\u0334e\u0335d\u0336 "
+                "ASAP as I can't do any work.\n\n"
+                "Thanks,\nAlex Nowak\nOperations"
+            ),
+            reporter=Reporter(
+                name="Alex Nowak",
+                email="alex.nowak@contoso.com",
+                department="Operations",
+            ),
+            created_at="2026-04-10T08:30:00Z",
+            channel=Channel.PORTAL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-041",
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.DEVICE_INFO,
+                MissingInfoField.ERROR_MESSAGE,
+            ],
+            next_best_action=(
+                "Investigate high CPU usage caused by WMI Provider Host after "
+                "Windows update KB5034441 — determine whether a rollback or "
+                "targeted fix is needed."
+            ),
+            remediation_steps=[
+                "Identify the exact laptop model and OS build for compatibility checks.",
+                "Review Windows Update history and confirm KB5034441 installation date.",
+                "Restart the WMI Provider Host service and monitor CPU usage.",
+                "If the issue persists, uninstall KB5034441 and test system stability.",
+                "Escalate to Microsoft support if the patch cannot be safely removed.",
+            ],
+        ),
+        tags=["data-cleanup", "zalgo-text", "unicode-combining"],
+        description=(
+            "Ticket subject and parts of the body contain heavy zalgo-style "
+            "combining Unicode diacritics that obscure the actual text."
+        ),
+    )
+
+
+def _dc042_url_encoded_content() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-042",
+            subject="SharePoint%20access%20denied%20error",
+            description=(
+                "Hi%20Data%20Platform%20team%2C\n\n"
+                "I%20am%20getting%20an%20%22Access%20Denied%22%20error%20when"
+                "%20trying%20to%20open%20the%20Q2%20Financial%20Reports"
+                "%20folder%20on%20SharePoint%3A\n\n"
+                "https%3A%2F%2Fcontoso.sharepoint.com%2Fsites%2Ffinance"
+                "%2FShared%2520Documents%2FQ2%2520Reports\n\n"
+                "I was able to access this folder last week without any "
+                "issues. My colleague jorge.silva%40contoso.com also reports "
+                "the same problem. We both have the 'Finance Contributors' "
+                "role assigned in the SharePoint admin center.\n\n"
+                "The error page shows HTTP 403 and a correlation ID of "
+                "b3f7a2c1-8d4e-4f6a-9b2c-1e5f3a7d9c0b. We need access "
+                "restored before the end-of-quarter deadline on Friday.\n\n"
+                "Thanks%2C\nMariana%20Costa\nFinance"
+            ),
+            reporter=Reporter(
+                name="Mariana Costa",
+                email="mariana.costa@contoso.com",
+                department="Finance",
+            ),
+            created_at="2026-04-10T09:45:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-042",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P3,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.ERROR_MESSAGE,
+                MissingInfoField.STEPS_TO_REPRODUCE,
+            ],
+            next_best_action=(
+                "Investigate SharePoint 403 Access Denied error for the Q2 "
+                "Financial Reports folder — verify permissions for the "
+                "'Finance Contributors' role."
+            ),
+            remediation_steps=[
+                "Check SharePoint audit logs for permission changes on the Q2 Reports folder.",
+                "Verify that the 'Finance Contributors' group still has read/write access.",
+                "Confirm that no conditional access policy or DLP rule is blocking access.",
+                "Restore permissions if they were inadvertently modified and validate access.",
+                "Communicate resolution to both affected users before the Friday deadline.",
+            ],
+        ),
+        tags=["data-cleanup", "url-encoded", "percent-encoding"],
+        description=(
+            "Ticket contains URL-encoded characters (%20, %2F, %3A, %40) "
+            "mixed with normal text, obscuring the actual SharePoint access issue."
+        ),
+    )
+
+
+def _dc043_monitoring_alert_flood() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-043",
+            subject=("FW: FW: FW: [ALERT] [CRITICAL] [PagerDuty] Multiple alerts from monitoring"),
+            description=(
+                "---------- Forwarded message ----------\n"
+                "From: PagerDuty <alerts@pagerduty.contoso.com>\n"
+                "Subject: [CRITICAL] db-prod-east-03 connection pool exhausted\n\n"
+                "[FIRING] ConnectionPoolExhausted\n"
+                "Severity: critical\n"
+                "Source: db-prod-east-03.contoso.com:5432\n"
+                "Value: 500/500 connections in use\n"
+                "Timestamp: 2026-04-10T03:12:44Z\n\n"
+                "---------- Forwarded message ----------\n"
+                "[FIRING] ConnectionPoolExhausted\n"
+                "Severity: critical\n"
+                "Source: db-prod-east-03.contoso.com:5432\n"
+                "Value: 500/500 connections in use\n"
+                "Timestamp: 2026-04-10T03:13:15Z\n\n"
+                "---------- Forwarded message ----------\n"
+                "[FIRING] HighDatabaseLatency\n"
+                "Severity: warning\n"
+                "Source: db-prod-east-03.contoso.com:5432\n"
+                "Average query time: 12,450ms (threshold: 500ms)\n"
+                "Timestamp: 2026-04-10T03:13:30Z\n\n"
+                "---------- Forwarded message ----------\n"
+                "[FIRING] DiskIOSaturation\n"
+                "Severity: warning\n"
+                "Source: db-prod-east-03.contoso.com\n"
+                "Disk utilization: 98.7%\n"
+                "Timestamp: 2026-04-10T03:14:01Z\n\n"
+                "Hi team — the above alerts have been firing non-stop since "
+                "around 3 AM. The core issue is that our production Postgres "
+                "database db-prod-east-03 has completely exhausted its "
+                "connection pool (500/500). All downstream services are "
+                "timing out. I suspect the new batch ETL job deployed "
+                "yesterday is leaking connections.\n\n"
+                "— Priya Sharma, SRE"
+            ),
+            reporter=Reporter(
+                name="Priya Sharma",
+                email="priya.sharma@contoso.com",
+                department="Site Reliability Engineering",
+            ),
+            created_at="2026-04-10T03:22:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-043",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=True,
+            missing_information=[MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate connection pool exhaustion on db-prod-east-03 — "
+                "likely caused by a connection leak in the new batch ETL job "
+                "deployed the previous day."
+            ),
+            remediation_steps=[
+                "Identify the new batch ETL job and check for unclosed database connections.",
+                "Terminate idle or leaked connections to restore pool availability.",
+                "Roll back or disable the suspect ETL job until the leak is fixed.",
+                "Monitor connection pool metrics after remediation to confirm stability.",
+                "Conduct a post-incident review and add connection-leak guardrails to CI.",
+            ],
+        ),
+        tags=["data-cleanup", "alert-flood", "monitoring-noise"],
+        description=(
+            "Ticket contains a flood of forwarded PagerDuty/Nagios-style "
+            "monitoring alerts with the real issue buried at the end."
+        ),
+    )
+
+
+def _dc044_sql_query_dump() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-044",
+            subject=("Report query returning wrong numbers \u2014 pasted the SQL here"),
+            description=(
+                "Hi Data Platform,\n\n"
+                "The monthly revenue report is showing numbers that don't "
+                "match Finance's figures. Here is the query I'm running:\n\n"
+                "WITH monthly_revenue AS (\n"
+                "    SELECT\n"
+                "        d.fiscal_month,\n"
+                "        d.fiscal_year,\n"
+                "        p.product_line,\n"
+                "        SUM(f.gross_revenue) AS total_gross,\n"
+                "        SUM(f.net_revenue) AS total_net,\n"
+                "        SUM(f.discount_amount) AS total_discounts\n"
+                "    FROM fact_sales f\n"
+                "    INNER JOIN dim_date d ON f.date_key = d.date_key\n"
+                "    INNER JOIN dim_product p ON f.product_key = p.product_key\n"
+                "    INNER JOIN dim_region r ON f.region_key = r.region_key\n"
+                "    LEFT JOIN dim_customer c ON f.customer_key = c.customer_key\n"
+                "    WHERE d.fiscal_year = 2026\n"
+                "      AND d.fiscal_month = 3\n"
+                "      AND r.region_name IN ('EMEA', 'APAC', 'AMER')\n"
+                "    GROUP BY d.fiscal_month, d.fiscal_year, p.product_line\n"
+                ")\n"
+                "SELECT\n"
+                "    fiscal_month,\n"
+                "    fiscal_year,\n"
+                "    product_line,\n"
+                "    total_gross,\n"
+                "    total_net,\n"
+                "    total_discounts,\n"
+                "    total_gross - total_net AS implied_discounts\n"
+                "FROM monthly_revenue\n"
+                "ORDER BY product_line;\n\n"
+                "The total_discounts column and the implied_discounts "
+                "calculation don't match. I think the JOIN to dim_customer "
+                "is causing row duplication but I'm not sure. Finance needs "
+                "the corrected numbers by end of week.\n\n"
+                "Thanks,\nChen Wei\nBusiness Intelligence"
+            ),
+            reporter=Reporter(
+                name="Chen Wei",
+                email="chen.wei@contoso.com",
+                department="Business Intelligence",
+            ),
+            created_at="2026-04-10T10:30:00Z",
+            channel=Channel.PORTAL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-044",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P3,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.ENVIRONMENT_DETAILS,
+                MissingInfoField.STEPS_TO_REPRODUCE,
+            ],
+            next_best_action=(
+                "Investigate the row-duplication hypothesis in the revenue "
+                "report query caused by the LEFT JOIN to dim_customer and "
+                "correct the aggregation logic."
+            ),
+            remediation_steps=[
+                "Run the query with and without the dim_customer JOIN and compare row counts.",
+                "If duplication is confirmed, refactor the JOIN or use DISTINCT to eliminate it.",
+                "Validate corrected figures against Finance's baseline numbers.",
+                "Update the report template with the fixed query.",
+                "Deliver corrected revenue numbers to Finance before end of week.",
+            ],
+        ),
+        tags=["data-cleanup", "sql-dump", "code-paste"],
+        description=(
+            "Ticket contains a large multi-line SQL query pasted inline, "
+            "with the actual issue (incorrect aggregation) described around it."
+        ),
+    )
+
+
+def _dc045_certificate_leak() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-045",
+            subject="SSL certificate expired on api.contoso.com",
+            description=(
+                "Hi Security team,\n\n"
+                "The TLS certificate for api.contoso.com expired today and "
+                "all API consumers are getting certificate warnings. Here "
+                "are the cert details — I pulled them from the server so "
+                "you can see:\n\n"
+                "-----BEGIN CERTIFICATE-----\n"
+                "MIIFtTCCA52gAwIBAgIUY3mDf7c0Rf4x2bK9L8aN4gRzJjowDQYJ"
+                "KoZIhvcNAQELBQAwYjELMAkGA1UEBhMCVVMxEzARBgNVBAgMCldh"
+                "c2hpbmd0b24xEDAOBgNVBAcMB1JlZG1vbmQxEDAOBgNVBAoMB0Nv"
+                "bnRvc28xGjAYBgNVBAMMEWFwaS5jb250b3NvLmNvbTAeFw0yNTA0"
+                "FAKE_CERT_DATA_REDACTED_FOR_SAFETY\n"
+                "-----END CERTIFICATE-----\n\n"
+                "-----BEGIN RSA PRIVATE KEY-----\n"
+                "MIIEowIBAAKCAQEA0Z3VS5JJcds3xfn/ygWep4PAtGoRBh1MLa0x"
+                "FAKE_PRIVATE_KEY_DATA_REDACTED_FOR_SAFETY\n"
+                "-----END RSA PRIVATE KEY-----\n\n"
+                "I probably shouldn't have pasted the private key but it's "
+                "expiring anyway so it should be fine. The cert needs to be "
+                "renewed and redeployed to the F5 load balancer and the "
+                "three API gateway nodes (api-gw-01 through api-gw-03). "
+                "Our cert provider is DigiCert and the renewal process "
+                "usually takes about 2 hours.\n\n"
+                "— David Kim, Platform Engineering"
+            ),
+            reporter=Reporter(
+                name="David Kim",
+                email="david.kim@contoso.com",
+                department="Platform Engineering",
+            ),
+            created_at="2026-04-10T06:00:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-045",
+            category=Category.SECURITY,
+            priority=Priority.P2,
+            assigned_team=Team.SECURITY_OPS,
+            needs_escalation=True,
+            missing_information=[MissingInfoField.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Immediately revoke the exposed private key, renew the TLS "
+                "certificate for api.contoso.com via DigiCert, and redeploy "
+                "to the F5 load balancer and API gateway nodes."
+            ),
+            remediation_steps=[
+                "Revoke the compromised private key immediately via DigiCert.",
+                "Generate a new CSR and request a replacement certificate.",
+                "Deploy the new certificate to the F5 load balancer and api-gw-01 through api-gw-03.",
+                "Verify TLS connectivity from external and internal clients.",
+                "Purge the private key material from this ticket and audit access logs.",
+            ],
+        ),
+        tags=["data-cleanup", "credential-leak", "pii", "certificate"],
+        description=(
+            "Ticket contains accidentally pasted private key and certificate "
+            "material inline alongside a legitimate SSL renewal request."
+        ),
+    )
+
+
+def _dc046_hex_dump() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-046",
+            subject=("File corruption issue \u2014 hex dump attached inline"),
+            description=(
+                "Hi team,\n\n"
+                "We're seeing file corruption on the \\\\nas-prod-02\\finance "
+                "share. Several Excel files are unreadable. I ran hexdump "
+                "on one of the corrupt files:\n\n"
+                "00000000  50 4b 03 04 14 00 06 00  08 00 00 00 21 00 62 ee  "
+                "|PK..........!.b.|\n"
+                "00000010  9d ad 46 01 00 00 51 04  00 00 13 00 08 02 5b 43  "
+                "|..F...Q.......[C|\n"
+                "00000020  6f 6e 74 65 6e 74 5f 54  79 70 65 73 5d 2e 78 6d  "
+                "|ontent_Types].xm|\n"
+                "00000030  6c 20 a2 04 02 28 a0 00  02 00 00 00 00 00 00 00  "
+                "|l ...(..........|\n"
+                "00000040  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  "
+                "|................|\n"
+                "*\n"
+                "00000060  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  "
+                "|................|\n\n"
+                "As you can see, the file starts as a valid ZIP/XLSX but the "
+                "content is zeroed out after the header. This has happened to "
+                "at least 12 files in the past week. All affected files are "
+                "on the same NAS volume. Users from Accounting and Treasury "
+                "have reported the problem.\n\n"
+                "Thanks,\nOliver Grant\nIT Infrastructure"
+            ),
+            reporter=Reporter(
+                name="Oliver Grant",
+                email="oliver.grant@contoso.com",
+                department="IT Infrastructure",
+            ),
+            created_at="2026-04-10T11:20:00Z",
+            channel=Channel.PORTAL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-046",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P3,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.AFFECTED_SYSTEM,
+                MissingInfoField.REPRODUCTION_FREQUENCY,
+            ],
+            next_best_action=(
+                "Investigate file corruption on the nas-prod-02 finance "
+                "share — files are being zeroed out after valid headers, "
+                "suggesting a storage or firmware issue."
+            ),
+            remediation_steps=[
+                "Run a filesystem integrity check on the affected NAS volume.",
+                "Review NAS firmware version and check vendor advisories for known bugs.",
+                "Examine NAS event logs for disk errors, RAID rebuild events, or write failures.",
+                "Restore the corrupted files from the most recent verified backup.",
+                "If firmware is outdated, schedule a maintenance window for the update.",
+            ],
+        ),
+        tags=["data-cleanup", "hex-dump", "binary-data"],
+        description=(
+            "Ticket contains hexdump -C style output pasted inline, "
+            "with the actual file corruption issue described around it."
+        ),
+    )
+
+
+def _dc047_mixed_date_formats() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-047",
+            subject="Meeting room booking system shows wrong dates",
+            description=(
+                "Hi Enterprise Apps team,\n\n"
+                "The meeting room booking system is displaying incorrect "
+                "dates for several of our offices. Here are examples of "
+                "what different users are seeing:\n\n"
+                "- London office: Booking created 10/04/2026 shows as "
+                "April 10th (should be 10th April in DD/MM format)\n"
+                "- New York office: Same booking shows as 10/04/2026 and "
+                "they read it as October 4th\n"
+                "- Tokyo office: Booking displays as 2026-04-10 which is "
+                "correct but the confirmation email says 04-Apr-26\n"
+                "- Mumbai office: Calendar export shows epoch 1775865600 "
+                "which converts to a different date entirely\n"
+                "- Berlin office: The iCal attachment uses DTSTART:"
+                "20260410T090000Z but the UI shows 11:00 local time "
+                "instead of 10:00\n\n"
+                "We have a board meeting on what I believe is April 10th "
+                "(or is it October 4th?) and rooms keep getting double-"
+                "booked because of this confusion. Multiple executives "
+                "have complained.\n\n"
+                "Thanks,\nSophie Martin\nExecutive Administration"
+            ),
+            reporter=Reporter(
+                name="Sophie Martin",
+                email="sophie.martin@contoso.com",
+                department="Executive Administration",
+            ),
+            created_at="2026-04-10T12:00:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-047",
+            category=Category.SOFTWARE,
+            priority=Priority.P4,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.STEPS_TO_REPRODUCE,
+                MissingInfoField.TIMESTAMP,
+            ],
+            next_best_action=(
+                "Investigate locale-dependent date formatting inconsistencies "
+                "in the meeting room booking system across international offices."
+            ),
+            remediation_steps=[
+                "Audit the booking system's date formatting logic for locale handling.",
+                "Standardize date storage to ISO 8601 (YYYY-MM-DD) internally.",
+                "Ensure the UI renders dates according to each user's locale preference.",
+                "Fix the timezone offset error in the iCal export for Berlin.",
+                "Verify the epoch timestamp conversion logic for the Mumbai office export.",
+            ],
+        ),
+        tags=["data-cleanup", "date-format", "locale-confusion"],
+        description=(
+            "Ticket contains dates in multiple conflicting formats "
+            "(MM/DD, DD/MM, ISO 8601, epoch, iCal) causing ambiguity."
+        ),
+    )
+
+
+def _dc048_financial_ticker_confusion() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-048",
+            subject=("Bloomberg terminal showing $AAPL instead of correct ticker for Contoso fund"),
+            description=(
+                "Hi Enterprise Apps,\n\n"
+                "We have a data feed mapping error on the Bloomberg "
+                "terminal. When pulling up the Contoso Growth Fund, the "
+                "terminal is returning Apple Inc. data instead:\n\n"
+                "Terminal query: CONGROW US Equity <GO>\n"
+                "Expected: Contoso Growth Fund (CUSIP: 21076N106, "
+                "ISIN: US21076N1063)\n"
+                "Actual: Apple Inc (AAPL US Equity, CUSIP: 037833100, "
+                "ISIN: US0378331005)\n\n"
+                "The Bloomberg FLDS screen shows:\n"
+                "  ID_BB_GLOBAL: BBG000B9XRY4 (this is Apple's FIGI)\n"
+                "  TICKER: AAPL\n"
+                "  MARKET_SECTOR_DES: Equity\n"
+                "  ID_CUSIP: 037833100\n\n"
+                "Our fund's correct FIGI should be BBG00Z1Y3XQ7. It "
+                "looks like someone updated the security master file "
+                "and mapped the wrong FIGI to our fund ticker. The "
+                "portfolio managers are seeing incorrect NAV calculations "
+                "as a result.\n\n"
+                "— Raj Patel, Portfolio Analytics"
+            ),
+            reporter=Reporter(
+                name="Raj Patel",
+                email="raj.patel@contoso.com",
+                department="Portfolio Analytics",
+            ),
+            created_at="2026-04-10T13:15:00Z",
+            channel=Channel.EMAIL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-048",
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.CONFIGURATION_DETAILS,
+                MissingInfoField.APPLICATION_VERSION,
+            ],
+            next_best_action=(
+                "Correct the FIGI mapping in the security master file — "
+                "the Contoso Growth Fund ticker is mapped to Apple's "
+                "FIGI (BBG000B9XRY4) instead of BBG00Z1Y3XQ7."
+            ),
+            remediation_steps=[
+                "Identify who last modified the security master file and review the change.",
+                "Correct the FIGI mapping for CONGROW from BBG000B9XRY4 to BBG00Z1Y3XQ7.",
+                "Revalidate the CUSIP and ISIN mappings for all recently modified entries.",
+                "Recalculate NAV for any affected reporting periods with the corrected data.",
+                "Add a validation check to flag FIGI mismatches during future master file updates.",
+            ],
+        ),
+        tags=["data-cleanup", "financial-data", "ticker-symbols"],
+        description=(
+            "Ticket contains financial ticker symbols, Bloomberg codes, "
+            "CUSIP and ISIN identifiers mixed with the actual data feed "
+            "mapping error."
+        ),
+    )
+
+
+def _dc049_tcpdump_output() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-049",
+            subject=("Network latency issue \u2014 tcpdump output attached"),
+            description=(
+                "Hi Network Ops,\n\n"
+                "We're experiencing high latency on internal DNS queries. "
+                "I captured some packets to show the problem:\n\n"
+                "14:32:01.234567 IP 10.1.5.42.51234 > 10.1.1.10.53: "
+                "12345+ A? app.internal.contoso.com. (45)\n"
+                "14:32:04.567890 IP 10.1.1.10.53 > 10.1.5.42.51234: "
+                "12345 3/0/0 A 10.2.3.100, A 10.2.3.101, A 10.2.3.102 (93)\n"
+                "14:32:04.568123 IP 10.1.5.42.51235 > 10.1.1.10.53: "
+                "12346+ AAAA? app.internal.contoso.com. (45)\n"
+                "14:32:07.891456 IP 10.1.1.10.53 > 10.1.5.42.51235: "
+                "12346 0/1/0 (87)\n"
+                "14:32:07.892001 IP 10.1.5.42.41567 > 10.1.1.11.53: "
+                "12347+ A? auth.internal.contoso.com. (44)\n"
+                "14:32:10.123789 IP 10.1.1.11.53 > 10.1.5.42.41567: "
+                "12347 1/0/0 A 10.2.4.50 (60)\n\n"
+                "As you can see, DNS responses are taking 3+ seconds "
+                "instead of the normal <10ms. This is affecting all "
+                "applications on the 10.1.5.0/24 subnet. The DNS servers "
+                "10.1.1.10 and 10.1.1.11 are both slow. Started around "
+                "2 PM today after a firewall rule change.\n\n"
+                "— Lisa Chen, DevOps"
+            ),
+            reporter=Reporter(
+                name="Lisa Chen",
+                email="lisa.chen@contoso.com",
+                department="DevOps",
+            ),
+            created_at="2026-04-10T14:45:00Z",
+            channel=Channel.PORTAL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-049",
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            assigned_team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.NETWORK_LOCATION],
+            next_best_action=(
+                "Investigate high DNS query latency on the 10.1.5.0/24 "
+                "subnet — likely caused by the firewall rule change "
+                "deployed around 2 PM today."
+            ),
+            remediation_steps=[
+                "Review the firewall rule change made around 2 PM and identify DNS-related rules.",
+                "Check whether DNS traffic (port 53) is being inspected or rate-limited by the new rules.",
+                "Roll back the suspect firewall rule and measure DNS response times.",
+                "Verify DNS forwarder and recursion settings on 10.1.1.10 and 10.1.1.11.",
+                "Monitor DNS latency across all subnets after remediation to confirm resolution.",
+            ],
+        ),
+        tags=["data-cleanup", "tcpdump", "packet-capture"],
+        description=(
+            "Ticket contains raw tcpdump output with timestamps, IPs, "
+            "and packet details pasted inline alongside the DNS latency issue."
+        ),
+    )
+
+
+def _dc050_screen_reader_artifacts() -> EvalCase:
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-050",
+            subject=(
+                "Button Image link Image ARIA: navigation Banner: main content Heading level 2: Can't access portal"
+            ),
+            description=(
+                "navigation landmark Banner landmark main landmark "
+                "Heading level 1: Contoso Self-Service Portal\n"
+                "link Image: Contoso Logo\n"
+                "navigation: Main Menu\n"
+                "list 5 items\n"
+                "  link: Home\n"
+                "  link: My Tickets\n"
+                "  link: Knowledge Base\n"
+                "  link: Service Catalog\n"
+                "  link: Contact Us\n"
+                "end of list\n"
+                "end of navigation\n"
+                "Heading level 2: Sign In\n"
+                "textbox: Username — edit text: jmendez\n"
+                "textbox: Password — edit text: (protected)\n"
+                "button: Sign In\n"
+                "alert: Error — Authentication failed. Your account "
+                "may be locked. Contact IT support.\n"
+                "end of main landmark\n"
+                "contentinfo landmark\n"
+                "link: Privacy Policy\n"
+                "link: Terms of Use\n\n"
+                "Hi I am using a screen reader and I copied the above "
+                "from my browser to show you what's happening. When I "
+                "try to sign in to the self-service portal I get the "
+                "error that my account may be locked. I haven't changed "
+                "my password recently and I was able to log in yesterday. "
+                "I need access to submit a facilities request urgently.\n\n"
+                "Thanks,\nJulia Mendez\nFacilities Management"
+            ),
+            reporter=Reporter(
+                name="Julia Mendez",
+                email="julia.mendez@contoso.com",
+                department="Facilities Management",
+            ),
+            created_at="2026-04-10T15:30:00Z",
+            channel=Channel.PORTAL,
+            attachments=[],
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-050",
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P3,
+            assigned_team=Team.IAM,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.ERROR_MESSAGE,
+                MissingInfoField.DEVICE_INFO,
+            ],
+            next_best_action=(
+                "Investigate account lockout for julia.mendez on the "
+                "self-service portal — verify Active Directory lock "
+                "status and recent authentication events."
+            ),
+            remediation_steps=[
+                "Check Active Directory for account lockout status on julia.mendez.",
+                "Review authentication logs for failed login attempts or suspicious activity.",
+                "Unlock the account if it was locked due to failed password attempts.",
+                "Verify that no recent password policy changes caused the lockout.",
+                "Confirm the user can sign in successfully and submit her facilities request.",
+            ],
+        ),
+        tags=["data-cleanup", "screen-reader", "accessibility-artifacts"],
+        description=(
+            "Ticket contains accessibility tree and screen reader output "
+            "artifacts from the DOM mixed with a portal login issue."
+        ),
+    )
+
+
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
 
 def build_dataset() -> EvalDataset:
-    """Build and return the data-cleanup evaluation dataset (40 cases)."""
+    """Build and return the data-cleanup evaluation dataset (50 cases)."""
     return EvalDataset(
         name="data_cleanup",
         description=(
@@ -2783,6 +3496,16 @@ def build_dataset() -> EvalDataset:
             _dc038_contradictory_replies(),
             _dc039_accidental_pii(),
             _dc040_base64_pdf_inline(),
+            _dc041_zalgo_text(),
+            _dc042_url_encoded_content(),
+            _dc043_monitoring_alert_flood(),
+            _dc044_sql_query_dump(),
+            _dc045_certificate_leak(),
+            _dc046_hex_dump(),
+            _dc047_mixed_date_formats(),
+            _dc048_financial_ticker_confusion(),
+            _dc049_tcpdump_output(),
+            _dc050_screen_reader_artifacts(),
         ],
     )
 
