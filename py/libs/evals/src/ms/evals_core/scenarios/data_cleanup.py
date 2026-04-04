@@ -5607,7 +5607,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "+++ b/src/auth/middleware.py\n"
                 "@@ -42,7 +42,7 @@ class AuthMiddleware:\n"
                 "     def validate_token(self, token: str) -> bool:\n"
-                '-        if not token or len(token) < 10:\n'
+                "-        if not token or len(token) < 10:\n"
                 "+        if not token:\n"
                 "             return False\n"
                 "-        return self._verify_signature(token)\n"

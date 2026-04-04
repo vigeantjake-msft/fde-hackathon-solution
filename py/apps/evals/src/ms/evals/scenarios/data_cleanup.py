@@ -4615,30 +4615,30 @@ register(
         ],
         descriptions=[
             "hey sorry typing this from my phone bc my laptop wont connect\n\n"
-            "so the VPN keeps saying \"authentication failed\" but my password is "
+            'so the VPN keeps saying "authentication failed" but my password is '
             "defintely right. i tried the global protect client and also the "
-            "cisco anyconnect one. the error says something about a \"certificate "
-            "validation\" but autocorrect keeps changing it lol\n\n"
+            'cisco anyconnect one. the error says something about a "certificate '
+            'validation" but autocorrect keeps changing it lol\n\n'
             "my laptops ethernet port isnt working either — i think the docking "
-            "station died. model is a \"dell latitudes\" (thats what autocorrect "
+            'station died. model is a "dell latitudes" (thats what autocorrect '
             "wants to call it 🙄) — its actually a Dell Latitude 5540.\n\n"
             "im on floor {floor} of the {office} office. been trying since 8am. "
             "my manager {name1} needs me online for a client call at 10.\n\n"
-            "also tried the \"alternate DNS\" thing someone told me about but i "
+            'also tried the "alternate DNS" thing someone told me about but i '
             "think i typed the address wrong bc now nothing works at all. i "
             "changed it to 8.8.8.8 but maybe i shouldnt have??\n\n"
             "pls help asap 🙏\n\n"
             "{name}\nSent from my iPhone",
             "sry for the typos on mobile rn\n\n"
             "the wifi keeps dropping every few mins. when it does work its super "
-            "slow like 2-3 mbps. im usually on the \"contoso-corp\" ssid but my "
-            "phone keeps autoconnecting to \"contoso-guest\" instead\n\n"
+            'slow like 2-3 mbps. im usually on the "contoso-corp" ssid but my '
+            'phone keeps autoconnecting to "contoso-guest" instead\n\n'
             "i tried forgetting the network and reconnecting but it asks for a "
-            "\"certificate\" that i dont have?? IT setup this laptop last month "
+            '"certificate" that i dont have?? IT setup this laptop last month '
             "and wifi worked fine until today\n\n"
-            "also the \"global protect\" vpn (autocorrect wants to call it "
-            "\"global protect agency\" lmao) wont connect at all. just spins "
-            "and says \"gateway not found\"\n\n"
+            'also the "global protect" vpn (autocorrect wants to call it '
+            '"global protect agency" lmao) wont connect at all. just spins '
+            'and says "gateway not found"\n\n'
             "im in bldg 3 floor {floor}, the {office} office. need this fixed "
             "before my 2pm presentation plsss\n\n"
             "{name} — {department}\nSent from mobile",
