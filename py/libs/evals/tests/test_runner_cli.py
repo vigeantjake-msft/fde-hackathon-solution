@@ -8,6 +8,9 @@ from unittest.mock import patch
 
 import pytest
 
+from ms.evals_core.constants import Category
+from ms.evals_core.constants import Priority
+from ms.evals_core.constants import Team
 from ms.evals_core.datasets import DatasetKind
 from ms.evals_core.eval_models import DimensionAggregates
 from ms.evals_core.eval_models import DimensionScores
@@ -75,9 +78,9 @@ class TestMainExecution:
     def _make_summary(*, errored: int = 0) -> EvalSummary:
         gold = GoldAnswer(
             ticket_id="INC-0001",
-            category="Network & Connectivity",
-            priority="P3",
-            assigned_team="Network Operations",
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            assigned_team=Team.NETWORK_OPS,
             needs_escalation=False,
             missing_information=[],
             next_best_action="Check VPN.",
@@ -191,14 +194,16 @@ class TestMainExecution:
         with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
             output_path = f.name
 
-        code = main([
-            "--endpoint",
-            "http://localhost:8000",
-            "--dataset",
-            "sample",
-            "--output",
-            output_path,
-        ])
+        code = main(
+            [
+                "--endpoint",
+                "http://localhost:8000",
+                "--dataset",
+                "sample",
+                "--output",
+                output_path,
+            ]
+        )
         assert code == 0
         assert Path(output_path).exists()
         Path(output_path).unlink()

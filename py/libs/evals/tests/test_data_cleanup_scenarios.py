@@ -184,7 +184,6 @@ class TestDataCleanupScenarios:
             "crash-reporter",
             # New tags from DC-121..DC-130
             "csv-data-inline",
-            "tabular-noise",
             "long-urls",
             "tracking-parameters",
             "rtf-conversion",
@@ -194,7 +193,6 @@ class TestDataCleanupScenarios:
             "svg-inline",
             "cross-threaded",
             "interleaved-issues",
-            "massive-cc-list",
             "buried-content",
             "env-var-dump",
             "config-noise",

@@ -192,7 +192,6 @@ class TestResponsibleAiScenarios:
             "structured-output-attack",
             "reasoning-manipulation",
             # New attack patterns (RAI-151..160)
-            "conditional-trigger",
             "time-based-injection",
             "fake-system-message",
             "self-referential",

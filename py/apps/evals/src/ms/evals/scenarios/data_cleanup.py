@@ -4815,10 +4815,10 @@ register(
             "Getting raw MIME boundaries in my emails. Example below:\n\n"
             "MIME-Version: 1.0\n"
             "Content-Type: multipart/alternative;\n"
-            "    boundary=\"----=_NextPart_001_0078_01DA4F2B.A7C3E680\"\n\n"
+            '    boundary="----=_NextPart_001_0078_01DA4F2B.A7C3E680"\n\n'
             "This is a multi-part message in MIME format.\n\n"
             "------=_NextPart_001_0078_01DA4F2B.A7C3E680\n"
-            "Content-Type: text/plain; charset=\"utf-8\"\n"
+            'Content-Type: text/plain; charset="utf-8"\n'
             "Content-Transfer-Encoding: 7bit\n\n"
             "Can someone from IT look at this? The emails from our clients at the "
             "{office} office are arriving like this since Thursday. It's affecting "
@@ -6683,16 +6683,16 @@ register(
         descriptions=[
             "I tried to paste my asset inventory into the ticket but it came out "
             "as formulas instead of values:\n\n"
-            '=VLOOKUP(A2,AssetDB!$A:$G,2,FALSE)\t'
-            '=VLOOKUP(A2,AssetDB!$A:$G,3,FALSE)\t'
+            "=VLOOKUP(A2,AssetDB!$A:$G,2,FALSE)\t"
+            "=VLOOKUP(A2,AssetDB!$A:$G,3,FALSE)\t"
             '=IF(VLOOKUP(A2,AssetDB!$A:$G,5,FALSE)>"2024-01-01","Current","Expired")\t'
             '=IFERROR(INDEX(Warranties!$B:$B,MATCH(A2,Warranties!$A:$A,0)),"N/A")\n'
-            '=VLOOKUP(A3,AssetDB!$A:$G,2,FALSE)\t'
-            '=VLOOKUP(A3,AssetDB!$A:$G,3,FALSE)\t'
+            "=VLOOKUP(A3,AssetDB!$A:$G,2,FALSE)\t"
+            "=VLOOKUP(A3,AssetDB!$A:$G,3,FALSE)\t"
             '=IF(VLOOKUP(A3,AssetDB!$A:$G,5,FALSE)>"2024-01-01","Current","Expired")\t'
             '=IFERROR(INDEX(Warranties!$B:$B,MATCH(A3,Warranties!$A:$A,0)),"N/A")\n'
-            '=VLOOKUP(A4,AssetDB!$A:$G,2,FALSE)\t'
-            '=VLOOKUP(A4,AssetDB!$A:$G,3,FALSE)\t'
+            "=VLOOKUP(A4,AssetDB!$A:$G,2,FALSE)\t"
+            "=VLOOKUP(A4,AssetDB!$A:$G,3,FALSE)\t"
             '=IF(VLOOKUP(A4,AssetDB!$A:$G,5,FALSE)>"2024-01-01","Current","Expired")\t'
             '=IFERROR(INDEX(Warranties!$B:$B,MATCH(A4,Warranties!$A:$A,0)),"N/A")\n\n'
             "What I meant to say: I have 3 laptops that need warranty replacement. "
@@ -6703,7 +6703,7 @@ register(
             "and it pasted the formulas:\n\n"
             '=CONCATENATE(B2," - ",C2," (",TEXT(D2,"yyyy-mm-dd"),")")\n'
             '=IF(AND(E2="Active",F2>TODAY()),"OK","NEEDS ATTENTION")\n'
-            '=SUMPRODUCT((Users!$A$2:$A$500=A2)*1)\n'
+            "=SUMPRODUCT((Users!$A$2:$A$500=A2)*1)\n"
             '=HYPERLINK("https://assets.contoso.com/device/"&A2,"View")\n'
             '=IF(G2>90,"Replace",IF(G2>60,"Monitor","OK"))\n\n'
             "The actual issue: 5 devices in {department} need to be reimaged. "
@@ -6834,7 +6834,7 @@ register(
             "    IDP->>MFA: Trigger MFA challenge\n"
             "    MFA-->>IDP: TIMEOUT (no response after 60s)\n"
             "    IDP->>APP: Error: MFA_TIMEOUT\n"
-            "    APP->>U: \"Authentication failed — contact IT\"\n"
+            '    APP->>U: "Authentication failed — contact IT"\n'
             "```\n\n"
             "The MFA step keeps timing out. It worked fine until last week. I'm in "
             "{department} on Floor {floor} and about 15 people on our team are "
@@ -7036,7 +7036,7 @@ register(
             "$ kubectl describe pod {app}-web-6f9a8b7c5-abc12 -n prod\n"
             "Events:\n"
             "  Warning  Failed     2m (x15 over 44m)  kubelet  Failed to pull image "
-            "\"contosoacr.azurecr.io/{app}-web:v3.1.0\": unauthorized: authentication "
+            '"contosoacr.azurecr.io/{app}-web:v3.1.0": unauthorized: authentication '
             "required\n"
             "  Warning  Failed     2m (x15 over 44m)  kubelet  Error: ImagePullBackOff\n\n"
             "The old pods (v3.0.9) are still running but the new ones can't pull the "
@@ -7301,46 +7301,46 @@ register(
             "Our ARM template deployment keeps failing. Here's the template — can "
             "someone spot what's wrong?\n\n"
             "{{\n"
-            "  \"$schema\": \"https://schema.management.azure.com/schemas/"
-            "2019-04-01/deploymentTemplate.json#\",\n"
-            "  \"contentVersion\": \"1.0.0.0\",\n"
-            "  \"parameters\": {{\n"
-            "    \"appServicePlanName\": {{ \"type\": \"string\", "
-            "\"defaultValue\": \"asp-{app}-prod\" }},\n"
-            "    \"webAppName\": {{ \"type\": \"string\", "
-            "\"defaultValue\": \"{app}-webapp-prod\" }},\n"
-            "    \"location\": {{ \"type\": \"string\", "
-            "\"defaultValue\": \"[resourceGroup().location]\" }},\n"
-            "    \"sku\": {{ \"type\": \"string\", \"defaultValue\": \"P1v3\" }}\n"
+            '  "$schema": "https://schema.management.azure.com/schemas/'
+            '2019-04-01/deploymentTemplate.json#",\n'
+            '  "contentVersion": "1.0.0.0",\n'
+            '  "parameters": {{\n'
+            '    "appServicePlanName": {{ "type": "string", '
+            '"defaultValue": "asp-{app}-prod" }},\n'
+            '    "webAppName": {{ "type": "string", '
+            '"defaultValue": "{app}-webapp-prod" }},\n'
+            '    "location": {{ "type": "string", '
+            '"defaultValue": "[resourceGroup().location]" }},\n'
+            '    "sku": {{ "type": "string", "defaultValue": "P1v3" }}\n'
             "  }},\n"
-            "  \"resources\": [\n"
+            '  "resources": [\n'
             "    {{\n"
-            "      \"type\": \"Microsoft.Web/serverfarms\",\n"
-            "      \"apiVersion\": \"2022-09-01\",\n"
-            "      \"name\": \"[parameters('appServicePlanName')]\",\n"
-            "      \"location\": \"[parameters('location')]\",\n"
-            "      \"sku\": {{ \"name\": \"[parameters('sku')]\" }},\n"
-            "      \"kind\": \"linux\",\n"
-            "      \"properties\": {{ \"reserved\": true }}\n"
+            '      "type": "Microsoft.Web/serverfarms",\n'
+            '      "apiVersion": "2022-09-01",\n'
+            '      "name": "[parameters(\'appServicePlanName\')]",\n'
+            '      "location": "[parameters(\'location\')]",\n'
+            '      "sku": {{ "name": "[parameters(\'sku\')]" }},\n'
+            '      "kind": "linux",\n'
+            '      "properties": {{ "reserved": true }}\n'
             "    }},\n"
             "    {{\n"
-            "      \"type\": \"Microsoft.Web/sites\",\n"
-            "      \"apiVersion\": \"2022-09-01\",\n"
-            "      \"name\": \"[parameters('webAppName')]\",\n"
-            "      \"location\": \"[parameters('location')]\",\n"
-            "      \"dependsOn\": [\n"
+            '      "type": "Microsoft.Web/sites",\n'
+            '      "apiVersion": "2022-09-01",\n'
+            '      "name": "[parameters(\'webAppName\')]",\n'
+            '      "location": "[parameters(\'location\')]",\n'
+            '      "dependsOn": [\n'
             "        \"[resourceId('Microsoft.Web/serverfarms', "
             "parameters('appServicePlanName'))]\"\n"
             "      ],\n"
-            "      \"properties\": {{\n"
-            "        \"serverFarmId\": \"[resourceId('Microsoft.Web/serverfarms', "
+            '      "properties": {{\n'
+            '        "serverFarmId": "[resourceId(\'Microsoft.Web/serverfarms\', '
             "parameters('appServicePlanName'))]\",\n"
-            "        \"siteConfig\": {{\n"
-            "          \"linuxFxVersion\": \"PYTHON|3.11\",\n"
-            "          \"alwaysOn\": true,\n"
-            "          \"appSettings\": [\n"
-            "            {{ \"name\": \"SCM_DO_BUILD_DURING_DEPLOYMENT\", "
-            "\"value\": \"true\" }}\n"
+            '        "siteConfig": {{\n'
+            '          "linuxFxVersion": "PYTHON|3.11",\n'
+            '          "alwaysOn": true,\n'
+            '          "appSettings": [\n'
+            '            {{ "name": "SCM_DO_BUILD_DURING_DEPLOYMENT", '
+            '"value": "true" }}\n'
             "          ]\n"
             "        }}\n"
             "      }}\n"
@@ -7845,9 +7845,11 @@ register(
         remediation_steps=[
             [
                 "Check the installed printer driver version and compare with the manufacturer's latest release",
-                "Reinstall the printer driver using the PCL6 or PostScript driver variant instead of the generic text driver",
+                "Reinstall the printer driver using the PCL6 or PostScript driver variant instead of the generic text "
+                "driver",
                 "Test printing from Word using the 'Print to PDF' option to confirm the document renders correctly",
-                "If the driver is current, check Word's print settings for 'Print using system default' vs direct rendering",
+                "If the driver is current, check Word's print settings for 'Print using system default' vs direct "
+                "rendering",
                 "Apply any pending Windows updates that may include print subsystem fixes",
                 "Test with a different printer to isolate whether the issue is driver-specific or Word-specific",
             ],
@@ -8005,7 +8007,7 @@ register(
             "The floor plan page on the network portal is showing XML instead "
             "of the diagram. I saved the page source and it's all SVG:\n\n"
             '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640">\n'
-            '  <style>\n'
+            "  <style>\n"
             "    .room {{ fill: #ecf0f1; stroke: #bdc3c7; stroke-width: 2; }}\n"
             "    .active {{ fill: #2ecc71; }}\n"
             "    .label {{ font-family: Segoe UI, sans-serif; font-size: 11px; }}\n"
@@ -8113,7 +8115,8 @@ register(
         remediation_steps=[
             [
                 "Untangle the separate issues and create sub-tickets for each distinct problem",
-                "For the likely related issues (VPN/DNS or Teams/fileshare/Outlook), check the floor switch logs for errors or flapping ports",
+                "For the likely related issues (VPN/DNS or Teams/fileshare/Outlook), check the floor switch logs for "
+                "errors or flapping ports",
                 "Verify the network maintenance changes didn't introduce a misconfiguration on the user's floor switch",
                 "Run a continuous ping and traceroute to identify packet loss or latency spikes",
                 "Address each sub-issue based on root cause: VPN config, WiFi coverage, DNS settings, or switch port",
@@ -8311,7 +8314,8 @@ register(
                 "Identify the missing environment variable from the application error message",
                 "Check the team's Azure Key Vault or secrets management system for the required secret",
                 "If the secret has expired, rotate it in the Azure AD app registration and update the vault",
-                "Set the environment variable through the approved configuration management process (not inline export)",
+                "Set the environment variable through the approved configuration management process (not inline "
+                "export)",
                 "Verify the application starts successfully with the new configuration",
                 "Remind the user to never paste environment variables containing secrets into tickets",
             ],
@@ -8429,8 +8433,10 @@ register(
         remediation_steps=[
             [
                 "Review the git diff to separate intentional production changes from accidental staging settings",
-                "Revert debug/staging changes: NODE_ENV=staging, LOG_LEVEL=debug, ENABLE_PROFILING, DEBUG_PORT, RC image tags",
-                "For intentional changes (TLS config, pool size), ensure prerequisites are met (certs deployed, capacity verified)",
+                "Revert debug/staging changes: NODE_ENV=staging, LOG_LEVEL=debug, ENABLE_PROFILING, DEBUG_PORT, RC "
+                "image tags",
+                "For intentional changes (TLS config, pool size), ensure prerequisites are met (certs deployed, "
+                "capacity verified)",
                 "Create a clean commit with only the production-ready changes",
                 "Run the CI/CD pipeline in a staging environment to validate before pushing to production",
                 "Enforce branch protection rules to require PR reviews for production config changes",
@@ -8584,7 +8590,8 @@ register(
         ],
         remediation_steps=[
             [
-                "Check if the referenced Kubernetes secret exists: kubectl get secret {app}-db-secret -n {department}-prod",
+                "Check if the referenced Kubernetes secret exists: kubectl get secret {app}-db-secret -n "
+                "{department}-prod",
                 "Verify the secret contains the correct connection string by decoding it (base64)",
                 "Test database connectivity from within the cluster using a debug pod",
                 "If the secret is correct, check if the memory limit (256Mi) is sufficient — increase if OOMKilled",

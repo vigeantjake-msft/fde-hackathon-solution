@@ -2870,17 +2870,17 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             "──────────────────────────────────────────────────────────────────────────────────\n"
             "Headcount Costs        =SUM(B3:B14) =SUM(C3:C14) =SUM(D3:D14) =SUM(E3:E14) =SUM(B15:E15)\n"
             "Contractor Budget      =B16*1.15    =C16*1.15    =D16*1.15    =E16*1.15    =SUM(B17:E17)\n"
-            "Software Licenses      =VLOOKUP(\"MKT\",Licensing!A:F,3,FALSE) =VLOOKUP(\"MKT\","
-            "Licensing!A:F,4,FALSE) =VLOOKUP(\"MKT\",Licensing!A:F,5,FALSE) =VLOOKUP(\"MKT\","
+            'Software Licenses      =VLOOKUP("MKT",Licensing!A:F,3,FALSE) =VLOOKUP("MKT",'
+            'Licensing!A:F,4,FALSE) =VLOOKUP("MKT",Licensing!A:F,5,FALSE) =VLOOKUP("MKT",'
             "Licensing!A:F,6,FALSE) =SUM(B18:E18)\n"
             "Travel & Events        ='Prior Year'!B18*1.08 ='Prior Year'!C18*1.08"
             " ='Prior Year'!D18*1.08 ='Prior Year'!E18*1.08 =SUM(B19:E19)\n"
-            "Digital Ad Spend       =INDEX(AdBudget,MATCH(\"Q1\",AdBudget[Quarter],0),"
-            "MATCH(\"Marketing\",AdBudget[#Headers],0)) =INDEX(AdBudget,MATCH(\"Q2\","
-            "AdBudget[Quarter],0),MATCH(\"Marketing\",AdBudget[#Headers],0)) =INDEX("
-            "AdBudget,MATCH(\"Q3\",AdBudget[Quarter],0),MATCH(\"Marketing\",AdBudget"
-            "[#Headers],0)) =INDEX(AdBudget,MATCH(\"Q4\",AdBudget[Quarter],0),MATCH("
-            "\"Marketing\",AdBudget[#Headers],0)) =SUM(B20:E20)\n"
+            'Digital Ad Spend       =INDEX(AdBudget,MATCH("Q1",AdBudget[Quarter],0),'
+            'MATCH("Marketing",AdBudget[#Headers],0)) =INDEX(AdBudget,MATCH("Q2",'
+            'AdBudget[Quarter],0),MATCH("Marketing",AdBudget[#Headers],0)) =INDEX('
+            'AdBudget,MATCH("Q3",AdBudget[Quarter],0),MATCH("Marketing",AdBudget'
+            '[#Headers],0)) =INDEX(AdBudget,MATCH("Q4",AdBudget[Quarter],0),MATCH('
+            '"Marketing",AdBudget[#Headers],0)) =SUM(B20:E20)\n'
             "Agency Fees            =IF(B20>50000,B20*0.12,B20*0.15) =IF(C20>50000,"
             "C20*0.12,C20*0.15) =IF(D20>50000,D20*0.12,D20*0.15) =IF(E20>50000,"
             "E20*0.12,E20*0.15) =SUM(B21:E21)\n"
@@ -2889,9 +2889,9 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " =SUM(F15:F21)\n"
             "vs Budget Cap          =B22-Budget_Cap_Q1 =C22-Budget_Cap_Q2 =D22-Budget_Cap_Q3"
             " =E22-Budget_Cap_Q4 =F22-Annual_Cap\n"
-            "Status                 =IF(B23>0,\"OVER\",\"OK\") =IF(C23>0,\"OVER\",\"OK\")"
-            " =IF(D23>0,\"OVER\",\"OK\") =IF(E23>0,\"OVER\",\"OK\") =IF(F23>0,\"OVER BUDGET\","
-            "\"WITHIN BUDGET\")\n\n"
+            'Status                 =IF(B23>0,"OVER","OK") =IF(C23>0,"OVER","OK")'
+            ' =IF(D23>0,"OVER","OK") =IF(E23>0,"OVER","OK") =IF(F23>0,"OVER BUDGET",'
+            '"WITHIN BUDGET")\n\n'
             "The real issue is: the file won't open anymore. When I try to open it I get"
             " 'Excel cannot open the file because the file format or extension is not"
             " valid.' It was working fine yesterday and it's on SharePoint. I need this"
@@ -2973,7 +2973,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " machines, and holiday planning",
             remediation_steps=(
                 "Update the Dell WD19TBS dock firmware using Dell Dock Updater utility",
-                "Check the ThinkPad T14s display output settings and ensure external displays are detected in Device Manager",
+                "Check the ThinkPad T14s display output settings and ensure external displays are detected in Device "
+                "Manager",
                 "Test with a different dock or direct HDMI/USB-C connection to isolate the faulty component",
                 "If firmware update does not resolve, swap the docking station with a known-good unit from inventory",
             ),
@@ -3033,7 +3034,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " summary identifying unencrypted PII, stale admin credentials, and"
             " missing audit logging ahead of the March 28th audit deadline",
             remediation_steps=(
-                "Enable server-side encryption (SSE-S3 or SSE-KMS) on the 'fin-reports-prod' S3 bucket and audit existing unencrypted objects",
+                "Enable server-side encryption (SSE-S3 or SSE-KMS) on the 'fin-reports-prod' S3 bucket and audit "
+                "existing unencrypted objects",
                 "Rotate the stale service account credentials immediately and enforce an automated rotation policy",
                 "Enable audit logging on the three production databases and verify log delivery to the SIEM",
                 "Request the user attach the PDF properly for archival and remove the inline base64 from the ticket",
@@ -3053,16 +3055,16 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         descriptions=(
             "Hay, sending this from my phone bc I'm traveling and can't get to my"
             " laptop. The Saleforce dashbored hasn't been loading since this morning."
-            " When I click on the \"Quartly Revenu Summery\" report it just spins"
-            " forever and then shows a massage that says something like \"reprot"
-            " execution timed out exceeded maximum querry complicity.\"\n\n"
+            ' When I click on the "Quartly Revenu Summery" report it just spins'
+            ' forever and then shows a massage that says something like "reprot'
+            ' execution timed out exceeded maximum querry complicity."\n\n'
             "I tired clearing my bowser cache and cockes (using Chrom on my iPhone)"
             " but same problm. My manger needs the Q1 piepline numbers for a bored"
             " meeting at 3pm tody so this is prety urget.\n\n"
             "I'm in the EST timezone, my Saleforce username is jthompson@contoso.com"
-            " and I'm in the \"North Amercia Sales\" busness unit. The dahsboard I"
-            " need is called \"Q1 FY26 Piepline Anaylsis\" in the \"Executve"
-            " Reprots\" folder.\n\n"
+            ' and I\'m in the "North Amercia Sales" busness unit. The dahsboard I'
+            ' need is called "Q1 FY26 Piepline Anaylsis" in the "Executve'
+            ' Reprots" folder.\n\n'
             "Plese advise ASPA. Thx.\n\n"
             "Sent form my iPhone",
             "Salesforce dashboard 'Q1 FY26 Pipeline Analysis' in the 'Executive"
@@ -3082,8 +3084,11 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " text obscures the actual error which is likely a SOQL query"
             " complexity limit; check report filters and row counts",
             remediation_steps=(
-                "Check the Salesforce report execution logs for jthompson@contoso.com to identify the SOQL query limit error",
-                "Review the 'Q1 FY26 Pipeline Analysis' report filters and reduce the query scope or add index-friendly filters",
+                "Check the Salesforce report execution logs for jthompson@contoso.com to identify the SOQL query limit "
+                "error",
+                "Review the 'Q1 FY26 Pipeline Analysis' report filters and reduce the query scope or add "
+                "index-friendly "
+                "filters",
                 "If the report is too complex, break it into smaller sub-reports or use an async report export",
                 "Provide the user with a temporary exported CSV of the pipeline data for the 3 PM board meeting",
             ),
@@ -3102,7 +3107,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         descriptions=(
             "[Voicemail Auto-Transcription \u2014 Confidence: 42%]\n"
             "From: Extension 4471 | Duration: 1m 23s | Received: 2026-03-11 07:14 EST\n\n"
-            "\"Hey this is uh Marcus from the wear house... the uh the wife eye is"
+            '"Hey this is uh Marcus from the wear house... the uh the wife eye is'
             " completely down on the floor sense about six this mourning. We can't"
             " scan any of the bar coats on the in ventory and the fork lift tracking"
             " system is showing off line too. We got a big sip mint going out at"
@@ -3113,7 +3118,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " and some one from net work came and re set the thing on the sealing.\n\n"
             "Can you guys send some one out here as soon as poss a bull? My sell"
             " is 555-0147 or just call the wear house main line at extension for"
-            " for seven one. Tanks.\"\n\n"
+            ' for seven one. Tanks."\n\n'
             "[End of Transcription]",
             "[Auto-transcribed voicemail from warehouse ext 4471] Wi-Fi is"
             " completely down on the warehouse floor since 6 AM. Barcode"
@@ -3134,10 +3139,13 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " garbled but the core issue is a complete Wi-Fi outage affecting barcode"
             " scanners and forklift tracking with an 8 AM shipment deadline",
             remediation_steps=(
-                "Remotely check the status of the warehouse access point near Dock 4 in the wireless controller dashboard",
+                "Remotely check the status of the warehouse access point near Dock 4 in the wireless controller "
+                "dashboard",
                 "If the AP is unreachable, dispatch a technician to power-cycle or replace it on-site",
-                "Verify all warehouse barcode scanners and forklift tracking devices reconnect after the AP is restored",
-                "Review the previous incident from two weeks ago to determine if this is a recurring hardware failure requiring permanent replacement",
+                "Verify all warehouse barcode scanners and forklift tracking devices reconnect after the AP is "
+                "restored",
+                "Review the previous incident from two weeks ago to determine if this is a recurring hardware failure "
+                "requiring permanent replacement",
             ),
         ),
         tags=("data-cleanup", "voicemail", "speech-to-text"),
@@ -3155,16 +3163,16 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             "I\u200b can\u200b't log\u200b in to\u200b any\u200bthing since\u200b this\u200b morn\u200bing."
             " When\u200b I try\u200b to\u200b sign in\u200b to the\u200b SSO por\u200btal at"
             " https://sso\u200b.con\u200btoso\u200b.com\u200b/login I get\u200b an"
-            " error:\u200b \"AADSTS\u200b50053\u200b: The\u200b account\u200b is\u200b locked"
+            ' error:\u200b "AADSTS\u200b50053\u200b: The\u200b account\u200b is\u200b locked'
             "\u200b because\u200b the\u200b user\u200b tried\u200b to sign\u200b in too\u200b"
             " many\u200b times\u200b with\u200b an\u200b incorrect\u200b user\u200b ID"
-            "\u200b or\u200b pass\u200bword.\u200b\"\n\n"
+            '\u200b or\u200b pass\u200bword.\u200b"\n\n'
             "I\u200b tried\u200b the\u200b self\u200b-service\u200b pass\u200bword\u200b reset"
             "\u200b at\u200b https://pass\u200bword\u200breset\u200b.micro\u200bsoft\u200bonline"
             "\u200b.com\u200b but\u200b when\u200b I\u200b paste\u200b my\u200b user\u200bname"
             "\u200b (e\u200bmily\u200b.chen\u200b@con\u200btoso\u200b.com\u200b) it\u200b says"
             "\u200b \"We\u200b couldn\u200b't\u200b find\u200b an\u200b account\u200b"
-            " with\u200b that\u200b user\u200bname.\u200b\"\n\n"
+            ' with\u200b that\u200b user\u200bname.\u200b"\n\n'
             "I\u200b think\u200b the\u200b user\u200bname\u200b might\u200b have\u200b invisible"
             "\u200b characters\u200b in\u200b it?\u200b I\u200b copied\u200b it\u200b from"
             "\u200b a\u200b web\u200bpage\u200b and\u200b it looks\u200b right\u200b but"
@@ -3190,7 +3198,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             remediation_steps=(
                 "Unlock the Azure AD account for emily.chen@contoso.com via the admin portal",
                 "Reset the password manually and provide temporary credentials through a secure channel",
-                "Advise the user to manually type the username instead of pasting to avoid invisible Unicode characters",
+                "Advise the user to manually type the username instead of pasting to avoid invisible Unicode "
+                "characters",
                 "Check Azure AD sign-in logs to confirm no unauthorized access attempts caused the lockout",
             ),
         ),
@@ -3293,8 +3302,10 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " the hardcoded credentials in the pasted YAML for immediate rotation"
             " since they are now exposed in the ticketing system",
             remediation_steps=(
-                "Add a health check and depends_on condition to the api-gateway service so it waits for postgres to be ready before starting",
-                "Rotate all credentials exposed in the ticket (DB_PASSWORD, JWT_SECRET) since they were pasted in plaintext",
+                "Add a health check and depends_on condition to the api-gateway service so it waits for postgres to be "
+                "ready before starting",
+                "Rotate all credentials exposed in the ticket (DB_PASSWORD, JWT_SECRET) since they were pasted in "
+                "plaintext",
                 "Migrate hardcoded secrets to a vault or Docker secrets to prevent future credential exposure",
                 "Verify the staging environment is fully operational and run a smoke test before QA begins",
             ),
@@ -3322,7 +3333,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             "@@ -142,7 +142,7 @@ class PaymentProcessor:\n"
             "     def validate_transaction(self, txn: Transaction) -> bool:\n"
             "         if txn.amount <= 0:\n"
-            "             raise InvalidAmountError(f\"Invalid amount: {txn.amount}\")\n"
+            '             raise InvalidAmountError(f"Invalid amount: {txn.amount}")\n'
             "-        if txn.currency in self.SUPPORTED_CURRENCIES:\n"
             "+        if txn.currency not in self.SUPPORTED_CURRENCIES:\n"
             "             return self._process_payment(txn)\n"
@@ -3368,9 +3379,12 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " regression, and a debug sleep statement left in production code",
             remediation_steps=(
                 "Revert the bad commit on main using git revert and deploy the fix to production immediately",
-                "Verify payment processing is restored by running end-to-end transaction tests against the production endpoint",
-                "Audit recent transactions processed under the inverted logic to identify and correct any mis-charged payments",
-                "Add a pre-merge CI check to flag debug statements (time.sleep, print, pdb) in payment-critical code paths",
+                "Verify payment processing is restored by running end-to-end transaction tests against the production "
+                "endpoint",
+                "Audit recent transactions processed under the inverted logic to identify and correct any mis-charged "
+                "payments",
+                "Add a pre-merge CI check to flag debug statements (time.sleep, print, pdb) in payment-critical code "
+                "paths",
             ),
         ),
         tags=("data-cleanup", "git-diff", "code-paste"),
@@ -3406,10 +3420,14 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " actionable detail about the Wi-Fi issue including location,"
             " device, scope of impact, or error messages",
             remediation_steps=(
-                "Reach out to the user to determine their physical location, device type, and whether other users are affected",
-                "Ask the user for the specific error message or symptom (no connection at all, intermittent drops, slow speed)",
+                "Reach out to the user to determine their physical location, device type, and whether other users are "
+                "affected",
+                "Ask the user for the specific error message or symptom (no connection at all, intermittent drops, "
+                "slow "
+                "speed)",
                 "Once location is known, check the wireless controller for AP status in that area",
-                "After gathering sufficient context, proceed with standard Wi-Fi troubleshooting based on the identified symptoms",
+                "After gathering sufficient context, proceed with standard Wi-Fi troubleshooting based on the "
+                "identified symptoms",
             ),
         ),
         tags=("data-cleanup", "terse-message", "minimal-context"),
@@ -3420,24 +3438,42 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
     ScenarioDefinition(
         scenario_id="dc-gen-060",
         subjects=(
-            "\u0645\u0634\u0643\u0644\u0629 \u0641\u064a VPN \u2014 \u0644\u0627 \u0623\u0633\u062a\u0637\u064a\u0639 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0627\u0644\u0634\u0628\u0643\u0629 \u0627\u0644\u062f\u0627\u062e\u0644\u064a\u0629",
-            "VPN connectivity issue \u2014 \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0627\u0647\u0631\u0629 cannot reach internal resources",
+            "\u0645\u0634\u0643\u0644\u0629 \u0641\u064a VPN \u2014 \u0644\u0627 \u0623\u0633\u062a\u0637\u064a\u0639 "
+            "\u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0627\u0644\u0634\u0628\u0643\u0629 "
+            "\u0627\u0644\u062f\u0627\u062e\u0644\u064a\u0629",
+            "VPN connectivity issue \u2014 \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0627\u0647\u0631\u0629 cannot "
+            "reach internal resources",
         ),
         descriptions=(
             "\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064a\u0643\u0645\u060c\n\n"
-            "\u0623\u0646\u0627 \u0623\u0639\u0645\u0644 \u0645\u0646 \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0627\u0647\u0631\u0629 \u200f(Cairo office, Building 2, Floor 3)\u200f \u0648\u0644\u0627 \u0623\u0633\u062a\u0637\u064a\u0639"
-            " \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0640 \u200finternal SharePoint\u200f \u0623\u0648 \u200fJira\u200f"
-            " \u0645\u0646\u0630 \u0635\u0628\u0627\u062d \u0627\u0644\u064a\u0648\u0645. \u0627\u0644\u0640 \u200fVPN client\u200f"
-            " (\u200fGlobalProtect 6.1\u200f) \u064a\u062a\u0635\u0644 \u0628\u0646\u062c\u0627\u062d \u0648\u064a\u0638\u0647\u0631"
-            " \"\u200fConnected\u200f\" \u0648\u0644\u0643\u0646 \u0639\u0646\u062f\u0645\u0627 \u0623\u062d\u0627\u0648\u0644"
+            "\u0623\u0646\u0627 \u0623\u0639\u0645\u0644 \u0645\u0646 \u0645\u0643\u062a\u0628 "
+            "\u0627\u0644\u0642\u0627\u0647\u0631\u0629 \u200f(Cairo office, Building 2, Floor 3)\u200f "
+            "\u0648\u0644\u0627 \u0623\u0633\u062a\u0637\u064a\u0639"
+            "\u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0640 \u200finternal SharePoint\u200f \u0623\u0648 "
+            "\u200fJira\u200f"
+            "\u0645\u0646\u0630 \u0635\u0628\u0627\u062d \u0627\u0644\u064a\u0648\u0645. \u0627\u0644\u0640 \u200fVPN "
+            "client\u200f"
+            "(\u200fGlobalProtect 6.1\u200f) \u064a\u062a\u0635\u0644 \u0628\u0646\u062c\u0627\u062d "
+            "\u0648\u064a\u0638\u0647\u0631"
+            '"\u200fConnected\u200f" \u0648\u0644\u0643\u0646 \u0639\u0646\u062f\u0645\u0627 '
+            "\u0623\u062d\u0627\u0648\u0644"
             " \u0627\u0644\u0648\u0635\u0648\u0644 \u0625\u0644\u0649 \u200fhttps://sharepoint.contoso.com\u200f"
-            " \u064a\u0638\u0647\u0631 \u200f\"ERR_CONNECTION_TIMED_OUT\"\u200f.\n\n"
+            ' \u064a\u0638\u0647\u0631 \u200f"ERR_CONNECTION_TIMED_OUT"\u200f.\n\n'
             "\u062c\u0631\u0628\u062a \u0627\u0644\u0622\u062a\u064a:\n"
-            "1. \u200f\u200fipconfig /release\u200f \u0648 \u200fipconfig /renew\u200f \u2014 \u0644\u0645 \u064a\u0646\u062c\u062d\n"
-            "2. \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0640 \u200fVPN client\u200f \u2014 \u0646\u0641\u0633 \u0627\u0644\u0645\u0634\u0643\u0644\u0629\n"
-            "3. \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u062f\u0648\u0646 \u200fVPN\u200f \u064a\u0639\u0645\u0644 \u0628\u0634\u0643\u0644 \u0637\u0628\u064a\u0639\u064a (\u200fgoogle.com\u200f \u064a\u0639\u0645\u0644)\n\n"
-            "\u0627\u0644\u0645\u0634\u0643\u0644\u0629 \u062a\u0624\u062b\u0631 \u0639\u0644\u0649 \u200f5 \u0645\u0648\u0638\u0641\u064a\u0646\u200f \u0641\u064a \u0646\u0641\u0633 \u0627\u0644\u0645\u0643\u062a\u0628."
-            " \u0646\u062d\u062a\u0627\u062c \u062d\u0644 \u0639\u0627\u062c\u0644 \u0644\u0623\u0646 \u0639\u0646\u062f\u0646\u0627 \u200fdeadline\u200f \u064a\u0648\u0645 \u0627\u0644\u062e\u0645\u064a\u0633.\n\n"
+            "1. \u200f\u200fipconfig /release\u200f \u0648 \u200fipconfig /renew\u200f \u2014 \u0644\u0645 "
+            "\u064a\u0646\u062c\u062d\n"
+            "2. \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0640 \u200fVPN "
+            "client\u200f "
+            "\u2014 \u0646\u0641\u0633 \u0627\u0644\u0645\u0634\u0643\u0644\u0629\n"
+            "3. \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u062f\u0648\u0646 \u200fVPN\u200f "
+            "\u064a\u0639\u0645\u0644 \u0628\u0634\u0643\u0644 \u0637\u0628\u064a\u0639\u064a (\u200fgoogle.com\u200f "
+            "\u064a\u0639\u0645\u0644)\n\n"
+            "\u0627\u0644\u0645\u0634\u0643\u0644\u0629 \u062a\u0624\u062b\u0631 \u0639\u0644\u0649 \u200f5 "
+            "\u0645\u0648\u0638\u0641\u064a\u0646\u200f \u0641\u064a \u0646\u0641\u0633 "
+            "\u0627\u0644\u0645\u0643\u062a\u0628."
+            "\u0646\u062d\u062a\u0627\u062c \u062d\u0644 \u0639\u0627\u062c\u0644 \u0644\u0623\u0646 "
+            "\u0639\u0646\u062f\u0646\u0627 \u200fdeadline\u200f \u064a\u0648\u0645 "
+            "\u0627\u0644\u062e\u0645\u064a\u0633.\n\n"
             "\u0634\u0643\u0631\u0627\u064b\u060c\n"
             "\u0641\u0627\u0637\u0645\u0629 \u0627\u0644\u0632\u0647\u0631\u0627\u0621\n"
             "\u200fEmployee ID: 78234\u200f",
@@ -3459,10 +3495,13 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " resources time out while external traffic works, suggesting a tunnel"
             " routing or DNS resolution issue affecting 5 users",
             remediation_steps=(
-                "Check the GlobalProtect gateway routing table and split-tunnel configuration for the Cairo office IP range",
-                "Verify DNS resolution for internal hostnames (sharepoint.contoso.com) resolves correctly when VPN is connected",
+                "Check the GlobalProtect gateway routing table and split-tunnel configuration for the Cairo office IP "
+                "range",
+                "Verify DNS resolution for internal hostnames (sharepoint.contoso.com) resolves correctly when VPN is "
+                "connected",
                 "Review recent changes to the VPN gateway or firewall rules that may have altered Cairo office routing",
-                "As a temporary workaround, provide the Cairo team with direct IP addresses for SharePoint and Jira while the tunnel issue is resolved",
+                "As a temporary workaround, provide the Cairo team with direct IP addresses for SharePoint and Jira "
+                "while the tunnel issue is resolved",
             ),
         ),
         tags=("data-cleanup", "bidi-text", "rtl-ltr-mixed"),
@@ -3544,11 +3583,17 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " across all dependent services \u2014 the alert flood is symptomatic noise"
             " and should not be triaged individually",
             remediation_steps=(
-                "Immediately free disk space on prod-db-primary by purging old WAL segments, temp tables, or expanding the volume",
-                "Once disk pressure is relieved, verify replication lag on replicas drops below threshold and connection pools recover",
-                "Monitor the HTTP 5xx rates and CPU on web servers to confirm they normalize as the database stabilizes",
-                "Conduct a post-incident review to add disk growth alerting at 80% and automate log rotation to prevent recurrence",
-                "Tune Datadog alert grouping to deduplicate cascading alerts and surface only the root-cause monitor during similar incidents",
+                "Immediately free disk space on prod-db-primary by purging old WAL segments, temp tables, or expanding "
+                "the volume",
+                "Once disk pressure is relieved, verify replication lag on replicas drops below threshold and "
+                "connection pools recover",
+                "Monitor the HTTP 5xx rates and CPU on web servers to confirm they normalize as the database "
+                "stabilizes",
+                "Conduct a post-incident review to add disk growth alerting at 80% and automate log rotation to "
+                "prevent "
+                "recurrence",
+                "Tune Datadog alert grouping to deduplicate cascading alerts and surface only the root-cause monitor "
+                "during similar incidents",
             ),
         ),
         tags=("data-cleanup", "monitoring-flood", "alert-noise"),

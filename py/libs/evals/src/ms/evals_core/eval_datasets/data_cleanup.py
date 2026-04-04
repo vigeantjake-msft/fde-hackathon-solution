@@ -3506,8 +3506,7 @@ def _dc051_graphql_introspection_dump() -> EvalCase:
         ),
         tags=["data-cleanup", "graphql_dump", "schema_noise", "json_payload"],
         description=(
-            "Tests handling of a massive GraphQL introspection JSON response "
-            "embedded in the ticket description."
+            "Tests handling of a massive GraphQL introspection JSON response embedded in the ticket description."
         ),
     )
 
@@ -3607,7 +3606,7 @@ def _dc053_webhook_payload_noise() -> EvalCase:
                 "I checked the webhook endpoint and it seems to be returning errors. Here are the "
                 "last several payloads that were attempted:\n\n"
                 "POST https://contoso.webhook.office.com/webhookb2/7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d\n"
-                'Content-Type: application/json\n\n'
+                "Content-Type: application/json\n\n"
                 '{"@type":"MessageCard","@context":"http://schema.org/extensions","themeColor":"FF0000",'
                 '"summary":"Build Failed: trading-engine #4521","sections":[{"activityTitle":"Build '
                 'Failed","activitySubtitle":"trading-engine #4521","activityImage":"https://ci.contoso'
@@ -3618,7 +3617,7 @@ def _dc053_webhook_payload_noise() -> EvalCase:
                 'true}],"potentialAction":[{"@type":"OpenUri","name":"View Build","targets":[{"os":'
                 '"default","uri":"https://ci.contoso.com/builds/4521"}]}]}\n\n'
                 "---\n\n"
-                'HTTP/1.1 400 Bad Request\n'
+                "HTTP/1.1 400 Bad Request\n"
                 '{"error":{"code":"WebhookUrlNotFound","message":"The webhook URL was not found or '
                 'has been removed.","innerError":{"date":"2026-03-17T09:15:32","request-id":'
                 '"4a5b6c7d-8e9f-0a1b-2c3d-4e5f6a7b8c9d"}}}\n\n'
@@ -3728,8 +3727,7 @@ def _dc054_powershell_mixed_streams() -> EvalCase:
         ),
         tags=["data-cleanup", "powershell_streams", "mixed_output", "deployment_log"],
         description=(
-            "Tests handling of PowerShell verbose/debug/error/warning streams "
-            "interleaved in the ticket description."
+            "Tests handling of PowerShell verbose/debug/error/warning streams interleaved in the ticket description."
         ),
     )
 
@@ -3826,8 +3824,7 @@ def _dc055_docker_compose_flood() -> EvalCase:
         ),
         tags=["data-cleanup", "docker_compose", "yaml_flood", "container_config"],
         description=(
-            "Tests handling of multiple docker-compose YAML configurations "
-            "dumped into the ticket description."
+            "Tests handling of multiple docker-compose YAML configurations dumped into the ticket description."
         ),
     )
 
@@ -4127,10 +4124,10 @@ def _dc060_excel_formula_artifacts() -> EvalCase:
                 "the clipboard:\n\n"
                 "Department\tRevenue\tExpenses\tNet Income\tMargin\n"
                 "Equities\t=SUM(B2:B13)\t=SUM(C2:C13)\t=B14-C14\t=D14/B14\n"
-                "Fixed Income\t=VLOOKUP(\"FI\",DataSource!A:D,2,FALSE)\t"
-                "=VLOOKUP(\"FI\",DataSource!A:D,3,FALSE)\t=B15-C15\t=D15/B15\n"
-                "Derivatives\t=INDEX(Revenue,MATCH(\"DRV\",Segments,0))\t"
-                "=INDEX(Expenses,MATCH(\"DRV\",Segments,0))\t=B16-C16\t#REF!\n"
+                'Fixed Income\t=VLOOKUP("FI",DataSource!A:D,2,FALSE)\t'
+                '=VLOOKUP("FI",DataSource!A:D,3,FALSE)\t=B15-C15\t=D15/B15\n'
+                'Derivatives\t=INDEX(Revenue,MATCH("DRV",Segments,0))\t'
+                '=INDEX(Expenses,MATCH("DRV",Segments,0))\t=B16-C16\t#REF!\n'
                 "Wealth Mgmt\t$2,457,000\t$1,893,000\t=B17-C17\t=D17/B17\n"
                 "Corporate\t#N/A\t#N/A\t#VALUE!\t#DIV/0!\n"
                 "TOTAL\t=SUM(B14:B18)\t=SUM(C14:C18)\t=SUM(D14:D18)\t=D19/B19\n\n"
@@ -4190,28 +4187,39 @@ def _dc061_csv_spreadsheet_inline() -> EvalCase:
                 "provisioned. I exported the roster from HR Workday and I'm pasting it here so "
                 "you can see exactly who is affected:\n\n"
                 "EmployeeID,FullName,Department,Title,AccessLevel,StartDate,Manager,Location,CostCenter,Status\n"
-                "E10441,Priya Patel,Engineering,Software Engineer II,L3,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
+                "E10441,Priya Patel,Engineering,Software Engineer II,L3,2026-03-01,David Kim,Building "
+                "40,CC-4401,Pending\n"
                 "E10442,James O'Brien,Engineering,DevOps Engineer,L3,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
                 "E10443,Aisha Mohammed,Finance,Financial Analyst,L2,2026-03-01,Lisa Chen,Building 12,CC-1205,Pending\n"
-                "E10444,Carlos Gutierrez,Marketing,Content Strategist,L2,2026-03-01,Rachel Adams,Building 8,CC-0801,Pending\n"
+                "E10444,Carlos Gutierrez,Marketing,Content Strategist,L2,2026-03-01,Rachel Adams,Building "
+                "8,CC-0801,Pending\n"
                 "E10445,Yuki Tanaka,Engineering,QA Engineer,L3,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
                 "E10446,Sarah Johansson,Legal,Paralegal,L1,2026-03-01,Michael Brown,Building 3,CC-0305,Pending\n"
-                "E10447,Oluwaseun Adeyemi,Sales,Account Executive,L2,2026-03-01,Jennifer Wu,Building 15,CC-1502,Pending\n"
+                "E10447,Oluwaseun Adeyemi,Sales,Account Executive,L2,2026-03-01,Jennifer Wu,Building "
+                "15,CC-1502,Pending\n"
                 "E10448,Wei Zhang,Engineering,Data Scientist,L4,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
                 "E10449,Elena Kowalski,HR,HR Business Partner,L2,2026-03-01,Patricia Gomez,Building 5,CC-0510,Pending\n"
-                "E10450,Raj Krishnamurthy,Engineering,Site Reliability Engineer,L3,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
+                "E10450,Raj Krishnamurthy,Engineering,Site Reliability Engineer,L3,2026-03-01,David Kim,Building "
+                "40,CC-4401,Pending\n"
                 "E10451,Maria Santos,Customer Success,CSM,L2,2026-03-01,Tom Harris,Building 10,CC-1003,Pending\n"
-                "E10452,Nathan Williams,Engineering,Frontend Engineer,L3,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
+                "E10452,Nathan Williams,Engineering,Frontend Engineer,L3,2026-03-01,David Kim,Building "
+                "40,CC-4401,Pending\n"
                 "E10453,Sophie Dubois,Design,UX Designer,L2,2026-03-01,Anna Petrov,Building 22,CC-2201,Pending\n"
                 "E10454,Ahmed Hassan,Security,Security Analyst,L3,2026-03-01,Robert Chen,Building 7,CC-0702,Pending\n"
                 "E10455,Liam O'Connor,IT,Systems Administrator,L3,2026-03-01,Steve Park,Building 2,CC-0208,Pending\n"
                 "E10456,Fatima Al-Rashid,Product,Product Manager,L3,2026-03-01,Diana Lee,Building 18,CC-1801,Pending\n"
-                "E10457,Henrik Larsson,Engineering,Backend Engineer,L3,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
-                "E10458,Grace Okafor,Finance,Accounts Payable Specialist,L1,2026-03-01,Lisa Chen,Building 12,CC-1205,Pending\n"
-                "E10459,Tomasz Nowak,Operations,Operations Analyst,L2,2026-03-01,Mark Johnson,Building 6,CC-0603,Pending\n"
-                "E10460,Isabel Fernandez,Engineering,Mobile Developer,L3,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
-                "E10461,Kevin Nakamura,Engineering,Platform Engineer,L3,2026-03-01,David Kim,Building 40,CC-4401,Pending\n"
-                "E10462,Amara Diallo,Compliance,Compliance Officer,L2,2026-03-01,Sandra Green,Building 3,CC-0312,Pending\n\n"
+                "E10457,Henrik Larsson,Engineering,Backend Engineer,L3,2026-03-01,David Kim,Building "
+                "40,CC-4401,Pending\n"
+                "E10458,Grace Okafor,Finance,Accounts Payable Specialist,L1,2026-03-01,Lisa Chen,Building "
+                "12,CC-1205,Pending\n"
+                "E10459,Tomasz Nowak,Operations,Operations Analyst,L2,2026-03-01,Mark Johnson,Building "
+                "6,CC-0603,Pending\n"
+                "E10460,Isabel Fernandez,Engineering,Mobile Developer,L3,2026-03-01,David Kim,Building "
+                "40,CC-4401,Pending\n"
+                "E10461,Kevin Nakamura,Engineering,Platform Engineer,L3,2026-03-01,David Kim,Building "
+                "40,CC-4401,Pending\n"
+                "E10462,Amara Diallo,Compliance,Compliance Officer,L2,2026-03-01,Sandra Green,Building "
+                "3,CC-0312,Pending\n\n"
                 "All of them show Status=Pending in the provisioning dashboard. They can't log "
                 "into any internal systems. Please bulk-provision ASAP.\n\n"
                 "Thanks,\nTanya Reeves\nHR Operations"
@@ -4534,46 +4542,46 @@ def _dc065_svg_data_inline() -> EvalCase:
                 '  <rect width="800" height="600" fill="#f5f5f5" />\n'
                 '  <text x="400" y="30" text-anchor="middle" font-size="18" '
                 'font-weight="bold">VLAN 220 Topology — Bldg 40</text>\n\n'
-                '  <!-- Core Switch -->\n'
+                "  <!-- Core Switch -->\n"
                 '  <rect x="325" y="60" width="150" height="50" rx="8" fill="#2196F3" />\n'
                 '  <text x="400" y="90" text-anchor="middle" fill="white" font-size="12">'
-                'Core-SW-01 (Nexus 9300)</text>\n\n'
-                '  <!-- Distribution Switches -->\n'
+                "Core-SW-01 (Nexus 9300)</text>\n\n"
+                "  <!-- Distribution Switches -->\n"
                 '  <rect x="100" y="180" width="140" height="45" rx="6" fill="#4CAF50" />\n'
                 '  <text x="170" y="207" text-anchor="middle" fill="white" font-size="11">'
-                'Dist-SW-40A (Cat 9400)</text>\n'
+                "Dist-SW-40A (Cat 9400)</text>\n"
                 '  <rect x="330" y="180" width="140" height="45" rx="6" fill="#4CAF50" />\n'
                 '  <text x="400" y="207" text-anchor="middle" fill="white" font-size="11">'
-                'Dist-SW-40B (Cat 9400)</text>\n'
+                "Dist-SW-40B (Cat 9400)</text>\n"
                 '  <rect x="560" y="180" width="140" height="45" rx="6" fill="#FF9800" />\n'
                 '  <text x="630" y="207" text-anchor="middle" fill="white" font-size="11">'
-                'Dist-SW-40C (FAILING)</text>\n\n'
-                '  <!-- Uplinks -->\n'
+                "Dist-SW-40C (FAILING)</text>\n\n"
+                "  <!-- Uplinks -->\n"
                 '  <line x1="400" y1="110" x2="170" y2="180" stroke="#333" stroke-width="2" />\n'
                 '  <line x1="400" y1="110" x2="400" y2="180" stroke="#333" stroke-width="2" />\n'
                 '  <line x1="400" y1="110" x2="630" y2="180" stroke="red" stroke-width="3" '
                 'stroke-dasharray="8,4" />\n\n'
-                '  <!-- Access Switches -->\n'
+                "  <!-- Access Switches -->\n"
                 '  <rect x="50" y="300" width="120" height="40" rx="5" fill="#9E9E9E" />\n'
                 '  <text x="110" y="325" text-anchor="middle" fill="white" font-size="10">'
-                'Acc-40-01 (2960X)</text>\n'
+                "Acc-40-01 (2960X)</text>\n"
                 '  <rect x="200" y="300" width="120" height="40" rx="5" fill="#9E9E9E" />\n'
                 '  <text x="260" y="325" text-anchor="middle" fill="white" font-size="10">'
-                'Acc-40-02 (2960X)</text>\n'
+                "Acc-40-02 (2960X)</text>\n"
                 '  <rect x="480" y="300" width="120" height="40" rx="5" fill="#9E9E9E" />\n'
                 '  <text x="540" y="325" text-anchor="middle" fill="white" font-size="10">'
-                'Acc-40-05 (2960X)</text>\n'
+                "Acc-40-05 (2960X)</text>\n"
                 '  <rect x="630" y="300" width="120" height="40" rx="5" fill="#9E9E9E" />\n'
                 '  <text x="690" y="325" text-anchor="middle" fill="white" font-size="10">'
-                'Acc-40-06 (2960X)</text>\n\n'
-                '  <!-- Links to access layer -->\n'
+                "Acc-40-06 (2960X)</text>\n\n"
+                "  <!-- Links to access layer -->\n"
                 '  <line x1="170" y1="225" x2="110" y2="300" stroke="#333" stroke-width="1.5" />\n'
                 '  <line x1="170" y1="225" x2="260" y2="300" stroke="#333" stroke-width="1.5" />\n'
                 '  <line x1="630" y1="225" x2="540" y2="300" stroke="red" stroke-width="2" '
                 'stroke-dasharray="5,3" />\n'
                 '  <line x1="630" y1="225" x2="690" y2="300" stroke="red" stroke-width="2" '
                 'stroke-dasharray="5,3" />\n\n'
-                '  <!-- Legend -->\n'
+                "  <!-- Legend -->\n"
                 '  <rect x="50" y="520" width="700" height="60" fill="#eeeeee" rx="5" />\n'
                 '  <line x1="70" y1="545" x2="120" y2="545" stroke="#333" stroke-width="2" />\n'
                 '  <text x="130" y="549" font-size="10">Healthy Link</text>\n'
@@ -4581,8 +4589,8 @@ def _dc065_svg_data_inline() -> EvalCase:
                 'stroke-dasharray="5,3" />\n'
                 '  <text x="310" y="549" font-size="10">Degraded / Dropping</text>\n'
                 '  <text x="70" y="568" font-size="10" fill="#666">Packet loss observed: '
-                '12-18% on Dist-SW-40C uplink, 5-9% on downstream access ports</text>\n'
-                '</svg>\n\n'
+                "12-18% on Dist-SW-40C uplink, 5-9% on downstream access ports</text>\n"
+                "</svg>\n\n"
                 "As you can see, Dist-SW-40C is the problem. Downstream ports on Acc-40-05 "
                 "and Acc-40-06 are seeing 5-9% packet loss. The uplink from Dist-SW-40C to "
                 "Core-SW-01 shows 12-18% loss during peak hours (10am-2pm). About 45 users "
@@ -5092,7 +5100,6 @@ def _dc070_yaml_config_dump() -> EvalCase:
             "pasted into a ticket about a pod CrashLoopBackOff / OOMKilled issue."
         ),
     )
-
 
 
 # ---------------------------------------------------------------------------

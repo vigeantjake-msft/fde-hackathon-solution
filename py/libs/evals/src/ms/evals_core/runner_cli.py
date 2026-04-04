@@ -195,11 +195,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     # Print per-ticket results
-    print(
-        f"Loaded {summary.tickets_total} tickets, "
-        f"{summary.tickets_scored} scored, "
-        f"{summary.tickets_errored} errors"
-    )
+    print(f"Loaded {summary.tickets_total} tickets, {summary.tickets_scored} scored, {summary.tickets_errored} errors")
     print()
 
     for result in summary.results:

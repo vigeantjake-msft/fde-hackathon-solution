@@ -6522,10 +6522,10 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Our Risk Alerts channel in Teams stopped receiving automated notifications from "
                 "the webhook connector about 3 days ago. I tried to debug it and captured these "
                 "webhook payloads that are failing. Can you figure out what's wrong?\n\n"
-                'POST https://contoso.webhook.office.com/webhookb2/7c8d9e0f-1a2b-3c4d-5e6f-7a8b9c0d1e2f'
-                '@72f988bf-86f1-41af-91ab-2d7cd011db47/IncomingWebhook/a1b2c3d4e5f6/g7h8i9j0-k1l2-'
+                "POST https://contoso.webhook.office.com/webhookb2/7c8d9e0f-1a2b-3c4d-5e6f-7a8b9c0d1e2f"
+                "@72f988bf-86f1-41af-91ab-2d7cd011db47/IncomingWebhook/a1b2c3d4e5f6/g7h8i9j0-k1l2-"
                 "m3n4-o5p6-q7r8s9t0u1v2\n"
-                'Content-Type: application/json\n\n'
+                "Content-Type: application/json\n\n"
                 '{"@type":"MessageCard","@context":"http://schema.org/extensions","themeColor":"FF0000",'
                 '"summary":"Risk Threshold Breach - Portfolio ALPHA-7","sections":[{"activityTitle":'
                 '"⚠️ VaR Limit Breach","activitySubtitle":"Portfolio ALPHA-7 | Desk: Macro Trading",'
@@ -6609,9 +6609,9 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "VERBOSE: [2026-03-15 18:30:19] Running post-deploy health check...\n"
                 "Write-Error: [2026-03-15 18:30:22] Health check FAILED on APP-PROD-01.\n"
                 "Write-Error: HTTP GET https://app-prod-01.contoso.local/health returned 503\n"
-                "Write-Error: Response body: {\"status\":\"unhealthy\",\"checks\":{\"database\":{\"status\":"
-                "\"degraded\",\"description\":\"Connection timeout after 30s\"},\"redis\":{\"status\":"
-                "\"healthy\"},\"blobStorage\":{\"status\":\"healthy\"}}}\n"
+                'Write-Error: Response body: {"status":"unhealthy","checks":{"database":{"status":'
+                '"degraded","description":"Connection timeout after 30s"},"redis":{"status":'
+                '"healthy"},"blobStorage":{"status":"healthy"}}}\n'
                 "WARNING: [2026-03-15 18:30:22] Rolling back APP-PROD-01 to v4.7.1...\n"
                 "VERBOSE: [2026-03-15 18:30:28] Rollback complete on APP-PROD-01.\n"
                 "Write-Error: [2026-03-15 18:30:28] Deployment FAILED. 0 of 6 servers updated.\n"
@@ -6900,10 +6900,8 @@ def get_scenarios() -> list[ScenarioDefinition]:
             remediation_steps=[
                 "Check the user's Azure AD sign-in logs for error codes during the redirect loop.",
                 "Review conditional access policies applied to the Trade Portal app registration.",
-                "Revoke the user's refresh tokens (Revoke-AzureADUserAllRefreshToken) "
-                "and have them re-authenticate.",
-                "Verify the app registration redirect URIs match the current "
-                "Trade Portal deployment URL.",
+                "Revoke the user's refresh tokens (Revoke-AzureADUserAllRefreshToken) and have them re-authenticate.",
+                "Verify the app registration redirect URIs match the current Trade Portal deployment URL.",
                 "If the issue is policy-related, grant a temporary exclusion so the user "
                 "can process the 47 pending trade confirmations.",
             ],
@@ -7020,8 +7018,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Verify GlobalProtect portal configuration includes the "
                 "HK-OFFICE-VPN-2026Q1 group in the allowed access policy.",
                 "Follow up on Palo Alto TAC case #TA-887432 for the split-tunnel configuration.",
-                "Have one new hire test VPN connectivity from the HK office "
-                "to confirm access to NYC trading systems.",
+                "Have one new hire test VPN connectivity from the HK office to confirm access to NYC trading systems.",
                 "Update INC0048721 and close once all 12 users have confirmed working VPN access.",
             ],
             reporter_name="Jennifer Wong",
@@ -7098,8 +7095,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Bloomberg feed servers (10.60.1.101-103) on port 8194.",
                 "Check the firewall rules — the BLPAPI diagnostic says it cannot "
                 "reach the policy server, suggesting a firewall change.",
-                "Contact Bloomberg support with the B-PIPE connection error details "
-                "if the network path is clear.",
+                "Contact Bloomberg support with the B-PIPE connection error details if the network path is clear.",
                 "As an interim measure, expand access to the backup Reuters feed for more traders.",
                 "Once connectivity is restored, verify all 12,847 subscriptions re-establish and data is flowing.",
             ],
@@ -7128,19 +7124,19 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "looks like:\n\n"
                 "Desk\tGross P&L\tNet P&L\tVaR Utilization\tTrade Count\tNotional ($M)\n"
                 "Equity Trading\t=SUM(B14:B87)\t=B2-VLOOKUP(A2,Costs!A:C,3,FALSE)\t"
-                "=IF(D2>0.85,\"BREACH\",IF(D2>0.7,\"WARNING\",\"OK\"))\t=COUNTA(Trades!A:A)-1\t"
+                '=IF(D2>0.85,"BREACH",IF(D2>0.7,"WARNING","OK"))\t=COUNTA(Trades!A:A)-1\t'
                 "=SUMPRODUCT(Trades!F2:F500,Trades!G2:G500)/1000000\n"
                 "Fixed Income\t=SUM(B88:B134)\t=B3-VLOOKUP(A3,Costs!A:C,3,FALSE)\t"
-                "#REF!\t=COUNTIFS(Trades!B:B,\"FI\",Trades!H:H,\">0\")\t"
-                "=SUMPRODUCT((Trades!B2:B500=\"FI\")*Trades!F2:F500*Trades!G2:G500)/1000000\n"
+                '#REF!\t=COUNTIFS(Trades!B:B,"FI",Trades!H:H,">0")\t'
+                '=SUMPRODUCT((Trades!B2:B500="FI")*Trades!F2:F500*Trades!G2:G500)/1000000\n'
                 "FX & Rates\t#N/A\t=B4-VLOOKUP(A4,Costs!A:C,3,FALSE)\t"
-                "=C15/VLOOKUP(A4,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,\"FX*\")\t"
+                '=C15/VLOOKUP(A4,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,"FX*")\t'
                 "#VALUE!\n"
                 "Credit\t=SUM(B200:B267)\t=B5-VLOOKUP(A5,Costs!A:C,3,FALSE)\t"
-                "=C16/VLOOKUP(A5,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,\"CRD\")\t"
-                "=SUMPRODUCT((Trades!B2:B500=\"CRD\")*Trades!F2:F500*Trades!G2:G500)/1000000\n"
+                '=C16/VLOOKUP(A5,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,"CRD")\t'
+                '=SUMPRODUCT((Trades!B2:B500="CRD")*Trades!F2:F500*Trades!G2:G500)/1000000\n'
                 "Commodities\t=SUM(B268:B301)\t#REF!\t"
-                "=C17/VLOOKUP(A6,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,\"CMDTY\")\t"
+                '=C17/VLOOKUP(A6,Limits!A:B,2,FALSE)\t=COUNTIFS(Trades!B:B,"CMDTY")\t'
                 "#N/A\n"
                 "TOTAL\t=SUM(B2:B6)\t=SUM(C2:C6)\t=MAX(D2:D6)\t=SUM(E2:E6)\t=SUM(F2:F6)\n\n"
                 "There are also these errors scattered throughout:\n"
@@ -7217,13 +7213,19 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "WHERE c.db_name = 'ContosoTradeDB'\n"
                 "ORDER BY c.wait_time_sec DESC;\n\n"
                 "+---------------+----------------+----------+---------------+---------------------------+-----------------+\n"
-                "| connection_id | client_ip      | state    | wait_time_sec | last_query                | db_name         |\n"
+                "| connection_id | client_ip      | state    | wait_time_sec | last_query                | db_name     "
+                "|\n"
                 "+---------------+----------------+----------+---------------+---------------------------+-----------------+\n"
-                "| 884201        | 10.20.5.112    | BLOCKED  |         14422 | EXEC sp_GetTradePositions | ContosoTradeDB  |\n"
-                "| 884203        | 10.20.5.113    | BLOCKED  |         14301 | SELECT * FROM vw_DailyPnL | ContosoTradeDB  |\n"
-                "| 884210        | 10.20.5.112    | BLOCKED  |         13987 | EXEC sp_CalcMarginReqs    | ContosoTradeDB  |\n"
-                "| 884215        | 10.20.5.119    | WAITING  |          9022 | INSERT INTO TradeAuditLog | ContosoTradeDB  |\n"
-                "| 884220        | 10.20.5.120    | RUNNING  |             2 | SELECT @@VERSION          | ContosoTradeDB  |\n"
+                "| 884201        | 10.20.5.112    | BLOCKED  |         14422 | EXEC sp_GetTradePositions | "
+                "ContosoTradeDB  |\n"
+                "| 884203        | 10.20.5.113    | BLOCKED  |         14301 | SELECT * FROM vw_DailyPnL | "
+                "ContosoTradeDB  |\n"
+                "| 884210        | 10.20.5.112    | BLOCKED  |         13987 | EXEC sp_CalcMarginReqs    | "
+                "ContosoTradeDB  |\n"
+                "| 884215        | 10.20.5.119    | WAITING  |          9022 | INSERT INTO TradeAuditLog | "
+                "ContosoTradeDB  |\n"
+                "| 884220        | 10.20.5.120    | RUNNING  |             2 | SELECT @@VERSION          | "
+                "ContosoTradeDB  |\n"
                 "+---------------+----------------+----------+---------------+---------------------------+-----------------+\n"
                 "5 rows in set (0.01 sec)\n\n"
                 "As you can see, SRV-0041 (db-east-prod-01) is DOWN and the remaining "
@@ -7343,8 +7345,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "starting from 11 PM last night.",
                 "Verify SWIFT Alliance Lite2 or equivalent gateway certificates have "
                 "not expired and that the TLS handshake completes successfully.",
-                "Restart the SWIFT gateway service if logs indicate a hung process "
-                "or thread-pool exhaustion.",
+                "Restart the SWIFT gateway service if logs indicate a hung process or thread-pool exhaustion.",
                 "Once the gateway is restored, trigger a bulk retry of the 142 stuck "
                 "confirmations from ContosoSettleFlow's admin console.",
                 "Add monitoring alerts for SWIFT gateway send latency exceeding 30 "
@@ -7525,8 +7526,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Roll back the deployment to v2.14.2 immediately to restore real-time "
                 "pricing for the 200 impacted trading floor users: "
                 "'kubectl rollout undo deployment/contoso-risk-pricing -n contoso-risk-prod'.",
-                "After rollback, verify all 8 replicas are Running and passing "
-                "readiness checks.",
+                "After rollback, verify all 8 replicas are Running and passing readiness checks.",
                 "Analyze v2.14.3 memory requirements — the expanded model cache "
                 "(PRICING_MODEL_CACHE_SIZE=8192) likely needs 6-8Gi total pod memory.",
                 "Update the deployment manifest to increase memory limits to 8Gi "
@@ -7838,7 +7838,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 '      "name": "app-contosopay-staging",\n'
                 '      "location": "[resourceGroup().location]",\n'
                 '      "dependsOn": [\n'
-                '        "[resourceId(\'Microsoft.Web/serverfarms\', '
+                "        \"[resourceId('Microsoft.Web/serverfarms', "
                 "'asp-contosopay-staging')]\"\n"
                 "      ],\n"
                 '      "properties": {\n'
@@ -8302,8 +8302,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "registry key is corrupted or the print driver is incompatible with Word.",
                 "Check the Windows registry key HKCU\\Software\\Microsoft\\Windows NT\\"
                 "CurrentVersion\\Windows for a corrupted 'Device' value.",
-                "Reset the default printer setting and verify the HP driver version matches "
-                "the printer firmware.",
+                "Reset the default printer setting and verify the HP driver version matches the printer firmware.",
                 "If the Word-specific issue persists, repair the Office installation via "
                 "Settings > Apps > Microsoft 365 > Modify > Online Repair.",
                 "Test printing from Word after each step to confirm resolution.",
@@ -8456,14 +8455,12 @@ def get_scenarios() -> list[ScenarioDefinition]:
             remediation_steps=[
                 "Check access point AP-7B health, uptime, and error logs on the wireless "
                 "controller for the 9:00-10:30 AM window.",
-                "Verify the uplink from AP-7B to the floor switch for errors, CRC failures, "
-                "or bandwidth saturation.",
+                "Verify the uplink from AP-7B to the floor switch for errors, CRC failures, or bandwidth saturation.",
                 "Check AP-7B client density — 15 traders with real-time applications may "
                 "exceed the AP's client or throughput capacity.",
                 "If AP capacity is the bottleneck, consider adding a second AP to split "
                 "the load between Trading Desk B and the Risk Team area.",
-                "Monitor the floor for a full trading day after any changes to confirm "
-                "the drops are resolved.",
+                "Monitor the floor for a full trading day after any changes to confirm the drops are resolved.",
             ],
             reporter_name="Nathan Brooks",
             reporter_email="nathan.brooks@contoso.com",
@@ -8520,8 +8517,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "his session around the Saturday maintenance window for configuration changes.",
                 "Investigate the 'Tunnel timeout — keepalive missed' errors — check if "
                 "MTU or keepalive interval settings were changed during maintenance.",
-                "Compare Tom's GlobalProtect client configuration with Raj Patel's to "
-                "identify differences.",
+                "Compare Tom's GlobalProtect client configuration with Raj Patel's to identify differences.",
                 "For the printer issue, create a separate ticket and route to Endpoint "
                 "Engineering for the HP LaserJet fuser error (WM-PRN-0318).",
                 "Follow up with Tom after gateway log analysis to apply targeted fix.",
@@ -8660,8 +8656,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "configuration in the Azure portal.",
                 "Verify the managed identity is enabled and has the correct role assignments "
                 "on the resource group rg-contoso-payments-staging.",
-                "If the managed identity is in a failed state, delete and recreate it via "
-                "'az webapp identity assign'.",
+                "If the managed identity is in a failed state, delete and recreate it via 'az webapp identity assign'.",
                 "Check if the Azure subscription has hit any managed identity limits.",
                 "Re-run the deployment pipeline after fixing the managed identity and verify "
                 "the staging slot provisions successfully.",
