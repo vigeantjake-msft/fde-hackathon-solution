@@ -10,6 +10,9 @@ dependencies = [
     "pydantic>=2.8.0",
 ]
 
+[project.scripts]
+run-evals = "ms.evals_core.runner_cli:main"
+
 [dependency-groups]
 dev = [
     "pyright>=1.1.407",

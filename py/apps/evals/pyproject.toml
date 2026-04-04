@@ -6,6 +6,7 @@ requires-python = "==3.12.*"
 
 dependencies = [
     "ms-common-models",
+    "ms-evals-core",
 ]
 
 [dependency-groups]
@@ -27,3 +28,4 @@ module-root = "src"
 
 [tool.uv.sources]
 ms-common-models = { workspace = true }
+ms-evals-core = { workspace = true }
