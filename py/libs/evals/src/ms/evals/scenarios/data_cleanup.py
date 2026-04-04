@@ -1622,3 +1622,413 @@ default_registry.register(
         ),
     )
 )
+
+
+# ---------------------------------------------------------------------------
+# dc-031: Very long email with deeply buried VPN issue
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-031",
+        name="Very long email with buried VPN issue",
+        description="Tests extraction of a VPN auth failure buried in a 10K+ char email thread.",
+        category=_CATEGORY,
+        tags=["very_long_email", "buried_issue", "forwarded_chain"],
+        ticket=EvalTicket(
+            ticket_id="INC-5031",
+            subject="Re: Re: FW: VPN not connecting after password change — follow-up",
+            description=(
+                "Hi Help Desk,\n\n"
+                "Forwarding this thread AGAIN. My VPN still does not connect after I changed my "
+                "password last Friday. I have spoken to three different agents and nobody has "
+                "resolved this.\n\n"
+                "Thanks,\nDaniel Okafor\nDirector, Institutional Sales\nContoso Financial Services\n"
+                "Phone: +1 (212) 555-0273 | Mobile: +1 (917) 555-0184\n"
+                "200 Park Avenue, 31st Floor, New York, NY 10166\n\n"
+                "CONFIDENTIALITY NOTICE: This e-mail and any files transmitted with it are "
+                "confidential and intended solely for the use of the intended recipient.\n\n"
+                "--- Forwarded ---\nFrom: Lisa Park\nDate: Wed, 19 Mar 2026 14:22\n\n"
+                "Daniel, I checked with Network Ops — they say everything looks fine. Have you "
+                "tried clearing your credential cache?\n\n"
+                "--- Original ---\nFrom: Daniel Okafor\nDate: Wed, 19 Mar 2026 10:05\n\n"
+                "Team — still broken today. I changed my domain password on Friday as required. "
+                "GlobalProtect shows 'Authentication Failed — Invalid credentials'. My new "
+                "password works for Outlook, SharePoint, and the trading portal.\n\n"
+                "Dell Latitude 7440, Windows 11, GlobalProtect 6.2.1, home on Verizon FiOS.\n\n"
+                "--- Forwarded ---\nFrom: Help Desk\nDate: Mon, 17 Mar 2026 16:30\n\n"
+                "Hi Daniel, ticket INC-4872 created. Try clearing Windows Credential Manager.\n\n"
+                "IT Service Desk | Contoso Financial Services\n"
+                "200 Park Avenue, New York, NY 10166\n\n"
+                "This message scanned by Contoso Antivirus Gateway v4.12.1.\n"
+                "Scan ID: AV-20260319-142200-OKAFOR-7893"
+            ),
+            reporter=_reporter("Daniel Okafor", "daniel.okafor@contoso.com", "Institutional Trading"),
+            created_at="2026-03-19T15:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-032: Multiple base64 images flooding the description
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-032",
+        name="Base64 image flood in monitor issue ticket",
+        description="Tests handling of 5+ inline base64 image fragments dwarfing the actual issue.",
+        category=_CATEGORY,
+        tags=["base64_flood", "multiple_images", "inline_binary"],
+        ticket=EvalTicket(
+            ticket_id="INC-5032",
+            subject="Monitor display glitch — photos inline",
+            description=(
+                "My external monitor has colored lines across the top. Photos:\n\n"
+                "[Photo 1]\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAQCYAAD"
+                "qcomAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAd0SU1FB9oKFwgM"
+                "NC3WkXYAACAASURBVHic7d15fFT1vfx95lsk5nsG0kgCQlhCfsSAoooLohi3bV1adXaam==\n\n"
+                "[Photo 2]\ndata:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcG"
+                "BQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PT"
+                "gyPC4zNDL2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj==\n\n"
+                "[Photo 3]\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs"
+                "9AAAAFUlEQVQYV2P8z8BQz0AEYBxVOHIVAvcHBQHzKSECAAAAAElFTkSuQmCCiVBORw0KGg==\n\n"
+                "[Photo 4]\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0"
+                "AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9oKFwgMNC3W==\n\n"
+                "[Photo 5]\ndata:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAADkBSyluO9K2kbzlh"
+                "9UISyz5DwgdKTjYDuns6nYeuGwyQpl1qwx5ie3TmN3iCf5U6chwnBnfJPX6P0D7nREDEUfQ==\n\n"
+                "Monitor: Dell U2723QE via USB-C. Singapore, Building 6, 3rd floor. "
+                "GPU: Intel Iris Xe. Started after a Windows Update. Tried replugging."
+            ),
+            reporter=_reporter("Mei-Lin Tan", "mei-lin.tan@contoso.com", "Equity Trading"),
+            created_at="2026-03-18T10:15:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-033: Base64-encoded log data (not an image)
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-033",
+        name="Base64-encoded error log in crash ticket",
+        description="Tests handling of base64-encoded text (error log) rather than image data.",
+        category=_CATEGORY,
+        tags=["base64_encoded_text", "error_log", "application_crash"],
+        ticket=EvalTicket(
+            ticket_id="INC-5033",
+            subject="Trade recon app crash — encoded log attached",
+            description=(
+                "Java trade recon app crashes with OutOfMemoryError. Encoded log:\n\n"
+                "RVJST1IgMjAyNi0wMy0xOCAwOToxNToyMiBbQXV0aE1vZHVsZV0gRmFpbGVkIHRvIHZhbGlkYXRl"
+                "IE1GQSB0b2tlbiBmb3IgdXNlciBzYXJhaC5jaGVuQGNvbnRvc28uY29tLiBUb2tlbiBleHBpcmVkIGF0"
+                "IDIwMjYtMDMtMThUMDk6MTA6MDBaLiBSZXRyeSBjb3VudDogMy4gTW9kdWxlOiBBenVyZUFELk1GQS5W"
+                "YWxpZGF0b3IuIENvcnJlbGF0aW9uSWQ6IGE4ZjNjMmUxLTRiNWQtNGY2YTb==\n\n"
+                "Crashes daily at 09:15 during the overnight US equity batch (~450K records). "
+                "Server: srv-trade-recon-01, Windows Server 2022, 16 GB JVM heap."
+            ),
+            reporter=_reporter("Robert Chen", "robert.chen@contoso.com", "Operations"),
+            created_at="2026-03-18T09:30:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-034: Giant email signature dwarfing the actual issue
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-034",
+        name="Giant legal signature dwarfing MFA issue",
+        description="Tests extraction of a 2-line MFA issue buried under a massive legal disclaimer.",
+        category=_CATEGORY,
+        tags=["giant_signature", "legal_disclaimer", "buried_issue"],
+        ticket=EvalTicket(
+            ticket_id="INC-5034",
+            subject="MFA not working",
+            description=(
+                "Hi, my MFA push notifications stopped working. Authenticator says 'Request "
+                "timed out'. Can't log in.\n\n"
+                "Raj Patel\nSVP, Wealth Management\nContoso Financial Services\n"
+                "Direct: +1 (212) 555-0391 | Mobile: +1 (917) 555-0248\n"
+                "200 Park Avenue, 42nd Floor, NY 10166\n\n"
+                "IMPORTANT LEGAL DISCLAIMER: This email is sent by Contoso Financial Services. "
+                "It may contain confidential information intended solely for the addressee. "
+                "If you are not the named addressee, do not disseminate or copy this email. "
+                "Email cannot be guaranteed secure or error-free.\n\n"
+                "REGULATORY INFORMATION: Authorized and regulated by the FCA (123456). "
+                "Registered in England and Wales (12345678). Member of FINRA, SIPC, NFA.\n\n"
+                "ENVIRONMENTAL NOTICE: Please consider the environment before printing.\n\n"
+                "PRIVACY NOTICE: We process personal data per GDPR, CCPA. See contoso.com/privacy.\n\n"
+                "TAX DISCLAIMER: Tax advice herein not intended for avoiding IRS penalties.\n\n"
+                "AML NOTICE: Contoso combats money laundering per BSA and USA PATRIOT Act."
+            ),
+            reporter=_reporter("Raj Patel", "raj.patel@contoso.com", "Wealth Management"),
+            created_at="2026-03-18T08:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-035: Extremely deep reply chain (15+ levels)
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-035",
+        name="Deep reply chain — 15 levels of quoting",
+        description="Tests extraction of issue from 15+ levels of email quoting.",
+        category=_CATEGORY,
+        tags=["deep_quoting", "reply_chain", "excessive_nesting"],
+        ticket=EvalTicket(
+            ticket_id="INC-5035",
+            subject="Re: Re: Re: Re: Re: Re: Re: Re: Printer jam Floor 7",
+            description=(
+                "Update: printer jamming again today. Same tray 2 issue.\n\n"
+                "> Kevin Park: Cleared the jam. Let me know if it recurs.\n"
+                "> > Janet Kim: Jammed again. Third time today.\n"
+                "> > > Kevin: Ordered replacement rollers. ETA Thursday.\n"
+                "> > > > Janet: Torn paper stuck near fuser.\n"
+                "> > > > > Kevin: Cleaned rollers. 10 test pages OK.\n"
+                "> > > > > > Janet: 7 jams today. Floor complaining.\n"
+                "> > > > > > > Help Desk: Kevin dispatched.\n"
+                "> > > > > > > > Janet: Tray 2, HP LaserJet M609, Floor 7.\n"
+                "> > > > > > > > > Janet: Printer jamming. Help.\n"
+                "> > > > > > > > > > Auto: Ticket INC-4901 created."
+            ),
+            reporter=_reporter("Janet Kim", "janet.kim@contoso.com", "Wealth Management"),
+            created_at="2026-03-20T09:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-036: Mojibake (garbled encoding) scattered in text
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-036",
+        name="Mojibake corruption in file share access ticket",
+        description="Tests triage despite double-encoded UTF-8 mojibake throughout the text.",
+        category=_CATEGORY,
+        tags=["mojibake", "encoding_corruption", "scattered_garble"],
+        ticket=EvalTicket(
+            ticket_id="INC-5036",
+            subject="Can\u00e2\u0080\u0099t access shared drive",
+            description=(
+                "I\u00e2\u0080\u0099m getting a \u00e2\u0080\u009cpermission denied\u00e2\u0080\u009d "
+                "error on \\\\fs-london-01\\wealth-mgmt\\reports. Worked fine until yesterday. "
+                "Need Q1 portfolio files for a 2 PM meeting.\n\n"
+                "Colleague \u00c3\u0089lodie Martin can still access it. London, Building 2. "
+                "Login: CONTOSO\\a.williams. ThinkPad T14 Gen 4.\n\n"
+                "Folder shows as \u00e2\u0080\u009cQ1_Valu\u00c3\u00a4tion_Rep\u00c3\u00b6rts"
+                "\u00e2\u0080\u009d instead of \u00e2\u0080\u009cQ1_Valuation_Reports\u00e2\u0080\u009d."
+            ),
+            reporter=_reporter("Alicia Williams", "alicia.williams@contoso.com", "Portfolio Management"),
+            created_at="2026-03-18T10:30:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Data & Storage",
+            priority="P3",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-037: Massive JSON ARM template pasted inline
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-037",
+        name="JSON ARM template dump in deployment ticket",
+        description="Tests triage with a large ARM template JSON blob obscuring a deployment timeout.",
+        category=_CATEGORY,
+        tags=["json_config_dump", "inline_config", "deployment_issue"],
+        ticket=EvalTicket(
+            ticket_id="INC-5037",
+            subject="Azure deployment timeout — ARM template included",
+            description=(
+                "Staging deployment failed. Here is the ARM template:\n\n"
+                '{"$schema": "https://schema.management.azure.com/schemas/2019-04-01/'
+                'deploymentTemplate.json#", "contentVersion": "1.0.0.0", "parameters": '
+                '{"env": {"type": "string"}, "vmSize": {"type": "string", '
+                '"defaultValue": "Standard_D4s_v3"}}, "resources": [{"type": '
+                '"Microsoft.Network/virtualNetworks", "apiVersion": "2023-05-01"}]}\n\n'
+                "Deployment ran 45 min then timed out at VNet creation. "
+                "Error: ProvisioningState: TimedOut. Correlation ID: "
+                "d8f3c2e1-4b5d-4f6a-8c9d-0e1f2a3b4c5d."
+            ),
+            reporter=_reporter("Nora Fischer", "nora.fischer@contoso.com", "Cloud Infrastructure"),
+            created_at="2026-03-18T14:00:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-038: Mixed language code-switching (EN/ZH/ES)
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-038",
+        name="Trilingual code-switching in email delay ticket",
+        description="Tests triage with English/Chinese/Spanish code-switching throughout.",
+        category=_CATEGORY,
+        tags=["code_switching", "multilingual", "trilingual"],
+        ticket=EvalTicket(
+            ticket_id="INC-5038",
+            subject="Email delivery delay / \u7535\u5b50\u90ae\u4ef6\u5ef6\u8fdf",
+            description=(
+                "\u4f60\u597d IT team,\n\n"
+                "Email delivery delays of 30-40 min. \u6211\u7684\u90ae\u4ef6\u53d1\u9001"
+                "\u540e\u8981\u7b49\u5f88\u4e45. Esto afecta al equipo de Singapore. "
+                "Los correos internos tambi\u00e9n lentos.\n\n"
+                "\u95ee\u9898\u4ece\u4e0a\u5468\u4e94\u5f00\u59cb. External worse than internal. "
+                "\u6211\u4eec\u7528 Outlook 2024 on Win 11.\n\n"
+                "\u8c22\u8c22 / Gracias / Thanks,\nWei-Chen Huang"
+            ),
+            reporter=_reporter("Wei-Chen Huang", "wei-chen.huang@contoso.com", "Institutional Trading"),
+            created_at="2026-03-18T11:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-039: URL spam from newsletter burying a sync issue
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-039",
+        name="Newsletter URL spam burying sync issue",
+        description="Tests extraction of a SharePoint sync issue from a forwarded newsletter.",
+        category=_CATEGORY,
+        tags=["url_spam", "tracking_urls", "newsletter_noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5039",
+            subject="FW: SharePoint sync broken + newsletter",
+            description=(
+                "Hi, my OneDrive sync broke. Red X, 'Sync pending', ~2 GB queued.\n\n"
+                "--- Contoso Newsletter ---\n"
+                "https://contoso.com/newsletter?utm_source=email&campaign=w12&mkt=NDc2\n"
+                "Q1 Preview: https://contoso.com/q1?ref=nl&utm=email&click=x7y8\n"
+                "SG Office: https://contoso.com/sg?ref=nl&utm=email&trk=mmm\n"
+                "ESG: https://contoso.com/esg?utm=email&campaign=esg\n"
+                "Tech: https://contoso.com/tech?utm=email&mkt=token\n"
+                "Compliance: https://contoso.com/comp?utm=email&session=Q2\n"
+                "Town Hall: https://contoso.com/townhall?utm=email&register=true\n"
+                "Wellness: https://contoso.com/wellness?utm=email&signup=true\n"
+                "Unsubscribe: https://contoso.com/unsub?id=12345&utm=email\n"
+                "--- End ---\n\n"
+                "SharePoint: https://contoso.sharepoint.com/sites/wealth-mgmt/Docs "
+                "OneDrive version 24.030.0213.0002."
+            ),
+            reporter=_reporter("Sophia Martinez", "sophia.martinez@contoso.com", "Client Services"),
+            created_at="2026-03-18T09:45:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Data & Storage",
+            priority="P3",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-040: Email metadata noise (MIME headers, DKIM, SPF)
+# ---------------------------------------------------------------------------
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-040",
+        name="Raw email headers in Teams audio ticket",
+        description="Tests triage with raw MIME/DKIM/SPF headers prepended to the actual issue.",
+        category=_CATEGORY,
+        tags=["email_metadata", "mime_headers", "raw_headers"],
+        ticket=EvalTicket(
+            ticket_id="INC-5040",
+            subject="Teams call quality — choppy audio",
+            description=(
+                "MIME-Version: 1.0\n"
+                "Content-Type: multipart/alternative; boundary=\"----=_Part_12345\"\n"
+                "X-Mailer: Microsoft Outlook 16.0.18025.20160\n"
+                "X-MS-Exchange-Organization-SCL: 0\n"
+                "Authentication-Results: spf=pass; dkim=pass; dmarc=pass\n"
+                "Received: from mail-east.contoso.com by mail-hub.contoso.com\n"
+                "DKIM-Signature: v=1; a=rsa-sha256; d=contoso.com\n\n"
+                "Hi IT,\n\n"
+                "Choppy audio on Teams calls for two days. Audio cuts out every few seconds. "
+                "Video and screen sharing fine. Colleagues say I sound robotic.\n\n"
+                "London, Building 2, 8th floor. Jabra Evolve2 75 via USB. "
+                "Teams 24053.811.3099. ThinkPad X1 Carbon Gen 11 on Wi-Fi."
+            ),
+            reporter=_reporter("Akira Morimoto", "akira.morimoto@contoso.com", "Quantitative Analysis"),
+            created_at="2026-03-18T11:20:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+        ),
+    )
+)
