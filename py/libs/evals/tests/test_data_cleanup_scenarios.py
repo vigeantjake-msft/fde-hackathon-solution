@@ -46,7 +46,7 @@ class TestDataCleanupScenarios:
         """Verify expected scenario IDs exist."""
         scenarios = get_scenarios()
         ids = {s.scenario_id for s in scenarios}
-        expected = {f"DC-{i:03d}" for i in range(1, 76)}
+        expected = {f"DC-{i:03d}" for i in range(1, 91)}
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_covers_key_cleanup_categories(self) -> None:
@@ -116,5 +116,37 @@ class TestDataCleanupScenarios:
             "misaligned-columns",
             "ansi-codes",
             "control-characters",
+            # New tags from DC-076..DC-090
+            "multi-topic",
+            "rambling",
+            "pdf-embed",
+            "inline-binary",
+            "screenshot-heavy",
+            "autocorrect",
+            "typos",
+            "mobile-input",
+            "voicemail",
+            "accent-noise",
+            "zero-width-chars",
+            "invisible-unicode",
+            "auto-translation",
+            "translation-artifacts",
+            "css-dark-mode",
+            "mass-forward",
+            "jwt-token",
+            "oauth-dump",
+            "auth-trace",
+            "yaml-config",
+            "docker-compose",
+            "git-diff",
+            "code-paste",
+            "multiple-screenshots",
+            "data-uri-flood",
+            "terse-message",
+            "minimal-context",
+            "bidi-text",
+            "rtl-ltr-mixed",
+            "arabic-english",
+            "unicode-control",
         }
         assert expected_tags.issubset(all_tags), f"Missing cleanup tags: {expected_tags - all_tags}"

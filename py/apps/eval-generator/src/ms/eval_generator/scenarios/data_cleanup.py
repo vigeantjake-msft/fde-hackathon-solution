@@ -974,4 +974,284 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         ),
         tags=("data-cleanup", "tracking-urls", "url-noise"),
     ),
+    # ──────────────────────────────────────────────────────────────────
+    # 21. Very long email with buried issue — real problem hidden in rambling
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-021",
+        subjects=(
+            "Various issues and general feedback — also something wrong with my computer",
+            "RE: Quick question (plus a few other things I've been meaning to mention)",
+        ),
+        descriptions=(
+            "Hi IT team,\n\n"
+            "Hope you're all doing well! I wanted to start by saying I really appreciate"
+            " the work you all did on the office renovation last month — the new monitors"
+            " look fantastic. Speaking of which, I had a great meeting with the London"
+            " office yesterday about the Q3 derivatives strategy and I think we're in a"
+            " really good place. Oh, I also wanted to mention that the coffee machine on"
+            " Floor 12 has been making a weird noise, not sure if that's you guys or"
+            " facilities but figured I'd mention it.\n\n"
+            "Anyway, my manager Sarah asked me to remind everyone about the compliance"
+            " training deadline next Friday. I know it's not IT-related but could you send"
+            " a reminder to the team? Also, the lunch options in the cafeteria have been"
+            " great lately.\n\n"
+            "Oh, I almost forgot the reason I'm actually writing — for the past three days"
+            " my Bloomberg Terminal has been throwing a 'CONNECTION REFUSED' error every"
+            " time I try to pull real-time equity feeds. It usually happens between 9 AM"
+            " and 11 AM ET during peak trading hours. I've restarted the terminal twice"
+            " and cleared the cache but it keeps happening. My desk is 12-A-047 and I'm"
+            " on the trading floor VLAN.\n\n"
+            "Also, do you know if the holiday party is confirmed for December 18th? And"
+            " one more thing — can we get more whiteboard markers for the 14th floor"
+            " conference room?\n\n"
+            "Thanks for everything!\nBest, Priya Sharma\nSenior Equity Analyst",
+            "Subject: Misc stuff + a tech problem\n\n"
+            "Hey team — I have like five things to mention so bear with me. First, the"
+            " parking garage lights on level B2 are flickering again. Second, I wanted to"
+            " say thanks for fixing the projector in room 8C last week. Third, my daughter"
+            " is selling Girl Scout cookies if anyone is interested (thin mints are the"
+            " best, fight me).\n\n"
+            "Fourth, and this is actually the important one — my Bloomberg Terminal keeps"
+            " dropping its connection to the real-time feed. Error says 'CONNECTION"
+            " REFUSED' and it's been happening every morning during market open for the"
+            " last three days. I'm on the trading floor, desk 12-A-047. Other traders"
+            " seem fine so it might be my terminal specifically.\n\n"
+            "Fifth, can someone look into whether we can get standing desk converters for"
+            " the risk team? A few people have been asking.\n\nThanks! — Priya",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message", "application_version"),
+            next_best_action="Investigate Bloomberg Terminal 'CONNECTION REFUSED' error on real-time"
+            " equity feeds during market hours — buried in a long rambling email with"
+            " multiple unrelated requests",
+            remediation_steps=(
+                "Check Bloomberg Terminal network connectivity from desk 12-A-047 on the trading floor VLAN",
+                "Verify the Bloomberg B-PIPE or real-time feed service is running and accessible",
+                "Review firewall rules for the trading floor VLAN to ensure Bloomberg ports are open",
+                "Compare network configuration with nearby working terminals to isolate the issue",
+                "Restart the Bloomberg Terminal service and clear local connection cache",
+            ),
+        ),
+        tags=("data-cleanup", "buried-issue", "verbose-email"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 22. Massive base64 PDF attachment inline in the ticket body
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-022",
+        subjects=(
+            "Compliance report PDF won't upload to SharePoint — pasting content here",
+            "Attached: Q2 audit findings — system won't let me attach so I pasted the raw file",
+        ),
+        descriptions=(
+            "I've been trying to upload our Q2 compliance audit report to the SharePoint"
+            " Regulatory Documents library but I keep getting a 'File exceeds maximum size'"
+            " error. The file is 48 MB. I'm pasting the raw PDF content below so you can"
+            " see what I'm working with:\n\n"
+            "--- BEGIN PDF CONTENT ---\n"
+            "JVBERi0xLjcKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAw\n"
+            "IFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFsz\n"
+            "IDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1Bh\n"
+            "Z2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSAvQ29u\n"
+            "dGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAwIFIg\n"
+            "Pj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA0NCA+PgpzdHJl\n"
+            "YW0KQlQKL0YxIDE4IFRmCjEwMCA3MDAgVGQKKENvbnRvc28gRmluYW5jaWFs\n"
+            "IFNlcnZpY2VzIC0gUTIgQXVkaXQpIFRqCkVUCmVuZHN0cmVhbQplbmRvYmoK\n"
+            "[... 2,847 more lines of base64 data omitted for brevity ...]\n"
+            "NTYgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNl\n"
+            "Rm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago=\n"
+            "--- END PDF CONTENT ---\n\n"
+            "Can you either increase the SharePoint upload limit or help me find another"
+            " way to get this into the Regulatory Documents library? The audit committee"
+            " needs access by end of week.",
+            "The SharePoint document library for regulatory filings has a file size cap"
+            " that's too low for our audit reports. I tried to upload the Q2 compliance"
+            " PDF (48 MB) and got rejected. Here's the base64 of the file header so you"
+            " can verify the format:\n\n"
+            "JVBERi0xLjcNCjEgMCBvYmoNCjw8IC9UeXBlIC9DYXRhbG9nIC9QYWdlcyAy\n"
+            "IDAgUiA+Pg0KZW5kb2JqDQoyIDAgb2JqDQo8PCAvVHlwZSAvUGFnZXMgL0tp\n"
+            "ZHMgWzMgMCBSXSAvQ291bnQgMSA+Pg0KZW5kb2JqDQozIDAgb2JqDQo8PCAv\n"
+            "VHlwZSAvUGFnZSAvUGFyZW50IDIgMCBSIC9NZWRpYUJveCBbMCAwIDYxMiA3\n"
+            "OTJdIC9Db250ZW50cyA0IDAgUiAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9G\n"
+            "MSA1IDAgUiA+PiA+PiA+Pg0KZW5kb2JqDQo0IDAgb2JqDQo=\n\n"
+            "Please increase the upload limit on the Regulatory Documents library or set"
+            " up a large-file upload solution. The audit committee review is Friday.",
+        ),
+        gold=ScenarioGold(
+            category="Data & Storage",
+            priority="P3",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+            missing_information=("configuration_details",),
+            next_best_action="Increase SharePoint document library file size limit or configure"
+            " large-file upload for the Regulatory Documents library — ignore inline"
+            " base64 PDF content in the ticket body",
+            remediation_steps=(
+                "Check the current file size upload limit on the SharePoint Regulatory Documents library",
+                "Increase the tenant or library-level upload limit to accommodate 48 MB+ files",
+                "Verify the SharePoint admin center settings for large file upload support",
+                "Test uploading the PDF after adjusting the limit and confirm success",
+                "Advise the user not to paste raw file content in tickets and use proper attachment methods",
+            ),
+        ),
+        tags=("data-cleanup", "base64-noise", "inline-attachment"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 23. Mobile autocorrect mangling technical terms
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-023",
+        subjects=(
+            "Out look keeps crassing on my phone",
+            "Cant get into share point from my i phone",
+        ),
+        descriptions=(
+            "hey so my out look keeps crassing on my i phone every time i try to open"
+            " the calandar it just spins and then closes. ive tried restarting the app"
+            " and my fone but same thing. also i cant sync my male box its saying"
+            " 'account not verified' or something like that. im using the latest eye oh"
+            " ess version i think. my user name is jthompson@contoso.com and im in the"
+            " risk and complience team. this has been happening seance yesterday after"
+            " that update popped up. also my teams app is fine its just out look thats"
+            " broken. pls help asap i have client meetings today and all my calander"
+            " invites are in out look\n\n"
+            "sent from my iphone",
+            "hi IT — out look on my mobile keeps shutting down when i open calender."
+            " i think its since the last up date. ive un installed and re installed but"
+            " same problem. also my male cant sync it says 'account configuration"
+            " error'. im on i phone 15 pro with eye oh ess 17. my teams works fine"
+            " its just the out look app. can some one look at this today? i have"
+            " important meetings.\n\n"
+            "thx\n"
+            "jason thompson\n"
+            "risk & complience\n"
+            "sent form my iphone",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("application_version", "device_info"),
+            next_best_action="Investigate Outlook mobile app crashing on calendar open and mailbox"
+            " sync failure after recent iOS update — autocorrect-mangled text but clear"
+            " issue is Outlook mobile malfunction",
+            remediation_steps=(
+                "Verify the user's Outlook mobile app version and iOS version",
+                "Check for known issues with the latest Outlook iOS update",
+                "Remove and re-add the Exchange account in the Outlook mobile app",
+                "Clear the Outlook app cache and data on the device",
+                "If the issue persists, test with the native iOS Mail app to isolate the problem",
+            ),
+        ),
+        tags=("data-cleanup", "autocorrect", "mobile-chat"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 24. Auto-translated email with translation artifacts
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-024",
+        subjects=(
+            "\u3010Translated from Japanese\u3011Network shared folder cannot access possibility",
+            "RE: [Auto-Translated] Common drive connection is not good condition",
+        ),
+        descriptions=(
+            "\u203bThis email has been automatically translated from Japanese\u203b\n\n"
+            "Dear IT Assistance Team Honorable Members,\n\n"
+            "I am Tanaka Yuki of the Tokyo Office Risk Management Department reporting"
+            " with sincerest apologies for the inconvenience. Since the time of this"
+            " morning approximately 10:00 JST, the shared network drive"
+            " (\\\\contoso-nas-tyo\\risk_reports) is becoming the state of inaccessibility.\n\n"
+            "When connection is attempted, the error of"
+            " '\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u30d1\u30b9\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093'"
+            " (translation: network path is not discoverable) is displayed on screen."
+            " This situation is affecting the entirety of the Tokyo Risk team members"
+            " (approximately 15 persons) who are requiring access to the daily risk"
+            " calculation reports with extreme urgency.\n\n"
+            "The circumstance of before was completely normal with good function until"
+            " the evening of yesterday. I am harboring suspicion that the maintenance"
+            " work of overnight may have connection to this problem occurrence.\n\n"
+            "With greatest urgency I am requesting the investigation. The risk reports"
+            " must achieve delivery to the regulatory authority (\u91d1\u878d\u5e81/FSA) by the"
+            " deadline of 14:00 JST today.\n\n"
+            "Respectfully with deep bow,\n"
+            "\u7530\u4e2d \u7531\u7d00 (Tanaka Yuki)\n"
+            "Risk Management Department, Tokyo Office\n"
+            "Extension: +81-3-XXXX-5678",
+            "\u203bAuto Translation from Chinese (Simplified)\u2192English\u203b\n\n"
+            "Hello IT Support Group,\n\n"
+            "Shanghai Office Compliance Department's Li Wei is speaking. The common"
+            " network storage drive (\\\\contoso-nas-sha\\compliance_docs) from this"
+            " morning suddenly cannot connect to the situation. Error message display"
+            " is '\u65e0\u6cd5\u8bbf\u95ee\u7f51\u7edc\u4f4d\u7f6e' meaning the network location"
+            " arrival is impossible.\n\n"
+            "Our team approximate 12 people all same problem is occurring. Yesterday"
+            " night time everything was normal operation. Perhaps overnight system"
+            " maintenance is having relationship with this failure.\n\n"
+            "Compliance report submission deadline is today afternoon, very much"
+            " urgent please. The regulatory filing (\u76d1\u7ba1\u62a5\u544a) cannot be delayed.\n\n"
+            "Please to help as fast as possible,\n"
+            "\u674e\u4f1f (Li Wei)\n"
+            "Compliance Department, Shanghai Office",
+        ),
+        gold=ScenarioGold(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+            missing_information=("error_message", "environment_details"),
+            next_best_action="Investigate network shared drive inaccessibility at APAC offices"
+            " following overnight maintenance — translation artifacts present but issue"
+            " is clear network path failure on NAS storage",
+            remediation_steps=(
+                "Verify the NAS storage appliance is online and accessible from the affected office network",
+                "Check if overnight maintenance changed SMB share permissions or network routes",
+                "Test connectivity to the NAS from the affected VLAN using UNC path and IP address",
+                "Review DNS resolution for the NAS hostname from Tokyo/Shanghai office subnets",
+                "Restore share access and confirm users can reach the risk/compliance report directories",
+            ),
+        ),
+        tags=("data-cleanup", "auto-translated", "translation-artifacts"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 25. Extremely terse ticket with almost no context
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-025",
+        subjects=(
+            "laptop broken",
+            "not working",
+        ),
+        descriptions=(
+            "laptop broken. pls fix",
+            "my computer doesnt turn on",
+        ),
+        gold=ScenarioGold(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+            missing_information=(
+                "device_info",
+                "error_message",
+                "steps_to_reproduce",
+                "business_impact",
+            ),
+            next_best_action="Request additional details from the user — ticket is too vague to"
+            " diagnose. Need device model, symptoms, when it started, and what 'broken'"
+            " or 'not working' means specifically",
+            remediation_steps=(
+                "Contact the user to gather basic information: device model, symptoms, and timeline",
+                "Determine whether the laptop fails to power on, has display issues, or another problem",
+                "Once symptoms are clarified, proceed with appropriate hardware diagnostics",
+                "If the device is unresponsive, schedule a swap or in-person desk visit",
+            ),
+        ),
+        tags=("data-cleanup", "terse", "missing-context"),
+    ),
 ]

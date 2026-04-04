@@ -4950,4 +4950,848 @@ def get_scenarios() -> list[ScenarioDefinition]:
             ],
             difficulty="medium",
         ),
+        # ── DC-076  Extremely long email with issue buried at the very end ──
+        ScenarioDefinition(
+            scenario_id="DC-076",
+            subject="RE: RE: RE: Multiple items — printer, badge, parking, and laptop dock issue",
+            description=(
+                "Hi IT team,\n\n"
+                "I wanted to follow up on a few things.\n\n"
+                "First, regarding the printer on Floor 7 — it seems to be working now after "
+                "someone replaced the toner. Thanks for that. I noticed it was jamming a bit "
+                "yesterday but today it printed my 50-page report with no issues.\n\n"
+                "Second, my badge stopped working at the south entrance on Monday but I used "
+                "the north entrance and it was fine. I think it might be the reader on the "
+                "south door rather than my badge. I asked security and they said they'd look "
+                "into it. Let me know if you need me to file a separate ticket for that.\n\n"
+                "Third, the parking garage barrier was stuck on Tuesday morning. I had to wait "
+                "about 15 minutes for someone to manually raise it. By the time I got back in "
+                "the evening it was working fine. I mention this just in case it's related to "
+                "the building systems.\n\n"
+                "Also, I saw that the kitchen coffee machine on Floor 5 is showing an error "
+                "message. Not sure if that falls under IT but figured I'd mention it. The "
+                "error code was E-42 or something like that.\n\n"
+                "Oh and one more thing — I moved offices last week from Building 2 to "
+                "Building 4 and the wireless coverage here is much worse. I keep getting "
+                "dropped from Teams calls. But that's a separate issue I think.\n\n"
+                "Anyway, the reason I'm actually writing is about my laptop docking station. "
+                "Since I moved to the new office in Building 4, Floor 3, my Lenovo ThinkPad "
+                "X1 Carbon won't detect the external monitors when I plug it into the USB-C "
+                "dock. The dock powers the laptop and the keyboard and mouse work, but neither "
+                "of the two Dell U2722D monitors gets a signal. I've tried different USB-C "
+                "cables and both Thunderbolt ports on the laptop. My colleague's laptop works "
+                "fine with the same dock and monitors, so it seems to be something specific to "
+                "my machine. This is really impacting my productivity because I'm working on a "
+                "dual-monitor workflow for the Q2 risk models.\n\n"
+                "Thanks,\nAisha\n\n"
+                "---\n"
+                "Aisha Okonkwo | Senior Risk Analyst\n"
+                "Risk Management | Building 4, Floor 3\n"
+                "Contoso Financial Services\n"
+                "This email and any attachments are confidential and intended solely for the "
+                "addressee. If you have received this email in error, please notify the sender "
+                "immediately and delete the message. Any unauthorized use, disclosure, or "
+                "distribution is prohibited. Contoso Financial Services is regulated by the "
+                "Financial Conduct Authority (FCA) and the Prudential Regulation Authority "
+                "(PRA). Registered in England and Wales. Company No. 12345678."
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Investigate USB-C dock display output failure on Lenovo ThinkPad X1 "
+                "Carbon in Building 4, Floor 3 — dock provides power and peripherals "
+                "but neither Dell U2722D monitor receives video signal."
+            ),
+            remediation_steps=[
+                "Check Thunderbolt/USB-C firmware on the ThinkPad X1 Carbon and update if needed.",
+                "Verify display drivers (Intel/NVIDIA) are up to date on the laptop.",
+                "Test with a known-good USB-C dock to isolate whether the issue is dock or laptop.",
+                "Check if the dock firmware needs an update for dual 4K monitor support.",
+                "If the issue persists, check BIOS settings for Thunderbolt security level.",
+            ],
+            reporter_name="Aisha Okonkwo",
+            reporter_email="aisha.okonkwo@contoso.com",
+            reporter_department="Risk Management",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "very-long-email", "buried-issue", "multi-topic", "rambling"],
+            difficulty="hard",
+        ),
+        # ── DC-077  Massive base64-encoded PDF inline in email body ──────
+        ScenarioDefinition(
+            scenario_id="DC-077",
+            subject="Error report from compliance scanner — see attached PDF",
+            description=(
+                "Hi IT,\n\n"
+                "The compliance scanner flagged some issues on our trading floor servers. I "
+                "tried to attach the PDF but our email system embedded it inline. Here's the "
+                "full report:\n\n"
+                "data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PAovVHlwZSAvQ2F0YW"
+                "xvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2Vz"
+                "Ci9LaWRzIFszIDAgUl0KL0NvdW50IDEKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KPj"
+                "4KZW5kb2JqCjMgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovQ29u"
+                "dGVudHMgNCAwIFIKL1Jlc291cmNlcyA8PAovRm9udCA8PAovRjEgNSAwIFIKPj4KPj"
+                "4KPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0xlbmd0aCA0NAo+PgpzdHJlYW0KQlQKL0Yx"
+                "IDE4IFRmCjEwMCA3MDAgVGQKKENvbXBsaWFuY2UgUmVwb3J0KSBUagpFVAplbmRzdH"
+                "JlYW0KZW5kb2JqCjUgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL1N1YnR5cGUgL1R5cGUx"
+                "Ci9CYXNlRm9udCAvSGVsdmV0aWNhCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9UeXBlIC"
+                "/SW5mbyAKL1Byb2R1Y2VyIChDb250b3NvIENvbXBsaWFuY2UgU2Nhbm5lcikKL0Ny"
+                "ZWF0aW9uRGF0ZSAoRDoyMDI2MDMxNzA5MDAwMCkKPj4KZW5kb2JqCnhyZWYKMCA3"
+                "CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAwOSAwMDAwMCBuIAowMDAwMMDAw"
+                "NTggMDAwMDAgbiAKMDAwMDAwMDE1MSAwMDAwMCBuIAowMDAwMDAwMzIyIDAwMMDAwI"
+                "G4gCjAwMDAwMDA0MTYgMDAwMDAgbiAKMDAwMDAwMDUwMSAwMDAwMCBuIAp0cmFpbG"
+                "VyCjw8Ci9TaXplIDcKL1Jvb3QgMSAwIFIKL0luZm8gNiAwIFIKPj4Kc3RhcnR4cm"
+                "VmCjYxNAolJUVPRgo=\n\n"
+                "The key finding is that three servers on the trading floor (TRDSVR-01, "
+                "TRDSVR-02, TRDSVR-04) have outdated TLS certificates that expire this "
+                "Friday. If they're not renewed before market open Monday, the trading "
+                "platform connections to the clearing house will fail. TRDSVR-03 was "
+                "renewed last month so it's fine.\n\n"
+                "Can someone prioritize getting those certs renewed? The clearing house "
+                "requires TLS 1.3 with certs from our approved CA.\n\n"
+                "Thanks,\nNikhil"
+            ),
+            category=Category.SECURITY,
+            priority=Priority.P2,
+            team=Team.SECURITY_OPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Renew expiring TLS certificates on TRDSVR-01, TRDSVR-02, and TRDSVR-04 "
+                "before Friday to prevent clearing house connection failures at Monday "
+                "market open."
+            ),
+            remediation_steps=[
+                "Verify current TLS certificate expiry dates on TRDSVR-01, -02, and -04.",
+                "Generate certificate signing requests (CSRs) from the approved internal CA.",
+                "Install renewed TLS 1.3 certificates on each server and restart the TLS services.",
+                "Test connectivity to the clearing house endpoint from each server.",
+                "Update the certificate monitoring dashboard and set renewal alerts for 30 days prior.",
+            ],
+            reporter_name="Nikhil Gupta",
+            reporter_email="nikhil.gupta@contoso.com",
+            reporter_department="Compliance",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "base64", "pdf-embed", "inline-binary", "compliance-report"],
+            difficulty="hard",
+        ),
+        # ── DC-078  Base64 images interspersed in every reply of email chain ─
+        ScenarioDefinition(
+            scenario_id="DC-078",
+            subject="RE: RE: Screen flickering issue — more screenshots",
+            description=(
+                "Hi Amy,\n\n"
+                "Here's another screenshot showing the flickering. It happens every 10 seconds.\n\n"
+                "[inline-image-3.png]\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlE"
+                "QVQoU2P8z8BQz0AEYBxVSHIVAvcHBQHzKSECAAAAAElFTkSuQmCC\n\n"
+                "You can see the horizontal lines appearing across the top third of the screen.\n\n"
+                "--- On Mar 15, Amy wrote ---\n"
+                "Thanks for the first screenshot. Can you try a different cable?\n\n"
+                "--- On Mar 14, Carlos wrote ---\n"
+                "Here's a screenshot of the flickering:\n\n"
+                "[inline-image-2.png]\n"
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwME"
+                "BQgFBQQEBQoHBwYIDAoMCwsKCwsKDA0QDRANBQ0KCwsNDg4PDw8NDwwMEBQUFBQUFBQUFP/bAEMB"
+                "AwQEBQQFCQUFCQ0LCw0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0N"
+                "DQ0NDf/AABEIAB4AHgMBIQACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAAABgUHCP/EACgQAAICAg"
+                "EDBAAHAAAAAAAAAAECAwQRBQAGEiExE0FRFGFxgZH/2gAMAwEAAhEDEQA/AOvxxx2OOZeqt/\n\n"
+                "[inline-image-1.png]\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4"
+                "2mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\n\n"
+                "The monitor is a Dell U2723QE connected via DisplayPort 1.4. The flickering "
+                "started after I updated the NVIDIA drivers to version 560.94. My GPU is an "
+                "NVIDIA RTX 4070. I've tried rolling back but the Device Manager says the "
+                "previous driver is no longer available.\n\n"
+                "Carlos Mendez | Quantitative Analysis | Building 2, Floor 6"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate Dell U2723QE monitor flickering after NVIDIA driver update "
+                "to v560.94 — likely a driver compatibility issue with DisplayPort 1.4 "
+                "on RTX 4070."
+            ),
+            remediation_steps=[
+                "Download the previous NVIDIA driver version from the NVIDIA enterprise driver archive.",
+                "Use Display Driver Uninstaller (DDU) in safe mode to cleanly remove the current driver.",
+                "Install the previous known-good driver version and test for flickering.",
+                "If resolved, add the problematic driver version to the deployment blocklist.",
+                "Check if a newer driver hotfix addresses DisplayPort 1.4 flickering on RTX 4070.",
+            ],
+            reporter_name="Carlos Mendez",
+            reporter_email="carlos.mendez@contoso.com",
+            reporter_department="Quantitative Analysis",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "base64", "inline-image", "reply-chain", "screenshot-heavy"],
+            difficulty="medium",
+        ),
+        # ── DC-079  Mobile autocorrect mangling technical terms ──────────
+        ScenarioDefinition(
+            scenario_id="DC-079",
+            subject="Outlook keeps crashing on my phone",
+            description=(
+                "hey team my outlook keeps crashing on my iphone\n\n"
+                "every time i open it and try to go to my calendar it freezes for like "
+                "10 seconds then the app just closes. ive tried deleting and reinstalling "
+                "the app but same thing happens\n\n"
+                "im running iOS 18.3 and the outlook version is the latest from the "
+                "appstore. its an iphone 15 pro if that matters\n\n"
+                "also my exchange autopilot isnt working right, the conditional axcess "
+                "policy keeps blocking me even tho im on the vpn. microsoft endtune "
+                "shows my device as compliant but outlook still says 'your organization "
+                "requires you to secure this device' and then crashes\n\n"
+                "i talked to my manager and he said to tell you this is affecting the "
+                "whole wealth mgmt team — at least 5 people r having the same issue "
+                "since the intune policy was pushed on thursday\n\n"
+                "can someone look at this asap? i need my calendar for client meetings "
+                "tmrw morning\n\n"
+                "thx\njamie"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Investigate Outlook crash on iOS tied to Intune conditional access "
+                "policy push — affects multiple users in Wealth Management team since "
+                "Thursday's policy deployment."
+            ),
+            remediation_steps=[
+                "Check Intune admin console for the conditional access policy pushed Thursday.",
+                "Verify the policy configuration for iOS devices and Outlook app protection.",
+                "Review Outlook app crash logs from affected devices via Intune diagnostics.",
+                "If the policy is misconfigured, roll it back for the Wealth Management group.",
+                "Confirm fix with the reporter and other affected team members.",
+            ],
+            reporter_name="Jamie Rodriguez",
+            reporter_email="jamie.rodriguez@contoso.com",
+            reporter_department="Wealth Management",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "autocorrect", "typos", "mobile-input", "informal-language"],
+            difficulty="medium",
+        ),
+        # ── DC-080  Speech-to-text transcription with accent errors ──────
+        ScenarioDefinition(
+            scenario_id="DC-080",
+            subject="Voicemail transcription: Server room temperature alert",
+            description=(
+                "[Automated voicemail transcription — confidence: 62%]\n\n"
+                "Hello I T support this is Rajesh from the Singapore office calling about "
+                "the server rum on the third floor. The temparature monitoring system is "
+                "showing 28 degrees sell see us in the main rack row and the a see units "
+                "are making a very loud noise like grinding.\n\n"
+                "I checked the bee em ess dashboard and it shows two of the three cooling "
+                "units are showing read status. The third one is still green but it is not "
+                "enough to cool the whole rum.\n\n"
+                "The servers are showing high sea pee you temparatures in the eye low "
+                "dashboard — some of the blade servers are throttling already at 85 degrees. "
+                "If this continues we might have to do an emergency shut down of the non "
+                "critical work loads.\n\n"
+                "Please send someone urgently. My contact number is plus 65 nine one two "
+                "three four five six seven eight. Thank you.\n\n"
+                "[End of transcription]"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P1,
+            team=Team.ENDPOINT,
+            needs_escalation=True,
+            missing_info=[MissingInfo.AFFECTED_SYSTEM],
+            next_best_action=(
+                "Dispatch facilities/engineering to Singapore server room immediately — "
+                "two of three cooling units failed, rack temperatures at 28°C ambient and "
+                "blade servers throttling at 85°C CPU. Risk of emergency shutdown."
+            ),
+            remediation_steps=[
+                "Dispatch on-site facilities team to the Singapore 3rd floor server room immediately.",
+                "Assess the two failed AC units — check for compressor failure, refrigerant leaks, or power issues.",
+                "If cooling cannot be restored quickly, begin orderly shutdown of non-critical workloads.",
+                "Engage the HVAC vendor for emergency repair or temporary portable cooling.",
+                "Monitor iLO/IPMI dashboards for CPU thermal warnings and set alerts at 80°C threshold.",
+            ],
+            reporter_name="Rajesh Krishnamurthy",
+            reporter_email="rajesh.krishnamurthy@contoso.com",
+            reporter_department="Cloud Infrastructure",
+            channel=Channel.PHONE,
+            tags=["data-cleanup", "speech-to-text", "voicemail", "transcription-errors", "accent-noise"],
+            difficulty="hard",
+        ),
+        # ── DC-081  Zero-width Unicode and invisible characters ──────────
+        ScenarioDefinition(
+            scenario_id="DC-081",
+            subject="Can\u200bt a\u200bc\u200bcess Sha\u200brePoint si\u200bte",
+            description=(
+                "Hi\u200b IT\u200b Support,\n\n"
+                "I\u200b can\u200bt\u200b access\u200b the\u200b SharePoint\u200b "
+                "site\u200b for\u200b our\u200b team.\u200b When\u200b I\u200b try\u200b "
+                "to\u200b open\u200b https://contoso.sharepoint.com/sites/trading-ops\u200b "
+                "I\u200b get\u200b a\u200b 403\u200b Forbidden\u200b error.\n\n"
+                "I\u200b was\u200b able\u200b to\u200b access\u200b it\u200b "
+                "yesterday\u200b but\u200b today\u200b it\u200b says\u200b I\u200b "
+                "don\u200bt\u200b have\u200b permission.\u200b My\u200b manager\u200b "
+                "Li\u200b Wei\u200b said\u200b she\u200b didn\u200bt\u200b remove\u200b "
+                "me\u200b from\u200b the\u200b group.\n\n"
+                "I\u200b need\u200b access\u200b to\u200b the\u200b Q2\u200b "
+                "trading\u200b strategy\u200b documents\u200b urgently.\u200b "
+                "The\u200b quarterly\u200b review\u200b is\u200b tomorrow.\n\n"
+                "Thanks,\n"
+                "Mei\u200b Chen\u200b\n"
+                "Trading\u200b Operations"
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            team=Team.IAM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate 403 Forbidden error for SharePoint site "
+                "contoso.sharepoint.com/sites/trading-ops — user had access yesterday, "
+                "likely a group membership or permissions change."
+            ),
+            remediation_steps=[
+                "Check the SharePoint site permissions and group membership for the user.",
+                "Verify if any recent permission changes or group policy updates affected access.",
+                "If membership is correct, check for conditional access policies blocking the user.",
+                "Restore access and confirm the user can reach the trading strategy documents.",
+                "Review audit logs to determine what changed the permissions.",
+            ],
+            reporter_name="Mei Chen",
+            reporter_email="mei.chen@contoso.com",
+            reporter_department="Trading",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "zero-width-chars", "invisible-unicode", "copy-paste-artifacts"],
+            difficulty="medium",
+        ),
+        # ── DC-082  Auto-translated email with translation artifacts ─────
+        ScenarioDefinition(
+            scenario_id="DC-082",
+            subject="[Translated from Japanese] Problem with network connection in the London office",
+            description=(
+                "[This message was automatically translated from Japanese]\n"
+                "[Translation confidence: Medium]\n\n"
+                "Dear IT Help Table,\n\n"
+                "I am writing to you about the internet connection problem that is occurring "
+                "in the London office Building 5, Floor 2. The network is doing 'going on and "
+                "off' behavior since the morning of today.\n\n"
+                "When I make the ping to the server of gateway (192.168.5.1), the packet loss "
+                "is showing 30-40% of the ratio. The speed test is revealing 2 Mbps of the "
+                "download which is very far from the normal 500 Mbps that we are usually "
+                "receiving.\n\n"
+                "The problem is affecting approximately 15 persons of the Fixed Income team "
+                "who are sitting in the same area. The wireless access point that we are "
+                "connecting to has the name 'LON-B5-F2-AP04'. The other access points in "
+                "the near vicinity seem to be functioning with normality.\n\n"
+                "We attempted the restart of our laptop computers and the clearing of the "
+                "DNS cache but the problem is persisting. The Bloomberg terminals that are "
+                "connected by the ethernet cable are not having this problem.\n\n"
+                "Please investigate this matter with urgency as the Fixed Income team cannot "
+                "execute the trades with reliability in the current condition.\n\n"
+                "With respectful regards,\n"
+                "Takeshi Yamamoto\n"
+                "Fixed Income Division, London Office"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.NETWORK_LOCATION],
+            next_best_action=(
+                "Investigate wireless AP LON-B5-F2-AP04 in London Building 5, Floor 2 — "
+                "30-40% packet loss and 2 Mbps throughput affecting 15 Fixed Income team "
+                "members. Wired connections unaffected."
+            ),
+            remediation_steps=[
+                "Check the status of access point LON-B5-F2-AP04 in the wireless controller.",
+                "Review AP logs for hardware errors, channel interference, or client association issues.",
+                "Run a wireless site survey to check for co-channel interference or rogue APs.",
+                "If the AP is faulty, replace it and verify connectivity for affected users.",
+                "Monitor the replacement AP for 24 hours to confirm stability.",
+            ],
+            reporter_name="Takeshi Yamamoto",
+            reporter_email="takeshi.yamamoto@contoso.com",
+            reporter_department="Fixed Income",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "auto-translation", "translation-artifacts", "non-native-english"],
+            difficulty="medium",
+        ),
+        # ── DC-083  HTML with CSS color/style artifacts from dark mode ───
+        ScenarioDefinition(
+            scenario_id="DC-083",
+            subject="Database query performance degradation",
+            description=(
+                '<div style="background-color: #1e1e1e; color: #d4d4d4; '
+                'font-family: Consolas, monospace; padding: 10px;">\n'
+                '<span style="color: #d4d4d4;">Hi DBA team,</span><br/><br/>\n'
+                '<span style="color: #ce9178;">Our production SQL Server instance '
+                "(SQLPROD-03) is experiencing severe performance degradation since "
+                "this morning.</span><br/><br/>\n"
+                '<span style="color: #569cd6;">Key symptoms:</span><br/>\n'
+                '<span style="color: #d4d4d4;">&bull; Average query response time '
+                "increased from 50ms to 3,200ms</span><br/>\n"
+                '<span style="color: #d4d4d4;">&bull; CPU utilization at 94% '
+                "(normally 35%)</span><br/>\n"
+                '<span style="color: #d4d4d4;">&bull; TempDB is growing rapidly '
+                "&mdash; currently at 180GB (normally 20GB)</span><br/>\n"
+                '<span style="color: #d4d4d4;">&bull; Multiple blocking chains '
+                "in sys.dm_exec_requests</span><br/><br/>\n"
+                '<span style="color: #ce9178;">I suspect the new ETL job that was '
+                "deployed last night (job: DailyRiskCalc_v2) is causing excessive "
+                "TempDB spills. The previous version was fine.</span><br/><br/>\n"
+                '<span style="color: #569cd6;">Server details:</span><br/>\n'
+                '<span style="color: #d4d4d4;">&bull; SQL Server 2022 (16.0.4145.4)'
+                "</span><br/>\n"
+                '<span style="color: #d4d4d4;">&bull; 256GB RAM, 64 cores</span>'
+                "<br/>\n"
+                '<span style="color: #d4d4d4;">&bull; SAN storage: Pure FlashArray'
+                "</span><br/><br/>\n"
+                '<span style="color: #d4d4d4;">Regards,<br/>Hannah Park<br/>'
+                "Data Engineering</span>\n</div>"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=True,
+            missing_info=[MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate SQL Server SQLPROD-03 performance degradation — "
+                "TempDB at 180GB (9x normal), 94% CPU, and 3.2s avg query time "
+                "since DailyRiskCalc_v2 ETL deployment last night."
+            ),
+            remediation_steps=[
+                "Identify the blocking head in sys.dm_exec_requests and capture the query plan.",
+                "Check the DailyRiskCalc_v2 ETL job execution plan for TempDB spills.",
+                "If confirmed, roll back to the previous ETL job version (DailyRiskCalc_v1).",
+                "Shrink TempDB after the blocking is resolved and monitor for recurrence.",
+                "Review the v2 ETL query for missing indexes or inefficient joins causing spills.",
+            ],
+            reporter_name="Hannah Park",
+            reporter_email="hannah.park@contoso.com",
+            reporter_department="Data Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "html-heavy", "css-dark-mode", "styled-email", "entities"],
+            difficulty="medium",
+        ),
+        # ── DC-084  Mass-forwarded alert with 50+ recipient headers ──────
+        ScenarioDefinition(
+            scenario_id="DC-084",
+            subject="FW: FW: FW: URGENT: Production Alert — Market Data Feed Down",
+            description=(
+                "---------- Forwarded message ----------\n"
+                "From: Monitoring System <alerts@contoso.com>\n"
+                "To: trading-floor-all@contoso.com; risk-management@contoso.com; "
+                "compliance-team@contoso.com; it-operations@contoso.com; "
+                "market-data-team@contoso.com; quant-research@contoso.com; "
+                "portfolio-mgmt@contoso.com; exec-team@contoso.com; "
+                "fixed-income@contoso.com; equity-trading@contoso.com; "
+                "derivatives-desk@contoso.com; settlements@contoso.com; "
+                "middle-office@contoso.com; fund-admin@contoso.com; "
+                "investor-relations@contoso.com; treasury@contoso.com; "
+                "corporate-strategy@contoso.com; private-banking@contoso.com; "
+                "asset-management@contoso.com; regulatory-affairs@contoso.com; "
+                "legal-dept@contoso.com; hr-department@contoso.com; "
+                "finance-dept@contoso.com; facilities@contoso.com; "
+                "procurement@contoso.com; it-security@contoso.com; "
+                "devops-team@contoso.com; qa-team@contoso.com; "
+                "customer-success@contoso.com; business-dev@contoso.com; "
+                "marketing@contoso.com; payroll@contoso.com; "
+                "learning-dev@contoso.com; corp-comms@contoso.com; "
+                "public-relations@contoso.com; esg-team@contoso.com\n"
+                "CC: cto@contoso.com; cio@contoso.com; coo@contoso.com; "
+                "cfo@contoso.com; ceo@contoso.com\n"
+                "Date: Mon, 17 Mar 2026 09:15:00 -0400\n"
+                "Subject: URGENT: Production Alert — Market Data Feed Down\n"
+                "X-Priority: 1\n"
+                "X-MS-Exchange-Organization-SCL: -1\n"
+                "X-Mailer: ContosoAlerts/3.2.1\n\n"
+                "---------- Forwarded by David Kim ----------\n"
+                "Adding IT support to this thread.\n\n"
+                "---------- Forwarded by Sarah Chen ----------\n"
+                "FYI — this is impacting the entire trading floor.\n\n"
+                "---------- Original Alert ----------\n"
+                "[CRITICAL] Bloomberg B-PIPE market data feed disconnected at 09:12:04 ET.\n"
+                "Feed ID: BPIPE-NYC-PRIMARY\n"
+                "Last good tick: 2026-03-17T09:12:03.847Z\n"
+                "Failover status: Secondary feed (BPIPE-NYC-DR) attempting connection...\n"
+                "Affected systems: Real-time pricing engine, Risk calculation, Order routing\n"
+                "Estimated impact: All equity and fixed income desks (NYC)\n\n"
+                "This is an automated alert from the Market Data Monitoring System."
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P1,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=True,
+            missing_info=[MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate Bloomberg B-PIPE primary feed disconnection at 09:12 ET — "
+                "all NYC equity and fixed income desks affected. Check failover to "
+                "secondary feed BPIPE-NYC-DR."
+            ),
+            remediation_steps=[
+                "Check the Bloomberg B-PIPE connection status and error logs on the primary feed server.",
+                "Verify the secondary feed (BPIPE-NYC-DR) failover — confirm it connected successfully.",
+                "If secondary feed is active, confirm data quality and latency are acceptable.",
+                "Contact Bloomberg support if both feeds are down to report the outage.",
+                "Once primary feed is restored, verify data consistency and rebalance load.",
+            ],
+            reporter_name="David Kim",
+            reporter_email="david.kim@contoso.com",
+            reporter_department="Equity Trading",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "mass-forward", "massive-cc-list", "alert-flood", "email-headers"],
+            difficulty="hard",
+        ),
+        # ── DC-085  JWT/OAuth error dump pasted inline ──────────────────
+        ScenarioDefinition(
+            scenario_id="DC-085",
+            subject="SSO login failing with token error",
+            description=(
+                "I can't log into the internal trading portal. When I click 'Sign in with "
+                "Contoso SSO' it redirects me back to the login page with an error. I opened "
+                "the browser dev tools and copied what I saw:\n\n"
+                "GET /auth/callback?code=M.C107_BAY.2.U.0a1b2c3d-4e5f-6789-abcd-ef0123456789"
+                "&state=eyJub25jZSI6IjEyMzQ1Njc4OTAiLCJyZWRpcmVjdFVyaSI6Imh0dHBzOi8vdHJh"
+                "ZGluZy5jb250b3NvLmNvbS9kYXNoYm9hcmQifQ=="
+                "&session_state=1a2b3c4d-5e6f-7890-abcd-ef1234567890\n\n"
+                "Response 401:\n"
+                "{\n"
+                '  "error": "invalid_grant",\n'
+                '  "error_description": "AADSTS700082: The refresh token has expired due to '
+                "inactivity. The token was issued on 2026-02-15T14:23:00Z and was inactive "
+                'for 30 days.",\n'
+                '  "error_codes": [700082],\n'
+                '  "timestamp": "2026-03-17T10:45:12.3456789Z",\n'
+                '  "trace_id": "a1b2c3d4-e5f6-7890-abcd-ef0123456789",\n'
+                '  "correlation_id": "f0e1d2c3-b4a5-9687-7654-321098765432",\n'
+                '  "error_uri": "https://login.microsoftonline.com/error?code=700082"\n'
+                "}\n\n"
+                "I also see this JWT payload in the network tab (token I got before it expired):\n"
+                "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjFGNDRGMUNBQTY5MjM5Nzk2R"
+                "DM1RUNCM0U3QTJBMjFEMzRBRUEifQ.eyJhdWQiOiJhcGk6Ly90cmFkaW5nLmNvbnRv"
+                "c28uY29tIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5taWNyb3NvZnRvbmxpbmUuY29tL2Nv"
+                "bnRvc28uY29tIiwiaWF0IjoxNzQwNjYxOTgwLCJuYmYiOjE3NDA2NjE5ODAsImV4cCI6"
+                "MTc0MDY2NTU4MCwibmFtZSI6IlBhdWwgVGhvbXBzb24iLCJvaWQiOiIxMjM0NTY3OC"
+                "05YWJjLWRlZjAtMTIzNC01Njc4OWFiY2RlZjAiLCJwcmVmZXJyZWRfdXNlcm5hbWUi"
+                "OiJwYXVsLnRob21wc29uQGNvbnRvc28uY29tIiwic2NwIjoiVHJhZGluZy5SZWFkV3"
+                "JpdGUiLCJzdWIiOiJhYmNkZWYxMjM0NTY3ODkwIiwidGlkIjoiY29udG9zby5jb20i"
+                "fQ.signature_placeholder\n\n"
+                "I need to access the trading platform urgently as I have morning trades "
+                "to execute. Can someone fix this?"
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            team=Team.IAM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION],
+            next_best_action=(
+                "Resolve SSO token refresh failure (AADSTS700082) for trading portal — "
+                "user's refresh token expired after 30 days of inactivity. Need to "
+                "reauthorize the session."
+            ),
+            remediation_steps=[
+                "Have the user clear browser cookies and cached tokens for the trading portal.",
+                "Instruct the user to sign in again via the SSO portal to get a fresh token pair.",
+                "If sign-in still fails, check Azure AD for the user's session and revoke stale tokens.",
+                "Verify the trading portal's OAuth client configuration for refresh token lifetime policy.",
+                "Consider reducing token inactivity timeout or enabling continuous access evaluation.",
+            ],
+            reporter_name="Paul Thompson",
+            reporter_email="paul.thompson@contoso.com",
+            reporter_department="Institutional Trading",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "jwt-token", "oauth-dump", "json-error", "auth-trace"],
+            difficulty="medium",
+        ),
+        # ── DC-086  Docker Compose / YAML config dump pasted inline ──────
+        ScenarioDefinition(
+            scenario_id="DC-086",
+            subject="Container deployment failing in staging",
+            description=(
+                "Hi team,\n\n"
+                "Our staging deployment pipeline is failing. The risk-engine container "
+                "keeps crash-looping. Here's the docker-compose.yml we're using:\n\n"
+                "```yaml\n"
+                "version: '3.8'\n"
+                "services:\n"
+                "  risk-engine:\n"
+                "    image: contoso.azurecr.io/risk-engine:2.4.1\n"
+                "    deploy:\n"
+                "      replicas: 3\n"
+                "      resources:\n"
+                "        limits:\n"
+                "          cpus: '4'\n"
+                "          memory: 8G\n"
+                "        reservations:\n"
+                "          cpus: '2'\n"
+                "          memory: 4G\n"
+                "    environment:\n"
+                "      - REDIS_HOST=redis-cluster.staging.svc\n"
+                "      - REDIS_PORT=6379\n"
+                "      - DB_HOST=sqlserver-staging.contoso.internal\n"
+                "      - DB_PORT=1433\n"
+                "      - DB_NAME=RiskCalcStaging\n"
+                "      - LOG_LEVEL=DEBUG\n"
+                "      - MARKET_DATA_ENDPOINT=http://market-data:8080/api/v2\n"
+                "    ports:\n"
+                "      - '8443:8443'\n"
+                "    depends_on:\n"
+                "      - redis-cluster\n"
+                "      - market-data\n"
+                "    healthcheck:\n"
+                "      test: ['CMD', 'curl', '-f', 'http://localhost:8443/health']\n"
+                "      interval: 30s\n"
+                "      timeout: 10s\n"
+                "      retries: 3\n"
+                "  redis-cluster:\n"
+                "    image: redis:7-alpine\n"
+                "    ports:\n"
+                "      - '6379:6379'\n"
+                "  market-data:\n"
+                "    image: contoso.azurecr.io/market-data-mock:1.0.0\n"
+                "    ports:\n"
+                "      - '8080:8080'\n"
+                "```\n\n"
+                "The container logs show:\n"
+                "```\n"
+                "risk-engine_1  | 2026-03-17 08:15:03 ERROR Failed to connect to "
+                "sqlserver-staging.contoso.internal:1433 — Connection refused\n"
+                "risk-engine_1  | 2026-03-17 08:15:03 ERROR Database initialization "
+                "failed after 5 retries\n"
+                "risk-engine_1  | 2026-03-17 08:15:03 FATAL Shutting down due to "
+                "unrecoverable error\n"
+                "```\n\n"
+                "It looks like the SQL Server staging instance is unreachable from the "
+                "container. The database was migrated to a new server last week — maybe "
+                "the hostname changed?"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Investigate staging SQL Server connectivity failure for risk-engine "
+                "container — DB host sqlserver-staging.contoso.internal may have changed "
+                "after last week's migration."
+            ),
+            remediation_steps=[
+                "Verify the current hostname/IP of the staging SQL Server after the migration.",
+                "Update the DB_HOST environment variable in docker-compose.yml if it changed.",
+                "Check network connectivity between the container network and the SQL Server.",
+                "Verify SQL Server is accepting connections on port 1433 and the firewall rules allow it.",
+                "Restart the deployment and verify the risk-engine container passes health checks.",
+            ],
+            reporter_name="Liam O'Sullivan",
+            reporter_email="liam.osullivan@contoso.com",
+            reporter_department="Backend Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "yaml-config", "docker-compose", "container-logs", "inline-code"],
+            difficulty="medium",
+        ),
+        # ── DC-087  Git diff output pasted as ticket body ──────────────
+        ScenarioDefinition(
+            scenario_id="DC-087",
+            subject="Code review system broken after merge",
+            description=(
+                "The PR review system stopped working after my merge. Here's the diff that "
+                "broke it:\n\n"
+                "```diff\n"
+                "diff --git a/src/auth/middleware.py b/src/auth/middleware.py\n"
+                "index 7a8b9c0..1d2e3f4 100644\n"
+                "--- a/src/auth/middleware.py\n"
+                "+++ b/src/auth/middleware.py\n"
+                "@@ -42,7 +42,7 @@ class AuthMiddleware:\n"
+                "     def validate_token(self, token: str) -> bool:\n"
+                '-        if not token or len(token) < 10:\n'
+                "+        if not token:\n"
+                "             return False\n"
+                "-        return self._verify_signature(token)\n"
+                "+        # TODO: re-enable signature verification after cert rotation\n"
+                "+        return True  # TEMPORARY BYPASS\n"
+                " \n"
+                "     def _verify_signature(self, token: str) -> bool:\n"
+                "         try:\n"
+                "@@ -67,3 +68,8 @@ class AuthMiddleware:\n"
+                "             logger.error(f'Token verification failed: {e}')\n"
+                "             return False\n"
+                "+\n"
+                "+    def _skip_auth_for_testing(self):\n"
+                "+        # Added for load testing - remove before production\n"
+                "+        self._auth_enabled = False\n"
+                "+        logger.warning('Authentication disabled for testing')\n"
+                "```\n\n"
+                "After this merge, the Azure DevOps pipeline that runs PR checks started "
+                "returning 500 errors on the webhook endpoint. The pipeline was working "
+                "fine before the merge. I don't think my code changes caused the pipeline "
+                "failure — it's more likely something with the DevOps agent or the webhook "
+                "configuration.\n\n"
+                "Can someone check the pipeline agent pool and the webhook endpoint?"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate Azure DevOps pipeline webhook 500 errors after code merge — "
+                "check pipeline agent status and webhook endpoint configuration."
+            ),
+            remediation_steps=[
+                "Check Azure DevOps pipeline run logs for the 500 error details.",
+                "Verify the webhook endpoint is healthy and accessible from the DevOps agent.",
+                "Check the agent pool status — ensure agents are online and not in error state.",
+                "Test the webhook endpoint manually with a sample payload.",
+                "If the webhook is down, restart the service and requeue the failed pipeline run.",
+            ],
+            reporter_name="Ethan Brooks",
+            reporter_email="ethan.brooks@contoso.com",
+            reporter_department="Backend Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "git-diff", "code-paste", "inline-code", "pipeline-output"],
+            difficulty="medium",
+        ),
+        # ── DC-088  Multiple base64 data URIs claiming to be screenshots ─
+        ScenarioDefinition(
+            scenario_id="DC-088",
+            subject="Multiple errors on dashboard — see all screenshots",
+            description=(
+                "Hi Support,\n\n"
+                "Our risk dashboard is showing multiple errors. I took screenshots of each "
+                "one. Sorry they're embedded inline — our email client does this automatically.\n\n"
+                "Screenshot 1 — Main dashboard shows 'Data Feed Error':\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA"
+                "GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5h"
+                "ZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6"
+                "cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8i\n\n"
+                "Screenshot 2 — Real-time pricing widget stuck on 'Loading...':\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABm"
+                "JLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QMRCQsKPjNT"
+                "LQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAJElEQVQ4"
+                "y2P4z8BQz0AENDMwMNQzEAfqGRgYGIiE9QwMDADGLwkGHBMbCAAAACV0RVh0ZGF0ZTpj\n\n"
+                "Screenshot 3 — Error modal: 'WebSocket connection to wss://feed.contoso.com failed':\n"
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4QBMRXhpZgAATU0AKgAA"
+                "AAgAAgESAAMAAAABAAEAAIdpAAQAAAABAAAAJgAAAAAAAqACAAQAAAABAAAAIKADAAQAAAAB"
+                "AAAAIAAAAABiiS0AAAKiYMn8kAMxODYuOTMuNTguMTIw\n\n"
+                "Screenshot 4 — Network tab showing repeated 503 responses:\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAF"
+                "UlEQVQYV2P8z8BQz0AEYBxVOHIVAvcHBQHzKSECAAAAAElFTkSuQmCC\n\n"
+                "The dashboard URL is https://risk.contoso.com/dashboard/main. The WebSocket "
+                "feed for real-time pricing at wss://feed.contoso.com keeps disconnecting. "
+                "This started about 30 minutes ago and affects all traders on the NYC floor.\n\n"
+                "— Rachel Torres, Portfolio Management"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P1,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate risk dashboard outage — WebSocket feed at wss://feed.contoso.com "
+                "disconnecting with 503 errors, affecting all NYC floor traders' real-time "
+                "pricing and risk calculations."
+            ),
+            remediation_steps=[
+                "Check the WebSocket server (feed.contoso.com) health and container/process status.",
+                "Investigate the 503 errors — check load balancer logs and upstream server health.",
+                "If the feed server crashed, restart it and verify WebSocket connections resume.",
+                "Confirm the risk dashboard reconnects and real-time pricing data flows correctly.",
+                "Review the feed server logs for the root cause of the disconnection.",
+            ],
+            reporter_name="Rachel Torres",
+            reporter_email="rachel.torres@contoso.com",
+            reporter_department="Portfolio Management",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "base64", "multiple-screenshots", "inline-image", "data-uri-flood"],
+            difficulty="hard",
+        ),
+        # ── DC-089  Extremely terse ticket — almost no context ──────────
+        ScenarioDefinition(
+            scenario_id="DC-089",
+            subject="broken",
+            description="laptop wont turn on. need it fixed today.",
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[
+                MissingInfo.DEVICE_INFO,
+                MissingInfo.ERROR_MESSAGE,
+                MissingInfo.STEPS_TO_REPRODUCE,
+                MissingInfo.BUSINESS_IMPACT,
+            ],
+            next_best_action=(
+                "Request additional details from the reporter — laptop make/model, "
+                "any power LED indicators, whether it was working recently, and what "
+                "happened before it stopped turning on."
+            ),
+            remediation_steps=[
+                "Contact the reporter to gather device details (make, model, asset tag).",
+                "Ask if there are any LED indicators when pressing the power button.",
+                "Determine if the laptop was dropped, exposed to liquid, or had a recent update.",
+                "If basic troubleshooting fails, schedule a hardware inspection.",
+                "Provide a loaner device if the repair will take more than one business day.",
+            ],
+            reporter_name="Alex Rivera",
+            reporter_email="alex.rivera@contoso.com",
+            reporter_department="Marketing",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "terse-message", "minimal-context", "no-details"],
+            difficulty="easy",
+        ),
+        # ── DC-090  Mixed LTR/RTL with bidi Unicode control characters ──
+        ScenarioDefinition(
+            scenario_id="DC-090",
+            subject="SharePoint \u202asite\u202c \u202baccess\u202c issue — \u202bالوصول\u202c denied",
+            description=(
+                "Hi IT team,\n\n"
+                "I am having an issue accessing the SharePoint site for the Dubai "
+                "client portfolio.\n\n"
+                "The site URL is: https://contoso.sharepoint.com/sites/\u202bDubai-Portfolio\u202c\n\n"
+                "When I try to access the \u202bمحفظة دبي\u202c (Dubai Portfolio) section, "
+                "I get an error message that says:\n"
+                "\u202b'ليس لديك إذن للوصول إلى هذا المورد'\u202c\n"
+                "(Translation: 'You do not have permission to access this resource')\n\n"
+                "I need to access the following documents:\n"
+                "1. \u202bتقرير الأداء الربعي Q1 2026\u202c (Q1 2026 Performance Report)\n"
+                "2. \u202bتحليل المخاطر - مارس 2026\u202c (Risk Analysis - March 2026)\n"
+                "3. \u202bاستراتيجية الاستثمار\u202c (Investment Strategy)\n\n"
+                "My manager \u202bأحمد الفارسي\u202c (Ahmed Al-Farsi) approved my access "
+                "request last week through the IAM portal (request ID: IAM-2026-04521). "
+                "The approval shows as 'Completed' in the portal but I still can't access "
+                "the site.\n\n"
+                "This is urgent because I have a client presentation tomorrow morning at "
+                "9 AM GST.\n\n"
+                "Thanks,\n"
+                "Fatima Al-Rashid\n"
+                "Private Banking | Dubai Office"
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            team=Team.IAM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate access provisioning gap for SharePoint Dubai-Portfolio "
+                "site — IAM request IAM-2026-04521 shows approved but permissions "
+                "not synced. User needs access for client presentation tomorrow."
+            ),
+            remediation_steps=[
+                "Check IAM request IAM-2026-04521 — verify the provisioning step completed successfully.",
+                "Check the SharePoint site permissions for the Dubai-Portfolio site collection.",
+                "If provisioning failed, manually grant access and investigate the sync failure.",
+                "Verify the user can access all three required documents.",
+                "Investigate why the IAM approval did not propagate to SharePoint permissions.",
+            ],
+            reporter_name="Fatima Al-Rashid",
+            reporter_email="fatima.alrashid@contoso.com",
+            reporter_department="Private Banking",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "bidi-text", "rtl-ltr-mixed", "arabic-english", "unicode-control"],
+            difficulty="hard",
+        ),
     ]
