@@ -46,13 +46,13 @@ class TestResponsibleAiScenarios:
         """Verify expected scenario IDs exist."""
         scenarios = get_scenarios()
         ids = {s.scenario_id for s in scenarios}
-        expected = {f"RAI-{i:03d}" for i in range(1, 121)}
+        expected = {f"RAI-{i:03d}" for i in range(1, 161)}
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Responsible AI should have at least 120 scenarios."""
+        """Responsible AI should have at least 160 scenarios."""
         scenarios = get_scenarios()
-        assert len(scenarios) >= 120, f"Expected >= 120 RAI scenarios, got {len(scenarios)}"
+        assert len(scenarios) >= 160, f"Expected >= 160 RAI scenarios, got {len(scenarios)}"
 
     def test_covers_key_attack_categories(self) -> None:
         """Verify that key adversarial categories are covered."""
@@ -166,5 +166,50 @@ class TestResponsibleAiScenarios:
             "mass-data-export",
             "invisible-injection",
             "zero-width-unicode",
+            # New attack patterns (RAI-131..140)
+            "unicode-tag-injection",
+            "conversation-fabrication",
+            "persona-hijack",
+            "base64-hidden-payload",
+            "fabricated-process",
+            "chain-of-thought-coercion",
+            "json-response-injection",
+            "xss-payload",
+            "persistent-manipulation",
+            "cjk-obfuscation",
+            # New attack patterns (RAI-141..150)
+            "reward-hacking",
+            "framing-attack",
+            "sycophancy",
+            "flattery-exploit",
+            "system-prompt-extraction",
+            "self-referential-loop",
+            "adversarial-filename",
+            "metadata-injection",
+            "context-stuffing",
+            "token-exhaustion",
+            "code-switch-injection",
+            "structured-output-attack",
+            "reasoning-manipulation",
+            # New attack patterns (RAI-151..160)
+            "conditional-trigger",
+            "time-based-injection",
+            "fake-system-message",
+            "self-referential",
+            "emotional-exploitation",
+            "disability-claim",
+            "fake-training-feedback",
+            "model-manipulation",
+            "malware-request",
+            "disguised-harmful",
+            "zero-width-injection",
+            "unicode-steganography",
+            "consensus-manipulation",
+            "consent-manipulation",
+            "fake-terms",
+            "context-poisoning",
+            "fake-history",
+            "progressive-escalation",
+            "multi-stage",
         }
         assert expected_tags.issubset(all_tags), f"Missing attack tags: {expected_tags - all_tags}"

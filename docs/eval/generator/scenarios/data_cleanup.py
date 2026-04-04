@@ -2,7 +2,9 @@
 
 Covers: long email threads, base64 content, HTML-heavy emails, garbled encoding,
 emoji-heavy messages, repeated content, massive signatures, mixed languages,
-truncated messages, log dumps, HTML entities, and duplicate sentences.
+truncated messages, log dumps, HTML entities, duplicate sentences, MIME boundaries,
+inline base64 PDFs, calendar metadata, buried issues, multilingual disclaimers,
+NDR/bounce-backs, regex/code patterns, contradictory threads, and PII patterns.
 """
 
 from generator.models import Scenario
@@ -1663,5 +1665,728 @@ SCENARIOS: list[Scenario] = [
             ],
         ],
         tags=["data-cleanup", "docker-compose", "yaml-config", "credential-rotation"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 31. MIME multipart boundaries visible in email body
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-mime-boundary-markers",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["error_message", "application_version"],
+        subjects=[
+            "Outlook displaying raw MIME boundary markers instead of formatted email",
+            "Email from vendor shows ------=_Part_12345 lines throughout the message body",
+        ],
+        descriptions=[
+            "Hi support,\n\n"
+            "When I open emails from one of our vendors, I see raw MIME boundary strings "
+            "scattered throughout the message instead of normal text and attachments. "
+            "Here is what the email looks like:\n\n"
+            "------=_Part_12345_67890.1720000000000\n"
+            "Content-Type: text/plain; charset=UTF-8\n"
+            "Content-Transfer-Encoding: quoted-printable\n\n"
+            "Hi team, please find the Q3 budget report attached.\n\n"
+            "------=_Part_12345_67890.1720000000000\n"
+            "Content-Type: application/pdf; name=\"Q3_Budget.pdf\"\n"
+            "Content-Disposition: attachment; filename=\"Q3_Budget.pdf\"\n"
+            "Content-Transfer-Encoding: base64\n\n"
+            "JVBERi0xLjQKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwo+PgplbmRvYmoKFAKE...\n\n"
+            "------=_Part_12345_67890.1720000000000--\n\n"
+            "This only happens with emails from this specific sender. Other emails display "
+            "correctly. I am using Outlook 365 on Windows 11. The issue started after our "
+            "email gateway was updated last week.",
+            "Emails from external partner display with visible multipart MIME boundaries "
+            "and raw Content-Type headers. The actual message text is interspersed with "
+            "lines like:\n\n"
+            "------=_NextPart_000_0042_01DA2B3C.F7A08E90\n"
+            "Content-Type: multipart/alternative;\n"
+            "\tboundary=\"----=_NextPart_001_0043_01DA2B3C.F7A08E90\"\n\n"
+            "The underlying request is simple: the vendor sent a follow-up about a "
+            "contract renewal and attached a signed PDF. But the email renders as raw "
+            "MIME source. I suspect the email gateway is stripping the Content-Type "
+            "header or mangling the multipart structure during spam filtering. This "
+            "affects about 20 users who correspond with this vendor.",
+        ],
+        next_best_actions=[
+            "Strip the MIME boundary markers and headers to extract the actual message: "
+            "a vendor follow-up about contract renewal with an attached PDF.",
+            "Investigate the email gateway configuration change that is causing MIME "
+            "parsing to fail for messages from this specific external domain.",
+        ],
+        remediation_steps=[
+            [
+                "Check the email gateway logs for MIME parsing errors on messages "
+                "from the vendor's domain",
+                "Review recent email gateway configuration or firmware updates that "
+                "may have introduced MIME handling regressions",
+                "Verify the vendor's mail server is sending properly formatted "
+                "multipart MIME messages using a message header analyzer",
+                "Add the vendor's domain to a bypass list if the gateway's content "
+                "filter is corrupting the MIME structure",
+                "Test with a clean Outlook profile to rule out local rendering issues",
+            ],
+        ],
+        tags=["data-cleanup", "mime-boundaries"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 32. Base64-encoded PDF pasted instead of attached
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-base64-pdf-inline",
+        category="Data & Storage",
+        priority="P2",
+        assigned_team="Data Platform",
+        needs_escalation=False,
+        missing_information=["error_message", "environment_details"],
+        subjects=[
+            "Data pipeline rejecting PDF — pasting the file contents directly for review",
+            "Base64 of the failed PDF ingest document — need help with storage import",
+        ],
+        descriptions=[
+            "Hi Data Platform team,\n\n"
+            "Our automated document ingest pipeline is rejecting a PDF that a client "
+            "uploaded. I can't attach the file to this ticket system, so I'm pasting "
+            "the base64-encoded contents here so you can decode and inspect it:\n\n"
+            "JVBERi0xLjcKCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCi9NYXJr"
+            "SW5mbyA8PAovTWFya2VkIHRydWUKPj4KPj4KZW5kb2JqCgoyIDAgb2JqCjw8Ci9UeXBlIC9Q"
+            "YWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+CmVuZG9iagozIDAgb2JqCjw8Ci9UeXBl"
+            "IC9QYWdlCi9QYXJlbnQgMiAwIFIKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KPj4KZW5kb2Jq"
+            "FAKE_BASE64_DATA_CONTINUES_FOR_MANY_MORE_LINES_REPRESENTING_A_FULL_PDF_DOCUMENT_"
+            "THAT_SHOULD_NOT_DISTRACT_FROM_THE_ACTUAL_SUPPORT_REQUEST_WHICH_IS_ABOUT_THE_"
+            "PIPELINE_REJECTING_THE_UPLOAD\n\n"
+            "The error from the pipeline is: 'UnsupportedMediaType: document header "
+            "validation failed — expected PDF/A-1b conformance but received PDF 1.7'. "
+            "Can you check if our ingest pipeline needs to be updated to accept standard "
+            "PDF 1.7 format?",
+            "Pasting the base64 of the PDF that is failing the data lake import:\n\n"
+            "JVBERi0xLjcNCjEgMCBvYmoNCjw8DQovVHlwZSAvQ2F0YWxvZw0KL1BhZ2VzIDIgMCBSDQov"
+            "T3V0bGluZXMgMyAwIFINCj4+DQplbmRvYmoNCg0KMiAwIG9iag0KPDwNCi9UeXBlIC9QYWdl"
+            "ANOTHER_BLOCK_OF_FAKE_BASE64_REPRESENTING_A_MULTIPAGE_PDF_FINANCIAL_REPORT_WITH_"
+            "EMBEDDED_FONTS_AND_IMAGES_TOTALLING_APPROXIMATELY_2MB_WHEN_DECODED\n\n"
+            "The real issue: our Azure Blob Storage ingest function expects PDF/A-1b "
+            "compliant documents, but the client's accounting software exports as "
+            "standard PDF 1.7. We need to either add a conversion step to the pipeline "
+            "or relax the validation rule. This is blocking the client's monthly "
+            "financial report upload and they have a compliance deadline on Friday.",
+        ],
+        next_best_actions=[
+            "Ignore the base64 payload. The core issue is a PDF version mismatch: the "
+            "ingest pipeline requires PDF/A-1b but the client submits standard PDF 1.7.",
+            "Evaluate whether to add a PDF/A conversion step in the pipeline or relax "
+            "the validation to accept standard PDF 1.7 documents.",
+        ],
+        remediation_steps=[
+            [
+                "Confirm the pipeline's PDF/A-1b requirement and whether it is a hard "
+                "compliance need or a default setting that can be relaxed",
+                "If PDF/A is required, add a Ghostscript or similar conversion step to "
+                "the ingest pipeline to convert PDF 1.7 to PDF/A-1b",
+                "If PDF/A is not mandatory, update the validation rule to accept "
+                "standard PDF 1.4 through 2.0",
+                "Manually convert the blocked PDF for the client's Friday deadline "
+                "while the pipeline fix is deployed",
+                "Notify the client about supported document formats to prevent recurrence",
+            ],
+        ],
+        tags=["data-cleanup", "base64-pdf"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 33. Multiple base64-encoded images interspersed with text
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-multiple-base64-images",
+        category="Network & Connectivity",
+        priority="P2",
+        assigned_team="Network Operations",
+        needs_escalation=False,
+        missing_information=["network_location", "error_message"],
+        subjects=[
+            "VPN dropping every 5 minutes — screenshots of every disconnect inline",
+            "Network keeps disconnecting — see all the embedded error screenshots below",
+        ],
+        descriptions=[
+            "Hi NetOps,\n\n"
+            "My VPN keeps disconnecting every 5 minutes or so. I've taken screenshots "
+            "of each disconnect event. Here they all are:\n\n"
+            "Screenshot 1 (first disconnect at 9:02 AM):\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA"
+            "FAKE_IMAGE_1_BASE64_DATA_FIRST_DISCONNECT_SHOWING_VPN_CLIENT_ERROR\n\n"
+            "Screenshot 2 (second disconnect at 9:07 AM):\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA"
+            "FAKE_IMAGE_2_BASE64_DATA_SECOND_DISCONNECT_DIFFERENT_ERROR_CODE\n\n"
+            "Screenshot 3 (third disconnect at 9:13 AM):\n"
+            "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gHYSUNDX1BST0ZJTEU"
+            "FAKE_IMAGE_3_BASE64_DATA_THIRD_DISCONNECT_SHOWING_NETWORK_ADAPTER_WARNING\n\n"
+            "Screenshot 4 (after rebooting at 9:20 AM):\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA"
+            "FAKE_IMAGE_4_BASE64_DATA_POST_REBOOT_STILL_SHOWING_VPN_TIMEOUT\n\n"
+            "As you can see, the VPN client shows 'Connection timed out — TLS handshake "
+            "failed' each time. I'm on the corporate Wi-Fi in Building 7, 3rd floor. "
+            "Other people on my floor seem to have the same issue.",
+            "VPN disconnects happening repeatedly on the 3rd floor of Building 7. "
+            "Embedding the error screenshots inline:\n\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAA"
+            "FAKE_SCREENSHOT_A_VPN_TLS_HANDSHAKE_FAILURE\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAA"
+            "FAKE_SCREENSHOT_B_NETWORK_ADAPTER_DISCONNECTED\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAA"
+            "FAKE_SCREENSHOT_C_DNS_RESOLUTION_TIMEOUT\n\n"
+            "Stripping the images, the issue is: VPN via GlobalProtect drops every "
+            "~5 minutes with TLS handshake failures. This affects multiple users on "
+            "the 3rd floor of Building 7. The Wi-Fi signal strength is fine. We "
+            "suspect the issue is with the network switch or firewall rule that was "
+            "changed during last weekend's maintenance window.",
+        ],
+        next_best_actions=[
+            "Discard the inline base64 screenshots and focus on the pattern: recurring VPN "
+            "TLS handshake failures for multiple users on Building 7 floor 3.",
+            "Check the network switch and firewall rules for Building 7 floor 3 that were "
+            "modified during the last maintenance window.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the network switch serving Building 7 floor 3 for port errors "
+                "or recent configuration changes",
+                "Check the firewall rules for changes made during the weekend maintenance "
+                "window that may block TLS traffic on VPN ports",
+                "Review the GlobalProtect gateway logs for TLS handshake failure details",
+                "Test VPN connectivity from a wired connection on the same floor to "
+                "isolate whether the issue is Wi-Fi or upstream",
+                "Roll back the firewall rule change if confirmed as root cause",
+            ],
+        ],
+        tags=["data-cleanup", "multiple-base64"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 34. ICS/vCalendar metadata mixed with support request
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-ics-calendar-metadata",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["application_version", "steps_to_reproduce"],
+        subjects=[
+            "Calendar invite rendering as raw ICS text — meeting room booking broken",
+            "Outlook calendar showing VCALENDAR source code instead of meeting details",
+        ],
+        descriptions=[
+            "Hi team,\n\n"
+            "When I try to open calendar invites from our room booking system, Outlook "
+            "displays the raw ICS file content instead of the formatted meeting invite. "
+            "Here is what I see:\n\n"
+            "BEGIN:VCALENDAR\n"
+            "VERSION:2.0\n"
+            "PRODID:-//Contoso Room Booking//EN\n"
+            "METHOD:REQUEST\n"
+            "BEGIN:VEVENT\n"
+            "DTSTART:20260720T140000Z\n"
+            "DTEND:20260720T150000Z\n"
+            "SUMMARY:Q3 Planning Review\n"
+            "LOCATION:Building 4 - Room 401C (Capacity: 12)\n"
+            "ORGANIZER;CN=Jane Doe:mailto:jane.doe@contoso.com\n"
+            "ATTENDEE;ROLE=REQ-PARTICIPANT;CN=John Smith:mailto:john.smith@contoso.com\n"
+            "ATTENDEE;ROLE=REQ-PARTICIPANT;CN=Support User:mailto:user@contoso.com\n"
+            "DESCRIPTION:Quarterly planning review with budget discussion.\\n"
+            "Please bring your department forecasts.\n"
+            "UID:a1b2c3d4-e5f6-7890-abcd-ef1234567890@contoso.com\n"
+            "STATUS:CONFIRMED\n"
+            "SEQUENCE:0\n"
+            "END:VEVENT\n"
+            "END:VCALENDAR\n\n"
+            "I can't accept or decline the invite because Outlook doesn't recognize it "
+            "as a calendar event. This only happens with invites from the room booking "
+            "system. Regular meeting invites from other people work fine.",
+            "Calendar invites from the room booking application render as raw vCalendar "
+            "source in Outlook. The email body shows BEGIN:VCALENDAR and all the ICS "
+            "properties instead of a clickable meeting invitation. Sample:\n\n"
+            "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\n"
+            "DTSTART:20260722T100000Z\nDTEND:20260722T110000Z\n"
+            "SUMMARY:Sprint Retrospective\nLOCATION:Room 205B\n"
+            "END:VEVENT\nEND:VCALENDAR\n\n"
+            "The actual request buried under the ICS noise: the room booking system is "
+            "sending calendar invites with the wrong Content-Type header (text/plain "
+            "instead of text/calendar), so Outlook treats them as plain text. This "
+            "started after the booking system was updated to version 4.2 last Thursday. "
+            "About 50 users are affected and cannot book rooms through the system.",
+        ],
+        next_best_actions=[
+            "Look past the raw ICS data to identify the root cause: the room booking "
+            "system sends invites with Content-Type text/plain instead of text/calendar.",
+            "Contact the room booking system administrator to fix the Content-Type "
+            "header in outgoing calendar invitations after the v4.2 update.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the room booking system version and confirm it was recently "
+                "updated to v4.2",
+                "Check the system's email sending configuration for the Content-Type "
+                "header on calendar invitations",
+                "Update the Content-Type from text/plain to text/calendar; method=REQUEST "
+                "for outgoing ICS attachments",
+                "Send a test invitation and confirm it renders correctly in Outlook",
+                "Notify affected users that the issue has been resolved and ask them "
+                "to re-send any pending room booking requests",
+            ],
+        ],
+        tags=["data-cleanup", "calendar-metadata"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 35. Very long email with the real issue buried at the very end
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-buried-issue-very-long",
+        category="Security & Compliance",
+        priority="P1",
+        assigned_team="Security Operations",
+        needs_escalation=True,
+        missing_information=["timestamp", "affected_system", "affected_users"],
+        subjects=[
+            "RE: RE: FW: Annual security policy review — URGENT credential leak at the end",
+            "FW: Long policy discussion thread — CRITICAL: exposed API keys found in production",
+        ],
+        descriptions=[
+            "---------- Forwarded message ----------\n"
+            "From: Compliance Team\nDate: Mon, 14 Jul 2026\nSubject: Annual security review\n\n"
+            "Hi all,\n\nAs part of our annual security policy review, I wanted to share "
+            "the updated guidelines for FY2027. Please review the following sections:\n\n"
+            "Section 1: Password Policy Updates\n"
+            "- Minimum length increased from 12 to 16 characters\n"
+            "- MFA required for all Tier-1 applications\n"
+            "- Password rotation reduced to every 180 days\n\n"
+            "Section 2: Data Classification\n"
+            "- All customer PII must be tagged as Confidential\n"
+            "- Internal documents default to Internal classification\n"
+            "- Public-facing content must go through legal review\n\n"
+            "Section 3: Endpoint Security\n"
+            "- EDR agent mandatory on all corporate devices\n"
+            "- USB storage disabled by default\n"
+            "- Full disk encryption required\n\n"
+            "Section 4: Network Security\n"
+            "- Zero-trust model for all internal services\n"
+            "- VPN mandatory for remote access\n"
+            "- Network segmentation review quarterly\n\n"
+            "Section 5: Incident Response\n"
+            "- P1 incidents must be escalated within 15 minutes\n"
+            "- Post-incident review mandatory within 48 hours\n"
+            "- Tabletop exercises quarterly\n\n"
+            "Please acknowledge receipt and send any comments by EOD Friday.\n\n"
+            "Best regards,\nCompliance Team\n\n"
+            "---\n\n"
+            "P.S. — URGENT: While preparing this review, I discovered that our CI/CD "
+            "pipeline's environment variables contain hardcoded AWS access keys "
+            "(AKIA...) and a database connection string with plaintext credentials. "
+            "These have been exposed in the build logs which are publicly accessible "
+            "via our Jenkins dashboard. I think this has been the case for at least "
+            "3 months. We need to rotate these credentials IMMEDIATELY and restrict "
+            "access to the build logs. This is a P1 security incident.",
+            "FW: Security policy annual review (long thread)\n\n"
+            "The first 90% of this email is a routine policy review covering password "
+            "requirements, data classification, endpoint hardening, network segmentation, "
+            "and incident response procedures for FY2027. Standard annual compliance "
+            "documentation that references 12 different policy subsections across 5 "
+            "departments.\n\n"
+            "[... extensive policy text omitted for brevity ...]\n\n"
+            "CRITICAL ISSUE AT END OF THREAD:\n"
+            "The sender discovered hardcoded AWS IAM access keys (AKIA prefix) and "
+            "a plaintext PostgreSQL connection string (postgresql://admin:PLAINTEXT_PWD"
+            "@prod-db-01:5432/core_app) in the CI/CD pipeline environment variables. "
+            "Jenkins build logs containing these secrets are publicly accessible "
+            "without authentication. Estimated exposure window is approximately 3 "
+            "months. This requires immediate credential rotation, Jenkins access "
+            "lockdown, and an investigation into whether the exposed credentials were "
+            "used by unauthorized parties.",
+        ],
+        next_best_actions=[
+            "Skip the routine policy review content and escalate the P1 finding at the "
+            "end: exposed AWS keys and database credentials in public Jenkins build logs.",
+            "Immediately initiate credential rotation for the exposed AWS IAM keys and "
+            "database connection string, and restrict Jenkins build log access.",
+        ],
+        remediation_steps=[
+            [
+                "Immediately rotate the exposed AWS IAM access keys and generate new ones "
+                "with least-privilege permissions",
+                "Change the database password and update the connection string in the "
+                "secrets manager (not in environment variables)",
+                "Restrict Jenkins build log access to authenticated users only",
+                "Audit CloudTrail and database access logs for unauthorized usage during "
+                "the 3-month exposure window",
+                "Migrate all secrets from CI/CD environment variables to a vault solution "
+                "such as HashiCorp Vault or AWS Secrets Manager",
+                "Conduct a broader review of all CI/CD pipelines for hardcoded secrets",
+            ],
+        ],
+        tags=["data-cleanup", "buried-issue", "very-long-email"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 36. Legal disclaimers in 8+ languages appended to request
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-multilingual-disclaimers",
+        category="Hardware & Peripherals",
+        priority="P3",
+        assigned_team="Endpoint Engineering",
+        needs_escalation=False,
+        missing_information=["device_info", "error_message"],
+        subjects=[
+            "Laptop keyboard not working — please see below (ignore the disclaimers)",
+            "Keys on laptop stuck after spill — long disclaimer block attached by email system",
+        ],
+        descriptions=[
+            "Hi,\n\n"
+            "Several keys on my laptop keyboard stopped working after a small coffee spill "
+            "this morning. The affected keys are: T, Y, G, H, B, N (basically the middle "
+            "row). I've dried it off but they are still unresponsive. I need this fixed "
+            "or replaced ASAP as I have client presentations this week.\n\n"
+            "Asset tag: LAPTOP-4821\nModel: ThinkPad X1 Carbon Gen 11\n\n"
+            "---\n\n"
+            "CONFIDENTIALITY NOTICE (English): This email and any attachments are "
+            "confidential and intended solely for the addressee. If you are not the "
+            "intended recipient, please delete immediately.\n\n"
+            "AVIS DE CONFIDENTIALITÉ (Français): Ce courriel et ses pièces jointes "
+            "sont confidentiels et destinés uniquement au destinataire. Si vous n'êtes "
+            "pas le destinataire prévu, veuillez le supprimer immédiatement.\n\n"
+            "VERTRAULICHKEITSHINWEIS (Deutsch): Diese E-Mail und alle Anhänge sind "
+            "vertraulich und nur für den Adressaten bestimmt. Wenn Sie nicht der "
+            "beabsichtigte Empfänger sind, löschen Sie diese bitte sofort.\n\n"
+            "AVISO DE CONFIDENCIALIDAD (Español): Este correo electrónico y sus "
+            "archivos adjuntos son confidenciales. Si usted no es el destinatario "
+            "previsto, por favor elimínelo inmediatamente.\n\n"
+            "AVVISO DI RISERVATEZZA (Italiano): Questa email e i relativi allegati "
+            "sono riservati e destinati esclusivamente al destinatario. Se non siete "
+            "il destinatario previsto, cancellatela immediatamente.\n\n"
+            "機密通知 (日本語): このメールおよび添付ファイルは機密であり、宛先の方のみを"
+            "対象としています。宛先でない場合は、直ちに削除してください。\n\n"
+            "기밀 통지 (한국어): 이 이메일과 첨부 파일은 기밀이며 수신자만을 위한 것입니다. "
+            "의도된 수신자가 아닌 경우 즉시 삭제하십시오.\n\n"
+            "保密声明 (中文): 本邮件及其附件为保密信息，仅供收件人使用。如果您不是预期"
+            "收件人，请立即删除。",
+            "Laptop keyboard partially non-functional after liquid spill.\n\n"
+            "The middle row keys (T, Y, G, H, B, N) are completely unresponsive on my "
+            "ThinkPad X1 Carbon Gen 11, asset LAPTOP-4821. Coffee spill this morning. "
+            "Dried externally but keys remain dead. Need urgent replacement as I have "
+            "client-facing meetings starting tomorrow.\n\n"
+            "[Following this message is a corporate email disclaimer block repeated in "
+            "English, French, German, Spanish, Italian, Japanese, Korean, and Chinese "
+            "that constitutes approximately 80% of the email body. The disclaimer is "
+            "auto-appended by the corporate email gateway and contains no relevant "
+            "information about the hardware issue.]\n\n"
+            "CONFIDENTIALITY / CONFIDENTIALITÉ / VERTRAULICHKEIT / CONFIDENCIALIDAD / "
+            "RISERVATEZZA / 機密 / 기밀 / 保密\n"
+            "This message is intended exclusively for the addressee...\n"
+            "[...8 full paragraphs in 8 languages omitted for brevity...]",
+        ],
+        next_best_actions=[
+            "Ignore the multilingual legal disclaimer block. The issue is a laptop "
+            "keyboard failure after a coffee spill on a ThinkPad X1 Carbon Gen 11.",
+            "Initiate a keyboard replacement for asset LAPTOP-4821 and provide a "
+            "loaner device for the user's client presentations this week.",
+        ],
+        remediation_steps=[
+            [
+                "Provide a loaner laptop or external USB keyboard immediately for "
+                "the user's client presentations",
+                "Submit a hardware repair ticket for keyboard replacement on "
+                "ThinkPad X1 Carbon Gen 11 (asset LAPTOP-4821)",
+                "Advise the user to power off the laptop and not attempt further "
+                "use until the keyboard is inspected for liquid damage",
+                "Schedule a technician to inspect for internal liquid damage "
+                "beyond the keyboard",
+                "If under warranty, process the keyboard replacement through Lenovo; "
+                "otherwise arrange third-party repair",
+            ],
+        ],
+        tags=["data-cleanup", "multilingual-disclaimers"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 37. NDR/bounce-back message wrapping the original support request
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-ndr-bounce-message",
+        category="Network & Connectivity",
+        priority="P2",
+        assigned_team="Network Operations",
+        needs_escalation=False,
+        missing_information=["network_location", "error_message", "affected_users"],
+        subjects=[
+            "Delivery Status Notification (Failure) — original request inside bounce-back",
+            "Undeliverable: RE: Office network down — NDR wrapped around real ticket",
+        ],
+        descriptions=[
+            "This is an automatically generated Delivery Status Notification.\n\n"
+            "Delivery to the following recipients failed permanently:\n\n"
+            "    helpdesk-old@contoso.com\n\n"
+            "Technical details of permanent failure:\n"
+            "550 5.1.1 The email account that you tried to reach does not exist. "
+            "Please try double-checking the recipient's email address for typos or "
+            "unnecessary spaces. Learn more at https://support.contoso.com/mail/errors "
+            "gsmtp d9e45f-20260714\n\n"
+            "----- Original message -----\n"
+            "From: Mike Johnson <mike.johnson@contoso.com>\n"
+            "To: helpdesk-old@contoso.com\n"
+            "Date: Mon, 14 Jul 2026 08:15:00 -0500\n"
+            "Subject: Office network down on 2nd floor\n\n"
+            "Hi help desk,\n\n"
+            "The entire 2nd floor network has been down since about 7:45 AM. We cannot "
+            "access any internal resources, the Wi-Fi shows connected but no internet, "
+            "and wired connections are also dead. About 30 people are affected and "
+            "nobody can work. The network switch in the IDF closet on the 2nd floor "
+            "has all amber lights instead of green. Please send someone urgently.\n\n"
+            "Thanks,\nMike",
+            "Bounce-back notification wrapping a support request:\n\n"
+            "--- Delivery Status Notification ---\n"
+            "Status: 550 5.1.1 User unknown\n"
+            "Recipient: helpdesk-old@contoso.com\n"
+            "Diagnostic-Code: smtp; 550 5.1.1 Mailbox not found\n"
+            "Action: failed\n"
+            "Final-Recipient: rfc822;helpdesk-old@contoso.com\n\n"
+            "--- Enclosed Original Message ---\n"
+            "The user (Mike Johnson) was trying to report that the entire 2nd floor "
+            "network is down since 7:45 AM. Approximately 30 people affected. Both "
+            "Wi-Fi and wired connections are non-functional. The IDF closet network "
+            "switch shows amber LEDs. The original email was sent to a decommissioned "
+            "help desk address (helpdesk-old@contoso.com) which no longer exists, so "
+            "this NDR bounced back to the user. Mike then forwarded the NDR to us. "
+            "The actual incident needs immediate attention — the NDR headers and "
+            "delivery failure details are irrelevant to the network outage.",
+        ],
+        next_best_actions=[
+            "Extract the original request from inside the NDR: 2nd floor network outage "
+            "affecting 30 users since 7:45 AM with amber LEDs on the IDF switch.",
+            "Dispatch network operations to the 2nd floor IDF closet immediately to "
+            "diagnose the switch failure. Also update the old help desk address redirect.",
+        ],
+        remediation_steps=[
+            [
+                "Dispatch a network technician to the 2nd floor IDF closet to inspect "
+                "the switch showing amber LEDs",
+                "Check the switch for power issues, failed uplinks, or spanning-tree "
+                "topology changes",
+                "If the switch is faulty, replace it with a spare and restore connectivity",
+                "Set up a mail redirect from helpdesk-old@contoso.com to the current "
+                "help desk address to prevent future lost tickets",
+                "Notify the 2nd floor users once connectivity is restored",
+            ],
+        ],
+        tags=["data-cleanup", "ndr", "bounce-back"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 38. Regex and code patterns with special characters in ticket
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-regex-code-patterns",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["application_version", "environment_details"],
+        subjects=[
+            "Data validation regex failing — pasting the full pattern and test cases",
+            "App crashes when regex pattern is applied — code and error dump below",
+        ],
+        descriptions=[
+            "Hi team,\n\n"
+            "Our internal data validation app is crashing when we apply a regex pattern "
+            "to sanitize input fields. I'm pasting the regex pattern and the code that "
+            "uses it so you can see the issue:\n\n"
+            "Pattern:\n"
+            "^(?:(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`"
+            "{|}~-]+)*)|(?:\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b"
+            "\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\"))@(?:(?:[a-zA"
+            "-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,}|\\[(?:(?:25[0-5]"
+            "|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]"
+            "[0-9]?)\\])$\n\n"
+            "Code snippet:\n"
+            "```python\n"
+            "import re\n"
+            "pattern = re.compile(r'<the above pattern>', re.IGNORECASE | re.DOTALL)\n"
+            "for record in dataset:  # ~500,000 records\n"
+            "    if not pattern.match(record['email']):\n"
+            "        invalid_records.append(record)\n"
+            "```\n\n"
+            "The app hangs for 30+ minutes on certain email inputs and then crashes "
+            "with a RecursionError. I think the regex has catastrophic backtracking. "
+            "We need to fix the pattern or use a different validation approach.",
+            "Regex-heavy ticket: the data validation tool uses a complex RFC 5322 email "
+            "regex that causes catastrophic backtracking on malformed input. The pattern "
+            "contains nested quantifiers and alternations with overlapping character "
+            "classes:\n\n"
+            "^(?:[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}"
+            "[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$)\n\n"
+            "The code applies this pattern against 500K records in a loop with "
+            "re.match(). When it encounters inputs like 'aaa@' + 'a' * 50 + '.com' "
+            "variants, the engine enters exponential backtracking. The fix should "
+            "either simplify the regex, use the 're2' library for linear-time matching, "
+            "or replace regex validation with a dedicated email validation library. "
+            "The application is Python 3.11 running on RHEL 9.",
+        ],
+        next_best_actions=[
+            "Look past the complex regex syntax and code dump. The issue is catastrophic "
+            "backtracking in an email validation regex applied to 500K records.",
+            "Replace the complex RFC 5322 regex with a simpler pattern or use the 're2' "
+            "library / a dedicated email validation library to avoid backtracking.",
+        ],
+        remediation_steps=[
+            [
+                "Replace the complex email regex with a simplified pattern that avoids "
+                "nested quantifiers and overlapping alternations",
+                "Consider using the 'email-validator' Python library or Google's 're2' "
+                "library for linear-time regex matching",
+                "Add a maximum input length check before applying the regex to prevent "
+                "pathological inputs from reaching the engine",
+                "Test the replacement pattern against the full 500K record dataset to "
+                "confirm performance is acceptable",
+                "Add monitoring and timeouts to the validation job so a single bad "
+                "record cannot hang the entire process",
+            ],
+        ],
+        tags=["data-cleanup", "regex", "code-patterns"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 39. Contradictory information across multiple replies in thread
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-contradictory-thread",
+        category="Hardware & Peripherals",
+        priority="P3",
+        assigned_team="Endpoint Engineering",
+        needs_escalation=False,
+        missing_information=["device_info", "steps_to_reproduce", "error_message"],
+        subjects=[
+            "RE: RE: RE: Monitor issue — actually it might be the docking station",
+            "FW: Display problems (updated: different symptoms now)",
+        ],
+        descriptions=[
+            "--- Reply 1 (Monday 9:00 AM) ---\n"
+            "My external monitor is completely black. It won't display anything when "
+            "connected to my laptop. I've tried two different HDMI cables.\n\n"
+            "--- Reply 2 (Monday 2:00 PM) ---\n"
+            "Update: actually the monitor does turn on now, but the resolution is stuck "
+            "at 1024x768 and I can't change it. The display settings don't show higher "
+            "options. Ignore my first message, the monitor isn't black anymore.\n\n"
+            "--- Reply 3 (Tuesday 10:00 AM) ---\n"
+            "Another update: I switched to a USB-C connection through my docking station "
+            "and now I'm getting display flickering every 10 seconds instead. The "
+            "resolution is correct now (2560x1440) but the flickering is unusable. "
+            "Also, I realized the docking station firmware was updated yesterday which "
+            "might be related.\n\n"
+            "--- Reply 4 (Tuesday 3:00 PM) ---\n"
+            "Correction to my earlier messages: the HDMI cable I was using was actually "
+            "DisplayPort, not HDMI. And the docking station is a Thunderbolt dock, not "
+            "USB-C. Sorry for the confusion. The flickering is still happening. My "
+            "laptop is a Dell Latitude 5540 and the dock is a Dell WD22TB4.",
+            "Contradictory multi-reply hardware ticket:\n\n"
+            "The user initially reported a black screen (Reply 1), then corrected to "
+            "a resolution issue (Reply 2), then described flickering over a different "
+            "connection (Reply 3), and finally corrected cable types and dock model "
+            "(Reply 4). Piecing together the latest accurate state:\n\n"
+            "- Device: Dell Latitude 5540\n"
+            "- Dock: Dell WD22TB4 Thunderbolt dock (firmware updated recently)\n"
+            "- Connection: Thunderbolt/DisplayPort to external 2560x1440 monitor\n"
+            "- Current symptom: display flickering every ~10 seconds at correct "
+            "resolution\n"
+            "- Suspected cause: recent Thunderbolt dock firmware update\n\n"
+            "All previous symptoms (black screen, low resolution) were either "
+            "misdiagnosed or resolved by switching connection types. The only "
+            "remaining issue is the post-firmware-update flickering.",
+        ],
+        next_best_actions=[
+            "Discard the contradicted earlier symptoms and focus on the latest state: "
+            "display flickering on Dell WD22TB4 dock after firmware update.",
+            "Check if the WD22TB4 dock firmware update has known flickering issues and "
+            "consider rolling back or applying a hotfix.",
+        ],
+        remediation_steps=[
+            [
+                "Check Dell support for known issues with the latest WD22TB4 Thunderbolt "
+                "dock firmware update",
+                "If a hotfix is available, apply it; otherwise roll back to the "
+                "previous firmware version",
+                "Update the Dell Latitude 5540's Thunderbolt controller driver and "
+                "Intel graphics driver to the latest versions",
+                "Test with a different Thunderbolt dock to isolate whether the issue "
+                "is dock-specific or laptop-specific",
+                "If the issue persists after firmware rollback, test with a direct "
+                "DisplayPort connection bypassing the dock",
+            ],
+        ],
+        tags=["data-cleanup", "contradictory"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 40. PII-like patterns accidentally included in ticket description
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-accidental-pii",
+        category="Access & Authentication",
+        priority="P2",
+        assigned_team="Identity & Access Management",
+        needs_escalation=False,
+        missing_information=["affected_system", "authentication_method"],
+        subjects=[
+            "Can't reset my password — providing my details for verification",
+            "Account locked out — including personal info so you can find me in the system",
+        ],
+        descriptions=[
+            "Hi IAM team,\n\n"
+            "I'm locked out of my account and can't reset my password through the "
+            "self-service portal. Here are my details so you can look me up:\n\n"
+            "Full name: Sarah J. Mitchell\n"
+            "Employee ID: EMP-20190847\n"
+            "Email: sarah.mitchell@contoso.com\n"
+            "Phone: (555) 867-5309\n"
+            "SSN: 078-05-1120\n"
+            "Date of Birth: 03/15/1988\n"
+            "Home address: 742 Evergreen Terrace, Springfield, IL 62704\n"
+            "Manager: David Chen (david.chen@contoso.com)\n\n"
+            "I know I shouldn't include all this info in an email but the self-service "
+            "portal keeps giving me an error ('Account recovery unavailable — contact "
+            "administrator') and I can't log into anything. I have a critical deadline "
+            "today and need access restored immediately. My last successful login was "
+            "Friday at 5:30 PM and when I tried this morning it said my account was "
+            "locked due to too many failed attempts, but I haven't tried to log in "
+            "since Friday.",
+            "Password reset request containing PII that should be redacted from the "
+            "ticket system:\n\n"
+            "The user (Employee ID: EMP-20190847, sarah.mitchell@contoso.com) is locked "
+            "out of their account. They included their SSN (078-XX-XXXX), date of birth, "
+            "home address, and personal phone number in the ticket — all of which need "
+            "to be scrubbed from this record after the request is processed.\n\n"
+            "The actual access issue: the account shows locked due to multiple failed "
+            "authentication attempts, but the user claims they haven't tried to log in "
+            "since Friday at 5:30 PM. This suggests either a brute-force attack against "
+            "the account, a misconfigured service account using stale credentials, or "
+            "another device with a saved password that was changed. The self-service "
+            "recovery portal is also returning an error, which may be a separate issue. "
+            "After resolving the lockout, the PII in this ticket must be redacted per "
+            "data handling policy.",
+        ],
+        next_best_actions=[
+            "Unlock the user's account and investigate the source of the failed login "
+            "attempts. IMPORTANT: redact the PII (SSN, DOB, address) from this ticket.",
+            "After resolving the lockout, flag this ticket for PII scrubbing per "
+            "data handling policy — the user included sensitive personal information.",
+        ],
+        remediation_steps=[
+            [
+                "Unlock the account for sarah.mitchell@contoso.com and force a password "
+                "reset on next login",
+                "Review the authentication logs to determine the source of failed login "
+                "attempts (IP address, user agent, timestamps)",
+                "Check for service accounts or devices using stale cached credentials "
+                "for this user",
+                "Investigate the self-service recovery portal error to ensure it is "
+                "functioning correctly",
+                "Redact the PII (SSN, date of birth, home address, personal phone) from "
+                "this ticket record per the data handling policy",
+                "Remind the user not to include sensitive personal information in support "
+                "tickets and direct them to secure verification channels",
+            ],
+        ],
+        tags=["data-cleanup", "pii-patterns"],
     ),
 ]

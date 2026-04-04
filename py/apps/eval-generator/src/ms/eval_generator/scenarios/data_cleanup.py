@@ -2173,4 +2173,1384 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         ),
         tags=("data-cleanup", "zero-width-unicode", "invisible-characters"),
     ),
+    # ──────────────────────────────────────────────────────────────────
+    # 42. GraphQL introspection dump in description
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-042",
+        subjects=(
+            "API gateway returns 502 on GraphQL endpoint",
+            "GraphQL service down — introspection query included",
+        ),
+        descriptions=(
+            "Our GraphQL API started returning 502 errors this morning. I ran an"
+            " introspection query before it went down and pasted the result below"
+            " for reference.\n\n"
+            '{"data":{"__schema":{"queryType":{"name":"Query"},"mutationType":'
+            '{"name":"Mutation"},"subscriptionType":null,"types":[{"kind":"OBJECT",'
+            '"name":"Query","fields":[{"name":"user","args":[{"name":"id","type":'
+            '{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"ID",'
+            '"ofType":null}}}],"type":{"kind":"OBJECT","name":"User","ofType":null}},'
+            '{"name":"orders","args":[{"name":"userId","type":{"kind":"NON_NULL",'
+            '"name":null,"ofType":{"kind":"SCALAR","name":"ID","ofType":null}}},'
+            '{"name":"status","type":{"kind":"ENUM","name":"OrderStatus","ofType":'
+            'null}}],"type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT",'
+            '"name":"Order","ofType":null}}},{"name":"inventory","args":[{"name":'
+            '"warehouseId","type":{"kind":"SCALAR","name":"String","ofType":null}}],'
+            '"type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":'
+            '"InventoryItem","ofType":null}}},{"name":"analytics","args":[],"type":'
+            '{"kind":"OBJECT","name":"AnalyticsDashboard","ofType":null}}]},{"kind":'
+            '"OBJECT","name":"User","fields":[{"name":"id","args":[],"type":{"kind":'
+            '"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"ID","ofType":'
+            'null}}},{"name":"email","args":[],"type":{"kind":"SCALAR","name":'
+            '"String","ofType":null}},{"name":"roles","args":[],"type":{"kind":'
+            '"LIST","name":null,"ofType":{"kind":"ENUM","name":"UserRole","ofType":'
+            'null}}}]}],"directives":[]}}}\n\n'
+            "The endpoint is https://api.contoso.com/graphql and it handles all"
+            " our order management queries. Around 200 internal users are affected.",
+            "GraphQL API at api.contoso.com/graphql returning 502 since this"
+            " morning. Handles order management for ~200 internal users."
+            " User pasted full introspection schema JSON dump in the ticket.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message", "environment_details"),
+            next_best_action="Investigate 502 errors on the GraphQL API gateway —"
+            " ignore the introspection schema dump and focus on the upstream"
+            " service health and gateway logs",
+            remediation_steps=(
+                "Check API gateway logs for the source of 502 errors on the /graphql endpoint",
+                "Verify the upstream GraphQL service health and container/pod status",
+                "Review recent deployments or configuration changes to the GraphQL service",
+                "Test connectivity between the API gateway and the GraphQL backend directly",
+                "Restore service and confirm order management queries are working for internal users",
+            ),
+        ),
+        tags=("data-cleanup", "graphql-introspection", "json-dump"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 43. Windows BSOD minidump output
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-043",
+        subjects=(
+            "Laptop blue screens every day — dump file info included",
+            "BSOD DRIVER_IRQL_NOT_LESS_OR_EQUAL — minidump attached",
+        ),
+        descriptions=(
+            "My laptop blue screens at least once a day, usually when I'm in a Teams"
+            " meeting with screen sharing. I opened the minidump in WinDbg and pasted"
+            " the output below.\n\n"
+            "Microsoft (R) Windows Debugger Version 10.0.25921.1001 AMD64\n"
+            "Copyright (c) Microsoft Corporation. All rights reserved.\n\n"
+            "Loading Dump File [C:\\Windows\\Minidump\\031026-18234-01.dmp]\n"
+            "Mini Kernel Dump File: Only registers and stack trace are available\n\n"
+            "Symbol search path is: srv*\n"
+            "Executable search path is:\n"
+            "Windows 11 Kernel Version 22631 MP (8 procs) Free x64\n"
+            "Product: WinNt, suite: TerminalServer SingleUserTS\n"
+            "Edition build lab: 22631.1.amd64fre.ni_release.220506-1250\n"
+            "Machine Name:\n"
+            "Kernel base = 0xfffff802`3a000000 PsLoadedModuleList = 0xfffff802`3b2134a0\n"
+            "Debug session time: Mon Mar 10 14:22:07.318 2026 (UTC - 5:00)\n"
+            "System Uptime: 0 days 6:43:12.204\n"
+            "Loading Kernel Symbols\n"
+            "...............................................................\n"
+            "Loading User Symbols\n"
+            "Loading unloaded module list\n"
+            ".......\n"
+            "*******************************************************************************\n"
+            "*                                                                             *\n"
+            "* Bugcheck Analysis                                                           *\n"
+            "*                                                                             *\n"
+            "*******************************************************************************\n\n"
+            "DRIVER_IRQL_NOT_LESS_OR_EQUAL (d1)\n"
+            "An attempt was made to access a pageable (or completely invalid) address at an\n"
+            "interrupt request level (IRQL) that is too high.\n"
+            "Arguments:\n"
+            "Arg1: ffffd580a3b7c010, memory referenced\n"
+            "Arg2: 0000000000000002, IRQL\n"
+            "Arg3: 0000000000000001, value 0 = read operation, 1 = write operation\n"
+            "Arg4: fffff80241e8b230, address which referenced memory\n\n"
+            "STACK_TEXT:\n"
+            "fffffe01`c4d4e6d8 fffff802`3a223a9f : nt!KeBugCheckEx\n"
+            "fffffe01`c4d4e6e0 fffff802`3a21f9c2 : nt!KiBugCheckDispatch+0x6f\n"
+            "fffffe01`c4d4e820 fffff802`41e8b230 : nt!KiPageFault+0x462\n"
+            "fffffe01`c4d4e9b8 fffff802`41e8a105 : ndis!ndisNblSetTimestamp+0x20\n"
+            "fffffe01`c4d4e9c0 fffff802`41120068 : ndis!NdisMIndicateReceiveNetBufferLists+0x135\n"
+            "fffffe01`c4d4ea30 fffff802`4111f8c2 : rt68cx21!RTMPRxDoneInterruptHandle+0x468\n\n"
+            "MODULE_NAME: rt68cx21\n"
+            "IMAGE_NAME: rt68cx21.sys\n\n"
+            "The laptop is a Lenovo ThinkPad T14s Gen 4, about 8 months old. The crashes"
+            " started after a Windows Update two weeks ago.",
+            "User reports daily BSOD on Lenovo ThinkPad T14s Gen 4 during Teams"
+            " meetings. Bugcheck DRIVER_IRQL_NOT_LESS_OR_EQUAL (0xD1) faulting"
+            " in rt68cx21.sys (Realtek network driver). Crashes started after"
+            " a Windows Update two weeks ago. Full WinDbg minidump analysis"
+            " pasted into the ticket.",
+        ),
+        gold=ScenarioGold(
+            category="Hardware & Peripherals",
+            priority="P2",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+            missing_information=("environment_details",),
+            next_best_action="Resolve recurring BSOD caused by Realtek network driver"
+            " (rt68cx21.sys) on ThinkPad T14s — likely triggered by a recent"
+            " Windows Update incompatibility with the NIC driver",
+            remediation_steps=(
+                "Update the Realtek network driver rt68cx21.sys to the latest version from Lenovo support",
+                "If no updated driver is available, roll back the driver to the pre-update version",
+                "Check Windows Update history for the specific KB that triggered the issue",
+                "Disable any network offloading features that may conflict with the updated kernel",
+                "Monitor for BSOD recurrence after the driver update and escalate to Lenovo if it persists",
+            ),
+        ),
+        tags=("data-cleanup", "bsod-minidump", "debugger-output"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 44. Teams/Slack webhook JSON payloads
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-044",
+        subjects=(
+            "Teams webhook notifications stopped working — payload samples included",
+            "Slack → Teams connector broken — JSON payloads attached",
+        ),
+        descriptions=(
+            "Our alerting pipeline sends notifications to a Teams channel via webhook"
+            " but messages stopped appearing yesterday afternoon. Here are the last"
+            " few payloads we sent that got HTTP 400 responses:\n\n"
+            '{"@type":"MessageCard","@context":"https://schema.org/extensions",'
+            '"themeColor":"FF0000","summary":"[CRITICAL] CPU > 95% on prod-web-04",'
+            '"sections":[{"activityTitle":"Infrastructure Alert","activitySubtitle":'
+            '"Triggered at 2026-03-10T15:42:18Z","activityImage":"https://monitoring'
+            '.contoso.com/icons/critical.png","facts":[{"name":"Server","value":'
+            '"prod-web-04.contoso.com"},{"name":"Metric","value":"cpu_percent"},'
+            '{"name":"Current","value":"97.3%"},{"name":"Threshold","value":"95%"},'
+            '{"name":"Duration","value":"12 minutes"},{"name":"Datacenter","value":'
+            '"East US 2"}],"markdown":true}],"potentialAction":[{"@type":"OpenUri",'
+            '"name":"View Dashboard","targets":[{"os":"default","uri":"https://'
+            'monitoring.contoso.com/dash/prod-web-04"}]},{"@type":"OpenUri","name":'
+            '"Acknowledge","targets":[{"os":"default","uri":"https://monitoring.'
+            'contoso.com/ack/alert-28841"}]}]}\n\n'
+            '{"@type":"MessageCard","@context":"https://schema.org/extensions",'
+            '"themeColor":"FFA500","summary":"[WARNING] Disk space < 10% on '
+            'sql-replica-02","sections":[{"activityTitle":"Infrastructure Alert",'
+            '"activitySubtitle":"Triggered at 2026-03-10T15:44:02Z","facts":'
+            '[{"name":"Server","value":"sql-replica-02.contoso.com"},{"name":'
+            '"Metric","value":"disk_free_percent"},{"name":"Current","value":'
+            '"7.2%"},{"name":"Threshold","value":"10%"},{"name":"Drive","value":'
+            '"E:\\\\Data"}],"markdown":true}]}\n\n'
+            "We haven't changed anything on our side. About 50 alerts a day go"
+            " through this channel and the on-call team relies on it.",
+            "Teams incoming webhook for infrastructure alerts returning HTTP 400"
+            " since yesterday afternoon. ~50 alerts/day affected. User pasted"
+            " multiple MessageCard JSON payloads. No changes made on sender side."
+            " On-call team missing critical notifications.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message",),
+            next_best_action="Investigate Teams incoming webhook returning HTTP 400 —"
+            " Microsoft may have deprecated the legacy MessageCard format or"
+            " changed connector requirements; on-call alerting is impacted",
+            remediation_steps=(
+                "Check the Teams admin center for any connector policy changes or deprecation notices",
+                "Verify the webhook URL is still valid and the target channel/team has not been modified",
+                "Test with a minimal MessageCard payload to isolate whether the schema or the connector is at fault",
+                "Migrate from legacy Office 365 connectors to the Workflows-based"
+                " webhook if connectors were deprecated",
+                "Set up a fallback notification channel (email or secondary webhook) until the primary is restored",
+            ),
+        ),
+        tags=("data-cleanup", "webhook-json", "teams-connector"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 45. PowerShell mixed error/verbose/warning streams
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-045",
+        subjects=(
+            "AD user provisioning script failing — PowerShell output attached",
+            "New hire onboarding script errors — full verbose log included",
+        ),
+        descriptions=(
+            "The PowerShell script we use for new hire AD provisioning is failing."
+            " I ran it with -Verbose and captured all streams. Here's the output:\n\n"
+            "VERBOSE: [09:14:01] Connecting to domain controller DC01.contoso.com...\n"
+            "VERBOSE: [09:14:02] Successfully authenticated as svc-provisioning@contoso.com\n"
+            "VERBOSE: [09:14:02] Reading input CSV: \\\\fileserv01\\HR\\NewHires_20260310.csv\n"
+            "VERBOSE: [09:14:03] Found 12 new hire records to process\n"
+            "VERBOSE: [09:14:03] Processing record 1/12: Aisha Patel (aisha.patel@contoso.com)\n"
+            "VERBOSE: [09:14:03] Creating AD account in OU=NewHires,OU=Users,DC=contoso,DC=com\n"
+            "VERBOSE: [09:14:04] Setting manager to CN=Robert Kim,OU=Engineering,OU=Users,DC=contoso,DC=com\n"
+            "VERBOSE: [09:14:04] Adding to groups: SG-Engineering, SG-AllEmployees, SG-VPN-Users\n"
+            "WARNING: Group SG-Engineering-BuildAccess not found — skipping group membership\n"
+            "VERBOSE: [09:14:05] Assigning E5 license via Microsoft Graph...\n"
+            "VERBOSE: [09:14:06] License assigned successfully\n"
+            "VERBOSE: [09:14:06] Processing record 2/12: James O'Brien (james.obrien@contoso.com)\n"
+            "WARNING: Username james.obrien conflicts with existing disabled account — appending '2'\n"
+            "VERBOSE: [09:14:07] Creating AD account as james.obrien2@contoso.com\n"
+            "VERBOSE: [09:14:07] Setting manager to CN=Lisa Wang,OU=Marketing,OU=Users,DC=contoso,DC=com\n"
+            "VERBOSE: [09:14:08] Adding to groups: SG-Marketing, SG-AllEmployees, SG-VPN-Users\n"
+            "VERBOSE: [09:14:08] Assigning E3 license via Microsoft Graph...\n"
+            "Write-Error: Insufficient licenses available for SKU ENTERPRISEPACK_E3 — "
+            "0 of 500 licenses remaining\n"
+            "VERBOSE: [09:14:09] Processing record 3/12: Mei Chen (mei.chen@contoso.com)\n"
+            "Write-Error: Insufficient licenses available for SKU ENTERPRISEPACK_E3 — "
+            "0 of 500 licenses remaining\n"
+            "Write-Error: Insufficient licenses available for SKU ENTERPRISEPACK_E3 — "
+            "0 of 500 licenses remaining\n"
+            "WARNING: 3 consecutive license failures — pausing license assignments\n"
+            "VERBOSE: [09:14:10] Creating AD account for mei.chen@contoso.com (without license)\n"
+            "VERBOSE: [09:14:11] Processing record 4/12: Carlos Mendoza (carlos.mendoza@contoso.com)\n"
+            "Write-Error: New-ADUser : The specified account already exists.\n"
+            "At C:\\Scripts\\Provision-NewHire.ps1:147 char:9\n"
+            "+         New-ADUser @userParams\n"
+            "+         ~~~~~~~~~~~~~~~~~~~~~~~\n"
+            "    + CategoryInfo          : ResourceExists\n"
+            "    + FullyQualifiedErrorId : ADIdentityAlreadyExists,New-ADUser\n"
+            "VERBOSE: [09:14:12] Script terminated after 4 records — 2 errors, 3 warnings\n\n"
+            "12 new hires are starting Monday and only 1 was provisioned successfully.",
+            "AD new hire provisioning script failed processing 12 users — only"
+            " 1 completed. E3 license pool exhausted (0 of 500 remaining),"
+            " username conflict with disabled account, and duplicate AD object"
+            " error. Full PowerShell verbose/warning/error stream output pasted"
+            " in the ticket. 12 new hires starting Monday.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+            missing_information=("environment_details",),
+            next_best_action="Resolve multiple AD provisioning failures — procure"
+            " additional E3 licenses, clean up conflicting/duplicate accounts,"
+            " and re-run the script before Monday onboarding",
+            remediation_steps=(
+                "Request additional E3 licenses or reclaim unused licenses from"
+                " disabled accounts to replenish the pool",
+                "Resolve the james.obrien username conflict by removing or permanently renaming the disabled account",
+                "Investigate and remove the duplicate AD object for carlos.mendoza before re-provisioning",
+                "Verify the missing security group SG-Engineering-BuildAccess and create it if needed",
+                "Re-run the provisioning script for the 11 incomplete users and"
+                " confirm all accounts are ready before Monday",
+            ),
+        ),
+        tags=("data-cleanup", "powershell-streams", "mixed-output"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 46. Docker Compose YAML flood
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-046",
+        subjects=(
+            "Dev environment won't start — Docker Compose config pasted below",
+            "docker compose up fails — YAML included for troubleshooting",
+        ),
+        descriptions=(
+            "My local dev environment stopped working after I pulled the latest"
+            " docker-compose.yml from the repo. Here's the full file:\n\n"
+            "version: '3.8'\n"
+            "services:\n"
+            "  web:\n"
+            "    build:\n"
+            "      context: .\n"
+            "      dockerfile: Dockerfile.web\n"
+            "    ports:\n"
+            "      - '3000:3000'\n"
+            "    environment:\n"
+            "      - NODE_ENV=development\n"
+            "      - DATABASE_URL=postgresql://devuser:devpass@db:5432/contoso_dev\n"
+            "      - REDIS_URL=redis://cache:6379/0\n"
+            "      - API_KEY=${CONTOSO_API_KEY}\n"
+            "      - JWT_SECRET=${JWT_SECRET}\n"
+            "      - AZURE_STORAGE_CONNECTION=DefaultEndpointsProtocol=https;"
+            "AccountName=contosodev;AccountKey=REDACTED;EndpointSuffix=core.windows.net\n"
+            "    volumes:\n"
+            "      - ./src:/app/src\n"
+            "      - /app/node_modules\n"
+            "    depends_on:\n"
+            "      db:\n"
+            "        condition: service_healthy\n"
+            "      cache:\n"
+            "        condition: service_started\n"
+            "      elasticsearch:\n"
+            "        condition: service_healthy\n"
+            "    networks:\n"
+            "      - contoso-net\n\n"
+            "  api:\n"
+            "    build:\n"
+            "      context: ./api\n"
+            "      dockerfile: Dockerfile\n"
+            "    ports:\n"
+            "      - '8080:8080'\n"
+            "    environment:\n"
+            "      - ASPNETCORE_ENVIRONMENT=Development\n"
+            "      - ConnectionStrings__DefaultConnection=Host=db;Database=contoso_dev;"
+            "Username=devuser;Password=devpass\n"
+            "      - ElasticSearch__Url=http://elasticsearch:9200\n"
+            "    depends_on:\n"
+            "      db:\n"
+            "        condition: service_healthy\n"
+            "    networks:\n"
+            "      - contoso-net\n\n"
+            "  db:\n"
+            "    image: postgres:16-alpine\n"
+            "    environment:\n"
+            "      - POSTGRES_DB=contoso_dev\n"
+            "      - POSTGRES_USER=devuser\n"
+            "      - POSTGRES_PASSWORD=devpass\n"
+            "    volumes:\n"
+            "      - pgdata:/var/lib/postgresql/data\n"
+            "      - ./init-scripts:/docker-entrypoint-initdb.d\n"
+            "    healthcheck:\n"
+            "      test: ['CMD-SHELL', 'pg_isready -U devuser -d contoso_dev']\n"
+            "      interval: 5s\n"
+            "      timeout: 5s\n"
+            "      retries: 5\n"
+            "    networks:\n"
+            "      - contoso-net\n\n"
+            "  cache:\n"
+            "    image: redis:7-alpine\n"
+            "    ports:\n"
+            "      - '6379:6379'\n"
+            "    networks:\n"
+            "      - contoso-net\n\n"
+            "  elasticsearch:\n"
+            "    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0\n"
+            "    environment:\n"
+            "      - discovery.type=single-node\n"
+            "      - xpack.security.enabled=false\n"
+            "      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'\n"
+            "    volumes:\n"
+            "      - esdata:/var/lib/elasticsearch/data\n"
+            "    healthcheck:\n"
+            "      test: ['CMD-SHELL', 'curl -sf http://localhost:9200/_cluster/health']\n"
+            "      interval: 10s\n"
+            "      timeout: 10s\n"
+            "      retries: 10\n"
+            "    networks:\n"
+            "      - contoso-net\n\n"
+            "  worker:\n"
+            "    build:\n"
+            "      context: ./worker\n"
+            "    environment:\n"
+            "      - REDIS_URL=redis://cache:6379/1\n"
+            "      - DATABASE_URL=postgresql://devuser:devpass@db:5432/contoso_dev\n"
+            "    depends_on:\n"
+            "      - cache\n"
+            "      - db\n"
+            "    networks:\n"
+            "      - contoso-net\n\n"
+            "volumes:\n"
+            "  pgdata:\n"
+            "  esdata:\n\n"
+            "networks:\n"
+            "  contoso-net:\n"
+            "    driver: bridge\n\n"
+            "The error I get is:\n"
+            "Error response from daemon: failed to create network contoso-net: could not"
+            " find an available, non-overlapping IPv4 address pool.\n\n"
+            "I think I have too many Docker networks already but I'm not sure what to clean up.",
+            "Dev docker-compose environment fails to start with 'could not find"
+            " an available, non-overlapping IPv4 address pool' error on network"
+            " creation. Full 7-service docker-compose.yml (web, api, db, cache,"
+            " elasticsearch, worker) pasted in ticket. User suspects too many"
+            " existing Docker networks.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("environment_details",),
+            next_best_action="Resolve Docker network address pool exhaustion — prune"
+            " unused Docker networks so the dev compose stack can create its"
+            " bridge network",
+            remediation_steps=(
+                "Run 'docker network ls' and 'docker network prune' to clean up unused networks",
+                "If pruning is insufficient, manually remove stale networks from old compose projects",
+                "Consider assigning a specific subnet in the docker-compose.yml to avoid pool conflicts",
+                "Verify the compose stack starts successfully after network cleanup",
+                "Document the network cleanup procedure for the development team to avoid recurrence",
+            ),
+        ),
+        tags=("data-cleanup", "docker-compose-yaml", "config-dump"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 47. OCR'd financial report with character confusion
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-047",
+        subjects=(
+            "Need he1p with quarter1y report — OCR scan has errors",
+            "F1nancial report PDF won't import — bad OCR characters",
+        ),
+        descriptions=(
+            "I scanned our Q4 financial report to import into the ERP but the OCR"
+            " is terrible. Here's a sample of what it produced:\n\n"
+            "CONT0SO CORP — Q4 2025 F1NANC1AL SUMMARY\n"
+            "Prepared by: 0ffice of the CF0\n"
+            "Date: January l5, 2O26\n\n"
+            "REVENUE BREAKD0WN (in $OOOs)\n"
+            "                          Q4 2025    Q3 2O25    YoY %\n"
+            "Product Sa1es            $l2,847     $ll,293    +l3.8%\n"
+            "Service Revenue          $ 8,4l9     $ 7,88O    + 6.8%\n"
+            "Subscripti0n Fees        $ 6,2O3     $ 5,9l4    + 4.9%\n"
+            "Licensing & R0ya1ties    $ 3,l87     $ 2,95O    + 8.O%\n"
+            "                         --------    --------\n"
+            "T0TAL REVENUE            $3O,656     $28,O37    + 9.3%\n\n"
+            "0PERATING EXPENSES\n"
+            "C0st of G0ods So1d       $l4,2l2     $l3,467    + 5.5%\n"
+            "R&D Expenditure          $ 4,8O3     $ 4,5l9    + 6.3%\n"
+            "Sa1es & Marketing        $ 3,97l     $ 3,7l2    + 7.O%\n"
+            "G&A / 0verhead           $ 2,l48     $ 2,Ol7    + 6.5%\n"
+            "Deprec1ati0n & Am0rt.    $ l,234     $ l,l89    + 3.8%\n"
+            "                         --------    --------\n"
+            "T0TAL 0PEX               $26,368     $24,9O4    + 5.9%\n\n"
+            "NET 1NC0ME               $ 4,288     $ 3,l33    +36.9%\n\n"
+            "The ERP import keeps rejecting it because the numbers have letter"
+            " substitutions (1 vs l, 0 vs O). This is a 47-page report and I"
+            " can't manually fix all of it. The original was printed on a dot-matrix"
+            " printer so re-scanning doesn't help.",
+            "User needs to import a 47-page Q4 financial report into the ERP"
+            " but OCR produced systematic character confusion — '1' vs 'l',"
+            " '0' vs 'O', etc. ERP rejects the data. Original was dot-matrix"
+            " printed so re-scanning won't help. Ticket contains sample OCR"
+            " output with garbled financial figures.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("screenshot_or_attachment",),
+            next_best_action="Help the user correct OCR character-confusion errors in"
+            " the 47-page financial report so it can be imported into the ERP —"
+            " a post-processing script to fix common l/1 and O/0 substitutions"
+            " is likely the fastest path",
+            remediation_steps=(
+                "Develop or provide a post-processing script to fix common OCR"
+                " substitutions (l→1, O→0) in numeric fields",
+                "Run the corrected output through ERP import validation in a staging environment first",
+                "Investigate higher-quality OCR software or settings that handle dot-matrix print better",
+                "Validate the corrected financial figures against a known summary before final ERP import",
+                "Recommend scanning future dot-matrix documents with enhanced OCR preprocessing for better accuracy",
+            ),
+        ),
+        tags=("data-cleanup", "ocr-artifacts", "character-confusion"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 48. Quoted-printable encoding artifacts
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-048",
+        subjects=(
+            "Email from vendor looks garbled =E2=80=94 can=27t read it",
+            "Procurement email full of =3D and =20 characters",
+        ),
+        descriptions=(
+            "I received an important email from our vendor but it's full of strange"
+            " characters. Here's what it looks like:\n\n"
+            "From: procurement@fabrikam.com\n"
+            "Subject: Re: Contract Renewal =E2=80=94 Contoso/Fabrikam MSA 2026=\n"
+            "=2D2028\n\n"
+            "Hi Team,=0D=0A=0D=0APlease find attached the revised Master Service=\n"
+            " Agreement for the 2026=E2=80=932028 term. Key changes include:=0D=\n"
+            "=0A=0D=0A1. Annual pricing adjustment of 4.5% =E2=80=94 down from th=\n"
+            "e originally proposed 7.2%=0D=0A2. SLA guarantees improved to 99.95% =\n"
+            "uptime (was 99.9%)=0D=0A3. Data residency clause updated per your le=\n"
+            "gal team=E2=80=99s requirements=0D=0A4. Payment terms extended to Net=\n"
+            " 45 (was Net 30)=0D=0A5. Auto-renewal opt=E2=80=91out window changed =\n"
+            "to 90 days=0D=0A=0D=0AThe total contract value for the 3=E2=80=91year=\n"
+            " term is $2,340,000 =E2=80=94 broken down as:=0D=0A=E2=80=A2 Year 1:=\n"
+            " $740,000=0D=0A=E2=80=A2 Year 2: $770,000=0D=0A=E2=80=A2 Year 3: $83=\n"
+            "0,000=0D=0A=0D=0AWe need signatures by March 28, 2026 to maintain cur=\n"
+            "rent pricing.=0D=0A=0D=0ABest regards,=0D=0ASanjay Mehta=0D=0AVP Ente=\n"
+            "rprise Sales=0D=0AFabrikam Inc.\n\n"
+            "I need to read this properly and forward it to legal. The attachment"
+            " also has the same encoding issue. This is blocking a $2.3M contract"
+            " renewal.",
+            "Vendor contract renewal email from Fabrikam arrived with raw"
+            " quoted-printable encoding visible (=E2=80=94, =0D=0A, soft line"
+            " breaks with trailing =). User cannot read the $2.3M MSA details."
+            " Attachment similarly affected. Needs resolution before March 28"
+            " signature deadline.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message", "environment_details"),
+            next_best_action="Fix the email rendering issue that is displaying raw"
+            " quoted-printable encoding — likely an Outlook or Exchange"
+            " transport rule stripping Content-Transfer-Encoding headers",
+            remediation_steps=(
+                "Check Exchange transport rules for any that modify or strip"
+                " email headers including Content-Transfer-Encoding",
+                "Verify the user's Outlook client is up to date and not using a legacy rendering mode",
+                "Provide the user with a decoded version of the email content as an immediate workaround",
+                "Test inbound email rendering from the same sender with a clean message to isolate the issue",
+                "Coordinate with Fabrikam to resend the contract email if the attachment is also corrupted",
+            ),
+        ),
+        tags=("data-cleanup", "quoted-printable", "encoding-artifacts"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 49. ServiceNow audit trail / state transitions
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-049",
+        subjects=(
+            "SAP login broken — see ServiceNow ticket history for context",
+            "Can't access SAP — this has been bounced around for 3 weeks (audit trail below)",
+        ),
+        descriptions=(
+            "I STILL can't log into SAP and this ticket has been open for 3 weeks."
+            " Here's the full audit trail from ServiceNow — maybe someone can finally"
+            " figure out what's going on:\n\n"
+            "INC0038471 — State Transitions:\n"
+            "────────────────────────────────\n"
+            "2026-02-18 09:12 | New → Assigned | Agent: Auto-Router\n"
+            "  Assignment Group: Service Desk L1\n"
+            "  Notes: Auto-classified as 'Software & Applications'\n\n"
+            "2026-02-18 11:45 | Assigned → In Progress | Agent: Tom Richards\n"
+            "  Work Notes: Contacted user, confirmed SAP GUI 8.0 login fails with"
+            " error 'No RFC authorization for function SYST_LOGIN'. Resetting"
+            " user's SAP password.\n\n"
+            "2026-02-18 14:22 | In Progress → Pending | Agent: Tom Richards\n"
+            "  Notes: Password reset completed. Waiting for user to confirm.\n\n"
+            "2026-02-19 08:55 | Pending → In Progress | Agent: Tom Richards\n"
+            "  Notes: User reports same error after password reset. Escalating.\n\n"
+            "2026-02-19 09:10 | In Progress → Assigned | Agent: Tom Richards\n"
+            "  Assignment Group: Enterprise Applications\n"
+            "  Escalation Notes: Password reset did not resolve. Likely an"
+            " authorization object issue, not credentials.\n\n"
+            "2026-02-21 16:00 | Assigned → In Progress | Agent: Priya Sharma\n"
+            "  Work Notes: Checked user's SAP role assignments. User has"
+            " SAP_BASIC_USER role but missing S_RFC authorization object."
+            " Need Basis team to add it.\n\n"
+            "2026-02-21 16:15 | In Progress → Assigned | Agent: Priya Sharma\n"
+            "  Assignment Group: SAP Basis\n"
+            "  Notes: Need S_RFC auth object added to user's composite role.\n\n"
+            "2026-02-28 09:00 | Assigned → In Progress | Agent: Klaus Weber\n"
+            "  Work Notes: Reviewing request. This requires a role change in"
+            " production — needs change request.\n\n"
+            "2026-02-28 09:30 | In Progress → Pending | Agent: Klaus Weber\n"
+            "  Notes: CHG0012847 created. Pending CAB approval for role change.\n\n"
+            "2026-03-04 14:00 | Pending → In Progress | Agent: Klaus Weber\n"
+            "  Notes: CAB approved CHG0012847. Implementing in next maintenance"
+            " window (Saturday 03/08).\n\n"
+            "2026-03-10 08:30 | In Progress → Pending | Agent: Klaus Weber\n"
+            "  Notes: Change implemented Saturday. Waiting for user confirmation.\n\n"
+            "It's Monday and I STILL can't log in. The error is different now —"
+            " 'User is locked' instead of the RFC error. I think someone locked"
+            " my account during the change.",
+            "SAP login issue open 3 weeks (INC0038471). Originally RFC"
+            " authorization error, escalated through L1 → Enterprise Apps"
+            " → SAP Basis with a CAB-approved change. Change was implemented"
+            " but now user gets 'User is locked' error instead. Full"
+            " ServiceNow audit trail with 11 state transitions pasted in"
+            " the ticket.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message",),
+            next_best_action="Unlock the SAP user account that was likely locked during"
+            " the weekend maintenance change — the original RFC authorization"
+            " fix may be in place but the account lock is a secondary issue"
+            " from the implementation",
+            remediation_steps=(
+                "Unlock the user's SAP account immediately via SU01 or the user admin transaction",
+                "Verify the S_RFC authorization object was correctly added to the user's composite role",
+                "Test SAP GUI login with the user to confirm both the lock and the original RFC error are resolved",
+                "Review the change implementation steps to understand why the account was locked during maintenance",
+                "Close both the incident and the associated change request after confirmation",
+            ),
+        ),
+        tags=("data-cleanup", "servicenow-audit-trail", "state-transitions"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 50. Bloomberg terminal fixed-width output
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-050",
+        subjects=(
+            "Bloomberg terminal not updating — screenshot text dump included",
+            "BBG data feed frozen — pasted terminal output below",
+        ),
+        descriptions=(
+            "My Bloomberg terminal stopped updating around 10:15 AM. I copied the"
+            " screen output to show what I'm seeing:\n\n"
+            "┌─────────────────────────────────────────────────────────────────────┐\n"
+            "│ BLOOMBERG PROFESSIONAL                          Mar 10, 2026 10:15 │\n"
+            "│ TOP <GO>                                                           │\n"
+            "├─────────────────────────────────────────────────────────────────────┤\n"
+            "│ EQUITY MONITOR — US LARGE CAP (STALE DATA WARNING)                 │\n"
+            "│                                                                    │\n"
+            "│ Ticker    Last      Chg     %Chg     Vol(K)    Bid      Ask        │\n"
+            "│ ────────  ────────  ──────  ──────   ────────  ───────  ───────    │\n"
+            "│ AAPL US   187.42    +1.23   +0.66%   12,847    187.41   187.43     │\n"
+            "│ MSFT US   428.91    +3.17   +0.74%    8,234    428.90   428.92     │\n"
+            "│ GOOGL US  172.55    -0.89   -0.51%    6,412    172.54   172.56     │\n"
+            "│ AMZN US   198.33    +2.45   +1.25%    9,871    198.32   198.34     │\n"
+            "│ NVDA US   892.10    +8.72   +0.99%   15,923    892.08   892.12     │\n"
+            "│ META US   512.67    +4.38   +0.86%    7,156    512.66   512.68     │\n"
+            "│ TSLA US   178.24    -3.91   -2.15%   22,448    178.23   178.25     │\n"
+            "│ BRK/B US  418.50    +1.05   +0.25%    2,847    418.49   418.51     │\n"
+            "│                                                                    │\n"
+            "│ ** DATA AS OF 10:15:42 — FEED INTERRUPTED — LAST UPDATE 47 MIN **  │\n"
+            "│                                                                    │\n"
+            "│ FX SNAPSHOT (STALE)          RATES (STALE)                          │\n"
+            "│ EUR/USD  1.0847  +0.0012     UST 2Y   4.587%  +0.023              │\n"
+            "│ GBP/USD  1.2734  -0.0008     UST 10Y  4.218%  +0.015              │\n"
+            "│ USD/JPY  148.23  +0.42       UST 30Y  4.442%  +0.008              │\n"
+            "│ USD/CHF  0.8812  +0.0015     FED FF   5.375%  unch                │\n"
+            "│                                                                    │\n"
+            "│ ALERTS: Connection to B-PIPE lost at 10:15:42                      │\n"
+            "│         Attempting reconnect... (attempt 23/50)                     │\n"
+            "│         Last successful heartbeat: 10:14:58                        │\n"
+            "└─────────────────────────────────────────────────────────────────────┘\n\n"
+            "I'm a portfolio manager and I need live data for trading. The B-PIPE"
+            " connection has been trying to reconnect for almost an hour. Other"
+            " people on the floor seem to be working fine.",
+            "Bloomberg terminal B-PIPE data feed disconnected at 10:15 AM for a"
+            " single portfolio manager. Terminal shows 'Connection to B-PIPE lost'"
+            " and has been attempting reconnect for ~47 minutes. Other users on"
+            " the same floor are unaffected. User pasted full fixed-width"
+            " terminal screen output including stale equity and FX data.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=("device_info", "environment_details"),
+            next_best_action="Restore Bloomberg B-PIPE connectivity for the portfolio"
+            " manager — the data feed has been stale for nearly an hour during"
+            " active trading, affecting trading decisions",
+            remediation_steps=(
+                "Restart the Bloomberg Terminal application and re-authenticate the B-PIPE connection",
+                "Check the local network connection and switch ports"
+                " — other users are unaffected so this may be workstation-specific",
+                "Verify the Bloomberg Anywhere license and B-PIPE entitlements are active for this user",
+                "Contact Bloomberg Technical Support if the reconnection continues to fail after restart",
+                "Provide the user with Bloomberg web access as a temporary workaround for live market data",
+            ),
+        ),
+        tags=("data-cleanup", "bloomberg-terminal", "fixed-width-output"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 51. Excel formula clipboard artifacts
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-051",
+        subjects=(
+            "Excel formulas showing instead of values — pasted broken data below",
+            "Copied from Excel but ticket has raw formulas — budget approval needed",
+        ),
+        descriptions=(
+            "I need help with our department budget file. When I copied the summary"
+            " to email my manager, the formulas came through instead of the values."
+            " Here's what I see:\n\n"
+            "FY2026 Department Budget — Marketing\n\n"
+            "Category               Q1           Q2           Q3           Q4           Total\n"
+            "──────────────────────────────────────────────────────────────────────────────────\n"
+            "Headcount Costs        =SUM(B3:B14) =SUM(C3:C14) =SUM(D3:D14) =SUM(E3:E14) =SUM(B15:E15)\n"
+            "Contractor Budget      =B16*1.15    =C16*1.15    =D16*1.15    =E16*1.15    =SUM(B17:E17)\n"
+            "Software Licenses      =VLOOKUP(\"MKT\",Licensing!A:F,3,FALSE) =VLOOKUP(\"MKT\","
+            "Licensing!A:F,4,FALSE) =VLOOKUP(\"MKT\",Licensing!A:F,5,FALSE) =VLOOKUP(\"MKT\","
+            "Licensing!A:F,6,FALSE) =SUM(B18:E18)\n"
+            "Travel & Events        ='Prior Year'!B18*1.08 ='Prior Year'!C18*1.08"
+            " ='Prior Year'!D18*1.08 ='Prior Year'!E18*1.08 =SUM(B19:E19)\n"
+            "Digital Ad Spend       =INDEX(AdBudget,MATCH(\"Q1\",AdBudget[Quarter],0),"
+            "MATCH(\"Marketing\",AdBudget[#Headers],0)) =INDEX(AdBudget,MATCH(\"Q2\","
+            "AdBudget[Quarter],0),MATCH(\"Marketing\",AdBudget[#Headers],0)) =INDEX("
+            "AdBudget,MATCH(\"Q3\",AdBudget[Quarter],0),MATCH(\"Marketing\",AdBudget"
+            "[#Headers],0)) =INDEX(AdBudget,MATCH(\"Q4\",AdBudget[Quarter],0),MATCH("
+            "\"Marketing\",AdBudget[#Headers],0)) =SUM(B20:E20)\n"
+            "Agency Fees            =IF(B20>50000,B20*0.12,B20*0.15) =IF(C20>50000,"
+            "C20*0.12,C20*0.15) =IF(D20>50000,D20*0.12,D20*0.15) =IF(E20>50000,"
+            "E20*0.12,E20*0.15) =SUM(B21:E21)\n"
+            "──────────────────────────────────────────────────────────────────────────────────\n"
+            "TOTAL                  =SUM(B15:B21) =SUM(C15:C21) =SUM(D15:D21) =SUM(E15:E21)"
+            " =SUM(F15:F21)\n"
+            "vs Budget Cap          =B22-Budget_Cap_Q1 =C22-Budget_Cap_Q2 =D22-Budget_Cap_Q3"
+            " =E22-Budget_Cap_Q4 =F22-Annual_Cap\n"
+            "Status                 =IF(B23>0,\"OVER\",\"OK\") =IF(C23>0,\"OVER\",\"OK\")"
+            " =IF(D23>0,\"OVER\",\"OK\") =IF(E23>0,\"OVER\",\"OK\") =IF(F23>0,\"OVER BUDGET\","
+            "\"WITHIN BUDGET\")\n\n"
+            "The real issue is: the file won't open anymore. When I try to open it I get"
+            " 'Excel cannot open the file because the file format or extension is not"
+            " valid.' It was working fine yesterday and it's on SharePoint. I need this"
+            " for a budget review meeting tomorrow morning.",
+            "Marketing budget Excel file on SharePoint won't open — 'file format"
+            " or extension is not valid' error. User pasted clipboard content"
+            " showing raw Excel formulas (SUM, VLOOKUP, INDEX/MATCH, IF) instead"
+            " of computed values. Budget review meeting tomorrow. File was"
+            " working yesterday.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message", "screenshot_or_attachment"),
+            next_best_action="Recover the corrupted Excel budget file from SharePoint"
+            " version history — the formulas in the ticket are clipboard artifacts"
+            " and not useful for recovery; focus on restoring a working version"
+            " before tomorrow's budget meeting",
+            remediation_steps=(
+                "Restore a previous version of the Excel file from SharePoint version history",
+                "If no clean version exists, attempt to open the file with Excel's Open and Repair feature",
+                "Verify the recovered file's formulas and cross-sheet references are intact",
+                "Save a local backup copy before re-uploading to SharePoint to prevent further corruption",
+                "Investigate whether a recent SharePoint sync or co-authoring conflict caused the corruption",
+            ),
+        ),
+        tags=("data-cleanup", "excel-formulas", "clipboard-artifacts"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 52. Very long email with buried issue — rambling before real ask
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-052",
+        subjects=(
+            "Quick question — also hi, how was your weekend?",
+            "Hey IT! Some stuff + a tiny laptop problem at the end",
+        ),
+        descriptions=(
+            "Hey team!! Hope everyone had a great weekend. Mine was honestly SO good —"
+            " my sister-in-law came up from Philadelphia and we went to that new brunch"
+            " place on 5th Street, you know the one with the huge pancakes? Anyway we"
+            " ended up walking around the park for like two hours after and my feet are"
+            " STILL sore haha.\n\n"
+            "Oh also — did anyone else notice the parking garage on Level 2 was super"
+            " full on Friday? I had to circle for 15 minutes. I think they need to open"
+            " up the overflow lot again. Maybe facilities can look into that? Not sure"
+            " if that's you guys or someone else.\n\n"
+            "Speaking of Friday, the coffee machine on the 4th floor was making that"
+            " weird grinding noise again. Last time it did that it broke for like a"
+            " week and we all had to go to the 3rd floor. If someone could put in a"
+            " maintenance request that would be amazing. Or maybe I should do it"
+            " myself? Who handles that?\n\n"
+            "Also random but does anyone know if the holiday party is confirmed for"
+            " December 12th? My team needs to plan around it for a client demo.\n\n"
+            "OH WAIT the actual reason I'm emailing — my laptop docking station stopped"
+            " outputting to my external monitors this morning. I get to my desk, plug"
+            " everything in, and both screens stay black. The laptop screen works fine."
+            " I tried unplugging and replugging. The dock is a Dell WD19TBS and my"
+            " laptop is a ThinkPad T14s Gen 4. It was working fine last Thursday."
+            " My employee ID is 50321 and I'm on Floor 4, Building A, desk 4-217.\n\n"
+            "Thanks so much!! Have a great day \U0001f60a",
+            "Rambling email mostly about weekend, parking, coffee machine, and holiday"
+            " party. Actual issue buried at the very end: Dell WD19TBS docking station"
+            " not outputting to external monitors since Monday morning. Laptop is a"
+            " ThinkPad T14s Gen 4. Both screens stay black when docked; laptop display"
+            " works. Floor 4, Building A, desk 4-217.",
+        ),
+        gold=ScenarioGold(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+            missing_information=("error_message", "device_info"),
+            next_best_action="Troubleshoot the Dell WD19TBS docking station display output"
+            " failure — the buried issue is that both external monitors stay black"
+            " when docked; ignore the unrelated rambling about parking, coffee"
+            " machines, and holiday planning",
+            remediation_steps=(
+                "Update the Dell WD19TBS dock firmware using Dell Dock Updater utility",
+                "Check the ThinkPad T14s display output settings and ensure external displays are detected in Device Manager",
+                "Test with a different dock or direct HDMI/USB-C connection to isolate the faulty component",
+                "If firmware update does not resolve, swap the docking station with a known-good unit from inventory",
+            ),
+        ),
+        tags=("data-cleanup", "buried-issue", "rambling"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 53. Base64-encoded PDF inline — pasted compliance report
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-053",
+        subjects=(
+            "Compliance audit failed — full PDF report attached inline below",
+            "URGENT: SOX compliance scan results (see encoded report)",
+        ),
+        descriptions=(
+            "We just got the results back from our quarterly SOX compliance scan and"
+            " there are critical findings. I couldn't figure out how to attach the PDF"
+            " to this ticket so I'm pasting the base64 of the report below. Can someone"
+            " from Security Ops review ASAP?\n\n"
+            "--- BEGIN COMPLIANCE REPORT PDF (base64) ---\n"
+            "JVBERi0xLjcKCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIg"
+            "MCBSCL9PdXRsaW5lcyA1IDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKL1R5"
+            "cGUgL1BhZ2VzCi9LaWRzIFszIDAgUl0KL0NvdW50IDEKL01lZGlhQm94IFsw"
+            "IDAgNjEyIDc5Ml0KPj4KZW5kb2JqCgozIDAgb2JqCjw8Ci9UeXBlIC9QYWdl"
+            "Ci9QYXJlbnQgMiAwIFIKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KL0NvbnRl"
+            "bnRzIDQgMCBSCi9SZXNvdXJjZXMgPDwgL0ZvbnQgPDwgL0YxIDYgMCBSID4+"
+            "ID4+Cj4+CmVuZG9iagouLi4KU09YIENvbXBsaWFuY2UgU2NhbiBSZXBvcnQg"
+            "LSBRMSA2MDI2CkNSSVRJQ0FMIEZJRE5JTkdTOiAzCi0gVW5lbmNyeXB0ZWQg"
+            "UERJIHN0b3JhZ2UgaW4gUzMgYnVja2V0ICJmaW4tcmVwb3J0cy1wcm9kIgot"
+            "IFN0YWxlIHNlcnZpY2UgYWNjb3VudCB3aXRoIGFkbWluIHByaXZpbGVnZXMg"
+            "KGxhc3Qgcm90YXRlZCAyMDI0LTAyLTE4KQotIE1pc3NpbmcgYXVkaXQgbG9n"
+            "Z2luZyBvbiAzIHByb2R1Y3Rpb24gZGF0YWJhc2VzCi4uLgo0IDAgb2JqCjw8"
+            "Ci9MZW5ndGggNDQKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgo3MiA3MjAgVGQK"
+            "KFNPWCBDb21wbGlhbmNlIFNjYW4gUmVwb3J0IC0gUTEgMjAyNikgVGoKRVQK"
+            "ZW5kc3RyZWFtCmVuZG9iago=\n"
+            "--- END COMPLIANCE REPORT PDF ---\n\n"
+            "The critical findings are:\n"
+            "1. Unencrypted PII storage in the S3 bucket 'fin-reports-prod'\n"
+            "2. A stale service account with admin privileges not rotated since Feb 2024\n"
+            "3. Missing audit logging on 3 production databases\n\n"
+            "We need to remediate before the external auditors arrive on March 28th.",
+            "SOX compliance scan returned 3 critical findings: unencrypted PII in"
+            " S3 bucket 'fin-reports-prod', stale admin service account (last"
+            " rotated 2024-02-18), and missing audit logging on 3 production"
+            " databases. User pasted base64-encoded PDF inline instead of"
+            " attaching. External auditors arrive March 28th.",
+        ),
+        gold=ScenarioGold(
+            category="Security & Compliance",
+            priority="P2",
+            assigned_team="Security Operations",
+            needs_escalation=False,
+            missing_information=("environment_details", "affected_system"),
+            next_best_action="Triage the three critical SOX findings — the base64 block is a"
+            " PDF artifact and should be decoded or ignored; focus on the plaintext"
+            " summary identifying unencrypted PII, stale admin credentials, and"
+            " missing audit logging ahead of the March 28th audit deadline",
+            remediation_steps=(
+                "Enable server-side encryption (SSE-S3 or SSE-KMS) on the 'fin-reports-prod' S3 bucket and audit existing unencrypted objects",
+                "Rotate the stale service account credentials immediately and enforce an automated rotation policy",
+                "Enable audit logging on the three production databases and verify log delivery to the SIEM",
+                "Request the user attach the PDF properly for archival and remove the inline base64 from the ticket",
+            ),
+        ),
+        tags=("data-cleanup", "pdf-embed", "base64"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 54. Mobile autocorrect mangling — garbled technical terms
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-054",
+        subjects=(
+            "Saleforce dadhboard not loading — sent from my iPhone",
+            "Can't axcess the CRM reporting — typos sry on phone",
+        ),
+        descriptions=(
+            "Hay, sending this from my phone bc I'm traveling and can't get to my"
+            " laptop. The Saleforce dashbored hasn't been loading since this morning."
+            " When I click on the \"Quartly Revenu Summery\" report it just spins"
+            " forever and then shows a massage that says something like \"reprot"
+            " execution timed out exceeded maximum querry complicity.\"\n\n"
+            "I tired clearing my bowser cache and cockes (using Chrom on my iPhone)"
+            " but same problm. My manger needs the Q1 piepline numbers for a bored"
+            " meeting at 3pm tody so this is prety urget.\n\n"
+            "I'm in the EST timezone, my Saleforce username is jthompson@contoso.com"
+            " and I'm in the \"North Amercia Sales\" busness unit. The dahsboard I"
+            " need is called \"Q1 FY26 Piepline Anaylsis\" in the \"Executve"
+            " Reprots\" folder.\n\n"
+            "Plese advise ASPA. Thx.\n\n"
+            "Sent form my iPhone",
+            "Salesforce dashboard 'Q1 FY26 Pipeline Analysis' in the 'Executive"
+            " Reports' folder is not loading — report execution times out with a"
+            " query complexity error. User is jthompson@contoso.com in North"
+            " America Sales. Sent from mobile with heavy autocorrect garbling."
+            " Manager needs pipeline numbers for board meeting at 3 PM EST today.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message", "application_version"),
+            next_best_action="Investigate the Salesforce report execution timeout on the"
+            " 'Q1 FY26 Pipeline Analysis' dashboard — the autocorrect-mangled"
+            " text obscures the actual error which is likely a SOQL query"
+            " complexity limit; check report filters and row counts",
+            remediation_steps=(
+                "Check the Salesforce report execution logs for jthompson@contoso.com to identify the SOQL query limit error",
+                "Review the 'Q1 FY26 Pipeline Analysis' report filters and reduce the query scope or add index-friendly filters",
+                "If the report is too complex, break it into smaller sub-reports or use an async report export",
+                "Provide the user with a temporary exported CSV of the pipeline data for the 3 PM board meeting",
+            ),
+        ),
+        tags=("data-cleanup", "autocorrect", "mobile-input"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 55. Voicemail speech-to-text transcription — badly transcribed
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-055",
+        subjects=(
+            "Voicemail transcription from ext 4471 — network issue in warehouse",
+            "[Auto-Transcribed VM] Network down in building — please call back",
+        ),
+        descriptions=(
+            "[Voicemail Auto-Transcription \u2014 Confidence: 42%]\n"
+            "From: Extension 4471 | Duration: 1m 23s | Received: 2026-03-11 07:14 EST\n\n"
+            "\"Hey this is uh Marcus from the wear house... the uh the wife eye is"
+            " completely down on the floor sense about six this mourning. We can't"
+            " scan any of the bar coats on the in ventory and the fork lift tracking"
+            " system is showing off line too. We got a big sip mint going out at"
+            " ate AM and if we can't get the scanners working we're gonna have to"
+            " do everything man yule which will put us behind at least three ours.\n\n"
+            "I think it might be the axe says point near dock for because that's"
+            " where the signal is the wurst. We had a sim lure issue too weeks a go"
+            " and some one from net work came and re set the thing on the sealing.\n\n"
+            "Can you guys send some one out here as soon as poss a bull? My sell"
+            " is 555-0147 or just call the wear house main line at extension for"
+            " for seven one. Tanks.\"\n\n"
+            "[End of Transcription]",
+            "[Auto-transcribed voicemail from warehouse ext 4471] Wi-Fi is"
+            " completely down on the warehouse floor since 6 AM. Barcode"
+            " scanners and forklift tracking system are offline. Large"
+            " shipment going out at 8 AM \u2014 will need manual processing if"
+            " not fixed. Suspects access point near Dock 4. Similar issue"
+            " 2 weeks ago resolved by resetting AP on ceiling. Contact:"
+            " cell 555-0147 or ext 4471.",
+        ),
+        gold=ScenarioGold(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+            missing_information=("network_location", "device_info"),
+            next_best_action="Dispatch a network technician to the warehouse floor to check the"
+            " access point near Dock 4 \u2014 the speech-to-text transcription is heavily"
+            " garbled but the core issue is a complete Wi-Fi outage affecting barcode"
+            " scanners and forklift tracking with an 8 AM shipment deadline",
+            remediation_steps=(
+                "Remotely check the status of the warehouse access point near Dock 4 in the wireless controller dashboard",
+                "If the AP is unreachable, dispatch a technician to power-cycle or replace it on-site",
+                "Verify all warehouse barcode scanners and forklift tracking devices reconnect after the AP is restored",
+                "Review the previous incident from two weeks ago to determine if this is a recurring hardware failure requiring permanent replacement",
+            ),
+        ),
+        tags=("data-cleanup", "voicemail", "speech-to-text"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 56. Zero-width Unicode characters — invisible chars in text
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-056",
+        subjects=(
+            "SSO lo\u200bgin fai\u200bling \u2014 pass\u200bword re\u200bset not wor\u200bking",
+            "Can\u2019t sign in to\u200b Azure\u200b AD \u200b\u2014 account locked\u200b out",
+        ),
+        descriptions=(
+            "I\u200b can\u200b't log\u200b in to\u200b any\u200bthing since\u200b this\u200b morn\u200bing."
+            " When\u200b I try\u200b to\u200b sign in\u200b to the\u200b SSO por\u200btal at"
+            " https://sso\u200b.con\u200btoso\u200b.com\u200b/login I get\u200b an"
+            " error:\u200b \"AADSTS\u200b50053\u200b: The\u200b account\u200b is\u200b locked"
+            "\u200b because\u200b the\u200b user\u200b tried\u200b to sign\u200b in too\u200b"
+            " many\u200b times\u200b with\u200b an\u200b incorrect\u200b user\u200b ID"
+            "\u200b or\u200b pass\u200bword.\u200b\"\n\n"
+            "I\u200b tried\u200b the\u200b self\u200b-service\u200b pass\u200bword\u200b reset"
+            "\u200b at\u200b https://pass\u200bword\u200breset\u200b.micro\u200bsoft\u200bonline"
+            "\u200b.com\u200b but\u200b when\u200b I\u200b paste\u200b my\u200b user\u200bname"
+            "\u200b (e\u200bmily\u200b.chen\u200b@con\u200btoso\u200b.com\u200b) it\u200b says"
+            "\u200b \"We\u200b couldn\u200b't\u200b find\u200b an\u200b account\u200b"
+            " with\u200b that\u200b user\u200bname.\u200b\"\n\n"
+            "I\u200b think\u200b the\u200b user\u200bname\u200b might\u200b have\u200b invisible"
+            "\u200b characters\u200b in\u200b it?\u200b I\u200b copied\u200b it\u200b from"
+            "\u200b a\u200b web\u200bpage\u200b and\u200b it looks\u200b right\u200b but"
+            "\u200b maybe\u200b there\u200b's something\u200b hidden.\u200b My\u200b manager"
+            "\u200b said\u200b to\u200b open\u200b a\u200b ticket\u200b because\u200b I\u200b"
+            " need\u200b access\u200b for\u200b client\u200b deliverables\u200b due\u200b Friday.",
+            "User cannot log in to SSO portal \u2014 Azure AD error AADSTS50053"
+            " (account locked). Self-service password reset also fails because"
+            " the username field contains zero-width space characters (\u200b)"
+            " copied from a webpage. Actual username is emily.chen@contoso.com."
+            " Access needed for client deliverables due Friday.",
+        ),
+        gold=ScenarioGold(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+            missing_information=("authentication_method", "timestamp"),
+            next_best_action="Unlock the Azure AD account for emily.chen@contoso.com and advise"
+            " the user that the self-service password reset failed because zero-width"
+            " Unicode characters (U+200B) were embedded in the username field when"
+            " pasted from a browser",
+            remediation_steps=(
+                "Unlock the Azure AD account for emily.chen@contoso.com via the admin portal",
+                "Reset the password manually and provide temporary credentials through a secure channel",
+                "Advise the user to manually type the username instead of pasting to avoid invisible Unicode characters",
+                "Check Azure AD sign-in logs to confirm no unauthorized access attempts caused the lockout",
+            ),
+        ),
+        tags=("data-cleanup", "zero-width-chars", "invisible-unicode"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 57. Docker compose / YAML config dump — entire config pasted
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-057",
+        subjects=(
+            "Staging environment won't start — docker-compose config below",
+            "HELP: containers keep crashing on staging — pasted full YAML",
+        ),
+        descriptions=(
+            "Our staging environment has been down since last night's deploy. I'm"
+            " pasting our full docker-compose.yml so you can see the setup:\n\n"
+            "```yaml\n"
+            "version: '3.8'\n"
+            "services:\n"
+            "  api-gateway:\n"
+            "    image: contoso-registry.azurecr.io/api-gateway:2.14.3\n"
+            "    ports:\n"
+            "      - '8080:8080'\n"
+            "      - '8443:8443'\n"
+            "    environment:\n"
+            "      - SPRING_PROFILES_ACTIVE=staging\n"
+            "      - JAVA_OPTS=-Xmx512m -Xms256m\n"
+            "      - DB_HOST=postgres-primary\n"
+            "      - DB_PORT=5432\n"
+            "      - DB_NAME=contoso_staging\n"
+            "      - DB_USER=app_svc\n"
+            "      - DB_PASSWORD=stg_Pr0d_2026!xK9m\n"
+            "      - REDIS_URL=redis://redis-cache:6379/0\n"
+            "      - JWT_SECRET=a8f5f167f44f4964e6c998dee827110c\n"
+            "    depends_on:\n"
+            "      - postgres-primary\n"
+            "      - redis-cache\n"
+            "    restart: always\n"
+            "    networks:\n"
+            "      - backend\n\n"
+            "  worker-service:\n"
+            "    image: contoso-registry.azurecr.io/worker:1.9.0\n"
+            "    deploy:\n"
+            "      replicas: 3\n"
+            "    environment:\n"
+            "      - WORKER_CONCURRENCY=4\n"
+            "      - RABBITMQ_URL=amqp://rabbit-mq:5672\n"
+            "      - DB_HOST=postgres-primary\n"
+            "      - DB_PASSWORD=stg_Pr0d_2026!xK9m\n"
+            "    depends_on:\n"
+            "      - rabbit-mq\n"
+            "    networks:\n"
+            "      - backend\n\n"
+            "  postgres-primary:\n"
+            "    image: postgres:16.2\n"
+            "    volumes:\n"
+            "      - pgdata:/var/lib/postgresql/data\n"
+            "    environment:\n"
+            "      - POSTGRES_DB=contoso_staging\n"
+            "      - POSTGRES_USER=app_svc\n"
+            "      - POSTGRES_PASSWORD=stg_Pr0d_2026!xK9m\n"
+            "    networks:\n"
+            "      - backend\n\n"
+            "  redis-cache:\n"
+            "    image: redis:7.2-alpine\n"
+            "    networks:\n"
+            "      - backend\n\n"
+            "  rabbit-mq:\n"
+            "    image: rabbitmq:3.13-management\n"
+            "    ports:\n"
+            "      - '15672:15672'\n"
+            "    networks:\n"
+            "      - backend\n\n"
+            "volumes:\n"
+            "  pgdata:\n\n"
+            "networks:\n"
+            "  backend:\n"
+            "    driver: bridge\n"
+            "```\n\n"
+            "The api-gateway container keeps restarting in a crash loop. The logs"
+            " say 'Connection refused' to postgres on port 5432. The postgres"
+            " container itself seems healthy. We need staging back for QA testing"
+            " that starts tomorrow morning.",
+            "Staging environment down since last night's deploy. User pasted full"
+            " docker-compose.yml (contains hardcoded credentials that should be"
+            " rotated). The api-gateway container is crash-looping with"
+            " 'Connection refused' to postgres:5432 even though postgres appears"
+            " healthy. Likely a container startup ordering or network issue."
+            " QA testing starts tomorrow.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message", "environment_details"),
+            next_best_action="Fix the staging docker-compose startup ordering issue causing"
+            " api-gateway to crash-loop on postgres connection refused \u2014 also flag"
+            " the hardcoded credentials in the pasted YAML for immediate rotation"
+            " since they are now exposed in the ticketing system",
+            remediation_steps=(
+                "Add a health check and depends_on condition to the api-gateway service so it waits for postgres to be ready before starting",
+                "Rotate all credentials exposed in the ticket (DB_PASSWORD, JWT_SECRET) since they were pasted in plaintext",
+                "Migrate hardcoded secrets to a vault or Docker secrets to prevent future credential exposure",
+                "Verify the staging environment is fully operational and run a smoke test before QA begins",
+            ),
+        ),
+        tags=("data-cleanup", "yaml-config", "docker-compose"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 58. Git diff pasted as ticket body
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-058",
+        subjects=(
+            "Deployment broke prod — here's the diff that caused it",
+            "ROLLBACK NEEDED: bad commit pushed to main — diff inside",
+        ),
+        descriptions=(
+            "Someone pushed a bad commit to main and now the payment processing"
+            " endpoint is returning 500 errors. I grabbed the diff — can someone"
+            " review and help us roll back?\n\n"
+            "```diff\n"
+            "diff --git a/src/services/payment/processor.py b/src/services/payment/processor.py\n"
+            "index 4a2e8b1..9f3c7d2 100644\n"
+            "--- a/src/services/payment/processor.py\n"
+            "+++ b/src/services/payment/processor.py\n"
+            "@@ -142,7 +142,7 @@ class PaymentProcessor:\n"
+            "     def validate_transaction(self, txn: Transaction) -> bool:\n"
+            "         if txn.amount <= 0:\n"
+            "             raise InvalidAmountError(f\"Invalid amount: {txn.amount}\")\n"
+            "-        if txn.currency in self.SUPPORTED_CURRENCIES:\n"
+            "+        if txn.currency not in self.SUPPORTED_CURRENCIES:\n"
+            "             return self._process_payment(txn)\n"
+            "         return self._reject_unsupported(txn)\n"
+            " \n"
+            "@@ -167,12 +167,8 @@ class PaymentProcessor:\n"
+            "     def _calculate_fees(self, amount: Decimal, region: str) -> Decimal:\n"
+            "-        fee_rate = self.FEE_SCHEDULE.get(region, self.DEFAULT_FEE)\n"
+            "-        if amount > Decimal('10000'):\n"
+            "-            fee_rate *= Decimal('0.85')  # bulk discount\n"
+            "-        return (amount * fee_rate).quantize(Decimal('0.01'))\n"
+            "+        return amount * Decimal('0.05')  # simplified fee calc\n"
+            " \n"
+            "diff --git a/src/services/payment/gateway.py b/src/services/payment/gateway.py\n"
+            "index 7b1e3f4..2d8a9c1 100644\n"
+            "--- a/src/services/payment/gateway.py\n"
+            "+++ b/src/services/payment/gateway.py\n"
+            "@@ -89,6 +89,7 @@ class PaymentGateway:\n"
+            "     async def charge(self, payment_intent: PaymentIntent) -> ChargeResult:\n"
+            "+        import time; time.sleep(5)  # debugging delay TODO remove\n"
+            "         try:\n"
+            "             result = await self.stripe_client.charges.create(\n"
+            "                 amount=payment_intent.amount_cents,\n"
+            "```\n\n"
+            "The logic inversion on line 145 is rejecting ALL valid currencies and"
+            " accepting invalid ones. Plus someone left a debug sleep in the"
+            " gateway. We're losing revenue every minute this is live.",
+            "Production payment endpoint returning 500 errors after bad commit"
+            " to main. User pasted git diff showing: (1) inverted currency"
+            " validation logic rejecting valid currencies, (2) fee calculation"
+            " replaced with hardcoded 5% ignoring bulk discounts, (3) debug"
+            " time.sleep(5) left in payment gateway. Revenue impact is ongoing.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("timestamp", "affected_users"),
+            next_best_action="Immediately revert the bad commit on main that inverted the"
+            " currency validation logic in processor.py \u2014 the git diff in the ticket"
+            " shows three distinct bugs including a logic inversion, a fee calculation"
+            " regression, and a debug sleep statement left in production code",
+            remediation_steps=(
+                "Revert the bad commit on main using git revert and deploy the fix to production immediately",
+                "Verify payment processing is restored by running end-to-end transaction tests against the production endpoint",
+                "Audit recent transactions processed under the inverted logic to identify and correct any mis-charged payments",
+                "Add a pre-merge CI check to flag debug statements (time.sleep, print, pdb) in payment-critical code paths",
+            ),
+        ),
+        tags=("data-cleanup", "git-diff", "code-paste"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 59. Extremely terse ticket — almost no context
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-059",
+        subjects=(
+            "wifi down",
+            "internet broken",
+        ),
+        descriptions=(
+            "wifi doesnt work. pls fix",
+            "net down. help.",
+        ),
+        gold=ScenarioGold(
+            category="Network & Connectivity",
+            priority="P3",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+            missing_information=(
+                "affected_system",
+                "error_message",
+                "network_location",
+                "device_info",
+                "affected_users",
+                "timestamp",
+            ),
+            next_best_action="Contact the user to gather basic information before any"
+            " troubleshooting can begin \u2014 the ticket contains virtually no"
+            " actionable detail about the Wi-Fi issue including location,"
+            " device, scope of impact, or error messages",
+            remediation_steps=(
+                "Reach out to the user to determine their physical location, device type, and whether other users are affected",
+                "Ask the user for the specific error message or symptom (no connection at all, intermittent drops, slow speed)",
+                "Once location is known, check the wireless controller for AP status in that area",
+                "After gathering sufficient context, proceed with standard Wi-Fi troubleshooting based on the identified symptoms",
+            ),
+        ),
+        tags=("data-cleanup", "terse-message", "minimal-context"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 60. Mixed LTR/RTL bidirectional text — Arabic and English mixed
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-060",
+        subjects=(
+            "\u0645\u0634\u0643\u0644\u0629 \u0641\u064a VPN \u2014 \u0644\u0627 \u0623\u0633\u062a\u0637\u064a\u0639 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0627\u0644\u0634\u0628\u0643\u0629 \u0627\u0644\u062f\u0627\u062e\u0644\u064a\u0629",
+            "VPN connectivity issue \u2014 \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0627\u0647\u0631\u0629 cannot reach internal resources",
+        ),
+        descriptions=(
+            "\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064a\u0643\u0645\u060c\n\n"
+            "\u0623\u0646\u0627 \u0623\u0639\u0645\u0644 \u0645\u0646 \u0645\u0643\u062a\u0628 \u0627\u0644\u0642\u0627\u0647\u0631\u0629 \u200f(Cairo office, Building 2, Floor 3)\u200f \u0648\u0644\u0627 \u0623\u0633\u062a\u0637\u064a\u0639"
+            " \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0640 \u200finternal SharePoint\u200f \u0623\u0648 \u200fJira\u200f"
+            " \u0645\u0646\u0630 \u0635\u0628\u0627\u062d \u0627\u0644\u064a\u0648\u0645. \u0627\u0644\u0640 \u200fVPN client\u200f"
+            " (\u200fGlobalProtect 6.1\u200f) \u064a\u062a\u0635\u0644 \u0628\u0646\u062c\u0627\u062d \u0648\u064a\u0638\u0647\u0631"
+            " \"\u200fConnected\u200f\" \u0648\u0644\u0643\u0646 \u0639\u0646\u062f\u0645\u0627 \u0623\u062d\u0627\u0648\u0644"
+            " \u0627\u0644\u0648\u0635\u0648\u0644 \u0625\u0644\u0649 \u200fhttps://sharepoint.contoso.com\u200f"
+            " \u064a\u0638\u0647\u0631 \u200f\"ERR_CONNECTION_TIMED_OUT\"\u200f.\n\n"
+            "\u062c\u0631\u0628\u062a \u0627\u0644\u0622\u062a\u064a:\n"
+            "1. \u200f\u200fipconfig /release\u200f \u0648 \u200fipconfig /renew\u200f \u2014 \u0644\u0645 \u064a\u0646\u062c\u062d\n"
+            "2. \u0625\u0639\u0627\u062f\u0629 \u062a\u0634\u063a\u064a\u0644 \u0627\u0644\u0640 \u200fVPN client\u200f \u2014 \u0646\u0641\u0633 \u0627\u0644\u0645\u0634\u0643\u0644\u0629\n"
+            "3. \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u062f\u0648\u0646 \u200fVPN\u200f \u064a\u0639\u0645\u0644 \u0628\u0634\u0643\u0644 \u0637\u0628\u064a\u0639\u064a (\u200fgoogle.com\u200f \u064a\u0639\u0645\u0644)\n\n"
+            "\u0627\u0644\u0645\u0634\u0643\u0644\u0629 \u062a\u0624\u062b\u0631 \u0639\u0644\u0649 \u200f5 \u0645\u0648\u0638\u0641\u064a\u0646\u200f \u0641\u064a \u0646\u0641\u0633 \u0627\u0644\u0645\u0643\u062a\u0628."
+            " \u0646\u062d\u062a\u0627\u062c \u062d\u0644 \u0639\u0627\u062c\u0644 \u0644\u0623\u0646 \u0639\u0646\u062f\u0646\u0627 \u200fdeadline\u200f \u064a\u0648\u0645 \u0627\u0644\u062e\u0645\u064a\u0633.\n\n"
+            "\u0634\u0643\u0631\u0627\u064b\u060c\n"
+            "\u0641\u0627\u0637\u0645\u0629 \u0627\u0644\u0632\u0647\u0631\u0627\u0621\n"
+            "\u200fEmployee ID: 78234\u200f",
+            "Mixed Arabic/English ticket with RTL/LTR control characters."
+            " User in Cairo office (Building 2, Floor 3) reports VPN connects"
+            " successfully via GlobalProtect 6.1 but internal resources"
+            " (SharePoint, Jira) return ERR_CONNECTION_TIMED_OUT. External"
+            " sites work without VPN. Affects 5 employees. Deadline Thursday."
+            " Employee ID 78234.",
+        ),
+        gold=ScenarioGold(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+            missing_information=("network_location", "configuration_details"),
+            next_best_action="Investigate the split-tunnel or routing configuration for the"
+            " Cairo office VPN gateway \u2014 GlobalProtect shows connected but internal"
+            " resources time out while external traffic works, suggesting a tunnel"
+            " routing or DNS resolution issue affecting 5 users",
+            remediation_steps=(
+                "Check the GlobalProtect gateway routing table and split-tunnel configuration for the Cairo office IP range",
+                "Verify DNS resolution for internal hostnames (sharepoint.contoso.com) resolves correctly when VPN is connected",
+                "Review recent changes to the VPN gateway or firewall rules that may have altered Cairo office routing",
+                "As a temporary workaround, provide the Cairo team with direct IP addresses for SharePoint and Jira while the tunnel issue is resolved",
+            ),
+        ),
+        tags=("data-cleanup", "bidi-text", "rtl-ltr-mixed"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 61. Monitoring alert flood — mass of Nagios/Datadog alerts pasted
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-061",
+        subjects=(
+            "CRITICAL: 47 alerts firing across prod — Datadog dump below",
+            "EVERYTHING IS DOWN — pasting all alerts from monitoring dashboard",
+        ),
+        descriptions=(
+            "We're getting flooded with alerts. Pasting everything from Datadog:\n\n"
+            "[CRITICAL] 06:01:03 UTC | host:prod-web-01 | CPU usage > 95% for 5m"
+            " | value: 98.2% | monitor: prod-cpu-high\n"
+            "[CRITICAL] 06:01:03 UTC | host:prod-web-02 | CPU usage > 95% for 5m"
+            " | value: 97.8% | monitor: prod-cpu-high\n"
+            "[CRITICAL] 06:01:03 UTC | host:prod-web-03 | CPU usage > 95% for 5m"
+            " | value: 99.1% | monitor: prod-cpu-high\n"
+            "[CRITICAL] 06:01:04 UTC | host:prod-web-04 | CPU usage > 95% for 5m"
+            " | value: 96.5% | monitor: prod-cpu-high\n"
+            "[WARNING]  06:01:05 UTC | host:prod-web-01 | Memory > 85%"
+            " | value: 91.3% | monitor: prod-mem-high\n"
+            "[WARNING]  06:01:05 UTC | host:prod-web-02 | Memory > 85%"
+            " | value: 89.7% | monitor: prod-mem-high\n"
+            "[WARNING]  06:01:05 UTC | host:prod-web-03 | Memory > 85%"
+            " | value: 93.2% | monitor: prod-mem-high\n"
+            "[CRITICAL] 06:01:08 UTC | service:api-gateway | HTTP 5xx rate > 10%"
+            " | value: 34.7% | monitor: prod-5xx-rate\n"
+            "[CRITICAL] 06:01:08 UTC | service:payment-svc | HTTP 5xx rate > 10%"
+            " | value: 28.1% | monitor: prod-5xx-rate\n"
+            "[CRITICAL] 06:01:08 UTC | service:auth-svc | HTTP 5xx rate > 10%"
+            " | value: 22.4% | monitor: prod-5xx-rate\n"
+            "[WARNING]  06:01:10 UTC | service:api-gateway | P99 latency > 2s"
+            " | value: 8.4s | monitor: prod-latency-p99\n"
+            "[WARNING]  06:01:10 UTC | service:payment-svc | P99 latency > 2s"
+            " | value: 12.1s | monitor: prod-latency-p99\n"
+            "[CRITICAL] 06:01:12 UTC | host:prod-db-primary | Disk usage > 90%"
+            " | value: 94.6% | monitor: prod-disk-critical\n"
+            "[CRITICAL] 06:01:12 UTC | host:prod-db-primary | Replication lag > 30s"
+            " | value: 127s | monitor: prod-repl-lag\n"
+            "[WARNING]  06:01:13 UTC | host:prod-db-replica-01 | Connections > 80%"
+            " | value: 87% | monitor: prod-db-conn-pool\n"
+            "[WARNING]  06:01:13 UTC | host:prod-db-replica-02 | Connections > 80%"
+            " | value: 84% | monitor: prod-db-conn-pool\n"
+            "[CRITICAL] 06:01:15 UTC | service:order-svc | Error rate > 5%"
+            " | value: 41.2% | monitor: prod-error-rate\n"
+            "[CRITICAL] 06:01:15 UTC | service:inventory-svc | Error rate > 5%"
+            " | value: 38.9% | monitor: prod-error-rate\n"
+            "[CRITICAL] 06:01:15 UTC | service:notification-svc | Error rate > 5%"
+            " | value: 19.3% | monitor: prod-error-rate\n"
+            "[WARNING]  06:01:18 UTC | host:prod-cache-01 | Redis evictions > 1000/min"
+            " | value: 4721/min | monitor: prod-redis-evict\n"
+            "[WARNING]  06:01:18 UTC | host:prod-cache-02 | Redis evictions > 1000/min"
+            " | value: 3894/min | monitor: prod-redis-evict\n"
+            "[CRITICAL] 06:01:20 UTC | check:prod-healthcheck | 8/12 endpoints failing"
+            " | monitor: prod-synthetic\n\n"
+            "There are about 25 more alerts but these are the main ones. This all"
+            " started around 06:00 UTC. I think the root cause is the database"
+            " disk filling up because the replication lag and connection pool"
+            " issues started first, then everything cascaded.",
+            "Massive Datadog alert flood starting 06:00 UTC: 4 web servers at"
+            " 95%+ CPU, 3 services with 20-35% HTTP 5xx rates, primary DB at"
+            " 94.6% disk with 127s replication lag, Redis cache eviction spike,"
+            " 8/12 health check endpoints failing. User suspects root cause is"
+            " DB disk filling up causing cascading failures across all services.",
+        ),
+        gold=ScenarioGold(
+            category="Network & Connectivity",
+            priority="P1",
+            assigned_team="Network Operations",
+            needs_escalation=True,
+            missing_information=("timestamp", "business_impact"),
+            next_best_action="Declare a P1 incident and address the probable root cause: the"
+            " primary database disk at 94.6% is likely causing replication lag"
+            " and connection pool exhaustion, which is cascading into 5xx errors"
+            " across all dependent services \u2014 the alert flood is symptomatic noise"
+            " and should not be triaged individually",
+            remediation_steps=(
+                "Immediately free disk space on prod-db-primary by purging old WAL segments, temp tables, or expanding the volume",
+                "Once disk pressure is relieved, verify replication lag on replicas drops below threshold and connection pools recover",
+                "Monitor the HTTP 5xx rates and CPU on web servers to confirm they normalize as the database stabilizes",
+                "Conduct a post-incident review to add disk growth alerting at 80% and automate log rotation to prevent recurrence",
+                "Tune Datadog alert grouping to deduplicate cascading alerts and surface only the root-cause monitor during similar incidents",
+            ),
+        ),
+        tags=("data-cleanup", "monitoring-flood", "alert-noise"),
+    ),
 ]
