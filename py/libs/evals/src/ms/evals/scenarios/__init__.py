@@ -1,4 +1,5 @@
 # Copyright (c) Microsoft. All rights reserved.
+<<<<<<< HEAD
 """Evaluation scenario definitions for data cleanup and responsible AI."""
 
 from ms.evals.scenarios.registry import get_scenarios
@@ -10,3 +11,5 @@ __all__ = [
     "get_scenarios_by_category",
     "register",
 ]
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche

@@ -1,4 +1,5 @@
 # Copyright (c) Microsoft. All rights reserved.
+<<<<<<< HEAD
 """Pydantic models for evaluation tickets and triage decisions."""
 
 from ms.evals.models.scenario import EvalScenario
@@ -26,3 +27,5 @@ __all__ = [
     "TicketCategory",
     "TriageDecision",
 ]
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
