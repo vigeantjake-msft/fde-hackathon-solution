@@ -3665,3 +3665,817 @@ register(
         ],
     )
 )
+
+# ---------------------------------------------------------------------------
+# dc-050  Hex dump pasted into email
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-050",
+        category=Category.DATA,
+        priority=Priority.P2,
+        assigned_team=Team.DATA_PLATFORM,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "Shared drive corrupted file — hex dump attached",
+            "Excel file on file server won't open — hex output inside",
+            "Critical report file corrupted — hexdump for reference",
+        ],
+        descriptions=[
+            "Hi,\n\n"
+            "A critical Excel file on the shared drive (\\\\NYC-FS-01\\{department}\\Q1-Reports\\"
+            "revenue_summary.xlsx) seems to be corrupted. When I try to open it, Excel "
+            "says the file format is not valid. I ran hexdump on it and the header "
+            "doesn't look right:\n\n"
+            "00000000  50 4b 03 04 14 00 06 00  08 00 00 00 21 00 b5 55  |PK..........!..U|\n"
+            "00000010  30 23 f4 00 00 00 4c 02  00 00 13 00 08 02 5b 43  |0#....L.......[C|\n"
+            "00000020  6f 6e 74 65 6e 74 5f 54  79 70 65 73 5d 2e 78 6d  |ontent_Types].xm|\n"
+            "00000030  6c 20 a2 04 02 28 a0 00  02 00 00 00 00 00 00 00  |l ...(.........|\n"
+            "00000040  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|\n"
+            "*\n"
+            "00000100  00 00 00 00 00 00 00 00  ff ff ff ff ff ff ff ff  |................|\n"
+            "00000110  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|\n"
+            "*\n"
+            '00000200  3c 3f 78 6d 6c 20 76 65  72 73 69 6f 6e 3d 22 31  |<?xml version="1|\n'
+            '00000210  2e 30 22 20 65 6e 63 6f  64 69 6e 67 3d 22 55 54  |.0" encoding="UT|\n'
+            '00000220  46 2d 38 22 3f 3e 0d 0a  00 00 00 00 00 00 00 00  |F-8"?>..........|\n\n'
+            "The file was last modified yesterday at 4:47 PM by an automated ETL process. "
+            "The file is about 2.4 MB and contains Q1 revenue data we need for the board "
+            "presentation tomorrow morning. Other files in the same directory seem fine.\n\n"
+            "Thanks,\n{name}\n{department}",
+            "Hi IT,\n\n"
+            "I'm getting 'The file is corrupt and cannot be opened' when trying to access "
+            "a shared report at \\\\PROD-FS-02\\Reports\\quarterly_summary.xlsx. I used "
+            "hexdump to look at the raw bytes:\n\n"
+            "00000000  50 4b 03 04 14 00 06 00  08 00 00 00 21 00 c3 44  |PK..........!..D|\n"
+            "00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|\n"
+            "*\n"
+            "00000080  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|\n"
+            "00000090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|\n\n"
+            "The ZIP header looks partially zeroed out. This file is critical for our "
+            "{department} quarterly review and we need it restored from backup ASAP.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate corrupted Excel file on the file server — ZIP header appears "
+            "partially zeroed out. Check the ETL process and restore from Volume Shadow "
+            "Copy or backup.",
+            "Restore corrupted XLSX file from backup or Volume Shadow Copy — the file "
+            "header is damaged, likely due to an interrupted write from an ETL process.",
+        ],
+        remediation_steps=[
+            [
+                "Attempt to restore the file from Volume Shadow Copy on the file server",
+                "If no shadow copy is available, restore from the nightly backup",
+                "Investigate ETL process logs for errors during the last write that may have caused corruption",
+                "Check disk health on the file server for I/O errors or SMART warnings",
+                "Once restored, verify file integrity by opening in Excel and validating the ZIP structure",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-051  Double-encoded HTML entities
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-051",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.APPLICATION_VERSION, MissingInfo.STEPS_TO_REPRODUCE],
+        subjects=[
+            "Login page shows garbled text &amp;mdash; can&amp;#39;t sign in",
+            "Portal login page rendering broken — HTML entities everywhere",
+            "Internal site shows &amp;ldquo; and &amp;nbsp; instead of normal text",
+        ],
+        descriptions=[
+            "Hi IT,\n\n"
+            "When I go to the internal portal at https://portal.contoso.com, the "
+            "login page is showing garbled text. The page title shows:\n\n"
+            "  &amp;ldquo;Contoso&amp;nbsp;Financial&amp;nbsp;Services "
+            "&amp;mdash;&amp;nbsp;Sign&amp;nbsp;In&amp;rdquo;\n\n"
+            "And the form labels say:\n"
+            "  &amp;bull; &amp;ldquo;Username&amp;rdquo;\n"
+            "  &amp;bull; &amp;ldquo;Password&amp;rdquo;\n"
+            "  &amp;bull; &amp;ldquo;Remember&amp;nbsp;Me&amp;rdquo;\n\n"
+            "The &amp;ldquo;Sign In&amp;rdquo; button text shows as "
+            "&amp;quot;Sign&amp;nbsp;In&amp;quot; and when I click it, I get "
+            "an error:\n\n"
+            "  &amp;lt;div class=&amp;quot;error&amp;quot;&amp;gt;\n"
+            "    &amp;lt;p&amp;gt;Authentication failed: invalid "
+            "token&amp;lt;/p&amp;gt;\n"
+            "  &amp;lt;/div&amp;gt;\n\n"
+            "I&amp;#39;ve tried clearing my cache and using different browsers "
+            "but the issue persists. I&amp;#39;m on Windows 11.\n\n"
+            "This is blocking me from accessing the compliance reporting dashboard.\n\n"
+            "Thanks,\n{name}\n{department}",
+            "The internal portal login page is completely garbled with double-encoded "
+            "HTML entities. Every &amp;quot; &amp;nbsp; &amp;lt; &amp;gt; is showing "
+            "literally instead of rendering correctly. For example the heading reads:\n\n"
+            "&amp;ldquo;Welcome&amp;nbsp;to&amp;nbsp;Contoso&amp;rdquo;\n\n"
+            "And the error message after login attempt displays raw HTML tags:\n"
+            "&amp;lt;span&amp;gt;Invalid&amp;nbsp;credentials&amp;lt;/span&amp;gt;\n\n"
+            "Multiple people on {floor} are seeing the same thing. This started "
+            "after the deployment last night.\n\n"
+            "{name}\n{department}",
+        ],
+        next_best_actions=[
+            "Investigate double-encoded HTML entities on the internal portal login "
+            "page — likely a deployment issue with the template rendering engine "
+            "causing both display and authentication failures.",
+            "Check the most recent deployment to portal.contoso.com for template "
+            "rendering changes that may be double-encoding HTML entities and "
+            "corrupting CSRF tokens.",
+        ],
+        remediation_steps=[
+            [
+                "Check the most recent deployment for template rendering changes that "
+                "may be double-encoding HTML entities",
+                "Verify the web application's content-type headers and character "
+                "encoding settings (UTF-8 vs ISO-8859-1)",
+                "Check the authentication token endpoint — the invalid token error may "
+                "be caused by encoding issues corrupting CSRF tokens",
+                "Roll back to the previous known-good deployment if the issue is "
+                "confirmed to be a recent change",
+                "Test the portal from multiple browsers and networks to confirm the fix",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-052  Chat transcript with bot messages and timestamps
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-052",
+        category=Category.HARDWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.ERROR_MESSAGE],
+        subjects=[
+            "Laptop keeps blue-screening — pasted chat history for context",
+            "BSOD 2-3 times daily — forwarding Slack conversation",
+            "Recurring blue screen crashes — chat transcript attached",
+        ],
+        descriptions=[
+            "[2026-03-16 14:23:01] @{name1}: hey can anyone help? my laptop "
+            "keeps blue-screening\n"
+            "[2026-03-16 14:23:05] \U0001f916 ContosBot: Hi! I see you might have a "
+            "technical issue. Would you like me to create a support ticket? "
+            "React with \U0001f44d to confirm.\n"
+            "[2026-03-16 14:23:12] @{name1} reacted with \U0001f44d\n"
+            "[2026-03-16 14:23:15] \U0001f916 ContosBot: Ticket created.\n"
+            "[2026-03-16 14:24:30] @mike.chen: what's the error code?\n"
+            "[2026-03-16 14:25:01] @{name1}: it says KERNEL_DATA_INPAGE_ERROR "
+            "and then restarts\n"
+            "[2026-03-16 14:25:45] @mike.chen: that's usually a disk issue. "
+            "how old is your laptop?\n"
+            "[2026-03-16 14:26:10] @{name1}: it's a Lenovo ThinkPad X1 Carbon "
+            "Gen 11, got it about 18 months ago\n"
+            "[2026-03-16 14:26:30] \U0001f916 ContosBot: \U0001f4ca Daily standup "
+            "reminder: Your standup is in 4 minutes!\n"
+            "[2026-03-16 14:27:00] @{name1}: also it's been really slow and the "
+            "fan goes crazy even when I'm just in Outlook\n"
+            "[2026-03-16 14:28:00] \U0001f916 ContosBot: \U0001f389 Kudos! @sarah "
+            "received a kudos from @david!\n"
+            "[2026-03-16 14:28:15] @{name1}: the blue screen happens 2-3 times a "
+            "day, always when I have lots of tabs open and large spreadsheets.\n"
+            "[2026-03-16 14:28:30] @{name1}: I'm on {floor}, Building 1\n"
+            "[2026-03-16 14:28:45] \U0001f916 ContosBot: \U0001f4c5 Meeting update: "
+            "'Client Review Call' moved to 3:30 PM.",
+            "[14:02] {name1}: my computer keeps crashing with a blue screen\n"
+            "[14:02] Bot: \U0001f916 Creating ticket...\n"
+            "[14:03] {name1}: SYSTEM_SERVICE_EXCEPTION every time I open Chrome "
+            "with more than 10 tabs\n"
+            "[14:04] @helpdesk_joe: what's your machine model?\n"
+            "[14:04] {name1}: Dell Latitude 5540\n"
+            "[14:05] Bot: \U0001f514 Reminder: Team sync in 25 minutes\n"
+            "[14:05] {name1}: also the screen flickers before the crash. "
+            "I'm in the {department} area, {floor}\n"
+            "[14:06] Bot: \U0001f3c6 Weekly highlight: 42 tickets resolved!\n"
+            "[14:06] {name1}: this has been going on for a week. Very disruptive.",
+        ],
+        next_best_actions=[
+            "Run hardware diagnostics on the user's laptop — recurring blue screens "
+            "(KERNEL_DATA_INPAGE_ERROR or SYSTEM_SERVICE_EXCEPTION) 2-3 times daily "
+            "suggest possible SSD failure or driver issue.",
+            "Investigate recurring BSOD on the user's laptop — likely SSD degradation "
+            "or a driver conflict given the frequency and symptoms.",
+        ],
+        remediation_steps=[
+            [
+                "Run hardware diagnostics focusing on SSD health (SMART status, "
+                "reallocated sector count, read/write error rates)",
+                "Check Windows Event Viewer for disk-related errors (Event IDs 7, 11, "
+                "51, 153) around the times of the blue screens",
+                "If SSD is degrading, immediately back up user data and arrange a "
+                "replacement drive or laptop swap",
+                "As a temporary measure, reduce Chrome tab count and consider moving "
+                "large workbooks to OneDrive streaming to reduce disk I/O",
+                "Monitor for recurrence over the next 48 hours after hardware replacement",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-053  Windows Registry export dump
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-053",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.CONFIGURATION_DETAILS],
+        subjects=[
+            "Outlook keeps resetting default signature — registry export included",
+            "Email signature reverts on every restart — GPO issue?",
+            "Outlook ignoring my updated signature — registry dump inside",
+        ],
+        descriptions=[
+            "Hi IT,\n\n"
+            "Every time I restart Outlook, my email signature resets to the old one "
+            "from 2024 instead of my updated signature. I exported the registry key:\n\n"
+            "Windows Registry Editor Version 5.00\n\n"
+            "[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Profiles\\"
+            "Outlook\\9375CFF0413111d3B88A00104B2A6676\\00000002]\n"
+            '"Account Name"="corporate.email@contoso.com"\n'
+            '"New Signature"="Contoso_Corporate_2024"\n'
+            '"Reply-Forward Signature"="Contoso_Corporate_2024"\n'
+            '"Identity Eid"=hex:00,00,00,00,dc,a7,40,c8,c0,42,10,1a,b4,b9,08,00,2b,2f,e1,82,\\\n'
+            "  01,00,00,00,03,00,00,00\n"
+            '"Identity Search Key"=hex:dc,a7,40,c8,c0,42,10,1a,b4,b9,08,00,2b,2f,e1,82,01,\\\n'
+            "  00,00,00,03,00,00,00\n\n"
+            "[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Common\\MailSettings]\n"
+            '"NewSignature"="Contoso_Corporate_2024"\n'
+            '"ReplySignature"="Contoso_Corporate_2024"\n'
+            '"ComposeFontComplex"=hex:3c,68,74,6d,6c,3e,0d,0a,0d,0a,3c,68,65,61,64,3e,0d,\\\n'
+            "  0a,3c,73,74,79,6c,65,3e,0d,0a\n\n"
+            "As you can see, the registry still points to 'Contoso_Corporate_2024' "
+            "but my updated signature is called 'Contoso_Corporate_2026'. I think "
+            "the Group Policy is pushing the old name. I've tried manually editing "
+            "the registry but it gets overwritten on restart.\n\n"
+            "Running Outlook 16.0.18025 on Windows 11 Enterprise.\n\n"
+            "{name}\n{department}",
+            "My Outlook email signature keeps reverting. I've dumped the relevant "
+            "registry keys:\n\n"
+            "[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Setup]\n"
+            '"First-Run"=dword:00000001\n'
+            '"CreateWelcome"=dword:00000000\n\n'
+            "[HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Common\\MailSettings]\n"
+            '"NewSignature"="OldSignature_v3"\n'
+            '"ReplySignature"="OldSignature_v3"\n'
+            '"Stationery"=""\n\n'
+            "A GPO seems to be forcing 'OldSignature_v3' but the correct name is "
+            "'NewSignature_v5'. This happens to multiple people in {department}.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate Group Policy Object overriding Outlook email signature "
+            "setting — registry shows an old signature name being pushed over "
+            "the user's updated signature on every restart.",
+            "Check the GPO linked to the user's OU for Outlook signature settings "
+            "that may be enforcing an outdated signature name.",
+        ],
+        remediation_steps=[
+            [
+                "Check the Group Policy Object linked to the user's OU for Outlook "
+                "signature settings enforcing the old signature name",
+                "Run 'gpresult /H gpresult.html' to confirm which GPO is applying "
+                "the signature preference",
+                "Update the GPO to reference the correct signature name or remove "
+                "the forced setting if individual choice is permitted",
+                "Run 'gpupdate /force' on the user's machine after the GPO change",
+                "Verify the signature persists across an Outlook restart",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-054  HTTP request/response headers dump
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-054",
+        category=Category.SOFTWARE,
+        priority=Priority.P1,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=True,
+        missing_information=[MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "Internal API returning 502 — full request/response dump",
+            "Pricing API down — curl verbose output attached",
+            "502 Bad Gateway on critical API — all backends timing out",
+        ],
+        descriptions=[
+            "Hi team,\n\n"
+            "The internal pricing API (pricing-api.contoso.internal) is returning 502 "
+            "Bad Gateway errors intermittently. I captured with curl -v:\n\n"
+            "> GET /api/v2/pricing/equity/MSFT HTTP/1.1\n"
+            "> Host: pricing-api.contoso.internal\n"
+            "> User-Agent: curl/8.4.0\n"
+            "> Accept: application/json\n"
+            "> Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+            "fakepayload.fakesignature\n"
+            "> X-Request-ID: 7f3a2b4c-9d1e-4f5a-b6c8-3e2d1f0a9b8c\n"
+            "> Cache-Control: no-cache\n"
+            ">\n"
+            "< HTTP/1.1 502 Bad Gateway\n"
+            "< Server: nginx/1.24.0\n"
+            "< Date: Tue, 17 Mar 2026 14:23:45 GMT\n"
+            "< Content-Type: text/html\n"
+            "< X-Upstream-Status: failed\n"
+            "< X-Upstream-Addr: 10.30.2.15:8080, 10.30.2.16:8080, 10.30.2.17:8080\n"
+            "< X-Upstream-Response-Time: 30.001, 30.002, 30.003\n"
+            "< Strict-Transport-Security: max-age=31536000\n"
+            "<\n"
+            "< <html><head><title>502 Bad Gateway</title></head>\n"
+            "< <body><center><h1>502 Bad Gateway</h1></center></body></html>\n\n"
+            "The upstream response times are all ~30s which looks like a timeout. "
+            "All three backend nodes are failing. This is affecting the {department} "
+            "desk — they can't get real-time pricing. Started about 30 minutes ago.\n\n"
+            "{name}\n{department}",
+            "Urgent: our {department} API endpoint is returning 502 errors.\n\n"
+            "> POST /api/v1/data/query HTTP/1.1\n"
+            "> Host: data-api.contoso.internal\n"
+            "> Authorization: Bearer [REDACTED]\n"
+            "> Content-Type: application/json\n"
+            ">\n"
+            "< HTTP/1.1 502 Bad Gateway\n"
+            "< Server: nginx/1.24.0\n"
+            "< X-Upstream-Addr: 10.40.1.10:9090, 10.40.1.11:9090\n"
+            "< X-Upstream-Response-Time: 30.000, 30.000\n"
+            "<\n"
+            "Both upstream nodes are timing out at 30s. This is blocking our "
+            "reporting pipeline.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate 502 Bad Gateway on internal API — all upstream backend "
+            "nodes are timing out at 30s. Critical impact on real-time operations.",
+            "Check health and resource utilization on all upstream backend nodes — "
+            "all are returning 30s timeouts indicating a systemic backend failure.",
+        ],
+        remediation_steps=[
+            [
+                "Check health and resource utilization (CPU, memory, disk I/O) on all "
+                "upstream backend nodes",
+                "Review application logs on the API service for errors or connection "
+                "pool exhaustion",
+                "Check the nginx reverse proxy configuration and upstream timeout settings",
+                "Verify the downstream data provider is responding and not causing "
+                "the backend to hang",
+                "If a backend restart is needed, perform a rolling restart to maintain "
+                "partial availability",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-055  CID inline image references (broken Content-ID)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-055",
+        category=Category.SOFTWARE,
+        priority=Priority.P4,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.APPLICATION_VERSION, MissingInfo.DEVICE_INFO],
+        subjects=[
+            "Desktop icons rearranged after reboot — screenshots inline",
+            "Icons scrambled after Windows Update — see attached images",
+            "Desktop layout keeps resetting — inline screenshots below",
+        ],
+        descriptions=[
+            "Hi IT Support,\n\n"
+            "Every time I restart my computer, all my desktop icons get rearranged "
+            "into a random order.\n\n"
+            "Here's what it looks like before (organized):\n"
+            '<img src="cid:image001.png@01DAF2B3.A1B2C3D4" alt="Before" '
+            'width="1920" height="1080">\n'
+            "[cid:image001.png@01DAF2B3.A1B2C3D4 — image not displayed]\n\n"
+            "And after the reboot (scrambled):\n"
+            '<img src="cid:image002.png@01DAF2B3.E5F6A7B8" alt="After" '
+            'width="1920" height="1080">\n'
+            "[cid:image002.png@01DAF2B3.E5F6A7B8 — image not displayed]\n\n"
+            "------=_Part_12345_67890.1710680400000\n"
+            'Content-Type: image/png; name="image001.png"\n'
+            "Content-Transfer-Encoding: base64\n"
+            "Content-ID: <image001.png@01DAF2B3.A1B2C3D4>\n"
+            '[base64 data stripped by mail gateway]\n\n'
+            "I'm on Windows 11 Enterprise, {floor}, Building 3.\n\n"
+            "{name}\n{department}",
+            "My desktop icons keep rearranging every reboot. Some icons show as "
+            "generic white rectangles:\n\n"
+            '<img src="cid:screenshot_001.png@01DAF300.AABB0011" '
+            'alt="broken icons">\n'
+            "[cid:screenshot_001.png@01DAF300.AABB0011 — not displayed]\n\n"
+            "------=_Part_99999_12345.1710680400000\n"
+            'Content-Type: image/png; name="screenshot_001.png"\n'
+            "Content-Transfer-Encoding: base64\n"
+            "Content-ID: <screenshot_001.png@01DAF300.AABB0011>\n"
+            "[base64 data removed]\n\n"
+            "This started after the latest Windows Update. {floor}, Building 2.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate desktop icon rearrangement and icon cache corruption on "
+            "Windows 11 — icons scramble after every reboot. Low priority cosmetic "
+            "issue but may indicate a profile or Group Policy conflict.",
+        ],
+        remediation_steps=[
+            [
+                "Check if a Group Policy or profile management tool (e.g., FSLogix) "
+                "is resetting the desktop layout on logon",
+                "Clear and rebuild the icon cache by deleting IconCache.db and "
+                "restarting Explorer",
+                "Verify the desktop layout is not managed by a mandatory profile or GPO",
+                "Check if the triggering Windows Update included a shell or Explorer update",
+                "If the issue persists, use a logon script to restore the saved layout",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-056  Escaped JSON within JSON (triple-escaped)
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-056",
+        category=Category.DATA,
+        priority=Priority.P1,
+        assigned_team=Team.DATA_PLATFORM,
+        needs_escalation=True,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.STEPS_TO_REPRODUCE],
+        subjects=[
+            "API error with nested JSON — can't parse response",
+            "Compliance ETL failing — triple-escaped JSON in error body",
+            "Data pipeline broken — API returns unreadable nested JSON error",
+        ],
+        descriptions=[
+            "Our integration with the compliance reporting API is failing. The API "
+            "returns an error response with triple-escaped JSON:\n\n"
+            '{"status":"error","code":500,"message":"Internal processing failure",'
+            '"details":"{\\"pipeline\\":\\"compliance-etl-v2\\",\\"stage\\":\\"transform'
+            '\\",\\"error\\":{\\"type\\":\\"SchemaValidationError\\",\\"message\\":'
+            '\\"Field \\\\\\\\\\\\\\"transaction_id\\\\\\\\\\\\\\" expected type '
+            '\\\\\\\\\\\\\\"string\\\\\\\\\\\\\\" but received '
+            '\\\\\\\\\\\\\\"null\\\\\\\\\\\\\\"\\"}}"}\n\n'
+            "The actual issue is that null transaction_id values are getting through "
+            "from the RawTransactions table in today's batch. This is breaking the "
+            "compliance ETL pipeline and we can't generate the daily regulatory report.\n\n"
+            "The pipeline runs on our Azure Data Factory instance. We need this fixed "
+            "before the 5 PM regulatory filing deadline.\n\n"
+            "{name}\n{department}",
+            "The {department} data pipeline is returning deeply nested escaped JSON "
+            "errors that are nearly impossible to read:\n\n"
+            '{"error":"{\\"code\\":500,\\"inner\\":{\\"msg\\":\\"NULL values in '
+            "required field\\\",\\\"table\\\":\\\"dbo.Transactions\\\","
+            '\\\"batch\\\":\\"BATCH-{date}-0923\\"}}"}\n\n'
+            "Translated: NULL values in dbo.Transactions are breaking the pipeline. "
+            "Regulatory report deadline is 5 PM today.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate null values in the source table causing the compliance ETL "
+            "pipeline to fail — regulatory filing deadline is 5 PM today.",
+            "Fix NULL data quality issue in the source table breaking the compliance "
+            "ETL pipeline on Azure Data Factory — urgent regulatory deadline.",
+        ],
+        remediation_steps=[
+            [
+                "Query the source table for records with NULL values in required "
+                "fields to assess scope",
+                "Check the upstream data source for schema or NULL handling changes "
+                "that introduced the bad records",
+                "Patch or exclude the NULL records to unblock the current pipeline batch",
+                "Add a NOT NULL constraint or pre-validation step to catch these "
+                "issues at ingestion time",
+                "Re-trigger the ETL pipeline after the data is corrected and verify "
+                "the regulatory report generates successfully",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-057  Tab-separated spreadsheet data pasted in email
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-057",
+        category=Category.ACCESS_AUTH,
+        priority=Priority.P2,
+        assigned_team=Team.IAM,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AUTHENTICATION_METHOD, MissingInfo.CONFIGURATION_DETAILS],
+        subjects=[
+            "VPN users table — some accounts are locked",
+            "Multiple VPN lockouts — user report pasted below",
+            "Bulk VPN account lockout — spreadsheet data inside",
+        ],
+        descriptions=[
+            "Hi IT,\n\n"
+            "Several VPN users are getting locked out. I pulled a report from the "
+            "VPN concentrator:\n\n"
+            "Username\tFull Name\tDepartment\tLast Login\tStatus\tIP Address\t"
+            "VPN Client\tOS\n"
+            "jsmith01\tJohn Smith\tTrading\t2026-03-17 08:12:04\tACTIVE\t"
+            "10.100.5.23\tGlobalProtect 6.1\tWindows 11\n"
+            "mchen02\tMei Chen\tCompliance\t2026-03-17 08:14:22\tLOCKED\t"
+            "10.100.5.45\tGlobalProtect 6.1\tWindows 11\n"
+            "agarcia03\tAna Garcia\tFinance\t2026-03-17 08:15:01\tACTIVE\t"
+            "10.100.5.67\tGlobalProtect 6.0\tmacOS 14.4\n"
+            "bwilson04\tBen Wilson\tEngineering\t2026-03-17 08:16:33\tLOCKED\t"
+            "10.100.5.89\tGlobalProtect 6.1\tWindows 11\n"
+            "cpatel05\tChitra Patel\tRisk\t2026-03-17 08:17:15\tACTIVE\t"
+            "10.100.5.101\tGlobalProtect 6.1\tWindows 11\n"
+            "dkimura06\tDaichi Kimura\tData Eng\t2026-03-16 17:42:08\tLOCKED\t"
+            "10.100.5.123\tGlobalProtect 6.1\tWindows 10\n"
+            "fjohansson08\tFreya Johansson\tLegal\t2026-03-16 16:30:12\tLOCKED\t"
+            "10.100.5.167\tGlobalProtect 6.1\tWindows 11\n"
+            "iali11\tIbrahim Ali\tFixed Income\t2026-03-16 15:55:00\tLOCKED\t"
+            "10.100.5.223\tGlobalProtect 5.3\tWindows 10\n\n"
+            "So that's 5 locked accounts. They all seem to have been locked out "
+            "this morning. We think it might be related to the password policy change "
+            "pushed last night. These users are all remote and can't work.\n\n"
+            "{name}\n{department}",
+            "Multiple remote users reporting VPN lockouts. Here's the data:\n\n"
+            "User\tDept\tStatus\tLast Seen\n"
+            "{name1}\t{department}\tLOCKED\t2026-03-17 07:55\n"
+            "r.santos\tTrading\tLOCKED\t2026-03-17 08:01\n"
+            "k.lindberg\tLegal\tACTIVE\t2026-03-17 08:10\n"
+            "j.park\tCompliance\tLOCKED\t2026-03-16 18:22\n\n"
+            "3 of 4 users are locked. Likely related to last night's password "
+            "policy GPO update. They need VPN to work remotely.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate mass VPN account lockouts correlating with last night's "
+            "password policy change — remote users cannot work.",
+            "Unlock the affected accounts in Active Directory and review the "
+            "password policy GPO change that likely caused the lockouts.",
+        ],
+        remediation_steps=[
+            [
+                "Unlock the affected accounts in Active Directory immediately",
+                "Review the password policy GPO change from last night to determine "
+                "if it invalidated existing credentials or changed lockout thresholds",
+                "Check Azure AD sign-in logs for the locked accounts to confirm "
+                "lockout was caused by repeated failed auth, not an attack",
+                "Communicate to all remote users that they may need to update their "
+                "cached credentials",
+                "Consider phased rollout for future password policy changes with advance notice",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-058  vCard data in email signature
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-058",
+        category=Category.HARDWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO],
+        subjects=[
+            "Badge reader on {floor} not recognizing my card",
+            "Access card not working on our floor — new badge issue",
+            "Floor badge reader rejects my replacement card",
+        ],
+        descriptions=[
+            "Hi,\n\n"
+            "The badge reader on the main entrance to {floor}, Building 2 is not "
+            "recognizing my access card. I tap it and the light stays red. My badge "
+            "number is CF-2026-8841. Other people's badges work fine.\n\n"
+            "I got a new badge two weeks ago because my old one cracked. The new "
+            "one works on the ground floor and parking garage, just not {floor}.\n\n"
+            "Best regards,\n\n"
+            "BEGIN:VCARD\n"
+            "VERSION:3.0\n"
+            "N:{name};;\n"
+            "FN:{name}\n"
+            "ORG:Contoso Financial Services;{department}\n"
+            "TITLE:Senior Analyst\n"
+            "TEL;TYPE=WORK,VOICE:+1-212-555-0147\n"
+            "TEL;TYPE=CELL:+1-917-555-0293\n"
+            "ADR;TYPE=WORK:;;One Contoso Plaza;New York;NY;10001;USA\n"
+            "EMAIL;TYPE=PREF:{name1}@contoso.com\n"
+            "PHOTO;TYPE=JPEG;ENCODING=BASE64:/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAg\n"
+            " GBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDA\n"
+            " xNDQ0Hyc5PTgyPC4zNDL/wAARCAAQABADASIAAhEB\n"
+            "NOTE:Bloomberg ID available upon request\n"
+            "REV:20260301T120000Z\n"
+            "END:VCARD\n\n"
+            "CONFIDENTIALITY NOTICE: This email and any attachments are for the "
+            "exclusive and confidential use of the intended recipient.",
+            "My replacement badge doesn't work on {floor}. It scans fine at the "
+            "lobby and parking garage but the {floor} reader shows a red light.\n\n"
+            "BEGIN:VCARD\n"
+            "VERSION:3.0\n"
+            "FN:{name}\n"
+            "ORG:Contoso Financial;{department}\n"
+            "TEL:+1-212-555-0200\n"
+            "EMAIL:{name1}@contoso.com\n"
+            "END:VCARD\n\n"
+            "Badge number: CF-2026-9912. Please update the floor access.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate access card not recognized by the floor badge reader — "
+            "card works on ground floor and parking but not on the user's floor. "
+            "Likely a provisioning issue with the replacement card's floor permissions.",
+        ],
+        remediation_steps=[
+            [
+                "Check the physical access control system to verify the badge has "
+                "the correct floor access permissions",
+                "Compare the new badge's access group assignments with the old badge "
+                "to identify missing floor-level permissions",
+                "Add the missing floor access to the new badge",
+                "Test the badge on the floor reader after updating permissions",
+                "Audit the badge replacement workflow to ensure floor permissions are "
+                "copied from old badges to replacements",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-059  Cron job / Task Scheduler output dump
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-059",
+        category=Category.DATA,
+        priority=Priority.P2,
+        assigned_team=Team.DATA_PLATFORM,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.CONFIGURATION_DETAILS],
+        subjects=[
+            "FW: Cron job failures on PROD-RPT-01 — overnight batch report",
+            "Batch reporting server failing — cron output attached",
+            "Nightly report generation broken for 3 days — full job log inside",
+        ],
+        descriptions=[
+            "IT team — forwarding the output from our overnight batch reporting "
+            "server. Reports haven't been generated since Saturday.\n\n"
+            "CRON JOB EXECUTION LOG — PROD-RPT-01\n"
+            "======================================\n"
+            "Host: PROD-RPT-01.contoso.local\n"
+            "Run date: 2026-03-17 02:00:00 EST\n"
+            "Job: /opt/contoso/reports/generate_daily_reports.sh\n"
+            "Schedule: 0 2 * * * (daily at 02:00)\n"
+            "User: svc_reports\n"
+            "PID: 28451\n\n"
+            "[02:00:01] Starting daily report generation...\n"
+            "[02:00:01] Connecting to PROD-SQL-03.contoso.local:1433...\n"
+            "[02:00:02] Connection established.\n"
+            "[02:00:03] Executing: P&L Daily Summary (RPT-001)...\n"
+            "[02:00:04] Rows returned: 1,247. PDF generated (2.3 MB). Uploaded to SharePoint.\n"
+            "[02:00:06] Executing: Risk Exposure Summary (RPT-002)...\n"
+            "[02:00:06] EXEC dbo.sp_RiskExposure @date='2026-03-16'\n"
+            "[02:00:06] ERROR: Execution Timeout Expired.\n"
+            "[02:00:06] SQL State: HYT00, Native Error: 0\n"
+            "[02:00:06] Connection to PROD-SQL-03 lost.\n"
+            "[02:00:07] Reconnection attempt 1/3 failed.\n"
+            "[02:00:37] Reconnection attempt 2/3 failed.\n"
+            "[02:01:07] Reconnection attempt 3/3 failed.\n"
+            "[02:01:37] FATAL: All reconnection attempts exhausted.\n"
+            "[02:01:37] Reports NOT generated: RPT-002, RPT-003, RPT-004, RPT-005\n"
+            "[02:01:37] Exit code: 1\n\n"
+            "Same failure repeated on 2026-03-15 and 2026-03-16 logs. The first "
+            "report always succeeds but sp_RiskExposure kills the connection. "
+            "We need these reports for the morning risk committee at 8 AM.\n\n"
+            "{name}\n{department}",
+            "Hi team,\n\n"
+            "Our nightly batch job on PROD-RPT-02 has been failing:\n\n"
+            "Task Scheduler Log:\n"
+            "Task: \\Contoso\\Reports\\DailyGeneration\n"
+            "Last Run: 2026-03-17 02:00:00 — Result: 0x1 (Failed)\n"
+            "Previous: 2026-03-16 02:00:00 — Result: 0x1 (Failed)\n"
+            "Previous: 2026-03-15 02:00:00 — Result: 0x0 (Success)\n\n"
+            "The job connects to the SQL server but the stored procedure times "
+            "out after 30 seconds. We need the daily {department} reports.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate stored procedure timeout on the production SQL server "
+            "causing overnight batch report failures for multiple consecutive "
+            "nights — downstream reports not being generated.",
+            "Fix the stored procedure timeout on PROD-SQL that is blocking "
+            "nightly report generation — likely needs index tuning or statistics "
+            "updates after recent data growth.",
+        ],
+        remediation_steps=[
+            [
+                "Check the production SQL server for long-running queries, blocking "
+                "sessions, or resource exhaustion around the 02:00 AM window",
+                "Review the execution plan for the failing stored procedure — it may "
+                "need index tuning or statistics updates",
+                "Check if a lock conflict with another overnight process is causing "
+                "the timeout",
+                "Increase the command timeout as a temporary measure while the stored "
+                "procedure is optimized",
+                "Manually trigger report generation for the missed dates once the "
+                "issue is resolved",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-060  Multiple concatenated ticket descriptions
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-060",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[
+            MissingInfo.AFFECTED_SYSTEM,
+            MissingInfo.AFFECTED_USERS,
+            MissingInfo.BUSINESS_IMPACT,
+        ],
+        subjects=[
+            "FW: FW: FW: Batch of issues from London office — please triage",
+            "Multiple issues from {department} — dumping into one ticket",
+            "Forwarding batch of problems from our floor — please split",
+        ],
+        descriptions=[
+            "Hi team,\n\n"
+            "Our London office manager forwarded a batch of issues collected at "
+            "this morning's all-hands. I'm dumping them all into one ticket "
+            "because our portal was down earlier.\n\n"
+            "=== ISSUE 1 (from Tom Bradley, Settlements) ===\n"
+            "The settlement reconciliation app crashes every time I try to "
+            "export to CSV. Error: 'System.OutOfMemoryException'. Machine: LDN-WS-1147.\n\n"
+            "=== ISSUE 2 (from Amara Osei, Client Services) ===\n"
+            "WiFi in the London office 3rd floor conference rooms A, B, C "
+            "has been extremely slow since the new partitions were installed. "
+            "Video calls keep freezing.\n\n"
+            "=== ISSUE 3 (from Liam McDonnell, Compliance) ===\n"
+            "I need access to the GDPR Data Subject Request portal. I "
+            "transferred from Dublin last month and my access didn't follow.\n\n"
+            "=== ISSUE 4 (from Yuki Sato, Quantitative Analysis) ===\n"
+            "Our Bloomberg Terminal (BT-LDN-0093) shows 'Connection to B-PIPE "
+            "lost' intermittently — data feed drops for 30-60 seconds hourly.\n\n"
+            "=== ISSUE 5 (from Grace Nkomo, HR) ===\n"
+            "The HR shared mailbox is bouncing emails with 'Mailbox full' — "
+            "49.8 GB of 50 GB limit.\n\n"
+            "Sorry for the messy format.\n\n"
+            "{name}\n{department}",
+            "Hi IT, forwarding a batch of problems from our {department} team:\n\n"
+            "--- Issue A ---\n"
+            "Shared drive access denied for {name1}. Worked until last Friday.\n\n"
+            "--- Issue B ---\n"
+            "VPN drops every 30 minutes for 3 people on our team.\n\n"
+            "--- Issue C ---\n"
+            "Outlook keeps crashing when opening attachments > 5 MB.\n\n"
+            "--- Issue D ---\n"
+            "We need a new team distribution list created: "
+            "{department}-all@contoso.com.\n\n"
+            "I know this should be separate tickets but our portal was down "
+            "so I'm batching them here. Please split as needed.\n\n"
+            "{name}",
+        ],
+        next_best_actions=[
+            "This ticket contains multiple separate issues bundled into one "
+            "submission. Split into individual tickets and triage each with "
+            "the appropriate team.",
+            "Split the concatenated ticket into individual issues — prioritize "
+            "the highest-impact items first.",
+        ],
+        remediation_steps=[
+            [
+                "Create separate tickets for each reported issue and assign to the "
+                "appropriate teams",
+                "Prioritize the items that directly impact business operations "
+                "(app crashes, data feed drops, mailbox full)",
+                "For the settlement app crash, investigate the OutOfMemoryException "
+                "in the CSV export code path",
+                "For WiFi issues, coordinate with Network Ops to assess coverage "
+                "changes after the partition installation",
+                "For the mailbox quota, increase the limit or implement an auto-archive policy",
+            ],
+        ],
+    )
+)
