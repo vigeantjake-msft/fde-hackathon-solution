@@ -9482,4 +9482,805 @@ def get_scenarios() -> list[ScenarioDefinition]:
             tags=["data-cleanup", "npm-dependency-tree", "package-conflict"],
             difficulty="medium",
         ),
+        # ── DC-141  Terraform / IaC config dump ────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-141",
+            subject="Azure VM not deploying — Terraform state attached",
+            description=(
+                "Hi team,\n\n"
+                "I've been trying to deploy a new Azure VM through our Terraform pipeline "
+                "and it keeps failing. I'm pasting the relevant state JSON so you can see "
+                "what's going on:\n\n"
+                '{\n'
+                '  "version": 4,\n'
+                '  "terraform_version": "1.7.3",\n'
+                '  "serial": 42,\n'
+                '  "lineage": "a3f8e1c2-94d7-4b1e-bf3a-6e82d9c0f1a5",\n'
+                '  "outputs": {},\n'
+                '  "resources": [\n'
+                '    {\n'
+                '      "mode": "managed",\n'
+                '      "type": "azurerm_virtual_machine",\n'
+                '      "name": "contoso_risk_engine_vm",\n'
+                '      "provider": "provider[\\"registry.terraform.io/hashicorp/azurerm\\"]",\n'
+                '      "instances": [\n'
+                '        {\n'
+                '          "schema_version": 0,\n'
+                '          "attributes": {\n'
+                '            "id": "/subscriptions/9f3e2a71-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+                '/resourceGroups/rg-contoso-prod-eastus/providers/Microsoft.Compute'
+                '/virtualMachines/vm-risk-engine-01",\n'
+                '            "name": "vm-risk-engine-01",\n'
+                '            "location": "eastus",\n'
+                '            "vm_size": "Standard_D8s_v5",\n'
+                '            "os_profile": {\n'
+                '              "computer_name": "vm-risk-engine-01",\n'
+                '              "admin_username": "contosoadmin"\n'
+                '            },\n'
+                '            "storage_os_disk": {\n'
+                '              "name": "osdisk-risk-engine-01",\n'
+                '              "caching": "ReadWrite",\n'
+                '              "create_option": "FromImage",\n'
+                '              "managed_disk_type": "Premium_LRS",\n'
+                '              "disk_size_gb": 256\n'
+                '            },\n'
+                '            "network_interface_ids": [\n'
+                '              "/subscriptions/9f3e2a71-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+                '/resourceGroups/rg-contoso-prod-eastus/providers/Microsoft.Network'
+                '/networkInterfaces/nic-risk-engine-01"\n'
+                '            ],\n'
+                '            "tags": {\n'
+                '              "environment": "production",\n'
+                '              "team": "risk-analytics",\n'
+                '              "cost_center": "CC-4402"\n'
+                '            }\n'
+                '          }\n'
+                '        }\n'
+                '      ]\n'
+                '    }\n'
+                '  ]\n'
+                '}\n\n'
+                "The actual error during `terraform apply` is:\n"
+                "Error: creating Virtual Machine \"vm-risk-engine-02\": the SKU "
+                "\"Standard_D8s_v5\" is not available in location \"eastus\" for "
+                "subscription \"9f3e2a71-xxxx\".\n\n"
+                "I need this VM for the new risk engine replica. Deployment deadline "
+                "is end of week."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "The Terraform state dump is noise — the real issue is an Azure SKU "
+                "availability error: Standard_D8s_v5 is not available in the eastus "
+                "region for this subscription. Check quota limits or choose an "
+                "alternative VM size or region."
+            ),
+            remediation_steps=[
+                "Run `az vm list-skus --location eastus --size Standard_D8s_v5` to confirm SKU availability.",
+                "Check the subscription's vCPU quota with `az vm list-usage --location eastus` and request an increase if needed.",
+                "If the SKU is restricted, try an alternative size such as Standard_D8as_v5 or deploy to a different region.",
+                "Update the Terraform configuration with the corrected VM size or location and re-run `terraform plan`.",
+                "Document the SKU limitation in the team's infrastructure runbook for future reference.",
+            ],
+            reporter_name="Ethan Kowalski",
+            reporter_email="ethan.kowalski@contoso.com",
+            reporter_department="Risk Analytics Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "terraform", "iac-dump"],
+            difficulty="medium",
+        ),
+        # ── DC-142  Prometheus / Grafana metrics dump ──────────────────
+        ScenarioDefinition(
+            scenario_id="DC-142",
+            subject="App response time spiking — Prometheus metrics attached",
+            description=(
+                "We're seeing major latency spikes on the portfolio analytics service "
+                "since around 10 AM today. I exported some Prometheus metrics that show "
+                "the problem:\n\n"
+                "# HELP http_request_duration_seconds HTTP request latency\n"
+                "# TYPE http_request_duration_seconds histogram\n"
+                "http_request_duration_seconds_bucket{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\",le=\"0.05\"} 12\n"
+                "http_request_duration_seconds_bucket{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\",le=\"0.1\"} 45\n"
+                "http_request_duration_seconds_bucket{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\",le=\"0.5\"} 112\n"
+                "http_request_duration_seconds_bucket{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\",le=\"1.0\"} 389\n"
+                "http_request_duration_seconds_bucket{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\",le=\"5.0\"} 1823\n"
+                "http_request_duration_seconds_bucket{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\",le=\"10.0\"} 2401\n"
+                "http_request_duration_seconds_bucket{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\",le=\"+Inf\"} 2455\n"
+                "http_request_duration_seconds_sum{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\"} 8934.21\n"
+                "http_request_duration_seconds_count{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\"} 2455\n\n"
+                "# HELP http_requests_total Total HTTP requests\n"
+                "# TYPE http_requests_total counter\n"
+                "http_requests_total{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"200\"} 2455\n"
+                "http_requests_total{method=\"GET\",endpoint=\"/api/v2/portfolio\","
+                "status=\"504\"} 387\n"
+                "http_requests_total{method=\"POST\",endpoint=\"/api/v2/trades\","
+                "status=\"200\"} 892\n"
+                "http_requests_total{method=\"POST\",endpoint=\"/api/v2/trades\","
+                "status=\"504\"} 64\n\n"
+                "# HELP process_cpu_seconds_total Total user and system CPU time\n"
+                "# TYPE process_cpu_seconds_total counter\n"
+                "process_cpu_seconds_total 48923.17\n\n"
+                "# HELP process_resident_memory_bytes Resident memory size in bytes\n"
+                "# TYPE process_resident_memory_bytes gauge\n"
+                "process_resident_memory_bytes 4.831838208e+09\n\n"
+                "The Grafana dashboard shows p99 latency went from 200ms to over 8 "
+                "seconds at 10:05 AM on March 19, 2026. Traders are complaining that "
+                "portfolio views take forever. About 15% of requests are timing out with "
+                "504s. Memory usage on the pod looks very high (~4.8 GB). This needs to "
+                "be fixed ASAP before the afternoon trading session."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "The Prometheus metrics dump obscures the core issue but reveals key "
+                "signals: p99 latency spiked to ~8s, 15% of requests return 504, and "
+                "resident memory is ~4.8 GB (likely a memory leak or missing resource "
+                "limit). Investigate the portfolio analytics pod for memory pressure and "
+                "potential OOM conditions."
+            ),
+            remediation_steps=[
+                "Check Kubernetes pod status and recent restarts with `kubectl get pods` and `kubectl describe pod` for the portfolio analytics service.",
+                "Review container memory limits and compare against the 4.8 GB resident memory — increase limits or fix the memory leak.",
+                "Check if a recent deployment correlates with the 10:05 AM latency spike and roll back if necessary.",
+                "Restart the affected pods as an immediate mitigation to free memory.",
+                "Set up a Grafana alert for p99 latency > 2s to catch regressions earlier.",
+            ],
+            reporter_name="Priya Narayanan",
+            reporter_email="priya.narayanan@contoso.com",
+            reporter_department="Portfolio Analytics",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "metrics-dump", "monitoring-noise"],
+            difficulty="medium",
+        ),
+        # ── DC-143  Email with deeply nested HTML table ────────────────
+        ScenarioDefinition(
+            scenario_id="DC-143",
+            subject="FW: Financial report not generating — see table below",
+            description=(
+                "Forwarding this from my Outlook — the report generator is broken again.\n"
+                "Below is what the output looks like when I try to export:\n\n"
+                "<html><body>"
+                "<table border='1' cellpadding='5' cellspacing='0' "
+                "style='border-collapse:collapse;width:100%'>"
+                "<tr style='background-color:#004578;color:white;font-weight:bold'>"
+                "<td>Report ID</td><td>Status</td><td>Generated</td>"
+                "<td>Error Code</td><td>Department</td></tr>"
+                "<tr><td>RPT-2026-Q1-001</td><td style='color:red'>FAILED</td>"
+                "<td>2026-03-20 08:15:03</td><td>ERR_TEMPLATE_RENDER_0x8004</td>"
+                "<td>Treasury</td></tr>"
+                "<tr><td>RPT-2026-Q1-002</td><td style='color:red'>FAILED</td>"
+                "<td>2026-03-20 08:15:04</td><td>ERR_TEMPLATE_RENDER_0x8004</td>"
+                "<td>Risk Management</td></tr>"
+                "<tr><td>RPT-2026-Q1-003</td><td style='color:green'>OK</td>"
+                "<td>2026-03-20 08:15:05</td><td></td><td>Compliance</td></tr>"
+                "<tr><td>RPT-2026-Q1-004</td><td style='color:red'>FAILED</td>"
+                "<td>2026-03-20 08:15:06</td><td>ERR_TEMPLATE_RENDER_0x8004</td>"
+                "<td>Treasury</td></tr>"
+                "<tr><td>RPT-2026-Q1-005</td><td style='color:red'>FAILED</td>"
+                "<td>2026-03-20 08:15:07</td><td>ERR_DATASOURCE_TIMEOUT</td>"
+                "<td>Equities Trading</td></tr>"
+                "<tr><td colspan='5' style='background-color:#f0f0f0;font-style:italic'>"
+                "Nested sub-table follows:</td></tr>"
+                "<tr><td colspan='5'><table border='1' cellpadding='3' width='100%'>"
+                "<tr style='background-color:#d4e6f1'><td>Sub-Report</td>"
+                "<td>Data Source</td><td>Row Count</td><td>Duration (ms)</td></tr>"
+                "<tr><td>Treasury P&amp;L</td><td>SQL-PROD-03</td>"
+                "<td>148,293</td><td>45,200</td></tr>"
+                "<tr><td>Risk VaR</td><td>SQL-PROD-03</td>"
+                "<td>0</td><td>TIMEOUT</td></tr>"
+                "<tr><td>Compliance AML</td><td>SQL-PROD-04</td>"
+                "<td>12,847</td><td>3,200</td></tr>"
+                "</table></td></tr>"
+                "</table>"
+                "<p style='font-family:Calibri;font-size:11pt'>"
+                "&nbsp;</p>"
+                "<p style='font-family:Calibri;font-size:11pt'>"
+                "Sent from my iPhone</p>"
+                "</body></html>\n\n"
+                "The quarterly financial reports for Treasury and Risk Management are "
+                "failing with ERR_TEMPLATE_RENDER_0x8004. One sub-report (Risk VaR) is "
+                "timing out against SQL-PROD-03 with zero rows returned. The Q1 filing "
+                "deadline is March 25. Please help urgently.\n\n"
+                "Thanks,\nGrace"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.APPLICATION_VERSION],
+            next_best_action=(
+                "The HTML table noise contains the actual signal: quarterly reports are "
+                "failing with ERR_TEMPLATE_RENDER_0x8004 and one data source (SQL-PROD-03) "
+                "is timing out on the Risk VaR sub-report. Investigate the SQL-PROD-03 "
+                "connection and the report template engine."
+            ),
+            remediation_steps=[
+                "Check connectivity and performance of SQL-PROD-03 — the Risk VaR sub-report returned 0 rows with a TIMEOUT.",
+                "Review the report template engine logs for ERR_TEMPLATE_RENDER_0x8004 to identify the root cause.",
+                "Verify that the Q1 data set is fully loaded into the Treasury and Risk Management data sources.",
+                "Re-run the failed reports individually to isolate whether the issue is the template engine or the data source.",
+                "Escalate to the DBA team if SQL-PROD-03 is experiencing broader performance issues.",
+            ],
+            reporter_name="Grace Thornton",
+            reporter_email="grace.thornton@contoso.com",
+            reporter_department="Treasury Operations",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "nested-html-table", "outlook-format"],
+            difficulty="hard",
+        ),
+        # ── DC-144  macOS system profiler output ───────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-144",
+            subject="MacBook USB-C port not working — system profiler dump",
+            description=(
+                "My left USB-C port stopped recognizing any devices. I ran "
+                "`system_profiler SPHardwareDataType SPUSBDataType` as support "
+                "suggested last time. Here's the output:\n\n"
+                "Hardware:\n\n"
+                "    Hardware Overview:\n\n"
+                "      Model Name: MacBook Pro\n"
+                "      Model Identifier: Mac14,5\n"
+                "      Model Number: Z17G000SDB\n"
+                "      Chip: Apple M2 Max\n"
+                "      Total Number of Cores: 12 (8 performance and 4 efficiency)\n"
+                "      Memory: 32 GB\n"
+                "      System Firmware Version: 10151.101.3\n"
+                "      OS Loader Version: 10151.101.3\n"
+                "      Serial Number (system): C02FX3ABCDEF\n"
+                "      Hardware UUID: A1B2C3D4-E5F6-7890-ABCD-EF1234567890\n"
+                "      Provisioning UDID: 00006020-001234560A56001E\n"
+                "      Activation Lock Status: Enabled\n\n"
+                "USB:\n\n"
+                "    USB 3.1 Bus:\n\n"
+                "      Host Controller Driver: AppleT6000USBXHCI\n"
+                "      PCI Device ID: 0x1100\n"
+                "      PCI Revision ID: 0x0000\n"
+                "      PCI Vendor ID: 0x1de4\n\n"
+                "        USB3.1 Hub:\n\n"
+                "          Product ID: 0x8110\n"
+                "          Vendor ID: 0x0bda (Realtek Semiconductor Corp.)\n"
+                "          Version: 1.17\n"
+                "          Speed: Up to 10 Gb/s\n"
+                "          Location ID: 0x02200000 / 1\n"
+                "          Current Available (mA): 900\n"
+                "          Current Required (mA): 0\n\n"
+                "    USB 3.1 Bus:\n\n"
+                "      Host Controller Driver: AppleT6000USBXHCI\n"
+                "      PCI Device ID: 0x1100\n"
+                "      PCI Revision ID: 0x0000\n"
+                "      PCI Vendor ID: 0x1de4\n\n"
+                "        (No USB devices connected on this bus)\n\n"
+                "The second USB 3.1 Bus (left side) shows no devices even when I "
+                "plug in my external monitor, USB drive, or Ethernet adapter. The "
+                "right port works fine. I've tried resetting SMC and NVRAM already. "
+                "This is my primary workstation and I need the second port for my "
+                "trading floor monitor setup.\n\n"
+                "Asset tag: CNTSO-MBP-40221\n"
+                "Assigned: March 2025\n"
+                "AppleCare expires: March 2028"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "The system profiler dump confirms the left USB-C port's host "
+                "controller is present but not detecting any devices, while the right "
+                "port works normally. After SMC/NVRAM resets failed, this is likely a "
+                "hardware defect. Schedule an Apple depot repair under AppleCare."
+            ),
+            remediation_steps=[
+                "Confirm the issue persists after booting into macOS Recovery and testing the port with a known-good device.",
+                "Run Apple Diagnostics (hold D at startup) to check for hardware fault codes on the USB controller.",
+                "If diagnostics report a fault, initiate an AppleCare depot repair (coverage confirmed through March 2028).",
+                "Issue a loaner MacBook Pro from the IT equipment pool while the device is in repair.",
+                "Update the asset management system (CNTSO-MBP-40221) with the repair ticket number.",
+            ],
+            reporter_name="Derek Olsen",
+            reporter_email="derek.olsen@contoso.com",
+            reporter_department="Equities Trading",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "system-profiler", "macos-dump"],
+            difficulty="medium",
+        ),
+        # ── DC-145  Base64 encoded email with S/MIME signature ─────────
+        ScenarioDefinition(
+            scenario_id="DC-145",
+            subject="Can't open encrypted emails — S/MIME certificate issue",
+            description=(
+                "Since Monday I can't open any of the encrypted emails from external "
+                "counsel. Outlook shows 'Microsoft Outlook had problems decrypting this "
+                "message'. I exported one of the message headers — here's what I see:\n\n"
+                "MIME-Version: 1.0\n"
+                "Content-Type: application/pkcs7-mime;\n"
+                "    smime-type=enveloped-data;\n"
+                "    name=smime.p7m\n"
+                "Content-Transfer-Encoding: base64\n"
+                "Content-Disposition: attachment;\n"
+                "    filename=smime.p7m\n\n"
+                "MIIRqQYJKoZIhvcNAQcDoIIRmjCCEZYCAQAxggJLMIICRwIBADB\n"
+                "vMGkxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9u\n"
+                "MRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVDb250b3NvIE\n"
+                "ZpbmFuY2lhbDETMBEGA1UEAxMKQ29udG9zbyBDQQICAQ0wDQYJ\n"
+                "KoZIhvcNAQEBBQAEggIAjKL8mT5eX3rA7t+8PqFV2XJ4B9m6QD\n"
+                "k5L+N7v2H1dN8yM3R5cXpSfQ9d4T2wK6bP8oY1lZ3nF0hR9qJm\n"
+                "...(truncated ~200 lines of base64)...\n"
+                "wZ0FTrEAe9h3Q7t8s==\n\n"
+                "I also see this in the Outlook certificate dialog:\n"
+                "  Issuer: CN=Contoso Financial CA, O=Contoso Financial, L=Redmond, "
+                "S=Washington, C=US\n"
+                "  Serial Number: 00:0D\n"
+                "  Valid From: 2024-06-15\n"
+                "  Valid To: 2026-03-15  <-- THIS EXPIRED!\n"
+                "  Subject: CN=jessica.lang@contoso.com\n"
+                "  Key Usage: Key Encipherment, Digital Signature\n\n"
+                "So my S/MIME certificate expired on March 15, 2026, and now I can't "
+                "decrypt anything that was encrypted to my old public key. I also can't "
+                "send signed emails. I work in Legal and we exchange encrypted emails "
+                "with outside counsel daily. This is blocking active deal work.\n\n"
+                "Please issue me a new certificate and help me recover access to "
+                "the old encrypted messages."
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            team=Team.IAM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AUTHENTICATION_METHOD, MissingInfo.PREVIOUS_TICKET_ID],
+            next_best_action=(
+                "The S/MIME certificate (CN=jessica.lang@contoso.com) expired on "
+                "2026-03-15. The base64 PKCS#7 blob is noise — the real issue is "
+                "certificate renewal. Issue a new S/MIME certificate and ensure the "
+                "old private key is archived so historical encrypted emails remain "
+                "accessible."
+            ),
+            remediation_steps=[
+                "Issue a new S/MIME certificate for jessica.lang@contoso.com from the Contoso Financial CA.",
+                "Publish the new certificate to the Global Address List so external correspondents can encrypt to the new key.",
+                "Archive the expired private key in the user's certificate store to retain access to previously encrypted emails.",
+                "Test decryption of an existing encrypted email and sending a new signed email to external counsel.",
+                "Set up a calendar reminder 30 days before the new certificate's expiration to avoid recurrence.",
+            ],
+            reporter_name="Jessica Lang",
+            reporter_email="jessica.lang@contoso.com",
+            reporter_department="Legal",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "smime", "encrypted-email"],
+            difficulty="medium",
+        ),
+        # ── DC-146  Syslog flood — firewall logs ──────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-146",
+            subject="URGENT: Firewall blocking legitimate traffic — syslog dump",
+            description=(
+                "The Palo Alto firewall is blocking traffic to our payment gateway "
+                "and we're losing transactions. I pulled syslog entries — there are "
+                "THOUSANDS but here's a sample:\n\n"
+                "Mar 21 09:14:01 pa-fw-01 1,2026/03/21 09:14:01,001234567890,TRAFFIC,"
+                "drop,2049,2026/03/21 09:14:01,10.10.50.12,203.0.113.45,0.0.0.0,0.0.0.0,"
+                "Block-Outbound,contoso\\svc-payment,,ssl,vsys1,trust,untrust,ae1.100,,"
+                "Deny-Log,2026/03/21 09:14:01,45892,1,51234,443,0,0,0x0,tcp,deny,"
+                "0,0,0,1,2026/03/21 09:14:01,0,any,0,12345678,0x0,10.0.0.0-10.255.255.255,"
+                "US,0,1,0,policy-deny,0,0,0,0,,pa-fw-01,from-policy,,,0,,0,,N/A,0,0,0,0\n"
+                "Mar 21 09:14:01 pa-fw-01 1,2026/03/21 09:14:01,001234567890,TRAFFIC,"
+                "drop,2049,2026/03/21 09:14:01,10.10.50.13,203.0.113.45,0.0.0.0,0.0.0.0,"
+                "Block-Outbound,contoso\\svc-payment,,ssl,vsys1,trust,untrust,ae1.100,,"
+                "Deny-Log,2026/03/21 09:14:01,45893,1,51235,443,0,0,0x0,tcp,deny,"
+                "0,0,0,1,2026/03/21 09:14:01,0,any,0,12345679,0x0,10.0.0.0-10.255.255.255,"
+                "US,0,1,0,policy-deny,0,0,0,0,,pa-fw-01,from-policy,,,0,,0,,N/A,0,0,0,0\n"
+                "Mar 21 09:14:02 pa-fw-01 1,2026/03/21 09:14:02,001234567890,TRAFFIC,"
+                "drop,2049,2026/03/21 09:14:02,10.10.50.14,203.0.113.45,0.0.0.0,0.0.0.0,"
+                "Block-Outbound,contoso\\svc-payment,,ssl,vsys1,trust,untrust,ae1.100,,"
+                "Deny-Log,2026/03/21 09:14:02,45894,1,51236,443,0,0,0x0,tcp,deny,"
+                "0,0,0,1,2026/03/21 09:14:02,0,any,0,12345680,0x0,10.0.0.0-10.255.255.255,"
+                "US,0,1,0,policy-deny,0,0,0,0,,pa-fw-01,from-policy,,,0,,0,,N/A,0,0,0,0\n"
+                "Mar 21 09:14:02 pa-fw-01 1,2026/03/21 09:14:02,001234567890,TRAFFIC,"
+                "drop,2049,2026/03/21 09:14:02,10.10.50.15,203.0.113.45,0.0.0.0,0.0.0.0,"
+                "Block-Outbound,contoso\\svc-payment,,ssl,vsys1,trust,untrust,ae1.100,,"
+                "Deny-Log,2026/03/21 09:14:02,45895,1,51237,443,0,0,0x0,tcp,deny,"
+                "0,0,0,1,2026/03/21 09:14:02,0,any,0,12345681,0x0,10.0.0.0-10.255.255.255,"
+                "US,0,1,0,policy-deny,0,0,0,0,,pa-fw-01,from-policy,,,0,,0,,N/A,0,0,0,0\n"
+                "Mar 21 09:14:03 pa-fw-01 1,2026/03/21 09:14:03,001234567890,TRAFFIC,"
+                "drop,2049,2026/03/21 09:14:03,10.10.50.12,203.0.113.46,0.0.0.0,0.0.0.0,"
+                "Block-Outbound,contoso\\svc-payment,,ssl,vsys1,trust,untrust,ae1.100,,"
+                "Deny-Log,2026/03/21 09:14:03,45896,1,51238,443,0,0,0x0,tcp,deny,"
+                "0,0,0,1,2026/03/21 09:14:03,0,any,0,12345682,0x0,10.0.0.0-10.255.255.255,"
+                "US,0,1,0,policy-deny,0,0,0,0,,pa-fw-01,from-policy,,,0,,0,,N/A,0,0,0,0\n\n"
+                "(hundreds more lines like this — all DENY on port 443 to 203.0.113.0/24)\n\n"
+                "All payment processing traffic from the svc-payment service accounts "
+                "(10.10.50.12-15) to the payment gateway at 203.0.113.45 and .46 is being "
+                "denied by the 'Block-Outbound' rule on pa-fw-01. This started after last "
+                "night's change window. We are losing approximately $12,000 per minute in "
+                "failed transactions. Payment Operations has confirmed the gateway IPs haven't "
+                "changed. This needs IMMEDIATE resolution."
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P1,
+            team=Team.NETWORK_OPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.PREVIOUS_TICKET_ID, MissingInfo.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "The syslog flood is noise but consistently shows the 'Block-Outbound' "
+                "policy on pa-fw-01 denying all TCP/443 traffic from the payment service "
+                "subnet (10.10.50.0/24) to the payment gateway (203.0.113.45-46). This "
+                "started after last night's change window — review the firewall change log "
+                "and restore the allow rule immediately."
+            ),
+            remediation_steps=[
+                "Review the change management log for last night's window to identify what rule was modified on pa-fw-01.",
+                "Add an emergency allow rule for 10.10.50.0/24 -> 203.0.113.45-46 on TCP/443 to restore payment traffic immediately.",
+                "Verify payment transactions are flowing again by checking the payment gateway dashboard.",
+                "Conduct a post-incident review of the change that introduced the blocking rule.",
+                "Implement a pre-change validation check that tests connectivity to critical payment endpoints before committing firewall changes.",
+            ],
+            reporter_name="Carlos Mendez",
+            reporter_email="carlos.mendez@contoso.com",
+            reporter_department="Payment Operations",
+            channel=Channel.PHONE,
+            tags=["data-cleanup", "syslog-flood", "firewall-logs"],
+            difficulty="hard",
+        ),
+        # ── DC-147  Azure Resource Manager (ARM) template dump ─────────
+        ScenarioDefinition(
+            scenario_id="DC-147",
+            subject="Resource group deployment failing — ARM template attached",
+            description=(
+                "Our ARM template deployment for the new analytics resource group keeps "
+                "failing. I'm attaching the full template so you can see what we're "
+                "deploying:\n\n"
+                '{\n'
+                '  "$schema": "https://schema.management.azure.com/schemas/'
+                '2019-04-01/deploymentTemplate.json#",\n'
+                '  "contentVersion": "1.0.0.0",\n'
+                '  "parameters": {\n'
+                '    "storageAccountName": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "stcontosoanalyticsprod"\n'
+                '    },\n'
+                '    "location": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "[resourceGroup().location]"\n'
+                '    },\n'
+                '    "sqlServerName": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "sql-contoso-analytics-prod"\n'
+                '    },\n'
+                '    "sqlAdminPassword": {\n'
+                '      "type": "securestring"\n'
+                '    }\n'
+                '  },\n'
+                '  "resources": [\n'
+                '    {\n'
+                '      "type": "Microsoft.Storage/storageAccounts",\n'
+                '      "apiVersion": "2023-01-01",\n'
+                '      "name": "[parameters(\'storageAccountName\')]",\n'
+                '      "location": "[parameters(\'location\')]",\n'
+                '      "sku": { "name": "Standard_LRS" },\n'
+                '      "kind": "StorageV2"\n'
+                '    },\n'
+                '    {\n'
+                '      "type": "Microsoft.Sql/servers",\n'
+                '      "apiVersion": "2022-05-01-preview",\n'
+                '      "name": "[parameters(\'sqlServerName\')]",\n'
+                '      "location": "[parameters(\'location\')]",\n'
+                '      "properties": {\n'
+                '        "administratorLogin": "contosoadmin",\n'
+                '        "administratorLoginPassword": "[parameters(\'sqlAdminPassword\')]",\n'
+                '        "version": "12.0"\n'
+                '      }\n'
+                '    },\n'
+                '    {\n'
+                '      "type": "Microsoft.Sql/servers/databases",\n'
+                '      "apiVersion": "2022-05-01-preview",\n'
+                '      "name": "[concat(parameters(\'sqlServerName\'), \'/analyticsdb\')]",\n'
+                '      "location": "[parameters(\'location\')]",\n'
+                '      "dependsOn": [\n'
+                '        "[resourceId(\'Microsoft.Sql/servers\', '
+                'parameters(\'sqlServerName\'))]"\n'
+                '      ],\n'
+                '      "sku": { "name": "P2", "tier": "Premium" },\n'
+                '      "properties": { "collation": "SQL_Latin1_General_CP1_CI_AS" }\n'
+                '    }\n'
+                '  ]\n'
+                '}\n\n'
+                "The deployment error from the Azure portal is:\n"
+                "\"The storage account named stcontosoanalyticsprod is already taken. "
+                "(Code: StorageAccountAlreadyTaken)\"\n\n"
+                "I'm deploying to the rg-contoso-analytics-prod resource group in East US 2. "
+                "The storage account name needs to be globally unique but I thought we owned "
+                "that name. This is blocking the data analytics platform migration scheduled "
+                "for March 28, 2026. — Raj"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "The full ARM template is noise — the deployment error is clear: "
+                "StorageAccountAlreadyTaken for 'stcontosoanalyticsprod'. Azure storage "
+                "account names must be globally unique. Either the name is taken by another "
+                "Azure tenant or it exists in a different subscription/resource group within "
+                "Contoso."
+            ),
+            remediation_steps=[
+                "Check if 'stcontosoanalyticsprod' exists in another Contoso subscription with `az storage account list --query \"[?name=='stcontosoanalyticsprod']\"` across all subscriptions.",
+                "If the account exists elsewhere, coordinate with the owning team to either reuse or rename.",
+                "If externally taken, choose a new globally unique name (e.g., 'stcntsoanalyticsprd01') and update the ARM template parameter.",
+                "Re-run the deployment with `az deployment group create` using the corrected storage account name.",
+                "Add a naming convention check to the CI/CD pipeline to validate resource name availability before deployment.",
+            ],
+            reporter_name="Raj Venkatesh",
+            reporter_email="raj.venkatesh@contoso.com",
+            reporter_department="Data Analytics Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "arm-template-dump", "azure-deployment"],
+            difficulty="medium",
+        ),
+        # ── DC-148  Multi-page PDF OCR text (garbled) ──────────────────
+        ScenarioDefinition(
+            scenario_id="DC-148",
+            subject="Invoice processing pipeline broken — OCR output garbled",
+            description=(
+                "The automated invoice processing system is producing garbage output. "
+                "I pulled the OCR text from one of the failed invoices — you can see how "
+                "garbled it is:\n\n"
+                "C O N T O S O   F I N A N C I A L   S E R V I C E S\n"
+                "I  N V O  |  C E\n"
+                "──────────────────────────────────────────\n"
+                "lnvo|ce Numb3r:    |NV-2026-03-00847\n"
+                "Dat3:              March 22, 2O26\n"
+                "Du3 Dat3:          Apri| 21, 2O26\n"
+                "Vend0r:            Ac me  C|oud  Serv ices  LLC\n"
+                "Vend0r lD:         VND - 00 4 4 2 1\n"
+                "──────────────────────────────────────────\n"
+                "  Qty     De scription              Un|t Pr|ce    T0tal\n"
+                "──────────────────────────────────────────\n"
+                "  1 2     Az ure Rese rved lnst.     $1,2 OO.OO   $14,4OO.OO\n"
+                "   4      Prem ium  Su pp ort         $  5OO.OO    $2,OOO.OO\n"
+                "   1      Data  Eg ress (1O TB)      $  87O.OO    $  87O.OO\n"
+                "──────────────────────────────────────────\n"
+                "                        Subt0ta|:              $17,27O.OO\n"
+                "                        Tax (8.5%):             $1,467.95\n"
+                "                        T0TAL DUE:            $18,737.95\n\n"
+                "Pa yme nt Te rms: Net 3O\n"
+                "Re mit to: ACH — Rout|ng O21OOOO89, Acc 4 4 7 8 XXXX XXXX\n\n"
+                "[Page 2 of 4 — subsequent pages contain similar garbled line items and "
+                "a signature block that OCR'd as wingdings]\n\n"
+                "The OCR engine (ABBYY FineReader Server 16) started producing these "
+                "garbled results after the March 20 update. About 340 invoices from the "
+                "last two days are stuck in the queue with 'OCR_QUALITY_BELOW_THRESHOLD' "
+                "errors. Accounts Payable can't process vendor payments until this is "
+                "resolved. Total blocked invoice value is approximately $2.3M."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "The garbled OCR output is the noise — the real issue is that the ABBYY "
+                "FineReader Server 16 update on March 20 broke OCR quality. 340 invoices "
+                "($2.3M) are stuck. Roll back the update or reconfigure the OCR engine's "
+                "recognition settings."
+            ),
+            remediation_steps=[
+                "Roll back the March 20 ABBYY FineReader Server update to the previous version to restore OCR quality.",
+                "Re-process a sample batch of stuck invoices to confirm OCR output quality is restored.",
+                "If rollback isn't possible, contact ABBYY support with sample PDFs to get a hotfix for the recognition regression.",
+                "Once OCR is working, requeue the 340 stuck invoices for reprocessing.",
+                "Implement OCR quality validation on a test batch before applying future updates to the production pipeline.",
+            ],
+            reporter_name="Linda Fujimoto",
+            reporter_email="linda.fujimoto@contoso.com",
+            reporter_department="Accounts Payable",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "ocr-garbled", "pdf-ocr"],
+            difficulty="hard",
+        ),
+        # ── DC-149  GitHub Actions workflow YAML + log ─────────────────
+        ScenarioDefinition(
+            scenario_id="DC-149",
+            subject="Build pipeline failing on main — GitHub Actions log attached",
+            description=(
+                "The main branch build has been red since yesterday afternoon. I'm "
+                "pasting our workflow config and the failure log:\n\n"
+                "# .github/workflows/ci.yml\n"
+                "name: Contoso Risk Engine CI\n"
+                "on:\n"
+                "  push:\n"
+                "    branches: [main, develop]\n"
+                "  pull_request:\n"
+                "    branches: [main]\n\n"
+                "jobs:\n"
+                "  build-and-test:\n"
+                "    runs-on: ubuntu-latest\n"
+                "    strategy:\n"
+                "      matrix:\n"
+                "        python-version: ['3.11', '3.12']\n"
+                "    services:\n"
+                "      postgres:\n"
+                "        image: postgres:15\n"
+                "        env:\n"
+                "          POSTGRES_PASSWORD: testpass\n"
+                "          POSTGRES_DB: riskengine_test\n"
+                "        ports:\n"
+                "          - 5432:5432\n"
+                "        options: >-\n"
+                "          --health-cmd pg_isready\n"
+                "          --health-interval 10s\n"
+                "          --health-timeout 5s\n"
+                "          --health-retries 5\n"
+                "    steps:\n"
+                "      - uses: actions/checkout@v4\n"
+                "      - name: Set up Python ${{ matrix.python-version }}\n"
+                "        uses: actions/setup-python@v5\n"
+                "        with:\n"
+                "          python-version: ${{ matrix.python-version }}\n"
+                "      - name: Install dependencies\n"
+                "        run: |\n"
+                "          pip install -r requirements.txt\n"
+                "          pip install -r requirements-dev.txt\n"
+                "      - name: Run tests\n"
+                "        run: pytest --cov=src --cov-report=xml -v\n"
+                "        env:\n"
+                "          DATABASE_URL: postgresql://postgres:testpass@localhost:5432/"
+                "riskengine_test\n\n"
+                "--- Run log (failed) ---\n"
+                "Run pytest --cov=src --cov-report=xml -v\n"
+                "============================= test session starts ==============================\n"
+                "platform linux -- Python 3.12.2, pytest-8.0.2, pluggy-1.4.0\n"
+                "collected 847 items\n\n"
+                "src/tests/test_risk_models.py::test_var_calculation PASSED\n"
+                "src/tests/test_risk_models.py::test_stress_scenario PASSED\n"
+                "src/tests/test_risk_models.py::test_monte_carlo_sim PASSED\n"
+                "...(742 passed tests omitted)...\n"
+                "src/tests/test_market_data.py::test_feed_connection FAILED\n"
+                "src/tests/test_market_data.py::test_feed_reconnect FAILED\n"
+                "src/tests/test_market_data.py::test_feed_snapshot FAILED\n\n"
+                "FAILED src/tests/test_market_data.py::test_feed_connection - "
+                "ConnectionRefusedError: [Errno 111] Connection refused\n"
+                "FAILED src/tests/test_market_data.py::test_feed_reconnect - "
+                "ConnectionRefusedError: [Errno 111] Connection refused\n"
+                "FAILED src/tests/test_market_data.py::test_feed_snapshot - "
+                "TimeoutError: Market data feed did not respond within 30s\n\n"
+                "========================= 3 failed, 844 passed =========================\n"
+                "Error: Process completed with exit code 1.\n\n"
+                "This is blocking all PRs from merging. The 3 failing tests are in "
+                "test_market_data.py and seem to be trying to connect to an external "
+                "market data feed that isn't available in CI. This was working before — "
+                "someone may have removed the mock. Build started failing after commit "
+                "abc123f merged on March 23, 2026 at 3:47 PM."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.STEPS_TO_REPRODUCE, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "The workflow YAML is noise — the test log shows 844/847 tests pass but "
+                "3 tests in test_market_data.py fail with ConnectionRefusedError, meaning "
+                "they depend on an external market data feed unavailable in CI. The regression "
+                "was introduced by commit abc123f on March 23. Check that commit for removed "
+                "or broken mock fixtures."
+            ),
+            remediation_steps=[
+                "Review commit abc123f to identify changes to test_market_data.py or its mock fixtures.",
+                "Restore or fix the market data feed mock so tests don't depend on an external service in CI.",
+                "Run the test suite locally with the fix to confirm all 847 tests pass.",
+                "Push the fix to main and verify the GitHub Actions build goes green.",
+                "Add a CI environment check to test_market_data.py that skips or mocks external feeds when DATABASE_URL indicates a CI environment.",
+            ],
+            reporter_name="Nathan Borkowski",
+            reporter_email="nathan.borkowski@contoso.com",
+            reporter_department="Risk Engine Development",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "github-actions-dump", "ci-pipeline-log"],
+            difficulty="medium",
+        ),
+        # ── DC-150  Interleaved chat transcript (multiple participants)
+        ScenarioDefinition(
+            scenario_id="DC-150",
+            subject="VPN token expired — Teams chat transcript with IT",
+            description=(
+                "Submitting this on behalf of my colleague who couldn't get into the "
+                "portal. Here's the Teams chat transcript of her troubleshooting session "
+                "with the help desk:\n\n"
+                "[2026-03-24 08:02:14] Samira Hussain joined the chat\n"
+                "[2026-03-24 08:02:15] System: Chat started with IT Help Desk\n"
+                "[2026-03-24 08:02:18] Samira Hussain: Hi, I can't connect to the VPN "
+                "this morning\n"
+                "[2026-03-24 08:02:45] IT Help Desk (Bot): Hello! I'm the Contoso IT "
+                "virtual assistant. Let me connect you with an agent. Your queue "
+                "position: 3. Estimated wait: 4 minutes.\n"
+                "[2026-03-24 08:03:01] System: Samira Hussain reacted with \U0001f44d to "
+                "\"Hello! I'm the Contoso IT virtual assistant...\"\n"
+                "[2026-03-24 08:06:33] System: Agent Kevin Park joined the chat\n"
+                "[2026-03-24 08:06:35] Kevin Park: Hi Samira, I'm Kevin from IT. What "
+                "VPN client are you using?\n"
+                "[2026-03-24 08:06:52] Samira Hussain: GlobalProtect 6.2\n"
+                "[2026-03-24 08:07:15] Kevin Park: OK. What error do you see when you "
+                "try to connect?\n"
+                "[2026-03-24 08:07:44] Samira Hussain: It says \"Authentication failed: "
+                "token expired. Please contact your administrator to renew your MFA "
+                "token.\"\n"
+                "[2026-03-24 08:08:01] Kevin Park: Got it. When did this start?\n"
+                "[2026-03-24 08:08:22] Samira Hussain: This morning. It was working "
+                "Friday. I haven't changed anything.\n"
+                "[2026-03-24 08:08:45] System: Kevin Park is typing...\n"
+                "[2026-03-24 08:09:10] Kevin Park: Let me check your MFA token status. "
+                "One moment.\n"
+                "[2026-03-24 08:09:12] System: Samira Hussain reacted with \u2764\ufe0f to "
+                "\"Let me check your MFA token status...\"\n"
+                "[2026-03-24 08:11:30] Kevin Park: I can see your TOTP hardware token "
+                "(serial: YK-5C-00293847) expired on 2026-03-22. These tokens have a "
+                "2-year lifecycle. You'll need a replacement.\n"
+                "[2026-03-24 08:11:58] Samira Hussain: Oh no. I'm working from home "
+                "today and I need VPN to access the trading systems. Can you do anything "
+                "remotely?\n"
+                "[2026-03-24 08:12:30] Kevin Park: I can issue a temporary software "
+                "token valid for 72 hours while we ship you a new hardware key. Would "
+                "that work?\n"
+                "[2026-03-24 08:12:45] Samira Hussain: Yes please!\n"
+                "[2026-03-24 08:12:47] System: Samira Hussain reacted with \U0001f389 to "
+                "\"I can issue a temporary software token...\"\n"
+                "[2026-03-24 08:15:02] Kevin Park: OK, I've provisioned a temporary "
+                "TOTP token to your Contoso Authenticator app. Please check and try "
+                "connecting.\n"
+                "[2026-03-24 08:16:30] Samira Hussain: It worked! I'm connected now. "
+                "Thank you Kevin!\n"
+                "[2026-03-24 08:16:45] Kevin Park: Great. I'm creating a ticket to ship "
+                "you a replacement YubiKey. You should receive it within 3-5 business "
+                "days. The temp token expires March 27.\n"
+                "[2026-03-24 08:17:00] Samira Hussain: Perfect. Thanks so much.\n"
+                "[2026-03-24 08:17:02] System: Samira Hussain rated the chat: \u2b50\u2b50\u2b50\u2b50\u2b50\n"
+                "[2026-03-24 08:17:05] System: Chat ended\n\n"
+                "So the temporary token is working now, but Samira still needs the "
+                "permanent hardware token replacement shipped to her home address. "
+                "Her employee ID is EMP-10482 and home address is on file in Workday. "
+                "Please make sure the new YubiKey gets sent before March 27 when the "
+                "temp token expires."
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P3,
+            team=Team.IAM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.CONTACT_INFO],
+            next_best_action=(
+                "The chat transcript noise (reactions, system messages, bot messages) "
+                "obscures a simple request: Samira Hussain's YubiKey hardware token "
+                "(YK-5C-00293847) expired on 2026-03-22. A temporary software TOTP "
+                "token is active until March 27. Ship a replacement YubiKey to her "
+                "home address (on file in Workday, EMP-10482) before that date."
+            ),
+            remediation_steps=[
+                "Look up Samira Hussain's home shipping address in Workday using employee ID EMP-10482.",
+                "Initiate a YubiKey 5C replacement shipment via the IT hardware provisioning portal with expedited shipping.",
+                "Verify the temporary TOTP software token is registered correctly and set to expire on March 27, 2026.",
+                "Follow up with Samira on March 26 to confirm the replacement YubiKey has arrived and assist with enrollment.",
+                "Decommission the expired hardware token (serial: YK-5C-00293847) in the MFA management console.",
+            ],
+            reporter_name="Omar Farouk",
+            reporter_email="omar.farouk@contoso.com",
+            reporter_department="Fixed Income Trading",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "chat-transcript-noise", "teams-transcript"],
+            difficulty="medium",
+        ),
     ]
