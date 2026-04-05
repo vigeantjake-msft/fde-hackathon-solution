@@ -192,6 +192,22 @@ class TestDataCleanupSpecific:
             "itsm_audit_trail",
             "bloomberg_terminal",
             "excel_formulas",
+            # New DC-136..DC-150 scenarios
+            "csv_injection",
+            "gpg_signed",
+            "zalgo",
+            "nested_json",
+            "sql_output",
+            "smime",
+            "near_empty",
+            "jira_notification",
+            "registry_export",
+            "deep_traceback",
+            "tracking_url",
+            "ooo_chain",
+            "base64_excel",
+            "terraform",
+            "git_blame",
         ]
         for scenario in expected_scenarios:
             matching = [t for t in all_tags if scenario in t]
@@ -243,6 +259,22 @@ class TestResponsibleAISpecific:
             "xss_payload",
             "persistent_poisoning",
             "cjk_obfuscation",
+            # New RAI-161..RAI-175 scenarios
+            "constitutional",
+            "steganographic",
+            "token_boundary",
+            "fake_audit",
+            "memory_manipulation",
+            "few_shot",
+            "markdown_injection",
+            "meta_reasoning",
+            "sandboxing_escape",
+            "accessibility_exploit",
+            "cross_session",
+            "prompt_chain",
+            "time_delayed",
+            "helpful_correction",
+            "social_proof",
         ]
         for scenario in expected_scenarios:
             matching = [t for t in all_tags if scenario in t]

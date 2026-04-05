@@ -46,13 +46,13 @@ class TestResponsibleAiScenarios:
         """Verify expected scenario IDs exist."""
         scenarios = get_scenarios()
         ids = {s.scenario_id for s in scenarios}
-        expected = {f"RAI-{i:03d}" for i in range(1, 201)}
+        expected = {f"RAI-{i:03d}" for i in range(1, 306)}
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Responsible AI should have at least 200 scenarios."""
+        """Responsible AI should have at least 305 scenarios."""
         scenarios = get_scenarios()
-        assert len(scenarios) >= 200, f"Expected >= 200 RAI scenarios, got {len(scenarios)}"
+        assert len(scenarios) >= 305, f"Expected >= 305 RAI scenarios, got {len(scenarios)}"
 
     def test_covers_key_attack_categories(self) -> None:
         """Verify that key adversarial categories are covered."""
@@ -216,5 +216,34 @@ class TestResponsibleAiScenarios:
             "emotional-manipulation",
             "authority-spoofing",
             "base64-injection",
+            # New attack patterns (RAI-291..305)
+            "constitutional-ai-bypass",
+            "transparency-exploitation",
+            "steganographic-acrostic",
+            "hidden-instruction",
+            "token-boundary-exploit",
+            "fake-audit-context",
+            "memory-manipulation",
+            "false-prior-agreement",
+            "adversarial-few-shot",
+            "classification-override",
+            "output-formatting-exploit",
+            "html-injection",
+            "meta-reasoning-attack",
+            "content-filter-bypass",
+            "sandboxing-escape",
+            "destructive-command",
+            "accessibility-exploitation",
+            "credential-extraction",
+            "cross-session-reference",
+            "fabricated-ticket",
+            "prompt-chaining",
+            "false-paper-trail",
+            "time-delayed-payload",
+            "automated-reclassification",
+            "helpful-correction-exploit",
+            "policy-override",
+            "social-proof-aggregation",
+            "peer-pressure-exploit",
         }
         assert expected_tags.issubset(all_tags), f"Missing attack tags: {expected_tags - all_tags}"
