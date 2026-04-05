@@ -4276,4 +4276,3 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         ),
         tags=("data-cleanup", "interleaved-threads"),
     ),
-]
