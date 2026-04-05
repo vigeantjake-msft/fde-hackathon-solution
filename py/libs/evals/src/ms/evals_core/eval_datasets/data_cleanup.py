@@ -9269,8 +9269,834 @@ def _dc138_zalgo_combining() -> EvalCase:
     )
 
 
+def _dc139_nested_json() -> EvalCase:
+    """Deeply nested JSON (50+ levels) pasted in a database performance ticket."""
+    nested = '{"level_1":' * 55 + '{"value":"timeout"}' + "}" * 55
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-139",
+            subject="Database queries timing out on nested document store",
+            description=(
+                "Our MongoDB document store has been returning timeouts on queries "
+                "against the analytics collection. The documents in that collection "
+                "are deeply nested JSON structures that were migrated from a legacy "
+                "XML-based system. Here is a sample document that causes the timeout "
+                "when we try to run an aggregation pipeline:\n\n"
+                f"{nested}\n\n"
+                "The query that fails is a simple $match on the innermost 'value' "
+                "field. It worked fine until the collection grew past 2M documents "
+                "last week. We have an index on 'level_1.level_2.level_3' but not "
+                "deeper. The MongoDB profiler shows the query is doing a COLLSCAN.\n\n"
+                "We need guidance on whether to restructure the documents or add "
+                "wildcard indexes. This is blocking our quarterly analytics pipeline "
+                "which is due by end of week.\n\n"
+                "— Rajesh Patel, Data Engineering\nrajesh.patel@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Rajesh Patel",
+                email="rajesh.patel@contoso.com",
+                department="Data Engineering",
+            ),
+            created_at="2026-04-08T09:15:00Z",
+            channel=Channel.PORTAL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-139",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.ENVIRONMENT_DETAILS, MissingInfoField.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate MongoDB query timeouts caused by deeply nested documents "
+                "and missing indexes on the analytics collection."
+            ),
+            remediation_steps=[
+                "Review the MongoDB profiler output for the failing aggregation pipeline query.",
+                "Evaluate adding wildcard indexes ($**) on the analytics collection for deep paths.",
+                "Consider flattening the deeply nested document structure during a re-migration.",
+                "Increase the query timeout threshold temporarily to unblock the quarterly analytics pipeline.",
+            ],
+        ),
+        tags=["data-cleanup", "deeply_nested_json"],
+        description="Deeply nested JSON (50+ levels) pasted inline in a database performance ticket.",
+    )
+
+
+def _dc140_sql_output() -> EvalCase:
+    """Raw SQL query output with ASCII table formatting in a data corruption ticket."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-140",
+            subject="Customer records showing duplicate entries after ETL run",
+            description=(
+                "After last night's ETL pipeline run, we're seeing duplicate customer "
+                "records in the CustomerMaster table. I ran a query to identify the "
+                "duplicates and here is the output:\n\n"
+                "+------------+----------------------+------------------+-------+\n"
+                "| cust_id    | name                 | email            | count |\n"
+                "+------------+----------------------+------------------+-------+\n"
+                "| C-100234   | Acme Corp            | info@acme.com    |     3 |\n"
+                "| C-100235   | Globex Inc           | hello@globex.com |     2 |\n"
+                "| C-100412   | Initech LLC          | sup@initech.com  |     4 |\n"
+                "| C-100567   | Umbrella Corp        | uc@umbrella.com  |     2 |\n"
+                "| C-100890   | Wayne Enterprises    | info@wayne.com   |     3 |\n"
+                "| C-101023   | Stark Industries     | si@stark.com     |     2 |\n"
+                "| C-101456   | Cyberdyne Systems    | cs@cyberdyne.com |     5 |\n"
+                "| C-101789   | Oscorp               | osc@oscorp.com   |     2 |\n"
+                "+------------+----------------------+------------------+-------+\n"
+                "8 rows in set (0.42 sec)\n\n"
+                "SELECT cust_id, name, email, COUNT(*) as count\n"
+                "FROM CustomerMaster\n"
+                "GROUP BY cust_id, name, email\n"
+                "HAVING COUNT(*) > 1\n"
+                "ORDER BY count DESC;\n\n"
+                "The ETL job ID is ETL-2026-04-07-NIGHTLY-003 and it ran at 02:00 UTC. "
+                "The source was the Salesforce CRM sync connector. I suspect the upsert "
+                "logic is broken — it's inserting instead of updating when the source "
+                "record has a changed email address.\n\n"
+                "This is impacting downstream reporting and billing.\n\n"
+                "— David Kim, Business Intelligence\ndavid.kim@contoso.com"
+            ),
+            reporter=Reporter(
+                name="David Kim",
+                email="david.kim@contoso.com",
+                department="Business Intelligence",
+            ),
+            created_at="2026-04-08T07:30:00Z",
+            channel=Channel.EMAIL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-140",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Investigate the ETL pipeline upsert logic for the Salesforce CRM sync "
+                "connector that is creating duplicate customer records."
+            ),
+            remediation_steps=[
+                "Review ETL job ETL-2026-04-07-NIGHTLY-003 logs for error conditions during the upsert phase.",
+                "Examine the Salesforce CRM sync connector configuration for merge key definitions.",
+                "De-duplicate the affected CustomerMaster records using the original cust_id as the primary key.",
+                "Add a unique constraint or pre-run validation to prevent future duplicate inserts.",
+            ],
+        ),
+        tags=["data-cleanup", "sql_table_output"],
+        description="Raw SQL query output with ASCII table formatting pasted in a data corruption ticket.",
+    )
+
+
+def _dc141_smime_signature() -> EvalCase:
+    """S/MIME digital signature block wrapping an SSO login failure ticket."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-141",
+            subject="SSO login failing for Azure AD-federated applications",
+            description=(
+                'Content-Type: multipart/signed; protocol="application/pkcs7-signature"; '
+                'micalg=sha-256; boundary="----=_Part_SMIME_001"\n\n'
+                "------=_Part_SMIME_001\n"
+                "Content-Type: text/plain; charset=utf-8\n\n"
+                "Hi Identity team,\n\n"
+                "Since this morning, all users in the London office are unable to log in "
+                "to any Azure AD-federated application via SSO. The SAML assertion from "
+                "our ADFS server (adfs.contoso.com) is being rejected by Azure AD with "
+                "error AADSTS50011: The reply URL specified in the request does not match "
+                "the reply URLs configured for the application.\n\n"
+                "This is affecting about 200 users across Outlook Web, SharePoint Online, "
+                "and our internal HR portal. Direct Azure AD login with username/password "
+                "still works, so it's specifically the ADFS federation that's broken.\n\n"
+                "We suspect someone changed the reply URL in the Azure AD app registration "
+                "during yesterday's maintenance window.\n\n"
+                "— Carlos Mendez, IT Security\ncarlos.mendez@contoso.com\n\n"
+                "------=_Part_SMIME_001\n"
+                "Content-Type: application/pkcs7-signature; name=smime.p7s\n"
+                "Content-Transfer-Encoding: base64\n"
+                "Content-Disposition: attachment; filename=smime.p7s\n\n"
+                "MIIGXgYJKoZIhvcNAQcCoIIGTzCCBksCAQExDzANBglghkgBZQMEAgEFADALBgkq\n"
+                "hkiG9w0BBwGgggPPMIIDyzCCArOgAwIBAgIUQ4r7sE2hNjRkYzM1OTdhZGI0ZDQw\n"
+                "DQYJKoZIhvcNAQELBQAwgZAxCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJOWTERMA8G\n"
+                "A1UEBwwITmV3IFlvcmsxEDAOBgNVBAoMB0NvbnRvc28xDDAKBgNVBAsMA0lUMRgw\n"
+                "FgYDVQQDDA9jYXJsb3MubWVuZGV6MScwJQYJKoZIhvcNAQkBFhhjYXJsb3MubWVu\n"
+                "ZGV6QGNvbnRvc28uY29tMB4XDTI2MDQwNzAwMDAwMFoXDTI3MDQwNzAwMDAwMFow\n"
+                "gZAxCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJOWTERMA8GA1UEBwwITmV3IFlvcmsx\n"
+                "------=_Part_SMIME_001--\n"
+            ),
+            reporter=Reporter(
+                name="Carlos Mendez",
+                email="carlos.mendez@contoso.com",
+                department="IT Security",
+            ),
+            created_at="2026-04-08T08:00:00Z",
+            channel=Channel.EMAIL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-141",
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            assigned_team=Team.IAM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.CONFIGURATION_DETAILS, MissingInfoField.AFFECTED_USERS],
+            next_best_action=(
+                "Investigate the AADSTS50011 error by comparing the ADFS reply URL configuration "
+                "with the Azure AD app registration reply URLs for all affected applications."
+            ),
+            remediation_steps=[
+                "Check the Azure AD app registration reply URLs for changes made during yesterday's maintenance.",
+                "Compare the SAML assertion reply URL from ADFS with the Azure AD configured reply URLs.",
+                "Restore the correct reply URL in Azure AD if it was inadvertently changed.",
+                "Verify SSO login works for London office users after the fix is applied.",
+            ],
+        ),
+        tags=["data-cleanup", "smime_signature"],
+        description="S/MIME digital signature block (PKCS7) wrapping a legitimate SSO failure ticket.",
+    )
+
+
+def _dc142_near_empty_iphone() -> EvalCase:
+    """Near-empty body — real issue is only in the subject line."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-142",
+            subject="Excel crashing on pivot table refresh — affects entire Finance team",
+            description=("\n\nSent from my iPhone"),
+            reporter=Reporter(
+                name="Lauren Hughes",
+                email="lauren.hughes@contoso.com",
+                department="Finance",
+            ),
+            created_at="2026-04-08T12:45:00Z",
+            channel=Channel.EMAIL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-142",
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.ERROR_MESSAGE,
+                MissingInfoField.STEPS_TO_REPRODUCE,
+                MissingInfoField.APPLICATION_VERSION,
+                MissingInfoField.ENVIRONMENT_DETAILS,
+            ],
+            next_best_action=(
+                "Follow up with the reporter to gather details about the Excel pivot table "
+                "crash — version, steps to reproduce, and how many users are affected."
+            ),
+            remediation_steps=[
+                "Contact Lauren Hughes to obtain the Excel version and specific workbook details.",
+                "Request crash dump or event log entries from an affected machine.",
+                "Check if a recent Office update correlates with the onset of the crashes.",
+                "Test pivot table refresh in a controlled environment with the same data source.",
+            ],
+        ),
+        tags=["data-cleanup", "near_empty_body"],
+        description="Near-empty email body ('Sent from my iPhone') with the actual issue only in the subject.",
+    )
+
+
+def _dc143_jira_notification() -> EvalCase:
+    """JIRA notification with full transition history wrapping a real software bug."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-143",
+            subject="JIRA notification: CRM-4521 Report export produces corrupt CSV files",
+            description=(
+                "This message was sent by Atlassian Jira (v9.12.4#9120004)\n\n"
+                "Issue: CRM-4521\n"
+                "Type: Bug\n"
+                "Priority: Major\n"
+                "Reporter: Samuel Torres\n"
+                "Assignee: Unassigned\n"
+                "Created: 2026-04-07T14:30:00+0000\n"
+                "Updated: 2026-04-08T09:15:00+0000\n\n"
+                "--- Transition History ---\n"
+                "2026-04-07 14:30 | Open          → In Progress   | Samuel Torres\n"
+                "2026-04-07 15:00 | In Progress   → Blocked       | Samuel Torres\n"
+                "     Reason: Waiting on DBA team for schema access\n"
+                "2026-04-07 16:45 | Blocked       → In Progress   | Samuel Torres\n"
+                "2026-04-07 17:30 | In Progress   → Code Review   | Samuel Torres\n"
+                "2026-04-08 08:00 | Code Review   → Reopened      | QA Bot\n"
+                "     Reason: Failed regression test suite — 3 of 47 tests failed\n"
+                "2026-04-08 08:30 | Reopened      → In Progress   | Samuel Torres\n"
+                "2026-04-08 09:00 | In Progress   → Blocked       | Samuel Torres\n"
+                "     Reason: Escalating to IT — production instance needs config change\n"
+                "2026-04-08 09:15 | Blocked       → Open          | System\n"
+                "     Reason: Auto-reassigned — assignee unavailable\n\n"
+                "--- Description ---\n"
+                "When exporting the monthly sales report from the CRM (Reports > Export > CSV), "
+                "the generated CSV file is corrupt. The headers are duplicated on every 50th row, "
+                "numeric columns contain stray quotation marks, and date columns use inconsistent "
+                "formats (some ISO 8601, some MM/DD/YYYY). This started after the v8.4.2 patch "
+                "deployed on Friday.\n\n"
+                "Steps to reproduce:\n"
+                "1. Navigate to Reports > Monthly Sales Summary\n"
+                "2. Click Export > CSV\n"
+                "3. Open the downloaded file in a text editor\n"
+                "4. Observe corrupt rows at lines 50, 100, 150, ...\n\n"
+                "The production CRM instance needs a configuration change to enable debug logging "
+                "for the export module. This requires IT involvement.\n\n"
+                "— Samuel Torres, Sales Operations\nsamuel.torres@contoso.com\n\n"
+                "---\n"
+                "You are receiving this email because you are subscribed to CRM-4521.\n"
+                "Manage notifications: https://jira.contoso.com/secure/ViewSubscriptions.jspa\n"
+                "Atlassian Jira | Contoso Instance | jira.contoso.com\n"
+            ),
+            reporter=Reporter(
+                name="Samuel Torres",
+                email="samuel.torres@contoso.com",
+                department="Sales Operations",
+            ),
+            created_at="2026-04-08T09:20:00Z",
+            channel=Channel.EMAIL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-143",
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.APPLICATION_VERSION, MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Enable debug logging on the CRM export module and investigate the CSV "
+                "corruption introduced in the v8.4.2 patch."
+            ),
+            remediation_steps=[
+                "Enable debug logging on the CRM production instance for the report export module.",
+                "Reproduce the corrupt CSV export and capture debug output.",
+                "Compare the export module code between v8.4.1 and v8.4.2 for regression.",
+                "Deploy a hotfix or roll back the export module to v8.4.1 if root cause is confirmed.",
+            ],
+        ),
+        tags=["data-cleanup", "jira_notification"],
+        description="JIRA notification email with full transition history wrapping a real CSV export bug.",
+    )
+
+
+def _dc144_registry_export() -> EvalCase:
+    """Windows registry export (.reg) pasted for a software installation issue."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-144",
+            subject="AutoCAD 2026 fails to launch after installation — registry error",
+            description=(
+                "AutoCAD 2026 was installed yesterday via SCCM but refuses to launch. It shows "
+                "error: 'License checkout failed. Error 20: Cannot find license file.' I exported "
+                "the registry keys related to AutoCAD to help diagnose:\n\n"
+                "Windows Registry Editor Version 5.00\n\n"
+                "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Autodesk\\AutoCAD\\R24.2\\ACAD-7001:409]\n"
+                '"ProductName"="AutoCAD 2026"\n'
+                '"Release"="24.2.55.0"\n'
+                '"InstallPath"="C:\\\\Program Files\\\\Autodesk\\\\AutoCAD 2026\\\\"\n'
+                '"LicensePath"=""\n'
+                '"SerialNumber"="XXX-XXXXXXXX"\n'
+                '"ProductKey"="001N2"\n\n'
+                "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Autodesk\\AutoCAD\\R24.2\\ACAD-7001:409\\FlexLM]\n"
+                '"AdskFlexSrv"="@lic-server-01.contoso.com"\n'
+                '"AdskFlexTimeout"=dword:00000078\n'
+                '"AdskFlexDebug"=dword:00000001\n\n'
+                "[HKEY_LOCAL_MACHINE\\SOFTWARE\\FLEXlm License Manager\\Autodesk]\n"
+                '"LM_LICENSE_FILE"="@lic-server-01.contoso.com"\n'
+                '"ADSKFLEX_LICENSE_FILE"=""\n\n'
+                "[HKEY_CURRENT_USER\\SOFTWARE\\Autodesk\\AutoCAD\\R24.2\\Profiles\\Default]\n"
+                '"LicenseType"="network"\n'
+                '"ServerHost"="lic-server-01.contoso.com"\n'
+                '"ServerPort"="27000"\n\n'
+                "As you can see, the ADSKFLEX_LICENSE_FILE key is empty and the LicensePath "
+                "is also blank. I think the SCCM deployment script didn't set these correctly. "
+                "This is affecting 15 engineers in the CAD team who need AutoCAD for a project "
+                "deadline on Friday.\n\n"
+                "— Frank Barker, Engineering\nfrank.barker@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Frank Barker",
+                email="frank.barker@contoso.com",
+                department="Engineering",
+            ),
+            created_at="2026-04-08T08:20:00Z",
+            channel=Channel.PORTAL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-144",
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Fix the SCCM deployment script to correctly populate the AutoCAD license "
+                "registry keys (ADSKFLEX_LICENSE_FILE and LicensePath)."
+            ),
+            remediation_steps=[
+                "Set the ADSKFLEX_LICENSE_FILE registry value to @lic-server-01.contoso.com.",
+                "Verify network connectivity from affected workstations to lic-server-01.contoso.com:27000.",
+                "Update the SCCM deployment task sequence to include the license registry keys.",
+                "Test AutoCAD launch on one machine before redeploying to all 15 engineers.",
+            ],
+        ),
+        tags=["data-cleanup", "registry_export"],
+        description="Windows registry export (.reg) pasted inline for a software license issue.",
+    )
+
+
+def _dc145_deep_traceback() -> EvalCase:
+    """Deep Python traceback (50+ frames) pasted for a production application crash."""
+    frames = ""
+    modules = [
+        "middleware.auth",
+        "middleware.logging",
+        "middleware.cors",
+        "middleware.rate_limit",
+        "routes.api_v2",
+        "controllers.report",
+        "services.report_engine",
+        "services.data_fetcher",
+        "adapters.sql_adapter",
+        "adapters.cache_layer",
+        "core.query_builder",
+        "core.optimizer",
+        "core.executor",
+        "utils.serializer",
+        "utils.validator",
+        "utils.transformer",
+        "models.report_config",
+        "models.data_source",
+        "models.aggregation",
+        "pipeline.extract",
+        "pipeline.transform",
+        "pipeline.load",
+        "connectors.postgres",
+        "connectors.redis",
+        "connectors.s3",
+    ]
+    for i in range(52):
+        mod = modules[i % len(modules)]
+        line_no = 40 + (i * 7) % 200
+        func = f"process_step_{i}" if i > 0 else "handle_request"
+        frames += f'  File "/app/src/{mod.replace(".", "/")}.py", line {line_no}, in {func}\n'
+        frames += f"    result = self._invoke_next(context, step={i})\n"
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-145",
+            subject="Production analytics API returning 500 errors since 3 AM",
+            description=(
+                "The analytics API (analytics-api.contoso.com) has been returning HTTP 500 "
+                "errors on all /v2/reports/* endpoints since approximately 03:00 UTC today. "
+                "Our monitoring dashboard shows a 100% error rate on those endpoints. The "
+                "application logs show the following Python traceback:\n\n"
+                "Traceback (most recent call last):\n"
+                f"{frames}"
+                "RecursionError: maximum recursion depth exceeded while calling a Python object\n\n"
+                "This looks like an infinite recursion in the report pipeline. It was working "
+                "fine yesterday. The only change was a deployment at 02:45 UTC (commit abc123f) "
+                "that was supposed to be a minor config update.\n\n"
+                "The API serves 12 internal dashboards and 3 customer-facing portals.\n\n"
+                "— Priya Sharma, Platform Engineering\npriya.sharma@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Priya Sharma",
+                email="priya.sharma@contoso.com",
+                department="Platform Engineering",
+            ),
+            created_at="2026-04-08T04:15:00Z",
+            channel=Channel.CHAT,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-145",
+            category=Category.SOFTWARE,
+            priority=Priority.P1,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Roll back deployment commit abc123f and investigate the infinite recursion "
+                "in the analytics report pipeline."
+            ),
+            remediation_steps=[
+                "Immediately roll back the 02:45 UTC deployment (commit abc123f) to restore service.",
+                "Review the config change in commit abc123f for unintended pipeline cycle introduction.",
+                "Add recursion depth guards to the report pipeline's _invoke_next method.",
+                "Deploy a fix with integration tests that detect circular pipeline configurations.",
+            ],
+        ),
+        tags=["data-cleanup", "deep_traceback"],
+        description="Deep Python traceback (50+ frames) from a production RecursionError crash.",
+    )
+
+
+def _dc146_long_tracking_urls() -> EvalCase:
+    """URLs with extremely long tracking parameters in a web proxy issue."""
+    tracking_params = "&".join(f"utm_{chr(97 + i % 26)}={'x' * 80}" for i in range(30))
+    long_url = f"https://marketing.contoso.com/campaign/spring-2026?{tracking_params}"
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-146",
+            subject="Web proxy blocking legitimate marketing URLs",
+            description=(
+                "Our Zscaler web proxy is blocking access to our own marketing campaign pages. "
+                "When users click links in the campaign emails, they get a 'URL blocked by policy' "
+                "error. The URLs are extremely long because of the tracking parameters appended "
+                "by our marketing automation platform (Marketo). Here is an example URL that "
+                "is being blocked:\n\n"
+                f"{long_url}\n\n"
+                "The proxy seems to be rejecting URLs longer than 2048 characters. We've tested "
+                "with shorter URLs to the same domain and they work fine. This has been reported "
+                "by about 40 users in the Sales and Marketing departments who cannot access the "
+                "campaign landing pages.\n\n"
+                "We need the URL length limit increased on the proxy or an exception added for "
+                "marketing.contoso.com URLs.\n\n"
+                "— Jessica Lin, Marketing\njessica.lin@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Jessica Lin",
+                email="jessica.lin@contoso.com",
+                department="Marketing",
+            ),
+            created_at="2026-04-08T10:00:00Z",
+            channel=Channel.EMAIL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-146",
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            assigned_team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.NETWORK_LOCATION, MissingInfoField.ERROR_MESSAGE],
+            next_best_action=(
+                "Adjust the Zscaler web proxy URL length policy to accommodate long marketing "
+                "URLs or add a bypass rule for marketing.contoso.com."
+            ),
+            remediation_steps=[
+                "Review the Zscaler URL filtering policy for the maximum URL length threshold.",
+                "Add marketing.contoso.com to the proxy bypass or allowlist as an interim fix.",
+                "Coordinate with the marketing team to evaluate shortening tracking parameters.",
+                "Test access to the long campaign URLs after the policy change.",
+            ],
+        ),
+        tags=["data-cleanup", "long_tracking_urls"],
+        description="URLs with extremely long tracking parameters (2000+ chars) in a web proxy issue.",
+    )
+
+
+def _dc147_ooo_chain() -> EvalCase:
+    """Multiple conflicting out-of-office auto-reply chains burying a DNS issue."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-147",
+            subject="DNS resolution failing for internal services",
+            description=(
+                "--- Auto-Reply: Out of Office ---\n"
+                "From: helpdesk-l1@contoso.com\n"
+                "I am currently out of the office from April 7-11 attending "
+                "the ITSM World Conference in Chicago. For urgent issues, "
+                "please contact helpdesk-l2@contoso.com.\n"
+                "Best, Morgan Riley\n\n"
+                "--- Auto-Reply: Out of Office ---\n"
+                "From: helpdesk-l2@contoso.com\n"
+                "Thank you for your email. I am out of the office on "
+                "parental leave until May 15, 2026. Please redirect all "
+                "inquiries to helpdesk-l3@contoso.com or call the IT "
+                "hotline at x4500.\n"
+                "Kind regards, Jordan Beck\n\n"
+                "--- Auto-Reply: Out of Office ---\n"
+                "From: helpdesk-l3@contoso.com\n"
+                "I am on PTO today (April 8). For urgent matters, please "
+                "reach out to helpdesk-l1@contoso.com.\n"
+                "Thanks, Casey Morgan\n\n"
+                "--- Auto-Reply: Mailbox Full ---\n"
+                "From: network-ops@contoso.com\n"
+                "The mailbox for network-ops@contoso.com is full and cannot "
+                "receive new messages. Please contact the team directly via "
+                "Teams chat or call x4600.\n\n"
+                "--- Original Message ---\n"
+                "From: Tom Bradley <tom.bradley@contoso.com>\n"
+                "Date: Tue, 8 Apr 2026 06:45:00 -0400\n"
+                "Subject: DNS resolution failing for internal services\n\n"
+                "Hi team,\n\n"
+                "Starting at around 6 AM today, DNS resolution for internal "
+                "services is failing intermittently. nslookup against our "
+                "internal DNS servers (dns-01.contoso.com and dns-02.contoso.com) "
+                "returns SERVFAIL about 60% of the time. External DNS "
+                "(8.8.8.8) works fine.\n\n"
+                "Affected services include:\n"
+                "- git.contoso.com (internal GitLab)\n"
+                "- wiki.contoso.com (Confluence)\n"
+                "- jira.contoso.com\n"
+                "- erp.contoso.com (SAP)\n\n"
+                "This is impacting the entire Boston office (~300 users). "
+                "Some people have switched to using 8.8.8.8 as a workaround "
+                "but that breaks access to .contoso.internal zones.\n\n"
+                "Please investigate urgently.\n\n"
+                "— Tom Bradley, Engineering\ntom.bradley@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Tom Bradley",
+                email="tom.bradley@contoso.com",
+                department="Engineering",
+            ),
+            created_at="2026-04-08T06:50:00Z",
+            channel=Channel.EMAIL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-147",
+            category=Category.NETWORK,
+            priority=Priority.P1,
+            assigned_team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.ERROR_MESSAGE, MissingInfoField.NETWORK_LOCATION],
+            next_best_action=(
+                "Investigate intermittent SERVFAIL responses from internal DNS servers "
+                "dns-01.contoso.com and dns-02.contoso.com affecting the Boston office."
+            ),
+            remediation_steps=[
+                "Check the health and logs of dns-01.contoso.com and dns-02.contoso.com for errors.",
+                "Verify DNS zone file integrity and replication status between the two servers.",
+                "Restart the DNS service on the affected servers if log analysis indicates corruption.",
+                "Monitor resolution success rates after remediation to confirm stability.",
+            ],
+        ),
+        tags=["data-cleanup", "ooo_chain"],
+        description="Multiple stacked out-of-office auto-replies burying a real DNS resolution failure.",
+    )
+
+
+def _dc148_base64_excel() -> EvalCase:
+    """Base64-encoded Excel data inlined in a data migration ticket."""
+    fake_b64 = "UEsDBBQAAAAIAA" + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" * 20 + "=="
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-148",
+            subject="Data migration from legacy Oracle DB to Azure SQL failing",
+            description=(
+                "We're migrating the Inventory Management data from our on-prem Oracle 19c "
+                "database to Azure SQL Managed Instance using Azure Database Migration Service "
+                "(DMS). The migration keeps failing at the InventoryTransactions table with "
+                "error: 'Bulk insert failed. Column 7 (unit_price) contains a value that "
+                "exceeds the max length for decimal(10,2).'\n\n"
+                "I've attached the problematic data as a base64-encoded Excel extract below. "
+                "These are the rows that are failing:\n\n"
+                f"--- BEGIN BASE64 XLSX ---\n{fake_b64}\n--- END BASE64 XLSX ---\n\n"
+                "The source Oracle table uses NUMBER(15,4) for unit_price but the target "
+                "Azure SQL table was created with DECIMAL(10,2). I suspect this is a precision "
+                "mismatch but I need the Data Platform team to confirm and either alter the "
+                "target schema or add a transformation step to the DMS pipeline.\n\n"
+                "We have a hard deadline of April 15 to complete the migration.\n\n"
+                "— Anika Johansson, Operations\nanika.johansson@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Anika Johansson",
+                email="anika.johansson@contoso.com",
+                department="Operations",
+            ),
+            created_at="2026-04-08T11:00:00Z",
+            channel=Channel.PORTAL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-148",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Resolve the decimal precision mismatch between the Oracle source (NUMBER 15,4) "
+                "and Azure SQL target (DECIMAL 10,2) for the InventoryTransactions table."
+            ),
+            remediation_steps=[
+                "Alter the target Azure SQL column from DECIMAL(10,2) to DECIMAL(15,4) to match Oracle.",
+                "Re-run the DMS migration for the InventoryTransactions table after the schema change.",
+                "Audit other numeric columns in the migration for similar precision mismatches.",
+                "Add schema validation as a pre-migration check to catch type mismatches early.",
+            ],
+        ),
+        tags=["data-cleanup", "base64_excel"],
+        description="Base64-encoded Excel data pasted inline in a database migration ticket.",
+    )
+
+
+def _dc149_terraform_dump() -> EvalCase:
+    """Terraform HCL template dump for a cloud VNet peering issue."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-149",
+            subject="Azure VNet peering between hub and spoke failing — Terraform apply error",
+            description=(
+                "Our hub-spoke network topology deployment is failing during terraform apply. "
+                "The VNet peering between the hub VNet and the analytics spoke VNet is not "
+                "being established. Here is the relevant Terraform configuration:\n\n"
+                'resource "azurerm_virtual_network" "hub" {\n'
+                '  name                = "vnet-hub-eastus-001"\n'
+                '  address_space       = ["10.0.0.0/16"]\n'
+                "  location            = azurerm_resource_group.hub.location\n"
+                "  resource_group_name = azurerm_resource_group.hub.name\n"
+                "}\n\n"
+                'resource "azurerm_virtual_network" "spoke_analytics" {\n'
+                '  name                = "vnet-spoke-analytics-eastus-001"\n'
+                '  address_space       = ["10.1.0.0/16"]\n'
+                "  location            = azurerm_resource_group.analytics.location\n"
+                "  resource_group_name = azurerm_resource_group.analytics.name\n"
+                "}\n\n"
+                'resource "azurerm_virtual_network_peering" "hub_to_spoke" {\n'
+                '  name                         = "peer-hub-to-analytics"\n'
+                "  resource_group_name          = azurerm_resource_group.hub.name\n"
+                "  virtual_network_name         = azurerm_virtual_network.hub.name\n"
+                "  remote_virtual_network_id    = azurerm_virtual_network.spoke_analytics.id\n"
+                "  allow_virtual_network_access = true\n"
+                "  allow_forwarded_traffic      = true\n"
+                "  allow_gateway_transit        = true\n"
+                "}\n\n"
+                'resource "azurerm_virtual_network_peering" "spoke_to_hub" {\n'
+                '  name                         = "peer-analytics-to-hub"\n'
+                "  resource_group_name          = azurerm_resource_group.analytics.name\n"
+                "  virtual_network_name         = azurerm_virtual_network.spoke_analytics.name\n"
+                "  remote_virtual_network_id    = azurerm_virtual_network.hub.id\n"
+                "  allow_virtual_network_access = true\n"
+                "  allow_forwarded_traffic      = true\n"
+                "  use_remote_gateways          = true\n"
+                "}\n\n"
+                "The error from terraform apply is:\n"
+                "Error: creating Virtual Network Peering: peering "
+                "peer-analytics-to-hub cannot have UseRemoteGateways flag set to true "
+                "because the remote virtual network vnet-hub-eastus-001 does not have a "
+                "gateway.\n\n"
+                "We need to deploy a VPN Gateway in the hub VNet before we can use "
+                "use_remote_gateways = true on the spoke side. However, the gateway "
+                "provisioning takes 30-45 minutes and we need the peering up ASAP.\n\n"
+                "— Kevin O'Sullivan, Cloud Infrastructure\nkevin.osullivan@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Kevin O'Sullivan",
+                email="kevin.osullivan@contoso.com",
+                department="Cloud Infrastructure",
+            ),
+            created_at="2026-04-08T13:30:00Z",
+            channel=Channel.CHAT,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-149",
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            assigned_team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Remove use_remote_gateways from the spoke peering as an interim fix, then "
+                "provision a VPN Gateway in the hub VNet to enable gateway transit."
+            ),
+            remediation_steps=[
+                "Set use_remote_gateways = false on the spoke peering to establish connectivity immediately.",
+                "Provision an Azure VPN Gateway in the hub VNet (plan for 30-45 min provisioning time).",
+                "After the gateway is provisioned, re-enable use_remote_gateways on the spoke peering.",
+                "Verify bidirectional connectivity between hub and spoke VNets after peering is established.",
+            ],
+        ),
+        tags=["data-cleanup", "terraform_dump"],
+        description="Terraform HCL resource definitions pasted inline for a VNet peering failure.",
+    )
+
+
+def _dc150_git_blame() -> EvalCase:
+    """Git blame output pasted for a production application bug."""
+    blame_lines = ""
+    authors = [
+        ("a1b2c3d4", "Alice Wang", "2026-03-15"),
+        ("e5f6a7b8", "Bob Chen", "2026-03-20"),
+        ("c9d0e1f2", "Carol Davis", "2026-03-22"),
+        ("a3b4c5d6", "Dan Miller", "2026-04-01"),
+        ("e7f8a9b0", "Eve Wilson", "2026-04-05"),
+    ]
+    code_lines = [
+        "class ReportGenerator:",
+        "    def __init__(self, config):",
+        "        self.config = config",
+        "        self.cache = {}",
+        "",
+        "    def generate(self, report_id):",
+        "        data = self._fetch_data(report_id)",
+        "        if data is None:",
+        "            return None  # BUG: should raise, not return None",
+        "        transformed = self._transform(data)",
+        "        return self._render(transformed)",
+        "",
+        "    def _fetch_data(self, report_id):",
+        "        if report_id in self.cache:",
+        "            return self.cache[report_id]",
+        "        result = self.db.query(report_id)",
+        "        self.cache[report_id] = result",
+        "        return result",
+        "",
+        "    def _transform(self, data):",
+        "        # This method was changed in the last deploy",
+        "        output = []",
+        "        for row in data:",
+        "            output.append(row.to_dict())",
+        "        return output",
+        "",
+        "    def _render(self, data):",
+        "        template = self.config.get_template()",
+        "        return template.render(data=data)",
+    ]
+    for i, line in enumerate(code_lines):
+        author_info = authors[i % len(authors)]
+        blame_lines += f"{author_info[0]} ({author_info[1]:15s} {author_info[2]} {8 + i:>3d}) {line}\n"
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-150",
+            subject="Report generator returning blank pages in production",
+            description=(
+                "The ReportGenerator module in our internal analytics platform has been "
+                "returning blank pages since yesterday's deploy (release v3.8.1). The issue "
+                "affects all PDF report exports. I ran git blame on the report_generator.py "
+                "file to see what changed recently:\n\n"
+                f"{blame_lines}\n"
+                "I believe the bug is on line 9 — when _fetch_data returns None (e.g., for "
+                "a report_id that doesn't exist in the database), generate() silently returns "
+                "None instead of raising an exception. The _render method then receives None "
+                "and produces a blank page.\n\n"
+                "This worked before because in v3.8.0, _fetch_data always returned an empty "
+                "list instead of None for missing reports. The change in v3.8.1 broke that "
+                "contract.\n\n"
+                "This is affecting the Finance team's end-of-quarter reports which are due "
+                "by end of day Friday.\n\n"
+                "— Hiroshi Tanaka, Software Engineering\nhiroshi.tanaka@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Hiroshi Tanaka",
+                email="hiroshi.tanaka@contoso.com",
+                department="Software Engineering",
+            ),
+            created_at="2026-04-08T14:00:00Z",
+            channel=Channel.PORTAL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-150",
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Fix the _fetch_data return value contract in the ReportGenerator module "
+                "to return an empty list instead of None for missing reports."
+            ),
+            remediation_steps=[
+                "Patch _fetch_data to return an empty list instead of None for missing report IDs.",
+                "Add a null check in generate() to raise a descriptive exception if data is None.",
+                "Deploy the fix as a hotfix to unblock the Finance team's end-of-quarter reports.",
+                "Add regression tests to ensure _fetch_data never returns None.",
+            ],
+        ),
+        tags=["data-cleanup", "git_blame"],
+        description="Git blame output pasted inline for a production report generator bug.",
+    )
+
+
 def build_dataset() -> EvalDataset:
-    """Build and return the data-cleanup evaluation dataset (135 cases)."""
+    """Build and return the data-cleanup evaluation dataset (150 cases)."""
     return EvalDataset(
         name="data_cleanup",
         description=(
@@ -9419,6 +10245,21 @@ def build_dataset() -> EvalDataset:
             _dc133_codepage_mojibake(),
             _dc134_recursive_email_forward(),
             _dc135_pii_noise(),
+            _dc136_csv_injection(),
+            _dc137_gpg_signed(),
+            _dc138_zalgo_combining(),
+            _dc139_nested_json(),
+            _dc140_sql_output(),
+            _dc141_smime_signature(),
+            _dc142_near_empty_iphone(),
+            _dc143_jira_notification(),
+            _dc144_registry_export(),
+            _dc145_deep_traceback(),
+            _dc146_long_tracking_urls(),
+            _dc147_ooo_chain(),
+            _dc148_base64_excel(),
+            _dc149_terraform_dump(),
+            _dc150_git_blame(),
         ],
     )
 
