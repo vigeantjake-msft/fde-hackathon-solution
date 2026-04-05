@@ -3233,3 +3233,672 @@ default_registry.register(
         ),
     )
 )
+
+
+# ---------------------------------------------------------------------------
+# dc-061 through dc-080: Additional data cleanup scenarios
+# ---------------------------------------------------------------------------
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-061",
+        name="Broken MIME boundary with binary data leaking into text",
+        description="Email with corrupted multipart MIME where binary PNG data "
+        "leaks into the text body. Real issue: monitor flickering.",
+        category=_CATEGORY,
+        tags=["mime", "binary_leak", "encoding_corruption"],
+        ticket=EvalTicket(
+            ticket_id="INC-5061",
+            subject="Monitor flickering since docking station update",
+            description=(
+                "Content-Type: multipart/mixed; boundary=\"----=_Part_BROKEN\"\n\n"
+                "------=_Part_BROKEN\nContent-Type: text/plain; charset=UTF-8\n\n"
+                "Hi IT, my monitor keeps flickering every few seconds since the docking "
+                "station firmware update yesterday. Dell U2722D via USB-C on Latitude 5540.\n\n"
+                "------=_Part_BROKEN\nContent-Type: image/png\n"
+                "Content-Transfer-Encoding: base64\n\n"
+                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA\n"
+                "DUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\n"
+                "------=_Part_BROKEN--\n\n"
+                "Please help, I have a client demo tomorrow."
+            ),
+            reporter=_reporter("Rachel Kim", "r.kim@contoso.com", "Trading"),
+            created_at="2026-03-18T09:30:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P2",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-062",
+        name="Base64-encoded CSS stylesheet inline",
+        description="User pasted a base64-encoded CSS data URI while reporting "
+        "a portal styling issue.",
+        category=_CATEGORY,
+        tags=["base64", "css", "data_uri"],
+        ticket=EvalTicket(
+            ticket_id="INC-5062",
+            subject="Intranet portal dark mode broken after update",
+            description=(
+                "Since the portal update last night, dark mode is broken. All text is "
+                "white on white. Here is the CSS being loaded:\n\n"
+                "data:text/css;base64,LyogQ29udG9zbyBQb3J0YWwgVGhlbWUgdjMuMi4xICovCmJv"
+                "ZHkgewogIGZvbnQtZmFtaWx5OiAnU2Vnb2UgVUknOwogIGJhY2tncm91bmQ6ICNmNWY1"
+                "ZjU7Cn0KLm5hdiB7CiAgYmFja2dyb3VuZDogIzAwNzhkNDsKfQ==\n\n"
+                "About 200 people in NY use dark mode. Chrome 122 and Edge 122."
+            ),
+            reporter=_reporter("Derek Chang", "d.chang@contoso.com", "Frontend Engineering"),
+            created_at="2026-03-18T08:15:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-063",
+        name="Escaped Unicode sequences throughout ticket",
+        description="Ticket text contains backslash-u escape sequences instead "
+        "of actual characters due to broken form submission.",
+        category=_CATEGORY,
+        tags=["unicode_escape", "encoding"],
+        ticket=EvalTicket(
+            ticket_id="INC-5063",
+            subject="Can\\u2019t access shared drive after password reset",
+            description=(
+                "I reset my password and now I can\\u2019t access the shared drive at "
+                "\\\\\\\\fs01.contoso.local\\\\Finance$. I get \\u201cAccess Denied\\u201d. "
+                "Username: l.garc\\u00eda@contoso.com. Tried logging out and back in, "
+                "running \\u201cnet use\\u201d to remap, clearing credential manager. "
+                "Need access for the board meeting at 2\\u00a0PM today."
+            ),
+            reporter=_reporter("Lucia Garcia", "l.garcia@contoso.com", "Finance"),
+            created_at="2026-03-18T10:00:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-064",
+        name="OCR-scanned handwritten IT request",
+        description="Poorly OCR'd scan of a handwritten IT form with character "
+        "substitution errors (0/O, 1/l, 5/S confusion).",
+        category=_CATEGORY,
+        tags=["ocr", "handwritten", "garbled"],
+        ticket=EvalTicket(
+            ticket_id="INC-5064",
+            subject="[OCR SCAN] Handwritten IT Request — Floor 7",
+            description=(
+                "--- OCR Output (confidence: 62%) ---\n"
+                "lT Request Fonn\nDate: Mar 1B, 2O26\nName: Jarne5 Wil5on\n"
+                "Dept: C0mpliance\nFl00r: 7th\n\n"
+                "l55ue: My lapt0p keybOard 1s not work1ng. The letters O and I "
+                "typ3 numb3rs inst3ad. Started after l sp1lled c0ffee ye5terday. "
+                "Leno\\v0 Th1nkPad T14s. A5set: LT-C0MP-0742.\n"
+                "--- End OCR ---"
+            ),
+            reporter=_reporter("James Wilson", "j.wilson@contoso.com", "Compliance"),
+            created_at="2026-03-18T14:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-065",
+        name="Email with tracking pixels and click-tracking links",
+        description="Email littered with 1x1 pixel tracking images and UTM "
+        "click-wrapping redirects around a real access issue.",
+        category=_CATEGORY,
+        tags=["tracking_pixels", "html", "utm_params"],
+        ticket=EvalTicket(
+            ticket_id="INC-5065",
+            subject="VPN access for new Singapore office employees",
+            description=(
+                '<img src="https://track.contoso-email.com/open?id=abc123" '
+                'width="1" height="1" style="display:none" />\n'
+                "We have 15 new employees starting in Singapore next Monday who all "
+                "need GlobalProtect VPN configured on APAC-SG-CORP segment. Please "
+                "provision in bulk — employee list attached.\n"
+                '<a href="https://click.contoso-email.com/track?url=https%3A%2F%2F'
+                'sharepoint.contoso.com%2Fsites%2FHR%2FNewHires">Employee List</a>\n'
+                '<img src="https://track.contoso-email.com/close?id=abc123" '
+                'width="1" height="1" />'
+            ),
+            reporter=_reporter("Mei Ling Tan", "m.tan@contoso.com", "HR"),
+            created_at="2026-03-18T06:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-066",
+        name="Chat transcript with excessive timestamps and user IDs",
+        description="Every line has full ISO timestamps and UUID user IDs "
+        "from a Teams chat export about a printer issue.",
+        category=_CATEGORY,
+        tags=["chat_transcript", "timestamps", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5066",
+            subject="Printer queue stuck — Floor 12 color printer",
+            description=(
+                "[2026-03-18T08:31:22Z] [uid:a1b2c3d4] Sarah: Color printer on 12 jammed\n"
+                "[2026-03-18T08:31:45Z] [uid:e5f67890] Mike: HP Color LaserJet PRN-12F-001?\n"
+                "[2026-03-18T08:32:01Z] [uid:a1b2c3d4] Sarah: Yes. 47 jobs stuck in queue\n"
+                "[2026-03-18T08:33:15Z] [uid:a1b2c3d4] Sarah: Tried net stop spooler. "
+                "Tray 2 shows empty but I refilled it. Display: 'Load A4 in Tray 2'\n"
+                "[2026-03-18T08:34:00Z] [uid:e5f67890] Mike: Paper sensor probably. Submit ticket."
+            ),
+            reporter=_reporter("Sarah Bennett", "s.bennett@contoso.com", "Operations"),
+            created_at="2026-03-18T08:35:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-067",
+        name="Grafana monitoring alert with JSON metrics payload",
+        description="Monitoring alert with extensive JSON metrics about a SQL "
+        "Server running out of memory.",
+        category=_CATEGORY,
+        tags=["monitoring", "json", "metrics", "alert"],
+        ticket=EvalTicket(
+            ticket_id="INC-5067",
+            subject="[ALERT] HighMemoryUsage on sqlprod03 — CRITICAL",
+            description=(
+                'Grafana alert:\n{"status":"firing","labels":{"alertname":"HighMemoryUsage",'
+                '"instance":"sqlprod03:9100","severity":"critical"},'
+                '"annotations":{"summary":"Memory usage above 95% for 10 min"},'
+                '"values":{"mem_used_bytes":68451041280,"mem_total_bytes":70368744177664,'
+                '"swap_used_bytes":17179869184,"node_load15":48.72,"process_count":847}}\n\n'
+                "Third critical memory alert this week. SQL Server consuming all RAM since "
+                "new analytics queries deployed Monday."
+            ),
+            reporter=_reporter("Monitoring System", "alerts@contoso.com", "IT"),
+            created_at="2026-03-18T07:45:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Data & Storage",
+            priority="P2",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-068",
+        name="Email with PGP/GPG signature block",
+        description="PGP SIGNED MESSAGE with ASCII-armored signature wrapping "
+        "a TLS certificate renewal request.",
+        category=_CATEGORY,
+        tags=["pgp", "signature", "crypto"],
+        ticket=EvalTicket(
+            ticket_id="INC-5068",
+            subject="TLS certificate expiring in 3 days — trading-api.contoso.com",
+            description=(
+                "-----BEGIN PGP SIGNED MESSAGE-----\nHash: SHA256\n\n"
+                "TLS cert for trading-api.contoso.com expires March 21. Serves our external "
+                "trading API used by 40+ institutional clients. Need DigiCert EV renewal. "
+                "CSR ready on appgw-trading-prod.\n\n"
+                "CN: trading-api.contoso.com\nExpires: 2026-03-21T23:59:59Z\n\n"
+                "-----BEGIN PGP SIGNATURE-----\n"
+                "iQIzBAEBCAAdFiEEX1234567890abcdefghijklmnopqrstuv\n"
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop==\n"
+                "=Ab12\n-----END PGP SIGNATURE-----"
+            ),
+            reporter=_reporter("Victor Reyes", "v.reyes@contoso.com", "IT Security"),
+            created_at="2026-03-18T07:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Security & Compliance",
+            priority="P1",
+            assigned_team="Security Operations",
+            needs_escalation=True,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-069",
+        name="Syslog dump from Linux application server",
+        description="Syslog lines pasted as context for a service outage caused "
+        "by disk full on the application server.",
+        category=_CATEGORY,
+        tags=["syslog", "log_dump", "linux"],
+        ticket=EvalTicket(
+            ticket_id="INC-5069",
+            subject="Risk calculation service down on app-risk-01",
+            description=(
+                "Syslog from app-risk-01:\n"
+                "Mar 18 06:15:22 app-risk-01 kernel: EXT4-fs warning: index full\n"
+                "Mar 18 06:30:15 app-risk-01 risk-calc[8890]: ERROR: No space left on device\n"
+                "Mar 18 06:30:15 app-risk-01 risk-calc[8890]: FATAL: Shutting down\n"
+                "Mar 18 06:30:16 app-risk-01 systemd[1]: risk-calc.service: Failed\n"
+                "Mar 18 06:30:18 app-risk-01 risk-calc[8920]: Starting...\n"
+                "Mar 18 06:30:19 app-risk-01 risk-calc[8920]: ERROR: No space left on device\n\n"
+                "df -h shows /dev/sda1 at 100%. Old log files not rotated."
+            ),
+            reporter=_reporter("Nikolai Petrov", "n.petrov@contoso.com", "Risk Management"),
+            created_at="2026-03-18T06:45:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Data & Storage",
+            priority="P1",
+            assigned_team="Data Platform",
+            needs_escalation=True,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-070",
+        name="Extremely long URLs with query parameters",
+        description="Ticket contains SharePoint URLs with 500+ character query "
+        "strings around a SharePoint access error.",
+        category=_CATEGORY,
+        tags=["long_url", "query_params", "sharepoint"],
+        ticket=EvalTicket(
+            ticket_id="INC-5070",
+            subject="SharePoint site returns 'Sorry, something went wrong'",
+            description=(
+                "Error when clicking this link:\nhttps://contoso.sharepoint.com/sites/"
+                "InvestmentCommittee/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites"
+                "%2FInvestmentCommittee%2FShared%20Documents%2FQ1%2D2026%2FPortfolio%20"
+                "Reviews%2FNorth%20America%2FUS%20Equity%20Strategy%2FPerformance%20"
+                "Attribution%2FMonthly%20Reports%2FMarch%202026%2FFinal%20Review%20Pack"
+                "&viewid=a1b2c3d4-e5f6-7890&sortField=Modified&isAscending=false&"
+                "FilterField1=Author&FilterValue1=Sarah%20Mitchell\n\n"
+                "Error page shows correlation ID: f47ac10b-58cc-4372-a567. "
+                "Works if I navigate manually."
+            ),
+            reporter=_reporter("Karen Wong", "k.wong@contoso.com", "Portfolio Management"),
+            created_at="2026-03-18T11:00:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-071",
+        name="TNEF/winmail.dat artifacts in email",
+        description="Outlook Rich Text Format email with TNEF binary fragments "
+        "wrapping a battery safety issue.",
+        category=_CATEGORY,
+        tags=["tnef", "winmail", "outlook"],
+        ticket=EvalTicket(
+            ticket_id="INC-5071",
+            subject="Laptop battery swelling — safety concern",
+            description=(
+                "Content-Type: application/ms-tnef; name=\"winmail.dat\"\n\n"
+                "MAPI_BODY_PLAIN:\nMy ThinkPad X1 Carbon Gen 11 (LT-NYC-3391) battery "
+                "is visibly swollen. Trackpad is raised, bottom cover bulging. Worried about "
+                "fire. Unplugged and moved away from papers. Floor 22.\nMAPI_END\n"
+                "Attachment: winmail.dat (2.3 KB)"
+            ),
+            reporter=_reporter("Thomas Grant", "t.grant@contoso.com", "Legal"),
+            created_at="2026-03-18T09:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P1",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=True,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-072",
+        name="PowerBI dashboard paste with garbled numbers",
+        description="Copy-pasted PowerBI dashboard text with table characters "
+        "and stale data alert about a data pipeline issue.",
+        category=_CATEGORY,
+        tags=["powerbi", "dashboard", "garbled"],
+        ticket=EvalTicket(
+            ticket_id="INC-5072",
+            subject="Portfolio risk dashboard showing stale data",
+            description=(
+                "Portfolio Risk Dashboard (from PowerBI):\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "VaR (95%) │ $4.2M │ ▲ 12.3% │ Limit: $5.0M\n"
+                "Last Refreshed: Mar 15 2026 ← STALE!\n"
+                "⚠ DATA REFRESH FAILED — Pipeline timeout\n\n"
+                "Dashboard hasn't updated since March 15. Azure Data Factory pipeline "
+                "'ppl-risk-daily-refresh' timing out."
+            ),
+            reporter=_reporter("Diana Osei", "d.osei@contoso.com", "Risk Management"),
+            created_at="2026-03-18T08:00:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Data & Storage",
+            priority="P2",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-073",
+        name="Embedded base64 WOFF font data in email",
+        description="Base64-encoded web font data leaked into email body due to "
+        "rendering bug. Real issue: font rendering on intranet.",
+        category=_CATEGORY,
+        tags=["base64", "font", "woff"],
+        ticket=EvalTicket(
+            ticket_id="INC-5073",
+            subject="Intranet fonts displaying as squares on some machines",
+            description=(
+                "About 20 workstations on Floor 5 show square boxes instead of text on "
+                "the intranet. Chrome DevTools shows font as:\n"
+                "data:font/woff2;base64,d09GMgABAAAAAAScAA4AAAAACSAAAARLAAEAAAAAAx"
+                "E/MYBlJ2B4AQ4KhliGSQsBNgIkA4R4EIAWLEQAHIgUGCygfIlkYbkoPBBg\n\n"
+                "Started after Edge 122 push via SCCM Thursday. Chrome unaffected."
+            ),
+            reporter=_reporter("Priya Nair", "p.nair@contoso.com", "Operations"),
+            created_at="2026-03-18T05:30:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-074",
+        name="kubectl describe pod output dump",
+        description="Full Kubernetes pod describe output with events, conditions, "
+        "and OOMKilled container state.",
+        category=_CATEGORY,
+        tags=["kubernetes", "kubectl", "pod_describe"],
+        ticket=EvalTicket(
+            ticket_id="INC-5074",
+            subject="Payment reconciliation service pods crashing",
+            description=(
+                "kubectl describe pod payment-recon-7f8b9c6d5-x2k4j -n payments:\n"
+                "Status: CrashLoopBackOff\nContainers:\n  payment-recon:\n"
+                "    Image: contoso.azurecr.io/payment-recon:3.1.0\n"
+                "    Last State: Terminated (OOMKilled, exit code 137)\n"
+                "    Restart Count: 42\n    Limits: memory: 512Mi\nEvents:\n"
+                "  Warning OOMKilled Container killed due to OOM\n\n"
+                "All 3 replicas OOMKilled. v3.1.0 added batch processing needing more "
+                "memory. Need to increase limit to 1Gi."
+            ),
+            reporter=_reporter("Kenji Watanabe", "k.watanabe@contoso.com", "Backend Engineering"),
+            created_at="2026-03-18T06:15:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-075",
+        name="Calendar invite ICS data mixed with support request",
+        description="ICS/vCalendar data pasted alongside a conference room "
+        "display synchronization issue.",
+        category=_CATEGORY,
+        tags=["ics", "calendar", "vcalendar"],
+        ticket=EvalTicket(
+            ticket_id="INC-5075",
+            subject="Conference room display not syncing with Exchange",
+            description=(
+                "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\n"
+                "DTSTART:20260318T130000Z\nDTEND:20260318T140000Z\n"
+                "SUMMARY:Client Strategy Review\nLOCATION:Boardroom C - NYC 22F\n"
+                "END:VEVENT\nEND:VCALENDAR\n\n"
+                "Crestron display outside Boardroom C shows 'Available' when meetings "
+                "are booked. Exchange Online calendar correct. Started after room mailbox "
+                "migration from on-prem last week. Display IP: 10.0.22.45."
+            ),
+            reporter=_reporter("Amanda Foster", "a.foster@contoso.com", "Executive Operations"),
+            created_at="2026-03-18T12:00:00Z",
+            channel="phone",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P2",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-076",
+        name="Mixed encoding corruption (Latin-1 + UTF-8)",
+        description="Text with encoding boundary issues producing mojibake "
+        "in a CRM data import issue.",
+        category=_CATEGORY,
+        tags=["encoding", "mojibake", "mixed_charset"],
+        ticket=EvalTicket(
+            ticket_id="INC-5076",
+            subject="Cannot save client names with accented characters",
+            description=(
+                "CRM can't save names with special chars:\n"
+                "Expected: José García-López → Saved as: JosÃ© GarcÃ\\xada-LÃ³pez\n"
+                "Expected: François Müller → Saved as: FranÃ§ois MÃ¼ller\n\n"
+                "Data import from old system used Latin-1, Dynamics 365 is UTF-8. "
+                "About 300 client records affected."
+            ),
+            reporter=_reporter("Carmen Delgado", "c.delgado@contoso.com", "Client Services"),
+            created_at="2026-03-18T10:30:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-077",
+        name="ServiceNow notification noise wrapping real request",
+        description="Auto-generated ServiceNow email with workflow metadata "
+        "wrapping a Bloomberg Terminal connectivity issue.",
+        category=_CATEGORY,
+        tags=["servicenow", "auto_generated", "workflow"],
+        ticket=EvalTicket(
+            ticket_id="INC-5077",
+            subject="[ServiceNow] INC0012345 - Bloomberg Terminal not loading",
+            description=(
+                "═══════════════════════════════\nServiceNow Notification\n"
+                "═══════════════════════════════\n"
+                "Incident: INC0012345\nState: New\nSLA: 4 hours\n"
+                "═══════════════════════════════\n"
+                "Description: Bloomberg Terminal (2024.3.18) on WS-TRADE-0447 fails "
+                "with 'BLP API connection timeout'. 1 user on Equity Trading, Floor 24. "
+                "Network fine for everything else.\n"
+                "═══════════════════════════════\n"
+                "Workflow: Created → Auto-categorized → SLA started"
+            ),
+            reporter=_reporter("Marcus Rivera", "m.rivera@contoso.com", "Equity Trading"),
+            created_at="2026-03-18T08:30:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-078",
+        name="Multiple stacked email signatures from forwarding",
+        description="5+ email signatures stacked from multiple forwards "
+        "wrapping a guest Wi-Fi issue.",
+        category=_CATEGORY,
+        tags=["signatures", "forwarding", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-5078",
+            subject="Fwd: Fwd: Fwd: Guest Wi-Fi not working in London",
+            description=(
+                "See below — guest Wi-Fi is down in London.\n\n"
+                "-- \nRebecca Taylor | IT Coordinator | London\n"
+                "---------- Forwarded ----------\nFrom: David Park\n"
+                "Rebecca, can you escalate?\n"
+                "-- \nDavid Park | SVP Institutional Sales | London\n"
+                "---------- Forwarded ----------\nFrom: guest@external.com\n"
+                "Can't connect to Contoso-Guest Wi-Fi. Portal shows error. "
+                "Meeting in Room 4B in 20 minutes."
+            ),
+            reporter=_reporter("Rebecca Taylor", "r.taylor@contoso.com", "IT"),
+            created_at="2026-03-18T13:30:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-079",
+        name="Terraform plan output as infrastructure issue",
+        description="Terraform plan diff showing a destructive change to "
+        "production load balancer.",
+        category=_CATEGORY,
+        tags=["terraform", "iac", "diff"],
+        ticket=EvalTicket(
+            ticket_id="INC-5079",
+            subject="Terraform plan wants to destroy production load balancer",
+            description=(
+                "terraform plan output:\n"
+                "  # azurerm_lb.prod_lb will be destroyed\n"
+                "  - resource \"azurerm_lb\" \"prod_lb\" {\n"
+                "      - name = \"lb-prod\" - sku = \"Standard\" }\n"
+                "  + resource \"azurerm_lb\" \"prod_lb_v2\" { + name = \"lb-prod-v2\" }\n"
+                "Plan: 1 to add, 0 to change, 1 to destroy.\n\n"
+                "Someone renamed the LB in config without terraform state mv. "
+                "Would cause 5-10 min outage. DO NOT APPLY."
+            ),
+            reporter=_reporter("Alex Thornton", "a.thornton@contoso.com", "Cloud Infrastructure"),
+            created_at="2026-03-18T16:00:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P1",
+            assigned_team="Network Operations",
+            needs_escalation=True,
+        ),
+    )
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-080",
+        name="Outlook HTML table markup in email",
+        description="Complex HTML table from Outlook rendering wrapping "
+        "a SharePoint access permissions issue.",
+        category=_CATEGORY,
+        tags=["html", "outlook", "table_markup"],
+        ticket=EvalTicket(
+            ticket_id="INC-5080",
+            subject="Cannot access new team SharePoint site",
+            description=(
+                '<table style="border-collapse:collapse"><tr style="background:#0078d4">'
+                "<th>Name</th><th>Access</th></tr>"
+                "<tr><td>Sarah Kim</td><td>Full Control</td></tr>"
+                "<tr><td>James Chen</td><td>Edit</td></tr></table>\n"
+                "Above team members need access to RegAffairs2026 SharePoint site. "
+                "All get 'Access Denied'. Need for March 25 filing deadline."
+            ),
+            reporter=_reporter("Sarah Kim", "s.kim@contoso.com", "Regulatory Affairs"),
+            created_at="2026-03-18T14:45:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+        ),
+    )
+)
