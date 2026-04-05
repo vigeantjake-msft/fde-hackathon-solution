@@ -1,18 +1,17 @@
 """Domain models for evaluation scenarios."""
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
-from ms.libs.evals.models.enums import (
-    AssignedTeam,
-    MissingInfoField,
-    Priority,
-    ScenarioTag,
-    TicketCategory,
-    TicketChannel,
-)
+from ms.common.models.base import FrozenBaseModel
+from ms.libs.evals.models.enums import AssignedTeam
+from ms.libs.evals.models.enums import MissingInfoField
+from ms.libs.evals.models.enums import Priority
+from ms.libs.evals.models.enums import ScenarioTag
+from ms.libs.evals.models.enums import TicketCategory
+from ms.libs.evals.models.enums import TicketChannel
 
 
-class Reporter(BaseModel):
+class Reporter(FrozenBaseModel):
     """Ticket reporter information."""
 
     name: str
@@ -20,7 +19,7 @@ class Reporter(BaseModel):
     department: str
 
 
-class Ticket(BaseModel):
+class Ticket(FrozenBaseModel):
     """An IT support ticket submitted to the triage API."""
 
     ticket_id: str = Field(pattern=r"^INC-[0-9]+$")
@@ -32,7 +31,7 @@ class Ticket(BaseModel):
     attachments: list[str] = Field(default_factory=list)
 
 
-class TriageDecision(BaseModel):
+class TriageDecision(FrozenBaseModel):
     """Expected triage output for a single ticket (gold standard)."""
 
     ticket_id: str = Field(pattern=r"^INC-[0-9]+$")
@@ -45,7 +44,7 @@ class TriageDecision(BaseModel):
     remediation_steps: list[str] = Field(min_length=1)
 
 
-class EvalScenario(BaseModel):
+class EvalScenario(FrozenBaseModel):
     """A single evaluation scenario: a ticket paired with its gold answer and test metadata."""
 
     ticket: Ticket

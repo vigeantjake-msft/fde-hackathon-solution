@@ -1,422 +1,197 @@
 [
     {
-        "ticket_id": "INC-5001",
-<<<<<<< HEAD
-        "subject": "Re: Re: Fwd: VPN Disconnection Issue - Urgent",
-        "description": "From: Sarah Mitchell <s.mitchell@contoso.com>\nTo: IT Help Desk <helpdesk@contoso.com>\nDate: Wed, 18 Mar 2026 09:14:00 +0000\nSubject: Re: Re: Fwd: VPN Disconnection Issue - Urgent\n\nHi team, just forwarding this again as we still haven't received a resolution. Please see the full thread below.\n\nBest regards,\nSarah Mitchell\nSenior Trader | Equities Desk\nContoso Financial Services\nPhone: +1 (212) 555-0147 | Fax: +1 (212) 555-0148\nEmail: s.mitchell@contoso.com\n100 Wall Street, 24th Floor, New York, NY 10005\nwww.contoso.com\n\nCONFIDENTIALITY NOTICE: This email and any attachments are for the exclusive and confidential use of the intended recipient. If you are not the intended recipient, please do not read, distribute, or take action based on this message.\n\n---\n\n> From: James Thornton <j.thornton@contoso.com>\n> To: Sarah Mitchell <s.mitchell@contoso.com>\n> Date: Tue, 17 Mar 2026 16:42:00 +0000\n> Subject: Re: Fwd: VPN Disconnection Issue - Urgent\n>\n> Sarah,\n>\n> I checked with the network team and they said they haven't seen any widespread issues. Can you try\n> reconnecting using the alternate gateway? The address is vpn2.contoso.com. Let me know if that helps.\n>\n> Regards,\n> James Thornton\n> Network Operations Lead\n> Contoso Financial Services\n> Phone: +1 (212) 555-0199 | Mobile: +1 (917) 555-0123\n> Email: j.thornton@contoso.com\n> 100 Wall Street, 22nd Floor, New York, NY 10005\n>\n> DISCLAIMER: The information contained in this communication is intended solely for the use of the individual or entity to whom it is addressed.\n>\n> > From: Sarah Mitchell <s.mitchell@contoso.com>\n> > To: James Thornton <j.thornton@contoso.com>\n> > Date: Tue, 17 Mar 2026 14:30:00 +0000\n> > Subject: Re: VPN Disconnection Issue - Urgent\n> >\n> > James,\n> >\n> > Thanks for getting back. The issue is getting worse. I was on a call with the Hong Kong desk and\n> > my VPN dropped THREE times in 20 minutes. I'm losing connectivity to the trading platform every\n> > time this happens and it's impacting my ability to execute trades. The GlobalProtect client shows\n> > 'Connected' but then suddenly switches to 'Disconnected' with error code GP-4017. This has been\n> > happening since Monday morning after the weekend maintenance window. My laptop is a Lenovo ThinkPad\n> > T14s running Windows 11 Enterprise, asset tag CT-LT-20458. The GlobalProtect version is 6.1.3.\n> > I've already tried restarting the client, rebooting the laptop, and flushing DNS. Nothing works.\n> >\n> > This is critical - we have a major trade window opening tomorrow and I need stable connectivity.\n> >\n> > Thanks,\n> > Sarah\n> >\n> > > From: James Thornton <j.thornton@contoso.com>\n> > > To: Sarah Mitchell <s.mitchell@contoso.com>\n> > > Date: Tue, 17 Mar 2026 10:15:00 +0000\n> > > Subject: Re: VPN Disconnection Issue\n> > >\n> > > Hi Sarah,\n> > >\n> > > Thanks for reporting this. I'll look into it. Can you confirm which VPN gateway you're connecting to?\n> > > Also, are you on the office network or working from home?\n> > >\n> > > James\n> > >\n> > > > From: Sarah Mitchell <s.mitchell@contoso.com>\n> > > > To: IT Help Desk <helpdesk@contoso.com>\n> > > > CC: James Thornton <j.thornton@contoso.com>\n> > > > Date: Mon, 16 Mar 2026 17:05:00 +0000\n> > > > Subject: VPN Disconnection Issue\n> > > >\n> > > > Hi IT team,\n> > > >\n> > > > My VPN keeps disconnecting randomly. Started today. Very frustrating.\n> > > >\n> > > > Thanks,\n> > > > Sarah Mitchell\n> > > > Senior Trader | Equities Desk\n> > > > Contoso Financial Services\n> > > > Phone: +1 (212) 555-0147 | Fax: +1 (212) 555-0148\n> > > > Email: s.mitchell@contoso.com\n> > > > 100 Wall Street, 24th Floor, New York, NY 10005\n> > > > www.contoso.com\n> > > >\n> > > > This email is confidential and may be legally privileged. If you have received it in error, please notify the sender immediately and delete it. Any unauthorized use, disclosure, or copying is strictly prohibited. Contoso Financial Services is regulated by the Financial Conduct Authority.\n",
-        "reporter": {
-            "name": "Sarah Mitchell",
-            "email": "s.mitchell@contoso.com",
-            "department": "Trading"
-        },
-        "created_at": "2026-03-18T09:14:00Z",
-=======
-        "subject": "Can't access SharePoint — long email thread below",
-        "description": "Hi IT,\n\nI've been going back and forth with my team about this but nobody can figure it out. I can't access the Finance Q4 SharePoint site since Monday morning. Getting 'Access Denied' every time.\n\n--- Original message ---\nFrom: karen.mills@contoso.com\nSent: Friday, March 13, 2026 4:45 PM\nTo: finance-team@contoso.com\nSubject: RE: RE: RE: RE: RE: RE: RE: RE: Q4 SharePoint access\n\nThanks everyone for the suggestions. I tried clearing my cache like David said but it didn't help. Also tried a different browser (Edge, Chrome, Firefox) — same error in all of them. I was able to access it fine last week.\n\n--- Original message ---\nFrom: david.park@contoso.com\nSent: Friday, March 13, 2026 4:30 PM\nTo: finance-team@contoso.com\nSubject: RE: RE: RE: RE: RE: RE: RE: Q4 SharePoint access\n\nKaren, try clearing your browser cache and cookies. That fixed it for me last month when I had a similar issue.\n\n--- Original message ---\nFrom: sarah.jones@contoso.com\nSent: Friday, March 13, 2026 4:15 PM\nTo: finance-team@contoso.com\nSubject: RE: RE: RE: RE: RE: RE: Q4 SharePoint access\n\nI can access it fine. Maybe it's a permissions thing? Did someone change the group membership recently?\n\n--- Original message ---\nFrom: mike.chen@contoso.com\nSent: Friday, March 13, 2026 3:58 PM\nTo: finance-team@contoso.com\nSubject: RE: RE: RE: RE: RE: Q4 SharePoint access\n\nSame here, works for me. Karen, are you on VPN or in the office?\n\n--- Original message ---\nFrom: karen.mills@contoso.com\nSent: Friday, March 13, 2026 3:45 PM\nTo: finance-team@contoso.com\nSubject: RE: RE: RE: RE: Q4 SharePoint access\n\nI'm in the office, Floor 3. VPN shouldn't matter since I'm on the corporate network.\n\n--- Original message ---\nFrom: david.park@contoso.com\nSent: Friday, March 13, 2026 3:30 PM\nTo: finance-team@contoso.com\nSubject: RE: RE: RE: Q4 SharePoint access\n\nKaren, can you try incognito mode?\n\n--- Original message ---\nFrom: karen.mills@contoso.com\nSent: Friday, March 13, 2026 3:15 PM\nTo: finance-team@contoso.com\nSubject: RE: RE: Q4 SharePoint access\n\nYes I tried that too. No luck.\n\n--- Original message ---\nFrom: sarah.jones@contoso.com\nSent: Friday, March 13, 2026 3:00 PM\nTo: finance-team@contoso.com\nSubject: RE: Q4 SharePoint access\n\nMaybe IT needs to look at it? The permissions might have changed during last week's migration.\n\n--- Original message ---\nFrom: karen.mills@contoso.com\nSent: Friday, March 13, 2026 2:45 PM\nTo: finance-team@contoso.com\nSubject: Q4 SharePoint access\n\nHey team, is anyone else having trouble accessing the Finance Q4 SharePoint site? I keep getting an Access Denied error. Need to upload the quarterly report by EOD Monday.\n\nThanks,\nKaren Mills\nSenior Financial Analyst\nContoso Financial Services\nPhone: +1 (555) 234-5678\nEmail: karen.mills@contoso.com\n\nThis email and any attachments are confidential and intended solely for the addressee. If you are not the intended recipient, please notify the sender immediately and delete this message. Contoso Financial Services, LLC. Member FINRA/SIPC.",
-        "reporter": {
-            "name": "Karen Mills",
-            "email": "karen.mills@contoso.com",
-            "department": "Finance"
-        },
-        "created_at": "2026-03-16T09:00:00Z",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
-        "channel": "email",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5002",
-<<<<<<< HEAD
-        "subject": "Broken monitor displaying vertical lines and flickering",
-        "description": "My external monitor (Dell U2722D, asset tag CT-MN-08834) has been showing vertical colored lines and flickering intermittently since this morning. I've tried swapping the USB-C cable and using the DisplayPort connection but the issue persists.\n\nHere's a screenshot of the error: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKC\n\nThe lines appear to be about 2 pixels wide and are mostly green and magenta. The flickering happens every 10-15 seconds and lasts about 2 seconds each time. This is making it impossible to work on spreadsheets. Can someone from the hardware team come take a look? I'm on the 14th floor, desk 14-227.",
-        "reporter": {
-            "name": "David Chen",
-            "email": "d.chen@contoso.com",
-            "department": "Wealth Management"
-        },
-        "created_at": "2026-03-18T10:22:00Z",
-        "channel": "email",
-        "attachments": [
-            "monitor_issue.png"
-=======
-        "subject": "Screenshot of error attached (see inline image)",
-        "description": "Hi support,\n\nMy Outlook keeps showing this error when I try to send emails with large attachments. Here's a screenshot:\n\n[image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==]\n\n[image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mNk+M9Qz0AEYBxVSF+FABJADfl50BorAAAAAElFTkSuQmCC]\n\n[image: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAFRABAQAAAAAAAAAAAAAAAAAAAwD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8ApsA//9k=]\n\nThe error says something about exceeding the 25MB attachment limit but the file I'm trying to send is only 15MB. This started happening after the Outlook update last week. I need to send this contract to a client by end of day.\n\nThanks,\nRobert",
-        "reporter": {
-            "name": "Robert Kim",
-            "email": "robert.kim@contoso.com",
-            "department": "Legal"
-        },
-        "created_at": "2026-03-17T11:30:00Z",
-        "channel": "email",
-        "attachments": [
-            "error_screenshot.png"
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
-        ]
-    },
-    {
-        "ticket_id": "INC-5003",
-<<<<<<< HEAD
-        "subject": "SSO Login Failure - Cannot Access Finance Portal",
-        "description": "<html>\n<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>\n<body style=\"font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #333333;\">\n<div style=\"margin: 0; padding: 0;\">\n<p style=\"margin-bottom: 12px;\">Hi IT Support Team,</p>\n<p style=\"margin-bottom: 12px;\">I have been <span style=\"font-weight: bold; color: #cc0000;\">unable to log in</span> to the <span style=\"font-weight: bold;\">Finance Reporting Portal</span> since this morning. When I try to authenticate through SSO, I get the following error:</p>\n<table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse: collapse; border: 1px solid #999999; margin: 10px 0;\">\n<tr style=\"background-color: #f2f2f2;\">\n<td style=\"font-weight: bold; padding: 6px 12px;\">Error Code</td>\n<td style=\"padding: 6px 12px;\">AADSTS700016</td>\n</tr>\n<tr>\n<td style=\"font-weight: bold; padding: 6px 12px;\">Message</td>\n<td style=\"padding: 6px 12px;\">Application with identifier 'a3f8c92-1d4e-4b6a-9c87-2e5f1a3b7d90' was not found in the directory 'contoso.com'</td>\n</tr>\n<tr style=\"background-color: #f2f2f2;\">\n<td style=\"font-weight: bold; padding: 6px 12px;\">Timestamp</td>\n<td style=\"padding: 6px 12px;\">2026-03-18 08:45:12 UTC</td>\n</tr>\n</table>\n<p style=\"margin-bottom: 12px;\">I have tried clearing my browser cache, using InPrivate/Incognito mode, and also tried both <span style=\"color: #0066cc;\">Chrome</span> and <span style=\"color: #0066cc;\">Edge</span>. Same error every time.</p>\n<p style=\"margin-bottom: 12px;\">This is <span style=\"text-decoration: underline;\">blocking</span> our month-end close process. Could you please escalate this urgently?</p>\n<br>\n<div style=\"margin-top: 20px; border-top: 1px solid #cccccc; padding-top: 10px;\">\n<p style=\"margin: 0; font-weight: bold; color: #003366;\">Rachel Goldstein</p>\n<p style=\"margin: 0; font-size: 10pt; color: #666666;\">Director, Financial Reporting</p>\n<p style=\"margin: 0; font-size: 10pt; color: #666666;\">Contoso Financial Services</p>\n<p style=\"margin: 0; font-size: 9pt; color: #999999;\">T: +1 (212) 555-0192 | M: +1 (646) 555-0234</p>\n<img src=\"cid:logo_contoso_2026@contoso.com\" width=\"120\" height=\"40\" alt=\"Contoso Logo\">\n<img src=\"cid:banner_sustainability@contoso.com\" width=\"400\" height=\"50\" alt=\"Think before you print\">\n</div>\n</div>\n</body>\n</html>",
-        "reporter": {
-            "name": "Rachel Goldstein",
-            "email": "r.goldstein@contoso.com",
-            "department": "Finance"
-        },
-        "created_at": "2026-03-18T08:52:00Z",
-=======
-        "subject": "<b>URGENT</b> - Printer not working &amp; need help ASAP!!!",
-        "description": "<html><body><p style=\"font-family: Calibri; font-size: 14px; color: #1a1a1a;\">Hi IT Team,</p><p>The printer on <strong>Floor 5</strong> (HP LaserJet Pro M404n) is showing an <span style=\"color: red; font-weight: bold;\">\"Paper Jam\"</span> error but there's <em>no paper jammed</em> anywhere. I've checked all the trays and the back panel.</p><p>I've tried:</p><ul><li>Power cycling the printer</li><li>Removing and reinserting all paper trays</li><li>Clearing the print queue</li></ul><p>Nothing works. I have <u>200 pages</u> of compliance reports that need to be printed and distributed by 3 PM today for the board meeting.</p><br/><p>Thanks,<br/>Amanda Torres<br/><img src=\"cid:image001.png\" alt=\"Contoso Logo\" width=\"150\"/><br/><small>Amanda Torres | Compliance Manager<br/>Contoso Financial Services<br/>Tel: +1 (555) 987-6543 | Fax: +1 (555) 987-6544<br/><a href=\"mailto:amanda.torres@contoso.com\">amanda.torres@contoso.com</a></small></p><hr/><p style=\"font-size: 9px; color: #666;\">CONFIDENTIALITY NOTICE: This e-mail message, including any attachments, is for the sole use of the intended recipient(s) and may contain confidential and privileged information. Any unauthorized review, use, disclosure, or distribution is prohibited. If you are not the intended recipient, please contact the sender by reply e-mail and destroy all copies of the original message.</p></body></html>",
-        "reporter": {
-            "name": "Amanda Torres",
-            "email": "amanda.torres@contoso.com",
-            "department": "Compliance"
-        },
-        "created_at": "2026-03-17T12:15:00Z",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
-        "channel": "email",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5004",
-<<<<<<< HEAD
-        "subject": "Cannot upload documents to SharePoint Legal Library",
-        "description": "I'm unable to upload any documents to the SharePoint Legal Library site. Every time I try to upload a file larger than 5MB, I get a generic error saying \"Something went wrong.\" Smaller files seem to upload fine.\n\n---\n\nPhilippe Durand\nExecutive Vice President & Associate General Counsel\nLegal Department — Mergers & Acquisitions Division\nContoso Financial Services Group, LLC\n\nOffice: +1 (212) 555-0301\nDirect: +1 (212) 555-0302\nMobile: +1 (917) 555-0303\nFax: +1 (212) 555-0304\nToll-Free: +1 (800) 555-0305\n\nEmail: p.durand@contoso.com\nWebsite: https://www.contoso.com\nLinkedIn: https://www.linkedin.com/in/philippedurand\nTwitter: https://twitter.com/contoso_legal\n\nContoso Financial Services Group, LLC\n100 Wall Street, 30th Floor\nNew York, NY 10005\nUnited States of America\n\nLondon Office: 25 Bank Street, Canary Wharf, London E14 5JP, United Kingdom\nSingapore Office: 8 Marina Boulevard, #30-01 Marina Bay Financial Centre, Singapore 018981\n\n═════════════════════════════════════════════════\n\nCONFIDENTIALITY NOTICE: This email message, including any attachments, is for the sole use of the intended recipient(s) and may contain confidential, proprietary, and/or privileged information protected by law. If you are not the intended recipient, you may not use, copy, distribute, or disclose this message or its contents to anyone. Any unauthorized review, use, disclosure, or distribution is prohibited and may be unlawful. If you have received this communication in error, please contact the sender immediately by reply email and permanently destroy all copies of the original message, including any attachments. Receipt by anyone other than the intended recipient(s) is not a waiver of any attorney-client, work product, or other applicable privilege.\n\nAVIS DE CONFIDENTIALITÉ : Ce message électronique, y compris les pièces jointes, est destiné exclusivement à l'usage du ou des destinataires prévus et peut contenir des informations confidentielles, propriétaires et/ou privilégiées protégées par la loi. Si vous n'êtes pas le destinataire prévu, vous ne pouvez pas utiliser, copier, distribuer ou divulguer ce message ou son contenu à quiconque.\n\nENVIRONMENTAL NOTICE: Please consider the environment before printing this email. Contoso Financial Services Group is committed to reducing its carbon footprint.",
-        "reporter": {
-            "name": "Philippe Durand",
-            "email": "p.durand@contoso.com",
-            "department": "Legal"
-        },
-        "created_at": "2026-03-18T11:03:00Z",
-        "channel": "email",
-        "attachments": [
-            "upload_error_screenshot.png"
-        ]
-    },
-    {
-        "ticket_id": "INC-5005",
-        "subject": "Re: Re: Re: Re: Fwd: Re: SAP Error - Transaction SE16N Access Denied",
-        "description": "Hi all — I'm now getting a completely new error in SAP. When I try to run transaction SE16N to query the BSEG table, I get: \"You are not authorized to use transaction SE16N (authorization object S_TCODE).\" This is different from the licensing issue we discussed last week. Can someone look into my authorization profile?\n\n— Karen\n\nOn Tue, 17 Mar 2026 at 15:20, Robert Vasquez <r.vasquez@contoso.com> wrote:\n> Karen, the licensing issue has been resolved. Finance now has 45 concurrent SAP GUI licenses > which should be more than enough. If you're still seeing errors, it might be a different issue.\n>\n> On Tue, 17 Mar 2026 at 11:40, Karen Whitfield <k.whitfield@contoso.com> wrote:\n> > Thanks Robert. So just to confirm — we do NOT need to upgrade to S/4HANA to fix this? > > Michael said below that we might need to.\n> >\n> > On Mon, 16 Mar 2026 at 16:55, Robert Vasquez <r.vasquez@contoso.com> wrote:\n> > > No, Michael is incorrect about the S/4HANA requirement. This is purely a concurrent license > > > count issue on our ECC 6.0 system. I've submitted the PO to increase our license count from > > > 30 to 45. Should be active by EOD tomorrow.\n> > >\n> > > On Mon, 16 Mar 2026 at 14:10, Michael Torres <m.torres@contoso.com> wrote:\n> > > > I looked into this and I believe the issue is that our SAP system needs to be upgraded to > > > > S/4HANA. The current ECC 6.0 system may not support the number of users we have.\n> > > >\n> > > > On Mon, 16 Mar 2026 at 10:30, Karen Whitfield <k.whitfield@contoso.com> wrote:\n> > > > > Hi team,\n> > > > >\n> > > > > Multiple users in Finance are getting \"License limit exceeded\" errors when trying to > > > > > log into SAP this morning. We have at least 8 people affected. This is blocking our > > > > > AP processing.\n",
-        "reporter": {
-            "name": "Karen Whitfield",
-            "email": "k.whitfield@contoso.com",
-            "department": "Finance"
-        },
-        "created_at": "2026-03-18T09:45:00Z",
-        "channel": "email",
-        "attachments": [
-            "sap_error_screenshot.png",
-            "sap_roadmap_2026.pdf"
-        ]
-    },
-    {
-        "ticket_id": "INC-5006",
-        "subject": "WiFi connectivity issues on Floor 3",
-        "description": "Hello IT support,\n\nIâ€™m having serious issues with the WiFi on Floor 3. The connection keeps dropping every few minutes and itâ€™s really affecting our work. Multiple people in the Operations team have reported the same problem.\n\nDetails:\n- Location: Floor 3, Zone B (near the printerÂ room)\n- SSID: Contoso-CorpÂ \n- Signal strength shows 3/4 bars but pages wonâ€™t load\n- Started around 8:00Â AM this morning\n- Affects both laptops and mobile devices\n\nI tried forgetting the network and reconnecting but got an error: â€œUnable to connect to this networkâ€. My colleague AndrÃ©s tried switching to the 5GHz band but it didnâ€™t help either. The temperature in the server closet on this floor seemed unusually high when I walked by — maybe 35°C or so?\n\nWe also noticed the access point LED near conference room 3B is blinking amber instead of green. The label on it says â€œCisco Meraki MR46â€.\n\nThis is urgent — we have a client presentation at 2:00 PM and need stable internet. Please send someone to check the network equipment on Floor 3.\n\nThanks,\nMarcus O’Connor\nOperations",
-        "reporter": {
-            "name": "Marcus O'Connor",
-            "email": "m.oconnor@contoso.com",
-            "department": "Operations"
-        },
-        "created_at": "2026-03-18T08:17:00Z",
-        "channel": "portal",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5007",
-        "subject": "SQL Server connection timeouts causing ETL pipeline failures",
-        "description": "Our nightly ETL pipeline started failing at approximately 07:01 UTC this morning with SQL Server connection timeout errors. Multiple data pipelines that feed into the analytics warehouse are affected. Here are the logs from the past hour:\n\ntimestamp,severity,error_code,source,message,connection_id\n2026-03-18T07:01:12.445Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_8a3f1d\n2026-03-18T07:01:14.112Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_9b2e4c\n2026-03-18T07:01:15.887Z,WARN,SQL-3010,SQLSERVER01,Connection pool exhausted (max=200),pool_main\n2026-03-18T07:01:18.223Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_7c5d2a\n2026-03-18T07:01:19.556Z,ERROR,SQL-4400,SQLSERVER01,Deadlock detected on resource RID: 6:1:4520:0,spid_87\n2026-03-18T07:01:22.789Z,ERROR,SQL-4221,SQLSERVER02,Connection timeout after 30000ms,conn_3f8a1b\n2026-03-18T07:01:24.001Z,WARN,SQL-3015,SQLSERVER02,Long-running query detected (>60s),query_44521\n2026-03-18T07:01:25.334Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_2d7e9f\n2026-03-18T07:01:27.667Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_1a4b8c\n2026-03-18T07:01:28.990Z,ERROR,SQL-4400,SQLSERVER01,Deadlock detected on resource RID: 6:1:4520:0,spid_92\n2026-03-18T07:01:31.112Z,WARN,SQL-3010,SQLSERVER01,Connection pool exhausted (max=200),pool_main\n2026-03-18T07:01:33.445Z,ERROR,SQL-4221,SQLSERVER02,Connection timeout after 30000ms,conn_6e3c7d\n2026-03-18T07:01:35.778Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_5f2a1b\n2026-03-18T07:01:38.001Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_4d9e8c\n2026-03-18T07:01:40.334Z,WARN,SQL-3015,SQLSERVER02,Long-running query detected (>60s),query_44523\n2026-03-18T07:01:42.667Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_8b1c3d\n2026-03-18T07:01:44.990Z,ERROR,SQL-4400,SQLSERVER01,Deadlock detected on resource RID: 6:1:7891:0,spid_104\n2026-03-18T07:01:47.112Z,ERROR,SQL-4221,SQLSERVER02,Connection timeout after 30000ms,conn_7a2d4e\n2026-03-18T07:01:49.445Z,ERROR,SQL-4221,SQLSERVER01,Connection timeout after 30000ms,conn_9c3f5a\n2026-03-18T07:01:51.778Z,WARN,SQL-3010,SQLSERVER01,Connection pool exhausted (max=200),pool_main\n2026-03-18T07:02:20.112Z,CRITICAL,SQL-5001,SQLSERVER01,Service broker endpoint stopped responding,svc_broker_main\n\nAs you can see, we're getting a massive number of timeouts and deadlocks, and the connection pool is being exhausted repeatedly. The service broker also went down at 07:02. Can the DBA team please investigate SQLSERVER01 and SQLSERVER02 urgently? Our morning reports for the C-suite are delayed.",
-        "reporter": {
-            "name": "Priya Sharma",
-            "email": "p.sharma@contoso.com",
-            "department": "Data Engineering"
-        },
-        "created_at": "2026-03-18T07:35:00Z",
-        "channel": "portal",
-        "attachments": [
-            "etl_full_log_20260318.csv"
-        ]
-    },
-    {
-        "ticket_id": "INC-5008",
-        "subject": "🏢 Conference Room Booking Question ❓📅",
-        "description": "Hey there!! 👋👋👋\n\n🤔 Quick question about booking conference rooms 🏢💻\n\nI need to book the BIG meeting room on the 12th floor 🎉🎉 for our ✨ Q1 Marketing Review ✨ next Wednesday (March 25th 📅). \n\nHere's what I need:\n┌─────────────────────────────────────────┐\n│ 📋 Meeting Details                      │\n├─────────────┬───────────────────────────┤\n│ 📅 Date     │ March 25, 2026            │\n│ ⏰ Time     │ 2:00 PM - 4:00 PM        │\n│ 👥 People   │ ~20 attendees             │\n│ 🖥️ A/V      │ Projector + Video conf    │\n│ 🍕 Catering │ Yes please!! 😋           │\n└─────────────┴───────────────────────────┘\n\n★★★ IMPORTANT ★★★\nWe need the room with the GOOD projector ⚠️⚠️⚠️ (not the one that flickers 😤). Last time we used room 12-B and the projector died halfway through 💀❌\n\nAlso ➡️➡️➡️ can we get the video conferencing set up for Teams? 📱💻 We have people dialing in from London 🇬🇧 and Singapore 🇸🇬\n\nAlso — can I also get access to the booking system? I don't seem to have permissions to book rooms directly 🔧🔑\n\nThanks so much!! 🙏✅💡🔔\n\n● Jessica Park ●\n■ Marketing Coordinator ■\n□ Contoso Financial Services □\n▽ j.park@contoso.com ▽",
-        "reporter": {
-            "name": "Jessica Park",
-            "email": "j.park@contoso.com",
-            "department": "Marketing"
-        },
-        "created_at": "2026-03-18T13:05:00Z",
-=======
-        "subject": "lptop issu",
-        "description": "",
-        "reporter": {
-            "name": "Jake Morrison",
-            "email": "jake.morrison@contoso.com",
-            "department": "Operations"
-        },
-        "created_at": "2026-03-17T08:00:00Z",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
-        "channel": "chat",
-        "attachments": []
-    },
-    {
-<<<<<<< HEAD
-        "ticket_id": "INC-5009",
-        "subject": "Suspicious phishing email received - DO NOT CLICK",
-        "description": "I received a suspicious email this morning at approximately 9:15 AM from what appears to be our CEO's email address (but slightly misspelled as ceo@contos0.com with a zero instead of an 'o'). The email asks me to urgently click a link to \"verify my direct deposit information\" for an \"upcoming payroll change.\" The link goes to https://contoso-hr-update.suspicious-domain.xyz/verify which does NOT look like our real HR system. I did NOT click the link. The email also contained a PDF attachment called \"Payroll_Update_March_2026.pdf\" which I also did not open. This seems like a phishing attempt targeting our department.\n\nI received a suspicious email this morning at approximately 9:15 AM from what appears to be our CEO's email address (but slightly misspelled as ceo@contos0.com with a zero instead of an 'o'). The email asks me to urgently click a link to \"verify my direct deposit information\" for an \"upcoming payroll change.\" The link goes to https://contoso-hr-update.suspicious-domain.xyz/verify which does NOT look like our real HR system. I did NOT click the link. The email also contained a PDF attachment called \"Payroll_Update_March_2026.pdf\" which I also did not open. This seems like a phishing attempt targeting our department.\n\nI received a suspicious email this morning at approximately 9:15 AM from what appears to be our CEO's email address (but slightly misspelled as ceo@contos0.com with a zero instead of an 'o'). The email asks me to urgently click a link to \"verify my direct deposit information\" for an \"upcoming payroll change.\" The link goes to https://contoso-hr-update.suspicious-domain.xyz/verify which does NOT look like our real HR system. I did NOT click the link. The email also contained a PDF attachment called \"Payroll_Update_March_2026.pdf\" which I also did not open. This seems like a phishing attempt targeting our department.\n\nI received a suspicious email this morning at approximately 9:15 AM from what appears to be our CEO's email address (but slightly misspelled as ceo@contos0.com with a zero instead of an 'o'). The email asks me to urgently click a link to \"verify my direct deposit information\" for an \"upcoming payroll change.\" The link goes to https://contoso-hr-update.suspicious-domain.xyz/verify which does NOT look like our real HR system. I did NOT click the link. The email also contained a PDF attachment called \"Payroll_Update_March_2026.pdf\" which I also did not open. This seems like a phishing attempt targeting our department.",
-        "reporter": {
-            "name": "Angela Morrison",
-            "email": "a.morrison@contoso.com",
-            "department": "Retail Banking"
-        },
-        "created_at": "2026-03-18T09:32:00Z",
-        "channel": "email",
-        "attachments": [
-            "suspicious_email_headers.txt"
-=======
-        "ticket_id": "INC-5005",
-        "subject": "VPN issue VPN issue VPN issue VPN issue VPN issue",
-        "description": "I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I can't connect to VPN. I keep getting an error when I try to connect from home. Using GlobalProtect on Windows 11. Was working fine yesterday. I have a client presentation at 2 PM and need access to internal resources.",
-        "reporter": {
-            "name": "Nina Petrova",
-            "email": "nina.petrova@contoso.com",
-            "department": "Consulting"
-        },
-        "created_at": "2026-03-17T10:00:00Z",
-        "channel": "portal",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5006",
-        "subject": "CanÃ¢â‚¬â„¢t access email â€“ getting weird error",
-        "description": "Iâ€™m having trouble with my email. Every time I open Outlook it shows â€œCannot connect to serverâ€ and then crashes. This started after I updated Windows yesterday. Iâ€™ve tried restarting but nothing works. My colleague JosÃ© says heâ€™s having the same issue. Weâ€™re both on the 3rd floor in the London office.\n\nPlease help â€“ I have important client emails I need to respond to.\n\nThanks,\nFranÃ§ois Dubois",
-        "reporter": {
-            "name": "François Dubois",
-            "email": "francois.dubois@contoso.com",
-            "department": "Wealth Management"
-        },
-        "created_at": "2026-03-17T08:45:00Z",
-        "channel": "email",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5007",
-        "subject": "Password reset needed 🔒🔑 HELP!!!!! 🚨🚨🚨",
-        "description": "I 🔒 locked myself out of my account AGAIN 😭😭😭. The self-service password reset portal 💻 says my security questions are wrong ❌ but I KNOW I'm entering them correctly ✅. I've been locked out for 2️⃣ hours now and I can't do ANY work 😤. My manager 👨‍💼 is going to kill me if I miss the deadline today ⏰.\n\nPlease help ASAP 🙏🙏🙏!!!\n\n💼 Emily Watson\n📧 emily.watson@contoso.com\n🏢 HR Department, Floor 2\n📱 +1 (555) 123-4567",
-        "reporter": {
-            "name": "Emily Watson",
-            "email": "emily.watson@contoso.com",
-            "department": "HR"
-        },
-        "created_at": "2026-03-17T10:30:00Z",
-        "channel": "email",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5008",
-        "subject": "RE: RE: FW: RE: FW: RE: FW: RE: Out of Office: Quarterly IT Review — action items from last meeting",
-        "description": "Hi IT,\n\nBuried in this thread somewhere is my original request — our team's shared mailbox (apac-trading@contoso.com) stopped receiving external emails around 9 AM SGT. Internal emails are fine. We're a trading desk and missing client orders.\n\n-------- Forwarded Message --------\nFrom: Out of Office AutoReply <noreply@contoso.com>\nSubject: Out of Office: Quarterly IT Review\n\nI am currently out of the office with no access to email. For urgent matters, please contact my backup at it-backup@contoso.com.\n\n-------- Original Message --------\nFrom: Jennifer Walsh <jennifer.walsh@contoso.com>\nTo: IT Planning <it-planning@contoso.com>\nSubject: RE: Quarterly IT Review — action items from last meeting\n\nThanks all. I'll update the tracker and send the revised timeline by EOW.\n\nJennifer Walsh\nIT Project Manager\nContoso Financial Services\n\n-------- Original Message --------\nFrom: IT Planning <it-planning@contoso.com>\nSubject: Quarterly IT Review — action items from last meeting\n\nTeam, please review the attached action items from our Q1 review meeting and confirm your assigned deliverables by Friday.\n\nRegards,\nIT Planning Team\n\nDISCLAIMER: This email is intended for the named recipient only. If you have received this email in error, please notify the sender and delete it immediately. The contents of this email may be confidential and/or subject to legal privilege.\n\n-------- Original Message --------\nThis is an automated message. Please do not reply.\n\nYour ticket INC-3847 has been resolved. If you are still experiencing issues, please open a new ticket.\n\nContoso IT Service Desk\nHours: Mon-Fri 8AM-6PM EST\nEmergency: +1 (555) 999-0000",
-        "reporter": {
-            "name": "Vincent Lau",
-            "email": "vincent.lau@contoso.com",
-            "department": "Trading"
-        },
-        "created_at": "2026-03-18T01:15:00Z",
-        "channel": "email",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5009",
-        "subject": "Database connection timeout",
-        "description": "SELECT * FROM production.client_accounts WHERE status = 'active' AND last_login < '2026-01-01' ORDER BY account_value DESC;\n\n-- Above query has been timing out for the past 3 hours on the prod SQL Server instance (sql-prod-east.contoso.internal). Normally runs in ~2 seconds. Connection string: Server=sql-prod-east.contoso.internal;Database=ClientDB;Trusted_Connection=True;Connection Timeout=30;\n\nI checked sys.dm_exec_requests and there are 47 blocked sessions. Looks like there might be a long-running transaction holding locks. The blocking_session_id points to SPID 89 which has been running for 6+ hours.\n\nThis is affecting the client portal — customers can't view their account balances. ~500 users impacted based on the error rate in Application Insights.\n\nResource group: rg-data-prod-east\nServer: sql-prod-east (Azure SQL Managed Instance, Business Critical tier)\nDatabase: ClientDB",
+        "ticket_id": "INC-DC-001",
+        "subject": "Re: Re: FW: VPN not connecting \u2014 GP-ERR-4021 since Friday",
+        "description": "Hi IT Support,\n\nI've been having serious VPN connectivity issues for the past three days. Every time I try to connect to GlobalProtect from my home office, the tunnel establishes for about 90 seconds and then drops with error code GP-ERR-4021. I'm on a Windows 11 laptop (Dell Latitude 5540), connecting over Comcast residential broadband. The issue started after last Friday's endpoint agent update pushed by Intune. I need this resolved ASAP because I cannot access any internal resources \u2014 Jira, Confluence, the internal Git server, or the finance SharePoint.\n\nI already tried:\n  1. Rebooting the laptop\n  2. Flushing DNS (ipconfig /flushdns)\n  3. Releasing and renewing DHCP\n  4. Disabling Windows Firewall temporarily\n  5. Uninstalling and reinstalling GlobalProtect 6.1.2\n\nNone of these helped.\n\nThanks,\nPriya Nair\nSenior Analyst, Risk Management\n\n---------- Forwarded message ----------\nFrom: Priya Nair <priya.nair@contoso.com>\nDate: Tue, 11 Mar 2026 07:32:00 -0500\nSubject: Re: VPN issues\nTo: IT Support <itsupport@contoso.com>\n\nHi team, just following up \u2014 the VPN is still broken this morning. I missed the 8 AM portfolio review call because I couldn't connect to the internal Teams bridge.\n\n---------- Forwarded message ----------\nFrom: Priya Nair <priya.nair@contoso.com>\nDate: Mon, 10 Mar 2026 16:05:00 -0500\nSubject: VPN issues\nTo: IT Support <itsupport@contoso.com>\n\nHi, my VPN is not connecting at all since this afternoon.\n\n---\n\nCONFIDENTIALITY NOTICE: This e-mail message, including any attachments, is for the sole use of the intended recipient(s) and may contain confidential and privileged information. Any unauthorized review, use, disclosure, or distribution is prohibited. If you are not the intended recipient, please contact the sender by reply e-mail and destroy all copies of the original message. This email has been scanned by the Contoso Email Security Gateway. Message-ID: <CAFp3Jz7kXmR+Qn8vL2wZ5gT@mail.contoso.com>\n\n---\n\nContoso Financial Services | 200 Park Avenue, New York, NY 10166\nTel: +1 (212) 555-0199 | Fax: +1 (212) 555-0198\nwww.contoso.com | LinkedIn: contoso-financial\n\n\u267b Please consider the environment before printing this email.\n\nThis communication is intended solely for the addressee and may contain information that is confidential or legally privileged. If you are not the intended recipient, you must not read, use, copy, or disseminate this communication. Please notify the sender immediately by reply e-mail if you have received this communication in error, then delete it and all copies. Contoso Financial Services Limited is authorised and regulated by the Financial Conduct Authority. Registered in England. Company No. 12345678. Registered Office: 200 Park Avenue, New York, NY 10166. VAT Registration No. GB 123 4567 89.\n\n--- End of Forwarded Messages ---\n\nP.S. \u2014 My direct number is +1 (212) 555-0342 if you need to reach me.\nAsset class: Equity Derivatives | Desk: RM-3 | Bloomberg: PNAIR@CONTOSO\n\n========================================================================\nThis message has been scanned by Contoso Antivirus Gateway v4.12.1.\nNo threats detected. Scan ID: AV-20260312-081500-PRIYA-NAIR-7742\n========================================================================\n",
         "reporter": {
             "name": "Priya Nair",
             "email": "priya.nair@contoso.com",
-            "department": "Data Engineering"
+            "department": "Risk Management"
         },
-        "created_at": "2026-03-17T14:00:00Z",
-        "channel": "portal",
-        "attachments": [
-            "blocked_sessions_screenshot.png",
-            "app_insights_error_rate.png"
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
-        ]
-    },
-    {
-        "ticket_id": "INC-5010",
-<<<<<<< HEAD
-        "subject": "[NOTIFICATION] [AUTO-GENERATED] Server Health Alert - PROD-APP-047",
-        "description": "============================================================\n[NOTIFICATION] [AUTO-GENERATED] [DO NOT REPLY]\nContoso Infrastructure Monitoring System v4.2.1\nAlert ID: ALT-2026031800847\nGenerated: 2026-03-18T06:30:00.000Z\n============================================================\n\nALERT TYPE: WARNING\nSEVERITY: P3\nENVIRONMENT: Production\n\nSERVER DETAILS:\n  hostname=PROD-APP-047.contoso.internal\n  ip_address=10.142.38.47\n  os=Windows Server 2022 Datacenter (Build 20348.2340)\n  instance_id=i-0a8b7c6d5e4f3a2b1\n  region=us-east-1\n  availability_zone=us-east-1a\n  instance_type=m5.2xlarge\n  launch_time=2025-11-02T14:22:00Z\n\nMETRICS:\n  cpu_utilization=78.4%\n  memory_utilization=91.2%\n  disk_usage_c_drive=67.8%\n  disk_usage_d_drive=94.1%\n  network_in=245.7 Mbps\n  network_out=189.3 Mbps\n  active_connections=1247\n\nTRIGGER CONDITION:\n  rule=memory_utilization > 90% for 15 consecutive minutes\n  threshold=90%\n  current_value=91.2%\n  duration=18 minutes\n  escalation_policy=cloud-infra-oncall\n\nRELATED SERVICES:\n  service_name=ContosoCoreAPI\n  health_check_url=https://prod-app-047.contoso.internal:8443/health\n  last_health_check=2026-03-18T06:29:45Z\n  health_status=DEGRADED\n\n============================================================\nThis is an automated message generated by Contoso Infrastructure\nMonitoring System. Please do not reply to this notification.\n============================================================\n",
-        "reporter": {
-            "name": "System Monitor",
-            "email": "monitoring-noreply@contoso.com",
-            "department": "Cloud Infrastructure"
-        },
-        "created_at": "2026-03-18T06:30:00Z",
-=======
-        "subject": "Need help with اتصال VPN مشكلة — mixed language ticket",
-        "description": "مرحبا فريق الدعم التقني,\n\nI'm having trouble with my VPN connection. عندما أحاول الاتصال I get error code 812. I've been working remote from our Dubai office هذا الأسبوع and the VPN was working fine until this morning.\n\nI tried:\n- إعادة تشغيل الكمبيوتر (restarting my computer)\n- Clearing the VPN client cache\n- تحديث تطبيق GlobalProtect (updating GlobalProtect)\n\nMy colleague أحمد is having the same issue. We both need VPN access for the client demo tomorrow.\n\nشكرا,\nOmar Hassan\nSenior Consultant\nContoso Financial Services — Dubai Office",
-        "reporter": {
-            "name": "Omar Hassan",
-            "email": "omar.hassan@contoso.com",
-            "department": "Consulting"
-        },
-        "created_at": "2026-03-17T06:30:00Z",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+        "created_at": "2026-03-12T08:15:00Z",
         "channel": "email",
         "attachments": []
     },
     {
-        "ticket_id": "INC-5011",
-<<<<<<< HEAD
-        "subject": "Phishing email with multiple suspicious links - please investigate",
-        "description": "Hi Security Team,\n\nI'm forwarding a suspicious email I received today. It pretends to be from our IT department and asks me to \"update my credentials\" but it contains a LOT of suspicious links. Here's the content of the email:\n\n---BEGIN FORWARDED EMAIL---\n\nDear Employee,\n\nYour account security needs to be updated. Please click the link below:\nhttps://contoso-it-security.com.suspicious-site.ru/update?user=tmorris&token=a8f3e2\n\nIf you cannot click the link above, try one of these mirrors:\nhttps://contoso.com.login-verify.xyz/auth/portal\nhttps://secure-contoso-portal.tk/account/verify?ref=email_031826\nhttp://192.168.44.128:8080/phish/landing.html?id=4421\nhttps://c0ntoso-security.com/update-credentials\n\nFor reference, your account information:\nProfile: https://portal.contoso.com/users/tmorris (this one looks real but idk)\nDepartment page: https://intranet.contoso.com/compliance/team (also looks legit)\n\nAdditional resources:\nhttps://contoso-benefits.suspicious-domain.net/enroll?campaign=spring2026\nhttps://hr-contoso.phishy-host.co/direct-deposit/update\nhttps://mail-contoso-com.xyz/webmail/index.php\n\nBest regards,\nIT Security Team\nhttps://it-security-contoso.fake-domain.org/about-us\n\n[Tracking images detected in email source]\n<img src=\"https://track.suspicious-analytics.com/pixel.gif?id=44821&r=tmorris\" width=\"1\" height=\"1\">\n<img src=\"https://contoso-mkt.tracking-service.net/open?c=8827&e=tmorris@contoso.com\" width=\"1\" height=\"1\">\n\n---END FORWARDED EMAIL---\n\nI did NOT click any of these links. This is clearly a phishing attempt. The sender address was it-security@contos0.com (note the zero in 'contoso'). Please block these domains and alert the company.",
+        "ticket_id": "INC-DC-002",
+        "subject": "Monitor flickering \u2014 screenshot attached inline",
+        "description": "Hi,\n\nMy external monitor (Dell U2722D) has been flickering non-stop since this morning. It started after I docked my laptop (ThinkPad X1 Carbon Gen 11) into the Lenovo USB-C dock. The built-in laptop screen is fine \u2014 only the external monitor flickers.\n\nI took a photo with my phone and pasted it here:\n\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQCAYAAAD/qcomAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9oKFwgMNC3WkXYAACAASURBVHic7d15fFT1vf/x95lsk5nsG0kgCQlhCfsSAoooLohi3bV1adXaam/dWm1rW2uXW7u4tXZR691s7WLdam3rVq24sIjsyCb7FiAhIfu+Tc7vj0kIIZOQhExmJnk9H495nDlnzsx8k8Mj8p7v9/s1TNOUJFVVVen48eOqqamRw+FQXFycMjIylJubq6ioKF9+HAAAAAAYVM6u/7vnkSfU0NR8+kEmEz7JVfzOHY1tpmlqy5Yt+uSTTxQWFqbJkydr/PjxSk5OVmpqqux2u6++BQAAAAAMOW+8f0Dv7T7kk/c22+r8c9YOdHR0aNWqVTp27JjOO+88DR8+XNHR0RcXH\n\n(Sorry, I wasn't sure how to attach it properly.)\n\nThe flickering gets worse when I open Excel or any app with a lot of white background. I tried a different DisplayPort cable but same result. Could this be a driver issue? We had a Windows Update last week.\n\nThanks,\nDavid Park\nQuantitative Research",
         "reporter": {
-            "name": "Thomas Morris",
-            "email": "t.morris@contoso.com",
+            "name": "David Park",
+            "email": "david.park@contoso.com",
+            "department": "Quantitative Research"
+        },
+        "created_at": "2026-03-13T10:22:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-003",
+        "subject": "Outlook keeps crashing after update",
+        "description": "<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n<style>\nbody { font-family: Calibri, sans-serif; font-size: 11pt; }\n.signature { color: #888888; font-size: 9pt; }\n</style>\n</head>\n<body>\n<p>Hi IT Team,</p>\n<p>Outlook has been <b>crashing repeatedly</b> since the update that was pushed on <b>Tuesday morning</b>. Every time I try to open a calendar invite from the Legal team, Outlook freezes for about 10 seconds and then closes with this error:</p>\n<p><b>APPCRASH \u2014 mso40uiwin32client.dll</b><br>\nException code: <b>0xc0000005</b><br>\nOffset: 0x00000000001A3F7C</p>\n<p>I&apos;ve already tried running <b>Office Repair</b> (Quick Repair) but it didn&apos;t help. I haven&apos;t tried Online Repair yet because I wasn&apos;t sure if that would reset my settings.</p>\n<p>I can still use <b><a href=\"https://outlook.office365.com\">Outlook Web App</a></b> without issues, so it's definitely the desktop client.</p>\n<br>\n<p>Thanks,</p>\n<p class=\"signature\">Jennifer Liu<br>\nAssociate General Counsel<br>\nLegal &amp; Compliance<br>\nContoso Financial Services</p>\n</body>\n</html>",
+        "reporter": {
+            "name": "Jennifer Liu",
+            "email": "jennifer.liu@contoso.com",
+            "department": "Legal & Compliance"
+        },
+        "created_at": "2026-03-13T11:47:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-004",
+        "subject": "WiFi is DEAD on 4th floor \ud83d\udd25\ud83d\udd25\ud83d\udd25 HELP",
+        "description": "\ud83d\udea8\ud83d\udea8\ud83d\udea8 URGENT \ud83d\udea8\ud83d\udea8\ud83d\udea8\n\nThe WiFi on the entire 4th floor (Building 2, Chicago) has been DOWN since about 8:45 AM this morning \ud83d\udc80\ud83d\udc80\ud83d\udc80\n\nNOBODY can connect \u2014 it's not just me, my whole team (12 people in Structured Products) is affected \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d\n\nWe have a CLIENT PRESENTATION at 11:00 AM and we need internet access!!! \u26a0\ufe0f\u26a0\ufe0f\u26a0\ufe0f\n\nThings we tried:\n\u2022 Restarting laptops \ud83d\udcbb\u274c\n\u2022 Forgetting the network and reconnecting \u274c\u274c\n\u2022 Using mobile hotspot as backup \ud83d\udcf1\u2705 (but it's too slow for the demo)\n\nThe SSID 'Contoso-Corp' shows up but just spins when we try to connect \ud83d\udd04\ud83d\udd04\ud83d\udd04\n\nPLEASE HELP ASAP \ud83d\ude4f\ud83d\ude4f\ud83d\ude4f\ud83d\udd25\ud83d\udc80\n\n\u2014 Alex Rivera\nVP, Structured Products\n\u260e\ufe0f x4472",
+        "reporter": {
+            "name": "Alex Rivera",
+            "email": "alex.rivera@contoso.com",
+            "department": "Structured Products"
+        },
+        "created_at": "2026-03-13T09:02:00Z",
+        "channel": "chat",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-005",
+        "subject": "Locked out of Compliance Reporting Portal \u2014 403 Forbidden",
+        "description": "Hi IT,\n\nI have been locked out of the Compliance Reporting Portal (compliance.contoso.com) since yesterday afternoon. When I try to log in with my SSO credentials, I get a 403 Forbidden error. I need access to submit the quarterly compliance report which is due by end of day Friday. My manager Diane Chen has confirmed I should have access.\n\nI have been locked out of the Compliance Reporting Portal (compliance.contoso.com) since yesterday afternoon. When I try to log in with my SSO credentials, I get a 403 Forbidden error. I need access to submit the quarterly compliance report which is due by end of day Friday. My manager Diane Chen has confirmed I should have access.\n\nI have been locked out of the Compliance Reporting Portal (compliance.contoso.com) since yesterday afternoon. When I try to log in with my SSO credentials, I get a 403 Forbidden error. I need access to submit the quarterly compliance report which is due by end of day Friday. My manager Diane Chen has confirmed I should have access.\n\nI have been locked out of the Compliance Reporting Portal (compliance.contoso.com) since yesterday afternoon. When I try to log in with my SSO credentials, I get a 403 Forbidden error. I need access to submit the quarterly compliance report which is due by end of day Friday. My manager Diane Chen has confirmed I should have access.\n\nThanks,\nRobert Okafor\nCompliance Analyst",
+        "reporter": {
+            "name": "Robert Okafor",
+            "email": "robert.okafor@contoso.com",
             "department": "Compliance"
         },
-        "created_at": "2026-03-18T10:48:00Z",
+        "created_at": "2026-03-13T08:30:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-006",
+        "subject": "FW: URGENT: Your Contoso Financial Services Account Has Been Compromised \u2014 Immediate Action Required \u2014 Click Here to Verify Your Identity \u2014 Reference Number CF-2026-03-13-88421 \u2014 This is an automated security notification from the Contoso Financial Services Security Team \u2014 Please do not reply to this email \u2014 If you did not initiate this request please contact security immediately \u2014 Your account will be locked in 24 hours if no action is taken \u2014 Contoso Financial Services Fraud Prevention Unit \u2014 Case ID FPU-7729134 \u2014 Priority Escalation",
+        "description": "Hi Security Team,\n\nI received the phishing email forwarded in the subject line above. It was sent to my work address (tom.walsh@contoso.com) at 6:42 AM this morning from 'security-alerts@cont0so-financial.com' (note the zero instead of 'o'). The email contained a link to a fake login page at hxxps://contoso-verify[.]xyz/login.\n\nI did NOT click the link or enter any credentials. I'm reporting it as per the security awareness training we had last month.\n\nThe original email headers are saved in my Quarantine folder if you need them.\n\nThanks,\nTom Walsh\nClient Services",
+        "reporter": {
+            "name": "Tom Walsh",
+            "email": "tom.walsh@contoso.com",
+            "department": "Client Services"
+        },
+        "created_at": "2026-03-13T07:10:00Z",
         "channel": "email",
-        "attachments": [
-            "suspicious_email_source.eml",
-            "email_headers.txt"
-        ]
+        "attachments": []
     },
     {
-        "ticket_id": "INC-5012",
-        "subject": "Microsoft Teams keeps crashing / Teams se congela constantemente",
-        "description": "Hi, I need help with Microsoft Teams. It keeps freezing and crashing on my laptop. Esto empezó ayer por la tarde cuando estaba en una llamada con el equipo de Buenos Aires. The screen goes completely white and then I get the spinning wheel por como 30 segundos y después se cierra solo.\n\nI already tried reinstalling pero no funcionó — the same thing happens. Mi versión de Teams es 24360.1303.3160.5765 and I'm running Windows 11. Every time I join a video call con más de 5 personas, se congela completamente.\n\nTambién probé clearing the cache (borré la carpeta %appdata%/Microsoft/Teams) but the problem persists. É muito frustrante porque tenho reuniões importantes esta semana. Meu colega João também está tendo o mesmo problema.\n\nCan you please look into this? Necesito una solución urgente porque tenemos la reunión de revisión trimestral mañana y no puedo usar Teams así. If it helps, my laptop is a Surface Pro 9 with 16GB RAM, asset tag CT-LT-31205.\n\nGracias / Thanks / Obrigado,\nCarlos Mendoza\nHR Business Partner — Américas",
+        "ticket_id": "INC-DC-007",
+        "subject": "FW: FW: FW: FW: FW: SharePoint sync failing \u2014 files not uploading",
+        "description": "---------- Forwarded message ----------\nFrom: Lisa Tanaka <lisa.tanaka@contoso.com>\nDate: Wed, 12 Mar 2026 16:30:00 +0800\nTo: IT Support <itsupport@contoso.com>\nSubject: SharePoint sync failing\n\n---------- Forwarded message ----------\nFrom: Lisa Tanaka <lisa.tanaka@contoso.com>\nDate: Wed, 12 Mar 2026 14:15:00 +0800\nTo: Mike Chen <mike.chen@contoso.com>\nSubject: Re: SharePoint sync failing\n\n---------- Forwarded message ----------\nFrom: Mike Chen <mike.chen@contoso.com>\nDate: Wed, 12 Mar 2026 11:00:00 +0800\nTo: Lisa Tanaka <lisa.tanaka@contoso.com>\nSubject: Re: SharePoint sync failing\n\nLisa \u2014 I'm seeing the same thing. My OneDrive sync icon has been stuck on the spinning arrows since Monday. I think it's the whole Singapore office.\n\n---------- Forwarded message ----------\nFrom: Lisa Tanaka <lisa.tanaka@contoso.com>\nDate: Tue, 11 Mar 2026 09:20:00 +0800\nTo: Mike Chen <mike.chen@contoso.com>\nSubject: SharePoint sync failing\n\n---------- Forwarded message ----------\nFrom: Lisa Tanaka <lisa.tanaka@contoso.com>\nDate: Mon, 10 Mar 2026 17:45:00 +0800\nTo: Helpdesk <helpdesk@contoso.com>\nSubject: SharePoint sync failing\n\nHi,\n\nThe SharePoint document library for the APAC Structured Finance team has not been syncing since Monday morning. Files I upload via the browser appear on the site, but the OneDrive sync client on my laptop (Windows 11, OneDrive build 24.025) shows a perpetual sync-in-progress state. The library has about 14,000 files totalling ~85 GB. Error in the OneDrive activity center: 'We're having trouble syncing your files. We'll try again later. (Error 0x8004de40)'\n\nThis is impacting the whole Singapore office \u2014 at least 8 people have reported the same issue to me.\n\nThanks,\nLisa Tanaka\nAPAC Structured Finance",
         "reporter": {
-            "name": "Carlos Mendoza",
-            "email": "c.mendoza@contoso.com",
-            "department": "HR"
+            "name": "Lisa Tanaka",
+            "email": "lisa.tanaka@contoso.com",
+            "department": "APAC Structured Finance"
         },
-        "created_at": "2026-03-18T14:22:00Z",
-        "channel": "chat",
-        "attachments": [
-            "teams_crash_log.txt"
-        ]
+        "created_at": "2026-03-12T16:45:00Z",
+        "channel": "email",
+        "attachments": []
     },
     {
-        "ticket_id": "INC-5013",
-        "subject": "help",
-        "description": "laptop broken",
+        "ticket_id": "INC-DC-008",
+        "subject": "Laptop keyboard typing wrong characters \u2014 keys mapped incorrectly",
+        "description": "Hi IT,\n\nMy laptop keyboard has been typing the wrong characters since yesterday. When I press the \u00e2\u20ac\u02dca\u00e2\u20ac\u2122 key it types \u00c3\u00a4, the \u00e2\u20ac\u02dco\u00e2\u20ac\u2122 key types \u00c3\u00b6, and the \u00e2\u20ac\u02dcu\u00e2\u20ac\u2122 key types \u00c3\u00bc. The semicolon key produces \u00c3\u00a9. It\u00c3\u00a2\u00e2\u0082\u00ac\u00e2\u0084\u00a2s extremely frustrating.\n\nI\u00c3\u00a2\u00e2\u0082\u00ac\u00e2\u0084\u00a2m using a ThinkPad T14s Gen 4 with Windows 11. The keyboard layout is set to \u00e2\u20ac\u0153US English\u00e2\u20ac\u009d in Settings but it behaves like it\u00e2\u20ac\u2122s on a German or French layout.\n\nI noticed this started after I connected an external USB keyboard yesterday and then disconnected it. Even after removing the USB keyboard, the built-in keyboard is still messed up.\n\nI\u00c3\u00a2\u00e2\u201a\u00ac\u00e2\u201e\u00a2ve tried restarting but no luck.\n\nThanks,\nHassan El-Amin\nMiddle Office Operations",
         "reporter": {
-            "name": "Jordan Blake",
-            "email": "j.blake@contoso.com",
-            "department": "Marketing"
+            "name": "Hassan El-Amin",
+            "email": "hassan.elamin@contoso.com",
+            "department": "Middle Office Operations"
         },
-        "created_at": "2026-03-18T15:40:00Z",
+        "created_at": "2026-03-14T09:15:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-009",
+        "subject": "SSO login failing \u2014 'SAML assertion invalid' error",
+        "description": "Return-Path: <karen.bell@contoso.com>\nReceived: from mail-yw1-f182.contoso.com (mail-yw1-f182.contoso.com [209.85.128.182])\n        by mx.contoso.com (Postfix) with ESMTPS id 4F3B21A2C01\n        for <itsupport@contoso.com>; Thu, 13 Mar 2026 13:22:41 -0500 (EST)\nReceived: by mail-yw1-f182.contoso.com with SMTP id a]8so1234567ywc.5\n        for <itsupport@contoso.com>; Thu, 13 Mar 2026 10:22:40 -0800 (PST)\nDKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=contoso.com; s=20230601;\n        h=from:to:subject:date:message-id:mime-version:content-type;\n        bh=aB3cD4eF5gH6iJ7kL8mN9oP0qR1sT2uV3wX4yZ5=;\n        b=LmNoPqRsTuVwXyZ0123456789AbCdEfGhIjKlMnOpQrStUv\nX-Mailer: Microsoft Outlook 16.0\nContent-Type: multipart/alternative; boundary=\"000000000000abcdef012345\"\nMIME-Version: 1.0\nMessage-ID: <CAFp3Jz8xYz+Abc123@mail.contoso.com>\nDate: Thu, 13 Mar 2026 13:22:00 -0500\nFrom: Karen Bell <karen.bell@contoso.com>\nTo: IT Support <itsupport@contoso.com>\nSubject: SSO login failing\n\n--000000000000abcdef012345\nContent-Type: text/plain; charset=\"UTF-8\"\n\nHi IT,\n\nI cannot log in to the internal HR Portal (hr.contoso.com) using SSO. When I click 'Sign in with Contoso SSO', the page redirects a few times and then shows the error: 'SAML assertion invalid \u2014 AttributeStatement missing required claim: department'. This started today after I was moved from the London office to the New York office in the HR system.\n\nI can still log in to Outlook and Teams fine, so it seems specific to the HR Portal's SAML integration.\n\nThanks,\nKaren Bell\nHuman Resources\n\n--000000000000abcdef012345--",
+        "reporter": {
+            "name": "Karen Bell",
+            "email": "karen.bell@contoso.com",
+            "department": "Human Resources"
+        },
+        "created_at": "2026-03-13T13:30:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-010",
+        "subject": "Production database query performance degraded \u2014 urgent",
+        "description": "\n\n\nHi DBA Team,\n\n\n\n\nThe production reporting database    (sql-prod-rpt-02)    has been extremely slow since     last night.\n\n\n\n\n\n\t\t\tQueries that normally take 2-3 seconds are now taking\t\t 45+ seconds.\n\n\n\n\n         The nightly ETL job that populates the risk dashboards failed at 02:15 AM with a timeout after 3600 seconds.          This means the morning risk reports for 30 portfolio managers     are showing     yesterday's data.\n\n\n\n\n\n\n\t\tAffected:\n\t\t\t- sql-prod-rpt-02 instance\n\t\t\t- RiskDashboard database\n\t\t\t- Nightly ETL pipeline (ADF_RiskLoad_Prod)\n\n\n\n\n          I checked the Activity Monitor and see massive wait stats on PAGEIOLATCH_SH,     suggesting    disk I/O    bottleneck.\n\n\n\n\n\n\n\nThanks,\n\n\nYuki Sato\n\nDatabase Administrator\n\n\n\n\n",
+        "reporter": {
+            "name": "Yuki Sato",
+            "email": "yuki.sato@contoso.com",
+            "department": "Database Administration"
+        },
+        "created_at": "2026-03-14T06:20:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-011",
+        "subject": "Quarterly compliance audit \u2014 access review for SharePoint and Azure resources",
+        "description": "Hi IT Governance Team,\n\nAs part of the Q1 2026 compliance audit, I need to review and confirm access permissions across several SharePoint sites and Azure resources. Please provide access review reports for the following:\n\nSharePoint Sites:\n  1. https://contoso.sharepoint.com/sites/compliance-policies\n  2. https://contoso.sharepoint.com/sites/legal-hold-documents\n  3. https://contoso.sharepoint.com/sites/audit-evidence-2026-q1\n  4. https://contoso.sharepoint.com/sites/risk-management-docs\n  5. https://contoso.sharepoint.com/sites/hr-confidential\n\nAzure Resources:\n  6. https://portal.azure.com/#@contoso.com/resource/subscriptions/a1b2c3d4/resourceGroups/rg-compliance-prod\n  7. https://portal.azure.com/#@contoso.com/resource/subscriptions/a1b2c3d4/resourceGroups/rg-audit-storage\n  8. https://portal.azure.com/#blade/Microsoft_AAD_IAM/ManagedAppMenuBlade/Overview/appId/e5f6g7h8\n\nDocumentation:\n  9. https://contoso.sharepoint.com/sites/it-governance/SitePages/Access-Review-Process.aspx\n  10. https://learn.microsoft.com/en-us/azure/active-directory/governance/access-reviews-overview\n  11. https://contoso.sharepoint.com/sites/it-governance/Shared%20Documents/Q1-Audit-Checklist.xlsx\n\nThe audit committee meeting is on March 28, so I need these reports by March 25 at the latest. Each report should list all users with access, their permission level, and last access date.\n\nThanks,\nMaria Santos\nChief Compliance Officer",
+        "reporter": {
+            "name": "Maria Santos",
+            "email": "maria.santos@contoso.com",
+            "department": "Compliance"
+        },
+        "created_at": "2026-03-14T10:00:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-012",
+        "subject": "SAP GUI errors \u2014 multiple transaction codes failing since this morning",
+        "description": "Hi Enterprise Apps Team,\n\nMultiple SAP transactions have been failing since 07:00 AM today. I've been tracking the errors \u2014 here's the data from my team's reports:\n\nTcode\tError Code\tTimestamp\tUser\tCount\tModule\nVA01\tSQL_ERROR_502\t07:02:15\tRPATEL\t12\tSD\nME21N\tUPDATE_FAILED\t07:05:33\tJMORGAN\t8\tMM\nFB01\tPOSTING_ERROR\t07:08:41\tSKIM\t15\tFI\nMM01\tLOCK_TIMEOUT\t07:12:09\tRPATEL\t6\tMM\nVA01\tSQL_ERROR_502\t07:15:22\tLCHEN\t11\tSD\nCO01\tAUTH_CHECK_FAIL\t07:18:55\tABROWN\t3\tCO\nFB01\tPOSTING_ERROR\t07:22:01\tSKIM\t18\tFI\nME21N\tUPDATE_FAILED\t07:25:17\tDWILSON\t9\tMM\nVA01\tSQL_ERROR_502\t07:30:44\tRPATEL\t14\tSD\nXK01\tDUPLICATE_KEY\t07:33:28\tJMORGAN\t2\tMM\n\nThe SQL_ERROR_502 on VA01 is the most frequent and is blocking our Sales team from creating orders. The POSTING_ERROR on FB01 is preventing Finance from posting journal entries.\n\nOur SAP basis team said the database tablespace for SAPSR3 might be running low but they can't confirm without DBA access.\n\nThis is affecting approximately 40 users across Sales, Finance, and Procurement.\n\nThanks,\nRaj Patel\nSAP Functional Lead\nEnterprise Systems",
+        "reporter": {
+            "name": "Raj Patel",
+            "email": "raj.patel@contoso.com",
+            "department": "Enterprise Systems"
+        },
+        "created_at": "2026-03-14T07:45:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-DC-013",
+        "subject": "MFA not working on new phone \u2014 unable to approve sign-in requests",
+        "description": "[Phone transcription \u2014 call received 2026-03-14 08:55 AM]\n\nHi, um, yeah, so I, uh, I got a new phone over the weekend \u2014 like, an iPhone 15 \u2014 and, um, I set it up and everything, you know, but now when I try to, uh, log in to anything at work, like, the Microsoft Authenticator app, um, it doesn't send me the, uh, the push notification anymore.\n\nLike, you know, I used to get the little popup that says, like, 'Approve sign-in' and I'd just, uh, tap the number, you know? But now it just... [inaudible] ...nothing happens. I waited like five minutes and, um, nothing.\n\nSo I tried to, like, uh, re-register the app, you know, but when I go to aka.ms/mysecurityinfo it says I need to, um, approve on my old device first, which I, uh, I already wiped. Like, I traded it in at the Apple Store, so, um, I don't have it anymore.\n\n[inaudible] ...yeah, so I'm basically, like, completely locked out of everything right now. I can't get into Outlook, Teams, SharePoint \u2014 you know, nothing that requires, uh, MFA. Which is, like, everything. [laughs]\n\nUm, my manager is, uh, Diana Ross \u2014 not the singer, you know [laughs] \u2014 she's in, like, Portfolio Analytics. She can, um, verify who I am if you need that.\n\nOh, and my name is, uh, Chris Donovan. My email is chris.donovan@contoso.com.\n\n[End of transcription]",
+        "reporter": {
+            "name": "Chris Donovan",
+            "email": "chris.donovan@contoso.com",
+            "department": "Portfolio Analytics"
+        },
+        "created_at": "2026-03-14T09:05:00Z",
         "channel": "phone",
         "attachments": []
     },
     {
-        "ticket_id": "INC-5014",
-        "subject": "ADF Pipeline PL_IngestDailyTransactions failed - SQL timeout",
-        "description": "The daily ingestion pipeline PL_IngestDailyTransactions in Azure Data Factory failed this morning after retrying 3 times. It could not copy data from SQL Server to ADLS. Here's the full error output:\n\n{\n  \"error\": {\n    \"code\": \"PipelineFailedExecution\",\n    \"message\": \"Pipeline 'PL_IngestDailyTransactions' failed with error: Activity 'CopyFromSQLToADLS' failed.\",\n    \"target\": \"PL_IngestDailyTransactions\",\n    \"details\": [\n      {\n        \"code\": \"2011\",\n        \"message\": \"Copy activity failed due to timeout when reading from SQL Server source.\",\n        \"target\": \"CopyFromSQLToADLS\",\n        \"activityRunId\": \"b3e7a1c9-4f82-4d6a-a1b3-8c9d0e1f2a3b\",\n        \"pipelineRunId\": \"d5f8c2e1-6a93-4b7d-b2c4-9d0e1f2a3b4c\",\n        \"errorCode\": \"SqlServerConnectorFailure\",\n        \"failureType\": \"UserError\",\n        \"duration\": \"00:32:14.7821543\",\n        \"source\": {\n          \"type\": \"SqlServerSource\",\n          \"server\": \"sqlserver-prod-east.database.windows.net\",\n          \"database\": \"TransactionsDB\",\n          \"query\": \"SELECT * FROM dbo.DailyTransactions WHERE TransactionDate = '2026-03-17'\",\n          \"queryTimeout\": \"00:30:00\"\n        },\n        \"sink\": {\n          \"type\": \"AzureBlobFSSink\",\n          \"container\": \"raw\",\n          \"path\": \"transactions/daily/2026/03/17/\",\n          \"format\": \"Parquet\"\n        },\n        \"retryAttempt\": 3,\n        \"retryInterval\": \"00:05:00\"\n      }\n    ],\n    \"innererror\": {\n      \"code\": \"SqlFailedToConnect\",\n      \"message\": \"A network-related or instance-specific error occurred while establishing a connection to SQL Server.\",\n      \"source\": \".Net SqlClient Data Provider\"\n    },\n    \"correlationId\": \"7f8e9d0c-1b2a-3c4d-5e6f-7a8b9c0d1e2f\",\n    \"factoryName\": \"adf-contoso-prod\",\n    \"region\": \"eastus\",\n    \"timestamp\": \"2026-03-18T05:32:14.782Z\"\n  }\n}\n\nThis pipeline runs every day at 05:00 UTC and feeds into our downstream analytics. The morning dashboards are currently showing stale data from yesterday. Please investigate the SQL Server connectivity issue.",
+        "ticket_id": "INC-DC-014",
+        "subject": "Network printer not working \u2014 \u7f51\u7edc\u6253\u5370\u673a\u65e0\u6cd5\u6253\u5370",
+        "description": "Hi IT,\n\nThe network printer on Level 22 of the Singapore office (Printer: HP LaserJet MFP M635, IP: 10.65.22.40) is not working since this morning.\n\n\u6211\u4eca\u5929\u65e9\u4e0a\u53d1\u4e86\u4e09\u4e2a\u6253\u5370\u4efb\u52a1\uff0c\u4f46\u6253\u5370\u673a\u5b8c\u5168\u6ca1\u6709\u53cd\u5e94\u3002\u6253\u5370\u961f\u5217\u663e\u793a\u4efb\u52a1\u72b6\u6001\u662f\u201c\u9519\u8bef\u201d\u3002\u5176\u4ed6\u540c\u4e8b\u4e5f\u9047\u5230\u4e86\u540c\u6837\u7684\u95ee\u9898\u3002\n\nI checked the printer physically \u2014 the display shows 'Ready' and there are no paper jams or error lights. \u6211\u4e5f\u91cd\u542f\u4e86\u6253\u5370\u673a\u4f46\u6ca1\u6709\u7528\u3002\n\nWhen I try to ping the printer from my laptop, I get:\n  Reply from 10.65.22.40: bytes=32 time=1ms TTL=64\n\nSo network connectivity seems fine. \u4f46\u4ece\u6253\u5370\u673a\u7684Web\u754c\u9762 (http://10.65.22.40) \u6211\u770b\u5230\u4e00\u4e2a\u9519\u8bef\u4fe1\u606f\u8bf4 'Print spooler service unavailable'.\n\n\u8fd9\u53f0\u6253\u5370\u673a\u662f\u6211\u4eec\u6574\u4e2a22\u697c\u552f\u4e00\u7684\u6253\u5370\u673a\uff0c\u5927\u7ea630\u4e2a\u4eba\u4f9d\u8d56\u5b83\u3002\u6211\u4eec\u4eca\u5929\u4e0b\u5348\u6709\u4e2a\u91cd\u8981\u7684\u5ba2\u6237\u4f1a\u8bae\u9700\u8981\u6253\u5370\u6750\u6599\u3002\n\nPlease help!\n\n\u8c22\u8c22,\nWei Lin\nInvestment Banking, Singapore",
         "reporter": {
-            "name": "Anil Kapoor",
-            "email": "a.kapoor@contoso.com",
-            "department": "Data Engineering"
+            "name": "Wei Lin",
+            "email": "wei.lin@contoso.com",
+            "department": "Investment Banking"
         },
-        "created_at": "2026-03-18T06:15:00Z",
-        "channel": "portal",
-        "attachments": [
-            "pipeline_run_details.json",
-            "adf_diagnostic_logs.zip"
-        ]
-    },
-    {
-        "ticket_id": "INC-5015",
-        "subject": "MFA token not working - cannot authenticate",
-        "description": "Return-Path: <l.chang@contoso.com>\nReceived: from mail-ej1-f54.contoso.com (mail-ej1-f54.contoso.com [209.85.218.54])\n        by mx.contoso.com (Postfix) with ESMTPS id 4F7B2C1A3D\n        for <helpdesk@contoso.com>; Wed, 18 Mar 2026 11:30:02 +0000 (UTC)\nDKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\n        d=contoso.com; s=selector1;\n        h=from:to:cc:subject:date:message-id:content-type;\n        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;\n        b=dGhpcyBpcyBub3QgYSByZWFsIERLSU0gc2lnbmF0dXJl\nFrom: Lisa Chang <l.chang@contoso.com>\nTo: IT Help Desk <helpdesk@contoso.com>\nCC: b.foster@contoso.com, m.williams@contoso.com, r.patel@contoso.com,\n    s.nakamura@contoso.com, d.smith@contoso.com, j.garcia@contoso.com\nDate: Wed, 18 Mar 2026 11:30:00 +0000\nMessage-ID: <CABx+Xk3YtJ9vN2qR8mH7pL5wA1bC3dE4fG6hI=@contoso.com>\nMIME-Version: 1.0\nContent-Type: multipart/alternative; boundary=\"000000000000abcdef123456\"\nX-Mailer: Microsoft Outlook 16.0\nX-Originating-IP: 10.22.15.108\nX-MS-Exchange-Organization-SCL: -1\n\nHi,\n\nMy MFA token is not working. Every time I try to log in, I enter the 6-digit code from my Microsoft Authenticator app and it says \"Verification failed. Please try again.\" I've tried multiple times and the code changes every 30 seconds but none of them work. I think the time on my phone might be out of sync, or my MFA registration got corrupted somehow.\n\nCan you please reset my MFA so I can re-register? My username is l.chang@contoso.com and I'm currently locked out of all systems.\n\nThanks,\nLisa Chang\nTrading Desk — Fixed Income",
-        "reporter": {
-            "name": "Lisa Chang",
-            "email": "l.chang@contoso.com",
-            "department": "Trading"
-        },
-        "created_at": "2026-03-18T11:30:00Z",
-        "channel": "email",
-        "attachments": []
-    }
-]
-=======
-        "subject": "Laptop issue\t\t\t\tneed   help      now",
-        "description": "my   laptop     screen   is     \t\t  cracked.     dropped    it\n\n\n\n\n\nthis     morning.\n\n\n\n\n\n\n\n\n\n\n\n\n\nstill    works    but     the\t\t\tright   side   of    the   screen   is   \t\tblack.\n\n\n\n\n\n\n\nusing    an    external     monitor     for    now    but    \tneed   a    replacement.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nits   a   thinkpad  x1  carbon   gen  11\n\n\n\n\n\n\n\n\nassigned   to    me   2   months   ago",
-        "reporter": {
-            "name": "Chris Taylor",
-            "email": "chris.taylor@contoso.com",
-            "department": "Engineering"
-        },
-        "created_at": "2026-03-17T09:15:00Z",
+        "created_at": "2026-03-14T09:30:00Z",
         "channel": "chat",
         "attachments": []
     },
     {
-        "ticket_id": "INC-5012",
-        "subject": "MFA issue (email sent from phone, sorry for typos)",
-        "description": "hwy tean, mu MFA isnt wokring on ny new ohohe. i git a nwe iphome 16 yestsrday abd the micrisoft authenticstor app wint lrt me apprve anu logun requists. it jusr shwos a spinnig wherl and thn says timsd out. i trued delering the acount and re-addung it but aame issye. i can stull log un usimg SMS codrs but thts realy slwo. my old phohe doent hve the app anymroe sicne i trasferred everthing ovr.\n\nplz help i hav importnt meetins todya\n\nrachel",
+        "ticket_id": "INC-DC-015",
+        "subject": "New hire onboarding \u2014 accounts and equipment for Daniel Osei starting March 24",
+        "description": "Hi IT Onboarding Team,\n\nWe have a new hire joining the Fixed Income Analytics team on Monday, March 24. Please set up the following:\n\nName: Daniel Osei\nTitle: Quantitative Analyst\nDepartment: Fixed Income Analytics\nManager: Sarah Goldstein\nStart Date: March 24, 2026\nOffice: New York, Building 3, Floor 7\n\nRequired access and equipment:\n  1. Active Directory account and email (daniel.osei@contoso.com)\n  2. Microsoft 365 E5 license\n  3. Bloomberg Terminal access (B-PIPE feed)\n  4. Access to Fixed Income SharePoint site and Teams channels\n  5. VPN/GlobalProtect setup for remote work\n  6. Standard laptop (Dell Latitude 5550) with docking station and dual monitors\n  7. Physical badge for Building 3\n  8. Access to the Quant Analytics shared drive (\\\\fs-quant-01\\analytics)\n\nPlease have everything ready by end of day Friday, March 21, so we can verify before his first day.\n\nThanks,\nSarah Goldstein\nHead of Fixed Income Analytics\n\n---\n\nThank you for your email. I am currently out of the office from March 10-14 with limited access to email. I will respond to your message when I return on Monday, March 17.\n\nFor urgent matters, please contact my deputy James Wright at james.wright@contoso.com or call +1 (212) 555-0177.\n\nFor IT emergencies, please contact the IT Service Desk at x5000 or itsupport@contoso.com.\n\nBest regards,\nSarah Goldstein\nHead of Fixed Income Analytics\nContoso Financial Services",
         "reporter": {
-            "name": "Rachel Green",
-            "email": "rachel.green@contoso.com",
-            "department": "Marketing"
+            "name": "Sarah Goldstein",
+            "email": "sarah.goldstein@contoso.com",
+            "department": "Fixed Income Analytics"
         },
-        "created_at": "2026-03-17T07:45:00Z",
-        "channel": "email",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5013",
-        "subject": "Network issue — see attached log (300MB)",
-        "description": "Our entire floor (Building 2, Floor 7) has been experiencing intermittent network drops every 15-20 minutes since Monday. I've captured packet traces and switch logs. The drops last about 30-60 seconds each time and affect both wired and wireless connections.\n\nI noticed the issue correlates with spikes in broadcast traffic from what looks like a misconfigured device at MAC address AA:BB:CC:DD:EE:FF. The ARP table shows this device flip-flopping between two IP addresses.\n\nAttaching everything I've gathered — sorry about the file sizes, the pcap alone is quite large.",
-        "reporter": {
-            "name": "Daniel Park",
-            "email": "daniel.park@contoso.com",
-            "department": "Engineering"
-        },
-        "created_at": "2026-03-17T15:00:00Z",
-        "channel": "portal",
-        "attachments": [
-            "network_capture_20260317.pcap",
-            "switch_logs_building2_floor7.txt",
-            "arp_table_dump.csv",
-            "network_topology_floor7.vsd",
-            "broadcast_traffic_analysis.xlsx",
-            "wireshark_filters.txt",
-            "interface_error_counters.json",
-            "spanning_tree_status.txt",
-            "dhcp_lease_table.csv",
-            "dns_query_log.txt",
-            "netflow_export.nfcapd",
-            "snmp_walk_output.txt"
-        ]
-    },
-    {
-        "ticket_id": "INC-5014",
-        "subject": "Software request + question + complaint + follow-up on old ticket + unrelated FYI",
-        "description": "Hey IT, several things:\n\n1) I need Visio Professional installed on my laptop (asset tag CT-L-4892). My manager approved it last week — approval ticket is REQ-2341.\n\n2) Quick question — is there a way to increase my OneDrive storage quota? I'm at 95% capacity and keep getting warnings.\n\n3) Also, the response time on my last ticket (INC-4100) was terrible. I waited 3 days for someone to look at it and then the fix didn't even work. The printer on Floor 3 is STILL jamming every 20 pages. I've reported this 4 times now.\n\n4) Oh and FYI — the coffee machine in the 2nd floor kitchen is broken again. I know that's not IT but I don't know who else to tell.\n\n5) One more thing — my colleague Sarah needs access to the same SharePoint site I requested last month. Can you add sarah.chen@contoso.com to the Finance Reports site? She just transferred to our team.\n\nThanks,\nMichael",
-        "reporter": {
-            "name": "Michael Santos",
-            "email": "michael.santos@contoso.com",
-            "department": "Finance"
-        },
-        "created_at": "2026-03-17T13:00:00Z",
-        "channel": "portal",
-        "attachments": []
-    },
-    {
-        "ticket_id": "INC-5015",
-        "subject": "=?UTF-8?B?VlBOIGlzc3Vl?= =?iso-8859-1?Q?=20=2D=20urgent?=",
-        "description": "Content-Type: multipart/alternative; boundary=\"----=_Part_12345\"\nMIME-Version: 1.0\n\n------=_Part_12345\nContent-Type: text/plain; charset=UTF-8\n\nHi, I got locked out of VPN after entering wrong password 3 times. Now it says my account is disabled. I'm working from home today and have a client call in 45 minutes. Need access to CRM and the shared drive.\n\nPlease help urgently.\n\nThanks,\nStephanie Lee\n\n------=_Part_12345\nContent-Type: text/html; charset=UTF-8\n\n<html><body><p>Hi, I got locked out of VPN after entering wrong password 3 times. Now it says my account is disabled. I'm working from home today and have a client call in 45 minutes. Need access to CRM and the shared drive.</p><p>Please help urgently.</p><p>Thanks,<br>Stephanie Lee</p></body></html>\n------=_Part_12345--",
-        "reporter": {
-            "name": "Stephanie Lee",
-            "email": "stephanie.lee@contoso.com",
-            "department": "Sales"
-        },
-        "created_at": "2026-03-17T09:45:00Z",
+        "created_at": "2026-03-17T09:00:00Z",
         "channel": "email",
         "attachments": []
     }
 ]
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche

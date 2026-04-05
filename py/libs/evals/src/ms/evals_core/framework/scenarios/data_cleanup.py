@@ -2176,8 +2176,8 @@ default_registry.register(
                 "[This message was automatically translated from Japanese]\n\n"
                 "Good morning IT team,\n\n"
                 "The VPN is <<\u63a5\u7d9a\u5931\u6557>> disconnection repeatedly making. "
-                "Since from Monday of morning, Cisco AnyConnect is \"connection has been "
-                "unexpectedly lost\" the error <<\u30a8\u30e9\u30fc\u30b3\u30fc\u30c9>> GP-4022 "
+                'Since from Monday of morning, Cisco AnyConnect is "connection has been '
+                'unexpectedly lost" the error <<\u30a8\u30e9\u30fc\u30b3\u30fc\u30c9>> GP-4022 '
                 "to display doing.\n\n"
                 "The Tokyo office <<\u6771\u4eac\u30aa\u30d5\u30a3\u30b9>> of 12th floor "
                 "<<12\u968e>> from working I am. The internet connection itself <<\u30a4\u30f3\u30bf"
@@ -2305,7 +2305,7 @@ default_registry.register(
                 " 5234 | idle in | BEGIN; SELECT portfolio_id,...  | Client\n"
                 "(5 rows)\n\n"
                 "ERROR: could not connect to server: Connection timed out\n"
-                "\tIs the server running on host \"prod-db-03.contoso.internal\" "
+                '\tIs the server running on host "prod-db-03.contoso.internal" '
                 "(10.2.8.43) and accepting TCP/IP connections on port 5432?\n\n"
                 "Happens ~every 15 min, lasts 30-60 sec. Started after the "
                 "network maintenance window Saturday night. Cluster: prod-db-01 "
@@ -2408,7 +2408,7 @@ default_registry.register(
                 "Binary Images:\n"
                 "0x104800000 - 0x106ffffff BloombergTerminal ARM-64\n"
                 "0x1a06e0000 - 0x1a0720fff libdispatch.dylib ARM-64\n\n"
-                "MacBook Pro 16\" M3 Pro. Happens only at market open. "
+                'MacBook Pro 16" M3 Pro. Happens only at market open. '
                 "Reinstalled twice, same crash. Other apps fine."
             ),
             reporter=_reporter("Elena Vasquez", "elena.vasquez@contoso.com", "Equity Trading"),

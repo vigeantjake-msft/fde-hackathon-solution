@@ -5,7 +5,8 @@ in-memory EvalScenario objects rather than JSON files.
 """
 
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 
 import httpx
 
@@ -125,7 +126,5 @@ def run_eval(
 
     client.close()
 
-    result.latency_p50_ms, result.latency_p95_ms = _compute_latency_percentiles(
-        latencies
-    )
+    result.latency_p50_ms, result.latency_p95_ms = _compute_latency_percentiles(latencies)
     return result

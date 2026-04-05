@@ -5,20 +5,16 @@ while still extracting the underlying support request and producing correct
 triage decisions.
 """
 
-from ms.libs.evals.models.enums import (
-    AssignedTeam,
-    MissingInfoField,
-    Priority,
-    ScenarioTag,
-    TicketCategory,
-    TicketChannel,
-)
-from ms.libs.evals.models.scenario import (
-    EvalScenario,
-    Reporter,
-    Ticket,
-    TriageDecision,
-)
+from ms.libs.evals.models.enums import AssignedTeam
+from ms.libs.evals.models.enums import MissingInfoField
+from ms.libs.evals.models.enums import Priority
+from ms.libs.evals.models.enums import ScenarioTag
+from ms.libs.evals.models.enums import TicketCategory
+from ms.libs.evals.models.enums import TicketChannel
+from ms.libs.evals.models.scenario import EvalScenario
+from ms.libs.evals.models.scenario import Reporter
+from ms.libs.evals.models.scenario import Ticket
+from ms.libs.evals.models.scenario import TriageDecision
 
 _TAG = ScenarioTag.DATA_CLEANUP
 
@@ -376,7 +372,7 @@ def _unicode_special_chars() -> EvalScenario:
         "The kiosk runs a digital signage app that shows the café menu and Contoso branding. "
         "It was working fine until the network maintenance last night.\n\n"
         "Model: Samsung Tizen display with built-in Wi-Fi\n"
-        "Location: Building 2, Ground Floor, Café \"Thé Crème\"\n"
+        'Location: Building 2, Ground Floor, Café "Thé Crème"\n'
         "SSID it should connect to: Contoso-Guest-IoT\n\n"
         "The display shows «Impossible de se connecter au réseau» (French error — "
         "we think the locale got changed somehow 🤷‍♂️)\n\n"
@@ -440,8 +436,7 @@ def _repeated_content() -> EvalScenario:
         "I've been waiting for someone to help me. Please prioritize this ticket. "
     )
     description = (
-        repeated_block * 3
-        + "\n\nACTUAL ISSUE: My Salesforce account shows 'License expired' when I try to "
+        repeated_block * 3 + "\n\nACTUAL ISSUE: My Salesforce account shows 'License expired' when I try to "
         "log in. I was able to access it fine last Friday. I need Salesforce to update "
         "client records for the Q1 review on Wednesday.\n\n"
         + repeated_block * 3
@@ -549,7 +544,8 @@ def _encoding_artifacts() -> EvalScenario:
                 "Have the user sign out of all Microsoft 365 sessions and sign back in with the new password",
                 "Clear cached credentials from Windows Credential Manager",
                 "Check SharePoint site permissions for the user's account on the legal-documents site",
-                "If permissions are correct, check for Conditional Access policies that may block after password change",
+                "If permissions are correct, check for Conditional Access policies"
+                " that may block after password change",
                 "Verify the user can upload the Q1 compliance report successfully",
             ],
         ),
@@ -683,9 +679,7 @@ def _log_dump_description() -> EvalScenario:
     )
 
     description = (
-        "Our ETL service account keeps failing to authenticate. Here are the logs:\n\n"
-        + log_lines
-        + "\n\n"
+        "Our ETL service account keeps failing to authenticate. Here are the logs:\n\n" + log_lines + "\n\n"
         "Can someone look at this? The service account svc-etl-prod can't authenticate "
         "against Azure AD. Might be an app registration issue."
     )
@@ -1076,10 +1070,10 @@ def _screenshot_ocr_errors() -> EvalScenario:
         "H1 IT Supp0rt,\n\n"
         "l\u2019m gett1ng an err0r when I try t0 0pen Micr0s0ft Teams. "
         "The err0r message says:\n\n"
-        "\"We\u2019re s0rry\u2014we\u2019ve run int0 an 1ssue.\n"
+        '"We\u2019re s0rry\u2014we\u2019ve run int0 an 1ssue.\n'
         "Err0r c0de: CAA2000B\n"
         "C0rrelati0n lD: 8f3a2b1c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\n"
-        "Timestarnp: 2O26-O3-18TO9:45:OOZ\"\n\n"
+        'Timestarnp: 2O26-O3-18TO9:45:OOZ"\n\n'
         "l\u2019ve tried:\n"
         "- Ciearing the Teams cache (de1eted %appdata%\\Micr0s0ft\\Tearns)\n"
         "- Reinstal1ing Tearns\n"
@@ -1216,8 +1210,8 @@ def _auto_translation_artifacts() -> EvalScenario:
     description = (
         "[Auto-translated from Japanese by Google Translate]\n\n"
         "The printer of our floor does not do printing. When the document is sent to the "
-        "printer, the work enters the queue but it is stuck in the state of \"sending\". "
-        "The printer display says \"Ready\" but it is lying.\n\n"
+        'printer, the work enters the queue but it is stuck in the state of "sending". '
+        'The printer display says "Ready" but it is lying.\n\n'
         "Things we have already tried to do:\n"
         "- The restart of the printer (the power was turned off and on again)\n"
         "- The deletion of all works from the print queue\n"
@@ -1426,9 +1420,7 @@ def _sql_result_dump() -> EvalScenario:
 
     description = (
         "Our Oracle-to-Snowflake data sync has been failing since last night. "
-        "Here are the last 10 failures:\n\n"
-        + sql_output
-        + "\n"
+        "Here are the last 10 failures:\n\n" + sql_output + "\n"
         "All failures show the same Oracle auth error. I suspect the service account "
         "password was rotated by the DBA team without updating our sync config. "
         "The sync job runs hourly and feeds our BI dashboards — the dashboards are now "
@@ -1591,7 +1583,9 @@ def _macos_crash_report() -> EvalScenario:
         "0   libsystem_kernel.dylib        0x1a2b3c4d8 __workq_kernreturn + 8\n"
         "1   libsystem_pthread.dylib       0x1a2b3c4d9 _pthread_wqthread + 364\n\n"
         "Binary Images:\n"
-        "0x100000000 - 0x10234ffff  com.microsoft.Outlook (16.83) <ABC12345-DEF6-7890-ABCD-EF1234567890> /Applications/Microsoft Outlook.app/Contents/MacOS/Microsoft Outlook\n"
+        "0x100000000 - 0x10234ffff  com.microsoft.Outlook (16.83)"
+        " <ABC12345-DEF6-7890-ABCD-EF1234567890>"
+        " /Applications/Microsoft Outlook.app/Contents/MacOS/Microsoft Outlook\n"
     )
 
     description = (
@@ -1716,7 +1710,8 @@ def _browser_console_dump() -> EvalScenario:
             ),
             remediation_steps=[
                 "Check the auth token service at api.contoso.com/v2/auth/token for errors or misconfigurations",
-                "Verify the token signing key or certificate has not expired or been rotated without updating the portal",
+                "Verify the token signing key or certificate has not expired"
+                " or been rotated without updating the portal",
                 "Review recent deployments or configuration changes to the auth service",
                 "Check Sentry for the captured AuthenticationError events for additional context",
                 "Confirm the portal maintains sessions correctly after the fix is applied",

@@ -11607,8 +11607,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
         # ── DC-171  Extremely long email with 50+ reply-all participants ──
         ScenarioDefinition(
             scenario_id="DC-171",
-            subject="RE: RE: RE: RE: RE: RE: ALL: Building access badges not "
-            "working after security system upgrade",
+            subject="RE: RE: RE: RE: RE: RE: ALL: Building access badges not working after security system upgrade",
             description=(
                 "From: David Chen <david.chen@contoso.com>\n"
                 "Sent: Monday, March 24, 2026 7:12 AM\n"
@@ -11695,15 +11694,13 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Send a targeted communication to Floors 3 and 4 occupants with "
                 "a status update and expected resolution time to prevent further "
                 "reply-all storms.",
-                "Set up a temporary manual sign-in process at affected entrances "
-                "until badge readers are operational.",
+                "Set up a temporary manual sign-in process at affected entrances until badge readers are operational.",
             ],
             reporter_name="David Chen",
             reporter_email="david.chen@contoso.com",
             reporter_department="Platform Engineering",
             channel=Channel.EMAIL,
-            tags=["data-cleanup", "reply-all-storm", "massive-cc-list",
-                  "very-long-email"],
+            tags=["data-cleanup", "reply-all-storm", "massive-cc-list", "very-long-email"],
             difficulty="hard",
         ),
         # ── DC-172  Base64-encoded screenshot flood in email body ──
@@ -11810,8 +11807,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Check if the Q1 revenue model workbook uses complex macros, "
                 "Power Query connections, or volatile functions that could cause "
                 "memory exhaustion.",
-                "Try opening the workbook in Excel Safe Mode (hold Ctrl while "
-                "launching) to rule out add-in conflicts.",
+                "Try opening the workbook in Excel Safe Mode (hold Ctrl while launching) to rule out add-in conflicts.",
                 "If the file is very large (>100 MB), suggest splitting it into "
                 "linked workbooks or migrating heavy calculations to Power BI.",
             ],
@@ -11819,8 +11815,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             reporter_email="aisha.patel@contoso.com",
             reporter_department="Finance",
             channel=Channel.EMAIL,
-            tags=["data-cleanup", "base64-flood", "image-heavy",
-                  "inline-image"],
+            tags=["data-cleanup", "base64-flood", "image-heavy", "inline-image"],
             difficulty="hard",
         ),
         # ── DC-173  Email with embedded SVG containing JavaScript ──
@@ -11835,22 +11830,22 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "from the page:\n\n"
                 '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400"'
                 ' viewBox="0 0 800 400">\n'
-                '  <style>\n'
-                '    .axis { stroke: #333; stroke-width: 1; }\n'
-                '    .bar { fill: #0078d4; transition: fill 0.3s; }\n'
-                '    .bar:hover { fill: #005a9e; }\n'
+                "  <style>\n"
+                "    .axis { stroke: #333; stroke-width: 1; }\n"
+                "    .bar { fill: #0078d4; transition: fill 0.3s; }\n"
+                "    .bar:hover { fill: #005a9e; }\n"
                 '    .label { font-family: "Segoe UI", sans-serif; font-size:'
-                ' 12px; fill: #666; }\n'
-                '  </style>\n'
-                '  <defs>\n'
+                " 12px; fill: #666; }\n"
+                "  </style>\n"
+                "  <defs>\n"
                 '    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2='
                 '"100%">\n'
                 '      <stop offset="0%" style="stop-color:#0078d4;stop-opacity'
                 ':1" />\n'
                 '      <stop offset="100%" style="stop-color:#005a9e;stop-opacity'
                 ':1" />\n'
-                '    </linearGradient>\n'
-                '  </defs>\n'
+                "    </linearGradient>\n"
+                "  </defs>\n"
                 '  <line class="axis" x1="50" y1="10" x2="50" y2="350" />\n'
                 '  <line class="axis" x1="50" y1="350" x2="780" y2="350" />\n'
                 '  <rect class="bar" x="80" y="120" width="60" height="230"'
@@ -12024,8 +12019,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             reporter_email="ops-alerts@contoso.com",
             reporter_department="Site Reliability Engineering",
             channel=Channel.PORTAL,
-            tags=["data-cleanup", "k8s-describe", "machine-generated",
-                  "no-details"],
+            tags=["data-cleanup", "k8s-describe", "machine-generated", "no-details"],
             difficulty="hard",
         ),
         # ── DC-175  Voicemail transcription with speech-to-text errors ──
@@ -12086,8 +12080,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             reporter_email="marcus.rivera@contoso.com",
             reporter_department="Fixed Income Trading",
             channel=Channel.PHONE,
-            tags=["data-cleanup", "voicemail", "speech-to-text",
-                  "transcription-errors", "bloomberg"],
+            tags=["data-cleanup", "voicemail", "speech-to-text", "transcription-errors", "bloomberg"],
             difficulty="hard",
         ),
         # ── DC-176  Email with massive Windows Event Log XML dump ──
@@ -12172,8 +12165,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Update the storport.sys driver to the latest version — the "
                 "current version 6.3.9600.21924 has a known IRQL bug when "
                 "handling high IOPS on certain SAN controllers.",
-                "Check the storage controller (HBA) firmware and update to the "
-                "vendor's latest recommended version.",
+                "Check the storage controller (HBA) firmware and update to the vendor's latest recommended version.",
                 "Analyze the MEMORY.DMP crash dump using WinDbg to confirm the "
                 "exact call stack in storport.sys causing the bugcheck.",
                 "Review the SAN multipath configuration — MPIO path failover "
@@ -12186,8 +12178,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             reporter_email="kevin.obrien@contoso.com",
             reporter_department="Database Administration",
             channel=Channel.EMAIL,
-            tags=["data-cleanup", "xml-dump", "windows-events",
-                  "bsod-dump", "machine-generated"],
+            tags=["data-cleanup", "xml-dump", "windows-events", "bsod-dump", "machine-generated"],
             difficulty="hard",
         ),
         # ── DC-177  Ticket with only a forwarded newsletter chain ──
@@ -12230,8 +12221,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             priority=Priority.P4,
             team=Team.ENTERPRISE_APPS,
             needs_escalation=False,
-            missing_info=[MissingInfo.APPLICATION_VERSION,
-                          MissingInfo.ENVIRONMENT_DETAILS],
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.ENVIRONMENT_DETAILS],
             next_best_action=(
                 "The real support request is buried at the bottom of a "
                 "triple-forwarded Microsoft 365 newsletter: Carol Wu reports "
@@ -12243,8 +12233,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Check Carol Wu's Microsoft 365 license tier — the AI meeting "
                 "recap feature requires a Microsoft 365 Copilot license or "
                 "Teams Premium.",
-                "Verify Carol's Teams client version — the feature requires "
-                "the new Teams client (not classic Teams).",
+                "Verify Carol's Teams client version — the feature requires the new Teams client (not classic Teams).",
                 "Check the Microsoft 365 admin center for the feature rollout "
                 "status in the Contoso tenant — it may be in a staged rollout.",
                 "Confirm that Carol's meetings meet the requirements for AI "
@@ -12258,8 +12247,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             reporter_email="carol.wu@contoso.com",
             reporter_department="Marketing",
             channel=Channel.EMAIL,
-            tags=["data-cleanup", "newsletter", "forward-chain",
-                  "buried-issue"],
+            tags=["data-cleanup", "newsletter", "forward-chain", "buried-issue"],
             difficulty="medium",
         ),
         # ── DC-178  Ticket pasted from a terminal with ANSI escape codes ──
@@ -12311,8 +12299,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "— the 'sessionId' prop was likely removed or renamed.",
                 "Update src/components/Layout.tsx line 47 to use the correct "
                 "prop name from the updated UserContextProps interface.",
-                "Run 'npx tsc --noEmit' locally to verify the fix compiles "
-                "before pushing.",
+                "Run 'npx tsc --noEmit' locally to verify the fix compiles before pushing.",
                 "If the sessionId prop was intentionally removed in PR #1847, "
                 "check all usages of UserProvider for the same breaking change.",
                 "Add the CI build status check as a required check on the main "
@@ -12322,15 +12309,13 @@ def get_scenarios() -> list[ScenarioDefinition]:
             reporter_email="yuki.tanaka@contoso.com",
             reporter_department="Frontend Engineering",
             channel=Channel.CHAT,
-            tags=["data-cleanup", "ansi-codes", "terminal-output",
-                  "ci-pipeline"],
+            tags=["data-cleanup", "ansi-codes", "terminal-output", "ci-pipeline"],
             difficulty="medium",
         ),
         # ── DC-179  Email with corrupted quoted-printable encoding ──
         ScenarioDefinition(
             scenario_id="DC-179",
-            subject="=?UTF-8?Q?Probl=C3=A8me_d=27acc=C3=A8s_VPN_=E2=80=94_"
-            "URGENT?=",
+            subject="=?UTF-8?Q?Probl=C3=A8me_d=27acc=C3=A8s_VPN_=E2=80=94_URGENT?=",
             description=(
                 "Content-Type: text/plain; charset=3Dutf-8\n"
                 "Content-Transfer-Encoding: quoted-printable\n\n"
@@ -12388,8 +12373,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             reporter_email="francois.dumont@contoso.com",
             reporter_department="International Sales",
             channel=Channel.EMAIL,
-            tags=["data-cleanup", "quoted-printable-encoding",
-                  "multilingual", "encoding-corruption"],
+            tags=["data-cleanup", "quoted-printable-encoding", "multilingual", "encoding-corruption"],
             difficulty="hard",
         ),
         # ── DC-180  Blank ticket with only auto-generated metadata ──
@@ -12433,9 +12417,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             priority=Priority.P4,
             team=Team.NONE,
             needs_escalation=False,
-            missing_info=[MissingInfo.AFFECTED_SYSTEM,
-                          MissingInfo.STEPS_TO_REPRODUCE,
-                          MissingInfo.ERROR_MESSAGE],
+            missing_info=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.STEPS_TO_REPRODUCE, MissingInfo.ERROR_MESSAGE],
             next_best_action=(
                 "This ticket contains only auto-generated ServiceNow metadata "
                 "with blank description and short description fields. The "
@@ -12462,8 +12444,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
             reporter_email="jorge.martinez@contoso.com",
             reporter_department="Unknown",
             channel=Channel.EMAIL,
-            tags=["data-cleanup", "machine-generated",
-                  "servicenow-audit-trail", "no-details", "blank-lines"],
+            tags=["data-cleanup", "machine-generated", "servicenow-audit-trail", "no-details", "blank-lines"],
             difficulty="medium",
         ),
     ]

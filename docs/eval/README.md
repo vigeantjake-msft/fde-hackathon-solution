@@ -116,29 +116,14 @@ uv run python run_eval.py \
   --dataset ../data/tickets/public_eval.json
 ```
 
-<<<<<<< HEAD
-### 15 data cleanup tickets (with gold answers)
+### Data cleanup eval (80 tickets with gold answers)
 
-Tests your system against messy real-world inputs: long email threads, base64 images, HTML bodies, mojibake, log dumps, excessive emoji, mixed languages, and more.
-=======
-### Data cleanup eval (130 tickets with gold answers)
-
-Tests your system against messy real-world data: very long emails, base64-encoded images in descriptions, HTML markup, excessive Unicode/emoji, whitespace-only content, repeated text, deeply nested email forwards, mixed-language tickets, raw JSON/XML dumps, empty descriptions, MIME-encoded content, OCR artifacts, container logs, invisible Unicode characters, RTL/bidi text, ANSI escape codes, and more.
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+Tests your system against messy real-world data: very long emails, base64-encoded images in descriptions, HTML markup, excessive Unicode/emoji, whitespace-only content, repeated text, deeply nested email forwards, mixed-language tickets, raw JSON/XML dumps, MIME-encoded content, OCR artifacts, container logs, invisible Unicode characters, RTL/bidi text, ANSI escape codes, and more.
 
 ```bash
 cd docs/eval
 uv run python run_eval.py \
   --endpoint http://localhost:8000 \
-<<<<<<< HEAD
-  --dataset ../data/tickets/data_cleanup.json \
-  --gold ../data/tickets/data_cleanup_gold.json
-```
-
-### 15 responsible AI tickets (with gold answers)
-
-Tests your system's safety boundaries: prompt injections, jailbreak attempts, social engineering, requests for harmful content, bias triggers, and adversarial inputs hidden inside legitimate tickets.
-=======
   --dataset ../data/tickets/eval_data_cleanup.json \
   --gold ../data/tickets/eval_data_cleanup_gold.json
 ```
@@ -152,19 +137,26 @@ uv run python -m ms.evals \
   --dataset eval_data_cleanup
 ```
 
-### Responsible AI eval (160 tickets with gold answers)
+### 15 data cleanup tickets (quick check, with gold answers)
 
-Tests your system against adversarial inputs: prompt injection, jailbreak attempts, social engineering, CEO fraud/BEC, requests for harmful content, priority manipulation, embedded classification overrides, encoding obfuscation, homoglyph attacks, multi-language injection, timing pressure attacks, fake approval chains, invisible Unicode injection, and combined multi-vector attacks.
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+A smaller 15-ticket subset for rapid iteration during development.
 
 ```bash
 cd docs/eval
 uv run python run_eval.py \
   --endpoint http://localhost:8000 \
-<<<<<<< HEAD
-  --dataset ../data/tickets/responsible_ai.json \
-  --gold ../data/tickets/responsible_ai_gold.json
-=======
+  --dataset ../data/tickets/data_cleanup.json \
+  --gold ../data/tickets/data_cleanup_gold.json
+```
+
+### Responsible AI eval (120 tickets with gold answers)
+
+Tests your system against adversarial inputs: prompt injection, jailbreak attempts, social engineering, CEO fraud/BEC, requests for harmful content, priority manipulation, embedded classification overrides, encoding obfuscation, homoglyph attacks, multi-language injection, timing pressure attacks, fake approval chains, invisible Unicode injection, and combined multi-vector attacks.
+
+```bash
+cd docs/eval
+uv run python run_eval.py \
+  --endpoint http://localhost:8000 \
   --dataset ../data/tickets/eval_responsible_ai.json \
   --gold ../data/tickets/eval_responsible_ai_gold.json
 ```
@@ -176,7 +168,18 @@ cd py
 uv run python -m ms.evals \
   --endpoint http://localhost:8000 \
   --dataset eval_responsible_ai
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+```
+
+### 15 responsible AI tickets (quick check, with gold answers)
+
+A smaller 15-ticket subset for rapid iteration during development.
+
+```bash
+cd docs/eval
+uv run python run_eval.py \
+  --endpoint http://localhost:8000 \
+  --dataset ../data/tickets/responsible_ai.json \
+  --gold ../data/tickets/responsible_ai_gold.json
 ```
 
 ### Custom gold file
@@ -244,3 +247,4 @@ python test_scoring.py
 ```
 
 All 84 should pass. If they don't, something's wrong with your environment, not the tests.
+
