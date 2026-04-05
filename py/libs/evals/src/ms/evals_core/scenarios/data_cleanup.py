@@ -13521,21 +13521,25 @@ def get_scenarios() -> list[ScenarioDefinition]:
         ),
         ScenarioDefinition(
             scenario_id="DC-194",
-            subject="Canâ€™t install software on my laptop",
+            subject="Can\u00e2\u20ac\u2122t install software on my laptop",
             description=(
                 "Hi IT team,\n\n"
-                "Iâ€™m having trouble installing software on my laptop. When I try to "
-                "run the installer for Adobe Acrobat Pro, I get an error that says "
-                "â€œInstallation failed: insufficient privilegesâ€\x9d. Iâ€™ve tried "
-                "right-clicking and selecting â€œRun as administratorâ€\x9d but it "
-                "doesnâ€™t help. My colleague JosÃ© said he had the same issue last "
-                "week and the IT team fixed it for him. Iâ€™m in the MÃ¼nchen office "
-                "on the 3rd floor. My laptop is a LenovoÂ\xa0ThinkPad T14s running "
-                "WindowsÂ\xa0â€™11 Pro. The software center doesnâ€™t show Adobe in "
-                "the available applications either. Can you please help? I need this "
-                "for a client presentation on FrÃ¬day. My managerâ€™s name is "
-                "FranÃ§ois DubÃ© and he approved the license. Thank you, "
-                "RenÃ©e Ã"â€™Brien"
+                "I\u00e2\u20ac\u2122m having trouble installing software on my laptop. "
+                "When I try to run the installer for Adobe Acrobat Pro, I get an error "
+                "that says \u00e2\u20ac\u0153Installation failed: insufficient "
+                "privileges\u00e2\u20ac\u009d. I\u00e2\u20ac\u2122ve tried "
+                "right-clicking and selecting \u00e2\u20ac\u0153Run as "
+                "administrator\u00e2\u20ac\u009d but it doesn\u00e2\u20ac\u2122t help. "
+                "My colleague Jos\u00c3\u00a9 said he had the same issue last "
+                "week and the IT team fixed it for him. I\u00e2\u20ac\u2122m in the "
+                "M\u00c3\u00bcnchen office on the 3rd floor. My laptop is a "
+                "Lenovo\u00c2\u00a0ThinkPad T14s running "
+                "Windows\u00c2\u00a0\u00e2\u20ac\u212211 Pro. The software center "
+                "doesn\u00e2\u20ac\u2122t show Adobe in the available applications "
+                "either. Can you please help? I need this for a client presentation "
+                "on Fr\u00c3\u00acday. My manager\u00e2\u20ac\u2122s name is "
+                "Fran\u00c3\u00a7ois Dub\u00c3\u00a9 and he approved the license. "
+                "Thank you, Ren\u00c3\u00a9e \u00c3\u201c\u00e2\u20ac\u2122Brien"
             ),
             category=Category.SOFTWARE,
             priority=Priority.P3,
