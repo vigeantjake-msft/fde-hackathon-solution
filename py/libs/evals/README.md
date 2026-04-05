@@ -93,3 +93,4 @@ uv run pytest tests/ -v
 ```
 
 119 tests covering models, scoring, datasets, scenarios, and the evaluation runner.
+
