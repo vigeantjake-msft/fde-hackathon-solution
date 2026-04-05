@@ -2470,3 +2470,772 @@ default_registry.register(
         ),
     )
 )
+
+
+# ---------------------------------------------------------------------------
+# dc-051: Very long email with 5 forwarded messages and a VPN issue buried at the end
+# ---------------------------------------------------------------------------
+_FORWARDED_CHAIN_BODY = (
+    "From: Angela Rivera <a.rivera@contoso.com>\n"
+    "To: IT Help Desk <helpdesk@contoso.com>\n"
+    "Date: Tue, 18 Mar 2026 10:05:00 +0000\n"
+    "Subject: Fwd: Fwd: Fwd: Fwd: Fwd: Network problems\n\n"
+    "Help desk — please see the chain below. We've been going back and forth "
+    "on this for days and nobody has fixed it yet.\n\n"
+    "Thanks,\nAngela Rivera\nSenior Compliance Analyst\n"
+    "Contoso Financial Services | Compliance Division\n"
+    "Phone: +1 (312) 555-0193 | Mobile: +1 (312) 555-0194\n"
+    "angela.rivera@contoso.com\n"
+    "200 S. Wacker Drive, Suite 3100, Chicago, IL 60606\n\n"
+    "DISCLAIMER: This communication is intended solely for the addressee and may contain "
+    "confidential information. If you received this message in error, please delete it and "
+    "notify the sender immediately. Unauthorized dissemination is strictly prohibited.\n\n"
+    "---------- Forwarded message ----------\n"
+    "From: David Park <d.park@contoso.com>\n"
+    "Date: Mon, 17 Mar 2026 16:30:00 +0000\n"
+    "Subject: Re: Fwd: Fwd: Fwd: Network problems\n\n"
+    "Angela, I think this is an IT thing not a facilities thing. Forward to the help desk.\n\n"
+    "— David\n\n"
+    "---------- Forwarded message ----------\n"
+    "From: Karen Liu <k.liu@contoso.com>\n"
+    "Date: Mon, 17 Mar 2026 14:12:00 +0000\n"
+    "Subject: Re: Fwd: Fwd: Network problems\n\n"
+    "David, this isn't a facilities issue. The network drop is happening on the VPN, not "
+    "the physical network. Please escalate to IT.\n\n"
+    "Best,\nKaren Liu\nFacilities Manager\nContoso Financial Services\n\n"
+    "---------- Forwarded message ----------\n"
+    "From: David Park <d.park@contoso.com>\n"
+    "Date: Mon, 17 Mar 2026 11:45:00 +0000\n"
+    "Subject: Re: Fwd: Network problems\n\n"
+    "Karen — Angela says her network keeps dying. Can you check the wiring on floor 31? "
+    "Maybe it's a loose cable.\n\n"
+    "---------- Forwarded message ----------\n"
+    "From: Angela Rivera <a.rivera@contoso.com>\n"
+    "Date: Mon, 17 Mar 2026 09:20:00 +0000\n"
+    "Subject: Fwd: Network problems\n\n"
+    "David, can you help route this? My manager said to forward it to you.\n\n"
+    "---------- Forwarded message ----------\n"
+    "From: Angela Rivera <a.rivera@contoso.com>\n"
+    "Date: Fri, 14 Mar 2026 15:40:00 +0000\n"
+    "Subject: Network problems\n\n"
+    "Hi IT,\n\n"
+    "Every afternoon around 3 PM my VPN drops for about 5-10 minutes. I'm remote in Chicago "
+    "using GlobalProtect 6.2.1 on a Dell Latitude 5540 running Windows 11 23H2. The VPN client "
+    "shows error GP-5012 (gateway timeout) and the connection log says 'tunnel keepalive lost'. "
+    "My ISP is Comcast, 200 Mbps down. The issue started after the GlobalProtect update pushed "
+    "last Wednesday. Colleagues on the same ISP in Chicago are not affected. I need this fixed "
+    "before the SOX audit prep starts Thursday.\n\n"
+    "— Angela Rivera"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-051",
+        name="Five-deep forwarded email chain with buried VPN issue",
+        description="Tests triage when a VPN connectivity issue is buried at the bottom of "
+        "five forwarded messages with signatures, disclaimers, and inter-department chatter.",
+        category=_CATEGORY,
+        tags=["forwarded_chain", "email_thread", "vpn", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-6051",
+            subject="Fwd: Fwd: Fwd: Fwd: Fwd: Network problems",
+            description=_FORWARDED_CHAIN_BODY,
+            reporter=_reporter("Angela Rivera", "a.rivera@contoso.com", "Compliance"),
+            created_at="2026-03-18T10:05:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-052: Base64 image data (1000+ chars) mixed with a printer issue
+# ---------------------------------------------------------------------------
+_B64_PRINTER_IMAGE = (
+    "iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz"
+    "AAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAADcJ"
+    "SURBVHhe7d0HnBTV+f/x7y5lYem9NwEVBRUrVqyxRGNiYkyMxqiJ+jcx0fRiYknUGBOTGBN7"
+    "jL1gVyxYsICKIL0Xaauw9P/o+hnPoZcmIXULgZrEhcw4rC/7jSlOZfvEwKqH2rEWsVeqQYomVIK0wCKIzpNeZw4Z/9aGLQZt0x0368hlPH"
+    "LnCD3S0wFTIYC8VMO74DEkydzUZa5Os61A1hA7QgjhiGiIYMyG86uITWQWeje9TM74mAmp9soL9H/yg5JKvc6b"
+    "Lonvy6NPNrzKhA7gZJcdsssY+srm12era5+UjQwyOOPxndJled52XroGz6XusRq4BhM3PmfBcI6qaedEvFX2jY"
+    "s4+V4slyGa7Y4mXfNUfPu9ALwjJcxv8UOAoMs0aoUO/SGUD/rSR5qNYDaCc"
+    "xQMlKpT3WYhUVzB4dHr2eF8sA3qPm0jG5CbkyYP8aR7v6zUdkC4FZ0nXGQDkv/YAcF35fTMwh"
+    "vOI7Z2IqwTPb9kcccuK3UvE7rxZxCIiIiKiEsDLyomIiIhKGBagRERERCUMC1AiIiKiEoYFKBER"
+    "EVEJwwKUiIiIqIRhAUpERERUwrAAJSIiIiphWIASERERlTAsQImIiIhKGBagRERERCUMC1AiIiKi"
+    "EoYFKBEREVEJwwKUiIiIqIRhAUpERERUwrAAJSIiIiphWIASERERlTAsQImIiIhKGBagRERERCUM"
+    "C1AiIiKiEoYFKBEREVEJwwKUiIiIqIRhAUpERERUwrAAJSIiIiphSvwdkUKhUNy/6aL/p+c6IS"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-052",
+        name="Base64 image blob embedded in printer issue ticket",
+        description="Tests triage when a large base64-encoded image (over 1000 characters) "
+        "is pasted inline alongside a legitimate printer hardware issue.",
+        category=_CATEGORY,
+        tags=["base64", "image_blob", "printer", "noise"],
+        ticket=EvalTicket(
+            ticket_id="INC-6052",
+            subject="Floor 12 printer jamming and printing garbled pages — photo attached",
+            description=(
+                "Hi IT,\n\n"
+                "The HP LaserJet Enterprise M609dn on Floor 12 east wing (asset tag PRT-1247) "
+                "has been jamming constantly since Monday. Every 3-4 pages it pulls multiple "
+                "sheets and produces garbled output — random ASCII characters across the page. "
+                "I took a photo of the output, here it is:\n\n"
+                f"data:image/png;base64,{_B64_PRINTER_IMAGE}\n\n"
+                "The printer displays error code 13.20.00 (paper jam in Tray 2) and the "
+                "maintenance counter shows 385,000 pages — well past the 250,000-page fuser "
+                "replacement interval. The toner cartridge was replaced last week (CF237A) but "
+                "the issue persists. We have 200+ people on this floor relying on this printer "
+                "and the only alternative is two floors down. Can someone from endpoint "
+                "engineering come take a look or arrange a service call?\n\n"
+                "Thanks,\nRobert Chen\nOperations, Floor 12"
+            ),
+            reporter=_reporter("Robert Chen", "r.chen@contoso.com", "Operations"),
+            created_at="2026-03-18T10:30:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-053: HTML table with CSS styles and a legitimate software update request
+# ---------------------------------------------------------------------------
+_HTML_TABLE_BODY = (
+    "Hi team,\n\n"
+    "I need the Bloomberg Terminal updated to the latest version on my workstation. "
+    "The current version is crashing when loading fixed-income analytics. Below is the "
+    "compatibility matrix I pulled from the vendor portal — sorry it pasted weird:\n\n"
+    '<table style="border-collapse:collapse;width:100%;font-family:Calibri,sans-serif;">'
+    '<thead><tr style="background-color:#1a3e5c;color:#ffffff;font-weight:bold;">'
+    '<th style="border:1px solid #2c5f8a;padding:8px 12px;text-align:left;">Component</th>'
+    '<th style="border:1px solid #2c5f8a;padding:8px 12px;text-align:left;">Current Version</th>'
+    '<th style="border:1px solid #2c5f8a;padding:8px 12px;text-align:left;">Required Version</th>'
+    '<th style="border:1px solid #2c5f8a;padding:8px 12px;text-align:left;">Status</th>'
+    "</tr></thead><tbody>"
+    '<tr style="background-color:#f0f4f8;">'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">Bloomberg Terminal</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">2025.4.18</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">2026.1.12</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;color:#c0392b;">&#10060; Outdated</td>'
+    "</tr>"
+    '<tr style="background-color:#ffffff;">'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">.NET Runtime</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">8.0.2</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">8.0.4</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;color:#c0392b;">&#10060; Outdated</td>'
+    "</tr>"
+    '<tr style="background-color:#f0f4f8;">'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">MSVC Redistributable</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">14.38.33130</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">14.40.33810</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;color:#c0392b;">&#10060; Outdated</td>'
+    "</tr>"
+    '<tr style="background-color:#ffffff;">'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">Windows 11</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">23H2 (22631.3296)</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;">23H2 (22631.3447)</td>'
+    '<td style="border:1px solid #d0d8e0;padding:6px 12px;color:#27ae60;">&#10004; OK</td>'
+    "</tr></tbody></table>\n\n"
+    "Machine: WS-FI-0042 (Dell Precision 5820, 64 GB RAM, Xeon W-2245). "
+    "The crash happens specifically in the FICC Analytics module with error BT-FICC-4401. "
+    "This is blocking my end-of-quarter analysis. Can we get the update scheduled for "
+    "today or tomorrow before market close?\n\n"
+    "— Naomi Whitfield, Fixed Income Trading"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-053",
+        name="HTML table with inline CSS in software update request",
+        description="Tests triage when a user pastes an HTML compatibility matrix with "
+        "heavy inline CSS styling alongside a legitimate software update request.",
+        category=_CATEGORY,
+        tags=["html", "css", "table", "software_update"],
+        ticket=EvalTicket(
+            ticket_id="INC-6053",
+            subject="Bloomberg Terminal update needed — crashing on FICC analytics",
+            description=_HTML_TABLE_BODY,
+            reporter=_reporter("Naomi Whitfield", "n.whitfield@contoso.com", "Fixed Income Trading"),
+            created_at="2026-03-18T11:00:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-054: Mojibake (corrupted encoding) throughout a hardware failure report
+# ---------------------------------------------------------------------------
+_MOJIBAKE_BODY = (
+    "Hi IT support,\n\n"
+    "My docking station stopped working this morning. When I plug in my laptop "
+    "nothing happens \u00e2\u0080\u0094 no external monitors, no USB devices, no Ethernet. "
+    "Here\u00e2\u0080\u0099s what I\u00e2\u0080\u0099ve tried:\n\n"
+    "\u00e2\u0080\u00a2 Unplugged and re-plugged the Thunderbolt cable \u00e2\u0080\u0094 no change\n"
+    "\u00e2\u0080\u00a2 Tried a different Thunderbolt port on the laptop \u00e2\u0080\u0094 same result\n"
+    "\u00e2\u0080\u00a2 Tested with a colleague\u00e2\u0080\u0099s dock \u00e2\u0080\u0094 "
+    "my laptop works fine on theirs\n"
+    "\u00e2\u0080\u00a2 Tested my dock with colleague\u00e2\u0080\u0099s laptop "
+    "\u00e2\u0080\u0094 their laptop doesn\u00e2\u0080\u0099t detect it either\n\n"
+    "The dock\u00e2\u0080\u0099s power LED is on but the \u00e2\u0080\u009cconnected\u00e2\u0080\u009d "
+    "indicator stays off. Device Manager shows \u00e2\u0080\u009cUnknown USB Device "
+    "(Device Descriptor Request Failed)\u00e2\u0080\u009d with error code 43 under "
+    "Universal Serial Bus controllers.\n\n"
+    "Equipment details:\n"
+    "\u00e2\u0080\u00a2 Dock: Lenovo ThinkPad Thunderbolt 4 Dock (40B00135US), "
+    "asset tag DCK-3891\n"
+    "\u00e2\u0080\u00a2 Laptop: ThinkPad X1 Carbon Gen 11, asset tag LPT-7723\n"
+    "\u00e2\u0080\u00a2 Firmware: dock firmware v1.0.48 (latest is 1.0.52 per Lenovo site)\n"
+    "\u00e2\u0080\u00a2 OS: Windows 11 23H2\n\n"
+    "I\u00e2\u0080\u0099m on Floor 8 in the Risk Analytics area, desk 8-142. "
+    "I need this fixed ASAP \u00e2\u0080\u0094 I have two external monitors "
+    "I can\u00e2\u0080\u0099t use and I\u00e2\u0080\u0099m running on laptop screen only, "
+    "which is making it really hard to work with the multi-panel dashboards.\n\n"
+    "Thanks,\nYuki Tanaka\u00e3\u0082\u00ad\nRisk Analytics"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-054",
+        name="Mojibake-corrupted encoding in hardware failure report",
+        description="Tests triage when a ticket contains pervasive mojibake (UTF-8 bytes "
+        "decoded as Latin-1) corrupting dashes, bullets, and quotes throughout a "
+        "legitimate docking station hardware failure report.",
+        category=_CATEGORY,
+        tags=["mojibake", "encoding", "hardware", "docking_station"],
+        ticket=EvalTicket(
+            ticket_id="INC-6054",
+            subject="Docking station completely dead \u00e2\u0080\u0094 no devices detected",
+            description=_MOJIBAKE_BODY,
+            reporter=_reporter("Yuki Tanaka", "y.tanaka@contoso.com", "Risk Analytics"),
+            created_at="2026-03-18T08:15:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-055: Email with multiple base64 encoded attachments inline in the body
+# ---------------------------------------------------------------------------
+_B64_ATTACHMENT_1 = (
+    "UEsDBBQAAAAIAGRkYVkAAAAA//8AABIAHABDb250b3NvX1ZQTl9Mb2cuZG9jeAEAEAAAAAAA"
+    "AAAAABQAAAAAAAAAUEsFBgAAAAABAAEAWAAAAD4AAAAAAA0MjctMDMtMTggMDk6MTI6MzQgW1"
+    "ZQTl0gQ29ubmVjdGlvbiB0byBndy1jaGktMDEuY29udG9zby5jb20gZmFpbGVkOiBUTFMgaG"
+    "FuZHNoYWtlIHRpbWVvdXQgYWZ0ZXIgMzBzCjIwMjYtMDMtMTggMDk6MTM6MDEgW1ZQTl0g"
+    "UmV0cnlpbmcgd2l0aCBndy1jaGktMDIuY29udG9zby5jb20KMjAyNi0wMy0xOCAwOToxMzox"
+    "NSBbVlBOXSBDb25uZWN0ZWQgdG8gZ3ctY2hpLTAyLmNvbnRvc28uY29tIChEVExTIDEuMikK"
+)
+
+_B64_ATTACHMENT_2 = (
+    "UEsDBBQAAAAIAHJkYVkAAAAA//8AABMAHABOZXR3b3JrRGlhZ25vc3RpYy50eHQBABAAAAAAAA"
+    "AAABQAAAAAAAAAUEsFBgAAAAABAAEAWQAAAD8AAAAAPHN5c3RlbWluZm8+CkhPU1ROQU1FOiBD"
+    "SEktRklOLVdTMDQyClRyYWNlcm91dGUgdG8gZ3ctY2hpLTAxLmNvbnRvc28uY29tOgogIDEg"
+    "ICA8MW1zICAgIDEwLjEuMS4xIChHYXRld2F5KQogIDIgICAgMm1zICAgIDE3Mi4xNi4wLjEK"
+    "ICAzICAgIDVtcyAgICAxOTIuMTY4LjEwMC4xCiAgNCAgICAqICogKiAoVGltZW91dCkKICA1"
+    "ICAgIDQybXMgICAxMC4yNTQuMC4xIChWUE4gR2F0ZXdheSkKUGluZyBndy1jaGktMDE6IDQv"
+)
+
+_B64_ATTACHMENT_3 = (
+    "UEsDBBQAAAAIAIJkYVkAAAAA//8AABQAHABFdmVudFZpZXdlckV4cG9ydC5ldnR4AQAQAAAA"
+    "AAAAAAAUAAAAAAAAAFBLBQYAAAAAAQABAFoAAABAAAAATG9nIE5hbWU6ICAgICAgU3lzdGVtCl"
+    "NvdXJjZTogICAgICAgIFJhc0NsaWVudApFdmVudCBJRDogICAgIDIwMjcxCkxldmVsOiAgIC"
+    "AgICAgRXJyb3IKRGVzY3JpcHRpb246IENvQ29ubmVjdGlvbkF0dGVtcHRGYWlsZWQgLSBSZW"
+    "Fzb246IFRoZSByZW1vdGUgY29ubmVjdGlvbiB3YXMgZGVuaWVkIGJlY2F1c2UgdGhlIHVz"
+    "ZXIgbmFtZSBhbmQgcGFzc3dvcmQgY29tYmluYXRpb24geW91IHByb3ZpZGVkIGlzIG5vdA"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-055",
+        name="Multiple base64 attachments inline in VPN connectivity ticket",
+        description="Tests triage when a user pastes three separate base64-encoded file "
+        "attachments (VPN log, network diagnostic, event viewer export) directly into "
+        "the ticket body alongside a VPN connectivity issue.",
+        category=_CATEGORY,
+        tags=["base64", "attachments", "vpn", "multi_blob"],
+        ticket=EvalTicket(
+            ticket_id="INC-6055",
+            subject="VPN keeps dropping — logs and diagnostics attached inline",
+            description=(
+                "IT team,\n\n"
+                "My VPN connection to the Chicago gateway drops every 15-20 minutes. "
+                "I've collected logs and diagnostics. My email client wouldn't let me "
+                "attach .evtx files so I'm pasting them base64 encoded:\n\n"
+                "=== Attachment 1: VPN Client Log (Contoso_VPN_Log.docx) ===\n"
+                f"{_B64_ATTACHMENT_1}\n"
+                "=== Attachment 2: Network Diagnostic (NetworkDiagnostic.txt) ===\n"
+                f"{_B64_ATTACHMENT_2}\n"
+                "=== Attachment 3: Event Viewer Export (EventViewerExport.evtx) ===\n"
+                f"{_B64_ATTACHMENT_3}\n\n"
+                "The key issue: GlobalProtect 6.2.1 on Windows 11 loses tunnel connectivity "
+                "to gw-chi-01.contoso.com every 15-20 minutes. The logs show TLS handshake "
+                "timeouts followed by failover to gw-chi-02. After the March 15 maintenance "
+                "window, the primary gateway seems to be rejecting DTLS 1.2 sessions. "
+                "Error in event viewer is RasClient 20271. Machine is CHI-FIN-WS042, "
+                "Dell Latitude 5550. This is impacting real-time trade monitoring.\n\n"
+                "— Marcus Webb, Trade Surveillance"
+            ),
+            reporter=_reporter("Marcus Webb", "m.webb@contoso.com", "Trade Surveillance"),
+            created_at="2026-03-18T09:30:00Z",
+            channel="email",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-056: ANSI color codes and terminal escape sequences in a container log dump
+# ---------------------------------------------------------------------------
+_ANSI_CONTAINER_LOG = (
+    "kubectl logs risk-engine-7f8b9c4d5-xk2lm --tail=80 --since=1h\n\n"
+    "\x1b[36m2026-03-18T08:00:01.123Z\x1b[0m \x1b[32mINFO \x1b[0m "
+    "\x1b[1m[RiskEngine]\x1b[0m Starting risk calculation batch job-2026-0318-0800\n"
+    "\x1b[36m2026-03-18T08:00:01.456Z\x1b[0m \x1b[32mINFO \x1b[0m "
+    "\x1b[1m[PortfolioLoader]\x1b[0m Loading 14,832 positions from "
+    "redis://risk-cache.contoso.internal:6379/db2\n"
+    "\x1b[36m2026-03-18T08:00:03.789Z\x1b[0m \x1b[32mINFO \x1b[0m "
+    "\x1b[1m[PortfolioLoader]\x1b[0m Loaded 14,832 positions in 2.33s\n"
+    "\x1b[36m2026-03-18T08:00:04.012Z\x1b[0m \x1b[33mWARN \x1b[0m "
+    "\x1b[1m[MarketDataFeed]\x1b[0m Stale price detected for AAPL "
+    "(last update 2026-03-17T20:00:00Z, threshold 12h)\n"
+    "\x1b[36m2026-03-18T08:00:04.234Z\x1b[0m \x1b[33mWARN \x1b[0m "
+    "\x1b[1m[MarketDataFeed]\x1b[0m Stale price detected for 847 instruments "
+    "from feed NYSE-ARCA-RT\n"
+    "\x1b[36m2026-03-18T08:00:04.567Z\x1b[0m \x1b[31mERROR\x1b[0m "
+    "\x1b[1m[MarketDataFeed]\x1b[0m \x1b[31mConnection refused to "
+    "mktdata-nyc.contoso.internal:9092 (Kafka broker)\x1b[0m\n"
+    "\x1b[36m2026-03-18T08:00:04.568Z\x1b[0m \x1b[31mERROR\x1b[0m "
+    "\x1b[1m[MarketDataFeed]\x1b[0m \x1b[31morg.apache.kafka.common.errors."
+    "TimeoutException: Failed to update metadata after 60000 ms.\x1b[0m\n"
+    "\x1b[36m2026-03-18T08:00:05.890Z\x1b[0m \x1b[31mERROR\x1b[0m "
+    "\x1b[1m[RiskEngine]\x1b[0m \x1b[1;31mFATAL: Risk calculation aborted — "
+    "unable to fetch live market data. Positions at risk: 14,832. "
+    "VaR calculation deadline: 08:30 UTC.\x1b[0m\n"
+    "\x1b[36m2026-03-18T08:00:06.001Z\x1b[0m \x1b[31mERROR\x1b[0m "
+    "\x1b[1m[AlertManager]\x1b[0m Sending PagerDuty alert: risk-engine-market-data-failure "
+    "(severity: critical)\n"
+    "\x1b[36m2026-03-18T08:00:06.123Z\x1b[0m \x1b[32mINFO \x1b[0m "
+    "\x1b[1m[HealthCheck]\x1b[0m Pod health: \x1b[31mUNHEALTHY\x1b[0m "
+    "(reason: upstream_dependency_failure)\n"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-056",
+        name="ANSI escape codes in container log dump",
+        description="Tests triage when a user pastes kubectl container logs containing "
+        "ANSI color codes, escape sequences, and terminal formatting throughout. "
+        "The underlying issue is a Kafka broker connectivity failure in the risk engine.",
+        category=_CATEGORY,
+        tags=["ansi_codes", "terminal", "container_logs", "kafka"],
+        ticket=EvalTicket(
+            ticket_id="INC-6056",
+            subject="Risk engine failing — Kafka broker unreachable in prod",
+            description=(
+                "URGENT: The morning risk calculation batch is failing because the "
+                "risk-engine pod can't reach the Kafka market data broker. VaR numbers "
+                "are due to the regulators by 09:00 UTC and we're already late. "
+                "Here are the pod logs — sorry about the formatting, copied straight "
+                "from my terminal:\n\n"
+                f"{_ANSI_CONTAINER_LOG}\n"
+                "The Kafka broker at mktdata-nyc.contoso.internal:9092 is refusing "
+                "connections. The broker was healthy yesterday. Risk cluster is "
+                "risk-prod-aks-east in the contoso-risk-prod namespace. "
+                "14,832 positions are stuck without live market data and VaR "
+                "cannot be computed. This is a regulatory deadline.\n\n"
+                "— Sanjay Patel, Quantitative Risk"
+            ),
+            reporter=_reporter("Sanjay Patel", "s.patel@contoso.com", "Quantitative Risk"),
+            created_at="2026-03-18T08:10:00Z",
+            channel="chat",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Network & Connectivity",
+            priority="P1",
+            assigned_team="Network Operations",
+            needs_escalation=True,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-057: XML/SOAP response envelope pasted as the ticket description
+# ---------------------------------------------------------------------------
+_SOAP_ENVELOPE = (
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    "<soap:Envelope "
+    'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" '
+    'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+    'xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" '
+    'xmlns:ctso="http://services.contoso.com/trading/v2">\n'
+    "  <soap:Header>\n"
+    "    <wsse:Security>\n"
+    "      <wsse:UsernameToken>\n"
+    "        <wsse:Username>svc-trade-reconciler</wsse:Username>\n"
+    "        <wsse:Password>********</wsse:Password>\n"
+    "      </wsse:UsernameToken>\n"
+    "    </wsse:Security>\n"
+    "    <ctso:RequestContext>\n"
+    "      <ctso:CorrelationId>a3f8e2c1-7b4d-4e9a-b6c3-8d2f1a5e7c9b</ctso:CorrelationId>\n"
+    "      <ctso:Timestamp>2026-03-18T07:45:22.341Z</ctso:Timestamp>\n"
+    "      <ctso:SourceSystem>TradeReconciler-v4.2.1</ctso:SourceSystem>\n"
+    "    </ctso:RequestContext>\n"
+    "  </soap:Header>\n"
+    "  <soap:Body>\n"
+    "    <soap:Fault>\n"
+    "      <faultcode>soap:Server</faultcode>\n"
+    "      <faultstring>Service Unavailable: The downstream settlement "
+    "service (SETTLE-ENGINE-03) is not responding. Connection pool exhausted "
+    "after 120 seconds. Active connections: 200/200. Queued requests: 1,847. "
+    "Last successful response: 2026-03-18T06:12:44Z.</faultstring>\n"
+    "      <detail>\n"
+    "        <ctso:ErrorDetail>\n"
+    "          <ctso:ErrorCode>CTSO-SETTLE-5003</ctso:ErrorCode>\n"
+    "          <ctso:Severity>CRITICAL</ctso:Severity>\n"
+    "          <ctso:AffectedTrades>2,341</ctso:AffectedTrades>\n"
+    "          <ctso:SettlementDate>2026-03-18</ctso:SettlementDate>\n"
+    '          <ctso:RetryAttempts max="3">3</ctso:RetryAttempts>\n'
+    "        </ctso:ErrorDetail>\n"
+    "      </detail>\n"
+    "    </soap:Fault>\n"
+    "  </soap:Body>\n"
+    "</soap:Envelope>"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-057",
+        name="SOAP XML fault envelope pasted as ticket body",
+        description="Tests triage when a user pastes a full SOAP/XML response envelope "
+        "with WS-Security headers, namespaces, and fault details. The underlying issue "
+        "is a settlement service outage affecting trade reconciliation.",
+        category=_CATEGORY,
+        tags=["xml", "soap", "envelope", "settlement_service"],
+        ticket=EvalTicket(
+            ticket_id="INC-6057",
+            subject="Trade reconciliation failing — settlement service down",
+            description=(
+                "The trade reconciliation batch has been failing since 07:45 UTC. "
+                "The SOAP call to the settlement engine returns this fault — I'm pasting "
+                "the full response so you can see the error details:\n\n"
+                f"{_SOAP_ENVELOPE}\n\n"
+                "2,341 trades from yesterday are stuck in 'pending settlement' status. "
+                "The settlement engine SETTLE-ENGINE-03 appears to have exhausted its "
+                "connection pool. This has downstream impact on T+1 settlement reporting "
+                "to the DTCC. The reconciliation service is TradeReconciler-v4.2.1 "
+                "running on app-server-chi-04. Please investigate the settlement engine "
+                "immediately — we have a regulatory deadline at 11:00 ET.\n\n"
+                "— Patricia Okonkwo, Trade Operations"
+            ),
+            reporter=_reporter(
+                "Patricia Okonkwo", "p.okonkwo@contoso.com", "Trade Operations"
+            ),
+            created_at="2026-03-18T08:00:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-058: Calendar ICS data mixed with a meeting room AV issue
+# ---------------------------------------------------------------------------
+_ICS_DATA = (
+    "BEGIN:VCALENDAR\n"
+    "VERSION:2.0\n"
+    "PRODID:-//Contoso//Exchange//EN\n"
+    "METHOD:REQUEST\n"
+    "BEGIN:VTIMEZONE\n"
+    "TZID:Eastern Standard Time\n"
+    "BEGIN:STANDARD\n"
+    "DTSTART:16011104T020000\n"
+    "RRULE:FREQ=YEARLY;BYDAY=1SU;BYMONTH=11\n"
+    "TZOFFSETFROM:-0400\n"
+    "TZOFFSETTO:-0500\n"
+    "END:STANDARD\n"
+    "BEGIN:DAYLIGHT\n"
+    "DTSTART:16010311T020000\n"
+    "RRULE:FREQ=YEARLY;BYDAY=2SU;BYMONTH=3\n"
+    "TZOFFSETFROM:-0500\n"
+    "TZOFFSETTO:-0400\n"
+    "END:DAYLIGHT\n"
+    "END:VTIMEZONE\n"
+    "BEGIN:VEVENT\n"
+    "DTSTART;TZID=Eastern Standard Time:20260318T140000\n"
+    "DTEND;TZID=Eastern Standard Time:20260318T160000\n"
+    "SUMMARY:Q1 Board Review — Quarterly Earnings Presentation\n"
+    "LOCATION:Boardroom A (Floor 40) [NYC-HQ-40-BOARDROOM-A]\n"
+    "ORGANIZER;CN=Catherine Ross:mailto:c.ross@contoso.com\n"
+    "ATTENDEE;CN=CEO;ROLE=REQ-PARTICIPANT:mailto:ceo@contoso.com\n"
+    "ATTENDEE;CN=CFO;ROLE=REQ-PARTICIPANT:mailto:cfo@contoso.com\n"
+    "ATTENDEE;CN=Board Members;ROLE=REQ-PARTICIPANT:mailto:board@contoso.com\n"
+    "ATTENDEE;CN=IR Team;ROLE=OPT-PARTICIPANT:mailto:ir-team@contoso.com\n"
+    "UID:a1b2c3d4-e5f6-7890-abcd-ef1234567890@contoso.com\n"
+    "SEQUENCE:3\n"
+    "STATUS:CONFIRMED\n"
+    "PRIORITY:1\n"
+    "X-MICROSOFT-CDO-IMPORTANCE:2\n"
+    "X-MICROSOFT-CDO-BUSYSTATUS:BUSY\n"
+    "DESCRIPTION:Q1 2026 earnings review with the board of directors. "
+    "Presentation deck and financial summary will be displayed on the main "
+    "screen. Video conference bridge for remote board members.\n"
+    "END:VEVENT\n"
+    "END:VCALENDAR"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-058",
+        name="Calendar ICS data mixed with meeting room AV issue",
+        description="Tests triage when a user pastes a full iCalendar (.ics) meeting invite "
+        "with timezone rules, attendee lists, and Exchange metadata alongside a "
+        "meeting room audio-visual equipment failure report.",
+        category=_CATEGORY,
+        tags=["ics", "calendar", "av_equipment", "meeting_room"],
+        ticket=EvalTicket(
+            ticket_id="INC-6058",
+            subject="Boardroom A (Floor 40) — projector and video conferencing not working",
+            description=(
+                "URGENT — The Q1 Board Review meeting is at 2:00 PM today in Boardroom A "
+                "on Floor 40 and the AV system is completely down. The Crestron control panel "
+                "on the wall shows 'System Offline' and none of the inputs work — no HDMI, "
+                "no wireless casting, no video conferencing. The Polycom Studio video bar "
+                "has a blinking red LED instead of the normal green. "
+                "Here's the meeting invite so you can see the urgency:\n\n"
+                f"{_ICS_DATA}\n\n"
+                "This is a board of directors meeting with the CEO, CFO, and external board "
+                "members dialing in remotely. We have less than 4 hours to fix this. The room "
+                "was working yesterday for a dry-run. The Crestron processor is model "
+                "CP4N, serial AV-40-001. Polycom Studio is asset tag AV-40-015. "
+                "The HDMI matrix switcher (Extron DTP CrossPoint 84) may also be affected. "
+                "Can someone from AV support come to Floor 40 immediately?\n\n"
+                "— Catherine Ross, Executive Assistant to the CEO"
+            ),
+            reporter=_reporter("Catherine Ross", "c.ross@contoso.com", "Executive Office"),
+            created_at="2026-03-18T10:15:00Z",
+            channel="phone",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P1",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=True,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-059: Windows minidump/BSOD output with a driver crash issue
+# ---------------------------------------------------------------------------
+_BSOD_OUTPUT = (
+    "* ******************************************************************************\n"
+    "*                                                                              *\n"
+    "*                        STOP ERROR (Blue Screen of Death)                     *\n"
+    "*                                                                              *\n"
+    "* ******************************************************************************\n\n"
+    "SYSTEM_THREAD_EXCEPTION_NOT_HANDLED (7e)\n"
+    "Bug Check Code:           0x0000007E\n"
+    "Parameter 1:              0xFFFFF8024A3B1000\n"
+    "Parameter 2:              0xFFFFF80249C72148\n"
+    "Parameter 3:              0xFFFFE40137A9E8F0\n"
+    "Parameter 4:              0xFFFFE40137A9E100\n\n"
+    "FAULTING_MODULE: nt\n"
+    "DEFAULT_BUCKET_ID: WIN8_DRIVER_FAULT\n\n"
+    "PROCESS_NAME:  System\n"
+    "IMAGE_NAME:    nvlddmkm.sys\n"
+    "MODULE_NAME:   nvlddmkm\n"
+    "IMAGE_VERSION: 32.0.15.6094\n\n"
+    "STACK_TEXT:\n"
+    "ffffe401`37a9e8f0 fffff802`49c72148 : nt!KeBugCheckEx\n"
+    "ffffe401`37a9e8f8 fffff802`49a8b230 : nt!PspSystemThreadStartup+0x58\n"
+    "ffffe401`37a9e950 fffff802`4a3b1423 : nvlddmkm!NvDmaEngineChannelSchedule+0x1a3\n"
+    "ffffe401`37a9e9b0 fffff802`4a3c8891 : nvlddmkm!NvDmaEngineSubmitCommands+0x451\n"
+    "ffffe401`37a9ea20 fffff802`4a2f1c40 : nvlddmkm!NvRmApiAlloc+0x2c1\n"
+    "ffffe401`37a9ea90 fffff802`49c35670 : dxgkrnl!DxgkSubmitCommandToHardware+0x340\n"
+    "ffffe401`37a9eb00 fffff802`49c10234 : dxgkrnl!DxgkPresentDisplayOnly+0x1f4\n"
+    "ffffe401`37a9eb70 fffff802`49b04560 : win32kfull!NtGdiDdDDIPresent+0x234\n\n"
+    "FAILURE_BUCKET_ID: 0x7E_nvlddmkm!NvDmaEngineChannelSchedule\n\n"
+    "Followup:     MachineOwner\n"
+    "Dump file:    C:\\Windows\\MEMORY.DMP\n"
+    "Dump written: 18 Mar 2026 07:42:15 UTC\n"
+    "System uptime before crash: 0 days 2:14:37.412"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-059",
+        name="Windows BSOD minidump output in driver crash ticket",
+        description="Tests triage when a user pastes raw Windows blue screen stop error "
+        "output including bug check codes, stack traces, and faulting module info. "
+        "The underlying issue is an NVIDIA GPU driver crash.",
+        category=_CATEGORY,
+        tags=["bsod", "minidump", "driver_crash", "gpu"],
+        ticket=EvalTicket(
+            ticket_id="INC-6059",
+            subject="Workstation blue-screening daily — NVIDIA driver crash",
+            description=(
+                "My workstation has been blue-screening every morning since the NVIDIA "
+                "driver update was pushed last Thursday (version 32.0.15.6094). It crashes "
+                "within 2 hours of booting, always during GPU-accelerated tasks like "
+                "running Monte Carlo simulations in our pricing engine. "
+                "I ran WinDbg on the memory dump and here's the analysis:\n\n"
+                f"{_BSOD_OUTPUT}\n\n"
+                "The faulting module is nvlddmkm.sys (NVIDIA display driver). The previous "
+                "driver version (31.0.15.5201) was stable for 6 months. Machine is a Dell "
+                "Precision 7875 Tower with NVIDIA RTX A6000 (asset tag WS-QR-0089), "
+                "128 GB RAM, Windows 11 23H2. I need this machine for quant model "
+                "development — the GPU compute is essential. Can we roll back the driver "
+                "to the previous version or get a hotfix from NVIDIA?\n\n"
+                "— Dr. Henrik Lindqvist, Quantitative Research"
+            ),
+            reporter=_reporter(
+                "Henrik Lindqvist", "h.lindqvist@contoso.com", "Quantitative Research"
+            ),
+            created_at="2026-03-18T07:50:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Hardware & Peripherals",
+            priority="P2",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+        ),
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-060: Raw JSON API error response (headers + body) for a software integration issue
+# ---------------------------------------------------------------------------
+_JSON_API_RESPONSE = (
+    "HTTP/1.1 502 Bad Gateway\n"
+    "Date: Wed, 18 Mar 2026 08:22:14 GMT\n"
+    "Content-Type: application/json; charset=utf-8\n"
+    "Content-Length: 1247\n"
+    "Connection: keep-alive\n"
+    "X-Request-Id: 7e4f2a91-3c8d-4b6e-a5f2-9d1c3b7e8a4f\n"
+    "X-Correlation-Id: trade-svc-b2f8a3e1-6d4c-4a9b-8e7f-2c1d5a3b9e6f\n"
+    "X-RateLimit-Limit: 1000\n"
+    "X-RateLimit-Remaining: 847\n"
+    "X-RateLimit-Reset: 1742285400\n"
+    "Strict-Transport-Security: max-age=31536000; includeSubDomains\n"
+    "X-Content-Type-Options: nosniff\n"
+    "X-Frame-Options: DENY\n"
+    "Cache-Control: no-store, no-cache, must-revalidate\n"
+    "Server: contoso-api-gateway/2.4.1\n\n"
+    "{\n"
+    '  "error": {\n'
+    '    "code": "UPSTREAM_SERVICE_UNAVAILABLE",\n'
+    '    "message": "The upstream service \'portfolio-analytics-v3\' is not responding.",\n'
+    '    "status": 502,\n'
+    '    "timestamp": "2026-03-18T08:22:14.567Z",\n'
+    '    "request_id": "7e4f2a91-3c8d-4b6e-a5f2-9d1c3b7e8a4f",\n'
+    '    "details": {\n'
+    '      "upstream_host": "portfolio-analytics.contoso.internal:8443",\n'
+    '      "upstream_path": "/api/v3/portfolios/risk-attribution",\n'
+    '      "timeout_ms": 30000,\n'
+    '      "retry_count": 3,\n'
+    '      "circuit_breaker_state": "OPEN",\n'
+    '      "circuit_breaker_trips": 47,\n'
+    '      "last_successful_request": "2026-03-18T06:45:22Z",\n'
+    '      "health_check_status": "UNHEALTHY",\n'
+    '      "pod_status": {\n'
+    '        "desired": 5,\n'
+    '        "ready": 0,\n'
+    '        "not_ready": 5,\n'
+    '        "restart_count": 23\n'
+    "      }\n"
+    "    },\n"
+    '    "trace": [\n'
+    '      "api-gateway -> portfolio-analytics-v3 (timeout after 30000ms)",\n'
+    '      "portfolio-analytics-v3 -> risk-calc-engine (connection refused)",\n'
+    '      "risk-calc-engine: CrashLoopBackOff (OOMKilled)"\n'
+    "    ]\n"
+    "  }\n"
+    "}"
+)
+
+default_registry.register(
+    EvalScenario(
+        scenario_id="dc-060",
+        name="Raw JSON API error response with HTTP headers in integration ticket",
+        description="Tests triage when a user pastes a full HTTP response including "
+        "headers, JSON error body with nested objects, circuit breaker status, "
+        "and distributed trace for a portfolio analytics service outage.",
+        category=_CATEGORY,
+        tags=["json", "api_response", "http_headers", "integration"],
+        ticket=EvalTicket(
+            ticket_id="INC-6060",
+            subject="Portfolio analytics API returning 502 — all risk dashboards down",
+            description=(
+                "All our risk attribution dashboards are broken since about 06:45 UTC. "
+                "The portfolio-analytics-v3 API is returning 502 errors. I captured the "
+                "full HTTP response from curl including headers:\n\n"
+                f"{_JSON_API_RESPONSE}\n\n"
+                "Key findings from the response: the risk-calc-engine pods are in "
+                "CrashLoopBackOff due to OOMKilled — they're running out of memory and "
+                "restarting (23 restarts so far). All 5 pods are not-ready. The circuit "
+                "breaker on portfolio-analytics has tripped 47 times and is now OPEN, "
+                "meaning all requests fail immediately. This is affecting every risk "
+                "dashboard in the firm — portfolio managers, compliance, and the trading "
+                "desk all rely on these APIs. The risk-calc-engine likely needs its memory "
+                "limits increased in the Kubernetes deployment spec. Currently running in "
+                "the contoso-analytics-prod namespace on AKS cluster aks-east-prod-01.\n\n"
+                "— Thomas Brennan, Platform Engineering"
+            ),
+            reporter=_reporter(
+                "Thomas Brennan", "t.brennan@contoso.com", "Platform Engineering"
+            ),
+            created_at="2026-03-18T08:25:00Z",
+            channel="portal",
+        ),
+        expected_triage=ExpectedTriage(
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+        ),
+    )
+)
