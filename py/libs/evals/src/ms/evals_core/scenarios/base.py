@@ -89,4 +89,6 @@ class ScenarioDefinition:
             scenario_category=scenario_category,
             scenario_tag=self.scenario_id,
             description=f"[{self.scenario_id}] {self.subject}",
+            tags=self.tags,
+            difficulty=self.difficulty,
         )

@@ -3,6 +3,8 @@
 
 from typing import Literal
 
+from pydantic import Field
+
 from ms.common.models.base import FrozenBaseModel
 from ms.evals_core.models.ticket import Ticket
 from ms.evals_core.models.triage_decision import TriageDecision
@@ -22,3 +24,5 @@ class Scenario(FrozenBaseModel):
     scenario_category: ScenarioCategory
     scenario_tag: str
     description: str
+    tags: list[str] = Field(default_factory=list)
+    difficulty: str = "medium"

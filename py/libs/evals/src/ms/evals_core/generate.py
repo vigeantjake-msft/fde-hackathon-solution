@@ -14,8 +14,18 @@ import json
 from pathlib import Path
 
 from ms.evals_core.models.scenario import Scenario
-from ms.evals_core.scenarios.data_cleanup import get_data_cleanup_scenarios
-from ms.evals_core.scenarios.responsible_ai import get_responsible_ai_scenarios
+from ms.evals_core.scenarios.base import ScenarioDefinition
+from ms.evals_core.scenarios.data_cleanup import get_scenarios as get_dc_scenario_defs
+from ms.evals_core.scenarios.responsible_ai import get_scenarios as get_rai_scenario_defs
+
+
+def _defs_to_scenarios(
+    defs: list[ScenarioDefinition],
+    id_prefix: str,
+    start: int = 1,
+) -> list[Scenario]:
+    """Convert ScenarioDefinitions to Scenario models with sequential ticket IDs."""
+    return [d.to_scenario(f"{id_prefix}{i:04d}") for i, d in enumerate(defs, start)]
 
 
 def _scenarios_to_tickets_json(scenarios: list[Scenario]) -> list[dict[str, object]]:
@@ -37,8 +47,8 @@ def _write_json(data: list[dict[str, object]], path: Path) -> None:
 
 def generate(output_dir: Path) -> None:
     """Generate all evaluation JSON files."""
-    data_cleanup = get_data_cleanup_scenarios()
-    responsible_ai = get_responsible_ai_scenarios()
+    data_cleanup = _defs_to_scenarios(get_dc_scenario_defs(), "INC-DC-GEN-")
+    responsible_ai = _defs_to_scenarios(get_rai_scenario_defs(), "INC-RAI-GEN-")
     all_scenarios = data_cleanup + responsible_ai
 
     print(f"Data cleanup scenarios:   {len(data_cleanup)}")
@@ -75,7 +85,11 @@ def generate(output_dir: Path) -> None:
     )
 
     print("\nDone. Run the eval harness with:")
-    print(f"  uv run python run_eval.py --endpoint <url> --dataset {output_dir}/data_cleanup.json --gold {output_dir}/data_cleanup_gold.json")
+    print(
+        f"  uv run python run_eval.py --endpoint <url>"
+        f" --dataset {output_dir}/data_cleanup.json"
+        f" --gold {output_dir}/data_cleanup_gold.json"
+    )
 
 
 def main() -> None:
@@ -83,7 +97,7 @@ def main() -> None:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path(__file__).resolve().parents[5] / "docs" / "data" / "tickets",
+        default=Path(__file__).resolve().parents[6] / "docs" / "data" / "tickets",
         help="Directory to write the JSON files to (default: docs/data/tickets/)",
     )
     args = parser.parse_args()
