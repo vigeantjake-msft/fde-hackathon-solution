@@ -15938,4 +15938,1588 @@ def get_scenarios() -> list[ScenarioDefinition]:
             tags=["data-cleanup", "git-blame-output", "source-code-noise"],
             difficulty="medium",
         ),
+        # ── DC-236  Massive pasted document text ────────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-236",
+            subject="Cannot access Compliance Policy Library on SharePoint",
+            description=(
+                "Hi IT Support,\n\n"
+                "I need help accessing a document in the Compliance Policy Library. "
+                "Here is the full text of the document I was trying to read so you "
+                "can understand what I need:\n\n"
+                "=== CONTOSO CORPORATION — COMPLIANCE POLICY FRAMEWORK ===\n"
+                "Document ID: CPF-2026-0041 | Version 3.2 | Effective Date: January 1, 2026\n"
+                "Classification: Internal — Restricted Distribution\n\n"
+                "SECTION 1: DATA RETENTION AND DISPOSAL\n"
+                "1.1 All electronic records pertaining to client transactions shall be "
+                "retained for a minimum period of seven (7) years from the date of "
+                "creation, in accordance with SEC Rule 17a-4 and FINRA Rule 4511.\n"
+                "1.2 Records classified as Tier 1 (client-facing communications, trade "
+                "confirmations, and account statements) must be stored in immutable "
+                "WORM-compliant storage with cryptographic integrity verification.\n"
+                "1.3 Disposal of records beyond the retention period requires written "
+                "approval from the Chief Compliance Officer and must be documented in "
+                "the Records Disposal Register (Appendix C-4).\n\n"
+                "SECTION 2: ACCESS CONTROLS AND AUTHORIZATION\n"
+                "2.1 Access to compliance records shall be granted on a need-to-know "
+                "basis following the principle of least privilege as defined in NIST "
+                "SP 800-53 AC-6.\n"
+                "2.2 All access requests must be submitted through the Compliance Access "
+                "Request Portal (CARP) and approved by the department head and the "
+                "Compliance Technology team within five (5) business days.\n"
+                "2.3 Privileged access to the Compliance Policy Library requires "
+                "multi-factor authentication (MFA) using a hardware token or biometric "
+                "factor in addition to standard Active Directory credentials.\n\n"
+                "SECTION 3: AUDIT REQUIREMENTS\n"
+                "3.1 The Compliance Technology team shall conduct quarterly access "
+                "reviews of all compliance record repositories to ensure adherence "
+                "to the authorization matrix defined in Appendix A-2.\n"
+                "3.2 Any unauthorized access attempts must be reported to the Security "
+                "Operations Center (SOC) within four (4) hours of detection and "
+                "documented in the Incident Register.\n"
+                "3.3 Annual penetration testing of compliance record storage systems "
+                "shall be performed by an independent third-party assessor approved "
+                "by the Audit Committee.\n\n"
+                "SECTION 4: CROSS-BORDER DATA TRANSFER\n"
+                "4.1 Transfer of compliance records across jurisdictional boundaries "
+                "must comply with applicable data protection regulations including "
+                "GDPR Article 46, CCPA Section 1798.140, and the APAC Data Localization "
+                "Framework adopted by the firm in 2025.\n"
+                "4.2 Standard Contractual Clauses (SCCs) must be executed with any "
+                "third-party processor receiving compliance data across borders.\n\n"
+                "SECTION 5: INCIDENT RESPONSE FOR COMPLIANCE DATA BREACHES\n"
+                "5.1 In the event of a breach involving compliance-regulated data, the "
+                "Incident Response Team shall be activated within thirty (30) minutes "
+                "following the notification protocol defined in Appendix D-1.\n"
+                "5.2 Regulatory notification obligations under SEC, FINRA, and state "
+                "privacy laws shall be assessed by Legal and Compliance within 24 hours.\n\n"
+                "=== END OF DOCUMENT ===\n\n"
+                "Anyway, I keep getting a 403 Forbidden error when I click the Compliance "
+                "Policy Library link on SharePoint. It worked fine before the migration "
+                "last Friday. Can you help?\n\n"
+                "— Nina Vasquez\nCompliance"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate SharePoint 403 error for Compliance Policy Library after "
+                "migration — likely a permissions issue from the site migration. Ignore "
+                "the pasted document content."
+            ),
+            remediation_steps=[
+                "Check SharePoint site permissions for the migrated library.",
+                "Verify the user's group membership includes the new site collection.",
+                "Re-grant access if permissions were not migrated.",
+                "Test access with the user's account after fixing permissions.",
+            ],
+            reporter_name="Nina Vasquez",
+            reporter_email="nina.vasquez@contoso.com",
+            reporter_department="Compliance",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "massive-pasted-document", "buried-issue"],
+            difficulty="hard",
+        ),
+        # ── DC-237  Embedded SVG image data with XML markup ─────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-237",
+            subject="Monitor color profile looks wrong after driver update",
+            description=(
+                "Hi,\n\n"
+                "My monitor colors look completely wrong after the last GPU driver update. "
+                "I tried to take a screenshot to show you but it came through as raw SVG "
+                "data somehow:\n\n"
+                '<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" '
+                'viewBox="0 0 1920 1080">\n'
+                "  <defs>\n"
+                '    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">\n'
+                '      <stop offset="0%" style="stop-color:rgb(255,0,0);stop-opacity:1"/>\n'
+                '      <stop offset="50%" style="stop-color:rgb(0,255,0);stop-opacity:1"/>\n'
+                '      <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1"/>\n'
+                "    </linearGradient>\n"
+                '    <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">\n'
+                '      <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:1"/>\n'
+                '      <stop offset="100%" style="stop-color:rgb(0,0,0);stop-opacity:1"/>\n'
+                "    </linearGradient>\n"
+                '    <radialGradient id="rg1" cx="50%" cy="50%" r="50%">\n'
+                '      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:0.8"/>\n'
+                '      <stop offset="100%" style="stop-color:rgb(128,0,128);stop-opacity:0.3"/>\n'
+                "    </radialGradient>\n"
+                "  </defs>\n"
+                '  <rect width="1920" height="1080" fill="url(#g1)"/>\n'
+                '  <rect width="1920" height="1080" fill="url(#g2)" opacity="0.5"/>\n'
+                '  <circle cx="960" cy="540" r="400" fill="url(#rg1)"/>\n'
+                '  <text x="50" y="50" font-family="Arial" font-size="24" fill="#FFFFFF">'
+                "Color calibration test pattern — sRGB reference</text>\n"
+                '  <rect x="100" y="900" width="120" height="80" fill="#FF0000"/>\n'
+                '  <rect x="240" y="900" width="120" height="80" fill="#00FF00"/>\n'
+                '  <rect x="380" y="900" width="120" height="80" fill="#0000FF"/>\n'
+                '  <rect x="520" y="900" width="120" height="80" fill="#FFFF00"/>\n'
+                '  <rect x="660" y="900" width="120" height="80" fill="#FF00FF"/>\n'
+                '  <rect x="800" y="900" width="120" height="80" fill="#00FFFF"/>\n'
+                '  <text x="100" y="1000" font-family="Consolas" font-size="12" fill="#FFFFFF">'
+                "R:255 G:0 B:0</text>\n"
+                '  <text x="240" y="1000" font-family="Consolas" font-size="12" fill="#FFFFFF">'
+                "R:0 G:255 B:0</text>\n"
+                '  <text x="380" y="1000" font-family="Consolas" font-size="12" fill="#FFFFFF">'
+                "R:0 G:0 B:255</text>\n"
+                "</svg>\n\n"
+                "After updating the NVIDIA GPU driver to version 550.67, my Dell U2722D "
+                "monitor's color profile shifted to a blue-ish tint. The sRGB mode looks "
+                "washed out.\n\n"
+                "— Carlos Mendez\nDesign"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.APPLICATION_VERSION],
+            next_best_action=(
+                "Investigate monitor color profile shift after NVIDIA driver update to "
+                "v550.67 — likely need to reapply the ICC color profile or roll back the driver."
+            ),
+            remediation_steps=[
+                "Check current ICC color profile and reapply the Dell U2722D sRGB profile.",
+                "Try rolling back the NVIDIA driver from 550.67 to the previous version.",
+                "Verify display color settings in NVIDIA Control Panel.",
+                "If issue persists replace the docking station display cable.",
+            ],
+            reporter_name="Carlos Mendez",
+            reporter_email="carlos.mendez@contoso.com",
+            reporter_department="Design",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "embedded-svg", "xml-data-inline"],
+            difficulty="hard",
+        ),
+        # ── DC-238  Hex dump of network packet capture ──────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-238",
+            subject="Intermittent packet loss on trading floor — packet capture attached",
+            description=(
+                "Hi Network Team,\n\n"
+                "We have been seeing packet loss on the trading floor. I captured some "
+                "packets with Wireshark and pasted the hex dump below:\n\n"
+                "0000  00 1a 2b 3c 4d 5e 00 0c 29 8a 1b 2c 08 00 45 00  ..+<M^..)..,.E.\n"
+                "0010  00 3c 1c 46 40 00 40 06 b1 e6 c0 a8 01 64 ac 10  .<.F@.@......d..\n"
+                "0020  01 01 c0 23 01 bb a3 4f 7d 8e 00 00 00 00 a0 02  ...#...O}.......\n"
+                "0030  fa f0 3c 5d 00 00 02 04 05 b4 04 02 08 0a 00 9c  ..<]............\n"
+                "0040  27 24 00 00 00 00 01 03 03 07 00 00 00 00 00 00  '$..............\n"
+                "0050  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................\n\n"
+                "0000  00 0c 29 8a 1b 2c 00 1a 2b 3c 4d 5e 08 00 45 00  ..)..,.+<M^..E.\n"
+                "0010  00 3c 00 00 40 00 3f 06 ce 2c ac 10 01 01 c0 a8  .<..@.?..,.....\n"
+                "0020  01 64 01 bb c0 23 5f 2a 1e 90 a3 4f 7d 8f a0 12  .d...#_*...O}...\n"
+                "0030  71 20 94 52 00 00 02 04 05 b4 04 02 08 0a 01 e2  q .R............\n"
+                "0040  38 4c 00 9c 27 24 01 03 03 07 00 00 00 00 00 00  8L..'$..........\n"
+                "0050  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................\n\n"
+                "0000  00 1a 2b 3c 4d 5e 00 0c 29 8a 1b 2c 08 00 45 00  ..+<M^..)..,.E.\n"
+                "0010  00 28 1c 47 40 00 40 06 b1 f9 c0 a8 01 64 ac 10  .(.G@.@......d..\n"
+                "0020  01 01 c0 23 01 bb a3 4f 7d 8f 5f 2a 1e 91 50 10  ...#...O}._*..P.\n"
+                "0030  fa f0 99 1b 00 00 00 00 00 00 00 00 00 00 00 00  ................\n\n"
+                "0000  00 1a 2b 3c 4d 5e 00 0c 29 8a 1b 2c 08 00 45 00  ..+<M^..)..,.E.\n"
+                "0010  01 a2 1c 48 40 00 40 06 b0 7e c0 a8 01 64 ac 10  ...H@.@..~...d..\n"
+                "0020  01 01 c0 23 01 bb a3 4f 7d 8f 5f 2a 1e 91 50 18  ...#...O}._*..P.\n"
+                "0030  fa f0 d7 3a 00 00 16 03 01 01 75 01 00 01 71 03  ...:......u...q.\n"
+                "0040  03 e7 b2 4a 91 c5 38 22 df 8a 9e 16 ab 7c 3e f1  ...J..8\"....|>.\n"
+                "0050  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................\n\n"
+                "[... 847 more packets omitted for brevity ...]\n\n"
+                "Every day between 14:00 and 14:15 UTC we see 5-8% packet loss on the "
+                "trading floor VLAN 210. It's affecting FIX protocol connections to the "
+                "exchange.\n\n"
+                "— Marcus Thompson\nEquity Trading"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.NETWORK_LOCATION, MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Investigate scheduled packet loss on VLAN 210 between 14:00-14:15 UTC — "
+                "correlate with network device logs and scheduled tasks on the trading floor switches."
+            ),
+            remediation_steps=[
+                "Review switch logs for VLAN 210 during the 14:00-14:15 window.",
+                "Check for scheduled backup jobs or batch processes that may saturate the link.",
+                "Analyze QoS configuration to ensure FIX protocol traffic has appropriate priority.",
+                "If a congestion issue verify uplink capacity and consider traffic engineering.",
+            ],
+            reporter_name="Marcus Thompson",
+            reporter_email="marcus.thompson@contoso.com",
+            reporter_department="Equity Trading",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "hex-dump", "network-capture"],
+            difficulty="hard",
+        ),
+        # ── DC-239  Windows Event Log XML dump ──────────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-239",
+            subject="Blue screen on my laptop — Event Viewer export attached",
+            description=(
+                "Hi IT,\n\n"
+                "My laptop blue-screened twice today. I exported the crash events from "
+                "Event Viewer:\n\n"
+                '<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">\n'
+                "  <System>\n"
+                '    <Provider Name="Microsoft-Windows-WER-SystemErrorReporting" '
+                'Guid="{ABCE23E7-DE45-4366-8631-84FA6C525952}"/>\n'
+                "    <EventID>1001</EventID>\n"
+                "    <Version>0</Version>\n"
+                "    <Level>2</Level>\n"
+                "    <Task>0</Task>\n"
+                "    <Opcode>0</Opcode>\n"
+                "    <Keywords>0x8000000000000080</Keywords>\n"
+                '    <TimeCreated SystemTime="2026-03-17T14:22:35.1234567Z"/>\n'
+                "    <EventRecordID>98765</EventRecordID>\n"
+                "    <Correlation/>\n"
+                '    <Execution ProcessID="0" ThreadID="0"/>\n'
+                "    <Channel>System</Channel>\n"
+                "    <Computer>DESKTOP-PRY4S21.contoso.com</Computer>\n"
+                '    <Security UserID="S-1-5-18"/>\n'
+                "  </System>\n"
+                "  <EventData>\n"
+                '    <Data Name="param1">0x000000d1 (DRIVER_IRQL_NOT_LESS_OR_EQUAL)</Data>\n'
+                '    <Data Name="param2">0xfffff80742301abc</Data>\n'
+                '    <Data Name="param3">0x0000000000000002</Data>\n'
+                '    <Data Name="param4">0xfffff80742301abc</Data>\n'
+                '    <Data Name="param5">usbhub3.sys</Data>\n'
+                '    <Data Name="param6">10.0.22621.2506</Data>\n'
+                '    <Data Name="param7">2026-03-17T14:22:30.0000000Z</Data>\n'
+                '    <Data Name="param8">C:\\Windows\\Minidump\\031726-12345-01.dmp</Data>\n'
+                '    <Data Name="param9">C:\\Windows\\MEMORY.DMP</Data>\n'
+                "  </EventData>\n"
+                "</Event>\n\n"
+                '<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">\n'
+                "  <System>\n"
+                '    <Provider Name="Microsoft-Windows-Kernel-Power" '
+                'Guid="{331C3B3A-2005-44C2-AC5E-77220C37D6B4}"/>\n'
+                "    <EventID>41</EventID>\n"
+                "    <Version>6</Version>\n"
+                "    <Level>1</Level>\n"
+                "    <Task>63</Task>\n"
+                "    <Opcode>0</Opcode>\n"
+                "    <Keywords>0x8000400000000002</Keywords>\n"
+                '    <TimeCreated SystemTime="2026-03-17T14:23:01.9876543Z"/>\n'
+                "    <EventRecordID>98766</EventRecordID>\n"
+                "    <Channel>System</Channel>\n"
+                "    <Computer>DESKTOP-PRY4S21.contoso.com</Computer>\n"
+                "  </System>\n"
+                "  <EventData>\n"
+                '    <Data Name="BugcheckCode">209</Data>\n'
+                '    <Data Name="BugcheckParameter1">0xfffff80742301abc</Data>\n'
+                '    <Data Name="SleepInProgress">0</Data>\n'
+                '    <Data Name="PowerButtonTimestamp">0</Data>\n'
+                "  </EventData>\n"
+                "</Event>\n\n"
+                "My laptop blue-screened twice today with DRIVER_IRQL_NOT_LESS_OR_EQUAL. "
+                "Both times it happened when I plugged in my USB-C docking station.\n\n"
+                "— Priya Sharma\nRisk Management"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P2,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.REPRODUCTION_FREQUENCY],
+            next_best_action=(
+                "Investigate DRIVER_IRQL_NOT_LESS_OR_EQUAL BSOD triggered by USB-C docking "
+                "station connection — likely a driver conflict with the dock's display or "
+                "Ethernet adapter."
+            ),
+            remediation_steps=[
+                "Check the minidump files (C:\\Windows\\Minidump) for the faulting driver name.",
+                "Update the docking station firmware and related USB-C drivers.",
+                "If a specific driver is identified roll it back to the previous version.",
+                "Test with a different docking station to isolate whether it is dock-specific.",
+            ],
+            reporter_name="Priya Sharma",
+            reporter_email="priya.sharma@contoso.com",
+            reporter_department="Risk Management",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "event-log-xml", "windows-diagnostic"],
+            difficulty="hard",
+        ),
+        # ── DC-240  Concatenated SCOM monitoring alerts ─────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-240",
+            subject="FW: FW: FW: CRITICAL ALERTS — disk space warnings from SCOM",
+            description=(
+                "Hi IT,\n\n"
+                "I keep getting these alerts from SCOM. Something is very wrong with our "
+                "SQL server. Here are all the alerts I received this morning:\n\n"
+                "--- Alert: Logical Disk Free Space is low ---\n"
+                "Source: SQLPROD01.contoso.com\n"
+                "Severity: Critical\n"
+                "Generated: 2026-03-17 08:15:03 UTC\n"
+                "Disk C: 2.1 GB free (4.2%) of 50 GB\n"
+                "Resolution State: New\n"
+                "Rule: Logical Disk Free Space (%) < 5\n"
+                "---\n\n"
+                "--- Alert: Logical Disk Free Space is low ---\n"
+                "Source: SQLPROD01.contoso.com\n"
+                "Severity: Critical\n"
+                "Generated: 2026-03-17 08:30:04 UTC\n"
+                "Disk C: 1.9 GB free (3.8%) of 50 GB\n"
+                "Resolution State: New\n"
+                "Rule: Logical Disk Free Space (%) < 5\n"
+                "---\n\n"
+                "--- Alert: Logical Disk Free Space is low ---\n"
+                "Source: SQLPROD01.contoso.com\n"
+                "Severity: Critical\n"
+                "Generated: 2026-03-17 08:45:05 UTC\n"
+                "Disk C: 1.7 GB free (3.4%) of 50 GB\n"
+                "Resolution State: New\n"
+                "Rule: Logical Disk Free Space (%) < 5\n"
+                "---\n\n"
+                "--- Alert: Logical Disk Free Space is low ---\n"
+                "Source: SQLPROD01.contoso.com\n"
+                "Severity: Critical\n"
+                "Generated: 2026-03-17 09:00:06 UTC\n"
+                "Disk C: 1.5 GB free (3.0%) of 50 GB\n"
+                "Resolution State: New\n"
+                "Rule: Logical Disk Free Space (%) < 5\n"
+                "---\n\n"
+                "--- Alert: Logical Disk Free Space is low ---\n"
+                "Source: SQLPROD01.contoso.com\n"
+                "Severity: Critical\n"
+                "Generated: 2026-03-17 09:15:07 UTC\n"
+                "Disk C: 1.3 GB free (2.6%) of 50 GB\n"
+                "Resolution State: New\n"
+                "Rule: Logical Disk Free Space (%) < 5\n"
+                "---\n\n"
+                "--- Alert: Logical Disk Free Space is low ---\n"
+                "Source: SQLPROD01.contoso.com\n"
+                "Severity: Critical\n"
+                "Generated: 2026-03-17 09:30:08 UTC\n"
+                "Disk C: 1.1 GB free (2.2%) of 50 GB\n"
+                "Resolution State: New\n"
+                "Rule: Logical Disk Free Space (%) < 5\n"
+                "---\n\n"
+                "--- Alert: Logical Disk Free Space is low ---\n"
+                "Source: SQLPROD01.contoso.com\n"
+                "Severity: Critical\n"
+                "Generated: 2026-03-17 09:45:09 UTC\n"
+                "Disk C: 0.9 GB free (1.8%) of 50 GB\n"
+                "Resolution State: New\n"
+                "Rule: Logical Disk Free Space (%) < 5\n"
+                "---\n\n"
+                "Our production SQL Server SQLPROD01 is running out of disk space on the "
+                "C: drive. It's been alerting every 15 minutes since 8 AM. Please help!\n\n"
+                "— David Park\nDatabase Administration"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P1,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=True,
+            missing_info=[MissingInfo.BUSINESS_IMPACT, MissingInfo.AFFECTED_SYSTEM],
+            next_best_action=(
+                "Immediately address the critically low disk space on SQLPROD01 C: drive "
+                "(under 5% free) — production SQL Server is at risk of failing."
+            ),
+            remediation_steps=[
+                "Free immediate disk space by clearing temp files IIS logs and old backups on SQLPROD01.",
+                "Check if SQL Server tempdb or error logs are consuming excessive C: drive space.",
+                "Move any relocatable databases or logs to a dedicated data volume.",
+                "Add disk capacity and update SCOM alert thresholds once resolved.",
+            ],
+            reporter_name="David Park",
+            reporter_email="david.park@contoso.com",
+            reporter_department="Database Administration",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "monitoring-alert-flood", "concatenated-alerts"],
+            difficulty="medium",
+        ),
+        # ── DC-241  Multi-encoding mojibake chain ───────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-241",
+            subject="Printer driver error — weird characters in error message",
+            description=(
+                "Hi IT Support,\n\n"
+                "I am trying to install a printer driver and I keep getting errors with "
+                "weird characters. The error message says:\n\n"
+                "\u00e2\u0080\u0098Druckertreiber konnte nicht installiert werden\u00e2\u0080\u0099 "
+                "\u00e2\u0080\u0094 Fehlercode 0x800F0214\n\n"
+                "I think the original was in German but my system garbled it. I also see "
+                "this in the driver installation wizard:\n\n"
+                "\u00c3\u00a2\u00e2\u201a\u00ac\u00c5\u201c"
+                "Cannot locate INF file"
+                "\u00c3\u00a2\u00e2\u201a\u00ac\u00c2\u00a0\n\n"
+                "My colleague sent me the error in an email and it got even more garbled. "
+                "Here is what the email showed:\n\n"
+                "\u00c3\u00a3\u00c2\u00a2\u00c3\u00a2\u00e2\u201a\u00ac\u00c5\u00a1"
+                "\u00c3\u00a2\u00e2\u201a\u00ac\u00c5\u201c"
+                "Driver installation failed \u00e2\u0080\u0094 Fehler beim Installieren des Treibers"
+                "\u00c3\u00a3\u00c2\u00a2\u00c3\u00a2\u00e2\u201a\u00ac\u00c5\u00a1"
+                "\u00c3\u00a2\u00e2\u201a\u00ac\u00c2\u00a0\n\n"
+                "And then another round of garbling when I forwarded it to myself:\n\n"
+                "\u00c3\u0083\u00c2\u00a3\u00c3\u0082\u00c2\u00a2"
+                "\u00c3\u0083\u00c2\u00a2\u00c3\u00a2\u00e2\u201a\u00ac"
+                "Treiberinstallation fehlgeschlagen \u00e2\u0080\u0094 "
+                "Bitte wenden Sie sich an den Systemadministrator"
+                "\u00c3\u0083\u00c2\u00a3\u00c3\u0082\u00c2\u00a2\n\n"
+                "Also the Device Manager shows: \u00ef\u00bf\u00bdKonica Minolta C308 "
+                "\u00ef\u00bf\u00bd \u00ef\u00bf\u00bdUniversal Print Driver "
+                "\u00ef\u00bf\u00bd v4.2.1\n\n"
+                "I'm trying to install the driver for our Konica Minolta C308 printer "
+                "on my Windows 11 laptop and it keeps failing with error 0x800F0214.\n\n"
+                "— Lena Fischer\nOperations"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.APPLICATION_VERSION],
+            next_best_action=(
+                "Troubleshoot Konica Minolta C308 printer driver installation failure with "
+                "error 0x800F0214 on Windows 11 — likely a missing INF file or unsigned "
+                "driver issue."
+            ),
+            remediation_steps=[
+                "Download the correct Konica Minolta C308 driver package for Windows 11 from the manufacturer.",
+                "Check if driver signing enforcement is blocking the installation.",
+                "Try installing the driver through the Add Printer wizard with the Have Disk option.",
+                "If 0x800F0214 persists temporarily disable driver signature enforcement and retry.",
+            ],
+            reporter_name="Lena Fischer",
+            reporter_email="lena.fischer@contoso.com",
+            reporter_department="Operations",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "mojibake", "multi-encoding"],
+            difficulty="hard",
+        ),
+        # ── DC-242  Cascading out-of-office auto-reply loop ─────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-242",
+            subject=(
+                "RE: RE: RE: RE: Automatic reply: RE: Automatic reply: "
+                "Meeting room booking system down"
+            ),
+            description=(
+                "--- Automatic Reply ---\n"
+                "Thank you for your email. I am currently out of the office from March "
+                "15-20 with limited access to email. For urgent matters please contact "
+                "help.desk@contoso.com.\n\n"
+                "Regards, Amanda Chen\n\n"
+                "--- Automatic Reply ---\n"
+                "Thank you for contacting IT Support. This is an automated acknowledgment. "
+                "Your request has been logged. A technician will respond within 4 business "
+                "hours.\n\nIT Help Desk\n\n"
+                "--- Automatic Reply ---\n"
+                "Thank you for your email. I am currently out of the office from March "
+                "15-20 with limited access to email. For urgent matters please contact "
+                "help.desk@contoso.com.\n\n"
+                "Regards, Amanda Chen\n\n"
+                "--- Automatic Reply ---\n"
+                "Thank you for contacting IT Support. This is an automated acknowledgment. "
+                "Your request has been logged. A technician will respond within 4 business "
+                "hours.\n\nIT Help Desk\n\n"
+                "--- Automatic Reply ---\n"
+                "Thank you for your email. I am currently out of the office from March "
+                "15-20 with limited access to email. For urgent matters please contact "
+                "help.desk@contoso.com.\n\n"
+                "Regards, Amanda Chen\n\n"
+                "--- Automatic Reply ---\n"
+                "Thank you for contacting IT Support. This is an automated acknowledgment. "
+                "Your request has been logged. A technician will respond within 4 business "
+                "hours.\n\nIT Help Desk\n\n"
+                "--- Automatic Reply ---\n"
+                "Thank you for your email. I am currently out of the office from March "
+                "15-20 with limited access to email. For urgent matters please contact "
+                "help.desk@contoso.com.\n\n"
+                "Regards, Amanda Chen\n\n"
+                "--- Automatic Reply ---\n"
+                "Thank you for contacting IT Support. This is an automated acknowledgment. "
+                "Your request has been logged.\n\nIT Help Desk\n\n"
+                "--- Original Message ---\n"
+                "Hi IT Support,\n\n"
+                "The meeting room booking system (RoomBook Pro) has been down since this "
+                "morning. Nobody on Floor 7 can reserve conference rooms. Can you please "
+                "look into this urgently?\n\n"
+                "Thanks,\nAmanda Chen\nFacilities"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Investigate RoomBook Pro meeting room booking system outage reported for "
+                "Floor 7 — ignore the cascading auto-reply chain and focus on restoring "
+                "the booking service."
+            ),
+            remediation_steps=[
+                "Check the RoomBook Pro application server status and logs.",
+                "Verify the Exchange room mailbox integration is functioning.",
+                "Restart the RoomBook Pro service if it is hung or crashed.",
+                "Communicate the estimated resolution time to affected users on Floor 7.",
+            ],
+            reporter_name="Amanda Chen",
+            reporter_email="amanda.chen@contoso.com",
+            reporter_department="Facilities",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "auto-reply-loop", "buried-issue"],
+            difficulty="hard",
+        ),
+        # ── DC-243  Tab-separated query result dump ─────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-243",
+            subject="Database query taking 45 minutes — full result set included",
+            description=(
+                "Hi DBA Team,\n\n"
+                "One of our queries is running extremely slow. Here is the result set "
+                "so you can see what we are dealing with:\n\n"
+                "trade_id\ttimestamp\tsymbol\tquantity\tprice\tstatus\taccount_id\n"
+                "50001\t2026-03-17 09:30:01\tAAPL\t100\t178.42\tFILLED\tACCT-7890\n"
+                "50002\t2026-03-17 09:30:01\tMSFT\t250\t415.67\tFILLED\tACCT-7891\n"
+                "50003\t2026-03-17 09:30:02\tGOOG\t50\t168.23\tPARTIAL\tACCT-7892\n"
+                "50004\t2026-03-17 09:30:02\tAMZN\t75\t185.91\tFILLED\tACCT-7893\n"
+                "50005\t2026-03-17 09:30:03\tTSLA\t200\t242.18\tFILLED\tACCT-7894\n"
+                "50006\t2026-03-17 09:30:03\tNVDA\t150\t890.45\tFILLED\tACCT-7895\n"
+                "50007\t2026-03-17 09:30:04\tMETA\t300\t502.33\tFILLED\tACCT-7896\n"
+                "50008\t2026-03-17 09:30:04\tJPM\t120\t198.76\tPARTIAL\tACCT-7897\n"
+                "50009\t2026-03-17 09:30:05\tV\t180\t281.54\tFILLED\tACCT-7898\n"
+                "50010\t2026-03-17 09:30:05\tBA\t90\t178.62\tFILLED\tACCT-7899\n"
+                "50011\t2026-03-17 09:30:06\tDIS\t400\t112.87\tFILLED\tACCT-7900\n"
+                "50012\t2026-03-17 09:30:06\tNFLX\t60\t612.45\tFILLED\tACCT-7901\n"
+                "50013\t2026-03-17 09:30:07\tAMD\t500\t178.93\tPARTIAL\tACCT-7902\n"
+                "50014\t2026-03-17 09:30:07\tINTC\t350\t42.18\tFILLED\tACCT-7903\n"
+                "50015\t2026-03-17 09:30:08\tCRM\t110\t298.64\tFILLED\tACCT-7904\n"
+                "50016\t2026-03-17 09:30:08\tORCL\t220\t128.37\tFILLED\tACCT-7905\n"
+                "50017\t2026-03-17 09:30:09\tADBE\t80\t545.21\tFILLED\tACCT-7906\n"
+                "50018\t2026-03-17 09:30:09\tPYPL\t175\t67.43\tPARTIAL\tACCT-7907\n"
+                "50019\t2026-03-17 09:30:10\tSQ\t290\t78.56\tFILLED\tACCT-7908\n"
+                "50020\t2026-03-17 09:30:10\tSHOP\t130\t89.12\tFILLED\tACCT-7909\n"
+                "[... 24,980 more rows omitted ...]\n\n"
+                "SELECT * FROM trades WHERE trade_date = '2026-03-17' takes 45 minutes "
+                "on SQLPROD03. It used to run in under 10 seconds. I think the index on "
+                "trade_date got dropped during last night's maintenance window.\n\n"
+                "— Jason Rivera\nQuantitative Analysis"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.TIMESTAMP],
+            next_best_action=(
+                "Investigate severe query performance degradation on SQLPROD03 trades table "
+                "— likely a missing index on trade_date that was dropped during maintenance."
+            ),
+            remediation_steps=[
+                "Check the index definitions on the trades table to verify the trade_date index exists.",
+                "If the index was dropped recreate it with CREATE INDEX on trade_date.",
+                "Review the maintenance window scripts to identify what caused the index drop.",
+                "Monitor query execution plans before and after index rebuild to confirm resolution.",
+            ],
+            reporter_name="Jason Rivera",
+            reporter_email="jason.rivera@contoso.com",
+            reporter_department="Quantitative Analysis",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "query-result-dump", "tabular-data"],
+            difficulty="hard",
+        ),
+        # ── DC-244  Raw email headers flood ─────────────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-244",
+            subject="Outlook freezes for 30 seconds when opening emails",
+            description=(
+                "Hi IT,\n\n"
+                "Outlook freezes every time I open an email from external senders. I "
+                "copied the raw headers of a problematic email below in case it helps:\n\n"
+                "Received: from MX01.contoso.com (10.0.1.50) by EX02.contoso.com "
+                "(10.0.1.51) with SMTP; Mon, 17 Mar 2026 09:15:22 +0000\n"
+                "Received: from mail-relay.partner.com (203.0.113.50) by MX01.contoso.com "
+                "(10.0.1.50) with ESMTPS id ABC123DEF; Mon, 17 Mar 2026 09:15:20 +0000\n"
+                "Received: from internal-mta.partner.com (10.200.1.25) by "
+                "mail-relay.partner.com (10.200.1.1) with ESMTP id GHI456JKL; "
+                "Mon, 17 Mar 2026 09:15:18 +0000\n"
+                "Authentication-Results: contoso.com; spf=pass "
+                "smtp.mailfrom=partner.com; dkim=pass header.d=partner.com; "
+                "dmarc=pass action=none header.from=partner.com\n"
+                "X-MS-Exchange-Organization-SCL: 1\n"
+                "X-MS-Exchange-Organization-AuthSource: MX01.contoso.com\n"
+                "X-MS-Exchange-Organization-AuthAs: Anonymous\n"
+                "X-MS-Exchange-Organization-AVStamp-Enterprise: 1.0\n"
+                "X-MS-Exchange-Transport-CrossTenantHeadersStamped: EX02\n"
+                "X-MS-Exchange-Organization-MessageDirectionality: Incoming\n"
+                "X-MS-Exchange-CrossTenant-AuthSource: MX01.contoso.com\n"
+                "X-MS-Exchange-CrossTenant-Network-Message-Id: "
+                "a1b2c3d4-e5f6-7890-abcd-ef1234567890\n"
+                "X-MS-Exchange-CrossTenant-Id: 12345678-abcd-ef01-2345-6789abcdef01\n"
+                "X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2026 09:15:20 UTC\n"
+                "X-MS-Exchange-CrossTenant-FromEntityHeader: Internet\n"
+                "MIME-Version: 1.0\n"
+                "Content-Type: multipart/mixed; boundary=\"----=_Part_12345_6789.1234\"\n"
+                "Message-ID: <20260317091518.ABC123@internal-mta.partner.com>\n"
+                "From: john.smith@partner.com\n"
+                "To: emily.nakamura@contoso.com\n"
+                "Subject: Q1 Partnership Review Materials\n"
+                "Date: Mon, 17 Mar 2026 09:15:18 +0000\n"
+                "X-Mailer: Microsoft Outlook 16.0\n"
+                "X-Originating-IP: [10.200.5.42]\n"
+                "Thread-Index: AQHZk2B1mN3pQ7R8sT5uV6wX9yZ0\n\n"
+                "Outlook 365 on my Windows 11 laptop freezes for about 30 seconds every "
+                "time I open an email from external senders. Internal emails open "
+                "instantly. Started after the March patch.\n\n"
+                "— Emily Nakamura\nClient Services"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Investigate Outlook 365 freeze when opening external emails — likely a "
+                "DLP or compliance policy scanning delay introduced with the March patch."
+            ),
+            remediation_steps=[
+                "Check Outlook performance logging for the delay source when opening external emails.",
+                "Review DLP and compliance policy configurations that may be scanning external mail.",
+                "Test with Outlook safe mode to rule out add-in interference.",
+                (
+                    "Check if the March patch introduced known Outlook performance regressions "
+                    "and apply any available hotfix."
+                ),
+            ],
+            reporter_name="Emily Nakamura",
+            reporter_email="emily.nakamura@contoso.com",
+            reporter_department="Client Services",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "raw-email-headers", "smtp-headers-dump"],
+            difficulty="hard",
+        ),
+        # ── DC-245  Very long single paragraph with no line breaks ──────────────
+        ScenarioDefinition(
+            scenario_id="DC-245",
+            subject="VPN certificate expired cannot connect",
+            description=(
+                "Hi IT support I am writing to report an issue with my VPN connection "
+                "that has been affecting my ability to work remotely since yesterday "
+                "morning when I tried to connect to the corporate network from my home "
+                "office using the GlobalProtect VPN client on my Dell Latitude 5540 "
+                "laptop running Windows 11 Pro version 23H2 and I received an error "
+                "message that said something like certificate validation failed or "
+                "certificate has expired I am not sure of the exact wording because I "
+                "was in a hurry to join a client call but I do remember it mentioned "
+                "something about the certificate and I tried clicking retry several "
+                "times and it did not work so I tried restarting my laptop and that did "
+                "not help either and then I tried connecting through my phone hotspot "
+                "instead of my home WiFi thinking maybe it was a network issue but I "
+                "got the same error on both networks which makes me think it is "
+                "definitely a certificate problem and not a network problem and I asked "
+                "my colleague Jennifer Park who sits next to me in the office and she "
+                "said her VPN is working fine so it might just be my machine and I am "
+                "supposed to work from home for the rest of this week because of a "
+                "plumber appointment on Wednesday and a dentist appointment on Thursday "
+                "so this is really urgent for me because I cannot access any of the "
+                "internal systems including SharePoint and the HR portal and SAP and "
+                "the trading platform without VPN and I have a quarterly report due on "
+                "Friday that I cannot even start working on until I get VPN access back "
+                "and my manager David Kim is aware of the situation and he said I should "
+                "contact IT support immediately which is what I am doing now and I really "
+                "hope you can help me resolve this quickly because I am falling behind "
+                "on my deliverables and I also want to mention that last month I had a "
+                "similar issue where the VPN client crashed every time I connected but "
+                "that was fixed by reinstalling the client so I tried that too this time "
+                "but the reinstall did not help because the error is about the certificate "
+                "not the client software itself and I checked the certificate store in "
+                "Windows and I can see there is a certificate from Contoso Corporate CA "
+                "but I do not know if it is the right one or if it has expired because "
+                "I am not very technical with certificates and PKI things and I hope "
+                "someone from your team can remote into my machine and take a look or "
+                "just tell me the steps to fix it and one more thing I noticed that when "
+                "I hover over the GlobalProtect icon in the system tray it says "
+                "disconnected and when I click connect it shows connecting for about ten "
+                "seconds then shows the certificate error and goes back to disconnected"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Renew or reissue the expired VPN client certificate on the user's Dell "
+                "Latitude 5540 — the GlobalProtect certificate validation failure prevents "
+                "remote connectivity."
+            ),
+            remediation_steps=[
+                "Check the VPN client certificate expiration date on the user's laptop.",
+                "Reissue a new VPN client certificate through the certificate authority.",
+                "Install the renewed certificate and verify VPN connectivity.",
+                "Check if other users have the same certificate batch that may be expiring soon.",
+            ],
+            reporter_name="Robert Chen",
+            reporter_email="robert.chen@contoso.com",
+            reporter_department="Portfolio Management",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "no-line-breaks", "wall-of-text"],
+            difficulty="hard",
+        ),
+        # ── DC-246  Base64 image flood obscuring real issue ────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-246",
+            subject="Monitor flickering — screenshots attached inline",
+            description=(
+                "Hi IT,\n\n"
+                "My monitor keeps flickering. Here are screenshots:\n\n"
+                "Screenshot 1:\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAA"
+                "BHNCSVU83LnNpZ25hdHVyZSBoZXJlIGlzIGEgdGVzdCBiYXNlNjQgZW5jb2RlZCBp"
+                "bWFnZSBkYXRhIHRoYXQgaXMgbm90IGFjdHVhbGx5IGEgcmVhbCBpbWFnZSBidXQg"
+                "c2ltdWxhdGVzIGEgbGFyZ2UgcGFzdGVkIHNjcmVlbnNob3QgaW4gYW4gZW1haWwg"
+                "Ym9keSB3aXRoIG1hbnkgbGluZXMgb2YgYmFzZTY0IGRhdGEgdGhhdCBvYnNjdXJl"
+                "cyB0aGUgcmVhbCBpc3N1ZSBiZWluZyByZXBvcnRlZCBieSB0aGUgdXNlciBhbmQg"
+                "bWFrZXMgaXQgZGlmZmljdWx0IGZvciB0aGUgdHJpYWdlIHN5c3RlbSB0byBleHRy"
+                "YWN0IHRoZSBhY3R1YWwgcHJvYmxlbSBkZXNjcmlwdGlvbiBmcm9tIHRoZSBub2lz"
+                "ZQ==\n\n"
+                "Screenshot 2:\n"
+                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJ"
+                "CQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgy"
+                "PC4zNDL/RkVBTElNQUdFREFUQUZBS0VCQVNFNjRFTkNPREVEQ09OVEVOVFRIQVRf"
+                "U0lNVUxBVEVTQUxBUkdFSU5MSU5FSU1BR0VQQVNURURJVE9USEVFTUFJTEJPRFlf"
+                "VE9PQlNDVVJFVEhFUkVBTElTU1VFREVTQ1JJUFRJT04gRk9SVEhFVFJJQUdFU1lT"
+                "VEVNVE9FWFRSQUNUIEZST01USEVOT0lTRQ==\n\n"
+                "Screenshot 3:\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAB"
+                "mJLR0QA/wD/AP+gvaeTAAAANklEQVQYV2NkIBIwMjAwMPxnYGD4z8DAwMDAyMjI8J"
+                "+BgYFBBCgB5DMyMjIwokvCJECqGRkZAQBUzAgR7UYAAAAASUVORK5CYII=AAAAFAKE"
+                "BASE64DATABLOCKTHREESIMULATINGANOTHERLARGEPASTEDSCREENSHOTIMAGE"
+                "CONTENTTHATTAKESUPSPACEINTHETICKETDESCRIPTION==\n\n"
+                "Screenshot 4:\n"
+                "data:image/bmp;base64,Qk2GAAAAAAAAAD4AAAAoAAAABQAAAAUAAAABAAEAAAAAAAA"
+                "AAADEDgAAxA4AAAAAAAAAAAAA////AAAAAADAAAAAYAAAADAAAABQFAKEDATA64BLOCK"
+                "FOURSIMULATESMOREBASE64IMAGECONTENTTHATFILLSUPTHEEMAILDESCRIPTION"
+                "ANDMAKESITVERYLONGANDNOISYWITHTHEREALISSUEBURIEDATTHEBOTTOM==\n\n"
+                "The monitor is a Dell U2722D connected via DisplayPort to a Lenovo "
+                "ThinkPad USB-C dock. The flickering happens every 5-10 seconds."
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate monitor flickering through USB-C dock — ignore the inline "
+                "base64 image data and focus on the hardware issue: Dell U2722D via "
+                "DisplayPort through Lenovo dock flickers every 5-10 seconds."
+            ),
+            remediation_steps=[
+                "Update the docking station firmware to the latest version.",
+                "Test with a different DisplayPort cable or a direct HDMI connection.",
+                "Check display driver version and update to the latest from Dell/Lenovo.",
+                "If flickering persists, test with a replacement docking station.",
+            ],
+            reporter_name="Angela Torres",
+            reporter_email="angela.torres@contoso.com",
+            reporter_department="Equity Trading",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "base64-image-flood", "buried-issue"],
+            difficulty="hard",
+        ),
+        # ── DC-247  Auto-reply/vacation chain burying real issue ───────────────
+        ScenarioDefinition(
+            scenario_id="DC-247",
+            subject="RE: RE: RE: FW: SAP timeout errors — please help",
+            description=(
+                "--- Auto-Reply ---\n"
+                "Thank you for your email. I am currently out of the office until "
+                "March 28, 2026 with limited access to email. For urgent matters, "
+                "please contact James Rivera at james.rivera@contoso.com.\n"
+                "Best regards, Patricia Wong\n\n"
+                "--- Auto-Reply ---\n"
+                "I am out of the office attending the Global Finance Summit in London "
+                "from March 17-24. I will respond to your email upon my return. For "
+                "immediate assistance, please reach out to the Finance Help Desk at "
+                "ext. 4500.\n"
+                "Regards, Michael Strauss\n\n"
+                "--- Auto-Reply ---\n"
+                "Thank you for reaching out. I am on parental leave and will not be "
+                "checking email regularly. For urgent requests, please contact my "
+                "backup Sarah Kim at sarah.kim@contoso.com or call ext. 3201.\n"
+                "— David Park\n\n"
+                "--- Auto-Reply ---\n"
+                "I will be out of the office for a medical appointment on March 18, "
+                "2026. I expect to return on March 19. Emails will be answered in "
+                "the order received.\n"
+                "Thanks, Jennifer Liu\n\n"
+                "--- Auto-Reply ---\n"
+                "Automatic reply: I am traveling internationally this week with "
+                "limited connectivity. Response times may be delayed 24-48 hours.\n"
+                "— Robert Chen\n\n"
+                "--- Original Message ---\n"
+                "From: Lisa Nakamura <lisa.nakamura@contoso.com>\n"
+                "Subject: SAP timeout errors\n\n"
+                "SAP transactions are timing out when processing end-of-quarter "
+                "journal entries. Error: 'Connection to application server timed "
+                "out after 30000ms'. This started yesterday afternoon and affects "
+                "the entire Finance team. We have quarterly close deadlines and "
+                "cannot process entries."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AFFECTED_USERS, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate SAP application server timeouts affecting quarter-end "
+                "journal entry processing for the Finance team. Ignore the five "
+                "auto-reply messages stacked on top of the original issue."
+            ),
+            remediation_steps=[
+                "Check SAP application server health and connection pool availability.",
+                "Review SAP transaction logs for the timeout errors during journal entry processing.",
+                "Verify network connectivity between client workstations and the SAP server.",
+                "Coordinate with the SAP Basis team to check for resource contention during quarter-end load.",
+            ],
+            reporter_name="Lisa Nakamura",
+            reporter_email="lisa.nakamura@contoso.com",
+            reporter_department="Finance",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "auto-reply-chain", "ooo-stack"],
+            difficulty="hard",
+        ),
+        # ── DC-248  Multilingual legal disclaimer overwhelming body ────────────
+        ScenarioDefinition(
+            scenario_id="DC-248",
+            subject="Suspicious login alerts on my account",
+            description=(
+                "Hi Security team, I received 3 alerts about suspicious login attempts "
+                "on my account from IP addresses I don't recognize. The attempts were "
+                "from 185.220.101.x range at 2:00 AM, 2:15 AM, and 3:30 AM.\n\n"
+                "CONFIDENTIALITY NOTICE: This email and any attachments are for the "
+                "exclusive and confidential use of the intended recipient. If you are "
+                "not the intended recipient, please do not read, distribute, or take "
+                "action based on this message. Any unauthorized review, use, disclosure, "
+                "or distribution is strictly prohibited. If you have received this "
+                "communication in error, please notify the sender immediately by reply "
+                "email and destroy all copies of the original message. This email may "
+                "contain material that is confidential, privileged, and/or attorney "
+                "work product for the sole use of the intended recipient. Any review "
+                "or distribution by others is strictly prohibited. Contoso Financial "
+                "Services cannot guarantee the security of email transmission.\n\n"
+                "AVIS DE CONFIDENTIALITÉ : Ce courriel et ses pièces jointes sont "
+                "destinés exclusivement à l'usage confidentiel du destinataire prévu. "
+                "Si vous n'êtes pas le destinataire prévu, veuillez ne pas lire, "
+                "distribuer ou agir sur la base de ce message. Toute révision, "
+                "utilisation, divulgation ou distribution non autorisée est strictement "
+                "interdite. Si vous avez reçu cette communication par erreur, veuillez "
+                "en informer l'expéditeur immédiatement par courriel et détruire tous "
+                "les exemplaires du message original. Contoso Services Financiers ne "
+                "peut garantir la sécurité de la transmission par courriel.\n\n"
+                "VERTRAULICHKEITSHINWEIS: Diese E-Mail und alle Anhänge sind "
+                "ausschließlich für den vertraulichen Gebrauch des vorgesehenen "
+                "Empfängers bestimmt. Wenn Sie nicht der vorgesehene Empfänger sind, "
+                "lesen, verteilen oder handeln Sie bitte nicht auf Grundlage dieser "
+                "Nachricht. Jede unbefugte Überprüfung, Nutzung, Offenlegung oder "
+                "Verbreitung ist strengstens untersagt. Wenn Sie diese Mitteilung "
+                "irrtümlich erhalten haben, benachrichtigen Sie bitte den Absender "
+                "umgehend per E-Mail und vernichten Sie alle Kopien.\n\n"
+                "機密保持に関する通知：この電子メールおよび添付ファイルは、意図された"
+                "受信者の排他的かつ機密的な使用のためのものです。意図された受信者でない"
+                "場合は、このメッセージを読んだり、配布したり、それに基づいて行動したり"
+                "しないでください。許可されていないレビュー、使用、開示、または配布は"
+                "固く禁じられています。この通信を誤って受信した場合は、直ちに返信メール"
+                "で送信者に通知し、元のメッセージのすべてのコピーを破棄してください。"
+            ),
+            category=Category.SECURITY,
+            priority=Priority.P2,
+            team=Team.SECURITY_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AUTHENTICATION_METHOD, MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Investigate suspicious login attempts from 185.220.101.x IP range on "
+                "user's account at 2:00-3:30 AM. Ignore the multilingual legal "
+                "disclaimer that occupies most of the email."
+            ),
+            remediation_steps=[
+                "Check Azure AD sign-in logs for the user's account to confirm the suspicious IPs.",
+                "Block the 185.220.101.x IP range if confirmed as unauthorized.",
+                "Force a password reset and enable MFA if not already active.",
+                "Check if any successful logins occurred from those IPs.",
+            ],
+            reporter_name="Kathryn Mueller",
+            reporter_email="kathryn.mueller@contoso.com",
+            reporter_department="Compliance",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "legal-disclaimer", "multilingual-footer"],
+            difficulty="hard",
+        ),
+        # ── DC-249  Teams chat transcript pasted into ticket ───────────────────
+        ScenarioDefinition(
+            scenario_id="DC-249",
+            subject="Teams keeps crashing — chat log attached",
+            description=(
+                "Here is the chat we had about the issue:\n\n"
+                "[3/17/2026 9:02 AM] Rachel Kim:\n"
+                "hey is Teams working for you?\n\n"
+                "[3/17/2026 9:02 AM] Derek Johnson:\n"
+                "yeah seems fine on my end\n\n"
+                "[3/17/2026 9:03 AM] Rachel Kim:\n"
+                "mine keeps crashing every time I open a chat. like literally freezes then closes\n\n"
+                "[3/17/2026 9:03 AM] Derek Johnson:\n"
+                "have you tried clearing the cache?\n\n"
+                "[3/17/2026 9:04 AM] Rachel Kim:\n"
+                "yes did that yesterday. no help\n\n"
+                "[3/17/2026 9:04 AM] Rachel Kim:\n"
+                "also tried reinstalling it\n\n"
+                "[3/17/2026 9:05 AM] Derek Johnson:\n"
+                "weird. maybe submit a ticket?\n\n"
+                "👍 Rachel Kim liked this message\n\n"
+                "[3/17/2026 9:06 AM] Rachel Kim:\n"
+                "already on hold with IT for 20 min lol\n\n"
+                "[3/17/2026 9:06 AM] Sofia Reyes:\n"
+                "same issue here! started this morning\n\n"
+                "👍 Rachel Kim liked this message\n"
+                "👍 Derek Johnson liked this message\n\n"
+                "[3/17/2026 9:07 AM] Sofia Reyes:\n"
+                "i think it started after the update last night\n\n"
+                "[3/17/2026 9:08 AM] Rachel Kim:\n"
+                "oh yeah the automatic update. that makes sense.\n\n"
+                "[3/17/2026 9:08 AM] Derek Johnson:\n"
+                "im on the new Teams (v2) maybe thats why mine works\n\n"
+                "[3/17/2026 9:10 AM] Rachel Kim:\n"
+                "ok submitting ticket now. copying this chat as context\n\n"
+                "So basically Teams (classic) crashes immediately when opening any "
+                "chat window. Started after the overnight update on March 16. Affects "
+                "at least 2 of us on the Trading floor."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Investigate Microsoft Teams (classic) crash-on-chat-open after the "
+                "March 16 overnight update. Multiple users on the Trading floor are "
+                "affected. Ignore the chat transcript noise."
+            ),
+            remediation_steps=[
+                "Check the Teams update version deployed overnight on March 16.",
+                "Clear the Teams cache and credentials from the Credential Manager.",
+                "Test migrating affected users to the new Teams (v2) client.",
+                "If the issue is widespread, consider rolling back the update for affected machines.",
+            ],
+            reporter_name="Rachel Kim",
+            reporter_email="rachel.kim@contoso.com",
+            reporter_department="Trading",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "teams-transcript", "chat-paste"],
+            difficulty="medium",
+        ),
+        # ── DC-250  HTTP response dump with headers and cookies ────────────────
+        ScenarioDefinition(
+            scenario_id="DC-250",
+            subject="Internal expense portal returning 500 errors",
+            description=(
+                "The expense reporting portal is returning 500 errors. Here is "
+                "the full response I captured from the browser dev tools:\n\n"
+                "HTTP/1.1 500 Internal Server Error\n"
+                "Date: Mon, 17 Mar 2026 14:32:15 GMT\n"
+                "Server: Microsoft-IIS/10.0\n"
+                "X-Powered-By: ASP.NET\n"
+                "X-AspNet-Version: 4.0.30319\n"
+                "X-Frame-Options: SAMEORIGIN\n"
+                "X-Content-Type-Options: nosniff\n"
+                "Strict-Transport-Security: max-age=31536000; includeSubDomains\n"
+                "Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'\n"
+                "X-Request-Id: 7f8a2b3c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\n"
+                "X-Correlation-Id: a1b2c3d4-e5f6-7890-abcd-ef1234567890\n"
+                "Set-Cookie: .AspNet.ApplicationCookie=REDACTED; path=/; secure; HttpOnly\n"
+                "Set-Cookie: __RequestVerificationToken=REDACTED; path=/; secure\n"
+                "Cache-Control: no-cache, no-store, must-revalidate\n"
+                "Pragma: no-cache\n"
+                "Content-Type: text/html; charset=utf-8\n"
+                "Content-Length: 4832\n\n"
+                '<!DOCTYPE html><html><head><title>Runtime Error</title></head>'
+                "<body><h2>Server Error in '/ExpensePortal' Application.</h2>"
+                "<h3>Object reference not set to an instance of an object.</h3>"
+                "<p><b>Description:</b> An unhandled exception occurred during the "
+                "execution of the current web request.</p>"
+                "<p><b>Stack Trace:</b><br>"
+                "System.NullReferenceException: Object reference not set to an "
+                "instance of an object.<br>"
+                "   at Contoso.Expenses.Controllers.SubmitController.Post(ExpenseForm "
+                "model) in D:\\Deploy\\ExpensePortal\\Controllers\\SubmitController.cs"
+                ":line 142<br>"
+                "   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase "
+                "controller, Object[] parameters)</p></body></html>\n\n"
+                "This happens when I try to submit an expense report. It worked fine "
+                "last week."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.STEPS_TO_REPRODUCE, MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Fix the NullReferenceException in the Expense Portal's SubmitController "
+                "(line 142) causing 500 errors on expense report submission. The HTTP "
+                "response dump provides the stack trace."
+            ),
+            remediation_steps=[
+                "Check the ExpensePortal application logs for the NullReferenceException details.",
+                "Review recent deployments to SubmitController.cs for the regression.",
+                "Verify the database connection and dependent services are available.",
+                "Apply a hotfix or rollback the last deployment if a regression is identified.",
+            ],
+            reporter_name="Marcus Webb",
+            reporter_email="marcus.webb@contoso.com",
+            reporter_department="Finance",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "http-dump", "response-headers"],
+            difficulty="medium",
+        ),
+        # ── DC-251  Data URI screenshot flood in HTML email ────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-251",
+            subject="Excel charts not rendering correctly",
+            description=(
+                "The charts in our Q1 Financial Summary workbook are rendering "
+                "incorrectly since the Excel update. Here are screenshots:\n\n"
+                '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA'
+                "AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO"
+                "FAKEBASE64DATABLOCKFORINLINESCREENSHOT1THATISPASTEDINTOTHEEMAIL"
+                "BODYASANHTMLIMAGETAGWITHBASE64ENCODEDCONTENTMAKINGTHEEMAIL"
+                'VERYLARGEANDHARDTOPARSE9k=" alt="Chart error 1">\n\n'
+                '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoA'
+                "AAAKCAYAAACNMs+9AAAABmJLR0QA/wD/AP+gvaeTAAAADUlEQVQYV2PoZWBg"
+                "FAKEBASE64SECONDSCREENSHOTBLOCKTHATCONTAINSMOREENCODEDIMAGE"
+                "DATATOSIMULATEMULTIPLEPASTEDINLINESCREENSHOTSFROMTHEUSER"
+                'k=" alt="Chart error 2">\n\n'
+                '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/'
+                "FAKEBASE64THIRDSCREENSHOTBLOCKWITHEVENMOREENCODEDDATATHAT"
+                "FILLSUPTHEMAILBODYANDOBSCURESTHEREALISSUEDESCRIPTION"
+                'AASUVORK5CYII=" alt="Chart error 3">\n\n'
+                "The bar charts show incorrect Y-axis scaling and pie charts are "
+                "missing legend labels. This is in Excel 365 on Windows 11."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate Excel 365 chart rendering issues: bar chart Y-axis "
+                "scaling errors and missing pie chart legend labels after the latest "
+                "update. Ignore the inline base64 image data."
+            ),
+            remediation_steps=[
+                "Check the Excel 365 version and compare with known chart rendering bugs.",
+                "Test with a new workbook to determine if the issue is file-specific.",
+                "Repair the Office 365 installation via Settings > Apps.",
+                "If file-specific, check for corrupted chart objects and recreate them.",
+            ],
+            reporter_name="Diana Kwon",
+            reporter_email="diana.kwon@contoso.com",
+            reporter_department="Research",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "data-uri-flood", "inline-screenshots"],
+            difficulty="hard",
+        ),
+        # ── DC-252  Multi-ticket thread confusion ──────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-252",
+            subject="RE: FW: Network issues — ref INC-1847, INC-1902, INC-1955",
+            description=(
+                "Hi IT team,\n\n"
+                "Following up on this ongoing network problem. For context, this has "
+                "been reported multiple times:\n\n"
+                "- INC-1847 (opened Feb 12): WiFi drops on 5th floor Building 3\n"
+                "- INC-1902 (opened Feb 28): Same issue, was told it was 'resolved' but "
+                "it wasn't\n"
+                "- INC-1955 (opened Mar 5): Reopened because the fix didn't hold\n"
+                "- INC-1971 (opened Mar 10): Filed by my colleague Janet about the same "
+                "problem on the 4th floor\n"
+                "- INC-1988 (opened Mar 14): Filed by Building 3 facilities about access "
+                "point replacement — not sure if related\n\n"
+                "The current issue is that the WiFi on the 5th floor of Building 3 "
+                "drops every 15-20 minutes during trading hours (9 AM - 4 PM ET). "
+                "It has been happening for over a month now despite multiple tickets. "
+                "The access point nearest my desk (AP-B3-5F-02) seems to be the one "
+                "failing. Signal drops to zero and takes 30-60 seconds to reconnect.\n\n"
+                "Can someone please coordinate all these tickets and give us a "
+                "permanent fix? This is affecting the entire 5th floor."
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.NETWORK_LOCATION, MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Investigate recurring WiFi drops on 5th floor Building 3 — access "
+                "point AP-B3-5F-02 drops signal every 15-20 minutes during trading "
+                "hours. Consolidate the multiple related tickets (INC-1847, 1902, "
+                "1955, 1971, 1988) into a single remediation effort."
+            ),
+            remediation_steps=[
+                "Inspect and test access point AP-B3-5F-02 for hardware failure or firmware issues.",
+                "Check for channel interference from neighboring APs or non-WiFi sources.",
+                "Replace AP-B3-5F-02 if hardware diagnostics show degradation.",
+                "Verify the fix holds for at least one full trading week before closing all related tickets.",
+            ],
+            reporter_name="Thomas Reilly",
+            reporter_email="thomas.reilly@contoso.com",
+            reporter_department="Trading",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "multi-ticket-reference", "thread-confusion"],
+            difficulty="medium",
+        ),
+        # ── DC-253  ServiceDesk notification template noise ────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-253",
+            subject="[ServiceNow] INC0087432 — Update from assignee",
+            description=(
+                "═══════════════════════════════════════════\n"
+                "ServiceNow Notification — Incident Update\n"
+                "═══════════════════════════════════════════\n"
+                "Incident:       INC0087432\n"
+                "Priority:       3 - Moderate\n"
+                "State:          Work in Progress → Pending User\n"
+                "Assignment:     Endpoint Engineering → Sarah Chen\n"
+                "Updated by:     Sarah Chen (IT Support)\n"
+                "Updated:        2026-03-17 10:45:22 UTC\n"
+                "SLA Status:     Within SLA (12h remaining)\n"
+                "Contact Type:   Self-Service Portal\n"
+                "Category:       Hardware\n"
+                "Subcategory:    Peripheral Devices\n"
+                "CI:             WKS-B2-4F-018\n"
+                "═══════════════════════════════════════════\n\n"
+                "Field Changes:\n"
+                "  State:         Work in Progress → Pending User\n"
+                "  Assignment:    IT Help Desk → Endpoint Engineering\n"
+                "  Priority:      4 → 3\n"
+                "  Work Notes:    Updated (see below)\n\n"
+                "Activity Log:\n"
+                "  2026-03-17 10:45 — Sarah Chen (Work Note):\n"
+                "    Checked the docking station firmware — it is on v1.2.3, latest "
+                "is v1.4.1. Scheduling firmware update.\n\n"
+                "  2026-03-17 09:30 — Help Desk (Customer Visible):\n"
+                "    Ticket assigned to Endpoint Engineering.\n\n"
+                "  2026-03-16 16:20 — User (Initial Description):\n"
+                "    My keyboard and mouse disconnect randomly when using the docking "
+                "station. Happens 3-4 times per day. Docking station model is Lenovo "
+                "ThinkPad USB-C Dock Gen 2.\n\n"
+                "═══════════════════════════════════════════\n"
+                "Please do not reply to this email directly.\n"
+                "Log in to the ServiceNow portal to update: "
+                "https://contoso.service-now.com/nav_to.do?uri=incident.do?sys_id=abc123\n"
+                "═══════════════════════════════════════════"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.REPRODUCTION_FREQUENCY],
+            next_best_action=(
+                "Continue troubleshooting keyboard/mouse disconnections through the "
+                "Lenovo ThinkPad USB-C Dock Gen 2. The dock firmware is outdated "
+                "(v1.2.3 vs v1.4.1) — update firmware and verify stability."
+            ),
+            remediation_steps=[
+                "Update the docking station firmware from v1.2.3 to v1.4.1.",
+                "Check USB drivers on the workstation for pending updates.",
+                "Test peripherals connected directly to the laptop to rule out device issues.",
+                "If disconnections persist after firmware update, replace the docking station.",
+            ],
+            reporter_name="Jason Okafor",
+            reporter_email="jason.okafor@contoso.com",
+            reporter_department="Operations",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "servicedesk-template", "auto-notification"],
+            difficulty="medium",
+        ),
+        # ── DC-254  Mojibake encoding corruption throughout ────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-254",
+            subject="SharePoint access broken \u00e2\u20ac\u201c can\u00e2\u20ac\u2122t open documents",
+            description=(
+                "Hi IT,\n\n"
+                "I\u00e2\u20ac\u2122m having trouble accessing SharePoint since this morning. When I "
+                "try to open documents in the Finance team site, I get a \u00e2\u20ac\u0153Access "
+                "Denied\u00e2\u20ac\u009d error even though I had access yesterday. My colleague\u00e2\u20ac\u2122s "
+                "access still works fine.\n\n"
+                "The URL is https://contoso.sharepoint.com/sites/FinanceTeam and the "
+                "specific library is \u00e2\u20ac\u0153Q1 Reports\u00e2\u20ac\u009d. I\u00e2\u20ac\u2122ve tried:\n"
+                "\u00e2\u20ac\u00a2 Clearing browser cache\n"
+                "\u00e2\u20ac\u00a2 Using InPrivate/Incognito mode\n"
+                "\u00e2\u20ac\u00a2 Trying Edge, Chrome, and Firefox\n"
+                "\u00e2\u20ac\u00a2 Logging out and back in\n\n"
+                "Nothing helps. I need access urgently \u00e2\u20ac\u201c the quarterly close reports "
+                "are due on Friday and they\u00e2\u20ac\u2122re all stored in that library.\n\n"
+                "Thanks,\n\u00c3\u2030milie Fontaine\u00e2\u20ac\u201dFinance"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.AUTHENTICATION_METHOD],
+            next_best_action=(
+                "Investigate SharePoint 'Access Denied' error on the Finance Team site. "
+                "The ticket contains mojibake encoding artifacts (UTF-8 interpreted as "
+                "Windows-1252) but the core issue is a permissions problem."
+            ),
+            remediation_steps=[
+                "Check the user's SharePoint permissions on the Finance Team site.",
+                "Verify the SharePoint group membership hasn't changed recently.",
+                "Check if a site collection admin removed or modified permissions.",
+                "Re-grant access to the Q1 Reports library and verify the user can open documents.",
+            ],
+            reporter_name="Emilie Fontaine",
+            reporter_email="emilie.fontaine@contoso.com",
+            reporter_department="Finance",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "mojibake-corruption", "encoding-mismatch"],
+            difficulty="hard",
+        ),
+        # ── DC-255  SOAP XML fault dump pasted into ticket ─────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-255",
+            subject="Internal trade reconciliation service error",
+            description=(
+                "The trade reconciliation service is returning errors. Here is the "
+                "response:\n\n"
+                '<?xml version="1.0" encoding="utf-8"?>\n'
+                "<soap:Envelope "
+                'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" '
+                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                'xmlns:xsd="http://www.w3.org/2001/XMLSchema">\n'
+                "  <soap:Body>\n"
+                "    <soap:Fault>\n"
+                "      <faultcode>soap:Server</faultcode>\n"
+                "      <faultstring>Server was unable to process request. "
+                "---&gt; System.Data.SqlClient.SqlException: Timeout expired. "
+                "The timeout period elapsed prior to completion of the operation "
+                "or the server is not responding. "
+                "---&gt; System.ComponentModel.Win32Exception: The wait operation "
+                "timed out</faultstring>\n"
+                "      <detail>\n"
+                "        <TradeReconciliationFault "
+                'xmlns="http://contoso.com/trading/reconciliation">\n'
+                "          <ErrorCode>RECON-5001</ErrorCode>\n"
+                "          <ErrorMessage>Database query timed out during "
+                "end-of-day reconciliation batch</ErrorMessage>\n"
+                "          <Timestamp>2026-03-17T16:05:32.847Z</Timestamp>\n"
+                "          <Server>TRADESRV-02.contoso.local</Server>\n"
+                "          <Database>TradeReconDB</Database>\n"
+                "          <BatchId>EOD-20260317-001</BatchId>\n"
+                "        </TradeReconciliationFault>\n"
+                "      </detail>\n"
+                "    </soap:Fault>\n"
+                "  </soap:Body>\n"
+                "</soap:Envelope>\n\n"
+                "This is blocking the end-of-day reconciliation process for all "
+                "trading desks."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AFFECTED_USERS, MissingInfo.BUSINESS_IMPACT],
+            next_best_action=(
+                "Fix the SQL timeout (RECON-5001) in the trade reconciliation service "
+                "on TRADESRV-02 — the TradeReconDB is timing out during the end-of-day "
+                "batch (EOD-20260317-001), blocking all trading desk reconciliation."
+            ),
+            remediation_steps=[
+                "Check TRADESRV-02 SQL Server performance and blocking queries.",
+                "Review the EOD reconciliation stored procedure for long-running queries.",
+                "Increase the SQL command timeout temporarily while investigating the root cause.",
+                "Verify database indexes and statistics are up to date on TradeReconDB.",
+            ],
+            reporter_name="Ivan Petrov",
+            reporter_email="ivan.petrov@contoso.com",
+            reporter_department="Settlements",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "soap-fault-dump", "xml-response"],
+            difficulty="medium",
+        ),
+        # ── DC-256  Complex HTML table email with inline CSS ───────────────────
+        ScenarioDefinition(
+            scenario_id="DC-256",
+            subject="Cannot print org chart email from HR",
+            description=(
+                "I received an email from HR with the updated org chart but when I try "
+                "to print it, the printer outputs garbage. The email contains this:\n\n"
+                '<table style="border-collapse:collapse;width:100%;font-family:Calibri,'
+                'Arial,sans-serif;font-size:11pt" cellpadding="8" cellspacing="0">\n'
+                '<tr style="background-color:#1F4E79;color:white;font-weight:bold">\n'
+                '<td colspan="4" style="text-align:center;padding:12px;font-size:14pt">'
+                "Contoso Financial Services — Q1 2026 Organization Chart</td></tr>\n"
+                '<tr style="background-color:#D6E4F0">\n'
+                '<td style="border:1px solid #9BC2E6;width:25%">Executive Office</td>\n'
+                '<td style="border:1px solid #9BC2E6;width:25%">James Harrison — CEO</td>\n'
+                '<td style="border:1px solid #9BC2E6;width:25%">Victoria Chen — CFO</td>\n'
+                '<td style="border:1px solid #9BC2E6;width:25%">Robert Blackwell — CTO</td>\n'
+                "</tr>\n"
+                '<tr style="background-color:#E2EFDA">\n'
+                '<td style="border:1px solid #A9D08E">Engineering</td>\n'
+                '<td style="border:1px solid #A9D08E" colspan="3">12 direct reports — see '
+                "attached PDF for full breakdown</td></tr>\n"
+                "</table>\n\n"
+                "<!-- More nested tables follow for 6 departments -->\n\n"
+                "The email renders fine on screen but the printer on Floor 4 (HP LaserJet "
+                "M507) just prints the raw HTML tags instead of the formatted table."
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P4,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate the HP LaserJet M507 printing raw HTML instead of rendered "
+                "content when printing emails with complex inline HTML tables and CSS. "
+                "Likely a print driver rendering issue."
+            ),
+            remediation_steps=[
+                "Check the print driver version on the user's workstation and update if needed.",
+                "Try printing from a different email client or browser to isolate the issue.",
+                "Test printing to PDF first, then printing the PDF to the physical printer.",
+                "Check if the HP printer firmware supports HTML rendering in the print stream.",
+            ],
+            reporter_name="Karen Yilmaz",
+            reporter_email="karen.yilmaz@contoso.com",
+            reporter_department="Human Resources",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "html-table-noise", "inline-css-dump"],
+            difficulty="medium",
+        ),
+        # ── DC-257  Very long rambling email with buried issue ─────────────────
+        ScenarioDefinition(
+            scenario_id="DC-257",
+            subject="Quick question about my computer",
+            description=(
+                "Hi IT team,\n\n"
+                "Hope you're all doing well! I know you guys are super busy so I "
+                "appreciate you looking at this. First off, I wanted to say that the "
+                "new coffee machines in the break room are amazing — whoever picked "
+                "those out deserves a raise, seriously. The oat milk option is a game "
+                "changer.\n\n"
+                "Anyway, so I was in the office yesterday and I ran into Marcus from "
+                "Trading and he was telling me about how his team just switched to "
+                "those new Bloomberg terminals and apparently they're way faster than "
+                "the old ones. Made me think about how technology moves so fast these "
+                "days. Remember when we all had those thick Dell monitors? Now "
+                "everyone has the thin ones with USB-C. Wild.\n\n"
+                "Speaking of monitors, my neighbor just got a new 4K TV and he was "
+                "showing me how he set it up as a second monitor for his gaming PC. "
+                "I don't really game but I thought that was pretty cool. My kids are "
+                "into Minecraft though — do you guys support Minecraft on the work "
+                "laptops? Just kidding, I know you don't.\n\n"
+                "So the reason I'm writing is that last Tuesday, or maybe Wednesday "
+                "— no wait, it was definitely Tuesday because that's when I had my "
+                "dentist appointment in the morning and I came in late — I noticed "
+                "that when I'm on the VPN from home, the network drives disconnect "
+                "after exactly 10 minutes of inactivity. Every single time. I have to "
+                "go to File Explorer and remap the drive. It's pretty annoying.\n\n"
+                "Oh and before I forget, are we still doing the team outing next "
+                "month? I heard something about bowling but I'm not sure if that's "
+                "confirmed. Also, is there a way to get a standing desk? My back has "
+                "been killing me since I started working from home three days a week.\n\n"
+                "But yeah, the network drive thing is the main issue. It's the "
+                "\\\\filesrv\\finance share and it disconnects after 10 minutes idle.\n\n"
+                "Thanks so much!\nGreg"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Fix the mapped network drive (\\\\filesrv\\finance) disconnecting after "
+                "10 minutes of idle time over VPN. Likely a session timeout or SMB "
+                "keepalive configuration issue."
+            ),
+            remediation_steps=[
+                "Check the VPN idle timeout settings and SMB session keepalive configuration.",
+                "Verify the GPO settings for mapped drive persistence over VPN.",
+                "Increase the SMB session timeout on the file server or VPN gateway.",
+                "Test with a persistent net use /persistent:yes mapping.",
+            ],
+            reporter_name="Greg Holloway",
+            reporter_email="greg.holloway@contoso.com",
+            reporter_department="Finance",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "extremely-verbose-buried", "rambling-email"],
+            difficulty="hard",
+        ),
+        # ── DC-258  Embedded EML with RFC 822 headers ──────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-258",
+            subject="FW: Email delivery failure — embedded original message",
+            description=(
+                "I'm forwarding the original failed email for IT to investigate. "
+                "When I forward it, my client includes the raw headers:\n\n"
+                "Content-Type: message/rfc822\n"
+                "Content-Disposition: attachment; filename=\"original_message.eml\"\n\n"
+                "Return-Path: <noreply@contoso.com>\n"
+                "Received: from mail-gw01.contoso.com (10.0.1.25) by "
+                "mail-hub02.contoso.com (10.0.1.30) with Microsoft SMTP Server "
+                "(version=TLS1_2, cipher=ECDHE-RSA-AES256-GCM-SHA384) id "
+                "15.1.2507.35; Mon, 17 Mar 2026 09:15:03 -0400\n"
+                "Received: from external-relay.partner.com (203.0.113.50) by "
+                "mail-gw01.contoso.com with ESMTPS id abc123def456;\n"
+                " Mon, 17 Mar 2026 09:14:58 -0400\n"
+                "DKIM-Signature: v=1; a=rsa-sha256; d=partner.com; s=selector1;\n"
+                " h=from:to:subject:date:message-id;\n"
+                " bh=abcdefg123456789=; b=LONGSIGNATUREDATA==\n"
+                "From: \"Partner Systems\" <alerts@partner.com>\n"
+                "To: \"Settlement Team\" <settlements@contoso.com>\n"
+                "Subject: Daily Settlement Confirmation — 2026-03-17\n"
+                "Date: Mon, 17 Mar 2026 13:14:55 +0000\n"
+                "Message-ID: <20260317131455.12345@partner.com>\n"
+                "MIME-Version: 1.0\n"
+                "Content-Type: multipart/mixed; boundary=\"----=_Part_12345\"\n\n"
+                "------=_Part_12345\n"
+                "Content-Type: text/plain; charset=UTF-8\n\n"
+                "This message was rejected by the Contoso email gateway with error: "
+                "'550 5.7.1 Message rejected due to content policy violation.'\n\n"
+                "------=_Part_12345--\n\n"
+                "We need this daily settlement confirmation email from partner.com to "
+                "come through. It stopped arriving 3 days ago and the settlement team "
+                "is manually reconciling, which is error-prone."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.CONFIGURATION_DETAILS, MissingInfo.TIMESTAMP],
+            next_best_action=(
+                "Investigate email delivery rejection (550 5.7.1 content policy "
+                "violation) for daily settlement confirmation emails from partner.com "
+                "to settlements@contoso.com. The embedded EML headers show the "
+                "rejection occurs at the Contoso email gateway."
+            ),
+            remediation_steps=[
+                "Check the Exchange transport rules for recently changed content filtering policies.",
+                "Review the mail gateway logs for the specific rejection reason for partner.com emails.",
+                "Whitelist the sender domain (partner.com) or specific sender address if legitimate.",
+                "Verify the DKIM/SPF/DMARC records for partner.com are passing validation.",
+            ],
+            reporter_name="Alan Nakamura",
+            reporter_email="alan.nakamura@contoso.com",
+            reporter_department="Settlements",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "embedded-eml", "rfc822-headers"],
+            difficulty="hard",
+        ),
+        # ── DC-259  OCR scan artifacts with recognition errors ─────────────────
+        ScenarioDefinition(
+            scenario_id="DC-259",
+            subject="Database backup report — OCR scan from printout",
+            description=(
+                "I scanned the printout from the server room and the OCR gave me "
+                "this. Sorry for the quality:\n\n"
+                "CONT0SO F1NANCIAL SERV1CES\n"
+                "Oata8ase Backup Rep0rt - March 2O26\n"
+                "======================================\n"
+                "Server: SQLSRV-O1.contoso.1ocal\n"
+                "Oata8ase: TradeL edgerO8 (1.2 T8)\n"
+                "Last 8ackup: 2O26-O3-15 O2:OO:OO UTC\n"
+                "Status: FA1LED\n"
+                "Err0r: 1nsufficient disk space on 8ackup v0lurne\n"
+                "     Avai1ab1e: 45.2 G8\n"
+                "     Required: 1,2OO G8\n"
+                "======================================\n"
+                "Server: SQLSRV-O2.contoso.1ocal\n"
+                "Oata8ase: ClientPortf0li0D8 (856 G8)\n"
+                "Last 8ackup: 2O26-O3-17 O2:OO:OO UTC\n"
+                "Status: C0MPLETED\n"
+                "======================================\n"
+                "Server: SQLSRV-O3.contoso.1ocal\n"
+                "Oata8ase: RiskAnalyticsO8 (445 G8)\n"
+                "Last 8ackup: 2O26-O3-17 O2:OO:OO UTC\n"
+                "Status: C0MPLETED\n"
+                "======================================\n\n"
+                "The TradeLedgerDB backup on SQLSRV-01 has been failing since "
+                "March 15 due to insufficient disk space on the backup volume."
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P3,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.BUSINESS_IMPACT, MissingInfo.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Resolve the TradeLedgerDB backup failure on SQLSRV-01 caused by "
+                "insufficient disk space on the backup volume (45 GB available, "
+                "1,200 GB needed). The OCR'd text has recognition errors but the "
+                "core issue is clear."
+            ),
+            remediation_steps=[
+                "Free disk space on the backup volume by archiving or deleting old backup files.",
+                "Expand the backup volume storage capacity to accommodate the 1.2 TB database.",
+                "Re-run the TradeLedgerDB backup manually and verify it completes successfully.",
+                "Set up monitoring alerts for backup volume capacity at 80% threshold.",
+            ],
+            reporter_name="Nikolai Volkov",
+            reporter_email="nikolai.volkov@contoso.com",
+            reporter_department="Data Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "ocr-scan-noise", "recognition-errors"],
+            difficulty="hard",
+        ),
+        # ── DC-260  WinRM remote session transcript ────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-260",
+            subject="Remote management output from failing server",
+            description=(
+                "I ran some diagnostics on APPSRV-04 via WinRM. Here's the full "
+                "session output:\n\n"
+                "PS C:\\> Enter-PSSession -ComputerName APPSRV-04.contoso.local "
+                "-Credential $cred\n"
+                "[APPSRV-04.contoso.local]: PS C:\\Users\\admin> Get-Service | "
+                "Where-Object {$_.Status -eq 'Stopped'}\n\n"
+                "Status   Name               DisplayName\n"
+                "------   ----               -----------\n"
+                "Stopped  ContosoTradeAPI     Contoso Trade API Service\n"
+                "Stopped  ContosoReconSvc     Contoso Reconciliation Service\n"
+                "Stopped  W3SVC              World Wide Web Publishing Service\n"
+                "Stopped  WAS                Windows Process Activation Service\n\n"
+                "[APPSRV-04.contoso.local]: PS C:\\Users\\admin> Get-EventLog "
+                "-LogName Application -Newest 5 -EntryType Error\n\n"
+                "   Index Time          EntryType   Source                 InstanceID Message\n"
+                "   ----- ----          ---------   ------                 ---------- -------\n"
+                "   45021 Mar 17 06:15  Error       ContosoTradeAPI           4096 Service "
+                "terminated unexpectedly. Exit code: -1073741819 (0xC0000005)\n"
+                "   45020 Mar 17 06:15  Error       .NET Runtime                 0 Application: "
+                "ContosoTradeAPI.exe Framework Version: v4.0.30319 Description: "
+                "The process was terminated due to an unhandled exception.\n"
+                "   45019 Mar 17 06:14  Error       W3SVC                     1001 The World "
+                "Wide Web Publishing Service terminated with service-specific error "
+                "The specified address is already in use.\n"
+                "   45018 Mar 17 06:14  Error       WAS                       5005 Windows "
+                "Process Activation Service failed to start. Port 443 is already in use.\n"
+                "   45017 Mar 17 06:10  Error       Application Error         1000 Faulting "
+                "application name: ContosoTradeAPI.exe, version: 3.2.1.0\n\n"
+                "[APPSRV-04.contoso.local]: PS C:\\Users\\admin> netstat -ano | "
+                "Select-String ':443'\n"
+                "  TCP    0.0.0.0:443        0.0.0.0:0       LISTENING       7892\n\n"
+                "[APPSRV-04.contoso.local]: PS C:\\Users\\admin> Get-Process -Id 7892\n"
+                "Handles  NPM(K)  PM(K)   WS(K)   CPU(s)     Id  SI ProcessName\n"
+                "-------  ------  -----   -----   ------     --  -- -----------\n"
+                "    320      25  48320   52416    12.34   7892   0 ContosoReconSvc\n\n"
+                "[APPSRV-04.contoso.local]: PS C:\\Users\\admin> Exit-PSSession\n\n"
+                "Summary: ContosoTradeAPI crashed at 06:15 and W3SVC can't start "
+                "because ContosoReconSvc is occupying port 443."
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.BUSINESS_IMPACT, MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Resolve the port conflict on APPSRV-04: ContosoReconSvc (PID 7892) is "
+                "holding port 443, preventing W3SVC and ContosoTradeAPI from starting. "
+                "The WinRM session output provides the full diagnostic trace."
+            ),
+            remediation_steps=[
+                "Stop ContosoReconSvc and reconfigure it to use a different port (e.g., 8443).",
+                "Restart W3SVC and ContosoTradeAPI after freeing port 443.",
+                "Investigate why ContosoReconSvc started binding to port 443 (configuration change?).",
+                "Set up service dependency ordering to prevent port conflicts on startup.",
+            ],
+            reporter_name="Pavel Kuznetsov",
+            reporter_email="pavel.kuznetsov@contoso.com",
+            reporter_department="DevOps",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "winrm-transcript", "remote-session-dump"],
+            difficulty="medium",
+        ),
     ]

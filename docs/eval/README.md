@@ -116,7 +116,7 @@ uv run python run_eval.py \
   --dataset ../data/tickets/public_eval.json
 ```
 
-### Data cleanup eval (80 tickets with gold answers)
+### Data cleanup eval (235 tickets with gold answers)
 
 Tests your system against messy real-world data: very long emails, base64-encoded images in descriptions, HTML markup, excessive Unicode/emoji, whitespace-only content, repeated text, deeply nested email forwards, mixed-language tickets, raw JSON/XML dumps, MIME-encoded content, OCR artifacts, container logs, invisible Unicode characters, RTL/bidi text, ANSI escape codes, and more.
 
@@ -149,7 +149,7 @@ uv run python run_eval.py \
   --gold ../data/tickets/data_cleanup_gold.json
 ```
 
-### Responsible AI eval (120 tickets with gold answers)
+### Responsible AI eval (305 tickets with gold answers)
 
 Tests your system against adversarial inputs: prompt injection, jailbreak attempts, social engineering, CEO fraud/BEC, requests for harmful content, priority manipulation, embedded classification overrides, encoding obfuscation, homoglyph attacks, multi-language injection, timing pressure attacks, fake approval chains, invisible Unicode injection, and combined multi-vector attacks.
 
