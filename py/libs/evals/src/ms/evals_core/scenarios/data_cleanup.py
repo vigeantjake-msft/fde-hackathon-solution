@@ -14217,4 +14217,904 @@ def get_scenarios() -> list[ScenarioDefinition]:
             tags=["data-cleanup", "zero-width-chars", "invisible-unicode"],
             difficulty="hard",
         ),
+        # ── DC-206  Extremely long subject line (500+ chars) ──────────────
+        ScenarioDefinition(
+            scenario_id="DC-206",
+            subject=(
+                "Re: Fwd: URGENT — VPN connectivity issue affecting trading floor "
+                "operations in New York Building 3 Floor 5 since Monday morning causing "
+                "intermittent disconnections during market open hours between 9:28 and "
+                "9:32 AM ET impacting ability to execute equity derivatives trades and "
+                "monitor real-time Bloomberg feeds and Reuters terminals while connected "
+                "to GlobalProtect v6.1.3 on Lenovo ThinkPad T14s running Windows 11 23H2 "
+                "with latest Intune endpoint agent update pushed last Friday — NEED "
+                "IMMEDIATE RESOLUTION BEFORE QUARTERLY OPTIONS EXPIRY THIS WEEK"
+            ),
+            description=(
+                "Hi team,\n\n"
+                "As the subject says, the VPN keeps dropping. I've already provided "
+                "all the details in the subject line because our email system was "
+                "truncating my previous messages.\n\n"
+                "Please fix ASAP.\n\n"
+                "Thanks,\nEmilio"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.NETWORK_LOCATION],
+            next_best_action=(
+                "Parse the extremely long subject line to extract the actual VPN "
+                "issue details and investigate GlobalProtect tunnel drops during "
+                "market open hours on Floor 5."
+            ),
+            remediation_steps=[
+                "Extract issue details from the oversized subject line.",
+                "Check GlobalProtect VPN gateway logs for session drops at 09:28-09:32 ET.",
+                "Correlate with wireless controller data for Building 3, Floor 5.",
+                "Verify VPN split-tunnel and MTU configuration on the client.",
+                "Test with Ethernet to rule out Wi-Fi congestion during market open.",
+            ],
+            reporter_name="Emilio Vargas",
+            reporter_email="emilio.vargas@contoso.com",
+            reporter_department="Equity Derivatives",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "extremely-long-subject", "subject-overflow"],
+            difficulty="medium",
+        ),
+        # ── DC-207  Embedded SVG data URIs ────────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-207",
+            subject="Monitor flickering with visual artifacts — see inline SVG",
+            description=(
+                "Hi IT,\n\n"
+                "My external Dell U2723QE monitor has been flickering with strange "
+                "color banding artifacts. I tried to capture the pattern as an SVG "
+                "since screenshots don't show the flicker properly:\n\n"
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">'
+                '<defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">'
+                '<stop offset="0%" style="stop-color:rgb(255,0,0);stop-opacity:1"/>'
+                '<stop offset="50%" style="stop-color:rgb(0,255,0);stop-opacity:1"/>'
+                '<stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1"/>'
+                "</linearGradient></defs>"
+                '<rect width="800" height="600" fill="url(#g1)"/>'
+                '<text x="400" y="300" text-anchor="middle" font-size="24">'
+                "Flicker pattern appears here every 3-4 seconds</text>"
+                '<animate attributeName="opacity" values="1;0.3;1" dur="3s" '
+                'repeatCount="indefinite"/></svg>\n\n'
+                "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAw"
+                "MC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaH"
+                "Q9IjMwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hv"
+                "cj0ibWlkZGxlIiBmaWxsPSIjZmYwIiBmb250LXNpemU9IjIwIj5GbGlja2VyIHpvbmU8L3"
+                "RleHQ+PC9zdmc+\n\n"
+                "The flickering started after I updated the DisplayPort firmware. "
+                "Monitor model: Dell U2723QE, connected via DisplayPort 1.4. "
+                "My laptop is a Dell Latitude 5540 with Intel Iris Xe graphics. "
+                "Asset tag: WM-MON-1847.\n\n"
+                "Thanks,\nAisha Okafor\nCompliance"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Ignore the inline SVG data and investigate the DisplayPort "
+                "firmware update as the likely cause of the monitor flickering."
+            ),
+            remediation_steps=[
+                "Strip SVG and data URI content from the ticket description.",
+                "Check Dell U2723QE DisplayPort firmware release notes for known flicker issues.",
+                "Test with a different DisplayPort cable to rule out cable faults.",
+                "Roll back the DisplayPort firmware if possible.",
+                "Update Intel Iris Xe graphics driver to the latest version.",
+            ],
+            reporter_name="Aisha Okafor",
+            reporter_email="aisha.okafor@contoso.com",
+            reporter_department="Compliance",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "svg-data-uri", "embedded-vectors"],
+            difficulty="medium",
+        ),
+        # ── DC-208  MIME multipart with garbled boundaries ────────────────
+        ScenarioDefinition(
+            scenario_id="DC-208",
+            subject="Password reset not working — garbled email forwarded",
+            description=(
+                "------=_Part_12345_98765432.1234567890123\n"
+                "Content-Type: multipart/alternative;\n"
+                '\tboundary="----=_Part_NESTED_001"\n\n'
+                "------=_Part_NESTED_001\n"
+                "Content-Type: text/plain; charset=utf-8\n"
+                "Content-Transfer-Encoding: quoted-printable\n\n"
+                "Hi IT Help Desk,\n\n"
+                "I've been trying to reset my password using the self-service portal "
+                "(identity.contoso.com/reset) but keep getting an error after the MFA "
+                "step. The page shows 'Token validation failed — ERR_AUTH_0x4F21' and "
+                "then redirects me back to the login screen. I've tried three different "
+                "browsers (Edge, Chrome, Firefox) and cleared cookies each time.\n\n"
+                "My account is: j.nakamura@contoso.com\n"
+                "Last successful login: March 15, 2026\n"
+                "MFA method: Microsoft Authenticator push notification\n\n"
+                "------=_Part_NESTED_001\n"
+                "Content-Type: text/html; charset=utf-8\n"
+                "Content-Transfer-Encoding: base64\n\n"
+                "PGh0bWw+PGJvZHk+PHA+SGkgSVQgSGVscCBEZXNrLDwvcD48cD5JJ3ZlIGJl\n"
+                "ZW4gdHJ5aW5nIHRvIHJlc2V0IG15IHBhc3N3b3JkPC9wPjwvYm9keT48L2h0\n"
+                "bWw+\n\n"
+                "------=_Part_NESTED_001--\n\n"
+                "------=_Part_12345_98765432.1234567890123\n"
+                "Content-Type: application/octet-stream;\n"
+                '\tname="debug_token_trace.log"\n'
+                "Content-Transfer-Encoding: base64\n"
+                "Content-Disposition: attachment;\n"
+                '\tfilename="debug_token_trace.log"\n\n'
+                "VG9rZW4gdmFsaWRhdGlvbiB0cmFjZToKMjAyNi0wMy0xOFQwOToxMjozNFoK\n"
+                "RVJSPSAweDRGMjEKU2Vzc2lvbjogYWJjMTIzNDU2Nzg5\n\n"
+                "------=_Part_12345_98765432.1234567890123--\n"
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P2,
+            team=Team.IAM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AUTHENTICATION_METHOD],
+            next_best_action=(
+                "Extract the password reset failure details from the MIME-garbled "
+                "email and investigate the token validation error ERR_AUTH_0x4F21 "
+                "on the identity portal."
+            ),
+            remediation_steps=[
+                "Parse through the MIME multipart encoding to extract the plain-text issue.",
+                "Investigate ERR_AUTH_0x4F21 in the identity provider logs for j.nakamura.",
+                "Check if the SSPR token service is functioning correctly.",
+                "Verify the user's MFA registration and Authenticator app configuration.",
+                "Manually reset the password and confirm the user can log in.",
+            ],
+            reporter_name="Jun Nakamura",
+            reporter_email="j.nakamura@contoso.com",
+            reporter_department="Risk Management",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "mime-garbled", "multipart-boundary"],
+            difficulty="hard",
+        ),
+        # ── DC-209  Prometheus / Grafana metrics flood ────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-209",
+            subject="Database response times degraded — Grafana alert pasted",
+            description=(
+                "Hi Data Platform team,\n\n"
+                "Our production PostgreSQL cluster (pg-prod-east-01) is showing "
+                "degraded response times since 06:00 UTC today. Here are the "
+                "Prometheus metrics from our Grafana dashboard:\n\n"
+                "# HELP pg_stat_activity_count Number of active connections\n"
+                "# TYPE pg_stat_activity_count gauge\n"
+                'pg_stat_activity_count{datname="contoso_trades",state="active"} 247\n'
+                'pg_stat_activity_count{datname="contoso_trades",state="idle"} 1893\n'
+                'pg_stat_activity_count{datname="contoso_trades",state="idle in transaction"} 42\n'
+                'pg_stat_activity_count{datname="contoso_risk",state="active"} 89\n'
+                'pg_stat_activity_count{datname="contoso_risk",state="idle"} 456\n\n'
+                "# HELP pg_stat_database_blks_hit Disk blocks hit in buffer cache\n"
+                "# TYPE pg_stat_database_blks_hit counter\n"
+                'pg_stat_database_blks_hit{datname="contoso_trades"} 9.87654321e+09\n'
+                'pg_stat_database_blks_read{datname="contoso_trades"} 4.56789012e+08\n\n'
+                "# HELP pg_locks_count Number of locks\n"
+                "# TYPE pg_locks_count gauge\n"
+                'pg_locks_count{datname="contoso_trades",mode="AccessShareLock"} 1247\n'
+                'pg_locks_count{datname="contoso_trades",mode="RowExclusiveLock"} 892\n'
+                'pg_locks_count{datname="contoso_trades",mode="ExclusiveLock"} 3\n\n'
+                "# HELP node_cpu_seconds_total CPU usage\n"
+                "# TYPE node_cpu_seconds_total counter\n"
+                'node_cpu_seconds_total{cpu="0",mode="user"} 345678.90\n'
+                'node_cpu_seconds_total{cpu="0",mode="system"} 123456.78\n'
+                'node_cpu_seconds_total{cpu="0",mode="iowait"} 98765.43\n'
+                'node_cpu_seconds_total{cpu="1",mode="user"} 334567.89\n'
+                'node_cpu_seconds_total{cpu="1",mode="iowait"} 87654.32\n\n'
+                "The key concern is the high iowait and the 42 connections stuck in "
+                "'idle in transaction' state. Average query latency went from 12ms "
+                "to 850ms. The nightly ETL job (etl-trade-reconciliation) may be "
+                "holding long transactions.\n\n"
+                "— Raj Patel, Data Engineering"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.TIMESTAMP, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate the 42 idle-in-transaction connections and high iowait "
+                "on pg-prod-east-01, likely caused by the nightly ETL job holding "
+                "long transactions."
+            ),
+            remediation_steps=[
+                "Identify the long-running transactions in pg_stat_activity.",
+                "Check if etl-trade-reconciliation is holding open transactions.",
+                "Terminate stale idle-in-transaction sessions if safe to do so.",
+                "Review iowait metrics and check disk I/O saturation on the host.",
+                "Tune connection pooling to prevent idle connection buildup.",
+            ],
+            reporter_name="Raj Patel",
+            reporter_email="raj.patel@contoso.com",
+            reporter_department="Data Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "prometheus-metrics", "grafana-alerts"],
+            difficulty="medium",
+        ),
+        # ── DC-210  Windows systeminfo dump ───────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-210",
+            subject="Laptop overheating — systeminfo output attached",
+            description=(
+                "My laptop keeps overheating and shutting down. IT asked me to run "
+                "systeminfo so here it is:\n\n"
+                "Host Name:                 NYC-WS-TCHEN04\n"
+                "OS Name:                   Microsoft Windows 11 Enterprise\n"
+                "OS Version:                10.0.22631 N/A Build 22631\n"
+                "OS Manufacturer:           Microsoft Corporation\n"
+                "OS Configuration:          Member Workstation\n"
+                "OS Build Type:             Multiprocessor Free\n"
+                "Registered Owner:          Tina Chen\n"
+                "Registered Organization:   Contoso Financial Services\n"
+                "Product ID:                00329-00000-00003-AA123\n"
+                "Original Install Date:     8/15/2025, 2:30:00 PM\n"
+                "System Boot Time:          3/18/2026, 8:45:12 AM\n"
+                "System Manufacturer:       LENOVO\n"
+                "System Model:              21HQS1RX00\n"
+                "System Type:               x64-based PC\n"
+                "Processor(s):              1 Processor(s) Installed.\n"
+                "                           [01]: Intel64 Family 6 Model 186 "
+                "Stepping 3 GenuineIntel ~2100 Mhz\n"
+                "BIOS Version:              LENOVO N3HET94W (1.60 ), 1/15/2026\n"
+                "Windows Directory:         C:\\Windows\n"
+                "System Directory:          C:\\Windows\\system32\n"
+                "Boot Device:               \\Device\\HarddiskVolume1\n"
+                "System Locale:             en-us;English (United States)\n"
+                "Input Locale:              en-us;English (United States)\n"
+                "Time Zone:                 (UTC-05:00) Eastern Time (US & Canada)\n"
+                "Total Physical Memory:     32,476 MB\n"
+                "Available Physical Memory: 4,231 MB\n"
+                "Virtual Memory: Max Size:  37,596 MB\n"
+                "Virtual Memory: Available: 8,102 MB\n"
+                "Virtual Memory: In Use:    29,494 MB\n"
+                "Page File Location(s):     C:\\pagefile.sys\n"
+                "Domain:                    contoso.com\n"
+                "Logon Server:              \\\\NYC-DC-01\n"
+                "Hotfix(s):                 15 Hotfix(s) Installed.\n"
+                "                           [01]: KB5034765\n"
+                "                           [02]: KB5035853\n"
+                "                           [03]: KB5036212\n"
+                "                           [04]: KB5037019\n"
+                "Network Card(s):           3 NIC(s) Installed.\n"
+                "                           [01]: Intel Wi-Fi 6E AX211 160MHz\n"
+                "                           [02]: Bluetooth Device\n"
+                "                           [03]: Cisco AnyConnect Virtual Adapter\n"
+                "Hyper-V Requirements:      VM Monitor Mode Extensions: Yes\n\n"
+                "The laptop gets really hot near the fan vent after about 30 minutes "
+                "of use. It has shut down twice today during video calls. "
+                "Asset tag: LPT-2024-01892.\n"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.REPRODUCTION_FREQUENCY, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate laptop thermal shutdown on ThinkPad 21HQS1RX00 — note "
+                "high memory utilization (28GB of 32GB in use) which may indicate "
+                "a runaway process contributing to thermal load."
+            ),
+            remediation_steps=[
+                "Check for dust buildup in fan vents and schedule physical cleaning.",
+                "Review Task Manager for high-CPU processes consuming resources.",
+                "Note available memory is only 4GB of 32GB — identify memory-intensive processes.",
+                "Update BIOS firmware if a thermal management fix is available.",
+                "Run Lenovo Vantage diagnostics to check fan and thermal sensor health.",
+            ],
+            reporter_name="Tina Chen",
+            reporter_email="tina.chen@contoso.com",
+            reporter_department="Wealth Management",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "systeminfo-dump", "command-output"],
+            difficulty="medium",
+        ),
+        # ── DC-211  Splunk search results paste ───────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-211",
+            subject="Suspicious login alerts — Splunk results attached",
+            description=(
+                "Security team,\n\n"
+                "We're seeing a spike in failed login attempts against our "
+                "production Azure AD. I exported the Splunk results below:\n\n"
+                "| _time              | src_ip        | user              | result  |\n"
+                "|--------------------+---------------+-------------------+---------|\n"
+                "| 2026-03-18 04:12:01| 185.220.101.42| admin@contoso.com | FAILURE |\n"
+                "| 2026-03-18 04:12:03| 185.220.101.42| admin@contoso.com | FAILURE |\n"
+                "| 2026-03-18 04:12:05| 185.220.101.42| svc-backup@contoso| FAILURE |\n"
+                "| 2026-03-18 04:12:07| 185.220.101.42| cfo@contoso.com   | FAILURE |\n"
+                "| 2026-03-18 04:12:09| 185.220.101.42| hr.admin@contoso  | FAILURE |\n"
+                "| 2026-03-18 04:12:11| 185.220.101.42| it.admin@contoso  | FAILURE |\n"
+                "| 2026-03-18 04:12:13| 185.220.101.42| admin@contoso.com | FAILURE |\n"
+                "| 2026-03-18 04:12:15| 91.219.236.88 | admin@contoso.com | FAILURE |\n"
+                "| 2026-03-18 04:12:17| 91.219.236.88 | root@contoso.com  | FAILURE |\n"
+                "| 2026-03-18 04:12:19| 91.219.236.88 | administrator@cto | FAILURE |\n\n"
+                "SPL query used: index=azure_ad sourcetype=azure:signin action=login "
+                "result=FAILURE | stats count by src_ip, user | where count > 5\n\n"
+                "Total: 847 failed attempts from 3 source IPs in the last 2 hours. "
+                "All from known Tor exit nodes. No successful logins yet but the "
+                "pattern looks like a credential stuffing attack. Please investigate "
+                "and consider blocking these IPs at the WAF.\n\n"
+                "— Omar Al-Rashid, SOC Analyst"
+            ),
+            category=Category.SECURITY,
+            priority=Priority.P2,
+            team=Team.SECURITY_OPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.AFFECTED_USERS, MissingInfo.BUSINESS_IMPACT],
+            next_best_action=(
+                "Investigate potential credential stuffing attack from Tor exit "
+                "nodes against Azure AD — 847 failed attempts in 2 hours."
+            ),
+            remediation_steps=[
+                "Block the identified Tor exit node IPs at the WAF and Azure AD conditional access.",
+                "Review all targeted accounts for successful logins from suspicious IPs.",
+                "Enable Azure AD Smart Lockout if not already configured.",
+                "Check if any of the targeted accounts have weak or compromised passwords.",
+                "Correlate with threat intelligence feeds for the source IP addresses.",
+            ],
+            reporter_name="Omar Al-Rashid",
+            reporter_email="omar.alrashid@contoso.com",
+            reporter_department="Security Operations",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "splunk-results", "siem-output"],
+            difficulty="medium",
+        ),
+        # ── DC-212  ARM / Bicep IaC template dump ─────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-212",
+            subject="Azure deployment failed — ARM template error",
+            description=(
+                "Hi team,\n\n"
+                "Our Azure deployment pipeline failed. Here's the ARM template "
+                "that errored out:\n\n"
+                "{\n"
+                '  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",\n'
+                '  "contentVersion": "1.0.0.0",\n'
+                '  "parameters": {\n'
+                '    "storageAccountName": {\n'
+                '      "type": "string",\n'
+                '      "metadata": { "description": "Name of the storage account" }\n'
+                "    },\n"
+                '    "location": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "[resourceGroup().location]"\n'
+                "    },\n"
+                '    "skuName": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "Standard_LRS",\n'
+                '      "allowedValues": ["Standard_LRS","Standard_GRS","Premium_LRS"]\n'
+                "    }\n"
+                "  },\n"
+                '  "resources": [\n'
+                "    {\n"
+                '      "type": "Microsoft.Storage/storageAccounts",\n'
+                '      "apiVersion": "2023-01-01",\n'
+                '      "name": "[parameters(\'storageAccountName\')]",\n'
+                '      "location": "[parameters(\'location\')]",\n'
+                '      "sku": { "name": "[parameters(\'skuName\')]" },\n'
+                '      "kind": "StorageV2",\n'
+                '      "properties": {\n'
+                '        "minimumTlsVersion": "TLS1_2",\n'
+                '        "supportsHttpsTrafficOnly": true,\n'
+                '        "networkAcls": {\n'
+                '          "defaultAction": "Deny",\n'
+                '          "virtualNetworkRules": [],\n'
+                '          "ipRules": []\n'
+                "        }\n"
+                "      }\n"
+                "    }\n"
+                "  ]\n"
+                "}\n\n"
+                "Error from Azure: 'StorageAccountAlreadyTaken — The storage account "
+                "name contosoproddata01 is already taken. Please choose a different name.'\n\n"
+                "We need this deployed for the Q2 data migration project by end of week.\n\n"
+                "— Fatima Hassan, Cloud Infrastructure"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.CONFIGURATION_DETAILS, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Resolve the storage account naming conflict — the name 'contosoproddata01' is globally taken in Azure."
+            ),
+            remediation_steps=[
+                "Choose a unique storage account name (Azure storage names are globally unique).",
+                "Update the ARM template parameter with the new name.",
+                "Verify the deployment pipeline uses the correct resource group and subscription.",
+                "Re-run the deployment and confirm the storage account provisions successfully.",
+                "Update the data migration documentation with the final resource name.",
+            ],
+            reporter_name="Fatima Hassan",
+            reporter_email="fatima.hassan@contoso.com",
+            reporter_department="Cloud Infrastructure",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "arm-bicep-template", "iac-dump"],
+            difficulty="medium",
+        ),
+        # ── DC-213  CSV with hundreds of rows pasted ──────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-213",
+            subject="Data import failing — sample CSV rows included",
+            description=(
+                "Hi Data Platform,\n\n"
+                "The nightly import job (etl-client-onboarding) keeps failing on "
+                "the CSV file from the client portal. Here are the first rows that "
+                "are causing issues:\n\n"
+                "client_id,name,email,department,account_type,balance,status,created\n"
+                "C-10001,John Smith,john.smith@example.com,Retail,CHECKING,15432.50,ACTIVE,2025-01-15\n"
+                "C-10002,Maria Garcia,m.garcia@example.com,Wealth,SAVINGS,892341.00,ACTIVE,2025-02-20\n"
+                "C-10003,Wei Zhang,,Corporate,MONEY_MARKET,2500000.00,ACTIVE,2025-03-01\n"
+                "C-10004,Ahmed Hassan,a.hassan@example.com,,CHECKING,7821.33,PENDING,2025-03-10\n"
+                "C-10005,Sarah O'Brien,s.obrien@example.com,Retail,CHECKING,0.00,CLOSED,2025-03-11\n"
+                "C-10006,Yuki Tanaka,y.tanaka@example.com,Private,INVESTMENT,15000000,ACTIVE,2025-03-12\n"
+                "C-10007,,anonymous@example.com,Unknown,CHECKING,-500.00,FROZEN,2025-03-13\n"
+                "C-10008,Boris Petrov,b.petrov@example.com,Institutional,CUSTODY,0,ACTIVE,\n"
+                "C-10009,Lisa Park,l.park@example.com,Retail,SAVINGS,42.99,ACTIVE,2025-03-14\n"
+                "C-10010,NO_NAME_PROVIDED,null,null,null,null,null,null\n"
+                "C-10011,Test Account,test@test.com,TEST,TEST,0,TEST,2025-01-01\n"
+                "C-10012,Priya Sharma,p.sharma@example.com,Retail,CHECKING,8900.00,ACTIVE,2025-03-15\n"
+                "C-10013,James Wilson,j.wilson@example.com,Corporate,CHECKING,125000,ACTIVE,2025-03-15\n"
+                "C-10014,Ana Costa,a.costa@example.com,Private,SAVINGS,3400000.00,ACTIVE,2025-03-16\n"
+                "C-10015,David Kim,d.kim@example.com,Retail,CHECKING,2100.00,ACTIVE,2025-03-16\n"
+                "[... 2,847 more rows omitted ...]\n\n"
+                "The ETL job throws: 'ValueError: could not convert string to float: "
+                "null' on rows with missing fields. Also row C-10007 has a negative "
+                "balance and C-10010 has all nulls. The source system changed its "
+                "export format without telling us.\n\n"
+                "— Nina Kowalski, Data Operations"
+            ),
+            category=Category.DATA_STORAGE,
+            priority=Priority.P3,
+            team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.CONFIGURATION_DETAILS, MissingInfo.AFFECTED_SYSTEM],
+            next_best_action=(
+                "Fix the ETL pipeline to handle null/missing fields in the changed CSV format from the client portal."
+            ),
+            remediation_steps=[
+                "Add null/empty field handling to the CSV parser in the ETL job.",
+                "Contact the source system team to get the new export format specification.",
+                "Add data validation rules to catch negative balances and test accounts.",
+                "Implement a quarantine table for rows that fail validation.",
+                "Re-run the import after fixing the parser and review quarantined rows.",
+            ],
+            reporter_name="Nina Kowalski",
+            reporter_email="nina.kowalski@contoso.com",
+            reporter_department="Data Operations",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "csv-flood", "bulk-data-paste"],
+            difficulty="medium",
+        ),
+        # ── DC-214  Legacy codepage mojibake ──────────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-214",
+            subject="Printer showing Ã©trange characters on output",
+            description=(
+                "Hi IT,\n\n"
+                "The printer on Floor 4 (HP LaserJet Pro M428fdw, asset tag "
+                "WM-PRN-0891) is printing garbled characters. For example, "
+                "when I print a document containing \u00e9, \u00e8, \u00ea, \u00f1, \u00fc it "
+                "comes out as Ã©, Ã¨, Ãª, Ã±, Ã¼ on paper.\n\n"
+                "The issue affects all documents printed from our CRM application "
+                "(Contoso Client Manager v3.8.2). Documents printed from Word or "
+                "Excel look fine. I think the CRM is sending CP-1252 encoded text "
+                "but the printer driver expects UTF-8.\n\n"
+                "Here\u2019s a sample of what prints:\n"
+                "  Expected: R\u00e9sum\u00e9 for client Ren\u00e9e Dupr\u00e9\n"
+                "  Printed:  R\u00c3\u00a9sum\u00c3\u00a9 for client Ren\u00c3\u00a9e Dupr\u00c3\u00a9\n\n"
+                "  Expected: Caf\u00e9 Cr\u00e8me LLC \u2014 M\u00fcnchen Office\n"
+                "  Printed:  Caf\u00c3\u00a9 Cr\u00c3\u00a8me LLC \u00e2\u20ac\u201c M\u00c3\u00bcnchen Office\n\n"
+                "This started after the printer driver was updated last week.\n\n"
+                "Thanks,\nSophie Fontaine\nPrivate Banking"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Fix the character encoding mismatch between the CRM application "
+                "(CP-1252) and the updated printer driver (UTF-8)."
+            ),
+            remediation_steps=[
+                "Check the printer driver encoding settings after the recent update.",
+                "Verify the CRM application's print output encoding (likely CP-1252).",
+                "Configure the printer driver to accept CP-1252 or update the CRM to output UTF-8.",
+                "Test printing with special characters after the fix.",
+                "Roll back the printer driver if the encoding issue cannot be resolved.",
+            ],
+            reporter_name="Sophie Fontaine",
+            reporter_email="sophie.fontaine@contoso.com",
+            reporter_department="Private Banking",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "codepage-mojibake", "encoding-corruption"],
+            difficulty="medium",
+        ),
+        # ── DC-215  Recursive email forward chain (10+ levels) ────────────
+        ScenarioDefinition(
+            scenario_id="DC-215",
+            subject="Fwd: Fwd: Fwd: Fwd: Fwd: Fwd: Fwd: Fwd: Fwd: Fwd: SharePoint access issue",
+            description=(
+                "---------- Forwarded message ----------\n"
+                "From: Lisa Park <l.park@contoso.com>\n"
+                "To: IT Support <itsupport@contoso.com>\n"
+                "Date: Mon, 18 Mar 2026 09:30:00\n"
+                "Subject: Fwd: Fwd: Fwd: ... SharePoint access issue\n\n"
+                "Forwarding this again, still no resolution.\n\n"
+                "---------- Forwarded message ----------\n"
+                "From: Mike Chen <m.chen@contoso.com>\n"
+                "To: Lisa Park <l.park@contoso.com>\n"
+                "Date: Fri, 14 Mar 2026 16:00:00\n\n"
+                "Lisa, can you forward this to IT? I don't have the email.\n\n"
+                "---------- Forwarded message ----------\n"
+                "From: Sarah Kim <s.kim@contoso.com>\n"
+                "To: Mike Chen <m.chen@contoso.com>\n"
+                "Date: Fri, 14 Mar 2026 15:30:00\n\n"
+                "Mike, I'm forwarding David's issue — he still can't access the "
+                "Q2 Planning SharePoint site.\n\n"
+                "---------- Forwarded message ----------\n"
+                "From: David Okonkwo <d.okonkwo@contoso.com>\n"
+                "To: Sarah Kim <s.kim@contoso.com>\n"
+                "Date: Thu, 13 Mar 2026 11:00:00\n\n"
+                "Sarah, I've been locked out of the Q2 Planning SharePoint site "
+                "(https://contoso.sharepoint.com/sites/Q2Planning) since Tuesday. "
+                "I get 'Error 403: Access Denied — You do not have permission to "
+                "access this resource.' I was added to the Contributors group last "
+                "month and it was working fine until the site migration on Monday.\n\n"
+                "---------- Forwarded message ----------\n"
+                "From: David Okonkwo <d.okonkwo@contoso.com>\n"
+                "To: Help Desk <helpdesk@contoso.com>\n"
+                "Date: Wed, 12 Mar 2026 09:00:00\n\n"
+                "Hi, I submitted a ticket about this on Monday but haven't heard back. "
+                "Ticket INC-4872.\n\n"
+                "---------- Forwarded message ----------\n"
+                "From: David Okonkwo <d.okonkwo@contoso.com>\n"
+                "To: Team Leads <teamleads@contoso.com>\n"
+                "Date: Tue, 11 Mar 2026 14:00:00\n\n"
+                "Does anyone else have access to Q2 Planning? I'm completely locked out.\n\n"
+                "---------- Forwarded message ----------\n"
+                "From: Auto-Reply <noreply@contoso.com>\n"
+                "Date: Tue, 11 Mar 2026 09:05:00\n\n"
+                "Thank you for contacting IT Support. Your ticket has been logged.\n"
+                "Reference: INC-4872. Expected response time: 24 hours.\n\n"
+                "---------- Forwarded message ----------\n"
+                "From: David Okonkwo <d.okonkwo@contoso.com>\n"
+                "To: IT Support <itsupport@contoso.com>\n"
+                "Date: Mon, 10 Mar 2026 10:00:00\n\n"
+                "Hi, I can't access the Q2 Planning SharePoint site after the migration.\n"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P3,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.PREVIOUS_TICKET_ID, MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Extract the SharePoint access issue from the deeply nested forward "
+                "chain — David Okonkwo lost access to Q2 Planning after a site "
+                "migration. Related ticket: INC-4872."
+            ),
+            remediation_steps=[
+                "Locate the original issue in the email chain (David Okonkwo, Q2 Planning SharePoint).",
+                "Check SharePoint admin center for David's permissions on the Q2 Planning site.",
+                "Verify if the site migration disrupted the Contributors group membership.",
+                "Re-add David to the Contributors group if his access was lost during migration.",
+                "Link this ticket to the existing INC-4872 for tracking.",
+            ],
+            reporter_name="Lisa Park",
+            reporter_email="l.park@contoso.com",
+            reporter_department="Operations",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "recursive-forward", "deep-chain"],
+            difficulty="hard",
+        ),
+        # ── DC-216  PII-heavy content scattered in network issue ──────────
+        ScenarioDefinition(
+            scenario_id="DC-216",
+            subject="Wi-Fi issues in London office — employee details included",
+            description=(
+                "Hi Network team,\n\n"
+                "Multiple employees in the London office (Building 2, Floors 3-5) "
+                "are reporting Wi-Fi connectivity issues. I've collected their "
+                "details for your investigation:\n\n"
+                "Employee: James Wilson\n"
+                "  Badge ID: EMP-UK-4521\n"
+                "  Phone: +44 20 7946 0321\n"
+                "  Mobile: +44 7700 900123\n"
+                "  Home: 42 Baker Street, London NW1 6XE\n"
+                "  NI Number: AB123456C\n"
+                "  Floor: 3, Desk: 3-A-14\n"
+                "  Issue: Drops every 15 minutes\n\n"
+                "Employee: Amara Obi\n"
+                "  Badge ID: EMP-UK-4522\n"
+                "  Phone: +44 20 7946 0322\n"
+                "  Mobile: +44 7700 900124\n"
+                "  Home: 17 Churchill Gardens, London SW1V 3AA\n"
+                "  NI Number: CD789012E\n"
+                "  Floor: 4, Desk: 4-B-07\n"
+                "  Issue: Cannot connect at all\n\n"
+                "Employee: Hans Mueller\n"
+                "  Badge ID: EMP-UK-4523\n"
+                "  Phone: +44 20 7946 0323\n"
+                "  Mobile: +44 7700 900125\n"
+                "  Home: 8 Kensington Court, London W8 5DL\n"
+                "  NI Number: EF345678G\n"
+                "  Floor: 5, Desk: 5-C-22\n"
+                "  Issue: Slow speeds (< 5 Mbps)\n\n"
+                "All three are on the 'CONTOSO-CORP' SSID. The Aruba access points "
+                "on these floors were updated last night (firmware 8.10.0.7). The "
+                "issues started this morning.\n\n"
+                "— Rebecca Thornton, Office Manager London"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Investigate Wi-Fi issues across Floors 3-5 in London Building 2 "
+                "following the Aruba AP firmware update to 8.10.0.7. Note: ticket "
+                "contains unnecessary PII that should be flagged."
+            ),
+            remediation_steps=[
+                "Check Aruba AP firmware 8.10.0.7 release notes for known Wi-Fi issues.",
+                "Review AP controller logs for Floors 3-5 client association failures.",
+                "Test Wi-Fi connectivity from each affected floor with a reference device.",
+                "Consider rolling back the AP firmware if the update caused the regression.",
+                "Flag the excessive PII in this ticket for data handling review.",
+            ],
+            reporter_name="Rebecca Thornton",
+            reporter_email="rebecca.thornton@contoso.com",
+            reporter_department="Facilities",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "pii-heavy", "sensitive-data-noise"],
+            difficulty="medium",
+        ),
+        # ── DC-217  Extremely deep JSON nesting ───────────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-217",
+            subject="API returning deeply nested JSON — app crashes parsing it",
+            description=(
+                "Hi Enterprise Apps,\n\n"
+                "Our trade reconciliation app crashes when parsing the response from "
+                "the internal pricing API (api-pricing.contoso.internal). The API "
+                "started returning deeply nested JSON after last night's deployment. "
+                "Here's a sample response:\n\n"
+                '{"data":{"result":{"pricing":{"instruments":{"equity":{"sectors":{'
+                '"technology":{"companies":{"MSFT":{"quotes":{"realtime":{"bid":{'
+                '"amount":{"value":{"raw":{"decimal":{"precision":{"digits":{'
+                '"mantissa":{"exponent":{"sign":{"positive":{"flag":true}}}}}}}}}}}}}}}}}}}}}}\n\n'
+                "The response has 20+ levels of nesting. Our parser (Jackson in Java) "
+                "throws a StackOverflowError when it tries to deserialize this. "
+                "The old API response was flat — just {symbol, bid, ask, last, volume}. "
+                "Someone on the API team must have changed the response schema without "
+                "updating the contract.\n\n"
+                "Stack trace (truncated):\n"
+                "java.lang.StackOverflowError\n"
+                "  at com.fasterxml.jackson.core.JsonParser.nextToken(JsonParser.java:924)\n"
+                "  at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserialize...\n"
+                "  ... 847 more frames ...\n\n"
+                "This is blocking the morning trade reconciliation run.\n\n"
+                "— Carlos Mendez, Backend Engineering"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.CONFIGURATION_DETAILS],
+            next_best_action=(
+                "Investigate the pricing API schema change that introduced deeply "
+                "nested JSON responses, causing the trade reconciliation parser to "
+                "crash with StackOverflowError."
+            ),
+            remediation_steps=[
+                "Contact the pricing API team about the schema change in last night's deployment.",
+                "Revert the API to the previous flat response schema if possible.",
+                "If the new schema is intentional, update the trade reconciliation parser.",
+                "Increase Jackson parser max nesting depth as a temporary workaround.",
+                "Add API contract tests to detect future breaking schema changes.",
+            ],
+            reporter_name="Carlos Mendez",
+            reporter_email="carlos.mendez@contoso.com",
+            reporter_department="Backend Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "deep-json-nesting", "api-debug-dump"],
+            difficulty="medium",
+        ),
+        # ── DC-218  macOS crash report in Teams video call ────────────────
+        ScenarioDefinition(
+            scenario_id="DC-218",
+            subject="Teams crashes during video calls — macOS crash report",
+            description=(
+                "Hi IT,\n\n"
+                "Microsoft Teams keeps crashing during video calls on my MacBook Pro. "
+                "Here's the crash report from Console.app:\n\n"
+                "Process:               Microsoft Teams [12847]\n"
+                "Path:                  /Applications/Microsoft Teams.app/Contents/MacOS/Teams\n"
+                "Identifier:            com.microsoft.teams2\n"
+                "Version:               24072.2406.2783.8184\n"
+                "Code Type:             ARM-64 (Native)\n"
+                "Parent Process:        launchd [1]\n"
+                "Responsible:           Microsoft Teams [12847]\n\n"
+                "Date/Time:             2026-03-18 09:15:42.123 -0400\n"
+                "OS Version:            macOS 14.4.1 (23E224)\n"
+                "Report Version:        12\n"
+                "Bridge OS Version:     8.4 (21P4222)\n\n"
+                "Exception Type:        EXC_CRASH (SIGABRT)\n"
+                "Exception Codes:       0x0000000000000000, 0x0000000000000000\n"
+                "Termination Reason:    Namespace SIGNAL, Code 6 Abort trap\n\n"
+                "Thread 0 Crashed:\n"
+                "0   libsystem_kernel.dylib    0x1a2f3c4d8 __pthread_kill + 8\n"
+                "1   libsystem_pthread.dylib   0x1a2f4e5f0 pthread_kill + 256\n"
+                "2   libsystem_c.dylib         0x1a2e8d7a4 abort + 124\n"
+                "3   Teams                     0x104a2b3c0 CrRendererMain + 1847232\n"
+                "4   Teams                     0x104a1c2b0 CrRendererMain + 1785024\n"
+                "5   Teams                     0x10498d1a0 CrRendererMain + 1201568\n\n"
+                "Thread 1:\n"
+                "0   libsystem_kernel.dylib    0x1a2f3b8c0 __workq_kernreturn + 8\n"
+                "1   libsystem_pthread.dylib   0x1a2f4d2a0 _pthread_wqthread + 364\n\n"
+                "Binary Images:\n"
+                "0x1048ac000 - 0x1062abfff Teams (0) <A1B2C3D4-E5F6-7890-AB12-CD34EF56> "
+                "/Applications/Microsoft Teams.app/Contents/MacOS/Teams\n\n"
+                "The crash happens within 5 minutes of joining any video call with "
+                "3+ participants. Audio-only calls work fine. MacBook Pro M3 Pro, "
+                "18GB RAM, macOS 14.4.1. Asset tag: LPT-2024-MAC-0247.\n\n"
+                "— Yuki Tanaka, Portfolio Management"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.REPRODUCTION_FREQUENCY, MissingInfo.STEPS_TO_REPRODUCE],
+            next_best_action=(
+                "Investigate Teams SIGABRT crash during video calls on macOS 14.4.1 "
+                "with M3 Pro — likely a renderer crash related to hardware video "
+                "encoding with multiple participants."
+            ),
+            remediation_steps=[
+                "Check for Teams updates addressing macOS 14.4.1 video call crashes.",
+                "Disable GPU hardware acceleration in Teams settings as a test.",
+                "Verify the macOS version and Teams version are compatible.",
+                "Check if the crash correlates with specific video codec usage.",
+                "File a bug report with Microsoft if no known fix is available.",
+            ],
+            reporter_name="Yuki Tanaka",
+            reporter_email="yuki.tanaka@contoso.com",
+            reporter_department="Portfolio Management",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "macos-reportcrash", "crash-dump"],
+            difficulty="medium",
+        ),
+        # ── DC-219  QR code ASCII art / data URI noise ────────────────────
+        ScenarioDefinition(
+            scenario_id="DC-219",
+            subject="Badge access not working — QR code from door scanner",
+            description=(
+                "Hi IAM team,\n\n"
+                "My badge stopped working at the Building 1 entrance this morning. "
+                "The security guard scanned the QR code on the door panel and sent "
+                "me this data — maybe it helps debug the issue?\n\n"
+                "██████████████  ██  ██████████████\n"
+                "██          ██  ██  ██          ██\n"
+                "██  ██████  ██      ██  ██████  ██\n"
+                "██  ██████  ██  ██  ██  ██████  ██\n"
+                "██  ██████  ██  ██  ██  ██████  ██\n"
+                "██          ██      ██          ██\n"
+                "██████████████  ██  ██████████████\n"
+                "                ██                \n"
+                "████████████  ██████  ████████████\n\n"
+                "data:text/plain;base64,eyJkb29yX2lkIjoiQkxEMS1NQUlOLTAxIiwi"
+                "cmVhZGVyX2lkIjoiSElELVJQLTQwMDAtMDEiLCJ0aW1lc3RhbXAiOiIyMDI2"
+                "LTAzLTE4VDA4OjQ1OjAwWiIsInN0YXR1cyI6IkFDQ0VTU19ERU5JRUQiLCJi"
+                "YWRnZV9pZCI6IkVNUC1OWUMtMjM0NSIsImVycm9yIjoiQ0VSVC1FWFBJUkVE"
+                "In0=\n\n"
+                "The decoded content says: door_id=BLD1-MAIN-01, reader_id=HID-RP-4000-01, "
+                "status=ACCESS_DENIED, badge_id=EMP-NYC-2345, error=CERT-EXPIRED.\n\n"
+                "My badge worked fine yesterday. I'm on the 8th floor, Quantitative "
+                "Analysis team.\n\n"
+                "— Viktor Kozlov"
+            ),
+            category=Category.ACCESS_AUTH,
+            priority=Priority.P3,
+            team=Team.IAM,
+            needs_escalation=False,
+            missing_info=[MissingInfo.DEVICE_INFO, MissingInfo.TIMESTAMP],
+            next_best_action=(
+                "Investigate badge access denial at BLD1-MAIN-01 — the door "
+                "reader reports CERT-EXPIRED for badge EMP-NYC-2345."
+            ),
+            remediation_steps=[
+                "Check the badge certificate expiry for EMP-NYC-2345 in the access control system.",
+                "Renew the badge certificate if expired.",
+                "Verify the HID reader BLD1-MAIN-01 is communicating with the access controller.",
+                "Issue a temporary access pass while the badge certificate is renewed.",
+                "Test badge access at the door after certificate renewal.",
+            ],
+            reporter_name="Viktor Kozlov",
+            reporter_email="viktor.kozlov@contoso.com",
+            reporter_department="Quantitative Analysis",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "qr-code-data", "ascii-art-noise"],
+            difficulty="medium",
+        ),
+        # ── DC-220  Mixed Arabic RTL and English LTR technical content ────
+        ScenarioDefinition(
+            scenario_id="DC-220",
+            subject=(
+                "VPN configuration issue"
+                " \u2014 "
+                "\u0645\u0634\u0643\u0644\u0629 \u0641\u064a"
+                " \u0625\u0639\u062f\u0627\u062f\u0627\u062a VPN"
+            ),
+            description=(
+                "\u0645\u0631\u062d\u0628\u0627 \u0641\u0631\u064a\u0642"
+                " \u062a\u0643\u0646\u0648\u0644\u0648\u062c\u064a\u0627"
+                " \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a,\n\n"
+                "I'm having a VPN connectivity issue "
+                "from our Dubai office. "
+                "\u0623\u0648\u0627\u062c\u0647 \u0645\u0634\u0643\u0644\u0629"
+                " \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644"
+                " \u0628\u0634\u0628\u0643\u0629 VPN"
+                " \u0645\u0646 \u0645\u0643\u062a\u0628 \u062f\u0628\u064a.\n\n"
+                "Technical details:\n"
+                "- Client: GlobalProtect v6.2.1\n"
+                "- \u0646\u0638\u0627\u0645 \u0627\u0644\u062a\u0634\u063a\u064a\u0644"
+                ": Windows 11 Enterprise 23H2\n"
+                "- Error: 'Gateway authentication failed'"
+                " / '\u0641\u0634\u0644 \u0645\u0635\u0627\u062f\u0642\u0629"
+                " \u0627\u0644\u0628\u0648\u0627\u0628\u0629'\n"
+                "- \u0627\u0644\u0628\u0648\u0627\u0628\u0629"
+                " \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629"
+                ": vpn-me.contoso.com\n"
+                "- IP: 192.168.50.0/24 (Dubai office subnet)\n\n"
+                "\u0627\u0644\u0645\u0634\u0643\u0644\u0629 \u0628\u062f\u0623\u062a"
+                " \u0628\u0639\u062f \u062a\u062d\u062f\u064a\u062b"
+                " \u0634\u0647\u0627\u062f\u0629 SSL"
+                " \u0639\u0644\u0649 \u0627\u0644\u0628\u0648\u0627\u0628\u0629"
+                " \u064a\u0648\u0645 \u0627\u0644\u0623\u062d\u062f. "
+                "The issue started after the SSL "
+                "certificate renewal on the gateway "
+                "on Sunday. "
+                "\u0643\u0644 \u0627\u0644\u0645\u0648\u0638\u0641\u064a\u0646"
+                " \u0641\u064a \u0645\u0643\u062a\u0628 \u062f\u0628\u064a"
+                " \u0645\u062a\u0623\u062b\u0631\u0648\u0646 "
+                "(All Dubai office employees are affected).\n\n"
+                "\u0634\u0643\u0631\u0627\u064b,\n"
+                "Khalid Al-Mansouri\n"
+                "\u0642\u0633\u0645"
+                " \u0627\u0644\u0639\u0645\u0644\u064a\u0627\u062a"
+                " \u0627\u0644\u0645\u0627\u0644\u064a\u0629"
+                " | Financial Operations"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P3,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE, MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Investigate VPN gateway authentication failure at vpn-me.contoso.com "
+                "after SSL certificate renewal — all Dubai office employees affected."
+            ),
+            remediation_steps=[
+                "Check the renewed SSL certificate on vpn-me.contoso.com for validity.",
+                "Verify the certificate chain is complete and trusted by the GlobalProtect client.",
+                "Test VPN connectivity from the Dubai office with a reference device.",
+                "If the certificate is misconfigured, redeploy with the correct chain.",
+                "Confirm VPN access is restored for all Dubai office employees.",
+            ],
+            reporter_name="Khalid Al-Mansouri",
+            reporter_email="khalid.almansouri@contoso.com",
+            reporter_department="Financial Operations",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "arabic-rtl-mixed", "bidi-technical"],
+            difficulty="hard",
+        ),
     ]
