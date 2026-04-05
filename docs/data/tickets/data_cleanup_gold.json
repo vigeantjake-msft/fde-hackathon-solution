@@ -8,7 +8,7 @@
         "missing_information": [
             "application_version"
         ],
-        "next_best_action": "Investigate GlobalProtect error GP-ERR-4021 on the user's Dell Latitude 5540 running Windows 11 \u2014 likely caused by the Intune endpoint agent update pushed last Friday conflicting with the VPN client.",
+        "next_best_action": "Investigate GlobalProtect error GP-ERR-4021 on the user's Dell Latitude 5540 running Windows 11 — likely caused by the Intune endpoint agent update pushed last Friday conflicting with the VPN client.",
         "remediation_steps": [
             "Check GlobalProtect gateway logs for GP-ERR-4021 correlated with the user's session.",
             "Review the Intune endpoint agent update pushed Friday for known VPN compatibility issues.",
@@ -26,7 +26,7 @@
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Troubleshoot Dell U2722D monitor flickering via Lenovo USB-C dock on ThinkPad X1 Carbon Gen 11 \u2014 likely a display driver regression from last week's Windows Update.",
+        "next_best_action": "Troubleshoot Dell U2722D monitor flickering via Lenovo USB-C dock on ThinkPad X1 Carbon Gen 11 — likely a display driver regression from last week's Windows Update.",
         "remediation_steps": [
             "Check the installed Intel/NVIDIA display driver version and compare against the pre-update version.",
             "Roll back the display driver to the previous version via Device Manager.",
@@ -44,7 +44,7 @@
         "missing_information": [
             "application_version"
         ],
-        "next_best_action": "Diagnose Outlook desktop crash (0xc0000005 in mso40uiwin32client.dll) triggered by calendar invites from Legal \u2014 likely caused by Tuesday's Office update.",
+        "next_best_action": "Diagnose Outlook desktop crash (0xc0000005 in mso40uiwin32client.dll) triggered by calendar invites from Legal — likely caused by Tuesday's Office update.",
         "remediation_steps": [
             "Identify the specific Office update pushed Tuesday and check for known issues.",
             "Run Outlook in safe mode to rule out add-in conflicts.",
@@ -62,7 +62,7 @@
         "missing_information": [
             "network_location"
         ],
-        "next_best_action": "Investigate complete WiFi outage on 4th floor, Building 2 Chicago affecting 12+ users in Structured Products \u2014 client presentation at 11:00 AM requires urgent resolution.",
+        "next_best_action": "Investigate complete WiFi outage on 4th floor, Building 2 Chicago affecting 12+ users in Structured Products — client presentation at 11:00 AM requires urgent resolution.",
         "remediation_steps": [
             "Check the wireless controller dashboard for AP status on Building 2, 4th floor.",
             "Verify if the APs lost power, connectivity to the switch, or received a bad config push.",
@@ -80,7 +80,7 @@
         "missing_information": [
             "error_message"
         ],
-        "next_best_action": "Restore access to the Compliance Reporting Portal for the user receiving 403 Forbidden \u2014 quarterly compliance report deadline is Friday EOD.",
+        "next_best_action": "Restore access to the Compliance Reporting Portal for the user receiving 403 Forbidden — quarterly compliance report deadline is Friday EOD.",
         "remediation_steps": [
             "Check the Compliance Reporting Portal's access control list for the user's account.",
             "Verify the user's Azure AD group memberships include the Compliance-Portal-Users group.",
@@ -98,7 +98,7 @@
         "missing_information": [
             "screenshot_or_attachment"
         ],
-        "next_best_action": "Investigate phishing email from 'cont0so-financial.com' targeting the user \u2014 confirm no credentials were compromised and block the sender domain org-wide.",
+        "next_best_action": "Investigate phishing email from 'cont0so-financial.com' targeting the user — confirm no credentials were compromised and block the sender domain org-wide.",
         "remediation_steps": [
             "Retrieve the original phishing email headers from the user's quarantine folder.",
             "Block the sender domain cont0so-financial.com and the URL contoso-verify.xyz in the email gateway.",
@@ -119,7 +119,7 @@
         "next_best_action": "Investigate OneDrive sync failure (error 0x8004de40) for the APAC Structured Finance SharePoint library affecting 8+ users in the Singapore office since Monday.",
         "remediation_steps": [
             "Check SharePoint admin center for throttling or service health issues on the APAC tenant.",
-            "Review OneDrive sync error 0x8004de40 \u2014 typically indicates a network or authentication problem.",
+            "Review OneDrive sync error 0x8004de40 — typically indicates a network or authentication problem.",
             "Verify the Singapore office proxy and firewall allow OneDrive sync endpoints.",
             "Check if the library size (14,000 files / 85 GB) exceeds any sync client limits.",
             "Have one user reset the OneDrive sync client and re-sync to test after backend checks."
@@ -134,7 +134,7 @@
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Fix keyboard layout issue on ThinkPad T14s Gen 4 \u2014 Windows input method likely switched to a non-US layout after the external USB keyboard was connected.",
+        "next_best_action": "Fix keyboard layout issue on ThinkPad T14s Gen 4 — Windows input method likely switched to a non-US layout after the external USB keyboard was connected.",
         "remediation_steps": [
             "Check Windows Settings > Time & Language > Language for extra keyboard layouts (DE, FR).",
             "Remove any non-US English keyboard layouts that were auto-added.",
@@ -152,7 +152,7 @@
         "missing_information": [
             "authentication_method"
         ],
-        "next_best_action": "Investigate SAML assertion failure for HR Portal SSO \u2014 the 'department' claim is missing after the user's office transfer from London to New York in the HR system.",
+        "next_best_action": "Investigate SAML assertion failure for HR Portal SSO — the 'department' claim is missing after the user's office transfer from London to New York in the HR system.",
         "remediation_steps": [
             "Check Azure AD SAML token claims configuration for the HR Portal enterprise app.",
             "Verify the user's 'department' attribute is populated in Azure AD after the office transfer.",
@@ -170,7 +170,7 @@
         "missing_information": [
             "environment_details"
         ],
-        "next_best_action": "Investigate I/O bottleneck on sql-prod-rpt-02 causing nightly ETL failure and stale risk dashboards for 30 portfolio managers \u2014 PAGEIOLATCH_SH waits indicate disk subsystem saturation.",
+        "next_best_action": "Investigate I/O bottleneck on sql-prod-rpt-02 causing nightly ETL failure and stale risk dashboards for 30 portfolio managers — PAGEIOLATCH_SH waits indicate disk subsystem saturation.",
         "remediation_steps": [
             "Check the storage subsystem health and latency metrics for sql-prod-rpt-02.",
             "Review SQL Server wait stats and identify the queries contributing to PAGEIOLATCH_SH waits.",
@@ -186,7 +186,7 @@
         "assigned_team": "Security Operations",
         "needs_escalation": false,
         "missing_information": [],
-        "next_best_action": "Generate access review reports for 5 SharePoint sites and 3 Azure resource groups for the Q1 2026 compliance audit \u2014 reports due by March 25 for audit committee meeting.",
+        "next_best_action": "Generate access review reports for 5 SharePoint sites and 3 Azure resource groups for the Q1 2026 compliance audit — reports due by March 25 for audit committee meeting.",
         "remediation_steps": [
             "Run Azure AD access reviews for the 5 listed SharePoint sites and export user/permission reports.",
             "Generate RBAC role assignment reports for the 3 Azure resource groups.",
@@ -204,7 +204,7 @@
         "missing_information": [
             "environment_details"
         ],
-        "next_best_action": "Investigate multiple SAP transaction failures (VA01, ME21N, FB01) since 07:00 AM affecting 40 users \u2014 SQL_ERROR_502 suggests a database-level issue, possibly SAPSR3 tablespace exhaustion.",
+        "next_best_action": "Investigate multiple SAP transaction failures (VA01, ME21N, FB01) since 07:00 AM affecting 40 users — SQL_ERROR_502 suggests a database-level issue, possibly SAPSR3 tablespace exhaustion.",
         "remediation_steps": [
             "Check SAP system logs (SM21) and database error logs for the root cause of SQL_ERROR_502.",
             "Verify SAPSR3 tablespace utilization and extend if it is near capacity.",
@@ -222,7 +222,7 @@
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Re-register Microsoft Authenticator MFA for the user who replaced their phone and wiped the old device \u2014 requires admin-initiated MFA reset since the old device is no longer available.",
+        "next_best_action": "Re-register Microsoft Authenticator MFA for the user who replaced their phone and wiped the old device — requires admin-initiated MFA reset since the old device is no longer available.",
         "remediation_steps": [
             "Verify the user's identity with their manager Diana Ross in Portfolio Analytics.",
             "Perform an admin MFA reset in Azure AD to clear the old Authenticator registration.",
@@ -240,7 +240,7 @@
         "missing_information": [
             "error_message"
         ],
-        "next_best_action": "Investigate HP LaserJet MFP M635 print spooler service failure on Level 22 Singapore \u2014 the printer responds to ping and shows 'Ready' but the spooler is unavailable, blocking ~30 users before an afternoon client meeting.",
+        "next_best_action": "Investigate HP LaserJet MFP M635 print spooler service failure on Level 22 Singapore — the printer responds to ping and shows 'Ready' but the spooler is unavailable, blocking ~30 users before an afternoon client meeting.",
         "remediation_steps": [
             "Access the printer's web interface at http://10.65.22.40 and restart the print spooler service.",
             "If the web interface restart fails, power-cycle the printer and wait for full initialization.",
@@ -258,7 +258,7 @@
         "missing_information": [
             "contact_info"
         ],
-        "next_best_action": "Provision all accounts, licenses, and equipment for new hire Daniel Osei (Quantitative Analyst, Fixed Income Analytics) starting March 24 \u2014 everything must be ready by Friday March 21.",
+        "next_best_action": "Provision all accounts, licenses, and equipment for new hire Daniel Osei (Quantitative Analyst, Fixed Income Analytics) starting March 24 — everything must be ready by Friday March 21.",
         "remediation_steps": [
             "Create Active Directory account and mailbox for daniel.osei@contoso.com.",
             "Assign Microsoft 365 E5 license and configure Bloomberg Terminal B-PIPE access.",

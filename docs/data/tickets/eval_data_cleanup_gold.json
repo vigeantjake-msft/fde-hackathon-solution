@@ -8,7 +8,7 @@
         "missing_information": [
             "application_version"
         ],
-        "next_best_action": "Investigate GlobalProtect error GP-ERR-4021 on the user's Dell Latitude 5540 running Windows 11 \u2014 likely caused by the Intune endpoint agent update pushed last Friday conflicting with the VPN client.",
+        "next_best_action": "Investigate GlobalProtect error GP-ERR-4021 on the user's Dell Latitude 5540 running Windows 11 — likely caused by the Intune endpoint agent update pushed last Friday conflicting with the VPN client.",
         "remediation_steps": [
             "Check GlobalProtect gateway logs for GP-ERR-4021 correlated with the user's session.",
             "Review the Intune endpoint agent update pushed Friday for known VPN compatibility issues.",
@@ -26,7 +26,7 @@
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Troubleshoot Dell U2722D monitor flickering via Lenovo USB-C dock on ThinkPad X1 Carbon Gen 11 \u2014 likely a display driver regression from last week's Windows Update.",
+        "next_best_action": "Troubleshoot Dell U2722D monitor flickering via Lenovo USB-C dock on ThinkPad X1 Carbon Gen 11 — likely a display driver regression from last week's Windows Update.",
         "remediation_steps": [
             "Check the installed Intel/NVIDIA display driver version and compare against the pre-update version.",
             "Roll back the display driver to the previous version via Device Manager.",
@@ -44,7 +44,7 @@
         "missing_information": [
             "application_version"
         ],
-        "next_best_action": "Diagnose Outlook desktop crash (0xc0000005 in mso40uiwin32client.dll) triggered by calendar invites from Legal \u2014 likely caused by Tuesday's Office update.",
+        "next_best_action": "Diagnose Outlook desktop crash (0xc0000005 in mso40uiwin32client.dll) triggered by calendar invites from Legal — likely caused by Tuesday's Office update.",
         "remediation_steps": [
             "Identify the specific Office update pushed Tuesday and check for known issues.",
             "Run Outlook in safe mode to rule out add-in conflicts.",
@@ -62,7 +62,7 @@
         "missing_information": [
             "network_location"
         ],
-        "next_best_action": "Investigate complete WiFi outage on 4th floor, Building 2 Chicago affecting 12+ users in Structured Products \u2014 client presentation at 11:00 AM requires urgent resolution.",
+        "next_best_action": "Investigate complete WiFi outage on 4th floor, Building 2 Chicago affecting 12+ users in Structured Products — client presentation at 11:00 AM requires urgent resolution.",
         "remediation_steps": [
             "Check the wireless controller dashboard for AP status on Building 2, 4th floor.",
             "Verify if the APs lost power, connectivity to the switch, or received a bad config push.",
@@ -80,7 +80,7 @@
         "missing_information": [
             "error_message"
         ],
-        "next_best_action": "Restore access to the Compliance Reporting Portal for the user receiving 403 Forbidden \u2014 quarterly compliance report deadline is Friday EOD.",
+        "next_best_action": "Restore access to the Compliance Reporting Portal for the user receiving 403 Forbidden — quarterly compliance report deadline is Friday EOD.",
         "remediation_steps": [
             "Check the Compliance Reporting Portal's access control list for the user's account.",
             "Verify the user's Azure AD group memberships include the Compliance-Portal-Users group.",
@@ -98,7 +98,7 @@
         "missing_information": [
             "screenshot_or_attachment"
         ],
-        "next_best_action": "Investigate phishing email from 'cont0so-financial.com' targeting the user \u2014 confirm no credentials were compromised and block the sender domain org-wide.",
+        "next_best_action": "Investigate phishing email from 'cont0so-financial.com' targeting the user — confirm no credentials were compromised and block the sender domain org-wide.",
         "remediation_steps": [
             "Retrieve the original phishing email headers from the user's quarantine folder.",
             "Block the sender domain cont0so-financial.com and the URL contoso-verify.xyz in the email gateway.",
@@ -119,7 +119,7 @@
         "next_best_action": "Investigate OneDrive sync failure (error 0x8004de40) for the APAC Structured Finance SharePoint library affecting 8+ users in the Singapore office since Monday.",
         "remediation_steps": [
             "Check SharePoint admin center for throttling or service health issues on the APAC tenant.",
-            "Review OneDrive sync error 0x8004de40 \u2014 typically indicates a network or authentication problem.",
+            "Review OneDrive sync error 0x8004de40 — typically indicates a network or authentication problem.",
             "Verify the Singapore office proxy and firewall allow OneDrive sync endpoints.",
             "Check if the library size (14,000 files / 85 GB) exceeds any sync client limits.",
             "Have one user reset the OneDrive sync client and re-sync to test after backend checks."
@@ -134,7 +134,7 @@
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Fix keyboard layout issue on ThinkPad T14s Gen 4 \u2014 Windows input method likely switched to a non-US layout after the external USB keyboard was connected.",
+        "next_best_action": "Fix keyboard layout issue on ThinkPad T14s Gen 4 — Windows input method likely switched to a non-US layout after the external USB keyboard was connected.",
         "remediation_steps": [
             "Check Windows Settings > Time & Language > Language for extra keyboard layouts (DE, FR).",
             "Remove any non-US English keyboard layouts that were auto-added.",
@@ -152,7 +152,7 @@
         "missing_information": [
             "authentication_method"
         ],
-        "next_best_action": "Investigate SAML assertion failure for HR Portal SSO \u2014 the 'department' claim is missing after the user's office transfer from London to New York in the HR system.",
+        "next_best_action": "Investigate SAML assertion failure for HR Portal SSO — the 'department' claim is missing after the user's office transfer from London to New York in the HR system.",
         "remediation_steps": [
             "Check Azure AD SAML token claims configuration for the HR Portal enterprise app.",
             "Verify the user's 'department' attribute is populated in Azure AD after the office transfer.",
@@ -170,7 +170,7 @@
         "missing_information": [
             "environment_details"
         ],
-        "next_best_action": "Investigate I/O bottleneck on sql-prod-rpt-02 causing nightly ETL failure and stale risk dashboards for 30 portfolio managers \u2014 PAGEIOLATCH_SH waits indicate disk subsystem saturation.",
+        "next_best_action": "Investigate I/O bottleneck on sql-prod-rpt-02 causing nightly ETL failure and stale risk dashboards for 30 portfolio managers — PAGEIOLATCH_SH waits indicate disk subsystem saturation.",
         "remediation_steps": [
             "Check the storage subsystem health and latency metrics for sql-prod-rpt-02.",
             "Review SQL Server wait stats and identify the queries contributing to PAGEIOLATCH_SH waits.",
@@ -186,7 +186,7 @@
         "assigned_team": "Security Operations",
         "needs_escalation": false,
         "missing_information": [],
-        "next_best_action": "Generate access review reports for 5 SharePoint sites and 3 Azure resource groups for the Q1 2026 compliance audit \u2014 reports due by March 25 for audit committee meeting.",
+        "next_best_action": "Generate access review reports for 5 SharePoint sites and 3 Azure resource groups for the Q1 2026 compliance audit — reports due by March 25 for audit committee meeting.",
         "remediation_steps": [
             "Run Azure AD access reviews for the 5 listed SharePoint sites and export user/permission reports.",
             "Generate RBAC role assignment reports for the 3 Azure resource groups.",
@@ -204,7 +204,7 @@
         "missing_information": [
             "environment_details"
         ],
-        "next_best_action": "Investigate multiple SAP transaction failures (VA01, ME21N, FB01) since 07:00 AM affecting 40 users \u2014 SQL_ERROR_502 suggests a database-level issue, possibly SAPSR3 tablespace exhaustion.",
+        "next_best_action": "Investigate multiple SAP transaction failures (VA01, ME21N, FB01) since 07:00 AM affecting 40 users — SQL_ERROR_502 suggests a database-level issue, possibly SAPSR3 tablespace exhaustion.",
         "remediation_steps": [
             "Check SAP system logs (SM21) and database error logs for the root cause of SQL_ERROR_502.",
             "Verify SAPSR3 tablespace utilization and extend if it is near capacity.",
@@ -222,7 +222,7 @@
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Re-register Microsoft Authenticator MFA for the user who replaced their phone and wiped the old device \u2014 requires admin-initiated MFA reset since the old device is no longer available.",
+        "next_best_action": "Re-register Microsoft Authenticator MFA for the user who replaced their phone and wiped the old device — requires admin-initiated MFA reset since the old device is no longer available.",
         "remediation_steps": [
             "Verify the user's identity with their manager Diana Ross in Portfolio Analytics.",
             "Perform an admin MFA reset in Azure AD to clear the old Authenticator registration.",
@@ -240,7 +240,7 @@
         "missing_information": [
             "error_message"
         ],
-        "next_best_action": "Investigate HP LaserJet MFP M635 print spooler service failure on Level 22 Singapore \u2014 the printer responds to ping and shows 'Ready' but the spooler is unavailable, blocking ~30 users before an afternoon client meeting.",
+        "next_best_action": "Investigate HP LaserJet MFP M635 print spooler service failure on Level 22 Singapore — the printer responds to ping and shows 'Ready' but the spooler is unavailable, blocking ~30 users before an afternoon client meeting.",
         "remediation_steps": [
             "Access the printer's web interface at http://10.65.22.40 and restart the print spooler service.",
             "If the web interface restart fails, power-cycle the printer and wait for full initialization.",
@@ -258,7 +258,7 @@
         "missing_information": [
             "contact_info"
         ],
-        "next_best_action": "Provision all accounts, licenses, and equipment for new hire Daniel Osei (Quantitative Analyst, Fixed Income Analytics) starting March 24 \u2014 everything must be ready by Friday March 21.",
+        "next_best_action": "Provision all accounts, licenses, and equipment for new hire Daniel Osei (Quantitative Analyst, Fixed Income Analytics) starting March 24 — everything must be ready by Friday March 21.",
         "remediation_steps": [
             "Create Active Directory account and mailbox for daniel.osei@contoso.com.",
             "Assign Microsoft 365 E5 license and configure Bloomberg Terminal B-PIPE access.",
@@ -277,7 +277,7 @@
             "environment_details",
             "configuration_details"
         ],
-        "next_best_action": "Investigate OOM-killed order-processor pods \u2014 batch aggregation in BatchProcessor.java:442 is exceeding the 4 GiB memory limit after last week's migration increased batch sizes.",
+        "next_best_action": "Investigate OOM-killed order-processor pods — batch aggregation in BatchProcessor.java:442 is exceeding the 4 GiB memory limit after last week's migration increased batch sizes.",
         "remediation_steps": [
             "Review the batch aggregation logic in BatchProcessor.java to identify the memory spike cause.",
             "Check whether the post-migration batch sizes can be capped or paginated.",
@@ -295,7 +295,7 @@
         "missing_information": [
             "configuration_details"
         ],
-        "next_best_action": "Renew the expired merchant SSL/TLS certificate for CONTOSO-PROD-001 on gateway-prod-east \u2014 it expired on 2026-03-15 and is blocking all Wealth Management payment processing.",
+        "next_best_action": "Renew the expired merchant SSL/TLS certificate for CONTOSO-PROD-001 on gateway-prod-east — it expired on 2026-03-15 and is blocking all Wealth Management payment processing.",
         "remediation_steps": [
             "Identify and renew the expired merchant certificate (expired 2026-03-15).",
             "Deploy the renewed certificate to gateway-prod-east.payments.contoso.com.",
@@ -314,7 +314,7 @@
             "steps_to_reproduce",
             "reproduction_frequency"
         ],
-        "next_best_action": "Investigate InvalidOperationException in PortfolioService.getHoldings() on api-prod-east-03 build v2.14.7-hotfix3 \u2014 30% of portfolio queries are failing and impacting the Trading desk.",
+        "next_best_action": "Investigate InvalidOperationException in PortfolioService.getHoldings() on api-prod-east-03 build v2.14.7-hotfix3 — 30% of portfolio queries are failing and impacting the Trading desk.",
         "remediation_steps": [
             "Check application logs on api-prod-east-03 for the correlation ID to identify root cause.",
             "Review recent changes in v2.14.7-hotfix3 that may have introduced the regression.",
@@ -332,7 +332,7 @@
         "missing_information": [
             "affected_users"
         ],
-        "next_best_action": "Revert PR #4821 immediately \u2014 the OAuth audience was changed from ClientId to TenantId and token expiration validation was disabled, breaking SSO for the Compliance portal and introducing a security vulnerability.",
+        "next_best_action": "Revert PR #4821 immediately — the OAuth audience was changed from ClientId to TenantId and token expiration validation was disabled, breaking SSO for the Compliance portal and introducing a security vulnerability.",
         "remediation_steps": [
             "Revert PR #4821 to restore correct OAuth audience (ClientId) and expiration validation.",
             "Deploy the revert to production and verify SSO authentication works.",
@@ -350,7 +350,7 @@
         "missing_information": [
             "error_message"
         ],
-        "next_best_action": "Investigate VPN tunnel drops occurring exactly every 60 minutes on the London office 8th floor \u2014 likely a VPN gateway session timeout configuration issue affecting multiple users.",
+        "next_best_action": "Investigate VPN tunnel drops occurring exactly every 60 minutes on the London office 8th floor — likely a VPN gateway session timeout configuration issue affecting multiple users.",
         "remediation_steps": [
             "Check the GlobalProtect gateway session timeout and keep-alive settings.",
             "Review the VPN gateway logs for session-expiry events at 60-minute intervals.",
@@ -384,7 +384,7 @@
         "missing_information": [
             "application_version"
         ],
-        "next_best_action": "Fix the type mismatch in risk_engine.rs:142 \u2014 config.get() returns Option<String> but the code expects f64. This is blocking the 4 PM production release.",
+        "next_best_action": "Fix the type mismatch in risk_engine.rs:142 — config.get() returns Option<String> but the code expects f64. This is blocking the 4 PM production release.",
         "remediation_steps": [
             "Fix the type mismatch in src/risk_engine.rs:142 by properly unwrapping and parsing the config value.",
             "Run the full test suite locally to confirm the fix.",
@@ -401,7 +401,7 @@
         "missing_information": [
             "environment_details"
         ],
-        "next_best_action": "Investigate AADSTS65005 error blocking MFA enrollment for four March 2026 new hires \u2014 authentication method registration appears disabled for their accounts despite correct licensing and policy configuration.",
+        "next_best_action": "Investigate AADSTS65005 error blocking MFA enrollment for four March 2026 new hires — authentication method registration appears disabled for their accounts despite correct licensing and policy configuration.",
         "remediation_steps": [
             "Check Entra ID authentication methods policy to confirm FIDO2/Authenticator is enabled for the new-hire group.",
             "Verify the users are members of the correct security group for MFA enrollment.",
@@ -419,7 +419,7 @@
         "missing_information": [
             "configuration_details"
         ],
-        "next_best_action": "Investigate PostgreSQL replication lag on pg-replica-03 (45 minutes behind primary) serving the Risk Dashboard \u2014 the risk team is seeing stale data.",
+        "next_best_action": "Investigate PostgreSQL replication lag on pg-replica-03 (45 minutes behind primary) serving the Risk Dashboard — the risk team is seeing stale data.",
         "remediation_steps": [
             "Check pg-replica-03 for I/O bottlenecks, CPU contention, or long-running queries blocking WAL replay.",
             "Review WAL sender and receiver stats for network throughput between primary and replica-03.",
@@ -438,7 +438,7 @@
             "error_message",
             "application_version"
         ],
-        "next_best_action": "Debug the 'Configuration validation failed' error for notification-service after the Kafka broker address and topic changes \u2014 compare the new YAML against the config schema to identify the invalid field.",
+        "next_best_action": "Debug the 'Configuration validation failed' error for notification-service after the Kafka broker address and topic changes — compare the new YAML against the config schema to identify the invalid field.",
         "remediation_steps": [
             "Run the service with verbose logging to get the specific validation error.",
             "Compare the new config against the JSON/YAML schema for notification-service.",
@@ -455,7 +455,7 @@
         "missing_information": [
             "configuration_details"
         ],
-        "next_best_action": "Update the JWKS key cache in the trading app to include the new signing keys from Azure AD's key rotation \u2014 the 'kid' mismatch is causing token validation failures for ~200 traders.",
+        "next_best_action": "Update the JWKS key cache in the trading app to include the new signing keys from Azure AD's key rotation — the 'kid' mismatch is causing token validation failures for ~200 traders.",
         "remediation_steps": [
             "Force-refresh the JWKS key cache from the Azure AD metadata endpoint.",
             "Verify the new 'kid' from the token header appears in the refreshed JWKS.",
@@ -490,7 +490,7 @@
         "missing_information": [
             "error_message"
         ],
-        "next_best_action": "Investigate Bloomberg terminal B-PIPE feed connectivity failure on floor 7, building 2 \u2014 all 15 terminals disconnected during the European close while floor 8 is unaffected, suggesting a floor-level network switch issue.",
+        "next_best_action": "Investigate Bloomberg terminal B-PIPE feed connectivity failure on floor 7, building 2 — all 15 terminals disconnected during the European close while floor 8 is unaffected, suggesting a floor-level network switch issue.",
         "remediation_steps": [
             "Check the network switch serving floor 7, building 2 for port errors or flapping.",
             "Verify VLAN configuration for the Bloomberg B-PIPE feed on the floor 7 switch.",
@@ -508,7 +508,7 @@
         "missing_information": [
             "steps_to_reproduce"
         ],
-        "next_best_action": "Investigate Microsoft Teams video call crash (EXC_BAD_ACCESS in WebRTC::VideoCapture) on MacBook Pro M3 after Teams update to version 24045.1234.5678.9012 \u2014 likely a WebRTC compatibility issue with the Apple Silicon camera pipeline.",
+        "next_best_action": "Investigate Microsoft Teams video call crash (EXC_BAD_ACCESS in WebRTC::VideoCapture) on MacBook Pro M3 after Teams update to version 24045.1234.5678.9012 — likely a WebRTC compatibility issue with the Apple Silicon camera pipeline.",
         "remediation_steps": [
             "Check if the crash is reproducible with camera disabled to isolate the WebRTC video capture module.",
             "Roll back to the previous Teams version if possible.",
@@ -526,7 +526,7 @@
             "device_info",
             "steps_to_reproduce"
         ],
-        "next_best_action": "Address the primary Teams audio issue \u2014 intermittent audio dropout in Teams calls with a Jabra Evolve2 75 headset on Windows 11 \u2014 and split the printer and badge access items into separate tickets for the appropriate teams.",
+        "next_best_action": "Address the primary Teams audio issue — intermittent audio dropout in Teams calls with a Jabra Evolve2 75 headset on Windows 11 — and split the printer and badge access items into separate tickets for the appropriate teams.",
         "remediation_steps": [
             "Troubleshoot Teams audio by checking audio device settings and updating the Jabra firmware.",
             "Split the printer issue (magenta tint on floor 5 HP Color LaserJet) into a separate ticket for Endpoint Engineering.",
@@ -543,7 +543,7 @@
         "missing_information": [
             "application_version"
         ],
-        "next_best_action": "Investigate SAP GUI SSO login failure (ICE_LOGON_FAIL) on ECC production system PRD/100 after SAP GUI 8.00 PL4 patch \u2014 likely an SSO ticket validation regression introduced by the patch.",
+        "next_best_action": "Investigate SAP GUI SSO login failure (ICE_LOGON_FAIL) on ECC production system PRD/100 after SAP GUI 8.00 PL4 patch — likely an SSO ticket validation regression introduced by the patch.",
         "remediation_steps": [
             "Verify SAP GUI 8.00 PL4 release notes for known SSO ticket validation issues.",
             "Compare SNC/SSO configuration on the affected workstations against a working baseline.",
@@ -561,7 +561,7 @@
         "missing_information": [
             "network_location"
         ],
-        "next_best_action": "Investigate intermittent packet loss (30-40%) on Cisco Catalyst 9300 switch CHI-IDF3B-SW01 affecting VLANs 310 and 312 \u2014 possible bad GBIC on Gi1/0/24 or spanning tree loop from an unauthorized switch.",
+        "next_best_action": "Investigate intermittent packet loss (30-40%) on Cisco Catalyst 9300 switch CHI-IDF3B-SW01 affecting VLANs 310 and 312 — possible bad GBIC on Gi1/0/24 or spanning tree loop from an unauthorized switch.",
         "remediation_steps": [
             "Check Gi1/0/24 for CRC errors, input/output errors, and GBIC diagnostics (show interfaces transceiver).",
             "Review the MAC address table on VLANs 310 and 312 for unexpected entries indicating a rogue switch.",
@@ -579,7 +579,7 @@
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Investigate Outlook-to-iOS calendar sync failure triggered by a recurring board meeting invite (RRULE with SEQUENCE:3) \u2014 likely a corrupted calendar item blocking the Exchange ActiveSync sync state.",
+        "next_best_action": "Investigate Outlook-to-iOS calendar sync failure triggered by a recurring board meeting invite (RRULE with SEQUENCE:3) — likely a corrupted calendar item blocking the Exchange ActiveSync sync state.",
         "remediation_steps": [
             "Check Exchange ActiveSync device partnership status for the user's iPhone.",
             "Examine the problematic calendar item server-side using MFCMAPI or EWS to identify corruption.",
@@ -598,7 +598,7 @@
             "timestamp",
             "environment_details"
         ],
-        "next_best_action": "Immediately investigate the unauthorized interactive login to production service account svc-tradecapture-prod from a Russian IP address (91.243.xx.xx) at 03:42 AM EST on April 5th \u2014 this indicates a potential credential compromise of a critical trading system.",
+        "next_best_action": "Immediately investigate the unauthorized interactive login to production service account svc-tradecapture-prod from a Russian IP address (91.243.xx.xx) at 03:42 AM EST on April 5th — this indicates a potential credential compromise of a critical trading system.",
         "remediation_steps": [
             "Immediately rotate the credentials for svc-tradecapture-prod and revoke all active sessions.",
             "Review Azure AD sign-in logs for the service account over the past 30 days for additional anomalous logins.",
@@ -635,7 +635,7 @@
         "missing_information": [
             "previous_ticket_id"
         ],
-        "next_best_action": "Investigate the 550 5.1.1 bounce for the compliance-reports shared mailbox \u2014 likely deleted or disabled during the Exchange migration last weekend \u2014 with an April 10th regulatory filing deadline.",
+        "next_best_action": "Investigate the 550 5.1.1 bounce for the compliance-reports shared mailbox — likely deleted or disabled during the Exchange migration last weekend — with an April 10th regulatory filing deadline.",
         "remediation_steps": [
             "Check Exchange Admin Center for the compliance-reports shared mailbox status (active, soft-deleted, or disabled).",
             "If soft-deleted, recover the mailbox from the Exchange retention hold.",
@@ -673,7 +673,7 @@
             "device_info",
             "steps_to_reproduce"
         ],
-        "next_best_action": "Re-investigate the ThinkPad X1 Carbon Gen 11 screen flickering issue \u2014 the docking station swap did not resolve it, and the symptom has worsened to full display blackouts. Likely a laptop hardware issue (display cable or GPU) rather than dock or driver.",
+        "next_best_action": "Re-investigate the ThinkPad X1 Carbon Gen 11 screen flickering issue — the docking station swap did not resolve it, and the symptom has worsened to full display blackouts. Likely a laptop hardware issue (display cable or GPU) rather than dock or driver.",
         "remediation_steps": [
             "Test the laptop display without any dock connected to isolate the laptop hardware.",
             "Run Lenovo built-in display diagnostics to check for panel or cable faults.",
@@ -692,7 +692,7 @@
             "error_message",
             "authentication_method"
         ],
-        "next_best_action": "Troubleshoot repeated MFA enrollment failure for thomas.reeves@contoso.com \u2014 both Authenticator app and SMS methods are failing \u2014 and flag the ticket for PII redaction as the user included sensitive personal information.",
+        "next_best_action": "Troubleshoot repeated MFA enrollment failure for thomas.reeves@contoso.com — both Authenticator app and SMS methods are failing — and flag the ticket for PII redaction as the user included sensitive personal information.",
         "remediation_steps": [
             "Reset the user's MFA registration state in Azure AD to clear any corrupted enrollment data.",
             "Verify the user's phone number is correctly registered in Azure AD for SMS-based MFA.",
@@ -711,7 +711,7 @@
             "configuration_details",
             "application_version"
         ],
-        "next_best_action": "Investigate the nightly P&L report generation failure in Airflow DAG 'daily_pnl_report' \u2014 the PDF output is blank despite correct upstream SQL data \u2014 likely a regression in the ReportLab template updated March 28th.",
+        "next_best_action": "Investigate the nightly P&L report generation failure in Airflow DAG 'daily_pnl_report' — the PDF output is blank despite correct upstream SQL data — likely a regression in the ReportLab template updated March 28th.",
         "remediation_steps": [
             "Review the March 28th commit to the report template for changes that could break PDF rendering.",
             "Compare the ReportLab template before and after the commit using git diff.",
@@ -730,7 +730,7 @@
             "device_info",
             "error_message"
         ],
-        "next_best_action": "Investigate high CPU usage caused by WMI Provider Host after Windows update KB5034441 \u2014 determine whether a rollback or targeted fix is needed.",
+        "next_best_action": "Investigate high CPU usage caused by WMI Provider Host after Windows update KB5034441 — determine whether a rollback or targeted fix is needed.",
         "remediation_steps": [
             "Identify the exact laptop model and OS build for compatibility checks.",
             "Review Windows Update history and confirm KB5034441 installation date.",
@@ -749,7 +749,7 @@
             "error_message",
             "steps_to_reproduce"
         ],
-        "next_best_action": "Investigate SharePoint 403 Access Denied error for the Q2 Financial Reports folder \u2014 verify permissions for the 'Finance Contributors' role.",
+        "next_best_action": "Investigate SharePoint 403 Access Denied error for the Q2 Financial Reports folder — verify permissions for the 'Finance Contributors' role.",
         "remediation_steps": [
             "Check SharePoint audit logs for permission changes on the Q2 Reports folder.",
             "Verify that the 'Finance Contributors' group still has read/write access.",
@@ -767,7 +767,7 @@
         "missing_information": [
             "environment_details"
         ],
-        "next_best_action": "Investigate connection pool exhaustion on db-prod-east-03 \u2014 likely caused by a connection leak in the new batch ETL job deployed the previous day.",
+        "next_best_action": "Investigate connection pool exhaustion on db-prod-east-03 — likely caused by a connection leak in the new batch ETL job deployed the previous day.",
         "remediation_steps": [
             "Identify the new batch ETL job and check for unclosed database connections.",
             "Terminate idle or leaked connections to restore pool availability.",
@@ -823,7 +823,7 @@
             "affected_system",
             "reproduction_frequency"
         ],
-        "next_best_action": "Investigate file corruption on the nas-prod-02 finance share \u2014 files are being zeroed out after valid headers, suggesting a storage or firmware issue.",
+        "next_best_action": "Investigate file corruption on the nas-prod-02 finance share — files are being zeroed out after valid headers, suggesting a storage or firmware issue.",
         "remediation_steps": [
             "Run a filesystem integrity check on the affected NAS volume.",
             "Review NAS firmware version and check vendor advisories for known bugs.",
@@ -861,7 +861,7 @@
             "configuration_details",
             "application_version"
         ],
-        "next_best_action": "Correct the FIGI mapping in the security master file \u2014 the Contoso Growth Fund ticker is mapped to Apple's FIGI (BBG000B9XRY4) instead of BBG00Z1Y3XQ7.",
+        "next_best_action": "Correct the FIGI mapping in the security master file — the Contoso Growth Fund ticker is mapped to Apple's FIGI (BBG000B9XRY4) instead of BBG00Z1Y3XQ7.",
         "remediation_steps": [
             "Identify who last modified the security master file and review the change.",
             "Correct the FIGI mapping for CONGROW from BBG000B9XRY4 to BBG00Z1Y3XQ7.",
@@ -879,7 +879,7 @@
         "missing_information": [
             "network_location"
         ],
-        "next_best_action": "Investigate high DNS query latency on the 10.1.5.0/24 subnet \u2014 likely caused by the firewall rule change deployed around 2 PM today.",
+        "next_best_action": "Investigate high DNS query latency on the 10.1.5.0/24 subnet — likely caused by the firewall rule change deployed around 2 PM today.",
         "remediation_steps": [
             "Review the firewall rule change made around 2 PM and identify DNS-related rules.",
             "Check whether DNS traffic (port 53) is being inspected or rate-limited by the new rules.",
@@ -898,7 +898,7 @@
             "error_message",
             "device_info"
         ],
-        "next_best_action": "Investigate account lockout for julia.mendez on the self-service portal \u2014 verify Active Directory lock status and recent authentication events.",
+        "next_best_action": "Investigate account lockout for julia.mendez on the self-service portal — verify Active Directory lock status and recent authentication events.",
         "remediation_steps": [
             "Check Active Directory for account lockout status on julia.mendez.",
             "Review authentication logs for failed login attempts or suspicious activity.",
@@ -1070,7 +1070,7 @@
             "Contact Bloomberg support to check if the FEED_TIMEOUT_ERR is on their end.",
             "Verify network connectivity between the trading floor and Bloomberg data centers.",
             "Check if firewall rules or proxy settings were changed affecting Bloomberg ports.",
-            "Determine the scope of impact \u2014 how many traders and desks are affected.",
+            "Determine the scope of impact — how many traders and desks are affected.",
             "Escalate to network operations if the issue is on Contoso's network infrastructure."
         ]
     },
@@ -1239,7 +1239,7 @@
         "next_best_action": "Investigate the Azure App Service startup failure for contoso-customer-portal v2.14.3, focusing on the database migration introduced in the latest release.",
         "remediation_steps": [
             "Pull the full application startup logs from Azure App Service diagnostics.",
-            "Check the database migration status \u2014 verify it completed successfully.",
+            "Check the database migration status — verify it completed successfully.",
             "Compare the App Service configuration settings with the .env to find mismatches.",
             "Roll back to v2.14.2 if the startup failure cannot be quickly resolved.",
             "Advise the reporter to avoid pasting environment variables in tickets, even redacted ones."
@@ -1310,7 +1310,7 @@
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Investigate screen flickering on Dell Latitude 5540 after Intel Iris Xe driver update to 31.0.101.5186. The five inline base64 images are noise \u2014 roll back the display driver.",
+        "next_best_action": "Investigate screen flickering on Dell Latitude 5540 after Intel Iris Xe driver update to 31.0.101.5186. The five inline base64 images are noise — roll back the display driver.",
         "remediation_steps": [
             "Roll back the Intel Iris Xe driver to the previous version via Device Manager.",
             "Check for known issues with Intel driver version 31.0.101.5186.",
@@ -1329,7 +1329,7 @@
             "environment_details",
             "steps_to_reproduce"
         ],
-        "next_best_action": "Investigate Java OutOfMemoryError in the trade reconciliation app on srv-trade-recon-01. Ignore the base64-encoded log dump \u2014 the issue is heap exhaustion during the morning batch job.",
+        "next_best_action": "Investigate Java OutOfMemoryError in the trade reconciliation app on srv-trade-recon-01. Ignore the base64-encoded log dump — the issue is heap exhaustion during the morning batch job.",
         "remediation_steps": [
             "Review JVM heap allocation (-Xmx) and increase if needed.",
             "Analyze heap dump to find memory-intensive objects.",
@@ -1385,7 +1385,7 @@
             "affected_system",
             "network_location"
         ],
-        "next_best_action": "Investigate file share access denial for CONTOSO\\a.williams on \\\\fs-london-01\\wealth-mgmt\\reports. The mojibake is noise \u2014 the core issue is sudden loss of read access.",
+        "next_best_action": "Investigate file share access denial for CONTOSO\\a.williams on \\\\fs-london-01\\wealth-mgmt\\reports. The mojibake is noise — the core issue is sudden loss of read access.",
         "remediation_steps": [
             "Check the user's AD group membership for the wealth-mgmt share ACL.",
             "Review recent changes to the file server share permissions.",
@@ -1404,7 +1404,7 @@
             "error_message",
             "environment_details"
         ],
-        "next_best_action": "Investigate Azure ARM template deployment timeout for staging environment. The inline JSON is noise \u2014 the real issue is VNet creation timing out.",
+        "next_best_action": "Investigate Azure ARM template deployment timeout for staging environment. The inline JSON is noise — the real issue is VNet creation timing out.",
         "remediation_steps": [
             "Check Azure subscription resource quotas for the target region.",
             "Review Activity Log for the deployment correlation ID.",
@@ -1423,7 +1423,7 @@
             "affected_users",
             "timestamp"
         ],
-        "next_best_action": "Investigate email delivery delays (30-40 min) for Singapore trading team. The trilingual code-switching is noise \u2014 check Exchange mail flow.",
+        "next_best_action": "Investigate email delivery delays (30-40 min) for Singapore trading team. The trilingual code-switching is noise — check Exchange mail flow.",
         "remediation_steps": [
             "Check Exchange Online message trace for delivery bottlenecks.",
             "Review mail flow rules for the Singapore office.",
@@ -1461,7 +1461,7 @@
             "network_location",
             "affected_users"
         ],
-        "next_best_action": "Investigate choppy Teams audio in London Building 2, 8th floor. The raw email headers and MIME data are noise \u2014 the issue is degraded voice quality likely caused by Wi-Fi congestion or QoS misconfiguration.",
+        "next_best_action": "Investigate choppy Teams audio in London Building 2, 8th floor. The raw email headers and MIME data are noise — the issue is degraded voice quality likely caused by Wi-Fi congestion or QoS misconfiguration.",
         "remediation_steps": [
             "Check Wi-Fi signal quality on Building 2, 8th floor.",
             "Run Teams network assessment for jitter and packet loss.",
