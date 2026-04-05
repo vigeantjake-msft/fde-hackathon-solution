@@ -9083,10 +9083,20 @@ def _dc136_csv_injection() -> EvalCase:
                 "loading data into the staging table."
             ),
             remediation_steps=[
-                "Review the nightly import job logs for the exact InvalidCharacterException stack traces and affected row counts.",
-                "Add a CSV sanitization step that prefixes cells starting with =, +, -, or @ with a single quote to neutralize formula injection.",
-                "Configure the import pipeline to skip or quarantine malformed rows instead of terminating the entire batch.",
-                "Re-run the failed imports for the last three nights after applying the sanitization fix.",
+                (
+                    "Review the nightly import job logs for the exact"
+                    " InvalidCharacterException stack traces and affected row counts."
+                ),
+                (
+                    "Add a CSV sanitization step that prefixes cells starting"
+                    " with =, +, -, or @ with a single quote to neutralize"
+                    " formula injection."
+                ),
+                (
+                    "Configure the import pipeline to skip or quarantine"
+                    " malformed rows instead of terminating the entire batch."
+                ),
+                ("Re-run the failed imports for the last three nights after applying the sanitization fix."),
             ],
         ),
         tags=["data-cleanup", "csv_injection"],
@@ -9150,10 +9160,25 @@ def _dc137_gpg_signed() -> EvalCase:
                 "and coordinate a rollback to v4.2.1 for affected ThinkPad USB-C Dock Gen 2 units."
             ),
             remediation_steps=[
-                "Check the Lenovo support site for known issues with ThinkPad USB-C Dock Gen 2 firmware v4.3.0 and DisplayPort output.",
-                "Attempt a firmware rollback to v4.2.1 on one affected dock to confirm it resolves the display detection issue.",
-                "If rollback resolves the issue, coordinate a batch rollback for all affected docks and pause the v4.3.0 deployment.",
-                "Open a case with Lenovo enterprise support if the issue persists after rollback, providing firmware version and monitor model details.",
+                (
+                    "Check the Lenovo support site for known issues with"
+                    " ThinkPad USB-C Dock Gen 2 firmware v4.3.0 and"
+                    " DisplayPort output."
+                ),
+                (
+                    "Attempt a firmware rollback to v4.2.1 on one affected"
+                    " dock to confirm it resolves the display detection issue."
+                ),
+                (
+                    "If rollback resolves the issue, coordinate a batch"
+                    " rollback for all affected docks and pause the v4.3.0"
+                    " deployment."
+                ),
+                (
+                    "Open a case with Lenovo enterprise support if the issue"
+                    " persists after rollback, providing firmware version and"
+                    " monitor model details."
+                ),
             ],
         ),
         tags=["data-cleanup", "gpg_signed"],
@@ -9168,14 +9193,80 @@ def _dc138_zalgo_combining() -> EvalCase:
             ticket_id="INC-DC-138",
             subject="Application crashes when opening reports module",
             description=(
-                "H\u0337\u0322\u0327\u0308\u030c\u0301e\u0336\u0323\u032e\u0301\u030el\u0338\u0324\u0330\u030b\u0302p\u0335\u0325\u032d\u0308\u030c "
-                "— the R\u0336\u0323\u032e\u0301e\u0337\u0324\u0330\u0308p\u0335\u0325\u032d\u030co\u0338\u0322\u0327\u030br\u0336\u0323\u032e\u0302t\u0337\u0324\u0330\u0301s "
-                "module in our internal CRM application (v8.4.2) is crashing every time I try "
-                "to open it. The a\u0336\u0323\u032e\u030cp\u0337\u0324\u0330\u0308p\u0335\u0325\u032d\u0302l\u0338\u0322\u0327\u030bi\u0336\u0323\u032e\u0301c\u0337\u0324\u0330\u030ca"
-                "\u0335\u0325\u032d\u0308t\u0338\u0322\u0327\u030bi\u0336\u0323\u032e\u0302o\u0337\u0324\u0330\u030cn "
-                "freezes for about 5 seconds, then shows a white screen and the "
-                "p\u0335\u0325\u032d\u030cr\u0338\u0322\u0327\u030bo\u0336\u0323\u032e\u0302c\u0337\u0324\u0330\u0301e\u0335\u0325\u032d\u0308s\u0338\u0322\u0327\u030bs "
-                "crashes with an un
+                "H\u0337\u0322\u0327\u0308\u030c\u0301"
+                "e\u0336\u0323\u032e\u0301\u030e"
+                "l\u0338\u0324\u0330\u030b\u0302"
+                "p\u0335\u0325\u032d\u0308\u030c "
+                "\u2014 the R\u0336\u0323\u032e\u0301"
+                "e\u0337\u0324\u0330\u0308"
+                "p\u0335\u0325\u032d\u030c"
+                "o\u0338\u0322\u0327\u030b"
+                "r\u0336\u0323\u032e\u0302"
+                "t\u0337\u0324\u0330\u0301s "
+                "module in our internal CRM application (v8.4.2) is "
+                "crashing every time I try to open it. The "
+                "a\u0336\u0323\u032e\u030c"
+                "p\u0337\u0324\u0330\u0308"
+                "p\u0335\u0325\u032d\u0302"
+                "l\u0338\u0322\u0327\u030b"
+                "i\u0336\u0323\u032e\u0301"
+                "c\u0337\u0324\u0330\u030ca"
+                "\u0335\u0325\u032d\u0308"
+                "t\u0338\u0322\u0327\u030b"
+                "i\u0336\u0323\u032e\u0302"
+                "o\u0337\u0324\u0330\u030cn "
+                "freezes for about 5 seconds, then shows a white "
+                "screen and the "
+                "p\u0335\u0325\u032d\u030c"
+                "r\u0338\u0322\u0327\u030b"
+                "o\u0336\u0323\u032e\u0302"
+                "c\u0337\u0324\u0330\u0301"
+                "e\u0335\u0325\u032d\u0308"
+                "s\u0338\u0322\u0327\u030bs "
+                "crashes with an unhandled NullReferenceException. "
+                "I\u0336\u0323\u032e\u030c've attached the "
+                "crash log below.\n\n"
+                "System.NullReferenceException: Object reference not set "
+                "to an instance of an object.\n"
+                "   at CRM.Reports.ReportEngine.LoadModule()\n"
+                "   at CRM.UI.MainWindow.OpenReports()\n\n"
+                "This started after the v8.4.2 update was pushed last "
+                "Friday. Version 8.4.1 worked fine.\n\n"
+                "Thanks,\nMaria Fischer\nSales Operations\n"
+                "maria.fischer@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Maria Fischer",
+                email="maria.fischer@contoso.com",
+                department="Sales Operations",
+            ),
+            created_at="2026-04-08T10:30:00Z",
+            channel=Channel.PORTAL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-138",
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.ENVIRONMENT_DETAILS,
+            ],
+            next_best_action=(
+                "Investigate the NullReferenceException in the CRM Reports "
+                "module introduced in v8.4.2 and coordinate a hotfix or "
+                "rollback to v8.4.1."
+            ),
+            remediation_steps=[
+                "Reproduce the crash on a test instance running CRM v8.4.2.",
+                "Review the v8.4.2 release notes and change log for the Reports module.",
+                "Collect full crash dumps from affected users for developer analysis.",
+                "If a hotfix is not immediately available, roll back to v8.4.1.",
+            ],
+        ),
+        tags=["data-cleanup", "zalgo_combining"],
+        description=("Zalgo text with combining Unicode diacritics scattered throughout a software crash ticket."),
+    )
 
 
 def build_dataset() -> EvalDataset:
