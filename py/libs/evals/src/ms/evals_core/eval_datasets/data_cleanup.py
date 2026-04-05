@@ -6753,9 +6753,7 @@ def _dc101_pgp_signed_docking_station() -> EvalCase:
 
 def _dc102_long_cc_bcc_outlook_crash() -> EvalCase:
     """Long CC/BCC headers causing Outlook crash."""
-    cc_list = "; ".join(
-        f"user{i:03d}@contoso.com" for i in range(1, 81)
-    )
+    cc_list = "; ".join(f"user{i:03d}@contoso.com" for i in range(1, 81))
     return EvalCase(
         ticket=EvalTicket(
             ticket_id="INC-DC-102",
@@ -6973,9 +6971,7 @@ def _dc105_hex_dump_tls_handshake() -> EvalCase:
                 MissingInfoField.ENVIRONMENT_DETAILS,
             ],
             next_best_action=(
-                "Diagnose TLS handshake failures between DMZ LB "
-                "and payments API. Hex dump is diagnostic "
-                "evidence."
+                "Diagnose TLS handshake failures between DMZ LB and payments API. Hex dump is diagnostic evidence."
             ),
             remediation_steps=[
                 "Compare cipher suites offered by client and server.",
@@ -7025,8 +7021,7 @@ def _dc106_mixed_encoding_wifi_drops() -> EvalCase:
                 MissingInfoField.NETWORK_LOCATION,
             ],
             next_best_action=(
-                "Investigate WiFi drops on Floor 3 after Aruba AP "
-                "firmware update. Mojibake is encoding noise."
+                "Investigate WiFi drops on Floor 3 after Aruba AP firmware update. Mojibake is encoding noise."
             ),
             remediation_steps=[
                 "Review Aruba AP firmware v8.10.0.7 release notes.",
@@ -7162,10 +7157,7 @@ def _dc108_multilingual_disclaimer_password() -> EvalCase:
             "multilingual-disclaimer",
             "password-reset",
         ],
-        description=(
-            "Multilingual legal disclaimer wrapping a "
-            "password reset request."
-        ),
+        description=("Multilingual legal disclaimer wrapping a password reset request."),
     )
 
 
@@ -7196,9 +7188,7 @@ def _dc109_near_empty_monitor_issue() -> EvalCase:
                 MissingInfoField.STEPS_TO_REPRODUCE,
             ],
             next_best_action=(
-                "Gather details from the reporter about which "
-                "monitor, what is not working, and any error "
-                "indicators."
+                "Gather details from the reporter about which monitor, what is not working, and any error indicators."
             ),
             remediation_steps=[
                 "Contact reporter for monitor make and model.",
@@ -7277,10 +7267,7 @@ def _dc110_vuln_scanner_tls_cert_expiry() -> EvalCase:
             "vulnerability-scanner",
             "tls-cert-expiry",
         ],
-        description=(
-            "Vulnerability scanner dump in a TLS certificate "
-            "expiry ticket."
-        ),
+        description=("Vulnerability scanner dump in a TLS certificate expiry ticket."),
     )
 
 
