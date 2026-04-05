@@ -12374,3 +12374,1080 @@ register(
         ],
     )
 )
+
+
+# ---------------------------------------------------------------------------
+# dc-191  Very long rambling email — buried expense issue
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-191",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.SCREENSHOT_OR_ATTACHMENT],
+        subjects=[
+            "Long email about various office issues and expense report",
+            "Rambling message — SAP Concur expense submission problem buried inside",
+            "Multiple topics in one email — expense system not working",
+        ],
+        descriptions=[
+            "Hi team, this is {name} from {department}. I wanted to start by saying "
+            "that the new coffee machine on floor 12 is great, and also the parking "
+            "situation has been terrible lately. I spent 30 minutes looking for a "
+            "spot yesterday. Anyway, I also wanted to mention that the holiday "
+            "party was fantastic — kudos to whoever organized it. Oh, and the "
+            "elevators in building B are super slow. Speaking of slow, my laptop "
+            "has been sluggish but that's another story. The real reason I'm "
+            "writing is that I cannot submit my expense report in SAP Concur — "
+            "every time I click Submit it just spins and then shows a generic "
+            "error. I've tried three different browsers. Could someone look "
+            "into this? Also, the vending machines on floor 9 are out of "
+            "sparkling water again. Thanks!",
+            "{name} from {department} sent a 10,000-character email covering "
+            "office complaints, parking, coffee, elevators, and vending machines. "
+            "Buried near the end: SAP Concur expense submission fails with a "
+            "generic error on Submit across all browsers. The actual IT issue "
+            "is a single paragraph in an extremely long, rambling message.",
+        ],
+        next_best_actions=[
+            "Investigate the SAP Concur expense submission failure reported "
+            "by {name}. The error occurs on Submit across multiple browsers. "
+            "Ignore the non-IT content in the lengthy email.",
+            "Escalate the SAP Concur Submit-button failure to the "
+            "Enterprise Apps team. The user has tested three browsers.",
+        ],
+        remediation_steps=[
+            [
+                "Verify SAP Concur service health and recent deployment changes",
+                "Check the user's Concur profile and delegation/approval settings",
+                "Reproduce the submission error in a test environment",
+                "Engage SAP Concur vendor support if the issue is platform-side",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-192  Multiple base64 PNG data URIs inline — Citrix freeze
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-192",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.DEVICE_INFO],
+        subjects=[
+            "Citrix session freezing — screenshots attached inline",
+            "Citrix freezes with inline base64 image evidence",
+            "Session freeze in Citrix — multiple data URI screenshots",
+        ],
+        descriptions=[
+            "{name} from {department} reports Citrix session freezing. "
+            "Inline screenshots (base64 data URIs):\n\n"
+            "Screenshot 1: data:image/png;base64,iVBORw0KGgoAAAANSUhEUg"
+            "AAAA...[ 50KB of base64 data truncated ]...\n\n"
+            "Screenshot 2: data:image/png;base64,iVBORw0KGgoAAAANSUhEUg"
+            "BBBB...[ 60KB of base64 data truncated ]...\n\n"
+            "Screenshot 3: data:image/png;base64,iVBORw0KGgoAAAANSUhEUg"
+            "CCCC...[ 45KB of base64 data truncated ]...\n\n"
+            "The session locks up after about 20 minutes of use and "
+            "requires a forced disconnect.",
+            "Citrix session freezing after ~20 minutes. {name} ({department}) "
+            "embedded three large base64 PNG data URIs directly in the "
+            "message body instead of attaching files. The actual issue is "
+            "a reproducible session freeze requiring forced disconnect.",
+        ],
+        next_best_actions=[
+            "Investigate the Citrix session freeze reported by {name}. "
+            "Sessions lock after ~20 minutes and need forced disconnect. "
+            "Disregard the inline base64 image noise.",
+            "Check Citrix server resource utilization and session "
+            "timeout policies. The user experiences consistent "
+            "freezes at the 20-minute mark.",
+        ],
+        remediation_steps=[
+            [
+                "Review Citrix Director for session performance metrics and errors",
+                "Check VDA resource utilization (CPU, memory, GPU) during freeze window",
+                "Verify Citrix session reliability settings and timeout policies",
+                "Test with a fresh Citrix profile to rule out profile corruption",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-193  Raw base64 JPEG photo — badge reader not working
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-193",
+        category=Category.HARDWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.NETWORK_LOCATION],
+        subjects=[
+            "Badge reader not working — photo of device pasted as base64",
+            "Door badge scanner broken — raw JPEG data in message",
+            "Badge reader failure with inline base64 photo evidence",
+        ],
+        descriptions=[
+            "{name} from {department}: My badge reader at the south "
+            "entrance isn't working. Here's a photo:\n\n"
+            "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTExMW"
+            "FhUX...[ 120KB of raw base64 JPEG data ]..."
+            "Fh8nHBYfGh0lHB4aIRAkICAgI/8QAHwAAAQUBAQEBAQEAAAA"
+            "...[ continues for thousands of characters ]...\n\n"
+            "The red light just blinks and doesn't read my card.",
+            "Badge reader at the south entrance is non-functional. "
+            "{name} ({department}) pasted a raw base64-encoded JPEG "
+            "photo directly into the ticket (120KB+ of encoded data). "
+            "The actual issue: the reader blinks red and does not "
+            "read any badge.",
+        ],
+        next_best_actions=[
+            "Dispatch facilities/endpoint team to inspect the south "
+            "entrance badge reader. It blinks red and refuses to "
+            "read badges. Ignore the base64 image data in the ticket.",
+            "Check whether the badge reader at the south entrance "
+            "is online in the access control system. The device may "
+            "need a firmware reset or physical replacement.",
+        ],
+        remediation_steps=[
+            [
+                "Verify badge reader status in the access control management system",
+                "Power-cycle the badge reader and check network connectivity",
+                "Test with a known-good badge to rule out card-specific issues",
+                "Replace the reader unit if hardware failure is confirmed",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-194  HTML email with nested tables and inline CSS — SharePoint access denied
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-194",
+        category=Category.ACCESS_AUTH,
+        priority=Priority.P2,
+        assigned_team=Team.IAM,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.AUTHENTICATION_METHOD],
+        subjects=[
+            "SharePoint access denied — request wrapped in complex HTML",
+            "Cannot access SharePoint site — HTML-heavy email format",
+            "SharePoint permission issue buried in nested HTML tables",
+        ],
+        descriptions=[
+            "<html><body><table border=\"1\" style=\"border-collapse:"
+            "collapse;\"><tr><td style=\"padding:10px;\"><table><tr>"
+            "<td style=\"font-family:Comic Sans MS;\"><table><tr><td>"
+            "<b>From:</b> {name}</td></tr><tr><td><b>Dept:</b> "
+            "{department}</td></tr></table></td></tr></table></td></tr>"
+            "<tr><td><table><tr><td style=\"color:#333;\">"
+            "I keep getting Access Denied when opening the {department} "
+            "SharePoint site. I need access urgently for the quarterly "
+            "review.</td></tr></table></td></tr>"
+            "</table></body></html>",
+            "{name} from {department} is getting Access Denied on their "
+            "department SharePoint site. The request was sent as an HTML "
+            "email with 50+ nested tables and inline CSS, obscuring the "
+            "one-sentence issue: they cannot open the SharePoint site "
+            "and need access for the quarterly review.",
+        ],
+        next_best_actions=[
+            "Grant or verify {name}'s permissions on the {department} "
+            "SharePoint site. They are receiving Access Denied and need "
+            "access for the quarterly review.",
+            "Check SharePoint site permissions and Azure AD group "
+            "membership for {name}. Ensure the {department} site "
+            "collection permissions are correctly configured.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the user's Azure AD group membership for SharePoint access",
+                "Check SharePoint site collection permissions and sharing settings",
+                "Grant appropriate access level and confirm the user can open the site",
+                "Review whether a recent permissions change caused the denial",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-195  Windows-1252 mojibake corrupting CJK characters — CRM crash
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-195",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.APPLICATION_VERSION, MissingInfo.STEPS_TO_REPRODUCE],
+        subjects=[
+            "CRM crashing — garbled CJK characters in description",
+            "Mojibake-corrupted ticket — CRM application failure",
+            "CRM app crash with encoding-corrupted text",
+        ],
+        descriptions=[
+            "{name} ({department}): CRM\u30a2\u30d7\u30ea\u30b1"
+            "\u30fc\u30b7\u30e7\u30f3\u304c\u30af\u30e9"
+            "\u30c3\u30b7\u30e5\u3057\u307e\u3059"
+            "\u3002 The CRM application crashes whenever I open "
+            "the customer detail page for accounts with Japanese "
+            "characters. Error: Unhandled exception in contoso.crm.dll. "
+            "This started after the last Windows update.",
+            "CRM application crashes on customer detail pages containing "
+            "CJK characters. The ticket from {name} ({department}) has "
+            "Windows-1252 mojibake throughout — the Japanese text was "
+            "garbled by an encoding mismatch. The actual issue: CRM "
+            "throws an unhandled exception in contoso.crm.dll since "
+            "the latest Windows update.",
+        ],
+        next_best_actions=[
+            "Investigate the CRM crash on customer detail pages with "
+            "CJK characters. The exception is in contoso.crm.dll and "
+            "started after a recent Windows update. Mojibake in the "
+            "ticket is an encoding artifact, not the root cause.",
+            "Roll back or patch the CRM module that crashes when "
+            "rendering CJK text. Coordinate with the vendor if "
+            "contoso.crm.dll is a third-party component.",
+        ],
+        remediation_steps=[
+            [
+                "Collect crash dumps from the CRM application for analysis",
+                "Identify which Windows update introduced the regression",
+                "Test CRM with the problematic update rolled back",
+                "Engage the CRM vendor for a hotfix addressing CJK rendering",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-196  Emoji-heavy message with minimal English — Teams calls dropping
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-196",
+        category=Category.NETWORK,
+        priority=Priority.P2,
+        assigned_team=Team.NETWORK,
+        needs_escalation=False,
+        missing_information=[MissingInfo.NETWORK_LOCATION, MissingInfo.DEVICE_INFO],
+        subjects=[
+            "Teams calls dropping — emoji-heavy description",
+            "Call drops in Microsoft Teams — minimal text",
+            "Teams audio/video issues — message full of emojis",
+        ],
+        descriptions=[
+            "\U0001f4de\u274c\U0001f4de\u274c\U0001f4de\u274c "
+            "{name} {department} \U0001f4de\u274c\U0001f4de\u274c\n\n"
+            "\U0001f621\U0001f621\U0001f621 Teams calls DROPPING "
+            "\U0001f621\U0001f621\U0001f621\n"
+            "\U0001f4de\u27a1\ufe0f\U0001f480 every 5 min "
+            "\u23f1\ufe0f\u23f1\ufe0f\u23f1\ufe0f\n"
+            "\U0001f50a\u274c audio gone \U0001f50a\u274c\n"
+            "\U0001f4f9\u274c video frozen \U0001f4f9\u274c\n"
+            "\U0001f3e2 floor 14 \U0001f3e2\n"
+            "\U0001f4bb laptop + dock \U0001f4bb\n"
+            "\U0001f4f6 WiFi? Ethernet? \U0001f4f6\n"
+            "\U0001f64f\U0001f64f\U0001f64f FIX PLS "
+            "\U0001f64f\U0001f64f\U0001f64f",
+            "Teams calls are dropping every 5 minutes for {name} on "
+            "floor 14 ({department}). The ticket is nearly all emojis "
+            "with minimal English. Extracted issue: audio cuts out and "
+            "video freezes, requiring reconnection. User is on a "
+            "laptop with docking station, connectivity type unclear.",
+        ],
+        next_best_actions=[
+            "Investigate Teams call quality for {name} on floor 14. "
+            "Calls drop every ~5 minutes with audio loss and video "
+            "freeze. Check both Wi-Fi and wired connectivity.",
+            "Run network diagnostics on floor 14 to identify packet "
+            "loss or jitter causing Teams call drops. The user's "
+            "connection type (Wi-Fi vs Ethernet) needs confirmation.",
+        ],
+        remediation_steps=[
+            [
+                "Pull Teams call quality dashboard (CQD) data for the user",
+                "Check floor 14 access point health and channel utilization",
+                "Test with a wired Ethernet connection to isolate Wi-Fi issues",
+                "Verify QoS policies are correctly applied for Teams traffic",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-197  Deep RE:/FW: email chain — print server queue stuck
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-197",
+        category=Category.HARDWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.ERROR_MESSAGE],
+        subjects=[
+            "RE: RE: RE: FW: RE: Print server queue stuck",
+            "Deeply nested email thread about print queue issue",
+            "15-deep reply chain — printer queue jammed",
+        ],
+        descriptions=[
+            "-----Original Message-----\n"
+            "From: {name} ({department})\n"
+            "Subject: RE: RE: RE: FW: RE: RE: FW: RE: RE: RE: RE: "
+            "FW: RE: RE: RE: Printer issue\n\n"
+            "Still broken.\n\n"
+            "--- 14 previous replies omitted for brevity ---\n\n"
+            "...original message from 3 weeks ago: The print queue on "
+            "PRTSRV-02 is stuck. Jobs go in but never print. {name}, "
+            "{department}.",
+            "A 15-deep RE:/FW: email chain about a print server issue. "
+            "{name} ({department}) reports the queue on PRTSRV-02 is "
+            "stuck — jobs enter the queue but never print. The thread "
+            "spans three weeks of back-and-forth with the most recent "
+            "reply simply saying 'Still broken.'",
+        ],
+        next_best_actions=[
+            "Investigate the stuck print queue on PRTSRV-02. Jobs are "
+            "accepted but never processed. This has been ongoing for "
+            "three weeks per the email thread from {name}.",
+            "Clear and restart the print spooler on PRTSRV-02. If "
+            "the queue remains stuck, check the print driver and "
+            "physical printer connectivity.",
+        ],
+        remediation_steps=[
+            [
+                "Clear all stuck jobs from the PRTSRV-02 print queue",
+                "Restart the Print Spooler service on PRTSRV-02",
+                "Verify network connectivity between PRTSRV-02 and the physical printer",
+                "Update or reinstall the printer driver if the issue recurs",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-198  Huge multilingual legal disclaimer signature — Outlook search broken
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-198",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.APPLICATION_VERSION, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "Outlook search broken — massive legal disclaimer in message",
+            "Search not working in Outlook — 4KB disclaimer signature",
+            "Outlook indexing issue with huge multilingual signature block",
+        ],
+        descriptions=[
+            "{name} ({department}): Outlook search returns no results "
+            "for any keyword.\n\n"
+            "--- Confidentiality Notice / Avis de confidentialit\u00e9 / "
+            "Vertraulichkeitshinweis / \u6a5f\u5bc6\u901a\u77e5 / Aviso de "
+            "confidencialidad ---\n"
+            "This email and any attachments are confidential and "
+            "intended solely for the addressee. If you have received "
+            "this in error, please notify the sender immediately and "
+            "delete all copies. Ce courriel et ses pi\u00e8ces jointes "
+            "sont confidentiels... Der Inhalt dieser E-Mail ist "
+            "vertraulich... \u3053\u306e\u96fb\u5b50\u30e1\u30fc\u30eb"
+            "\u306f\u6a5f\u5bc6\u60c5\u5831\u3092\u542b\u3093"
+            "\u3067\u3044\u307e\u3059... "
+            "Este correo electr\u00f3nico es confidencial...\n"
+            "[Disclaimer continues in 8 more languages for 4KB total]",
+            "Outlook search is returning zero results for {name} "
+            "({department}). The ticket body is dominated by a 4KB+ "
+            "multilingual legal disclaimer in English, French, German, "
+            "Japanese, Spanish, and 8 other languages. The actual "
+            "issue is one sentence: Outlook search returns no results.",
+        ],
+        next_best_actions=[
+            "Rebuild the Outlook search index for {name}. Search is "
+            "returning zero results for all queries. The lengthy "
+            "multilingual disclaimer in the ticket is irrelevant.",
+            "Troubleshoot Outlook search indexing. Check Windows "
+            "Search service status and Outlook indexing options on "
+            "the user's workstation.",
+        ],
+        remediation_steps=[
+            [
+                "Check Windows Search service status and indexing health",
+                "Rebuild the Outlook search index via Indexing Options",
+                "Verify the Outlook OST/PST file integrity with scanpst.exe",
+                "Confirm search returns results after re-indexing completes",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-199  Message truncated mid-sentence by gateway — VDI black screen
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-199",
+        category=Category.SOFTWARE,
+        priority=Priority.P1,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=True,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.AFFECTED_USERS],
+        subjects=[
+            "VDI session black screen — message truncated by gateway",
+            "[TRUNCATED] VDI desktop goes black after login",
+            "Incomplete ticket — VDI black screen issue cut off mid-sentence",
+        ],
+        descriptions=[
+            "{name} from {department}: I logged into my VDI desktop "
+            "this morning and after entering my credentials the screen "
+            "went completely black. I can see the mouse cursor but "
+            "nothing else loads. I have tried restarting the session "
+            "three times. This is affecting my ability to"
+            "\n\n--- Message truncated by gateway (max 2048 bytes) ---",
+            "VDI session shows a black screen after login for {name} "
+            "({department}). The ticket was truncated mid-sentence by "
+            "a gateway size limit. From what is readable: the user "
+            "sees only a mouse cursor after authentication, and "
+            "restarting the session has not helped.",
+        ],
+        next_best_actions=[
+            "Investigate VDI black screen after login for {name}. "
+            "The user sees a cursor but no desktop loads. Note: the "
+            "original ticket was truncated — follow up for details.",
+            "Check the VDI infrastructure for issues affecting "
+            "desktop rendering. The user's session authenticates "
+            "but displays only a black screen with a cursor.",
+        ],
+        remediation_steps=[
+            [
+                "Check VDI broker logs for session allocation errors",
+                "Verify the user's VDI profile is not corrupted",
+                "Reset the VDI session and assign a fresh virtual desktop",
+                "Follow up with the user for any truncated information",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-200  500+ line Java stack trace — trading platform latency
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-200",
+        category=Category.SOFTWARE,
+        priority=Priority.P1,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=True,
+        missing_information=[MissingInfo.BUSINESS_IMPACT, MissingInfo.TIMESTAMP],
+        subjects=[
+            "Trading platform latency — massive Java stack trace pasted",
+            "500-line stack trace — ContosoTradeEngine performance issue",
+            "Trading platform slow with inline Java exception dump",
+        ],
+        descriptions=[
+            "{name} ({department}): The trading platform is "
+            "experiencing severe latency. Here is the stack trace:\n\n"
+            "java.lang.OutOfMemoryError: GC overhead limit exceeded\n"
+            "\tat com.contoso.trade.engine.OrderProcessor.process"
+            "(OrderProcessor.java:847)\n"
+            "\tat com.contoso.trade.engine.MatchingEngine.execute"
+            "(MatchingEngine.java:312)\n"
+            "\tat com.contoso.trade.core.Pipeline.run"
+            "(Pipeline.java:156)\n"
+            "\tat com.contoso.trade.core.WorkerThread.doWork"
+            "(WorkerThread.java:89)\n"
+            "... [496 more frames omitted for brevity] ...\n\n"
+            "Trades are taking 30+ seconds instead of sub-second.",
+            "Trading platform latency: 30+ seconds per trade instead "
+            "of sub-second. {name} ({department}) pasted a 500+ line "
+            "Java stack trace showing OutOfMemoryError (GC overhead "
+            "limit exceeded) in OrderProcessor. The root cause is a "
+            "memory issue in the ContosoTradeEngine.",
+        ],
+        next_best_actions=[
+            "URGENT: Trading platform is experiencing 30x latency due "
+            "to OutOfMemoryError in the ContosoTradeEngine. The Java "
+            "heap is exhausted. Immediate action needed.",
+            "Increase JVM heap allocation for ContosoTradeEngine and "
+            "investigate the memory leak in OrderProcessor. Current "
+            "trade latency is 30+ seconds.",
+        ],
+        remediation_steps=[
+            [
+                "Restart ContosoTradeEngine with increased JVM heap (-Xmx8g)",
+                "Capture a heap dump before restart for root cause analysis",
+                "Monitor GC logs to identify memory leak patterns",
+                "Deploy a hotfix for the OrderProcessor memory leak",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-201  Double-encoded HTML entities — ServiceNow form not submitting
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-201",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.STEPS_TO_REPRODUCE, MissingInfo.APPLICATION_VERSION],
+        subjects=[
+            "ServiceNow form not submitting — double-encoded HTML",
+            "Can't submit ServiceNow request — garbled HTML entities",
+            "ServiceNow form error with entity corruption",
+        ],
+        descriptions=[
+            "{name} from {department}: I can&amp;amp;#39;t submit the "
+            "ServiceNow change request form. When I click "
+            "&amp;amp;quot;Submit&amp;amp;quot; the page shows "
+            "&amp;amp;quot;Validation Error&amp;amp;quot; and the "
+            "form fields are cleared. I&amp;amp;#39;ve tried in "
+            "Chrome and Edge. This is blocking our {department} "
+            "deployment.",
+            "ServiceNow change request form fails on Submit with a "
+            "Validation Error. {name} ({department}) reports the issue "
+            "in a ticket riddled with double-encoded HTML entities "
+            "(&amp;amp; throughout). The actual problem: the form "
+            "clears all fields and shows a validation error on submit.",
+        ],
+        next_best_actions=[
+            "Investigate the ServiceNow change request form validation "
+            "error on submit. The form clears fields instead of saving. "
+            "Issue reproduced in Chrome and Edge by {name}.",
+            "Check ServiceNow form configuration and recent catalog "
+            "updates that may have broken validation on the change "
+            "request form.",
+        ],
+        remediation_steps=[
+            [
+                "Check ServiceNow system logs for form validation errors",
+                "Review recent catalog item or form layout changes",
+                "Clear the browser cache and test submission in an incognito window",
+                "Restore the form configuration from a known-good backup if needed",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-202  Stuttering duplicate paragraphs — Exchange mailbox quota exceeded
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-202",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_USERS, MissingInfo.BUSINESS_IMPACT],
+        subjects=[
+            "Exchange mailbox quota exceeded — duplicated text in request",
+            "Mailbox full — same paragraph repeated 4 times",
+            "Stuttering duplicate message — Exchange quota issue",
+        ],
+        descriptions=[
+            "{name} ({department}): My mailbox is full and I can't "
+            "receive new emails. Please increase my quota.\n\n"
+            "{name} ({department}): My mailbox is full and I can't "
+            "receive new emails. Please increase my quota.\n\n"
+            "{name} ({department}): My mailbox is full and I can't "
+            "receive new emails. Please increase my quota.\n\n"
+            "{name} ({department}): My mailbox is full and I can't "
+            "receive new emails. Please increase my quota.",
+            "Exchange mailbox quota exceeded for {name} ({department}). "
+            "The user cannot receive new emails. The ticket contains "
+            "the same single-sentence request duplicated four times, "
+            "likely from a client glitch. Issue: mailbox is full and "
+            "needs a quota increase or cleanup.",
+        ],
+        next_best_actions=[
+            "Increase the Exchange mailbox quota for {name} or assist "
+            "with mailbox cleanup. The user cannot receive emails due "
+            "to a full mailbox.",
+            "Review the mailbox size and retention policies for "
+            "{name} ({department}). Determine if a quota increase "
+            "or archival is appropriate.",
+        ],
+        remediation_steps=[
+            [
+                "Check current mailbox size and quota in Exchange Admin Center",
+                "Enable or expand the user's online archive mailbox",
+                "Apply a retention policy to auto-archive old items",
+                "Increase the mailbox quota if within organizational policy",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-203  Raw MIME multipart with boundary markers — email attachments corrupted
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-203",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.CONFIGURATION_DETAILS],
+        subjects=[
+            "Email attachments corrupted — raw MIME data in ticket",
+            "MIME boundary markers in message — attachment corruption",
+            "Corrupted attachments with inline MIME multipart data",
+        ],
+        descriptions=[
+            "MIME-Version: 1.0\n"
+            "Content-Type: multipart/mixed; boundary=\"----=_Part_"
+            "12345\"\n\n"
+            "------=_Part_12345\n"
+            "Content-Type: text/plain; charset=utf-8\n\n"
+            "{name} from {department}: All email attachments I receive "
+            "are showing as corrupted .dat files instead of their "
+            "original format.\n\n"
+            "------=_Part_12345\n"
+            "Content-Type: application/octet-stream\n"
+            "Content-Disposition: attachment; filename=\"report.xlsx\""
+            "\n\nUEsDBBQAAAA...[ truncated ]...\n"
+            "------=_Part_12345--",
+            "Email attachments are arriving as corrupted .dat files "
+            "for {name} ({department}). The ticket itself contains raw "
+            "MIME multipart data with boundary markers, suggesting the "
+            "email gateway is not properly parsing MIME parts. Actual "
+            "issue: all received attachments are unreadable.",
+        ],
+        next_best_actions=[
+            "Investigate email attachment corruption for {name}. All "
+            "inbound attachments arrive as .dat files. The MIME data "
+            "in the ticket suggests a gateway parsing issue.",
+            "Check the email gateway and Exchange transport rules for "
+            "MIME handling issues. Attachments are being converted to "
+            ".dat files during transit.",
+        ],
+        remediation_steps=[
+            [
+                "Review Exchange transport rules that may modify attachments",
+                "Check the email gateway (e.g., Proofpoint, Mimecast) MIME settings",
+                "Test by sending attachments from an external address to the user",
+                "Verify Outlook TNEF settings are not forcing winmail.dat conversion",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-204  Inline base64 PDF pasted as text — SQL Server replication lag
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-204",
+        category=Category.SOFTWARE,
+        priority=Priority.P1,
+        assigned_team=Team.DATA_PLATFORM,
+        needs_escalation=True,
+        missing_information=[MissingInfo.TIMESTAMP, MissingInfo.BUSINESS_IMPACT],
+        subjects=[
+            "SQL Server replication lag — base64 PDF pasted in ticket",
+            "DB replication delay with inline base64 PDF evidence",
+            "SQL Server subscriber 4 hours behind — PDF data in message",
+        ],
+        descriptions=[
+            "{name} ({department}): SQL Server replication is 4 hours "
+            "behind on the subscriber. Attached the monitoring report "
+            "below:\n\n"
+            "JVBERi0xLjQKMSAwIG9iago8PAovVGl0bGUgKFJlcGxpY2F0aW9u"
+            "IFJlcG9ydCkKL0F1dGhvciAoQ29udG9zbykKPj4KZW5kb2JqCjIg"
+            "...[ 80KB of base64-encoded PDF data ]...\n\n"
+            "The subscriber database is falling further behind every "
+            "hour. Production reads are serving stale data.",
+            "SQL Server transactional replication subscriber is 4+ "
+            "hours behind the publisher. {name} ({department}) pasted "
+            "an 80KB base64-encoded PDF monitoring report directly "
+            "into the ticket. The actual issue: production reads from "
+            "the subscriber are serving stale data and the lag is "
+            "growing.",
+        ],
+        next_best_actions=[
+            "URGENT: SQL Server replication subscriber is 4 hours "
+            "behind and growing. Production reads are returning stale "
+            "data. Immediate investigation needed.",
+            "Investigate SQL Server replication lag on the subscriber "
+            "database. Check distribution agent status, pending "
+            "commands, and network throughput between publisher and "
+            "subscriber.",
+        ],
+        remediation_steps=[
+            [
+                "Check the SQL Server Replication Monitor for distribution agent errors",
+                "Verify pending commands in the distribution database",
+                "Restart the distribution agent and monitor catch-up progress",
+                "Investigate long-running transactions on the publisher blocking replication",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-205  ICS/vCalendar metadata mixed in — conference room booking down
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-205",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.AFFECTED_USERS],
+        subjects=[
+            "Conference room booking system down — ICS data in ticket",
+            "Room booking broken — vCalendar metadata mixed in message",
+            "Cannot book meeting rooms — ICS/vCalendar noise in request",
+        ],
+        descriptions=[
+            "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Contoso//"
+            "RoomBooking//EN\nBEGIN:VEVENT\nDTSTART:20250115T090000Z"
+            "\nDTEND:20250115T100000Z\nSUMMARY:Q1 Planning\n"
+            "LOCATION:Conf Room 14B\nORGANIZER:mailto:{name}@contoso"
+            ".com\nEND:VEVENT\nEND:VCALENDAR\n\n"
+            "{name} ({department}): The conference room booking system "
+            "has been down since this morning. None of us can reserve "
+            "any rooms. We have critical meetings today.",
+            "Conference room booking system is down — no rooms can be "
+            "reserved. {name} ({department}) submitted the ticket with "
+            "ICS/vCalendar metadata (VCALENDAR, VEVENT blocks) "
+            "prepended to the actual request. The system has been "
+            "non-functional since the morning with critical meetings "
+            "at risk.",
+        ],
+        next_best_actions=[
+            "Investigate the conference room booking system outage. "
+            "No rooms can be reserved. {name} reports critical "
+            "meetings are affected. Ignore the ICS metadata noise.",
+            "Check the room booking backend service and Exchange "
+            "resource mailbox health. The entire booking system is "
+            "non-functional since this morning.",
+        ],
+        remediation_steps=[
+            [
+                "Check the room booking application service health and logs",
+                "Verify Exchange resource mailboxes for conference rooms are responsive",
+                "Restart the room booking service and test a reservation",
+                "Communicate status to affected users with critical meetings",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-206  8K+ verbose description, issue in one sentence — BitLocker recovery key
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-206",
+        category=Category.SECURITY,
+        priority=Priority.P1,
+        assigned_team=Team.SECOPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.AUTHENTICATION_METHOD],
+        subjects=[
+            "BitLocker recovery key needed — extremely verbose ticket",
+            "Locked out by BitLocker — 8K description with one-line issue",
+            "BitLocker recovery request buried in lengthy narrative",
+        ],
+        descriptions=[
+            "{name} from {department}: I want to start by explaining "
+            "the full context of my day. I arrived at the office at "
+            "7:45am and parked in lot B. After getting coffee from the "
+            "3rd floor kitchen I went to my desk and opened my laptop. "
+            "... [8000+ characters of detailed narrative about the "
+            "user's morning routine, the weather, conversations with "
+            "colleagues, and observations about the office] ... "
+            "Anyway, my laptop is showing a BitLocker recovery screen "
+            "and I need the recovery key to unlock it. My device name "
+            "is YOURPC-{name}.",
+            "BitLocker recovery key needed for {name} ({department}). "
+            "The ticket is 8000+ characters of narrative about the "
+            "user's morning, but the actual request is one sentence: "
+            "laptop shows BitLocker recovery screen, needs recovery "
+            "key. Device name: YOURPC-{name}.",
+        ],
+        next_best_actions=[
+            "Retrieve the BitLocker recovery key for device "
+            "YOURPC-{name}. The user is locked out at the BitLocker "
+            "recovery screen. Verify identity before providing the key.",
+            "Look up the BitLocker recovery key in Azure AD/Intune "
+            "for the user's device and provide it after identity "
+            "verification.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the user's identity through standard authentication",
+                "Retrieve the BitLocker recovery key from Azure AD or MBAM",
+                "Provide the recovery key and confirm the device boots successfully",
+                "Investigate why BitLocker recovery was triggered (TPM change, update, etc.)",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-207  NDR bounce-back wrapper — unable to send to external domain
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-207",
+        category=Category.NETWORK,
+        priority=Priority.P2,
+        assigned_team=Team.NETWORK,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.AFFECTED_SYSTEM],
+        subjects=[
+            "Unable to send email externally — NDR bounce-back in ticket",
+            "Email delivery failure to external domain — NDR wrapper",
+            "Bounce-back NDR wrapped around original send failure",
+        ],
+        descriptions=[
+            "Delivery has failed to these recipients or groups:\n\n"
+            "partner@externalcorp.com\n\n"
+            "Your message wasn't delivered because the destination "
+            "server returned: 550 5.7.1 Unable to relay.\n\n"
+            "Diagnostic information for administrators:\n"
+            "Generating server: MAILGW-03.contoso.com\n"
+            "Remote server: smtp.externalcorp.com\n"
+            "#550 5.7.1 <partner@externalcorp.com>: Relay access "
+            "denied ##\n\n"
+            "--- Original message from {name} ({department}) ---\n"
+            "Hi, please see the attached contract for review. "
+            "Thanks, {name}",
+            "{name} ({department}) cannot send email to external "
+            "domain externalcorp.com. The ticket is an NDR bounce-back "
+            "wrapper showing 550 5.7.1 relay access denied from "
+            "MAILGW-03. The user's original message was a routine "
+            "business email to a partner.",
+        ],
+        next_best_actions=[
+            "Investigate the 550 5.7.1 relay access denied error on "
+            "MAILGW-03 when sending to externalcorp.com. This may be "
+            "a connector or relay configuration issue.",
+            "Check the Exchange Send Connector and SMTP relay "
+            "configuration on MAILGW-03. External email to at least "
+            "one domain is failing with relay denied.",
+        ],
+        remediation_steps=[
+            [
+                "Check MAILGW-03 Send Connector configuration for external relay",
+                "Verify DNS MX records and SPF/DKIM for the external domain",
+                "Test SMTP connectivity from MAILGW-03 to smtp.externalcorp.com",
+                "Review firewall rules for outbound SMTP (port 25/587) from MAILGW-03",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-208  Code snippets inline — scheduled task failing
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-208",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ENVIRONMENT_DETAILS, MissingInfo.CONFIGURATION_DETAILS],
+        subjects=[
+            "Scheduled task failing — PowerShell/Python/SQL code inline",
+            "Automated job broken — multiple code snippets in ticket",
+            "Task Scheduler failure with inline code samples",
+        ],
+        descriptions=[
+            "{name} ({department}): Our nightly data sync task is "
+            "failing. Here are the scripts involved:\n\n"
+            "PowerShell launcher:\n"
+            "```powershell\n"
+            "$conn = New-Object System.Data.SqlClient.SqlConnection\n"
+            "$conn.ConnectionString = \"Server=SQLPROD-01;Database="
+            "ContosoSync;Integrated Security=true\"\n"
+            "$conn.Open()\n"
+            "```\n\n"
+            "Python ETL:\n"
+            "```python\n"
+            "import pandas as pd\n"
+            "df = pd.read_sql(query, engine)\n"
+            "df.to_csv('//fileshare/exports/daily.csv')\n"
+            "```\n\n"
+            "SQL query:\n"
+            "```sql\n"
+            "SELECT * FROM SyncLog WHERE Status = 'Failed' "
+            "ORDER BY Timestamp DESC\n"
+            "```\n\n"
+            "The task last ran successfully 3 days ago. Now it fails "
+            "with exit code 1.",
+            "Nightly data sync scheduled task is failing with exit "
+            "code 1 for {name} ({department}). The ticket includes "
+            "PowerShell, Python, and SQL code snippets. The task "
+            "worked 3 days ago — something changed. Pipeline: "
+            "PowerShell connects to SQLPROD-01, Python ETL exports "
+            "to a file share.",
+        ],
+        next_best_actions=[
+            "Investigate the nightly data sync task failure (exit "
+            "code 1). The pipeline involves PowerShell, Python ETL, "
+            "and SQL on SQLPROD-01. Last success was 3 days ago.",
+            "Check Task Scheduler history and the sync scripts for "
+            "errors. Verify connectivity to SQLPROD-01 and the "
+            "file share used for CSV exports.",
+        ],
+        remediation_steps=[
+            [
+                "Check Task Scheduler history for the specific error details",
+                "Verify SQL Server connectivity from the task runner to SQLPROD-01",
+                "Test the file share path (//fileshare/exports/) for write access",
+                "Run the PowerShell launcher manually to reproduce and diagnose the failure",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-209  Contradictory thread — AP dropping connections
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-209",
+        category=Category.NETWORK,
+        priority=Priority.P2,
+        assigned_team=Team.NETWORK,
+        needs_escalation=False,
+        missing_information=[MissingInfo.NETWORK_LOCATION, MissingInfo.REPRODUCTION_FREQUENCY],
+        subjects=[
+            "Access point dropping connections — contradictory thread",
+            "Wi-Fi AP issue — fixed/not-fixed back and forth in thread",
+            "Contradictory email chain — AP-14B intermittent disconnects",
+        ],
+        descriptions=[
+            "{name} ({department}):\n\n"
+            "[Jan 10] Original: AP-14B keeps dropping connections "
+            "every 30 minutes.\n"
+            "[Jan 11] Update: Seems fixed after rebooting the AP.\n"
+            "[Jan 12] Update: Not fixed. Still dropping.\n"
+            "[Jan 13] Update: IT replaced the AP, working now.\n"
+            "[Jan 14] Update: Dropping again on the new AP too.\n"
+            "[Jan 15] Update: Switching to Ethernet fixed it. "
+            "Closing.\n"
+            "[Jan 16] Update: Reopening — I need Wi-Fi for meeting "
+            "rooms. AP-14B and AP-14C both dropping now.\n\n"
+            "Current status: NOT resolved. Two APs affected.",
+            "Access points AP-14B and AP-14C are intermittently "
+            "dropping connections. {name} ({department}) submitted a "
+            "contradictory thread that was marked fixed, reopened, "
+            "fixed again, and reopened again over a week. Current "
+            "status: unresolved, two APs affected, drops every "
+            "~30 minutes.",
+        ],
+        next_best_actions=[
+            "Investigate recurring Wi-Fi drops on AP-14B and AP-14C. "
+            "Previous fixes (reboot, replacement) did not resolve the "
+            "issue. This may be an infrastructure or interference "
+            "problem rather than a single-AP failure.",
+            "Perform a wireless site survey around AP-14B and AP-14C "
+            "to check for interference, channel congestion, or "
+            "controller misconfiguration causing repeated drops.",
+        ],
+        remediation_steps=[
+            [
+                "Check the wireless controller for AP-14B and AP-14C error logs",
+                "Run a wireless site survey to identify interference sources",
+                "Verify channel assignments and power levels on both APs",
+                "Update AP firmware and controller configuration as needed",
+            ],
+        ],
+    )
+)
+
+
+# ---------------------------------------------------------------------------
+# dc-210  Accidental PII in description — payroll calculation error
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-210",
+        category=Category.DATA,
+        priority=Priority.P2,
+        assigned_team=Team.DATA_PLATFORM,
+        needs_escalation=True,
+        missing_information=[MissingInfo.AFFECTED_USERS, MissingInfo.BUSINESS_IMPACT],
+        subjects=[
+            "Payroll calculation error — accidental PII in ticket",
+            "Incorrect paycheck — ticket contains fake SSN and CC number",
+            "Payroll discrepancy with sensitive data in description",
+        ],
+        descriptions=[
+            "{name} ({department}): My paycheck this month is wrong — "
+            "I was underpaid by $847.50. For reference, my details: "
+            "SSN 078-05-1120, employee ID E-44821, bank account ending "
+            "in 6743, credit card 4111-1111-1111-1111. My manager is "
+            "also affected, their SSN is 219-09-9999. Please correct "
+            "the calculation immediately. This is the second month in "
+            "a row.",
+            "Payroll calculation error for {name} ({department}) — "
+            "underpaid by $847.50 for the second consecutive month. "
+            "WARNING: The ticket contains accidental PII including "
+            "SSNs and a credit card number that must be redacted "
+            "immediately. The actual issue: payroll system is "
+            "miscalculating this employee's pay.",
+        ],
+        next_best_actions=[
+            "URGENT: Redact the PII (SSNs, CC number) from this "
+            "ticket immediately. Then investigate the payroll "
+            "calculation error — {name} has been underpaid $847.50 "
+            "for two consecutive months.",
+            "Flag this ticket for PII redaction per data handling "
+            "policy. After redaction, route the payroll discrepancy "
+            "to the payroll team for correction.",
+        ],
+        remediation_steps=[
+            [
+                "Immediately redact all PII (SSNs, credit card numbers) from the ticket",
+                "Log a data handling incident per organizational PII exposure policy",
+                "Investigate the payroll calculation error for the affected employee",
+                "Coordinate with payroll to issue a correction for the underpayment",
+            ],
+        ],
+    )
+)
