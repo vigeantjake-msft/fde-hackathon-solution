@@ -2271,7 +2271,7 @@ def _teams_chat_export() -> EvalScenario:
             subject="Teams meeting recordings not saving to OneDrive",
             description=(
                 '{"@odata.context": "https://graph.microsoft.com/v1.0/$metadata#chats/'
-                "messages\",\n"
+                'messages",\n'
                 '"value": [{"id": "1742284800000", "messageType": "message",\n'
                 '"createdDateTime": "2026-03-18T08:00:00Z",\n'
                 '"from": {"user": {"displayName": "Olivia Santos",\n'
@@ -2398,7 +2398,7 @@ def _cron_job_output() -> EvalScenario:
                 "[2026-03-16 02:00:01] Starting backup of postgres-prod-01...\n"
                 "[2026-03-16 02:00:01] ERROR: pg_dump: connection to server at "
                 '"10.0.2.50", port 5432 failed: FATAL: password authentication '
-                "failed for user \"backup_svc\"\n"
+                'failed for user "backup_svc"\n'
                 "[2026-03-16 02:00:01] Backup FAILED. Exit code: 2\n"
                 "[2026-03-17 02:00:01] Starting backup of postgres-prod-01...\n"
                 "[2026-03-17 02:00:01] ERROR: pg_dump: same error as above\n\n"
@@ -2522,7 +2522,7 @@ def _kubernetes_events_dump() -> EvalScenario:
                 "2m          Warning   Failed              pod/payment-svc-7f8b9c6d5-x2k4j  "
                 "Error: CrashLoopBackOff\n"
                 "3m          Normal    Pulled              pod/payment-svc-7f8b9c6d5-x2k4j  "
-                "Container image \"contoso.azurecr.io/payment-svc:2.4.1\" already present\n"
+                'Container image "contoso.azurecr.io/payment-svc:2.4.1" already present\n'
                 "3m          Normal    Created             pod/payment-svc-7f8b9c6d5-x2k4j  "
                 "Created container payment-svc\n"
                 "3m          Warning   Unhealthy           pod/payment-svc-7f8b9c6d5-x2k4j  "
