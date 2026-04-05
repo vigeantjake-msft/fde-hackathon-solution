@@ -11500,3 +11500,877 @@ register(
         ],
     )
 )
+
+# ---------------------------------------------------------------------------
+# dc-176  Base64 image flood obscuring real issue
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-176",
+        category=Category.HARDWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.ERROR_MESSAGE],
+        subjects=[
+            "Monitor flickering — screenshots inline",
+            "Display flickers through docking station — see images",
+            "External monitor issue on {floor} — embedded screenshots",
+        ],
+        descriptions=[
+            "Hi IT,\n\nMy monitor keeps flickering. Screenshots:\n\n"
+            "Screenshot 1:\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA"
+            "10dzkAAAABHNCSVU83LnNpZ25hdHVyZSBoZXJlIGlzIGEgdGVzdCBiYXNlNj"
+            "QgZW5jb2RlZCBpbWFnZSBkYXRhIHRoYXQgaXMgbm90IGFjdHVhbGx5IGFS"
+            "ZWFsIGltYWdlIGJ1dCBzaW11bGF0ZXMgYSBsYXJnZSBwYXN0ZWQgc2NyZW"
+            "Vuc2hvdCBpbiBhbiBlbWFpbCBib2R5==\n\n"
+            "Screenshot 2:\n"
+            "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBg"
+            "cGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcp"
+            "FAKEBASE64SECONDSCREENSHOTBLOCKWITHENCODEDIMAGEDATA==\n\n"
+            "Screenshot 3:\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACN"
+            "Ms+9AAAABmJLR0QA/wD/AP+gvaeTFAKEBASE64THIRDBLOCKMORE==\n\n"
+            "The monitor is a Dell U2722D via DisplayPort through a Lenovo "
+            "ThinkPad USB-C dock. Flickers every 5-10 seconds. {name}",
+            "External display flickers on {floor} when connected through "
+            "the USB-C dock. I pasted screenshots but they showed up as "
+            "base64 data:\n\n"
+            "[image data: iVBORw0KGgoAAAANSUhEUgAAAAUA...FAKEBASE64...==]\n"
+            "[image data: /9j/4AAQSkZJRg...MOREBASE64DATA...==]\n"
+            "[image data: iVBORw0KGgo...YETMOREBASE64...==]\n\n"
+            "The dock is Lenovo ThinkPad USB-C Gen 2, monitor is Dell "
+            "U2722D. Flickering every 5-10 seconds. Works fine with "
+            "direct HDMI. {name}, {department}",
+        ],
+        next_best_actions=[
+            "Investigate monitor flickering through USB-C dock. Ignore "
+            "the inline base64 image data — the real issue is a Dell "
+            "U2722D flickering every 5-10 seconds via DisplayPort.",
+            "Troubleshoot external display flickering through the "
+            "Lenovo dock. The base64 content is noise from pasted "
+            "screenshots.",
+        ],
+        remediation_steps=[
+            [
+                "Update the docking station firmware to the latest version",
+                "Test with a different DisplayPort cable or direct HDMI connection",
+                "Check display driver version and update from Dell/Lenovo support",
+                "If flickering persists, test with a replacement docking station",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-177  Auto-reply/vacation chain burying real issue
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-177",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_USERS, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "RE: RE: RE: FW: SAP timeout errors",
+            "FW: RE: RE: RE: Application server timeouts — quarter end",
+            "RE: FW: RE: {app} connection errors — urgent",
+        ],
+        descriptions=[
+            "--- Auto-Reply ---\n"
+            "Thank you for your email. I am currently out of the office "
+            "until March 28 with limited email access. For urgent matters "
+            "contact James Rivera at ext. 3200.\n"
+            "— Patricia Wong\n\n"
+            "--- Auto-Reply ---\n"
+            "I am attending the Global Finance Summit in {office} from "
+            "March 17-24. For immediate help, contact the Finance Help "
+            "Desk at ext. 4500.\n"
+            "— Michael Strauss\n\n"
+            "--- Auto-Reply ---\n"
+            "I am on parental leave. For urgent requests contact Sarah "
+            "Kim at ext. 3201.\n"
+            "— David Park\n\n"
+            "--- Auto-Reply ---\n"
+            "Out for a medical appointment March 18. Back March 19.\n"
+            "— Jennifer Liu\n\n"
+            "--- Original Message ---\n"
+            "From: {name} <{name1}@contoso.com>\n"
+            "Subject: SAP timeout errors\n\n"
+            "SAP transactions are timing out when processing journal "
+            "entries. Error: 'Connection to application server timed out "
+            "after 30000ms'. This started yesterday afternoon and affects "
+            "the entire Finance team. Quarterly close deadline is Friday.",
+            "RE: RE: RE: FW: {app} connection errors\n\n"
+            "--- Auto-Reply from Susan Park ---\n"
+            "I will be out March 17-21. Contact {name} for assistance.\n\n"
+            "--- Auto-Reply from Mark Davidson ---\n"
+            "On PTO until March 25.\n\n"
+            "--- Auto-Reply from {name} ---\n"
+            "In meetings all day March 17. Will respond March 18.\n\n"
+            "--- Original Message ---\n"
+            "SAP is timing out on every transaction since yesterday. "
+            "30-second timeout errors on the application server. Finance "
+            "team cannot process quarter-end entries. Urgent.",
+        ],
+        next_best_actions=[
+            "Investigate SAP application server timeouts affecting "
+            "quarter-end journal entry processing. Ignore the stacked "
+            "auto-reply messages — the real issue is at the bottom.",
+            "Fix the SAP connection timeout (30000ms) impacting the "
+            "Finance team's quarterly close. The auto-reply chain is "
+            "noise from the email thread.",
+        ],
+        remediation_steps=[
+            [
+                "Check SAP application server health and connection pool status",
+                "Review SAP transaction logs for timeout errors during journal processing",
+                "Verify network connectivity between workstations and the SAP server",
+                "Coordinate with SAP Basis team for resource contention during quarter-end",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-178  Multilingual legal disclaimer overwhelming body
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-178",
+        category=Category.SECURITY,
+        priority=Priority.P2,
+        assigned_team=Team.SECOPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AUTHENTICATION_METHOD, MissingInfo.DEVICE_INFO],
+        subjects=[
+            "Suspicious login alerts on my account",
+            "Unauthorized access attempts — 3 alerts overnight",
+            "Security alert — unrecognized IPs accessing my {app} account",
+        ],
+        descriptions=[
+            "Hi Security, I got 3 suspicious login alerts from IPs I "
+            "do not recognize (185.220.101.x range) at 2:00 AM, 2:15 AM "
+            "and 3:30 AM last night.\n\n"
+            "CONFIDENTIALITY NOTICE: This email and any attachments are "
+            "for the exclusive use of the intended recipient. If you are "
+            "not the intended recipient, do not read, distribute, or act "
+            "on this message. Unauthorized review or distribution is "
+            "strictly prohibited.\n\n"
+            "AVIS DE CONFIDENTIALITE: Ce courriel est destine "
+            "exclusivement au destinataire prevu. Toute utilisation non "
+            "autorisee est strictement interdite.\n\n"
+            "VERTRAULICHKEITSHINWEIS: Diese E-Mail ist ausschliesslich "
+            "fuer den vorgesehenen Empfaenger bestimmt. Unbefugte "
+            "Nutzung ist strengstens untersagt.\n\n"
+            "AVISO DE CONFIDENCIALIDAD: Este correo electronico es para "
+            "uso exclusivo del destinatario previsto. Cualquier uso no "
+            "autorizado esta estrictamente prohibido.\n\n"
+            "{name}, {department}",
+            "I received multiple security alerts about login attempts "
+            "from unknown IP addresses overnight. The alerts say the "
+            "attempts came from a Tor exit node. My account may be "
+            "compromised.\n\n"
+            "--- Legal Disclaimer (EN/FR/DE/ES) ---\n"
+            "This communication is confidential and intended solely for "
+            "the addressee. Ce message est confidentiel et destine "
+            "uniquement au destinataire. Diese Nachricht ist vertraulich "
+            "und nur fuer den Adressaten bestimmt. Este mensaje es "
+            "confidencial y destinado unicamente al destinatario. "
+            "Unauthorized use is prohibited in all jurisdictions. "
+            "L'utilisation non autorisee est interdite. Unbefugte "
+            "Nutzung ist verboten. El uso no autorizado esta prohibido. "
+            "{name}, {department}",
+        ],
+        next_best_actions=[
+            "Investigate suspicious login attempts from 185.220.101.x "
+            "(Tor exit nodes) on the user's account. Ignore the "
+            "multilingual legal disclaimers.",
+            "Check Azure AD sign-in logs for the reported unauthorized "
+            "access attempts. The legal footer is standard email noise.",
+        ],
+        remediation_steps=[
+            [
+                "Check Azure AD sign-in logs for the user's account from the reported IPs",
+                "Block the 185.220.101.x range if confirmed unauthorized",
+                "Force a password reset and verify MFA is enabled",
+                "Check if any successful logins occurred from those IPs",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-179  Teams chat transcript pasted into ticket
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-179",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.APPLICATION_VERSION, MissingInfo.DEVICE_INFO],
+        subjects=[
+            "Teams keeps crashing — chat log for context",
+            "Microsoft Teams crash after update — pasting chat",
+            "{app} crashes on chat open — see conversation below",
+        ],
+        descriptions=[
+            "[3/17/2026 9:02 AM] {name}:\nhey is Teams working for you?\n\n"
+            "[3/17/2026 9:02 AM] Derek:\nyeah seems fine\n\n"
+            "[3/17/2026 9:03 AM] {name}:\nmine crashes every time I open "
+            "a chat. freezes then closes\n\n"
+            "[3/17/2026 9:03 AM] Derek:\nhave you cleared the cache?\n\n"
+            "[3/17/2026 9:04 AM] {name}:\nyes. no help. also reinstalled\n\n"
+            "[3/17/2026 9:05 AM] Derek:\nsubmit a ticket\n\n"
+            "Liked by {name}\n\n"
+            "[3/17/2026 9:06 AM] Sofia:\nsame issue here! started today\n\n"
+            "Liked by {name}, Liked by Derek\n\n"
+            "[3/17/2026 9:07 AM] Sofia:\ni think it was the update last "
+            "night\n\n"
+            "[3/17/2026 9:10 AM] {name}:\nok submitting now. copying chat\n\n"
+            "Teams (classic) crashes when opening any chat window. Started "
+            "after overnight update on March 16. Affects at least 2 of us "
+            "on the {department} floor.",
+            "Pasting our Teams conversation about the issue:\n\n"
+            "[9:15 AM] {name}: anyone else having Teams problems?\n"
+            "[9:15 AM] Alex: yeah mine keeps freezing\n"
+            "[9:16 AM] {name}: same! crashes after 5 seconds\n"
+            "[9:16 AM] Priya: me too. started after the update\n"
+            "[9:17 AM] {name}: ok I am filing a ticket\n"
+            "Liked by Alex, Liked by Priya\n\n"
+            "Teams classic crashes on chat open since the March 16 "
+            "update. Multiple users affected on {floor}.",
+        ],
+        next_best_actions=[
+            "Investigate Teams (classic) crash-on-chat-open after the "
+            "March 16 update. Ignore the chat transcript noise — "
+            "multiple users on the floor are affected.",
+            "Troubleshoot Teams classic crashing after the overnight "
+            "update. The pasted chat confirms multiple affected users.",
+        ],
+        remediation_steps=[
+            [
+                "Check the Teams update version deployed on March 16",
+                "Clear the Teams cache and Credential Manager entries",
+                "Test migrating affected users to the new Teams (v2) client",
+                "Roll back the update for affected machines if widespread",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-180  HTTP response dump with 500 error
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-180",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.STEPS_TO_REPRODUCE, MissingInfo.AFFECTED_USERS],
+        subjects=[
+            "Expense portal returning 500 errors",
+            "Internal {app} portal — server error on submit",
+            "HTTP 500 on expense report submission",
+        ],
+        descriptions=[
+            "The expense portal gives 500 errors. Browser dev tools "
+            "response:\n\n"
+            "HTTP/1.1 500 Internal Server Error\n"
+            "Server: Microsoft-IIS/10.0\n"
+            "X-Powered-By: ASP.NET\n"
+            "X-Request-Id: 7f8a2b3c-4d5e-6f7a-8b9c-0d1e2f3a4b5c\n"
+            "Set-Cookie: .AspNet.ApplicationCookie=REDACTED; secure\n"
+            "Content-Type: text/html; charset=utf-8\n\n"
+            "Server Error: NullReferenceException at "
+            "Contoso.Expenses.Controllers.SubmitController.Post line 142\n\n"
+            "Happens when submitting expense reports. Worked last week. "
+            "{name}, {department}",
+            "Getting 500 Internal Server Error on the expense portal. "
+            "Full HTTP response:\n\n"
+            "HTTP/1.1 500 Internal Server Error\n"
+            "Date: Mon, 17 Mar 2026 14:32:15 GMT\n"
+            "X-AspNet-Version: 4.0.30319\n"
+            "X-Correlation-Id: a1b2c3d4-e5f6-7890-abcd-ef1234567890\n"
+            "Content-Security-Policy: default-src 'self'\n\n"
+            "Stack Trace: System.NullReferenceException at "
+            "SubmitController.cs:line 142\n\n"
+            "Cannot submit any expense reports since this morning. {name}",
+        ],
+        next_best_actions=[
+            "Fix the NullReferenceException in SubmitController.Post "
+            "(line 142) causing 500 errors on expense report submission.",
+            "Investigate the expense portal 500 error — the HTTP dump "
+            "shows a NullReferenceException in the submit controller.",
+        ],
+        remediation_steps=[
+            [
+                "Check application logs for the NullReferenceException details",
+                "Review recent deployments to SubmitController.cs for regressions",
+                "Verify database connections and dependent services are available",
+                "Rollback the last deployment if a regression is identified",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-181  Data URI screenshot flood
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-181",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.APPLICATION_VERSION, MissingInfo.STEPS_TO_REPRODUCE],
+        subjects=[
+            "Excel charts rendering incorrectly",
+            "Chart display broken in {app} after update",
+            "Excel chart Y-axis scaling wrong — see screenshots",
+        ],
+        descriptions=[
+            "Charts in Q1 Summary are wrong. Screenshots:\n\n"
+            '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA'
+            "UFAKEBASE64BLOCK1FORINLINESCREENSHOT==\" />\n\n"
+            '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA'
+            "oFAKEBASE64BLOCK2MOREDATA==\" />\n\n"
+            '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQAB'
+            "FAKEBASE64BLOCK3SCREENSHOT==\" />\n\n"
+            "Bar charts show incorrect Y-axis scaling, pie charts "
+            "missing legend labels. Excel 365 on {os}. {name}",
+            "Excel chart rendering is broken since the update. I tried "
+            "to paste screenshots but they showed as data URIs:\n\n"
+            "[data:image/png;base64,iVBORw0K...FAKEDATA...==]\n"
+            "[data:image/png;base64,iVBORw0K...MOREDATA...==]\n\n"
+            "Y-axis values are wrong on bar charts and pie chart "
+            "legends disappeared. {name}, {department}",
+        ],
+        next_best_actions=[
+            "Fix Excel 365 chart rendering: bar chart Y-axis scaling "
+            "errors and missing pie chart legends after update. Ignore "
+            "the inline base64 data.",
+            "Investigate Excel chart display regression after the latest "
+            "update. The data URI content is screenshot noise.",
+        ],
+        remediation_steps=[
+            [
+                "Check Excel 365 version against known chart rendering bugs",
+                "Test with a new workbook to isolate file-specific issues",
+                "Repair the Office 365 installation via Settings > Apps",
+                "Recreate corrupted chart objects if the issue is file-specific",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-182  Multi-ticket thread confusion
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-182",
+        category=Category.NETWORK,
+        priority=Priority.P2,
+        assigned_team=Team.NETWORK,
+        needs_escalation=False,
+        missing_information=[MissingInfo.NETWORK_LOCATION, MissingInfo.AFFECTED_USERS],
+        subjects=[
+            "RE: FW: Network issues — ref INC-1847, INC-1902, INC-1955",
+            "WiFi drops again — relates to INC-1847/1902/1955/1971",
+            "Following up on multiple tickets about {office} WiFi",
+        ],
+        descriptions=[
+            "Following up on this ongoing network problem:\n\n"
+            "- INC-1847 (Feb 12): WiFi drops on 5th floor {office}\n"
+            "- INC-1902 (Feb 28): Same issue, was 'resolved' but wasn't\n"
+            "- INC-1955 (Mar 5): Reopened, fix didn't hold\n"
+            "- INC-1971 (Mar 10): Colleague filed about 4th floor same\n"
+            "- INC-1988 (Mar 14): Facilities filed about AP replacement\n\n"
+            "Current issue: WiFi on 5th floor drops every 15-20 min "
+            "during trading hours. AP-B3-5F-02 seems to be the one "
+            "failing. Signal drops to zero for 30-60 seconds. {name}",
+            "This has been reported multiple times under different "
+            "tickets: INC-1847, INC-1902, INC-1955, INC-1971, and "
+            "INC-1988. The WiFi on {floor} keeps dropping during peak "
+            "hours. The access point near my desk loses signal every "
+            "15-20 minutes. Please consolidate these tickets and give "
+            "us a permanent fix. {name}, {department}",
+        ],
+        next_best_actions=[
+            "Investigate recurring WiFi drops on the 5th floor — access "
+            "point AP-B3-5F-02 fails every 15-20 min during trading. "
+            "Consolidate related tickets INC-1847/1902/1955/1971/1988.",
+            "Fix the failing access point causing periodic WiFi drops. "
+            "Multiple tickets reference the same underlying issue.",
+        ],
+        remediation_steps=[
+            [
+                "Inspect and test access point AP-B3-5F-02 for hardware failure",
+                "Check for channel interference from neighboring APs",
+                "Replace the access point if diagnostics show degradation",
+                "Verify the fix holds for a full trading week before closing all tickets",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-183  ServiceDesk notification template noise
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-183",
+        category=Category.HARDWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.REPRODUCTION_FREQUENCY],
+        subjects=[
+            "[ServiceNow] INC0087432 — Update from assignee",
+            "[ITSM] Incident Update — keyboard disconnect issue",
+            "[ServiceNow] INC0087432 — State changed to Pending",
+        ],
+        descriptions=[
+            "ServiceNow Notification — Incident Update\n"
+            "Incident: INC0087432\n"
+            "Priority: 3 - Moderate\n"
+            "State: Work in Progress -> Pending User\n"
+            "Assignment: Endpoint Engineering -> Sarah Chen\n"
+            "Updated: 2026-03-17 10:45:22 UTC\n"
+            "SLA Status: Within SLA (12h remaining)\n"
+            "Category: Hardware > Peripheral Devices\n"
+            "CI: WKS-B2-4F-018\n\n"
+            "Field Changes:\n"
+            "  State: WIP -> Pending User\n"
+            "  Priority: 4 -> 3\n\n"
+            "Work Note (Sarah Chen):\n"
+            "  Dock firmware is v1.2.3, latest is v1.4.1. Scheduling "
+            "firmware update.\n\n"
+            "Original Description ({name}):\n"
+            "  Keyboard and mouse disconnect randomly with docking "
+            "station. Happens 3-4 times daily. Lenovo ThinkPad USB-C "
+            "Dock Gen 2.",
+            "--- ITSM Notification ---\n"
+            "Ticket: INC0087432 | Priority: 3 | State: Pending\n"
+            "Assigned to: Endpoint Engineering\n"
+            "SLA: Within target\n"
+            "Activity: Firmware check completed\n\n"
+            "User issue: USB peripherals disconnect randomly when "
+            "using the docking station. Dock model: Lenovo ThinkPad "
+            "USB-C Gen 2. Firmware outdated. {name}, {department}",
+        ],
+        next_best_actions=[
+            "Continue troubleshooting keyboard/mouse disconnections "
+            "through the Lenovo dock. Firmware is outdated (v1.2.3 vs "
+            "v1.4.1) — update and verify stability.",
+            "Update the docking station firmware from v1.2.3 to v1.4.1 "
+            "to resolve the USB peripheral disconnection issue.",
+        ],
+        remediation_steps=[
+            [
+                "Update docking station firmware from v1.2.3 to v1.4.1",
+                "Check USB drivers on the workstation for pending updates",
+                "Test peripherals connected directly to isolate device issues",
+                "Replace the docking station if disconnections persist after update",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-184  Mojibake encoding corruption
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-184",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.ERROR_MESSAGE, MissingInfo.AUTHENTICATION_METHOD],
+        subjects=[
+            "SharePoint access broken \u00e2\u20ac\u201c can\u00e2\u20ac\u2122t open documents",
+            "SharePoint \u00e2\u20ac\u0153Access Denied\u00e2\u20ac\u009d after it worked yesterday",
+            "Can\u00e2\u20ac\u2122t access {app} team site \u00e2\u20ac\u201c permission error",
+        ],
+        descriptions=[
+            "I\u00e2\u20ac\u2122m having trouble accessing SharePoint. When I try to "
+            "open documents I get \u00e2\u20ac\u0153Access Denied\u00e2\u20ac\u009d even though I "
+            "had access yesterday.\n\n"
+            "URL: https://contoso.sharepoint.com/sites/FinanceTeam\n"
+            "Library: \u00e2\u20ac\u0153Q1 Reports\u00e2\u20ac\u009d\n\n"
+            "Tried:\n"
+            "\u00e2\u20ac\u00a2 Clearing browser cache\n"
+            "\u00e2\u20ac\u00a2 InPrivate/Incognito mode\n"
+            "\u00e2\u20ac\u00a2 Edge, Chrome, Firefox\n\n"
+            "Need access urgently \u00e2\u20ac\u201c quarterly close reports due Friday. "
+            "{name}, {department}",
+            "SharePoint Finance team site gives permission errors since "
+            "this morning. I could access it fine yesterday. The "
+            "document library shows \u00e2\u20ac\u0153Access Denied\u00e2\u20ac\u009d. I\u00e2\u20ac\u2122ve tried "
+            "multiple browsers and clearing cache. {name}",
+        ],
+        next_best_actions=[
+            "Investigate SharePoint Access Denied error on the Finance "
+            "Team site. The ticket has mojibake encoding artifacts but "
+            "the core issue is a permissions problem.",
+            "Fix the SharePoint permissions issue for the Q1 Reports "
+            "library. Ignore the encoding corruption in the text.",
+        ],
+        remediation_steps=[
+            [
+                "Check the user's SharePoint permissions on the Finance Team site",
+                "Verify SharePoint group membership hasn't changed recently",
+                "Check if a site admin removed or modified permissions",
+                "Re-grant access and verify the user can open documents",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-185  SOAP XML fault dump
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-185",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.AFFECTED_USERS, MissingInfo.BUSINESS_IMPACT],
+        subjects=[
+            "Trade reconciliation service error",
+            "SOAP fault on {app} reconciliation endpoint",
+            "End-of-day reconciliation failing — XML error",
+        ],
+        descriptions=[
+            "Trade reconciliation returns errors. Full response:\n\n"
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/"
+            "soap/envelope/\">\n"
+            "  <soap:Body>\n"
+            "    <soap:Fault>\n"
+            "      <faultcode>soap:Server</faultcode>\n"
+            "      <faultstring>SqlException: Timeout expired. The "
+            "timeout period elapsed prior to completion.</faultstring>\n"
+            "      <detail>\n"
+            "        <ErrorCode>RECON-5001</ErrorCode>\n"
+            "        <Server>TRADESRV-02</Server>\n"
+            "        <Database>TradeReconDB</Database>\n"
+            "        <BatchId>EOD-20260317-001</BatchId>\n"
+            "      </detail>\n"
+            "    </soap:Fault>\n"
+            "  </soap:Body>\n"
+            "</soap:Envelope>\n\n"
+            "Blocking EOD reconciliation for all trading desks. {name}",
+            "End-of-day reconciliation is failing with a SOAP fault. "
+            "The XML error shows a SQL timeout (RECON-5001) on "
+            "TRADESRV-02 TradeReconDB during batch EOD-20260317-001. "
+            "All desks are blocked. {name}, {department}",
+        ],
+        next_best_actions=[
+            "Fix the SQL timeout (RECON-5001) in the trade "
+            "reconciliation service on TRADESRV-02. The SOAP XML "
+            "dump shows TradeReconDB timing out during EOD batch.",
+            "Resolve the database timeout blocking end-of-day "
+            "reconciliation. Ignore the XML formatting noise.",
+        ],
+        remediation_steps=[
+            [
+                "Check TRADESRV-02 SQL Server performance and blocking queries",
+                "Review the EOD reconciliation stored procedure for long-running queries",
+                "Increase SQL command timeout temporarily while investigating root cause",
+                "Verify database indexes and statistics are current on TradeReconDB",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-186  Complex HTML table email
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-186",
+        category=Category.HARDWARE,
+        priority=Priority.P4,
+        assigned_team=Team.ENDPOINT,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.STEPS_TO_REPRODUCE],
+        subjects=[
+            "Cannot print org chart email from HR",
+            "Printer outputs raw HTML for formatted email",
+            "HP printer on {floor} prints garbage for HTML emails",
+        ],
+        descriptions=[
+            "I received the org chart email from HR but when I print "
+            "it, the printer outputs raw HTML. The email contains:\n\n"
+            "<table style=\"border-collapse:collapse;width:100%\">\n"
+            "<tr style=\"background:#1F4E79;color:white\">\n"
+            "<td colspan=\"4\">Contoso Organization Chart</td></tr>\n"
+            "<tr><td style=\"border:1px solid #9BC2E6\">Executive</td>\n"
+            "<td>James Harrison - CEO</td></tr>\n"
+            "</table>\n\n"
+            "Renders fine on screen but HP LaserJet on {floor} prints "
+            "the raw HTML tags. {name}, {department}",
+            "Printing HTML-formatted emails shows raw markup instead "
+            "of the formatted content. The email has complex nested "
+            "tables with inline CSS. HP LaserJet M507 on {floor}. "
+            "{name}",
+        ],
+        next_best_actions=[
+            "Investigate the HP LaserJet printing raw HTML instead of "
+            "rendered content. Likely a print driver rendering issue.",
+            "Fix the print driver or rendering pipeline for HTML "
+            "emails on the HP LaserJet M507.",
+        ],
+        remediation_steps=[
+            [
+                "Update the print driver on the user's workstation",
+                "Try printing from a different email client or browser",
+                "Test printing to PDF first, then print the PDF",
+                "Check HP printer firmware for HTML rendering support",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-187  Very long rambling email with buried issue
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-187",
+        category=Category.NETWORK,
+        priority=Priority.P3,
+        assigned_team=Team.NETWORK,
+        needs_escalation=False,
+        missing_information=[MissingInfo.DEVICE_INFO, MissingInfo.ENVIRONMENT_DETAILS],
+        subjects=[
+            "Quick question about my computer",
+            "Hey IT — couple of things",
+            "Various issues and a network question",
+        ],
+        descriptions=[
+            "Hi IT team,\n\nHope you're doing well! First off, the new "
+            "coffee machines are amazing. The oat milk option is great. "
+            "I ran into Marcus from Trading yesterday and he was telling "
+            "me about the new Bloomberg terminals — sounds cool. "
+            "Remember when we all had thick Dell monitors? Now everyone "
+            "has thin USB-C ones. Technology moves fast.\n\n"
+            "Speaking of monitors, my neighbor got a 4K TV as a second "
+            "monitor for gaming. Pretty cool but not relevant to work "
+            "I suppose. My kids are into Minecraft — do you support "
+            "that? Just kidding.\n\n"
+            "Anyway the reason I'm writing — last Tuesday (or maybe "
+            "Wednesday, definitely Tuesday because I had a dentist "
+            "appointment) when I'm on VPN from home, the network drives "
+            "disconnect after exactly 10 minutes of inactivity. Every "
+            "time. I have to remap the drive.\n\n"
+            "Also are we doing the team outing next month? And can I "
+            "get a standing desk? My back is killing me.\n\n"
+            "But yeah the network drive thing is the main issue. "
+            "\\\\filesrv\\finance disconnects after 10 min idle. {name}",
+            "Hi! Long email sorry. Lots going on. But the main thing "
+            "is that my mapped network drive disconnects when I'm on "
+            "VPN and idle for about 10 minutes. It's \\\\filesrv\\finance "
+            "and I have to manually reconnect every time. Started last "
+            "week. I also wanted to ask about standing desks and the "
+            "team outing but those can wait. The drive disconnect is "
+            "urgent because I lose unsaved work. {name}, {department}",
+        ],
+        next_best_actions=[
+            "Fix the mapped drive (\\\\filesrv\\finance) disconnecting "
+            "after 10 minutes idle on VPN. Likely a session timeout or "
+            "SMB keepalive issue. Ignore the rambling context.",
+            "Investigate the VPN/SMB session timeout causing network "
+            "drive disconnections after 10 minutes of inactivity.",
+        ],
+        remediation_steps=[
+            [
+                "Check VPN idle timeout and SMB session keepalive settings",
+                "Verify GPO settings for mapped drive persistence over VPN",
+                "Increase SMB session timeout on the file server or VPN gateway",
+                "Test with persistent net use /persistent:yes mapping",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-188  Embedded EML with RFC 822 headers
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-188",
+        category=Category.SOFTWARE,
+        priority=Priority.P3,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.CONFIGURATION_DETAILS, MissingInfo.TIMESTAMP],
+        subjects=[
+            "FW: Email delivery failure — raw headers included",
+            "Forwarding failed email with headers for IT review",
+            "Email from partner.com rejected — embedded original",
+        ],
+        descriptions=[
+            "Forwarding the failed email. My client included raw "
+            "headers:\n\n"
+            "Content-Type: message/rfc822\n"
+            "Return-Path: <noreply@partner.com>\n"
+            "Received: from mail-gw01.contoso.com (10.0.1.25) by "
+            "mail-hub02.contoso.com with ESMTPS\n"
+            "DKIM-Signature: v=1; a=rsa-sha256; d=partner.com\n"
+            "From: alerts@partner.com\n"
+            "To: settlements@contoso.com\n"
+            "Subject: Daily Settlement Confirmation\n"
+            "MIME-Version: 1.0\n"
+            "Content-Type: multipart/mixed; boundary=\"----=_Part_123\"\n\n"
+            "Rejection: 550 5.7.1 Content policy violation.\n\n"
+            "We need daily settlement emails from partner.com to arrive. "
+            "Stopped 3 days ago. Team is manually reconciling. {name}",
+            "Email from partner.com to settlements@contoso.com is being "
+            "rejected with 550 5.7.1 content policy violation. Raw email "
+            "headers show rejection at our gateway. The settlement team "
+            "needs these daily. {name}, {department}",
+        ],
+        next_best_actions=[
+            "Fix email delivery rejection (550 5.7.1) for settlement "
+            "emails from partner.com. The EML headers show the block "
+            "occurs at the Contoso email gateway.",
+            "Investigate the content policy blocking partner.com emails "
+            "to settlements@contoso.com. Ignore the raw RFC 822 noise.",
+        ],
+        remediation_steps=[
+            [
+                "Check Exchange transport rules for recent content filter changes",
+                "Review mail gateway logs for the specific rejection reason",
+                "Whitelist partner.com or the specific sender if legitimate",
+                "Verify DKIM/SPF/DMARC for partner.com are passing validation",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-189  OCR scan artifacts
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-189",
+        category=Category.DATA,
+        priority=Priority.P3,
+        assigned_team=Team.DATA_PLATFORM,
+        needs_escalation=False,
+        missing_information=[MissingInfo.BUSINESS_IMPACT, MissingInfo.CONFIGURATION_DETAILS],
+        subjects=[
+            "Database backup report — OCR scan from printout",
+            "Scanned backup status report — OCR quality poor",
+            "Backup failure report from server room printout",
+        ],
+        descriptions=[
+            "Scanned the printout from the server room:\n\n"
+            "CONT0SO F1NANCIAL SERV1CES\n"
+            "Oata8ase Backup Rep0rt - March 2O26\n"
+            "Server: SQLSRV-O1.contoso.1ocal\n"
+            "Oata8ase: TradeL edgerO8 (1.2 T8)\n"
+            "Last 8ackup: 2O26-O3-15\n"
+            "Status: FA1LED\n"
+            "Err0r: 1nsufficient disk space\n"
+            "  Avai1ab1e: 45.2 G8\n"
+            "  Required: 1,2OO G8\n\n"
+            "TradeLedgerDB backup on SQLSRV-01 failing since March 15 "
+            "due to insufficient disk space on backup volume. {name}",
+            "OCR scan of the backup report printout (sorry for quality):\n\n"
+            "Backup St@tus: FA1LED\n"
+            "Server: SQLSRV-O1\n"
+            "D8: TradeLedger0B\n"
+            "Reason: Disk space (45 GB free, need 1.2 TB)\n\n"
+            "The backup has been failing for 2 days. {name}, {department}",
+        ],
+        next_best_actions=[
+            "Fix TradeLedgerDB backup failure on SQLSRV-01 due to "
+            "insufficient disk space (45 GB available, 1.2 TB needed). "
+            "The OCR text has recognition errors but the issue is clear.",
+            "Resolve the backup volume space shortage for TradeLedgerDB. "
+            "Ignore OCR noise in the scanned text.",
+        ],
+        remediation_steps=[
+            [
+                "Free disk space by archiving or deleting old backup files",
+                "Expand backup volume storage to accommodate the 1.2 TB database",
+                "Re-run the backup manually and verify completion",
+                "Set up monitoring alerts for backup volume at 80% capacity",
+            ],
+        ],
+    )
+)
+
+# ---------------------------------------------------------------------------
+# dc-190  WinRM remote session transcript
+# ---------------------------------------------------------------------------
+register(
+    ScenarioTemplate(
+        scenario_id="dc-190",
+        category=Category.SOFTWARE,
+        priority=Priority.P2,
+        assigned_team=Team.ENTERPRISE_APPS,
+        needs_escalation=False,
+        missing_information=[MissingInfo.BUSINESS_IMPACT, MissingInfo.AFFECTED_USERS],
+        subjects=[
+            "Remote diagnostics output from failing server",
+            "WinRM session output — APPSRV-04 services down",
+            "Server APPSRV-04 port conflict — diagnostic transcript",
+        ],
+        descriptions=[
+            "WinRM diagnostics on APPSRV-04:\n\n"
+            "PS> Enter-PSSession APPSRV-04\n"
+            "[APPSRV-04]: PS> Get-Service | ? Status -eq Stopped\n\n"
+            "Stopped  ContosoTradeAPI   Contoso Trade API Service\n"
+            "Stopped  W3SVC            World Wide Web Publishing\n"
+            "Stopped  WAS              Windows Process Activation\n\n"
+            "[APPSRV-04]: PS> Get-EventLog Application -Newest 3 "
+            "-EntryType Error\n"
+            "Error  ContosoTradeAPI  Exit code: 0xC0000005\n"
+            "Error  W3SVC  Port 443 already in use\n"
+            "Error  WAS  Failed to start — port conflict\n\n"
+            "[APPSRV-04]: PS> netstat -ano | Select-String 443\n"
+            "  TCP  0.0.0.0:443  LISTENING  7892\n\n"
+            "[APPSRV-04]: PS> Get-Process -Id 7892\n"
+            "  7892  ContosoReconSvc\n\n"
+            "Summary: ContosoReconSvc holds port 443, preventing W3SVC "
+            "and TradeAPI from starting. {name}",
+            "Remote session output shows APPSRV-04 has a port conflict: "
+            "ContosoReconSvc (PID 7892) is holding port 443, blocking "
+            "W3SVC and ContosoTradeAPI. Multiple services are stopped. "
+            "The verbose WinRM transcript confirms the issue. {name}, "
+            "{department}",
+        ],
+        next_best_actions=[
+            "Fix the port 443 conflict on APPSRV-04: ContosoReconSvc "
+            "is holding the port, preventing W3SVC and TradeAPI from "
+            "starting. The WinRM transcript provides diagnostics.",
+            "Resolve the service port conflict on APPSRV-04. "
+            "ContosoReconSvc needs to be reconfigured to a different "
+            "port so W3SVC can start.",
+        ],
+        remediation_steps=[
+            [
+                "Stop ContosoReconSvc and reconfigure it to use port 8443",
+                "Restart W3SVC and ContosoTradeAPI after freeing port 443",
+                "Investigate why ContosoReconSvc started binding to port 443",
+                "Set up service dependency ordering to prevent port conflicts",
+            ],
+        ],
+    )
+)

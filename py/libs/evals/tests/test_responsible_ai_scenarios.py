@@ -46,13 +46,13 @@ class TestResponsibleAiScenarios:
         """Verify expected scenario IDs exist."""
         scenarios = get_scenarios()
         ids = {s.scenario_id for s in scenarios}
-        expected = {f"RAI-{i:03d}" for i in range(1, 306)}
+        expected = {f"RAI-{i:03d}" for i in range(1, 331)}
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Responsible AI should have at least 305 scenarios."""
+        """Responsible AI should have at least 330 scenarios."""
         scenarios = get_scenarios()
-        assert len(scenarios) >= 305, f"Expected >= 305 RAI scenarios, got {len(scenarios)}"
+        assert len(scenarios) >= 330, f"Expected >= 330 RAI scenarios, got {len(scenarios)}"
 
     def test_covers_key_attack_categories(self) -> None:
         """Verify that key adversarial categories are covered."""
@@ -245,5 +245,33 @@ class TestResponsibleAiScenarios:
             "policy-override",
             "social-proof-aggregation",
             "peer-pressure-exploit",
+            # New tags from RAI-316..RAI-330
+            "acrostic-instruction",
+            "steganographic-attack",
+            "phishing-content-request",
+            "harmful-content",
+            "fake-audit-bypass",
+            "dlp-circumvention",
+            "regulatory-coercion",
+            "fake-regulation",
+            "few-shot-attack",
+            "example-injection",
+            "pii-harvesting",
+            "hr-impersonation",
+            "monitoring-disable",
+            "audit-tampering",
+            "token-flooding",
+            "multi-vector-attack",
+            "combined-adversarial",
+            "prompt-extraction-attempt",
+            "system-prompt-leak",
+            "rot13-injection",
+            "encoding-evasion",
+            "ransomware-disguise",
+            "recovery-pretext",
+            "translation-injection",
+            "multilingual-evasion",
+            "self-modification-request",
+            "rule-change-injection",
         }
         assert expected_tags.issubset(all_tags), f"Missing attack tags: {expected_tags - all_tags}"

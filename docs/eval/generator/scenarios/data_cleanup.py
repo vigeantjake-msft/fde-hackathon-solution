@@ -4495,4 +4495,902 @@ SCENARIOS: list[Scenario] = [
         ],
         tags=["data-cleanup", "no-line-breaks", "wall-of-text"],
     ),
+    # ──────────────────────────────────────────────────────────────────
+    # Base64 image data flooding
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-base64-image-flood",
+        category="Hardware & Peripherals",
+        priority="P3",
+        assigned_team="Endpoint Engineering",
+        needs_escalation=False,
+        missing_information=["error_message", "device_info"],
+        subjects=[
+            "Laptop screen flickering — pasting diagnostic screenshots below",
+            "Monitor display glitch — see Base64 encoded screenshots attached inline",
+        ],
+        descriptions=[
+            "My Dell Latitude 7430 screen has been flickering intermittently since the last "
+            "BIOS update. It happens mostly when switching between external monitor and laptop "
+            "display. I captured a few screenshots of the artifacts and converted them so I "
+            "could paste them in this ticket:\n\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAACCAYAAAAv+"
+            "MJvAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAGXRFWHRTb2Z0d2FyZQB3d3cu"
+            "aW5rc2NhcGUub3Jnm+48GgAAIABJREFUeJzsvXd4XNd17/2bXtB7IQES7L13"
+            "iqJIUaIkShZly5Ys27Fjx4kTx0mud5JxnDhOHCeusmXJqqQoiuq9ECTZ0TsG"
+            "fWYwM6ff94cGEAdAACRBkpLv+3meBzNnzj5n77PP3mutXwEC/P/svXmcXEV5"
+            "9/+tqrtn3yczmclkJZCEBBKSsMoOIquIgOCC4gKKoii44Ia44L6ioKIoKIoI"
+            "gogIsu9LCGQlIWQhezL7Pt1d9f5R3dM9k0lCwPd9f++Hzwc6fW/dqrp161Y9"
+            "z1rPU0VKKfn/tyV5Y/9k/wT+BP4E/j97e6MF+H/b/9v+3/b/tv+3/YnaGy3A"
+            "\n...[truncated 47KB of Base64 data]...\n"
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw"
+            "4pVUAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAAGXR"
+            "FWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAABdJJREFUeJzt3V"
+            "\n...[truncated 31KB of Base64 data]...\n\n"
+            "The flickering is random but happens at least 5 times per day. It started after "
+            "the BIOS was updated to version 1.18.0 last Thursday.",
+            "Screen keeps flickering on my laptop. I took screenshots and encoded them as "
+            "Base64 so I could include them directly in this ticket. "
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M "
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAA "
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABklEQVQI12NgBQ "
+            "The issue is worst when I undock from my external monitor. BIOS 1.18.0.",
+        ],
+        next_best_actions=[
+            "Investigate screen flickering on Dell Latitude 7430 after BIOS update to "
+            "1.18.0 — likely a display driver or BIOS regression when switching outputs.",
+            "Roll back the BIOS update to the previous version or update the display "
+            "driver to resolve the flickering during monitor hot-swap.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the current BIOS version and check Dell support for known issues with 1.18.0",
+                "Update or roll back the Intel graphics driver to a compatible version",
+                "Test with the external monitor disconnected to isolate the trigger",
+                "If flickering persists, roll back the BIOS to the previous stable version",
+            ],
+        ],
+        tags=["data-cleanup", "base64-image-flood"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # Auto-reply / OOO chain
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-auto-reply-chain",
+        category="Software & Applications",
+        priority="P2",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["error_message", "affected_users"],
+        subjects=[
+            "RE: Automatic reply: RE: Automatic reply: RE: Out of Office: SAP login broken",
+            "RE: OOO: RE: Automatic reply: RE: Out of Office: Cannot access SAP portal",
+        ],
+        descriptions=[
+            "--- Automatic Reply ---\nI am currently out of the office with no access to "
+            "email. I will return on March 24th. For urgent matters contact Jim at "
+            "jim@contoso.com.\n\n"
+            "--- Automatic Reply ---\nThank you for your message. I am out of the office "
+            "until March 28th. For immediate assistance, please contact the Help Desk.\n\n"
+            "--- Automatic Reply ---\nI will be out of the office from March 20-27. For "
+            "urgent issues please reach out to my backup Sarah Chen.\n\n"
+            "--- Original Message from user ---\n"
+            "The SAP Fiori portal returns HTTP 403 Forbidden when I try to log in. I can "
+            "reach the login page but after entering my credentials I get bounced to an "
+            "error page. This started this morning. I need access to submit purchase orders "
+            "before end of day.",
+            "Out of Office: I am away from the office.\n"
+            "Out of Office: Thanks for your email, I'm OOO.\n"
+            "Out of Office: Away until next Monday.\n"
+            "Auto-Reply: I'm traveling with limited access.\n"
+            "Auto-Reply: On PTO this week, back 3/28.\n\n"
+            "Original issue: SAP Fiori gives 403 Forbidden after login. Need to submit POs "
+            "urgently. Was working yesterday, broken today for my account only.",
+        ],
+        next_best_actions=[
+            "Investigate SAP Fiori 403 Forbidden error after authentication — likely a "
+            "role assignment or authorization object issue specific to this user's account.",
+            "Check the user's SAP role assignments and authorization profiles to resolve "
+            "the 403 error blocking purchase order submission.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the user's SAP role assignments and authorization objects in SU01",
+                "Check SAP system logs (SM21) for authorization failures tied to the user",
+                "Reassign missing roles or reset the user's authorization buffer with SU56",
+                "Confirm the user can access the Fiori portal and submit purchase orders",
+            ],
+        ],
+        tags=["data-cleanup", "auto-reply-chain"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 4-language legal disclaimer
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-legal-disclaimer-multilingual",
+        category="Security & Compliance",
+        priority="P2",
+        assigned_team="Security Operations",
+        needs_escalation=False,
+        missing_information=["affected_system", "timestamp"],
+        subjects=[
+            "DLP alert triggered on outbound email — false positive?",
+            "Data Loss Prevention policy blocking legitimate email with contract attachment",
+        ],
+        descriptions=[
+            "I'm getting DLP policy violations when sending contracts to our legal partner. "
+            "The email keeps getting quarantined. Here's the full email with disclaimers:\n\n"
+            "CONFIDENTIALITY NOTICE: This email and any attachments are for the exclusive "
+            "and confidential use of the intended recipient. If you are not the intended "
+            "recipient, please do not read, distribute, or take action based on this message. "
+            "If you have received this message in error, please notify the sender immediately "
+            "and delete this message from your system.\n\n"
+            "AVIS DE CONFIDENTIALITÉ: Ce courriel et toute pièce jointe sont destinés "
+            "exclusivement au destinataire prévu et sont confidentiels. Si vous n'êtes pas "
+            "le destinataire prévu, veuillez ne pas lire, distribuer ou agir sur la base de "
+            "ce message. Si vous avez reçu ce message par erreur, veuillez en informer "
+            "immédiatement l'expéditeur et supprimer ce message de votre système.\n\n"
+            "VERTRAULICHKEITSHINWEIS: Diese E-Mail und alle Anhänge sind ausschließlich für "
+            "den vorgesehenen Empfänger bestimmt und vertraulich. Wenn Sie nicht der "
+            "vorgesehene Empfänger sind, lesen, verteilen oder handeln Sie bitte nicht auf "
+            "der Grundlage dieser Nachricht. Wenn Sie diese Nachricht irrtümlich erhalten "
+            "haben, benachrichtigen Sie bitte umgehend den Absender und löschen Sie diese "
+            "Nachricht aus Ihrem System.\n\n"
+            "AVISO DE CONFIDENCIALIDAD: Este correo electrónico y cualquier archivo adjunto "
+            "son para uso exclusivo y confidencial del destinatario previsto. Si usted no es "
+            "el destinatario previsto, por favor no lea, distribuya ni actúe en base a este "
+            "mensaje. Si ha recibido este mensaje por error, notifique inmediatamente al "
+            "remitente y elimine este mensaje de su sistema.\n\n"
+            "The actual issue: DLP policy is flagging the keyword 'confidential' in the "
+            "disclaimer footer as a policy match and quarantining all my outbound email to "
+            "external legal counsel.",
+            "Our DLP system quarantines every email I send to outside counsel because it "
+            "picks up the word 'confidential' from the four-language disclaimer block that "
+            "Legal requires on all outbound correspondence. The disclaimer is in English, "
+            "French, German, and Spanish. This has been blocking my work for two days. "
+            "The DLP rule seems to match on keywords in the disclaimer, not just the body.",
+        ],
+        next_best_actions=[
+            "Adjust the DLP policy to exclude standard legal disclaimer blocks from "
+            "keyword matching — the rule is triggering on boilerplate confidentiality text.",
+            "Create a DLP policy exception for the corporate legal disclaimer template "
+            "to stop false-positive quarantining of outbound legal correspondence.",
+        ],
+        remediation_steps=[
+            [
+                "Review the DLP policy rule that is triggering on the disclaimer keywords",
+                "Add an exception for the corporate legal disclaimer template text",
+                "Release the quarantined emails that were false positives",
+                "Test by sending an email with the disclaimer to verify the exception works",
+                "Document the DLP exception in the security policy change log",
+            ],
+        ],
+        tags=["data-cleanup", "legal-disclaimer"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # Teams chat transcript paste
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-teams-chat-paste",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["error_message", "application_version"],
+        subjects=[
+            "SharePoint sync failing — pasting Teams chat with our team discussion",
+            "OneDrive SharePoint sync broken — Teams troubleshooting thread below",
+        ],
+        descriptions=[
+            "[3/15 9:02 AM] Mike Chen: Hey has anyone else's SharePoint sync stopped working?\n"
+            "[3/15 9:03 AM] Sarah Jones: mine's fine\n"
+            "[3/15 9:03 AM] Mike Chen: weird, mine just shows a red X on the OneDrive icon\n"
+            "[3/15 9:04 AM] Dave Wilson: @Mike same here actually, started this morning\n"
+            "[3/15 9:04 AM] Sarah Jones: oh wait I'm not syncing the Marketing folder\n"
+            "[3/15 9:05 AM] Mike Chen: it's specifically the Q1 Reports library\n"
+            "[3/15 9:05 AM] Dave Wilson: yeah same library for me too\n"
+            "[3/15 9:06 AM] Lisa Park: I just tried, also broken for Q1 Reports\n"
+            "[3/15 9:07 AM] Mike Chen: @Lisa can you check if Projects library works?\n"
+            "[3/15 9:07 AM] Lisa Park: Projects syncs fine, just Q1 Reports is broken\n"
+            "[3/15 9:08 AM] Dave Wilson: should we open a ticket?\n"
+            "[3/15 9:08 AM] Mike Chen: yeah I'll do it, let me paste this chat\n"
+            "[3/15 9:09 AM] Sarah Jones: lol just paste the whole thing 😂\n"
+            "[3/15 9:09 AM] Mike Chen: 👍\n\n"
+            "So basically the Q1 Reports SharePoint library won't sync through OneDrive. "
+            "Multiple people affected. Projects library syncs fine. Started this morning.",
+            "[Teams Chat - Marketing Team]\n"
+            "Mike: SharePoint sync broken for anyone else?\n"
+            "Dave: yes Q1 Reports library\n"
+            "Lisa: same\n"
+            "Mike: Projects lib works tho\n"
+            "Dave: just Q1 Reports\n"
+            "Mike: opening ticket now\n\n"
+            "OneDrive sync to SharePoint Q1 Reports library is failing for at least 3 "
+            "users on the Marketing team since this morning. Red X on the OneDrive tray "
+            "icon. Other libraries sync normally.",
+        ],
+        next_best_actions=[
+            "Investigate OneDrive sync failure for the Q1 Reports SharePoint library — "
+            "multiple users affected, other libraries sync normally, suggesting a "
+            "library-level issue.",
+            "Check the Q1 Reports SharePoint library for sync-blocking conditions such "
+            "as file path length limits, checked-out files, or permission changes.",
+        ],
+        remediation_steps=[
+            [
+                "Check the Q1 Reports SharePoint library for sync-blocking conditions",
+                "Review OneDrive sync client logs for specific error codes",
+                "Verify no recent permission changes were made to the library",
+                "Reset the OneDrive sync relationship for the affected library and re-sync",
+            ],
+        ],
+        tags=["data-cleanup", "teams-transcript"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # HTTP 500 response dump
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-http-response-dump",
+        category="Software & Applications",
+        priority="P2",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["steps_to_reproduce", "environment_details"],
+        subjects=[
+            "Internal portal returning 500 error — full response dump below",
+            "HR self-service portal crashes — HTTP 500 with stack trace",
+        ],
+        descriptions=[
+            "The HR self-service portal started returning 500 errors this morning when "
+            "I try to submit my timesheet. Here's the full HTTP response I captured from "
+            "the browser dev tools:\n\n"
+            "HTTP/1.1 500 Internal Server Error\n"
+            "Server: Microsoft-IIS/10.0\n"
+            "X-Powered-By: ASP.NET\n"
+            "X-AspNet-Version: 4.0.30319\n"
+            "Content-Type: text/html; charset=utf-8\n"
+            "Content-Length: 8734\n"
+            "Date: Mon, 17 Mar 2026 14:22:05 GMT\n"
+            "Connection: keep-alive\n"
+            "X-Frame-Options: SAMEORIGIN\n"
+            "X-Content-Type-Options: nosniff\n"
+            "Strict-Transport-Security: max-age=31536000; includeSubDomains\n"
+            "Cache-Control: no-cache, no-store, must-revalidate\n"
+            "Pragma: no-cache\n\n"
+            '<!DOCTYPE html><html><head><title>Runtime Error</title><style>body{font-family:'
+            "Arial;margin:50px}h2{color:#cc0000}</style></head><body><h2>Server Error in "
+            "'/' Application</h2><hr><p><b>Runtime Error</b></p><p>Description: An "
+            "exception occurred while processing your request.</p><p>Exception Details: "
+            "System.Data.SqlClient.SqlException: Timeout expired. The timeout period "
+            "elapsed prior to completion of the operation.</p><p><b>Stack Trace:</b></p>"
+            "<pre>   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception)"
+            "\n   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException "
+            "exception)\n   at HRPortal.Services.TimesheetService.SubmitTimesheet(Int32 "
+            "employeeId, DateTime weekEnding)\n   at HRPortal.Controllers."
+            "TimesheetController.Submit(TimesheetModel model)</pre></body></html>\n\n"
+            "I need to submit my timesheet by end of day.",
+            "Getting 500 Internal Server Error on the HR portal when submitting timesheets. "
+            "The response body shows a SQL timeout in TimesheetService.SubmitTimesheet. "
+            "Full HTTP headers and HTML error page are in the response. Multiple users "
+            "are reporting the same issue since 2 PM today.",
+        ],
+        next_best_actions=[
+            "Investigate SQL timeout in the HR portal's TimesheetService — the database "
+            "query for timesheet submission is exceeding the connection timeout.",
+            "Check the HR portal's SQL Server database for blocking queries or resource "
+            "contention causing the timesheet submission timeout.",
+        ],
+        remediation_steps=[
+            [
+                "Check SQL Server for blocking sessions or long-running queries on the timesheet tables",
+                "Review the TimesheetService.SubmitTimesheet stored procedure for performance issues",
+                "Increase the SQL connection timeout as a temporary fix if the query is legitimate",
+                "Verify the database server has adequate resources (CPU, memory, disk I/O)",
+                "Confirm timesheet submission works after resolving the database contention",
+            ],
+        ],
+        tags=["data-cleanup", "http-dump"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # HTML data URI screenshots flood
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-data-uri-screenshots",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["application_version", "device_info"],
+        subjects=[
+            "Excel add-in crashes — embedded screenshot evidence in data URIs",
+            "Excel Power Query add-in freezing — inline data URI images showing the error",
+        ],
+        descriptions=[
+            "Our Power Query add-in for Excel keeps crashing when refreshing data from "
+            "the Azure SQL source. I took screenshots and embedded them as data URIs so "
+            "you can see exactly what happens:\n\n"
+            '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAYAAAD'
+            "L1t+KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAA"
+            "AOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAABAAElEQVR42u3deXxU1"
+            'fn48c+5M5OFJBASwr4T9n0RBBQXFNe6V6u11qV1q7XW2mr9tta2Wm2r1tpaW5da6l'
+            "K1WqtWRRBFRUABAdl32SEQlpB97vn9cSchIQECJGQwn/frlTczd+7ce+69w3nOec"
+            '65V4EA" width="800" />\n\n'
+            "Error dialog screenshot:\n"
+            '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCA'
+            "gMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsKDA0QDQYJDQ4OEg8QERETFh"
+            "wSFBYcFhccHR0dHBwgICAgICAiIiIkJCQgICAgICIiIiQkJCQiIiIiIiIiIiIiJCQ"
+            'kJCQiIiIiJA==" width="400" />\n\n'
+            "The crash happens every time on the Refresh All button. Excel version is "
+            "Microsoft 365 Apps, build 16.0.17928. The data source is our Azure SQL "
+            "reporting database.",
+            "Power Query add-in crashes in Excel during data refresh. Screenshots embedded "
+            "as <img src='data:image/png;base64,...'> tags showing the error dialog. The "
+            "add-in worked fine last week, started failing after the Monday Office update.",
+        ],
+        next_best_actions=[
+            "Investigate Power Query add-in crash during data refresh in Excel — likely "
+            "an incompatibility with the latest Microsoft 365 Apps update.",
+            "Check for known issues with the current Office build and Power Query, and "
+            "test rolling back the recent Office update.",
+        ],
+        remediation_steps=[
+            [
+                "Check Microsoft 365 known issues for the current build and Power Query compatibility",
+                "Test the data refresh with Power Query in a clean Excel session without other add-ins",
+                "Roll back the recent Office update to the previous build if the issue is confirmed",
+                "Report the bug to Microsoft if it's a regression in the latest build",
+            ],
+        ],
+        tags=["data-cleanup", "data-uri-flood"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # Multiple INC ticket number references
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-multi-ticket-reference",
+        category="Network & Connectivity",
+        priority="P2",
+        assigned_team="Network Operations",
+        needs_escalation=False,
+        missing_information=["previous_ticket_id", "network_location"],
+        subjects=[
+            "RECURRING: Site-to-site VPN flapping — see INC0012345, INC0012890, INC0013401, INC0014002",
+            "VPN tunnel instability — refs: INC0012345 INC0012890 INC0013401 INC0014002 INC0014500",
+        ],
+        descriptions=[
+            "The site-to-site VPN tunnel between our Chicago office and the Atlanta data "
+            "center has been flapping intermittently for the past 3 weeks. We have opened "
+            "multiple tickets and I want to consolidate them here:\n\n"
+            "INC0012345 — Opened 2/28: VPN tunnel down for 2 hours, came back on its own.\n"
+            "INC0012890 — Opened 3/3: Tunnel flapped 4 times in one day, closed as "
+            "'resolved' but it happened again.\n"
+            "INC0013401 — Opened 3/7: Network team replaced the VPN concentrator PSU, "
+            "issue persisted.\n"
+            "INC0014002 — Opened 3/10: Tunnel stability improved for 2 days then started "
+            "flapping again.\n"
+            "INC0014500 — Opened 3/14: Current ticket, still ongoing.\n\n"
+            "Pattern: the tunnel drops every 6-8 hours, stays down for 5-15 minutes, then "
+            "re-establishes. DPD (Dead Peer Detection) logs show the remote end stops "
+            "responding. The Atlanta firewall was rebooted in INC0013401 with no improvement. "
+            "We suspect an ISP issue or a MTU/fragmentation problem on the circuit.",
+            "VPN between Chicago and Atlanta keeps dropping — this is the 5th ticket. "
+            "See INC0012345, INC0012890, INC0013401, INC0014002 for history. Tunnel "
+            "flaps every 6-8 hours. Previous fixes attempted: PSU replacement, firewall "
+            "reboot, IKE rekey timer adjustment. None resolved it. Suspect ISP or MTU issue.",
+        ],
+        next_best_actions=[
+            "Escalate the recurring Chicago–Atlanta VPN tunnel flapping to the ISP for "
+            "circuit-level investigation — internal troubleshooting across 5 tickets has "
+            "not resolved the issue.",
+            "Perform MTU path discovery between the Chicago and Atlanta endpoints and "
+            "engage the ISP to check for packet loss or jitter on the WAN circuit.",
+        ],
+        remediation_steps=[
+            [
+                "Run MTU path discovery between Chicago and Atlanta VPN endpoints",
+                "Capture packet traces during the next flap event to identify the failure point",
+                "Engage the ISP to run circuit diagnostics for packet loss and jitter",
+                "If ISP confirms circuit issues, request a circuit migration or failover path",
+            ],
+        ],
+        tags=["data-cleanup", "multi-ticket-reference"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # ITSM servicedesk notification template noise
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-servicedesk-notification",
+        category="Hardware & Peripherals",
+        priority="P3",
+        assigned_team="Endpoint Engineering",
+        needs_escalation=False,
+        missing_information=["device_info", "error_message"],
+        subjects=[
+            "[ServiceDesk Plus] [Auto-Generated] Request #SR-48291 — Keyboard not working",
+            "[ITSM Notification] Ticket SR-48291 created — Peripheral device failure",
+        ],
+        descriptions=[
+            "──────────────────────────────────────\n"
+            "THIS IS AN AUTO-GENERATED NOTIFICATION\n"
+            "──────────────────────────────────────\n"
+            "ServiceDesk Plus — Request Notification\n"
+            "Request ID: SR-48291\n"
+            "Category: Hardware\n"
+            "Sub-Category: Peripheral\n"
+            "Item: Keyboard\n"
+            "Status: Open\n"
+            "Created: 2026-03-17 10:45:22 UTC\n"
+            "Requester: Pat Morgan (pat.morgan@contoso.com)\n"
+            "Requester Department: Finance\n"
+            "Requester Location: Building 3, Floor 2, Desk 47\n"
+            "Technician: Unassigned\n"
+            "Priority: Medium\n"
+            "Impact: Affects User\n"
+            "Urgency: Medium\n"
+            "SLA: 8 Business Hours\n"
+            "Due By: 2026-03-18 10:45:22 UTC\n"
+            "──────────────────────────────────────\n"
+            "DESCRIPTION:\n"
+            "My wireless keyboard stopped responding this morning. I've tried replacing "
+            "the batteries and reconnecting the USB receiver but it still won't type. "
+            "The Num Lock light doesn't come on either.\n"
+            "──────────────────────────────────────\n"
+            "Please do not reply to this email. Log in to ServiceDesk Plus to update.\n"
+            "© 2026 IT Service Management — Contoso Corp\n"
+            "──────────────────────────────────────\n",
+            "[Auto Notification] Ticket SR-48291. Category: Hardware > Peripheral > "
+            "Keyboard. Priority: Medium. SLA: 8h. Requester: Pat Morgan, Finance, "
+            "Bldg 3 Fl 2. Description: Wireless keyboard unresponsive after battery "
+            "change and receiver re-pair. Num Lock LED does not illuminate. Please "
+            "do not reply — update via portal. © 2026 Contoso IT.",
+        ],
+        next_best_actions=[
+            "Replace the wireless keyboard or USB receiver for the user — standard "
+            "troubleshooting (battery swap, receiver re-pair) has already been attempted.",
+            "Dispatch a replacement wireless keyboard to the user's desk and collect "
+            "the defective unit for asset disposal.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the USB receiver is recognized by the OS in Device Manager",
+                "Test with a known-good keyboard to confirm the issue is the peripheral",
+                "If the keyboard is confirmed defective, issue a replacement from inventory",
+                "Update the asset record in the CMDB for the swapped keyboard",
+            ],
+        ],
+        tags=["data-cleanup", "servicedesk-template"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # Mojibake / encoding corruption
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-mojibake-encoding",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["application_version", "environment_details"],
+        subjects=[
+            "CRM displaying garbled characters — Ã©, Ã¼, â€™ everywhere",
+            "Customer names corrupted in CRM — encoding issue since migration",
+        ],
+        descriptions=[
+            "Since the CRM database migration last weekend, all customer records with "
+            "non-ASCII characters are displaying garbled text. Examples:\n\n"
+            "José García → José García\n"
+            "François Müller → FranÃ§ois MÃ¼ller\n"
+            "Søren Østergaard → SÃ¸ren Ãstergaard\n"
+            "日本語テスト → æ\u0097¥æ\u009c¬èª\u009eãã¹ã\n"
+            "Ñoño → Ã\u0091oÃ±o\n"
+            "café → cafÃ©\n"
+            "naïve → naÃ¯ve\n"
+            "résumé → rÃ©sumÃ©\n\n"
+            "It looks like the data was UTF-8 encoded but the new database connection "
+            "is reading it as Latin-1/ISO-8859-1. This affects approximately 15,000 "
+            "customer records. Reports and email templates are also showing the garbled "
+            "text because they pull from the same fields.",
+            "CRM has encoding corruption after the weekend migration. Accented characters "
+            "show as mojibake (Ã©, Ã¼, Ã§, etc.). Looks like a UTF-8 vs Latin-1 mismatch. "
+            "All records with diacritics are affected — about 15K records. Need this fixed "
+            "before the Monday mail merge goes out.",
+        ],
+        next_best_actions=[
+            "Fix the character encoding mismatch in the CRM database connection — the "
+            "data is UTF-8 but is being read as Latin-1, causing mojibake on all "
+            "non-ASCII characters.",
+            "Update the CRM database connection string to specify UTF-8 encoding and "
+            "run a data repair script on the 15K affected customer records.",
+        ],
+        remediation_steps=[
+            [
+                "Verify the database character set and collation settings post-migration",
+                "Update the CRM application connection string to specify UTF-8 encoding",
+                "Run a data repair script to convert the double-encoded records back to proper UTF-8",
+                "Validate a sample of corrected records across different character sets",
+                "Schedule the Monday mail merge only after encoding is confirmed fixed",
+            ],
+        ],
+        tags=["data-cleanup", "mojibake-corruption"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # SOAP fault XML dump
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-soap-xml-fault",
+        category="Software & Applications",
+        priority="P2",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["steps_to_reproduce", "configuration_details"],
+        subjects=[
+            "Payroll integration failing — SOAP fault response from ADP endpoint",
+            "ADP payroll sync broken — XML fault dump from the web service call",
+        ],
+        descriptions=[
+            "The nightly payroll sync to ADP failed last night and returned a SOAP fault. "
+            "Here's the full XML response from the integration server logs:\n\n"
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+            "  <soap:Body>\n"
+            "    <soap:Fault>\n"
+            "      <faultcode>soap:Server</faultcode>\n"
+            "      <faultstring>Authentication token expired. Please request a new "
+            "security token from the STS endpoint.</faultstring>\n"
+            "      <detail>\n"
+            "        <ErrorResponse xmlns=\"http://api.adp.com/errors/v1\">\n"
+            "          <ErrorCode>AUTH-4012</ErrorCode>\n"
+            "          <ErrorMessage>The SAML assertion has expired. Token lifetime: "
+            "3600 seconds. Token age: 86427 seconds.</ErrorMessage>\n"
+            "          <RequestId>a7b3c9d1-e4f5-6789-abcd-0123456789ab</RequestId>\n"
+            "          <Timestamp>2026-03-17T02:15:33.445Z</Timestamp>\n"
+            "          <ServerNode>adp-api-prod-east-07</ServerNode>\n"
+            "        </ErrorResponse>\n"
+            "      </detail>\n"
+            "    </soap:Fault>\n"
+            "  </soap:Body>\n"
+            "</soap:Envelope>\n\n"
+            "Payroll data for 2,400 employees did not sync. We need this resolved before "
+            "the Wednesday payroll processing deadline.",
+            "ADP payroll integration returned SOAP fault AUTH-4012 — expired SAML token. "
+            "The token was 86K seconds old vs 3600 second lifetime. Nightly sync job failed "
+            "at 2:15 AM. 2,400 employee records not synced. Wednesday payroll deadline at risk.",
+        ],
+        next_best_actions=[
+            "Renew the SAML authentication token for the ADP payroll integration and "
+            "re-run the nightly sync — the token expired because the refresh job did "
+            "not execute.",
+            "Investigate why the SAML token refresh job failed and manually trigger a "
+            "new token request to the STS endpoint to unblock the payroll sync.",
+        ],
+        remediation_steps=[
+            [
+                "Request a new SAML security token from the STS endpoint for the ADP integration",
+                "Re-run the nightly payroll sync job and verify 2,400 records are transmitted",
+                "Investigate why the automatic token refresh job did not run on schedule",
+                "Add monitoring and alerting for SAML token expiration on the integration server",
+            ],
+        ],
+        tags=["data-cleanup", "soap-fault-dump"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # HTML table / CSS dump noise
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-html-table-noise",
+        category="Hardware & Peripherals",
+        priority="P4",
+        assigned_team="Endpoint Engineering",
+        needs_escalation=False,
+        missing_information=["device_info", "screenshot_or_attachment"],
+        subjects=[
+            "Printer inventory report not rendering — raw HTML table below",
+            "Printer fleet status page broken — showing HTML source instead of report",
+        ],
+        descriptions=[
+            "The printer inventory dashboard is showing raw HTML instead of the rendered "
+            "report. I copied what I see on the page:\n\n"
+            '<table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif'
+            ';font-size:12px">\n'
+            '<thead><tr style="background-color:#4472C4;color:#FFFFFF;font-weight:bold">\n'
+            '<th style="padding:8px;border:1px solid #ddd">Asset Tag</th>\n'
+            '<th style="padding:8px;border:1px solid #ddd">Model</th>\n'
+            '<th style="padding:8px;border:1px solid #ddd">Location</th>\n'
+            '<th style="padding:8px;border:1px solid #ddd">Status</th>\n'
+            '<th style="padding:8px;border:1px solid #ddd">Toner Level</th>\n'
+            "</tr></thead>\n"
+            "<tbody>\n"
+            '<tr style="background-color:#D9E2F3"><td style="padding:8px;border:1px solid '
+            '#ddd">PRN-0401</td><td>HP LaserJet Pro M404dn</td><td>Bldg 1, Fl 3</td>'
+            '<td style="color:green">Online</td><td>72%</td></tr>\n'
+            '<tr><td style="padding:8px;border:1px solid #ddd">PRN-0402</td><td>HP Color '
+            "LaserJet M553</td><td>Bldg 1, Fl 3</td>"
+            '<td style="color:red">Offline</td><td>15%</td></tr>\n'
+            '<tr style="background-color:#D9E2F3"><td style="padding:8px;border:1px solid '
+            '#ddd">PRN-0403</td><td>Xerox VersaLink C405</td><td>Bldg 2, Fl 1</td>'
+            '<td style="color:orange">Error</td><td>45%</td></tr>\n'
+            "</tbody></table>\n\n"
+            "The actual issue: PRN-0402 on Building 1 Floor 3 has been offline for two "
+            "days and needs a toner replacement (15%). Also the dashboard itself is broken.",
+            "Printer fleet dashboard rendering as raw HTML/CSS. Aside from the display bug, "
+            "printer PRN-0402 (HP Color LaserJet M553, Bldg 1 Fl 3) is offline and low on "
+            "toner at 15%. Needs toner replacement and investigation into why it went offline.",
+        ],
+        next_best_actions=[
+            "Replace toner on printer PRN-0402 (HP Color LaserJet M553, Building 1 "
+            "Floor 3) and investigate the offline status — separately report the "
+            "dashboard rendering bug to the web team.",
+            "Dispatch a toner cartridge for PRN-0402 and restart the print spooler "
+            "service. File a separate bug for the printer dashboard HTML rendering issue.",
+        ],
+        remediation_steps=[
+            [
+                "Replace the toner cartridge on PRN-0402 and verify print quality",
+                "Restart the print spooler service on PRN-0402 to bring it back online",
+                "Verify the printer is online and accepting jobs from the print server",
+                "Report the dashboard HTML rendering bug to the web application team as a separate issue",
+            ],
+        ],
+        tags=["data-cleanup", "html-table-noise"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # Extremely verbose email with issue buried deep
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-buried-issue-verbose",
+        category="Network & Connectivity",
+        priority="P3",
+        assigned_team="Network Operations",
+        needs_escalation=False,
+        missing_information=["network_location", "error_message"],
+        subjects=[
+            "Wi-Fi issues in conference room (long explanation sorry)",
+            "Wireless connectivity problems — detailed background and context provided",
+        ],
+        descriptions=[
+            "Hi IT team, I hope you're all doing well and having a good week so far. I "
+            "wanted to reach out about something that's been bothering me for a while now "
+            "and I apologize in advance for the length of this email but I want to make "
+            "sure I give you all the context you need. So basically I've been working here "
+            "at Contoso for about 3 years now and for the most part the IT infrastructure "
+            "has been really solid and I always tell people how great the network is compared "
+            "to my last company where we had constant outages. Anyway, last year when we "
+            "renovated the 4th floor and moved our team from Building A to Building B "
+            "everything was great for the first few months. The new office layout is really "
+            "nice and the standing desks are fantastic by the way, great choice on those. "
+            "But I started noticing something around November or December, it's hard to "
+            "remember exactly when. The Wi-Fi in conference room B4-302 — that's the large "
+            "one at the end of the hallway near the kitchen — seems to drop connections when "
+            "there are more than about 8 people in the room. I first noticed it during our "
+            "quarterly planning meeting when half the team lost their connection at the same "
+            "time. I thought it was a fluke but then it happened again during the December "
+            "all-hands and then again in January during the budget review. My colleague Tom "
+            "from accounting mentioned he had the same issue during his team's meetings in "
+            "that room. So it seems like it's specifically room B4-302 and it's specifically "
+            "when there are a lot of people. Small meetings of 3-4 people seem fine. I asked "
+            "around and a few other people confirmed the same pattern. Oh and I should "
+            "mention that the Wi-Fi in the adjacent rooms B4-301 and B4-303 seems fine even "
+            "during large meetings, so it's really just that one room. I hope that helps "
+            "narrow it down. Let me know if you need any more information and thanks again "
+            "for all you do!",
+            "Long story short: conference room B4-302 in Building B, 4th floor, drops "
+            "Wi-Fi connections when more than ~8 people are in the room. Adjacent rooms "
+            "B4-301 and B4-303 are fine. Happening since November. Multiple people have "
+            "confirmed. Small meetings work OK. Appreciate any help!",
+        ],
+        next_best_actions=[
+            "Investigate the wireless access point serving conference room B4-302 — it "
+            "cannot handle more than 8 concurrent clients, suggesting an AP capacity or "
+            "channel congestion issue.",
+            "Survey the RF environment in B4-302 and check the AP client association "
+            "limits and channel utilization during a large meeting.",
+        ],
+        remediation_steps=[
+            [
+                "Check the AP serving B4-302 for client association limits and firmware version",
+                "Perform an RF site survey in B4-302 during a large meeting to measure signal and interference",
+                "Upgrade or add a second AP in B4-302 if the current one cannot handle the client density",
+                "Verify the fix during the next large meeting in B4-302",
+            ],
+        ],
+        tags=["data-cleanup", "extremely-verbose-buried"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # Nested email / embedded EML MIME structure
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-embedded-eml",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["error_message", "application_version"],
+        subjects=[
+            "FW: FW: Attached message — Outlook cannot open .eml attachments",
+            "Email with embedded .eml attachment won't open — MIME parsing error",
+        ],
+        descriptions=[
+            "I received an email that has another email attached as a .eml file, and that "
+            "attached email itself contains another .eml attachment. When I try to open the "
+            "nested attachment, Outlook shows an error. Here's what the raw source looks "
+            "like:\n\n"
+            "Content-Type: multipart/mixed;\n"
+            ' boundary="----=_Part_OUTER_001"\n\n'
+            "------=_Part_OUTER_001\n"
+            "Content-Type: text/plain; charset=UTF-8\n\n"
+            "Please see the attached forwarded email chain.\n\n"
+            "------=_Part_OUTER_001\n"
+            "Content-Type: message/rfc822\n"
+            "Content-Disposition: attachment; filename=\"original_request.eml\"\n\n"
+            "From: vendor@partner.com\n"
+            "To: procurement@contoso.com\n"
+            "Subject: RE: Purchase Order 4501\n"
+            "Content-Type: multipart/mixed;\n"
+            ' boundary="----=_Part_INNER_002"\n\n'
+            "------=_Part_INNER_002\n"
+            "Content-Type: text/plain; charset=UTF-8\n\n"
+            "Attached is the signed PO for your records.\n\n"
+            "------=_Part_INNER_002\n"
+            "Content-Type: application/pdf; name=\"PO_4501_signed.pdf\"\n"
+            "Content-Transfer-Encoding: base64\n"
+            "Content-Disposition: attachment; filename=\"PO_4501_signed.pdf\"\n\n"
+            "JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwo+PgplbmRv\n"
+            "YmoKMiAwIG9iago8PAovVHlwZSAvUGFnZXMKL0tpZHMgWzMgMCBSXQo+PgplbmRv\n"
+            "...[truncated]...\n\n"
+            "------=_Part_INNER_002--\n"
+            "------=_Part_OUTER_001--\n\n"
+            "I need to access PO_4501_signed.pdf from the nested attachment. Outlook gives "
+            "a generic 'Cannot open this item' error when I double-click the inner .eml.",
+            "Outlook can't open a nested .eml attachment — an email attached inside another "
+            "email. The inner attachment contains a signed PDF (PO 4501) that procurement "
+            "needs. Getting 'Cannot open this item' error. The MIME structure has nested "
+            "multipart boundaries that Outlook seems unable to parse.",
+        ],
+        next_best_actions=[
+            "Extract the nested PO_4501_signed.pdf from the embedded .eml attachment "
+            "using an alternative mail client or MIME parsing tool.",
+            "Save the outer .eml to disk, open it with a MIME-aware tool, and extract "
+            "the PDF attachment from the inner message.",
+        ],
+        remediation_steps=[
+            [
+                "Save the outer email as an .eml file to the desktop",
+                "Open the .eml in a MIME parsing tool or alternative client to access the nested message",
+                "Extract the PO_4501_signed.pdf from the inner attachment",
+                "Check if Outlook has a known bug with deeply nested MIME structures and apply updates",
+            ],
+        ],
+        tags=["data-cleanup", "embedded-eml"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # OCR scan artifacts and recognition errors
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-ocr-scan-artifacts",
+        category="Data & Storage",
+        priority="P3",
+        assigned_team="Data Platform",
+        needs_escalation=False,
+        missing_information=["affected_system", "configuration_details"],
+        subjects=[
+            "OCR data import has garbled text — scanned invoices corrupted",
+            "Invoice data pipeline ingesting OCR garbage — recognition quality issue",
+        ],
+        descriptions=[
+            "Our automated invoice processing pipeline uses OCR to scan paper invoices and "
+            "import them into the ERP system. Since the last scanner firmware update, the "
+            "OCR quality has degraded badly. Here's a sample of what the OCR output looks "
+            "like vs what the invoice actually says:\n\n"
+            "OCR Output:\n"
+            "INVDICE #: lNV-2O26-OO4S1\n"
+            "Vend0r: Acrrre Supp1ies Ltcl.\n"
+            "Date: O3/l7/2O26\n"
+            "Arnount Due: $l2,4S6.7B\n"
+            "Payrnent Terrns: Net 3O\n"
+            "Ship To: Cont0so C0rp, l23 Main 5t, 5uite 4OO\n"
+            "P0 Nurnber: PO-2O26-OO89l\n"
+            "Line lterns:\n"
+            "  l. Widget A (SKU: WDG-OOl) - Qty: lOO - Unit: $45.6O - Tot: $4,S6O.OO\n"
+            "  2. Widget B (5KU: WDG-OO2) - Qty: 5O - Unit: $87.l2 - Tot: $4,3S6.OO\n"
+            "  3. 5hipping & Hancl1ing - $34O.7B\n"
+            "  Subtota1: $9,l56.7B\n"
+            "  Tax (8.25%): $3,3OO.OO\n"
+            "  TOTAL: $l2,4S6.7B\n\n"
+            "The OCR is consistently confusing 0/O, l/1, S/5, B/8, rn/m, and cl/d. This "
+            "is causing data validation failures in the ERP import — about 300 invoices "
+            "are stuck in the error queue.",
+            "Invoice OCR pipeline is producing garbled output — zeros read as letter O, "
+            "ones as lowercase L, fives as S, eights as B. ~300 invoices stuck in the "
+            "ERP import error queue. Started after scanner firmware update last week. "
+            "Need to fix the OCR quality and reprocess the failed batch.",
+        ],
+        next_best_actions=[
+            "Roll back the scanner firmware to the previous version and reprocess the "
+            "300 failed invoices through the OCR pipeline.",
+            "Investigate the scanner firmware update impact on OCR accuracy and adjust "
+            "the OCR engine's character confidence thresholds.",
+        ],
+        remediation_steps=[
+            [
+                "Roll back the scanner firmware to the previous stable version",
+                "Recalibrate the OCR engine with the original scanner settings",
+                "Reprocess the 300 failed invoices through the corrected OCR pipeline",
+                "Validate a sample of reprocessed invoices against the original paper copies",
+                "Add OCR confidence scoring to flag low-quality scans before ERP import",
+            ],
+        ],
+        tags=["data-cleanup", "ocr-scan-noise"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # WinRM session transcript output
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-winrm-transcript",
+        category="Software & Applications",
+        priority="P2",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["affected_users", "environment_details"],
+        subjects=[
+            "App deployment failed on 50 servers — WinRM transcript output attached",
+            "SCCM task sequence failing — WinRM remote session logs below",
+        ],
+        descriptions=[
+            "The overnight SCCM task sequence to deploy the new CRM agent failed on 50 "
+            "out of 200 servers. I captured the WinRM transcript from one of the failed "
+            "servers. Here's the session output:\n\n"
+            "**********************\n"
+            "Windows Remote Management (WinRM) Session Transcript\n"
+            "Start Time: 2026-03-17T01:30:15.4423891Z\n"
+            "Machine: APPSRV-047.contoso.com\n"
+            "User: CONTOSO\\svc_sccm_deploy\n"
+            "**********************\n"
+            "PS C:\\Windows\\system32> Get-Service -Name 'CRMAgentSvc' | Stop-Service "
+            "-Force\n"
+            "WARNING: Waiting for service 'CRM Agent Service (CRMAgentSvc)' to stop...\n"
+            "WARNING: Waiting for service 'CRM Agent Service (CRMAgentSvc)' to stop...\n"
+            "WARNING: Waiting for service 'CRM Agent Service (CRMAgentSvc)' to stop...\n"
+            "PS C:\\Windows\\system32> $msiPath = '\\\\filesvr01\\deployments$\\CRMAgent"
+            "\\CRMAgent_v3.2.1.msi'\n"
+            "PS C:\\Windows\\system32> Start-Process msiexec.exe -ArgumentList '/i', "
+            "$msiPath, '/qn', '/norestart', '/l*v', 'C:\\Logs\\CRMAgent_install.log' "
+            "-Wait -PassThru\n\n"
+            "ExitCode : 1603\n"
+            "HasExited : True\n"
+            "StartTime : 3/17/2026 1:31:02 AM\n"
+            "ExitTime  : 3/17/2026 1:33:47 AM\n\n"
+            "PS C:\\Windows\\system32> Get-Content C:\\Logs\\CRMAgent_install.log | "
+            "Select-Object -Last 20\n"
+            "MSI (s) (3C:A8) [01:33:45:123]: Product: CRM Agent -- Error 1603. Fatal "
+            "error during installation.\n"
+            "MSI (s) (3C:A8) [01:33:45:124]: Note: 1: 1729\n"
+            "MSI (s) (3C:A8) [01:33:45:125]: Product: CRM Agent -- Configuration "
+            "failed.\n"
+            "MSI (s) (3C:A8) [01:33:47:001]: MainEngineThread is returning 1603\n"
+            "**********************\n"
+            "End Time: 2026-03-17T01:34:02.8891234Z\n"
+            "**********************\n\n"
+            "MSI error 1603 on 50 servers. The install works fine on test servers. Suspect "
+            "a prerequisite is missing on the production app servers.",
+            "CRM agent MSI deployment failing with exit code 1603 on 50 production app "
+            "servers via WinRM/SCCM. WinRM transcript shows the service stop succeeded but "
+            "msiexec returned fatal error. Works on test servers. Suspect missing "
+            "prerequisite (.NET version or VC++ runtime) on the production fleet.",
+        ],
+        next_best_actions=[
+            "Compare the prerequisite software inventory between the test servers and the "
+            "50 failed production servers — MSI error 1603 typically indicates a missing "
+            "dependency.",
+            "Check the CRM Agent MSI installation log on one of the failed servers for "
+            "the specific prerequisite check that failed before the 1603 error.",
+        ],
+        remediation_steps=[
+            [
+                "Review the full MSI installation log (C:\\Logs\\CRMAgent_install.log) for the root cause",
+                "Compare installed prerequisites (.NET, VC++ runtimes) between test and failed production servers",
+                "Deploy the missing prerequisite to the 50 failed servers via SCCM",
+                "Re-run the CRM Agent MSI deployment on the remediated servers and verify success",
+            ],
+        ],
+        tags=["data-cleanup", "winrm-transcript"],
+    ),
 ]

@@ -46,13 +46,13 @@ class TestDataCleanupScenarios:
         """Verify expected scenario IDs exist."""
         scenarios = get_scenarios()
         ids = {s.scenario_id for s in scenarios}
-        expected = {f"DC-{i:03d}" for i in range(1, 236)}
+        expected = {f"DC-{i:03d}" for i in range(1, 261)}
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Data cleanup should have at least 235 scenarios."""
+        """Data cleanup should have at least 260 scenarios."""
         scenarios = get_scenarios()
-        assert len(scenarios) >= 235, f"Expected >= 235 DC scenarios, got {len(scenarios)}"
+        assert len(scenarios) >= 260, f"Expected >= 260 DC scenarios, got {len(scenarios)}"
 
     def test_covers_key_cleanup_categories(self) -> None:
         """Verify that key data cleanup noise types are covered."""
@@ -231,5 +231,33 @@ class TestDataCleanupScenarios:
             "iac-template-dump",
             "git-blame-output",
             "source-code-noise",
+            # New tags from DC-246..DC-260
+            "base64-image-flood",
+            "ooo-stack",
+            "legal-disclaimer",
+            "multilingual-footer",
+            "teams-transcript",
+            "chat-paste",
+            "http-dump",
+            "response-headers",
+            "inline-screenshots",
+            "multi-ticket-reference",
+            "thread-confusion",
+            "servicedesk-template",
+            "auto-notification",
+            "mojibake-corruption",
+            "encoding-mismatch",
+            "soap-fault-dump",
+            "xml-response",
+            "html-table-noise",
+            "inline-css-dump",
+            "extremely-verbose-buried",
+            "rambling-email",
+            "embedded-eml",
+            "rfc822-headers",
+            "ocr-scan-noise",
+            "recognition-errors",
+            "winrm-transcript",
+            "remote-session-dump",
         }
         assert expected_tags.issubset(all_tags), f"Missing cleanup tags: {expected_tags - all_tags}"
