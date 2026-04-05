@@ -9038,9 +9038,144 @@ def _dc135_pii_noise() -> EvalCase:
     )
 
 
-# ---------------------------------------------------------------------------
-# Public API
-# ---------------------------------------------------------------------------
+def _dc136_csv_injection() -> EvalCase:
+    """CSV injection patterns (=CMD, =HYPERLINK, @SUM) embedded in a data import/export ticket."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-136",
+            subject="Data import failing with special characters in CSV uploads",
+            description=(
+                "We've been getting failures when importing customer data from CSV files "
+                "into the DataHub pipeline. The import job runs nightly at 02:00 UTC and "
+                "has failed for the last three nights.\n\n"
+                "Here are sample rows from the failing CSV that I extracted from the staging "
+                "table — I think these might be causing issues:\n\n"
+                'Row 42: "Acme Corp","=CMD|\'/C calc\'!A0","Northeast","2026-03-15"\n'
+                'Row 108: "Globex Inc","=HYPERLINK(""http://evil.com"",""Click here"")","West","2026-03-16"\n'
+                'Row 203: "Initech","@SUM(1+1)*cmd|\'/C calc\'!A0","Southeast","2026-03-17"\n'
+                'Row 317: "Umbrella LLC","+cmd|\'/C powershell\'!A0","Central","2026-03-18"\n'
+                'Row 445: "Soylent Corp","=1+1]|*/cmd\'!A0","Northwest","2026-03-19"\n\n'
+                "The import log shows 'InvalidCharacterException' on these rows but the "
+                "job terminates instead of skipping them. Previous imports (before March 12) "
+                "worked fine. We have about 15,000 rows total per nightly batch.\n\n"
+                "Can someone look into why the pipeline is not sanitizing these inputs and "
+                "whether we need to add a pre-processing step?\n\n"
+                "— Deepak Patel, Data Engineering\ndeepak.patel@contoso.com"
+            ),
+            reporter=Reporter(
+                name="Deepak Patel",
+                email="deepak.patel@contoso.com",
+                department="Data Engineering",
+            ),
+            created_at="2026-04-08T09:15:00Z",
+            channel=Channel.EMAIL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-136",
+            category=Category.DATA_STORAGE,
+            priority=Priority.P2,
+            assigned_team=Team.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.ERROR_MESSAGE, MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate the CSV import pipeline's input sanitization and add a "
+                "pre-processing step to neutralize formula injection patterns before "
+                "loading data into the staging table."
+            ),
+            remediation_steps=[
+                "Review the nightly import job logs for the exact InvalidCharacterException stack traces and affected row counts.",
+                "Add a CSV sanitization step that prefixes cells starting with =, +, -, or @ with a single quote to neutralize formula injection.",
+                "Configure the import pipeline to skip or quarantine malformed rows instead of terminating the entire batch.",
+                "Re-run the failed imports for the last three nights after applying the sanitization fix.",
+            ],
+        ),
+        tags=["data-cleanup", "csv_injection"],
+        description="CSV injection patterns (=CMD, =HYPERLINK) embedded in a data import/export ticket.",
+    )
+
+
+def _dc137_gpg_signed() -> EvalCase:
+    """GPG/PGP signed email with armor blocks wrapping a hardware docking station issue."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-137",
+            subject="Docking station not detecting external monitors after firmware update",
+            description=(
+                "-----BEGIN PGP SIGNED MESSAGE-----\n"
+                "Hash: SHA256\n\n"
+                "Hi IT Support,\n\n"
+                "After the firmware update pushed last Friday (v4.2.1 → v4.3.0) to our "
+                "Lenovo ThinkPad USB-C Dock Gen 2 stations, my two external monitors "
+                "(Dell U2722D, connected via DisplayPort) are no longer being detected. "
+                "The dock powers the laptop and USB peripherals work fine — it's only the "
+                "display outputs that are dead.\n\n"
+                "I have tried:\n"
+                "- Unplugging and reconnecting the dock\n"
+                "- Swapping DisplayPort cables\n"
+                "- Connecting monitors directly to the laptop (works fine)\n"
+                "- Rolling back the Lenovo Dock Manager to the previous version\n"
+                "- Checking Device Manager — the dock shows 'This device is working properly'\n\n"
+                "Three other people on my team (Carlos, Wei, and Priya) are having the exact "
+                "same issue with the same dock model. We all got the firmware update at the "
+                "same time.\n\n"
+                "This is blocking our design review work since we need dual-monitor setups "
+                "for CAD applications.\n\n"
+                "Thanks,\nHelena Voss\nEngineering — Mechanical Design\n"
+                "helena.voss@contoso.com\n\n"
+                "-----BEGIN PGP SIGNATURE-----\n\n"
+                "iQIzBAEBCAAdFiEEYd7WkljJhG4xQpZ1rT3JhVm8mMIFAmYDqV0ACgkQrT3JhVm8\n"
+                "mMJ5kA/+N7K3mVZ5Q2rP8wYjXb5mCdKx5xA1v3qLp2rF9d6Kz7j8nB3W4Xx6mD1\n"
+                "P5sA8gR2kYt0hWnJ3L9xQpR4mE7vB2dF6yH8cN5wT1jK0aS3uI9fG4hL7xQ2pM0\n"
+                "kD3nR5vA1bC8eW6yT4uI9oP2lK7jH0gF5dS3aZ8xM1nB4vC9qE6wR2tY7uJ0iL3\n"
+                "=dK4m\n"
+                "-----END PGP SIGNATURE-----"
+            ),
+            reporter=Reporter(
+                name="Helena Voss",
+                email="helena.voss@contoso.com",
+                department="Engineering",
+            ),
+            created_at="2026-04-08T10:30:00Z",
+            channel=Channel.EMAIL,
+        ),
+        gold=GoldAnswer(
+            ticket_id="INC-DC-137",
+            category=Category.HARDWARE,
+            priority=Priority.P3,
+            assigned_team=Team.ENDPOINT,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.DEVICE_INFO, MissingInfoField.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "Investigate the dock firmware update v4.3.0 for display output regressions "
+                "and coordinate a rollback to v4.2.1 for affected ThinkPad USB-C Dock Gen 2 units."
+            ),
+            remediation_steps=[
+                "Check the Lenovo support site for known issues with ThinkPad USB-C Dock Gen 2 firmware v4.3.0 and DisplayPort output.",
+                "Attempt a firmware rollback to v4.2.1 on one affected dock to confirm it resolves the display detection issue.",
+                "If rollback resolves the issue, coordinate a batch rollback for all affected docks and pause the v4.3.0 deployment.",
+                "Open a case with Lenovo enterprise support if the issue persists after rollback, providing firmware version and monitor model details.",
+            ],
+        ),
+        tags=["data-cleanup", "gpg_signed"],
+        description="GPG/PGP signed email with armor blocks wrapping a hardware docking station issue.",
+    )
+
+
+def _dc138_zalgo_combining() -> EvalCase:
+    """Zalgo text with combining Unicode diacritics in a software crash ticket."""
+    return EvalCase(
+        ticket=EvalTicket(
+            ticket_id="INC-DC-138",
+            subject="Application crashes when opening reports module",
+            description=(
+                "H\u0337\u0322\u0327\u0308\u030c\u0301e\u0336\u0323\u032e\u0301\u030el\u0338\u0324\u0330\u030b\u0302p\u0335\u0325\u032d\u0308\u030c "
+                "— the R\u0336\u0323\u032e\u0301e\u0337\u0324\u0330\u0308p\u0335\u0325\u032d\u030co\u0338\u0322\u0327\u030br\u0336\u0323\u032e\u0302t\u0337\u0324\u0330\u0301s "
+                "module in our internal CRM application (v8.4.2) is crashing every time I try "
+                "to open it. The a\u0336\u0323\u032e\u030cp\u0337\u0324\u0330\u0308p\u0335\u0325\u032d\u0302l\u0338\u0322\u0327\u030bi\u0336\u0323\u032e\u0301c\u0337\u0324\u0330\u030ca"
+                "\u0335\u0325\u032d\u0308t\u0338\u0322\u0327\u030bi\u0336\u0323\u032e\u0302o\u0337\u0324\u0330\u030cn "
+                "freezes for about 5 seconds, then shows a white screen and the "
+                "p\u0335\u0325\u032d\u030cr\u0338\u0322\u0327\u030bo\u0336\u0323\u032e\u0302c\u0337\u0324\u0330\u0301e\u0335\u0325\u032d\u0308s\u0338\u0322\u0327\u030bs "
+                "crashes with an un
 
 
 def build_dataset() -> EvalDataset:

