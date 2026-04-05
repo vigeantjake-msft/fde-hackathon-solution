@@ -4882,7 +4882,7 @@ default_registry.register(
             description=(
                 "------=_Part_44819_1032576774.1710748800000\n"
                 "Content-Type: multipart/alternative; "
-                "boundary=\"----=_Part_44820_893241.1710748800001\"\n\n"
+                'boundary="----=_Part_44820_893241.1710748800001"\n\n'
                 "------=_Part_44820_893241.1710748800001\n"
                 "Content-Type: text/plain; charset=UTF-8\n"
                 "Content-Transfer-Encoding: quoted-printable\n\n"
@@ -4902,10 +4902,10 @@ default_registry.register(
                 "------=_Part_44820_893241.1710748800001\n"
                 "Content-Type: text/html; charset=UTF-8\n"
                 "Content-Transfer-Encoding: quoted-printable\n\n"
-                "<html><head><meta http-equiv=3D\"Content-Type\" "
-                "content=3D\"text/html; charset=3DUTF-8\">"
-                "</head><body><div style=3D\"font-family: "
-                "Calibri, sans-serif; font-size: 11pt;\">"
+                '<html><head><meta http-equiv=3D"Content-Type" '
+                'content=3D"text/html; charset=3DUTF-8">'
+                '</head><body><div style=3D"font-family: '
+                'Calibri, sans-serif; font-size: 11pt;">'
                 "<p>Hi Service Desk,</p><p>My account "
                 "(j.nakamura@contoso.com) got locked this "
                 "morning after I mistyped my password a few "
@@ -4921,11 +4921,11 @@ default_registry.register(
                 "Ext. 4781</p></div></body></html>\n"
                 "------=_Part_44820_893241.1710748800001--\n"
                 "------=_Part_44819_1032576774.1710748800000\n"
-                "Content-Type: image/png; name=\"signature_logo.png\"\n"
+                'Content-Type: image/png; name="signature_logo.png"\n'
                 "Content-Transfer-Encoding: base64\n"
                 "Content-ID: <logo_img_001>\n"
                 "Content-Disposition: inline; "
-                "filename=\"signature_logo.png\"\n\n"
+                'filename="signature_logo.png"\n\n'
                 "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA"
                 "DUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\n"
                 "------=_Part_44819_1032576774.1710748800000--"
@@ -5008,14 +5008,14 @@ default_registry.register(
                 "mysql_global_status_innodb_row_lock_time 8.47291e+06\n"
                 "# HELP mysql_info_schema_table_size Table sizes\n"
                 "# TYPE mysql_info_schema_table_size gauge\n"
-                "mysql_info_schema_table_size{schema=\"orders\","
-                "table=\"order_items\"} 4.827e+09\n"
-                "mysql_info_schema_table_size{schema=\"orders\","
-                "table=\"order_headers\"} 2.134e+09\n"
-                "mysql_info_schema_table_size{schema=\"orders\","
-                "table=\"order_audit_log\"} 1.892e+10\n"
-                "mysql_info_schema_table_size{schema=\"orders\","
-                "table=\"shipments\"} 1.247e+09\n\n"
+                'mysql_info_schema_table_size{schema="orders",'
+                'table="order_items"} 4.827e+09\n'
+                'mysql_info_schema_table_size{schema="orders",'
+                'table="order_headers"} 2.134e+09\n'
+                'mysql_info_schema_table_size{schema="orders",'
+                'table="order_audit_log"} 1.892e+10\n'
+                'mysql_info_schema_table_size{schema="orders",'
+                'table="shipments"} 1.247e+09\n\n'
                 "The order_audit_log table has grown to ~19 GB "
                 "and I suspect a missing index or a full table "
                 "scan on the nightly reconciliation job. The "
@@ -5185,7 +5185,7 @@ default_registry.register(
                 "for service account svc_backup@contoso.com.\n\n"
                 "I ran the following Splunk query to investigate:\n\n"
                 "index=auth sourcetype=azure:aad:signin "
-                "userPrincipalName=\"svc_backup@contoso.com\" "
+                'userPrincipalName="svc_backup@contoso.com" '
                 "earliest=-24h latest=now\n"
                 "| table _time, userPrincipalName, appDisplayName, "
                 "ipAddress, location.city, location.countryOrRegion, "
@@ -5293,74 +5293,74 @@ default_registry.register(
                 "Our production Application Gateway deployment "
                 "failed this morning during the scheduled release. "
                 "Error from the deployment log:\n\n"
-                "ERROR: {\"status\":\"Failed\",\"error\":{\"code\":"
-                "\"DeploymentFailed\",\"message\":\"At least one "
-                "resource deployment operation failed.\"}}\n\n"
+                'ERROR: {"status":"Failed","error":{"code":'
+                '"DeploymentFailed","message":"At least one '
+                'resource deployment operation failed."}}\n\n'
                 "Here is the full ARM template we are deploying:\n\n"
                 "{\n"
-                "  \"$schema\": \"https://schema.management.azure.com/"
-                "schemas/2019-04-01/deploymentTemplate.json#\",\n"
-                "  \"contentVersion\": \"1.0.0.0\",\n"
-                "  \"parameters\": {\n"
-                "    \"appGatewayName\": {\n"
-                "      \"type\": \"string\",\n"
-                "      \"defaultValue\": \"appgw-prod-eastus2\"\n"
+                '  "$schema": "https://schema.management.azure.com/'
+                'schemas/2019-04-01/deploymentTemplate.json#",\n'
+                '  "contentVersion": "1.0.0.0",\n'
+                '  "parameters": {\n'
+                '    "appGatewayName": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "appgw-prod-eastus2"\n'
                 "    },\n"
-                "    \"vnetName\": {\n"
-                "      \"type\": \"string\",\n"
-                "      \"defaultValue\": \"vnet-prod-eastus2\"\n"
+                '    "vnetName": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "vnet-prod-eastus2"\n'
                 "    },\n"
-                "    \"subnetName\": {\n"
-                "      \"type\": \"string\",\n"
-                "      \"defaultValue\": \"snet-appgw\"\n"
+                '    "subnetName": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "snet-appgw"\n'
                 "    },\n"
-                "    \"skuName\": {\n"
-                "      \"type\": \"string\",\n"
-                "      \"defaultValue\": \"WAF_v2\"\n"
+                '    "skuName": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "WAF_v2"\n'
                 "    },\n"
-                "    \"skuTier\": {\n"
-                "      \"type\": \"string\",\n"
-                "      \"defaultValue\": \"WAF_v2\"\n"
+                '    "skuTier": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": "WAF_v2"\n'
                 "    },\n"
-                "    \"capacity\": {\n"
-                "      \"type\": \"int\",\n"
-                "      \"defaultValue\": 2\n"
+                '    "capacity": {\n'
+                '      "type": "int",\n'
+                '      "defaultValue": 2\n'
                 "    },\n"
-                "    \"backendPoolFqdn\": {\n"
-                "      \"type\": \"string\",\n"
-                "      \"defaultValue\": "
-                "\"app-prod.azurewebsites.net\"\n"
+                '    "backendPoolFqdn": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": '
+                '"app-prod.azurewebsites.net"\n'
                 "    },\n"
-                "    \"certificateSecretId\": {\n"
-                "      \"type\": \"string\",\n"
-                "      \"defaultValue\": "
-                "\"https://kv-prod.vault.azure.net/secrets/"
-                "appgw-ssl-cert\"\n"
+                '    "certificateSecretId": {\n'
+                '      "type": "string",\n'
+                '      "defaultValue": '
+                '"https://kv-prod.vault.azure.net/secrets/'
+                'appgw-ssl-cert"\n'
                 "    }\n"
                 "  },\n"
-                "  \"resources\": [\n"
+                '  "resources": [\n'
                 "    {\n"
-                "      \"type\": \"Microsoft.Network/"
-                "applicationGateways\",\n"
-                "      \"apiVersion\": \"2023-09-01\",\n"
-                "      \"name\": "
+                '      "type": "Microsoft.Network/'
+                'applicationGateways",\n'
+                '      "apiVersion": "2023-09-01",\n'
+                '      "name": '
                 "\"[parameters('appGatewayName')]\",\n"
-                "      \"location\": "
-                "\"[resourceGroup().location]\",\n"
-                "      \"properties\": {\n"
-                "        \"sku\": {\n"
-                "          \"name\": "
+                '      "location": '
+                '"[resourceGroup().location]",\n'
+                '      "properties": {\n'
+                '        "sku": {\n'
+                '          "name": '
                 "\"[parameters('skuName')]\",\n"
-                "          \"tier\": "
+                '          "tier": '
                 "\"[parameters('skuTier')]\",\n"
-                "          \"capacity\": "
+                '          "capacity": '
                 "\"[parameters('capacity')]\"\n"
                 "        },\n"
-                "        \"gatewayIPConfigurations\": [{\n"
-                "          \"name\": \"appGatewayIpConfig\",\n"
-                "          \"properties\": {\n"
-                "            \"subnet\": {\n"
-                "              \"id\": "
+                '        "gatewayIPConfigurations": [{\n'
+                '          "name": "appGatewayIpConfig",\n'
+                '          "properties": {\n'
+                '            "subnet": {\n'
+                '              "id": '
                 "\"[resourceId('Microsoft.Network/"
                 "virtualNetworks/subnets', "
                 "parameters('vnetName'), "
@@ -5475,7 +5475,7 @@ default_registry.register(
                 "Source: blob/raw/inventory/2026-Q1-full.csv\n"
                 "Sink: dw-prod.inventory_fact\n"
                 "Error: \"Type mismatch: cannot convert 'N/A' to "
-                "Int32 for column qty_on_hand at row 847\""
+                'Int32 for column qty_on_hand at row 847"'
             ),
             reporter=_reporter(
                 "Aisha Patel",
@@ -5512,10 +5512,7 @@ default_registry.register(
         tags=["codepage_mojibake", "encoding_corruption"],
         ticket=EvalTicket(
             ticket_id="INC-5099",
-            subject=(
-                "Printer on 3rd floor \u00e2\u0080\u0093 "
-                "paper jam and driver crash"
-            ),
+            subject=("Printer on 3rd floor \u00e2\u0080\u0093 paper jam and driver crash"),
             description=(
                 "Hi IT,\n\n"
                 "The printer on the 3rd floor (HP LaserJet "
@@ -5595,10 +5592,7 @@ default_registry.register(
         tags=["recursive_forward_chain", "deep_email_nesting"],
         ticket=EvalTicket(
             ticket_id="INC-5100",
-            subject=(
-                "FW: FW: FW: FW: FW: FW: FW: FW: FW: FW: "
-                "SharePoint access issue"
-            ),
+            subject=("FW: FW: FW: FW: FW: FW: FW: FW: FW: FW: SharePoint access issue"),
             description=(
                 "Please handle.\n"
                 "- Dana\n\n"
@@ -5692,9 +5686,9 @@ default_registry.register(
                 "site (https://contoso.sharepoint.com/sites/"
                 "ProjectAtlas). When I click on any document "
                 "in the Shared Documents library, I get:\n\n"
-                "\"Access Denied. You do not have permission "
+                '"Access Denied. You do not have permission '
                 "to access this resource. Contact the site "
-                "owner for access.\"\n\n"
+                'owner for access."\n\n'
                 "I was added to the project last Monday by my "
                 "manager Helen Torres and I'm supposed to be "
                 "in the 'Atlas Contributors' SharePoint group. "

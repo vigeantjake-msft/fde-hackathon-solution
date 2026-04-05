@@ -8342,7 +8342,11 @@ def _dc126_extremely_long_subject() -> EvalCase:
                 "Thanks,\nRachel Simmons\nIT Liaison — Building 7\n"
                 "rachel.simmons@contoso.com"
             ),
-            reporter=_reporter("Rachel Simmons", "rachel.simmons@contoso.com", "Facilities IT"),
+            reporter=Reporter(
+                name="Rachel Simmons",
+                email="rachel.simmons@contoso.com",
+                department="Facilities IT",
+            ),
             created_at="2026-04-07T09:20:00Z",
             channel=Channel.EMAIL,
         ),
@@ -8373,14 +8377,14 @@ def _dc126_extremely_long_subject() -> EvalCase:
 def _dc127_svg_data_uri() -> EvalCase:
     """SVG data URIs pasted inline, adding vector-graphic noise to a hardware monitor issue."""
     svg_blob_1 = (
-        'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZp'
-        'ZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0icmVk'
-        'Ii8+PC9zdmc+'
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZp"
+        "ZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0icmVk"
+        "Ii8+PC9zdmc+"
     )
     svg_blob_2 = (
-        'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22'
-        '200%22%20height%3D%22200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill'
-        '%3D%22%23ccc%22/%3E%3C/svg%3E'
+        "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22"
+        "200%22%20height%3D%22200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill"
+        "%3D%22%23ccc%22/%3E%3C/svg%3E"
     )
     return EvalCase(
         ticket=EvalTicket(
@@ -8404,7 +8408,11 @@ def _dc127_svg_data_uri() -> EvalCase:
                 "code reviews and design work.\n\n"
                 "— Jorge Medina, Engineering\njorge.medina@contoso.com"
             ),
-            reporter=_reporter("Jorge Medina", "jorge.medina@contoso.com", "Engineering"),
+            reporter=Reporter(
+                name="Jorge Medina",
+                email="jorge.medina@contoso.com",
+                department="Engineering",
+            ),
             created_at="2026-04-07T10:15:00Z",
             channel=Channel.PORTAL,
         ),
@@ -8479,7 +8487,11 @@ def _dc128_prometheus_metrics_flood() -> EvalCase:
                 "on the order service.\n\n"
                 "— Priya Chandrasekaran, Data Engineering\npriya.c@contoso.com"
             ),
-            reporter=_reporter("Priya Chandrasekaran", "priya.c@contoso.com", "Data Engineering"),
+            reporter=Reporter(
+                name="Priya Chandrasekaran",
+                email="priya.c@contoso.com",
+                department="Data Engineering",
+            ),
             created_at="2026-04-07T06:45:00Z",
             channel=Channel.CHAT,
         ),
@@ -8555,7 +8567,11 @@ def _dc129_systeminfo_dump() -> EvalCase:
                 "already tried cleaning the vents with compressed air but it didn't help.\n\n"
                 "— Derek Martin, Marketing\nderek.martin@contoso.com"
             ),
-            reporter=_reporter("Derek Martin", "derek.martin@contoso.com", "Marketing"),
+            reporter=Reporter(
+                name="Derek Martin",
+                email="derek.martin@contoso.com",
+                department="Marketing",
+            ),
             created_at="2026-04-07T11:30:00Z",
             channel=Channel.EMAIL,
         ),
@@ -8621,7 +8637,11 @@ def _dc130_splunk_search_results() -> EvalCase:
                 "of the breach.\n\n"
                 "— Kwame Asante, SOC Analyst\nkwame.asante@contoso.com"
             ),
-            reporter=_reporter("Kwame Asante", "kwame.asante@contoso.com", "Security Operations"),
+            reporter=Reporter(
+                name="Kwame Asante",
+                email="kwame.asante@contoso.com",
+                department="Security Operations",
+            ),
             created_at="2026-04-06T23:25:00Z",
             channel=Channel.PORTAL,
         ),
@@ -8695,10 +8715,10 @@ def _dc131_arm_bicep_template() -> EvalCase:
                 "Our CI/CD pipeline is failing to deploy the Orders API to Azure App Service. "
                 "The deployment started failing yesterday after we changed the SKU from S1 to "
                 "P1v3 in our Bicep template. The error from the ARM deployment is:\n\n"
-                "\"Code: SkuNotAvailable, Message: The requested size for resource "
+                '"Code: SkuNotAvailable, Message: The requested size for resource '
                 "'contoso-orders-api-plan' is currently not available in location 'eastus2' "
                 "for subscription '...' . Please try another size or deploy to a different "
-                "region.\"\n\n"
+                'region."\n\n'
                 "Here is the Bicep template we are using:\n\n"
                 f"{bicep_snippet}\n"
                 "We need the P1v3 SKU for the performance requirements of the Orders API — "
@@ -8708,7 +8728,11 @@ def _dc131_arm_bicep_template() -> EvalCase:
                 "zone within eastus2, or a comparable SKU that is available?\n\n"
                 "— Tomás Rivera, Platform Engineering\ntomas.rivera@contoso.com"
             ),
-            reporter=_reporter("Tomás Rivera", "tomas.rivera@contoso.com", "Platform Engineering"),
+            reporter=Reporter(
+                name="Tomás Rivera",
+                email="tomas.rivera@contoso.com",
+                department="Platform Engineering",
+            ),
             created_at="2026-04-07T08:00:00Z",
             channel=Channel.CHAT,
         ),
@@ -8772,7 +8796,11 @@ def _dc132_csv_bulk_paste() -> EvalCase:
                 "We need these orders processed by end of business today to meet our SLA.\n\n"
                 "— Lin Chen, Order Operations\nlin.chen@contoso.com"
             ),
-            reporter=_reporter("Lin Chen", "lin.chen@contoso.com", "Order Operations"),
+            reporter=Reporter(
+                name="Lin Chen",
+                email="lin.chen@contoso.com",
+                department="Order Operations",
+            ),
             created_at="2026-04-06T14:20:00Z",
             channel=Channel.EMAIL,
         ),
@@ -8826,7 +8854,11 @@ def _dc133_codepage_mojibake() -> EvalCase:
                 "print invoices daily.\n\n"
                 "\u00e2\u0080\u0094 Svetlana Novak, Finance\nsvetlana.novak@contoso.com"
             ),
-            reporter=_reporter("Svetlana Novak", "svetlana.novak@contoso.com", "Finance"),
+            reporter=Reporter(
+                name="Svetlana Novak",
+                email="svetlana.novak@contoso.com",
+                department="Finance",
+            ),
             created_at="2026-04-07T08:45:00Z",
             channel=Channel.PHONE,
         ),
@@ -8874,13 +8906,16 @@ def _dc134_recursive_email_forward() -> EvalCase:
         "Body: We cannot reproduce. Please collect Outlook ETL traces.\n\n"
         "---------- Forwarded message ----------\n"
         "From: m365.ops@contoso.com\nTo: exchange.team@contoso.com\n"
-        "Date: Mon, 7 Apr 2026 10:10:00 -0400\nSubject: FW: RE: FW: FW: FW: FW: FW: FW: Outlook calendar sync broken\n\n"
+        "Date: Mon, 7 Apr 2026 10:10:00 -0400\n"
+        "Subject: FW: RE: FW: FW: FW: FW: FW: FW: Outlook calendar sync broken\n\n"
         "---------- Forwarded message ----------\n"
         "From: exchange.team@contoso.com\nTo: l2.support@contoso.com\n"
-        "Date: Mon, 7 Apr 2026 10:30:00 -0400\nSubject: FW: FW: RE: FW: FW: FW: FW: FW: FW: Outlook calendar sync broken\n\n"
+        "Date: Mon, 7 Apr 2026 10:30:00 -0400\n"
+        "Subject: FW: FW: RE: FW: FW: FW: FW: FW: FW: Outlook calendar sync broken\n\n"
         "---------- Forwarded message ----------\n"
         "From: l2.support@contoso.com\nTo: helpdesk@contoso.com\n"
-        "Date: Mon, 7 Apr 2026 10:45:00 -0400\nSubject: FW: FW: FW: RE: FW: FW: FW: FW: FW: FW: Outlook calendar sync broken\n\n"
+        "Date: Mon, 7 Apr 2026 10:45:00 -0400\n"
+        "Subject: FW: FW: FW: RE: FW: FW: FW: FW: FW: FW: Outlook calendar sync broken\n\n"
         "---------- Forwarded message ----------\n"
         "From: helpdesk@contoso.com\nTo: enterprise.apps@contoso.com\n"
         "Date: Mon, 7 Apr 2026 11:00:00 -0400\n"
@@ -8911,7 +8946,11 @@ def _dc134_recursive_email_forward() -> EvalCase:
                 "I'm missing meetings because of this and it's really disruptive.\n\n"
                 "— Angela Park, Legal\nangela.park@contoso.com"
             ),
-            reporter=_reporter("Angela Park", "angela.park@contoso.com", "Legal"),
+            reporter=Reporter(
+                name="Angela Park",
+                email="angela.park@contoso.com",
+                department="Legal",
+            ),
             created_at="2026-04-07T11:30:00Z",
             channel=Channel.EMAIL,
         ),
@@ -8968,7 +9007,11 @@ def _dc135_pii_noise() -> EvalCase:
                 "we absolutely cannot have WiFi drops during it.\n\n"
                 "— Nathan Brooks, Facilities\nnathan.brooks@contoso.com"
             ),
-            reporter=_reporter("Nathan Brooks", "nathan.brooks@contoso.com", "Facilities"),
+            reporter=Reporter(
+                name="Nathan Brooks",
+                email="nathan.brooks@contoso.com",
+                department="Facilities",
+            ),
             created_at="2026-04-07T14:00:00Z",
             channel=Channel.PHONE,
         ),

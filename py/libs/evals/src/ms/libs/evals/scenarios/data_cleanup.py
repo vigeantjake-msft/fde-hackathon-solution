@@ -3361,35 +3361,35 @@ def _prometheus_metrics_flood() -> EvalScenario:
         "help. Here they are:\n\n"
         "# HELP pg_stat_activity_count Number of connections\n"
         "# TYPE pg_stat_activity_count gauge\n"
-        "pg_stat_activity_count{datname=\"orders_db\",state=\"active\"} 487\n"
-        "pg_stat_activity_count{datname=\"orders_db\",state=\"idle\"} 312\n"
-        "pg_stat_activity_count{datname=\"orders_db\",state=\"idle_in_transaction\"} 74\n"
-        "pg_stat_activity_count{datname=\"inventory_db\",state=\"active\"} 23\n"
-        "pg_stat_activity_count{datname=\"inventory_db\",state=\"idle\"} 156\n\n"
+        'pg_stat_activity_count{datname="orders_db",state="active"} 487\n'
+        'pg_stat_activity_count{datname="orders_db",state="idle"} 312\n'
+        'pg_stat_activity_count{datname="orders_db",state="idle_in_transaction"} 74\n'
+        'pg_stat_activity_count{datname="inventory_db",state="active"} 23\n'
+        'pg_stat_activity_count{datname="inventory_db",state="idle"} 156\n\n'
         "# HELP pg_locks_count Number of locks\n"
         "# TYPE pg_locks_count gauge\n"
-        "pg_locks_count{datname=\"orders_db\",mode=\"AccessShareLock\"} 1024\n"
-        "pg_locks_count{datname=\"orders_db\",mode=\"RowExclusiveLock\"} 893\n"
-        "pg_locks_count{datname=\"orders_db\",mode=\"ExclusiveLock\"} 12\n\n"
+        'pg_locks_count{datname="orders_db",mode="AccessShareLock"} 1024\n'
+        'pg_locks_count{datname="orders_db",mode="RowExclusiveLock"} 893\n'
+        'pg_locks_count{datname="orders_db",mode="ExclusiveLock"} 12\n\n'
         "# HELP pg_replication_lag_seconds Replication lag in seconds\n"
         "# TYPE pg_replication_lag_seconds gauge\n"
-        "pg_replication_lag_seconds{replica=\"pg-replica-01\"} 47.3\n"
-        "pg_replication_lag_seconds{replica=\"pg-replica-02\"} 112.8\n"
-        "pg_replication_lag_seconds{replica=\"pg-replica-03\"} 0.4\n\n"
+        'pg_replication_lag_seconds{replica="pg-replica-01"} 47.3\n'
+        'pg_replication_lag_seconds{replica="pg-replica-02"} 112.8\n'
+        'pg_replication_lag_seconds{replica="pg-replica-03"} 0.4\n\n'
         "# HELP pg_stat_bgwriter_buffers_checkpoint Total buffers written during checkpoints\n"
         "# TYPE pg_stat_bgwriter_buffers_checkpoint counter\n"
         "pg_stat_bgwriter_buffers_checkpoint 9.284731e+06\n\n"
         "# HELP pg_database_size_bytes Database size in bytes\n"
         "# TYPE pg_database_size_bytes gauge\n"
-        "pg_database_size_bytes{datname=\"orders_db\"} 5.28934e+11\n"
-        "pg_database_size_bytes{datname=\"inventory_db\"} 1.73421e+10\n\n"
+        'pg_database_size_bytes{datname="orders_db"} 5.28934e+11\n'
+        'pg_database_size_bytes{datname="inventory_db"} 1.73421e+10\n\n'
         "# HELP node_cpu_seconds_total CPU time in seconds\n"
         "# TYPE node_cpu_seconds_total counter\n"
-        "node_cpu_seconds_total{cpu=\"0\",mode=\"user\"} 4.82931e+05\n"
-        "node_cpu_seconds_total{cpu=\"0\",mode=\"system\"} 1.23847e+05\n"
-        "node_cpu_seconds_total{cpu=\"0\",mode=\"iowait\"} 8.7421e+04\n"
-        "node_cpu_seconds_total{cpu=\"1\",mode=\"user\"} 4.91283e+05\n"
-        "node_cpu_seconds_total{cpu=\"1\",mode=\"iowait\"} 9.1032e+04\n\n"
+        'node_cpu_seconds_total{cpu="0",mode="user"} 4.82931e+05\n'
+        'node_cpu_seconds_total{cpu="0",mode="system"} 1.23847e+05\n'
+        'node_cpu_seconds_total{cpu="0",mode="iowait"} 8.7421e+04\n'
+        'node_cpu_seconds_total{cpu="1",mode="user"} 4.91283e+05\n'
+        'node_cpu_seconds_total{cpu="1",mode="iowait"} 9.1032e+04\n\n'
         "The orders_db is the one causing problems. Queries that normally "
         "take 200ms are now timing out after 30 seconds. The application "
         "team is complaining about checkout failures.\n\n"
@@ -3553,76 +3553,76 @@ def _arm_template_noise() -> EvalScenario:
         "pasting the ARM template we are using so you can see the config. "
         "The error happens when the App Service tries to start.\n\n"
         "{\n"
-        "  \"$schema\": \"https://schema.management.azure.com/schemas/"
-        "2019-04-01/deploymentTemplate.json#\",\n"
-        "  \"contentVersion\": \"1.0.0.0\",\n"
-        "  \"parameters\": {\n"
-        "    \"appServicePlanName\": {\n"
-        "      \"type\": \"string\",\n"
-        "      \"defaultValue\": \"asp-contoso-staging\"\n"
+        '  "$schema": "https://schema.management.azure.com/schemas/'
+        '2019-04-01/deploymentTemplate.json#",\n'
+        '  "contentVersion": "1.0.0.0",\n'
+        '  "parameters": {\n'
+        '    "appServicePlanName": {\n'
+        '      "type": "string",\n'
+        '      "defaultValue": "asp-contoso-staging"\n'
         "    },\n"
-        "    \"webAppName\": {\n"
-        "      \"type\": \"string\",\n"
-        "      \"defaultValue\": \"app-contoso-orders-stg\"\n"
+        '    "webAppName": {\n'
+        '      "type": "string",\n'
+        '      "defaultValue": "app-contoso-orders-stg"\n'
         "    },\n"
-        "    \"location\": {\n"
-        "      \"type\": \"string\",\n"
-        "      \"defaultValue\": \"[resourceGroup().location]\"\n"
+        '    "location": {\n'
+        '      "type": "string",\n'
+        '      "defaultValue": "[resourceGroup().location]"\n'
         "    },\n"
-        "    \"skuName\": {\n"
-        "      \"type\": \"string\",\n"
-        "      \"defaultValue\": \"P1v3\"\n"
+        '    "skuName": {\n'
+        '      "type": "string",\n'
+        '      "defaultValue": "P1v3"\n'
         "    },\n"
-        "    \"linuxFxVersion\": {\n"
-        "      \"type\": \"string\",\n"
-        "      \"defaultValue\": \"DOTNETCORE|8.0\"\n"
+        '    "linuxFxVersion": {\n'
+        '      "type": "string",\n'
+        '      "defaultValue": "DOTNETCORE|8.0"\n'
         "    }\n"
         "  },\n"
-        "  \"resources\": [\n"
+        '  "resources": [\n'
         "    {\n"
-        "      \"type\": \"Microsoft.Web/serverfarms\",\n"
-        "      \"apiVersion\": \"2022-09-01\",\n"
-        "      \"name\": \"[parameters('appServicePlanName')]\",\n"
-        "      \"location\": \"[parameters('location')]\",\n"
-        "      \"sku\": {\n"
-        "        \"name\": \"[parameters('skuName')]\",\n"
-        "        \"capacity\": 2\n"
+        '      "type": "Microsoft.Web/serverfarms",\n'
+        '      "apiVersion": "2022-09-01",\n'
+        '      "name": "[parameters(\'appServicePlanName\')]",\n'
+        '      "location": "[parameters(\'location\')]",\n'
+        '      "sku": {\n'
+        '        "name": "[parameters(\'skuName\')]",\n'
+        '        "capacity": 2\n'
         "      },\n"
-        "      \"kind\": \"linux\",\n"
-        "      \"properties\": {\n"
-        "        \"reserved\": true\n"
+        '      "kind": "linux",\n'
+        '      "properties": {\n'
+        '        "reserved": true\n'
         "      }\n"
         "    },\n"
         "    {\n"
-        "      \"type\": \"Microsoft.Web/sites\",\n"
-        "      \"apiVersion\": \"2022-09-01\",\n"
-        "      \"name\": \"[parameters('webAppName')]\",\n"
-        "      \"location\": \"[parameters('location')]\",\n"
-        "      \"dependsOn\": [\n"
+        '      "type": "Microsoft.Web/sites",\n'
+        '      "apiVersion": "2022-09-01",\n'
+        '      "name": "[parameters(\'webAppName\')]",\n'
+        '      "location": "[parameters(\'location\')]",\n'
+        '      "dependsOn": [\n'
         "        \"[resourceId('Microsoft.Web/serverfarms', "
         "parameters('appServicePlanName'))]\"\n"
         "      ],\n"
-        "      \"properties\": {\n"
-        "        \"serverFarmId\": \"[resourceId('Microsoft.Web/"
+        '      "properties": {\n'
+        '        "serverFarmId": "[resourceId(\'Microsoft.Web/'
         "serverfarms', parameters('appServicePlanName'))]\",\n"
-        "        \"siteConfig\": {\n"
-        "          \"linuxFxVersion\": \"[parameters('linuxFxVersion')]\",\n"
-        "          \"alwaysOn\": true,\n"
-        "          \"appSettings\": [\n"
-        "            { \"name\": \"ASPNETCORE_ENVIRONMENT\", "
-        "\"value\": \"Staging\" },\n"
-        "            { \"name\": \"ConnectionStrings__Default\", "
-        "\"value\": \"Server=sql-contoso-stg.database.windows.net;"
-        "Database=orders;\" }\n"
+        '        "siteConfig": {\n'
+        '          "linuxFxVersion": "[parameters(\'linuxFxVersion\')]",\n'
+        '          "alwaysOn": true,\n'
+        '          "appSettings": [\n'
+        '            { "name": "ASPNETCORE_ENVIRONMENT", '
+        '"value": "Staging" },\n'
+        '            { "name": "ConnectionStrings__Default", '
+        '"value": "Server=sql-contoso-stg.database.windows.net;'
+        'Database=orders;" }\n'
         "          ]\n"
         "        }\n"
         "      }\n"
         "    }\n"
         "  ]\n"
         "}\n\n"
-        "The deployment pipeline shows: \"ERROR: The resource "
+        'The deployment pipeline shows: "ERROR: The resource '
         "Microsoft.Web/sites/app-contoso-orders-stg failed with status "
-        "CancelledByUser.\" But nobody cancelled it — it just timed out "
+        'CancelledByUser." But nobody cancelled it — it just timed out '
         "after 20 minutes waiting for the app to become healthy. The app "
         "logs show a connection string error but the connection string "
         "looks correct in the template above.\n\n"
