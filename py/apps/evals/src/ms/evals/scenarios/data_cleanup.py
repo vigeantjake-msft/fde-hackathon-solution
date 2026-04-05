@@ -12546,12 +12546,12 @@ register(
             "SharePoint permission issue buried in nested HTML tables",
         ],
         descriptions=[
-            "<html><body><table border=\"1\" style=\"border-collapse:"
-            "collapse;\"><tr><td style=\"padding:10px;\"><table><tr>"
-            "<td style=\"font-family:Comic Sans MS;\"><table><tr><td>"
+            '<html><body><table border="1" style="border-collapse:'
+            'collapse;"><tr><td style="padding:10px;"><table><tr>'
+            '<td style="font-family:Comic Sans MS;"><table><tr><td>'
             "<b>From:</b> {name}</td></tr><tr><td><b>Dept:</b> "
             "{department}</td></tr></table></td></tr></table></td></tr>"
-            "<tr><td><table><tr><td style=\"color:#333;\">"
+            '<tr><td><table><tr><td style="color:#333;">'
             "I keep getting Access Denied when opening the {department} "
             "SharePoint site. I need access urgently for the quarterly "
             "review.</td></tr></table></td></tr>"
@@ -13024,8 +13024,8 @@ register(
         ],
         descriptions=[
             "MIME-Version: 1.0\n"
-            "Content-Type: multipart/mixed; boundary=\"----=_Part_"
-            "12345\"\n\n"
+            'Content-Type: multipart/mixed; boundary="----=_Part_'
+            '12345"\n\n'
             "------=_Part_12345\n"
             "Content-Type: text/plain; charset=utf-8\n\n"
             "{name} from {department}: All email attachments I receive "
@@ -13033,7 +13033,7 @@ register(
             "original format.\n\n"
             "------=_Part_12345\n"
             "Content-Type: application/octet-stream\n"
-            "Content-Disposition: attachment; filename=\"report.xlsx\""
+            'Content-Disposition: attachment; filename="report.xlsx"'
             "\n\nUEsDBBQAAAA...[ truncated ]...\n"
             "------=_Part_12345--",
             "Email attachments are arriving as corrupted .dat files "
@@ -13297,8 +13297,8 @@ register(
             "PowerShell launcher:\n"
             "```powershell\n"
             "$conn = New-Object System.Data.SqlClient.SqlConnection\n"
-            "$conn.ConnectionString = \"Server=SQLPROD-01;Database="
-            "ContosoSync;Integrated Security=true\"\n"
+            '$conn.ConnectionString = "Server=SQLPROD-01;Database='
+            'ContosoSync;Integrated Security=true"\n'
             "$conn.Open()\n"
             "```\n\n"
             "Python ETL:\n"
