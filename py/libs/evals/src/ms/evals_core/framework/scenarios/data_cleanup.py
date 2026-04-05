@@ -5743,7 +5743,7 @@ default_registry.register(
                 "I exported our Q1 client data from the CRM portal "
                 "and the CSV file has some weird entries. Here's a "
                 "sample of what I see when I open it in Notepad:\n\n"
-                'Name,Email,Revenue,Notes\n'
+                "Name,Email,Revenue,Notes\n"
                 '"Johnson & Co","j.co@example.com","$1.2M","=CMD(\'calc\')!A0"\n'
                 '"Acme Corp","acme@example.com","$850K","=HYPERLINK(\\"http://evil.example.com\\")"\n'
                 '"Beta Inc","beta@example.com","$2.1M","=1+1"\n'
@@ -5852,16 +5852,22 @@ default_registry.register(
         tags=["zalgo_text", "combining_diacritics"],
         ticket=EvalTicket(
             ticket_id="INC-5103",
-            subject="O\u0336\u0317\u0353u\u0337\u031e\u0326t\u0334\u0318\u032dl\u0335\u031f\u0329o\u0337\u0316\u032ao\u0336\u0320\u0324k crashes on startup",
+            subject=(
+                "O\u0336\u0317\u0353u\u0337\u031e\u0326t\u0334\u0318\u032d"
+                "l\u0335\u031f\u0329o\u0337\u0316\u032ao\u0336\u0320\u0324k crashes on startup"
+            ),
             description=(
                 "E\u0336\u0319\u032dv\u0335\u031d\u0325e\u0334\u031e\u0328r\u0336\u0320\u032by "
                 "t\u0337\u031f\u0326i\u0335\u0317\u0329m\u0336\u031e\u032ae "
                 "I open Outlook it freezes for about 30 seconds "
                 "then shows 'Microsoft Outlook is not responding' "
-                "and crashes. This started after T\u0336\u031d\u0324u\u0337\u031f\u0325e\u0334\u0320\u0328s\u0335\u031e\u032bd\u0336\u0317\u032ea\u0337\u0319\u0326y's "
+                "and crashes. This started after "
+                "T\u0336\u031d\u0324u\u0337\u031f\u0325e\u0334\u0320\u0328"
+                "s\u0335\u031e\u032bd\u0336\u0317\u032ea\u0337\u0319\u0326y's "
                 "update.\n\n"
                 "I\u0335\u031d\u0324'\u0336\u031f\u0325v\u0334\u0320\u0328e tried:\n"
-                "- R\u0337\u031e\u032be\u0335\u0317\u032ep\u0336\u0319\u0326a\u0337\u031d\u0324i\u0334\u031f\u0325r from Control Panel\n"
+                "- R\u0337\u031e\u032be\u0335\u0317\u032ep\u0336\u0319\u0326"
+                "a\u0337\u031d\u0324i\u0334\u031f\u0325r from Control Panel\n"
                 "- Starting in safe mode (same issue)\n"
                 "- Deleting my .ost file\n\n"
                 "Version: Microsoft 365 Apps v2402\n"
@@ -5913,9 +5919,7 @@ default_registry.register(
                 "Hi Data Platform team,\n\n"
                 "Our reporting API is returning errors when I "
                 "query the analytics database. Here's the full "
-                "JSON response I'm getting:\n\n"
-                + _NESTED_JSON
-                + "\n\n"
+                "JSON response I'm getting:\n\n" + _NESTED_JSON + "\n\n"
                 "This started about 2 hours ago. The API endpoint "
                 "is https://api.internal.contoso.com/v2/analytics/"
                 "quarterly-revenue. We need this for the CFO's "
@@ -6016,9 +6020,9 @@ default_registry.register(
             subject="Need to re-enroll MFA — lost my phone",
             description=(
                 "Content-Type: multipart/signed; "
-                "protocol=\"application/pkcs7-signature\"; "
+                'protocol="application/pkcs7-signature"; '
                 "micalg=sha-256; "
-                "boundary=\"----=_Part_12345_6789.1234567890\"\n\n"
+                'boundary="----=_Part_12345_6789.1234567890"\n\n'
                 "------=_Part_12345_6789.1234567890\n"
                 "Content-Type: text/plain; charset=utf-8\n\n"
                 "Hi IAM team,\n\n"
@@ -6030,10 +6034,10 @@ default_registry.register(
                 "Thanks,\nTakeshi Nakamura\nFixed Income\n\n"
                 "------=_Part_12345_6789.1234567890\n"
                 "Content-Type: application/pkcs7-signature; "
-                "name=\"smime.p7s\"\n"
+                'name="smime.p7s"\n'
                 "Content-Transfer-Encoding: base64\n"
                 "Content-Disposition: attachment; "
-                "filename=\"smime.p7s\"\n\n"
+                'filename="smime.p7s"\n\n'
                 "MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEF\n"
                 "ADALBgkqhkiG9w0BBwGggDCCA1IwggI6oAMCAQICEBwPsvMp\n"
                 "Lx3Gq5fv2TdUZG8wDQYJKoZIhvcNAQELBQAwSTELMAkGA1UE\n"
@@ -6161,10 +6165,7 @@ default_registry.register(
     EvalScenario(
         scenario_id="dc-109",
         name="Windows registry export (.reg) pasted in ticket",
-        description=(
-            "User pasted a Windows registry export file "
-            "to show a software configuration problem."
-        ),
+        description=("User pasted a Windows registry export file to show a software configuration problem."),
         category=_CATEGORY,
         tags=["registry_export", "windows_config"],
         ticket=EvalTicket(
@@ -6238,9 +6239,7 @@ default_registry.register(
                 "Our portfolio analytics API started returning 500 "
                 "errors at about 2 PM. Here's the traceback from "
                 "the logs:\n\n"
-                "Traceback (most recent call last):\n"
-                + _DEEP_FRAMES
-                + "\n"
+                "Traceback (most recent call last):\n" + _DEEP_FRAMES + "\n"
                 '  File "/app/db/pool.py", line 42, in acquire_connection\n'
                 "    raise ConnectionError(\n"
                 "ConnectionError: Timed out waiting for a database connection "
@@ -6273,11 +6272,13 @@ _LONG_URL = (
     "https://contoso.sharepoint.com/sites/ProjectAtlas/"
     "_layouts/15/Doc.aspx?sourcedoc=%7B4a5b6c7d-8e9f-0a1b-2c3d-4e5f6a7b8c9d%7D"
     "&action=edit&wdOrigin=OFFICECOM-WEB.START.REC"
-    "&ct=" + "a" * 200
+    "&ct="
+    + "a" * 200
     + "&utm_source=internal_newsletter&utm_medium=email"
     + "&utm_campaign=q1_2026_project_atlas_update_newsletter_march_edition"
     + "&utm_content=document_link_cta_button_primary"
-    + "&sdata=" + "x" * 300
+    + "&sdata="
+    + "x" * 300
     + "&reserved=0&wdNewAndOpenCt=2&wdOriginTriggered=1"
 )
 
@@ -6296,16 +6297,12 @@ default_registry.register(
             ticket_id="INC-5111",
             subject="Can't edit document in SharePoint — permission error",
             description=(
-                "When I click on this link I get a permission error:\n\n"
-                + _LONG_URL
-                + "\n\n"
+                "When I click on this link I get a permission error:\n\n" + _LONG_URL + "\n\n"
                 "The error says 'You need permission to access this "
                 "item.' I was added to the Project Atlas team last "
                 "week by my manager. I can see the site but can't "
                 "edit any documents.\n\n"
-                "Full URL from the second attempt:\n"
-                + _LONG_URL.replace("Atlas", "Atlas2")
-                + "\n\n"
+                "Full URL from the second attempt:\n" + _LONG_URL.replace("Atlas", "Atlas2") + "\n\n"
                 "Sonia Martinez\nProduct Management"
             ),
             reporter=_reporter(
@@ -6390,10 +6387,7 @@ default_registry.register(
 # ---------------------------------------------------------------------------
 # dc-113: Base64-encoded Excel binary data inlined
 # ---------------------------------------------------------------------------
-_B64_EXCEL = (
-    "UEsDBBQAAAAIAAAAAEAAAAAAAAAAAA"
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" * 40
-)
+_B64_EXCEL = "UEsDBBQAAAAIAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" * 40
 
 default_registry.register(
     EvalScenario(
@@ -6414,9 +6408,7 @@ default_registry.register(
                 "drive (\\\\fs01\\Finance\\Models\\Q1-2026.xlsx) is "
                 "corrupted. Excel says 'The file is corrupt and "
                 "cannot be opened.' I tried the base64 content "
-                "below to see if it helps you recover it:\n\n"
-                + _B64_EXCEL
-                + "\n\n"
+                "below to see if it helps you recover it:\n\n" + _B64_EXCEL + "\n\n"
                 "This file has 47 sheets and 3 years of financial "
                 "projections. We have a board meeting Thursday and "
                 "this is the primary model. Last good backup was "
@@ -6447,10 +6439,7 @@ default_registry.register(
     EvalScenario(
         scenario_id="dc-114",
         name="Terraform template pasted as ticket description",
-        description=(
-            "User pasted a Terraform configuration file showing "
-            "a cloud provisioning failure."
-        ),
+        description=("User pasted a Terraform configuration file showing a cloud provisioning failure."),
         category=_CATEGORY,
         tags=["terraform_template", "iac_dump"],
         ticket=EvalTicket(
@@ -6478,7 +6467,7 @@ default_registry.register(
                 '  address_prefixes     = ["10.1.1.0/24"]\n'
                 "}\n\n"
                 'resource "azurerm_linux_virtual_machine" "app_server" {\n'
-                '  count               = 3\n'
+                "  count               = 3\n"
                 '  name                = "vm-app-${count.index + 1}"\n'
                 "  resource_group_name = azurerm_resource_group.prod_east.name\n"
                 "  location            = azurerm_resource_group.prod_east.location\n"
@@ -6558,12 +6547,16 @@ default_registry.register(
                 "a1b2c3d4 (Alice Chen  2026-03-10 14:22:31 +0000 10) ) -> decimal.Decimal:\n"
                 "a1b2c3d4 (Alice Chen  2026-03-10 14:22:31 +0000 11)     total = decimal.Decimal(0)\n"
                 "a1b2c3d4 (Alice Chen  2026-03-10 14:22:31 +0000 12)     for pos in positions:\n"
-                "e5f6a7b8 (Bob Kim     2026-03-17 09:15:42 +0000 13)         price = prices.get(pos.symbol, pos.cost_basis)\n"
-                "e5f6a7b8 (Bob Kim     2026-03-17 09:15:42 +0000 14)         # BUG: should multiply by quantity, not divide\n"
-                "e5f6a7b8 (Bob Kim     2026-03-17 09:15:42 +0000 15)         pnl = (price - pos.cost_basis) / pos.quantity\n"
+                "e5f6a7b8 (Bob Kim     2026-03-17 09:15:42 +0000 13)         "
+                "price = prices.get(pos.symbol, pos.cost_basis)\n"
+                "e5f6a7b8 (Bob Kim     2026-03-17 09:15:42 +0000 14)         "
+                "# BUG: should multiply by quantity, not divide\n"
+                "e5f6a7b8 (Bob Kim     2026-03-17 09:15:42 +0000 15)         "
+                "pnl = (price - pos.cost_basis) / pos.quantity\n"
                 "a1b2c3d4 (Alice Chen  2026-03-10 14:22:31 +0000 16)         total += pnl\n"
                 "a1b2c3d4 (Alice Chen  2026-03-10 14:22:31 +0000 17)     return total.quantize(\n"
-                "e5f6a7b8 (Bob Kim     2026-03-17 09:15:42 +0000 18)         decimal.Decimal('0.01'), rounding=ROUNDING\n"
+                "e5f6a7b8 (Bob Kim     2026-03-17 09:15:42 +0000 18)         "
+                "decimal.Decimal('0.01'), rounding=ROUNDING\n"
                 "a1b2c3d4 (Alice Chen  2026-03-10 14:22:31 +0000 19)     )\n\n"
                 "Line 15 is dividing instead of multiplying. This "
                 "was introduced by Bob Kim's commit e5f6a7b8 from "

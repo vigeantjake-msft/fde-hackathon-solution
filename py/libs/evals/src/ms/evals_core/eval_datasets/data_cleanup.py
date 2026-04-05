@@ -9384,7 +9384,7 @@ def _dc140_sql_output() -> EvalCase:
                 "Add a unique constraint or pre-run validation to prevent future duplicate inserts.",
             ],
         ),
-        tags=["data-cleanup", "sql_table_output"],
+        tags=["data-cleanup", "sql_output"],
         description="Raw SQL query output with ASCII table formatting pasted in a data corruption ticket.",
     )
 

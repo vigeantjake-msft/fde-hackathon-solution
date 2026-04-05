@@ -10007,7 +10007,7 @@ register(
         ],
         descriptions=[
             "I exported client data from the CRM and the CSV has entries like:\n\n"
-            'Name,Email,Revenue,Notes\n'
+            "Name,Email,Revenue,Notes\n"
             '"Johnson & Co","j.co@example.com","$1.2M","=CMD(\'calc\')!A0"\n'
             '"Acme Corp","acme@example.com","$850K","=HYPERLINK(\\"http://evil.example.com\\")"\n'
             '"Beta Inc","beta@example.com","$2.1M","+THUNK(\'-o evil.bat\')"\n\n'
@@ -10151,12 +10151,16 @@ register(
         ],
         descriptions=[
             "The reporting API returns this response:\n\n"
-            + "{" * 55 + '"error":"connection_timeout"' + "}" * 55
+            + "{" * 55
+            + '"error":"connection_timeout"'
+            + "}" * 55
             + "\n\nThis started about 2 hours ago. The endpoint is "
             "https://api.internal.contoso.com/v2/analytics/quarterly-revenue.\n\n"
             "{name}, {department}",
             "Our analytics database API is timing out. Here's the JSON:\n\n"
-            + "{" * 60 + '"status":"pool_exhausted"' + "}" * 60
+            + "{" * 60
+            + '"status":"pool_exhausted"'
+            + "}" * 60
             + "\n\nThe CFO's dashboard depends on this refreshing every 15 minutes.\n\n"
             "{name}, {department}",
         ],
@@ -10239,8 +10243,8 @@ register(
             "MFA reset needed after phone replacement",
         ],
         descriptions=[
-            "Content-Type: multipart/signed; protocol=\"application/pkcs7-signature\"; "
-            "micalg=sha-256; boundary=\"----=_Part_12345\"\n\n"
+            'Content-Type: multipart/signed; protocol="application/pkcs7-signature"; '
+            'micalg=sha-256; boundary="----=_Part_12345"\n\n'
             "------=_Part_12345\nContent-Type: text/plain\n\n"
             "I lost my phone and can't do MFA. Need my authenticator re-enrolled "
             "on my new device. Username: {name1}, {office} office.\n\n"
@@ -10417,7 +10421,7 @@ register(
             "Our portfolio analytics API started returning 500s. Traceback:\n\n"
             "Traceback (most recent call last):\n"
             + "\n".join(
-                f'  File "/app/services/layer_{i}/handler.py", line {10+i}, in process\n'
+                f'  File "/app/services/layer_{i}/handler.py", line {10 + i}, in process\n'
                 f"    return next_layer.process(ctx)"
                 for i in range(40)
             )
@@ -10460,8 +10464,13 @@ register(
         descriptions=[
             "When I click this link I get a permission error:\n\n"
             "https://contoso.sharepoint.com/sites/ProjectAtlas/_layouts/15/Doc.aspx?"
-            "sourcedoc=%7B4a5b6c7d%7D&action=edit" + "&utm_source=" + "a" * 200
-            + "&utm_campaign=" + "b" * 200 + "&sdata=" + "x" * 300
+            "sourcedoc=%7B4a5b6c7d%7D&action=edit"
+            + "&utm_source="
+            + "a" * 200
+            + "&utm_campaign="
+            + "b" * 200
+            + "&sdata="
+            + "x" * 300
             + "\n\nI was added to the team last week but can't edit documents.\n\n"
             "{name}, {department}",
         ],
@@ -10541,7 +10550,8 @@ register(
             "The Q1 financial model (\\\\fs01\\Finance\\Models\\Q1-2026.xlsx) is "
             "corrupted. Excel says 'The file is corrupt and cannot be opened.' "
             "Here's the base64:\n\n"
-            + "UEsDBBQAAAAIAAAAAAAAAAAAAAAA" * 50
+            + "UEsDBBQAAAAIAAAAAAAAAAAAAAAA"
+            * 50
             + "\n\nThis file has 47 sheets. Board meeting Thursday. Last good "
             "backup: March 10.\n\n{name}, {department}",
         ],
@@ -10580,7 +10590,7 @@ register(
             "Terraform apply is failing:\n\n"
             "```hcl\n"
             'resource "azurerm_linux_virtual_machine" "app_server" {\n'
-            '  count    = 3\n'
+            "  count    = 3\n"
             '  name     = "vm-app-${count.index + 1}"\n'
             '  size     = "Standard_D4s_v5"\n'
             '  location = "eastus"\n'
