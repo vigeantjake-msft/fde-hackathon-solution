@@ -38,9 +38,7 @@ class StructuralViolation(Exception):
         super().__init__(f"{ticket_id} [{field}]: {message}")
 
 
-def validate_response_structure(
-    response: dict[str, object],
-) -> list[StructuralViolation]:
+def validate_response_structure(response: dict[str, object]) -> list[StructuralViolation]:
     """Validate that a triage response has all required fields with valid values.
 
     Returns a list of violations (empty means the response is structurally valid).
@@ -49,127 +47,92 @@ def validate_response_structure(
     violations: list[StructuralViolation] = []
     ticket_id = str(response.get("ticket_id", "<missing>"))
 
+    # Check required fields
     missing_fields = _REQUIRED_FIELDS - set(response.keys())
     for field in sorted(missing_fields):
-        violations.append(
-            StructuralViolation(ticket_id, field, "required field is missing")
-        )
+        violations.append(StructuralViolation(ticket_id, field, "required field is missing"))
 
     if missing_fields:
         return violations
 
+    # Validate category enum
     category = response.get("category")
-    if (
-        not isinstance(category, str)
-        or category.strip().lower() not in _VALID_CATEGORIES
-    ):
+    if not isinstance(category, str) or category.strip().lower() not in _VALID_CATEGORIES:
         violations.append(
             StructuralViolation(
-                ticket_id,
-                "category",
-                f"invalid value: {category!r}",
+                ticket_id, "category", f"invalid value: {category!r} (expected one of {sorted(_VALID_CATEGORIES)})"
             )
         )
 
+    # Validate priority enum
     priority = response.get("priority")
-    if (
-        not isinstance(priority, str)
-        or priority.strip().lower() not in _VALID_PRIORITIES
-    ):
+    if not isinstance(priority, str) or priority.strip().lower() not in _VALID_PRIORITIES:
         violations.append(
             StructuralViolation(
-                ticket_id,
-                "priority",
-                f"invalid value: {priority!r}",
+                ticket_id, "priority", f"invalid value: {priority!r} (expected one of {sorted(_VALID_PRIORITIES)})"
             )
         )
 
+    # Validate assigned_team enum
     assigned_team = response.get("assigned_team")
-    if (
-        not isinstance(assigned_team, str)
-        or assigned_team.strip().lower() not in _VALID_TEAMS
-    ):
+    if not isinstance(assigned_team, str) or assigned_team.strip().lower() not in _VALID_TEAMS:
         violations.append(
             StructuralViolation(
-                ticket_id,
-                "assigned_team",
-                f"invalid value: {assigned_team!r}",
+                ticket_id, "assigned_team", f"invalid value: {assigned_team!r} (expected one of {sorted(_VALID_TEAMS)})"
             )
         )
 
+    # Validate needs_escalation type
     needs_escalation = response.get("needs_escalation")
-    if not isinstance(needs_escalation, (bool, str, int)):
+    if not isinstance(needs_escalation, bool) and not isinstance(needs_escalation, (str, int)):
         violations.append(
             StructuralViolation(
-                ticket_id,
-                "needs_escalation",
-                f"expected boolean, got {type(needs_escalation).__name__}",
+                ticket_id, "needs_escalation", f"expected boolean, got {type(needs_escalation).__name__}"
             )
         )
 
+    # Validate missing_information
     missing_info = response.get("missing_information")
     if not isinstance(missing_info, list):
         violations.append(
-            StructuralViolation(
-                ticket_id,
-                "missing_information",
-                f"expected list, got {type(missing_info).__name__}",
-            )
+            StructuralViolation(ticket_id, "missing_information", f"expected list, got {type(missing_info).__name__}")
         )
     else:
         for item in missing_info:
             if not isinstance(item, str):
                 violations.append(
                     StructuralViolation(
-                        ticket_id,
-                        "missing_information",
-                        f"list item must be string, got {type(item).__name__}",
+                        ticket_id, "missing_information", f"list item must be string, got {type(item).__name__}"
                     )
                 )
             elif item.strip().lower() not in _VALID_MISSING_INFO:
                 violations.append(
-                    StructuralViolation(
-                        ticket_id,
-                        "missing_information",
-                        f"invalid vocabulary item: {item!r}",
-                    )
+                    StructuralViolation(ticket_id, "missing_information", f"invalid vocabulary item: {item!r}")
                 )
 
+    # Validate next_best_action
     next_action = response.get("next_best_action")
     if not isinstance(next_action, str):
         violations.append(
-            StructuralViolation(
-                ticket_id,
-                "next_best_action",
-                f"expected string, got {type(next_action).__name__}",
-            )
+            StructuralViolation(ticket_id, "next_best_action", f"expected string, got {type(next_action).__name__}")
         )
     elif len(next_action.strip()) == 0:
-        violations.append(
-            StructuralViolation(ticket_id, "next_best_action", "must not be empty")
-        )
+        violations.append(StructuralViolation(ticket_id, "next_best_action", "must not be empty"))
 
+    # Validate remediation_steps
     remediation = response.get("remediation_steps")
     if not isinstance(remediation, list):
         violations.append(
-            StructuralViolation(
-                ticket_id,
-                "remediation_steps",
-                f"expected list, got {type(remediation).__name__}",
-            )
+            StructuralViolation(ticket_id, "remediation_steps", f"expected list, got {type(remediation).__name__}")
         )
     elif len(remediation) == 0:
-        violations.append(
-            StructuralViolation(ticket_id, "remediation_steps", "must not be empty")
-        )
+        violations.append(StructuralViolation(ticket_id, "remediation_steps", "must not be empty"))
     else:
         for step in remediation:
             if not isinstance(step, str):
                 violations.append(
                     StructuralViolation(
-                        ticket_id,
-                        "remediation_steps",
-                        f"list item must be string, got {type(step).__name__}",
+                        ticket_id, "remediation_steps", f"list item must be string, got {type(step).__name__}"
                     )
                 )
 

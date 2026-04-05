@@ -2,10 +2,11 @@
 """Pydantic models for evaluation results — scoring, runner, and dataset loading.
 
 These models define the domain types used by the evaluation execution framework
-(as opposed to the input/output schema models in ``ms.evals_core.models``).
-"""
+(as opposed to the scenario generation models in ``ms.evals_core.models``).
 
-from pydantic import Field
+All domain values (categories, teams, priorities, missing-info vocabulary)
+are imported from ``ms.evals_core.constants`` to maintain a single source of truth.
+"""
 
 from ms.common.models.base import FrozenBaseModel
 from ms.evals_core.constants import Category
@@ -36,7 +37,7 @@ class Ticket(FrozenBaseModel):
     reporter: Reporter
     created_at: str
     channel: Channel
-    attachments: list[str] = Field(default_factory=list)
+    attachments: list[str] = []
 
 
 # Alias so callers can use the more explicit name.
@@ -125,7 +126,7 @@ class EvalCase(FrozenBaseModel):
 
     ticket: Ticket
     gold: GoldAnswer
-    tags: list[str] = Field(default_factory=list)
+    tags: list[str] = []
     description: str = ""
 
 

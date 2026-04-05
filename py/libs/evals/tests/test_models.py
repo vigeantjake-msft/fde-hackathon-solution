@@ -1,182 +1,198 @@
 # Copyright (c) Microsoft. All rights reserved.
-"""Tests for evaluation Pydantic models."""
+"""Tests for Pydantic model validation."""
 
 import pytest
 from pydantic import ValidationError
 
-from ms.evals_core.models.scenario import Scenario
-from ms.evals_core.models.ticket import Reporter
-from ms.evals_core.models.ticket import Ticket
-from ms.evals_core.models.triage_decision import TriageDecision
+from ms.evals_core.constants import Channel
+from ms.evals_core.constants import MissingInfo
+from ms.evals_core.constants import Priority
+from ms.evals_core.constants import Team
+from ms.evals_core.eval_models import AssignedTeam
+from ms.evals_core.eval_models import Category
+from ms.evals_core.eval_models import GoldAnswer
+from ms.evals_core.eval_models import MissingInfoItem
+from ms.evals_core.eval_models import Reporter
+from ms.evals_core.eval_models import Ticket
+from ms.evals_core.eval_models import TriageResponse
 
 
 class TestTicketModel:
     def test_valid_ticket(self) -> None:
-        ticket = Ticket(
+        t = Ticket(
             ticket_id="INC-0001",
-            subject="Test subject",
-            description="Test description",
+            subject="Test",
+            description="A test ticket",
             reporter=Reporter(name="Alice", email="alice@contoso.com", department="IT"),
-            created_at="2026-03-18T09:00:00Z",
-            channel="email",
+            created_at="2026-03-18T00:00:00Z",
+            channel=Channel.EMAIL,
         )
-        assert ticket.ticket_id == "INC-0001"
-        assert ticket.attachments == []
+        assert t.ticket_id == "INC-0001"
+        assert t.channel == Channel.EMAIL
+        assert t.attachments == []
 
     def test_invalid_channel_rejected(self) -> None:
-        with pytest.raises(ValidationError, match="channel"):
-            Ticket(
-                ticket_id="INC-0001",
-                subject="Test",
-                description="Test",
-                reporter=Reporter(name="A", email="a@c.com", department="IT"),
-                created_at="2026-03-18T09:00:00Z",
-                channel="fax",  # type: ignore[arg-type]
+        with pytest.raises(ValidationError):
+            Ticket.model_validate(
+                {
+                    "ticket_id": "INC-0001",
+                    "subject": "Test",
+                    "description": "Test",
+                    "reporter": {"name": "Alice", "email": "a@b.com", "department": "IT"},
+                    "created_at": "2026-03-18T00:00:00Z",
+                    "channel": "fax",
+                }
             )
 
-    def test_ticket_is_frozen(self) -> None:
-        ticket = Ticket(
+    def test_immutable(self) -> None:
+        t = Ticket(
             ticket_id="INC-0001",
             subject="Test",
             description="Test",
-            reporter=Reporter(name="A", email="a@c.com", department="IT"),
-            created_at="2026-03-18T09:00:00Z",
-            channel="portal",
+            reporter=Reporter(name="Alice", email="a@b.com", department="IT"),
+            created_at="2026-03-18T00:00:00Z",
+            channel=Channel.EMAIL,
         )
         with pytest.raises(ValidationError):
-            ticket.subject = "Modified"  # type: ignore[misc]
+            t.subject = "Changed"
 
 
-class TestTriageDecisionModel:
-    def test_valid_decision(self) -> None:
-        decision = TriageDecision(
+class TestGoldAnswerModel:
+    def test_valid_gold(self) -> None:
+        g = GoldAnswer(
             ticket_id="INC-0001",
-            category="Network & Connectivity",
-            priority="P2",
-            assigned_team="Network Operations",
-            needs_escalation=False,
-            missing_information=["error_message"],
-            next_best_action="Investigate the issue.",
+            category=Category.SECURITY,
+            priority=Priority.P1,
+            assigned_team=Team.SECURITY_OPS,
+            needs_escalation=True,
+            missing_information=[MissingInfo.TIMESTAMP, MissingInfo.ERROR_MESSAGE],
+            next_best_action="Investigate immediately",
             remediation_steps=["Step 1", "Step 2"],
         )
-        assert decision.category == "Network & Connectivity"
+        assert g.category == Category.SECURITY
+        assert g.assigned_team == AssignedTeam.SECURITY_OPS
+        assert len(g.missing_information) == 2
 
     def test_invalid_category_rejected(self) -> None:
-        with pytest.raises(ValidationError, match="category"):
-            TriageDecision(
-                ticket_id="INC-0001",
-                category="Invalid Category",  # type: ignore[arg-type]
-                priority="P2",
-                assigned_team="Network Operations",
-                needs_escalation=False,
-                missing_information=[],
-                next_best_action="Test",
-                remediation_steps=["Step 1"],
-            )
-
-    def test_invalid_priority_rejected(self) -> None:
-        with pytest.raises(ValidationError, match="priority"):
-            TriageDecision(
-                ticket_id="INC-0001",
-                category="Network & Connectivity",
-                priority="P0",  # type: ignore[arg-type]
-                assigned_team="Network Operations",
-                needs_escalation=False,
-                missing_information=[],
-                next_best_action="Test",
-                remediation_steps=["Step 1"],
+        with pytest.raises(ValidationError):
+            GoldAnswer.model_validate(
+                {
+                    "ticket_id": "INC-0001",
+                    "category": "Invalid Category",
+                    "priority": "P1",
+                    "assigned_team": "Security Operations",
+                    "needs_escalation": False,
+                    "missing_information": [],
+                    "next_best_action": "",
+                    "remediation_steps": [],
+                }
             )
 
     def test_invalid_team_rejected(self) -> None:
-        with pytest.raises(ValidationError, match="assigned_team"):
-            TriageDecision(
-                ticket_id="INC-0001",
-                category="Network & Connectivity",
-                priority="P2",
-                assigned_team="Root Access Team",  # type: ignore[arg-type]
-                needs_escalation=False,
-                missing_information=[],
-                next_best_action="Test",
-                remediation_steps=["Step 1"],
+        with pytest.raises(ValidationError):
+            GoldAnswer.model_validate(
+                {
+                    "ticket_id": "INC-0001",
+                    "category": "Security & Compliance",
+                    "priority": "P1",
+                    "assigned_team": "Made Up Team",
+                    "needs_escalation": False,
+                    "missing_information": [],
+                    "next_best_action": "",
+                    "remediation_steps": [],
+                }
+            )
+
+    def test_invalid_priority_rejected(self) -> None:
+        with pytest.raises(ValidationError):
+            GoldAnswer.model_validate(
+                {
+                    "ticket_id": "INC-0001",
+                    "category": "Security & Compliance",
+                    "priority": "P5",
+                    "assigned_team": "Security Operations",
+                    "needs_escalation": False,
+                    "missing_information": [],
+                    "next_best_action": "",
+                    "remediation_steps": [],
+                }
             )
 
     def test_invalid_missing_info_rejected(self) -> None:
-        with pytest.raises(ValidationError, match="missing_information"):
-            TriageDecision(
-                ticket_id="INC-0001",
-                category="Network & Connectivity",
-                priority="P2",
-                assigned_team="Network Operations",
-                needs_escalation=False,
-                missing_information=["invalid_field"],  # type: ignore[list-item]
-                next_best_action="Test",
-                remediation_steps=["Step 1"],
-            )
-
-    def test_decision_is_frozen(self) -> None:
-        decision = TriageDecision(
-            ticket_id="INC-0001",
-            category="Network & Connectivity",
-            priority="P2",
-            assigned_team="Network Operations",
-            needs_escalation=False,
-            missing_information=[],
-            next_best_action="Test",
-            remediation_steps=["Step 1"],
-        )
         with pytest.raises(ValidationError):
-            decision.priority = "P1"  # type: ignore[misc]
-
-
-class TestScenarioModel:
-    def test_valid_scenario(self) -> None:
-        scenario = Scenario(
-            ticket=Ticket(
-                ticket_id="INC-0001",
-                subject="Test",
-                description="Test",
-                reporter=Reporter(name="A", email="a@c.com", department="IT"),
-                created_at="2026-03-18T09:00:00Z",
-                channel="portal",
-            ),
-            gold=TriageDecision(
-                ticket_id="INC-0001",
-                category="General Inquiry",
-                priority="P4",
-                assigned_team="Endpoint Engineering",
-                needs_escalation=False,
-                missing_information=[],
-                next_best_action="Test",
-                remediation_steps=["Step 1"],
-            ),
-            scenario_category="data_cleanup",
-            scenario_tag="test_tag",
-            description="A test scenario.",
-        )
-        assert scenario.scenario_category == "data_cleanup"
-
-    def test_invalid_scenario_category_rejected(self) -> None:
-        with pytest.raises(ValidationError, match="scenario_category"):
-            Scenario(
-                ticket=Ticket(
-                    ticket_id="INC-0001",
-                    subject="Test",
-                    description="Test",
-                    reporter=Reporter(name="A", email="a@c.com", department="IT"),
-                    created_at="2026-03-18T09:00:00Z",
-                    channel="portal",
-                ),
-                gold=TriageDecision(
-                    ticket_id="INC-0001",
-                    category="General Inquiry",
-                    priority="P4",
-                    assigned_team="Endpoint Engineering",
-                    needs_escalation=False,
-                    missing_information=[],
-                    next_best_action="Test",
-                    remediation_steps=["Step 1"],
-                ),
-                scenario_category="invalid_category",  # type: ignore[arg-type]
-                scenario_tag="test",
-                description="Test",
+            GoldAnswer.model_validate(
+                {
+                    "ticket_id": "INC-0001",
+                    "category": "Security & Compliance",
+                    "priority": "P1",
+                    "assigned_team": "Security Operations",
+                    "needs_escalation": False,
+                    "missing_information": ["not_a_valid_field"],
+                    "next_best_action": "",
+                    "remediation_steps": [],
+                }
             )
+
+
+class TestTriageResponseModel:
+    def test_accepts_any_string_values(self) -> None:
+        """TriageResponse is deliberately permissive — scoring handles validation."""
+        r = TriageResponse(
+            ticket_id="INC-0001",
+            category="Anything Goes",
+            priority="P99",
+            assigned_team="Unknown Team",
+            needs_escalation=True,
+            missing_information=["made_up"],
+            next_best_action="Whatever",
+            remediation_steps=["Step"],
+        )
+        assert r.category == "Anything Goes"
+
+
+class TestEnumValues:
+    def test_all_categories(self) -> None:
+        expected = {
+            "Access & Authentication",
+            "Hardware & Peripherals",
+            "Network & Connectivity",
+            "Software & Applications",
+            "Security & Compliance",
+            "Data & Storage",
+            "General Inquiry",
+            "Not a Support Ticket",
+        }
+        assert {c.value for c in Category} == expected
+
+    def test_all_teams(self) -> None:
+        expected = {
+            "Identity & Access Management",
+            "Endpoint Engineering",
+            "Network Operations",
+            "Enterprise Applications",
+            "Security Operations",
+            "Data Platform",
+            "None",
+        }
+        assert {t.value for t in AssignedTeam} == expected
+
+    def test_all_missing_info(self) -> None:
+        expected = {
+            "affected_system",
+            "error_message",
+            "steps_to_reproduce",
+            "affected_users",
+            "environment_details",
+            "timestamp",
+            "previous_ticket_id",
+            "contact_info",
+            "device_info",
+            "application_version",
+            "network_location",
+            "business_impact",
+            "reproduction_frequency",
+            "screenshot_or_attachment",
+            "authentication_method",
+            "configuration_details",
+        }
+        assert {m.value for m in MissingInfoItem} == expected

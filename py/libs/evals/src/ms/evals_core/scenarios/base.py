@@ -1,4 +1,3 @@
-# Copyright (c) Microsoft. All rights reserved.
 """Base scenario definition and builder for eval ticket generation."""
 
 from ms.evals_core.constants import Category
@@ -6,10 +5,10 @@ from ms.evals_core.constants import Channel
 from ms.evals_core.constants import MissingInfo
 from ms.evals_core.constants import Priority
 from ms.evals_core.constants import Team
-from ms.evals_core.eval_models import EvalCase
-from ms.evals_core.eval_models import EvalTicket
-from ms.evals_core.eval_models import GoldAnswer
-from ms.evals_core.eval_models import Reporter
+from ms.evals_core.models import GoldAnswer
+from ms.evals_core.models import Reporter
+from ms.evals_core.models import Scenario
+from ms.evals_core.models import Ticket
 
 
 class ScenarioDefinition:
@@ -56,9 +55,9 @@ class ScenarioDefinition:
         self.tags = tags or []
         self.difficulty = difficulty
 
-    def to_eval_case(self, ticket_id: str) -> EvalCase:
-        """Convert this definition to an EvalCase with the given ticket ID."""
-        ticket = EvalTicket(
+    def to_scenario(self, ticket_id: str) -> Scenario:
+        """Convert this definition to a Scenario model with the given ticket ID."""
+        ticket = Ticket(
             ticket_id=ticket_id,
             subject=self.subject,
             description=self.description,
@@ -81,9 +80,9 @@ class ScenarioDefinition:
             next_best_action=self.next_best_action,
             remediation_steps=self.remediation_steps,
         )
-        return EvalCase(
+        return Scenario(
             ticket=ticket,
             gold=gold,
             tags=self.tags,
-            description=f"[{self.scenario_id}] {self.subject}",
+            difficulty=self.difficulty,
         )

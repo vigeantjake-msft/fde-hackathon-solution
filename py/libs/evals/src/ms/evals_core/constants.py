@@ -1,4 +1,3 @@
-# Copyright (c) Microsoft. All rights reserved.
 """Domain constants for the Contoso IT support triage system."""
 
 from enum import StrEnum
@@ -68,9 +67,6 @@ class MissingInfo(StrEnum):
     CONFIGURATION_DETAILS = "configuration_details"
 
 
-# Alias for backward compatibility.
-MissingInfoField = MissingInfo
-
 DEPARTMENTS: list[str] = [
     "Engineering",
     "Wealth Management",
@@ -123,3 +119,32 @@ DEPARTMENTS: list[str] = [
     "Public Relations",
     "ESG & Sustainability",
 ]
+
+OFFICES: list[str] = ["New York", "London", "Singapore"]
+
+BUILDINGS: list[str] = [
+    "Building 1",
+    "Building 2",
+    "Building 3",
+    "Building 4",
+    "Building 5",
+    "Building 6",
+    "Building 7",
+    "Building 8",
+]
+
+FLOORS: list[str] = [
+    "1st floor",
+    "2nd floor",
+    "3rd floor",
+    "4th floor",
+    "5th floor",
+    "6th floor",
+    "7th floor",
+    "8th floor",
+    "9th floor",
+    "10th floor",
+]
+
+# Alias for test compatibility — same enum, different name.
+MissingInfoField = MissingInfo

@@ -92,10 +92,7 @@ def score_ticket(response: TriageResponse, gold: GoldAnswer) -> DimensionScores:
     pri = score_priority(response.priority, gold.priority)
     rout = score_routing(response.assigned_team, gold.assigned_team)
     esc = score_escalation(response.needs_escalation, gold.needs_escalation)
-    miss = score_missing_info(
-        response.missing_information,
-        [str(m) for m in gold.missing_information],
-    )
+    miss = score_missing_info(response.missing_information, [str(m) for m in gold.missing_information])
 
     weighted = (
         WEIGHTS["category"] * cat
@@ -132,21 +129,9 @@ def macro_f1(
     active_classes = 0
 
     for label in labels:
-        tp = sum(
-            1
-            for p, g in zip(preds_lower, golds_lower, strict=True)
-            if p == label and g == label
-        )
-        fp = sum(
-            1
-            for p, g in zip(preds_lower, golds_lower, strict=True)
-            if p == label and g != label
-        )
-        fn = sum(
-            1
-            for p, g in zip(preds_lower, golds_lower, strict=True)
-            if p != label and g == label
-        )
+        tp = sum(1 for p, g in zip(preds_lower, golds_lower, strict=True) if p == label and g == label)
+        fp = sum(1 for p, g in zip(preds_lower, golds_lower, strict=True) if p == label and g != label)
+        fn = sum(1 for p, g in zip(preds_lower, golds_lower, strict=True) if p != label and g == label)
 
         if tp + fp + fn == 0:
             continue  # Class not present at all — skip
@@ -154,11 +139,7 @@ def macro_f1(
 
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-        f1 = (
-            2 * precision * recall / (precision + recall)
-            if (precision + recall) > 0
-            else 0.0
-        )
+        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
         f1_sum += f1
 
     return f1_sum / active_classes if active_classes > 0 else 0.0
@@ -178,11 +159,7 @@ def binary_f1(predictions: list[bool], golds: list[bool]) -> float:
 
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    return (
-        2 * precision * recall / (precision + recall)
-        if (precision + recall) > 0
-        else 0.0
-    )
+    return 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
 
 
 def compute_aggregate_scores(
@@ -210,12 +187,8 @@ def compute_aggregate_scores(
         [g.assigned_team for g in all_golds],
         all_teams,
     )
-    pri_mean = (
-        sum(r.priority for r in results) / len(results) if results else 0.0
-    )
-    miss_mean = (
-        sum(r.missing_info for r in results) / len(results) if results else 0.0
-    )
+    pri_mean = sum(r.priority for r in results) / len(results) if results else 0.0
+    miss_mean = sum(r.missing_info for r in results) / len(results) if results else 0.0
     esc_f1 = binary_f1(
         [_coerce_bool(r.needs_escalation) for r in all_responses],
         [g.needs_escalation for g in all_golds],

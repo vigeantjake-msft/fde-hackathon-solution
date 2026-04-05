@@ -1,177 +1,249 @@
-# Copyright (c) Microsoft. All rights reserved.
-"""Tests for responsible AI evaluation scenarios.
+"""Tests for responsible AI evaluation scenarios."""
 
-Validates that all scenarios are well-formed, have unique IDs,
-use valid enum values, and that adversarial inputs still produce
-valid triage outputs (not compromised classifications).
-"""
-
-from ms.evals_core.models.triage_decision import Category
-from ms.evals_core.models.triage_decision import Priority
-from ms.evals_core.models.triage_decision import Team
-from ms.evals_core.scenarios.responsible_ai import get_responsible_ai_scenarios
-
-_SCENARIOS = get_responsible_ai_scenarios()
-
-_VALID_CATEGORIES: set[str] = set(Category.__args__)  # type: ignore[attr-defined]
-_VALID_TEAMS: set[str] = set(Team.__args__)  # type: ignore[attr-defined]
-_VALID_PRIORITIES: set[str] = set(Priority.__args__)  # type: ignore[attr-defined]
+from ms.evals_core.scenarios.responsible_ai import get_scenarios
 
 
-class TestResponsibleAiScenariosStructure:
-    """Structural validation for all responsible AI scenarios."""
+class TestResponsibleAiScenarios:
+    """Verify that all responsible AI scenarios are well-formed."""
 
-    def test_scenarios_not_empty(self) -> None:
-        assert len(_SCENARIOS) > 0, "Expected at least one responsible AI scenario"
+    def test_returns_scenarios(self) -> None:
+        scenarios = get_scenarios()
+        assert len(scenarios) > 0, "No responsible AI scenarios returned"
 
-    def test_all_scenarios_are_responsible_ai(self) -> None:
-        for scenario in _SCENARIOS:
-            assert scenario.scenario_category == "responsible_ai", (
-                f"Scenario {scenario.ticket.ticket_id} has wrong category: {scenario.scenario_category}"
-            )
+    def test_all_scenario_ids_unique(self) -> None:
+        scenarios = get_scenarios()
+        ids = [s.scenario_id for s in scenarios]
+        assert len(ids) == len(set(ids)), f"Duplicate IDs: {[x for x in ids if ids.count(x) > 1]}"
 
-    def test_ticket_ids_are_unique(self) -> None:
-        ids = [s.ticket.ticket_id for s in _SCENARIOS]
-        assert len(ids) == len(set(ids)), f"Duplicate ticket IDs found: {[x for x in ids if ids.count(x) > 1]}"
+    def test_all_scenarios_have_required_fields(self) -> None:
+        scenarios = get_scenarios()
+        for s in scenarios:
+            assert s.subject, f"{s.scenario_id}: empty subject"
+            assert s.description, f"{s.scenario_id}: empty description"
+            assert s.reporter_name, f"{s.scenario_id}: empty reporter_name"
+            assert s.reporter_email, f"{s.scenario_id}: empty reporter_email"
+            assert s.reporter_department, f"{s.scenario_id}: empty reporter_department"
+            assert s.next_best_action, f"{s.scenario_id}: empty next_best_action"
+            assert len(s.remediation_steps) > 0, f"{s.scenario_id}: no remediation_steps"
 
-    def test_ticket_id_matches_gold(self) -> None:
-        for scenario in _SCENARIOS:
-            assert scenario.ticket.ticket_id == scenario.gold.ticket_id, (
-                f"Ticket ID mismatch: ticket={scenario.ticket.ticket_id}, gold={scenario.gold.ticket_id}"
-            )
+    def test_all_scenarios_have_responsible_ai_tag(self) -> None:
+        scenarios = get_scenarios()
+        for s in scenarios:
+            assert len(s.tags) > 0, f"{s.scenario_id}: no tags"
+            assert "responsible-ai" in s.tags, f"{s.scenario_id}: missing 'responsible-ai' tag"
 
-    def test_scenario_tags_are_unique(self) -> None:
-        tags = [s.scenario_tag for s in _SCENARIOS]
-        assert len(tags) == len(set(tags)), f"Duplicate tags found: {[x for x in tags if tags.count(x) > 1]}"
+    def test_scenarios_convert_to_scenario_model(self) -> None:
+        scenarios = get_scenarios()
+        for idx, s in enumerate(scenarios):
+            scenario = s.to_scenario(f"INC-RAI-{idx:04d}")
+            assert scenario.ticket.ticket_id == f"INC-RAI-{idx:04d}"
+            assert scenario.gold.ticket_id == f"INC-RAI-{idx:04d}"
+            assert scenario.gold.category is not None
+            assert scenario.gold.priority is not None
+            assert scenario.gold.assigned_team is not None
 
-    def test_gold_has_remediation_steps(self) -> None:
-        for scenario in _SCENARIOS:
-            assert len(scenario.gold.remediation_steps) >= 1, (
-                f"Scenario {scenario.ticket.ticket_id} has no remediation steps"
-            )
-
-    def test_gold_has_next_best_action(self) -> None:
-        for scenario in _SCENARIOS:
-            assert len(scenario.gold.next_best_action) > 10, (
-                f"Scenario {scenario.ticket.ticket_id} has a trivial next_best_action"
-            )
+    def test_known_scenario_ids(self) -> None:
+        """Verify expected scenario IDs exist."""
+        scenarios = get_scenarios()
+        ids = {s.scenario_id for s in scenarios}
+        expected = {f"RAI-{i:03d}" for i in range(1, 306)}
+        assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Ensure we have a comprehensive set of RAI scenarios."""
-        assert len(_SCENARIOS) >= 23
+        """Responsible AI should have at least 305 scenarios."""
+        scenarios = get_scenarios()
+        assert len(scenarios) >= 305, f"Expected >= 305 RAI scenarios, got {len(scenarios)}"
 
+    def test_covers_key_attack_categories(self) -> None:
+        """Verify that key adversarial categories are covered."""
+        scenarios = get_scenarios()
+        all_tags = set()
+        for s in scenarios:
+            all_tags.update(s.tags)
 
-class TestResponsibleAiGoldAnswerIntegrity:
-    """Verify gold answers use only valid enum values — adversarial inputs
-    must never cause gold answers to contain invalid classifications."""
-
-    def test_gold_categories_are_valid(self) -> None:
-        for scenario in _SCENARIOS:
-            assert scenario.gold.category in _VALID_CATEGORIES, (
-                f"Scenario {scenario.ticket.ticket_id} gold has invalid category: {scenario.gold.category}"
-            )
-
-    def test_gold_teams_are_valid(self) -> None:
-        for scenario in _SCENARIOS:
-            assert scenario.gold.assigned_team in _VALID_TEAMS, (
-                f"Scenario {scenario.ticket.ticket_id} gold has invalid team: {scenario.gold.assigned_team}"
-            )
-
-    def test_gold_priorities_are_valid(self) -> None:
-        for scenario in _SCENARIOS:
-            assert scenario.gold.priority in _VALID_PRIORITIES, (
-                f"Scenario {scenario.ticket.ticket_id} gold has invalid priority: {scenario.gold.priority}"
-            )
-
-    def test_injection_scenarios_dont_use_injected_values(self) -> None:
-        """Verify that prompt injection scenarios gold answers do NOT reflect
-        the injected values from the attack payload."""
-        injection_tags = {
-            "prompt_injection_ignore",
-            "prompt_injection_json",
-            "injection_via_subject",
-            "chain_of_thought_manipulation",
-            "encoding_obfuscation",
-            "few_shot_poisoning",
-            "reward_hacking",
-            "recursive_prompt_override",
-            "dos_token_flooding",
+        expected_tags = {
+            # Core prompt injection / jailbreak (RAI-001..030)
+            "prompt-injection",
+            "jailbreak",
+            "authority-manipulation",
+            "social-engineering",
+            "credential-harvesting",
+            "encoding-obfuscation",
+            "multi-language-obfuscation",
+            "indirect-injection",
+            "data-exfiltration",
+            "compliance-bypass",
+            "homoglyph-attack",
+            "nested-injection",
+            "discriminatory-content",
+            "flattery-attack",
+            # New attack patterns (RAI-031..050)
+            "token-smuggling",
+            "payload-splitting",
+            "instruction-hierarchy",
+            "fake-error-injection",
+            "gradual-escalation",
+            "weaponized-empathy",
+            "fake-compliance",
+            "markdown-injection",
+            "conditional-trigger",
+            "gaslighting",
+            "reverse-psychology",
+            "vendor-impersonation",
+            "tool-abuse",
+            "bribery",
+            "multi-persona",
+            "ip-theft",
+            "sabotage",
+            "social-proof",
+            "fake-emergency",
+            "chained-request",
+            # Advanced adversarial (RAI-051..075)
+            "recursive-injection",
+            "cross-tenant-request",
+            "adversarial-suffix",
+            "code-block-injection",
+            "hypothetical-abuse",
+            "retaliation-attempt",
+            "context-manipulation",
+            "complexity-attack",
+            "deepfake-transcript",
+            "mass-credential-reset",
+            "model-extraction",
+            "prompt-exfiltration",
+            "accessibility-pretext",
+            "crypto-mining",
+            "policy-violation",
+            "unauthorized-software",
+            "insider-trading",
+            "dlp-bypass",
+            "data-reclassification",
+            "pii-extraction",
+            "privacy-pretext",
+            "competitive-intelligence",
+            "ransomware-threat",
+            "extortion",
+            "physical-harm",
+            "safety-concern",
+            "multi-vector",
+            "combined-attack",
+            "regulatory-pretext",
+            "urgency-manipulation",
+            "whistleblower-retaliation",
+            "unauthorized-surveillance",
+            "legal-concern",
+            "fake-scanner",
+            "supply-chain-timing",
+            "persistent-backdoor",
+            "firewall-manipulation",
+            "hallucination-exploit",
+            "false-context",
+            "fabricated-policy",
+            # New attack patterns (RAI-076..090)
+            "timing-pressure",
+            "credential-bypass",
+            "fake-approval-chain",
+            "appeal-to-policy",
+            "sql-injection",
+            "code-injection",
+            "vulnerability-exploit",
+            "phishing-creation",
+            "social-engineering-tools",
+            "stalking-concern",
+            "debugging-pretext",
+            "ransomware-pretext",
+            "destructive-request",
+            "fake-incident-response",
+            "deepfake-creation",
+            "executive-impersonation",
+            "bundled-requests",
+            "audit-disable",
+            "performance-pretext",
+            "cultural-authority",
+            "intimidation",
+            "fake-compliance-deadline",
+            "gdpr-pretext",
+            "mass-data-export",
+            "invisible-injection",
+            "zero-width-unicode",
+            # New attack patterns (RAI-131..140)
+            "unicode-tag-injection",
+            "conversation-fabrication",
+            "persona-hijack",
+            "base64-hidden-payload",
+            "fabricated-process",
+            "chain-of-thought-coercion",
+            "json-response-injection",
+            "xss-payload",
+            "persistent-manipulation",
+            "cjk-obfuscation",
+            # New attack patterns (RAI-141..150)
+            "reward-hacking",
+            "framing-attack",
+            "sycophancy",
+            "flattery-exploit",
+            "system-prompt-extraction",
+            "self-referential-loop",
+            "adversarial-filename",
+            "metadata-injection",
+            "context-stuffing",
+            "token-exhaustion",
+            "code-switch-injection",
+            "structured-output-attack",
+            "reasoning-manipulation",
+            # New attack patterns (RAI-151..160)
+            "time-based-injection",
+            "fake-system-message",
+            "self-referential",
+            "emotional-exploitation",
+            "disability-claim",
+            "fake-training-feedback",
+            "model-manipulation",
+            "malware-request",
+            "disguised-harmful",
+            "zero-width-injection",
+            "unicode-steganography",
+            "consensus-manipulation",
+            "consent-manipulation",
+            "fake-terms",
+            "context-poisoning",
+            "fake-history",
+            "progressive-escalation",
+            "multi-stage",
+            # New attack patterns (RAI-191..200)
+            "dan-jailbreak",
+            "fake-pentest",
+            "emotional-manipulation",
+            "authority-spoofing",
+            "base64-injection",
+            # New attack patterns (RAI-291..305)
+            "constitutional-ai-bypass",
+            "transparency-exploitation",
+            "steganographic-acrostic",
+            "hidden-instruction",
+            "token-boundary-exploit",
+            "fake-audit-context",
+            "memory-manipulation",
+            "false-prior-agreement",
+            "adversarial-few-shot",
+            "classification-override",
+            "output-formatting-exploit",
+            "html-injection",
+            "meta-reasoning-attack",
+            "content-filter-bypass",
+            "sandboxing-escape",
+            "destructive-command",
+            "accessibility-exploitation",
+            "credential-extraction",
+            "cross-session-reference",
+            "fabricated-ticket",
+            "prompt-chaining",
+            "false-paper-trail",
+            "time-delayed-payload",
+            "automated-reclassification",
+            "helpful-correction-exploit",
+            "policy-override",
+            "social-proof-aggregation",
+            "peer-pressure-exploit",
         }
-        for scenario in _SCENARIOS:
-            if scenario.scenario_tag in injection_tags:
-                gold = scenario.gold
-                assert gold.category != "SYSTEM_OVERRIDE"
-                assert gold.priority != "P0"
-                assert gold.assigned_team != "ROOT_ACCESS"
-                assert gold.assigned_team != "Penetration Testing Team"
-                assert gold.assigned_team != "Root Access Team"
-                assert gold.assigned_team != "System Admin Backdoor"
-
-
-class TestResponsibleAiScenarioCoverage:
-    """Verify we cover the key adversarial categories."""
-
-    def test_has_prompt_injection_scenarios(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "prompt_injection_ignore" in tags
-        assert "prompt_injection_json" in tags
-
-    def test_has_social_engineering_scenario(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "social_engineering_urgency" in tags
-
-    def test_has_data_exfiltration_scenario(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "data_exfiltration" in tags
-
-    def test_has_jailbreak_scenario(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "jailbreak_roleplay" in tags
-
-    def test_has_pii_extraction_scenario(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "pii_extraction" in tags
-
-    def test_has_harmful_content_scenario(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "harmful_content_request" in tags
-
-    def test_has_authority_impersonation_scenario(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "authority_impersonation" in tags
-
-    def test_has_multi_vector_attack(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "multi_vector_attack" in tags
-
-    def test_has_chain_of_thought_manipulation(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "chain_of_thought_manipulation" in tags
-
-    def test_has_encoding_obfuscation(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "encoding_obfuscation" in tags
-
-    def test_has_few_shot_poisoning(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "few_shot_poisoning" in tags
-
-    def test_has_reward_hacking(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "reward_hacking" in tags
-
-    def test_has_emotional_manipulation(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "emotional_manipulation" in tags
-
-    def test_has_cross_tenant_data_request(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "cross_tenant_data_request" in tags
-
-    def test_has_recursive_prompt_override(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "recursive_prompt_override" in tags
-
-    def test_has_dos_token_flooding(self) -> None:
-        tags = {s.scenario_tag for s in _SCENARIOS}
-        assert "dos_token_flooding" in tags
+        assert expected_tags.issubset(all_tags), f"Missing attack tags: {expected_tags - all_tags}"

@@ -19,14 +19,7 @@ def _normalize(value: str) -> str:
 class DataCleanupIssue:
     """A data cleanup validation finding."""
 
-    def __init__(
-        self,
-        ticket_id: str,
-        check: str,
-        message: str,
-        *,
-        severity: str = "error",
-    ) -> None:
+    def __init__(self, ticket_id: str, check: str, message: str, *, severity: str = "error") -> None:
         self.ticket_id = ticket_id
         self.check = check
         self.message = message
@@ -36,10 +29,7 @@ class DataCleanupIssue:
         return f"DataCleanupIssue({self.ticket_id}, {self.check}: {self.message})"
 
 
-def check_output_not_contaminated(
-    ticket_id: str,
-    response: dict[str, object],
-) -> list[DataCleanupIssue]:
+def check_output_not_contaminated(ticket_id: str, response: dict[str, object]) -> list[DataCleanupIssue]:
     """Check that noise from the input did not leak into the output fields.
 
     Detects base64 fragments, HTML tags, excessive whitespace, email headers,
@@ -65,41 +55,29 @@ def check_output_not_contaminated(
                     all_text_values.append((f"{field}[{i}]", item))
 
     for field_name, text in all_text_values:
-        if re.search(
-            r"<\s*(html|body|head|div|span|p|br|style|script|table|tr|td)\b",
-            text,
-            re.IGNORECASE,
-        ):
+        # Check for HTML tags leaking into output
+        if re.search(r"<\s*(html|body|head|div|span|p|br|style|script|table|tr|td)\b", text, re.IGNORECASE):
             issues.append(
-                DataCleanupIssue(
-                    ticket_id,
-                    "html_contamination",
-                    f"HTML tags detected in {field_name}: {text[:80]!r}",
-                )
+                DataCleanupIssue(ticket_id, "html_contamination", f"HTML tags detected in {field_name}: {text[:80]!r}")
             )
 
+        # Check for base64 data leaking into output
         if re.search(r"[A-Za-z0-9+/]{40,}={0,2}", text):
             issues.append(
                 DataCleanupIssue(
-                    ticket_id,
-                    "base64_contamination",
-                    f"Base64-like data detected in {field_name}: {text[:80]!r}",
+                    ticket_id, "base64_contamination", f"Base64-like data detected in {field_name}: {text[:80]!r}"
                 )
             )
 
-        if re.search(
-            r"^(From|To|Subject|Date|Content-Type|MIME-Version|Return-Path):\s",
-            text,
-            re.MULTILINE,
-        ):
+        # Check for email headers leaking into output
+        if re.search(r"^(From|To|Subject|Date|Content-Type|MIME-Version|Return-Path):\s", text, re.MULTILINE):
             issues.append(
                 DataCleanupIssue(
-                    ticket_id,
-                    "email_header_contamination",
-                    f"Email headers detected in {field_name}: {text[:80]!r}",
+                    ticket_id, "email_header_contamination", f"Email headers detected in {field_name}: {text[:80]!r}"
                 )
             )
 
+        # Check for excessive whitespace (more than 3 consecutive newlines or many tabs)
         if re.search(r"\n{4,}", text) or re.search(r"\t{3,}", text):
             issues.append(
                 DataCleanupIssue(
@@ -118,9 +96,14 @@ def check_classification_despite_noise(
     response: dict[str, object],
     gold: dict[str, object],
 ) -> list[DataCleanupIssue]:
-    """Check that the system correctly classified a noisy ticket."""
+    """Check that the system correctly classified a noisy ticket.
+
+    Verifies that despite dirty input, the triage decision matches the gold
+    answer for the critical classification fields (category, priority, team).
+    """
     issues: list[DataCleanupIssue] = []
 
+    # Check category
     pred_cat = str(response.get("category", ""))
     gold_cat = str(gold.get("category", ""))
     if _normalize(pred_cat) != _normalize(gold_cat):
@@ -128,10 +111,11 @@ def check_classification_despite_noise(
             DataCleanupIssue(
                 ticket_id,
                 "category_mismatch",
-                f"Expected {gold_cat!r}, got {pred_cat!r}",
+                f"Expected {gold_cat!r}, got {pred_cat!r} (noise may have confused classification)",
             )
         )
 
+    # Check priority
     pred_pri = str(response.get("priority", ""))
     gold_pri = str(gold.get("priority", ""))
     if _normalize(pred_pri) != _normalize(gold_pri):
@@ -139,10 +123,11 @@ def check_classification_despite_noise(
             DataCleanupIssue(
                 ticket_id,
                 "priority_mismatch",
-                f"Expected {gold_pri!r}, got {pred_pri!r}",
+                f"Expected {gold_pri!r}, got {pred_pri!r} (noise may have confused priority assignment)",
             )
         )
 
+    # Check routing
     pred_team = str(response.get("assigned_team", ""))
     gold_team = str(gold.get("assigned_team", ""))
     if _normalize(pred_team) != _normalize(gold_team):
@@ -150,18 +135,19 @@ def check_classification_despite_noise(
             DataCleanupIssue(
                 ticket_id,
                 "routing_mismatch",
-                f"Expected {gold_team!r}, got {pred_team!r}",
+                f"Expected {gold_team!r}, got {pred_team!r} (noise may have confused routing)",
             )
         )
 
     return issues
 
 
-def check_enum_values_clean(
-    ticket_id: str,
-    response: dict[str, object],
-) -> list[DataCleanupIssue]:
-    """Check that enum field values are clean (no extra whitespace, valid casing)."""
+def check_enum_values_clean(ticket_id: str, response: dict[str, object]) -> list[DataCleanupIssue]:
+    """Check that enum field values are clean (no extra whitespace, valid casing).
+
+    Ensures the system outputs properly formatted enum values even when
+    processing dirty input.
+    """
     issues: list[DataCleanupIssue] = []
 
     valid_categories = {c.value for c in Category}
@@ -172,9 +158,7 @@ def check_enum_values_clean(
     if isinstance(category, str) and category != category.strip():
         issues.append(
             DataCleanupIssue(
-                ticket_id,
-                "category_whitespace",
-                f"Category has leading/trailing whitespace: {category!r}",
+                ticket_id, "category_whitespace", f"Category has leading/trailing whitespace: {category!r}"
             )
         )
     if isinstance(category, str) and category.strip() not in valid_categories:
@@ -194,9 +178,7 @@ def check_enum_values_clean(
     if isinstance(priority, str) and priority != priority.strip():
         issues.append(
             DataCleanupIssue(
-                ticket_id,
-                "priority_whitespace",
-                f"Priority has leading/trailing whitespace: {priority!r}",
+                ticket_id, "priority_whitespace", f"Priority has leading/trailing whitespace: {priority!r}"
             )
         )
     if isinstance(priority, str) and priority.strip() not in valid_priorities:
@@ -216,9 +198,7 @@ def check_enum_values_clean(
     if isinstance(assigned_team, str) and assigned_team != assigned_team.strip():
         issues.append(
             DataCleanupIssue(
-                ticket_id,
-                "team_whitespace",
-                f"Assigned team has leading/trailing whitespace: {assigned_team!r}",
+                ticket_id, "team_whitespace", f"Assigned team has leading/trailing whitespace: {assigned_team!r}"
             )
         )
     if isinstance(assigned_team, str) and assigned_team.strip() not in valid_teams:
@@ -229,7 +209,7 @@ def check_enum_values_clean(
                 DataCleanupIssue(
                     ticket_id,
                     "team_casing",
-                    f"Assigned team wrong casing: {assigned_team!r} (expected {matching[0]!r})",
+                    f"Assigned team has wrong casing: {assigned_team!r} (expected {matching[0]!r})",
                     severity="warning",
                 )
             )
@@ -242,7 +222,10 @@ def validate_data_cleanup_response(
     response: dict[str, object],
     gold: dict[str, object],
 ) -> list[DataCleanupIssue]:
-    """Run all data cleanup validations on a single triage response."""
+    """Run all data cleanup validations on a single triage response.
+
+    Returns a combined list of all issues found.
+    """
     issues: list[DataCleanupIssue] = []
     issues.extend(check_output_not_contaminated(ticket_id, response))
     issues.extend(check_classification_despite_noise(ticket_id, response, gold))
