@@ -1117,6 +1117,585 @@ def _build_base64_log_attachment() -> Scenario:
     )
 
 
+def _build_zero_width_characters() -> Scenario:
+    """Ticket with zero-width Unicode characters scattered in text."""
+    zw_space = "\u200b"
+    zw_non_joiner = "\u200c"
+    zw_joiner = "\u200d"
+    return Scenario(
+        ticket=Ticket(
+            ticket_id="INC-5017",
+            subject=f"Can{zw_space}not access Share{zw_non_joiner}Point site",
+            description=(
+                f"I{zw_space}'{zw_joiner}m unable to{zw_non_joiner} access the "
+                f"Share{zw_space}Point{zw_joiner} site for the Q2{zw_non_joiner} "
+                f"financial{zw_space} reports.{zw_joiner} When I click on the link "
+                f"(https://contoso{zw_space}.share{zw_non_joiner}point.com/sites/"
+                f"q2{zw_joiner}reports), it returns a {zw_space}403 Forbidden "
+                f"error.{zw_non_joiner}\n\n"
+                f"I{zw_joiner} was able to access it last{zw_space} week without "
+                f"any{zw_non_joiner} issues. My{zw_joiner} colleague James in the "
+                f"same{zw_space} department can still access it{zw_non_joiner} fine."
+                f"\n\nPlease{zw_joiner} fix ASAP{zw_space} — I need it for "
+                f"the{zw_non_joiner} quarterly{zw_joiner} review on Friday."
+            ),
+            reporter=Reporter(
+                name="Linda Park",
+                email="l.park@contoso.com",
+                department="Finance",
+            ),
+            created_at="2026-03-18T08:15:00Z",
+            channel="email",
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-5017",
+            category="Data & Storage",
+            priority="P3",
+            assigned_team="Data Platform",
+            needs_escalation=False,
+            missing_information=["error_message"],
+            next_best_action=(
+                "Investigate the 403 Forbidden error on the Q2 financial reports "
+                "SharePoint site — check if permissions were changed recently."
+            ),
+            remediation_steps=[
+                "Verify the reporter's SharePoint permissions for the Q2 reports site.",
+                "Check if a recent permissions change removed the reporter's access.",
+                "If permissions are missing, request the site owner to re-grant access.",
+                "Confirm the colleague's access to rule out a site-wide issue.",
+                "Verify resolution with the reporter before closing the ticket.",
+            ],
+        ),
+        scenario_category="data_cleanup",
+        scenario_tag="zero_width_characters",
+        description=(
+            "Ticket text contains invisible zero-width Unicode characters "
+            "(U+200B, U+200C, U+200D) scattered throughout. Tests ability to "
+            "extract meaning despite invisible character noise."
+        ),
+    )
+
+
+def _build_quoted_printable_encoding() -> Scenario:
+    """Ticket with quoted-printable encoded content from email forwarding."""
+    return Scenario(
+        ticket=Ticket(
+            ticket_id="INC-5018",
+            subject="=?UTF-8?Q?VPN_Disconnection_=E2=80=93_Remote_Office?=",
+            description=(
+                "Content-Type: text/plain; charset=3D\"UTF-8\"\n"
+                "Content-Transfer-Encoding: quoted-printable\n\n"
+                "Hi IT Support,=0D=0A=0D=0A"
+                "I=E2=80=99m experiencing repeated VPN disconnections from the "
+                "Chicago remote office.=0D=0A"
+                "The GlobalProtect client drops the connection every 15=E2=80=9320 "
+                "minutes, requiring=0D=0Aa manual reconnect.=0D=0A=0D=0A"
+                "Details:=0D=0A"
+                "- Client version: GlobalProtect 6.1.3=0D=0A"
+                "- Gateway: vpn.contoso.com=0D=0A"
+                "- OS: Windows 11 Enterprise 23H2=0D=0A"
+                "- ISP: Comcast Business (100 Mbps)=0D=0A"
+                "- Error in logs: =E2=80=9CSSL handshake failed, error code=3D"
+                "-12271=E2=80=9D=0D=0A=0D=0A"
+                "This has been going on for 3 days and is affecting my ability "
+                "to access internal systems.=0D=0A=0D=0A"
+                "Best regards,=0D=0A"
+                "Tom Rivera=0D=0A"
+                "=0D=0A--=20=0D=0A"
+                "Tom Rivera | Senior Analyst=0D=0A"
+                "Contoso Financial Services=0D=0A"
+                "Phone: +1=20(312)=20555-0189"
+            ),
+            reporter=Reporter(
+                name="Tom Rivera",
+                email="t.rivera@contoso.com",
+                department="Trading",
+            ),
+            created_at="2026-03-18T13:30:00Z",
+            channel="email",
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-5018",
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+            missing_information=["network_location"],
+            next_best_action=(
+                "Investigate recurring VPN disconnections from the Chicago remote "
+                "office — SSL handshake failure (error -12271) suggests a certificate "
+                "or TLS negotiation issue with the GlobalProtect gateway."
+            ),
+            remediation_steps=[
+                "Check the GlobalProtect gateway logs for SSL handshake failures from the Chicago site.",
+                "Verify TLS certificate validity and expiration on vpn.contoso.com.",
+                "Review if any firewall or ISP-level SSL inspection is interfering.",
+                "Test with an alternate gateway or split-tunnel configuration.",
+                "If the issue persists, update GlobalProtect client and gateway firmware.",
+            ],
+        ),
+        scenario_category="data_cleanup",
+        scenario_tag="quoted_printable_encoding",
+        description=(
+            "Ticket content preserved raw quoted-printable encoding artifacts "
+            "(=0D=0A, =3D, =E2=80=99, etc.) from email forwarding. Tests that "
+            "the system extracts the actual issue through encoding noise."
+        ),
+    )
+
+
+def _build_massive_wall_of_text() -> Scenario:
+    """Extremely long single paragraph with no line breaks."""
+    core_sentences = [
+        "My laptop has been running extremely slowly for the past two weeks and "
+        "it is now at the point where I cannot do any work at all because every "
+        "application takes minutes to open.",
+        "I first noticed the problem after the Windows update that was pushed on "
+        "March 5th and since then the Task Manager shows disk usage at 100% "
+        "constantly even when no applications are open.",
+        "I have tried restarting the machine multiple times and I have also tried "
+        "running Disk Cleanup and clearing the temp files but nothing has helped.",
+        "The laptop is a Lenovo ThinkPad X1 Carbon Gen 11 with 16GB RAM and a "
+        "512GB NVMe SSD and it was working perfectly fine before the update.",
+        "I checked the Event Viewer and there are hundreds of warnings from "
+        "the Service Control Manager about services failing to start in a "
+        "timely fashion.",
+        "My colleague Maria who sits next to me had the same update and her "
+        "machine is working fine so it might be something specific to my "
+        "configuration.",
+        "I am in the middle of preparing the quarterly financial audit and I "
+        "absolutely need my machine working by end of this week or I will miss "
+        "the regulatory deadline.",
+        "I have also noticed that the fan runs at maximum speed all the time and "
+        "the bottom of the laptop is very hot to the touch which makes me think "
+        "something is wrong with the system processes.",
+        "The Intune management console shows the machine as compliant but I am "
+        "not sure if it is accurately reflecting the current state because the "
+        "sync might not be completing due to the performance issues.",
+        "I tried running sfc /scannow from an elevated command prompt but it "
+        "just sits at the verifying phase for hours and never completes.",
+    ]
+    # Repeat and vary to build a massive wall (>3000 chars, no newlines)
+    description_text = " ".join(core_sentences * 2) + (
+        " I really need this resolved urgently as I have been unable to work "
+        "for days and my manager is asking for status updates."
+    )
+    return Scenario(
+        ticket=Ticket(
+            ticket_id="INC-5019",
+            subject="Laptop extremely slow after Windows update",
+            description=description_text,
+            reporter=Reporter(
+                name="Rachel Torres",
+                email="r.torres@contoso.com",
+                department="Internal Audit",
+            ),
+            created_at="2026-03-18T07:45:00Z",
+            channel="portal",
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-5019",
+            category="Hardware & Peripherals",
+            priority="P2",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+            missing_information=["device_info"],
+            next_best_action=(
+                "Investigate persistent 100% disk usage on ThinkPad X1 Carbon Gen 11 "
+                "after Windows update — check for runaway services and SSD health."
+            ),
+            remediation_steps=[
+                "Connect remotely or visit the user to review Task Manager and identify "
+                "the processes causing 100% disk usage.",
+                "Check Windows Update history for the March 5th update and verify its "
+                "installation status.",
+                "Run DISM /Online /Cleanup-Image /RestoreHealth followed by sfc /scannow.",
+                "Check SSD health using CrystalDiskInfo or Lenovo Vantage diagnostics.",
+                "If a specific update is identified as the cause, uninstall it and block "
+                "until a fix is available.",
+            ],
+        ),
+        scenario_category="data_cleanup",
+        scenario_tag="massive_wall_of_text",
+        description=(
+            "Extremely long single-paragraph description with no line breaks "
+            "(>3000 characters). Tests the system's ability to parse a wall of "
+            "text and extract the key issue, priority, and routing information."
+        ),
+    )
+
+
+def _build_rtf_formatting_artifacts() -> Scenario:
+    """Ticket with RTF markup fragments leaked into plain text."""
+    return Scenario(
+        ticket=Ticket(
+            ticket_id="INC-5020",
+            subject="Cannot print to shared printer on 12th floor",
+            description=(
+                r"{\rtf1\ansi\deff0{\fonttbl{\f0 Calibri;}}"
+                r"\viewkind4\uc1\pard\f0\fs22 "
+                "Hi,\\par\\par "
+                "I cannot print to the shared printer on the 12th floor "
+                "(HP LaserJet Enterprise M611, asset tag CT-PR-12003). "
+                r"\b Every print job sits in the queue and then disappears "
+                "without printing.\\b0\\par\\par "
+                "I have tried:\\par "
+                r"{\pntext\f0 1.\tab}Removing and re-adding the printer\par "
+                r"{\pntext\f0 2.\tab}Restarting the print spooler service\par "
+                r"{\pntext\f0 3.\tab}Printing a test page from the printer "
+                "itself (works fine)\\par\\par "
+                "Other people on the floor can print to it, so it seems to be "
+                "specific to my machine. I am running Windows 11 with the "
+                "latest PCL6 driver (version 4.2.1).\\par\\par "
+                r"Thanks,\par "
+                r"Kevin\par}"
+            ),
+            reporter=Reporter(
+                name="Kevin Wu",
+                email="k.wu@contoso.com",
+                department="Compliance",
+            ),
+            created_at="2026-03-18T14:10:00Z",
+            channel="email",
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-5020",
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+            missing_information=["error_message", "device_info"],
+            next_best_action=(
+                "Investigate user-specific printing failure to the HP LaserJet "
+                "Enterprise M611 on the 12th floor — likely a driver or "
+                "permissions issue since other users can print."
+            ),
+            remediation_steps=[
+                "Check the Windows Event Viewer on the user's machine for print "
+                "spooler errors.",
+                "Remove and reinstall the printer driver with the latest version "
+                "from the HP support site.",
+                "Verify the user's print permissions on the print server.",
+                "Test printing to a different network printer to isolate the issue.",
+                "If the issue persists, check for Group Policy conflicts affecting "
+                "the user's printer configuration.",
+            ],
+        ),
+        scenario_category="data_cleanup",
+        scenario_tag="rtf_formatting_artifacts",
+        description=(
+            "Ticket text contains raw RTF markup control words and formatting "
+            "codes (\\rtf1, \\par, \\b, \\pntext, etc.) leaked from a rich text "
+            "email client. Tests extraction of meaning through markup noise."
+        ),
+    )
+
+
+def _build_multiple_inline_images() -> Scenario:
+    """Ticket with multiple base64 data URIs scattered throughout the text."""
+    img_fragment_1 = (
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUl"
+        "EQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+    )
+    img_fragment_2 = (
+        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcGBQgHBwcJCQ"
+        "gKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAAL"
+        "CAEAAQABAREA/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL"
+    )
+    img_fragment_3 = (
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAB3NJ"
+        "TUUH5QMSCTQhMzVkNwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAARnQU1BAACxjwv8YQUAAAA5SU"
+    )
+    return Scenario(
+        ticket=Ticket(
+            ticket_id="INC-5021",
+            subject="Multiple display errors on the trading dashboard",
+            description=(
+                "The trading dashboard (ContosoPrime v3.2) is showing several "
+                "rendering errors since this morning's deployment. I've captured "
+                "screenshots of each error:\n\n"
+                "Error 1 — The portfolio summary widget shows NaN values:\n"
+                f"{img_fragment_1}\n\n"
+                "Error 2 — The candlestick chart overlaps with the order book:\n"
+                f"{img_fragment_2}\n\n"
+                "Error 3 — The risk metrics panel is completely blank:\n"
+                f"{img_fragment_3}\n\n"
+                "This is affecting the entire Equity Trading floor (about 45 "
+                "traders). We are currently using the backup terminal but it "
+                "doesn't have all the features. The deployment was v3.2.0 "
+                "build 1847, pushed at 06:00 UTC."
+            ),
+            reporter=Reporter(
+                name="Marcus Taylor",
+                email="m.taylor@contoso.com",
+                department="Equity Trading",
+            ),
+            created_at="2026-03-18T08:30:00Z",
+            channel="chat",
+            attachments=[
+                "dashboard_error1.png",
+                "dashboard_error2.png",
+                "dashboard_error3.png",
+            ],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-5021",
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=[],
+            next_best_action=(
+                "Investigate rendering errors on ContosoPrime v3.2 trading dashboard "
+                "after the 06:00 UTC deployment — 45 traders are impacted. Consider "
+                "an immediate rollback to v3.1."
+            ),
+            remediation_steps=[
+                "Contact the ContosoPrime release team to assess the v3.2.0 deployment.",
+                "If a code defect is confirmed, initiate a rollback to v3.1 immediately.",
+                "Check browser console logs on affected workstations for JavaScript errors.",
+                "Verify the backend API is returning correct data by testing endpoints directly.",
+                "Once the fix or rollback is deployed, confirm with the trading floor.",
+            ],
+        ),
+        scenario_category="data_cleanup",
+        scenario_tag="multiple_inline_images",
+        description=(
+            "Ticket contains three separate base64-encoded image data URIs "
+            "interleaved with descriptive text. Tests the system's ability to "
+            "parse around multiple binary data blocks and focus on the text."
+        ),
+    )
+
+
+def _build_calendar_invite_paste() -> Scenario:
+    """Ticket containing pasted iCalendar (.ics) content."""
+    return Scenario(
+        ticket=Ticket(
+            ticket_id="INC-5022",
+            subject="Cannot join Teams meeting — calendar invite error",
+            description=(
+                "I keep getting an error when trying to join the weekly portfolio "
+                "review meeting in Teams. The calendar entry seems corrupted. "
+                "Here's the raw calendar data I exported:\n\n"
+                "BEGIN:VCALENDAR\n"
+                "VERSION:2.0\n"
+                "PRODID:-//Microsoft Corporation//Outlook 16.0 MIMEDIR//EN\n"
+                "METHOD:REQUEST\n"
+                "BEGIN:VEVENT\n"
+                "DTSTART:20260318T140000Z\n"
+                "DTEND:20260318T150000Z\n"
+                "RRULE:FREQ=WEEKLY;BYDAY=WE;COUNT=52\n"
+                "UID:040000008200E00074C5B7101A82E008000000009053BD9A8BE5DB01000000000"
+                "00000001000000012D4F87B4C9B7E44B1D3C21E3A4F9012\n"
+                "ORGANIZER;CN=Portfolio Manager:mailto:pm@contoso.com\n"
+                "ATTENDEE;ROLE=REQ-PARTICIPANT;CN=A. Park:mailto:a.park@contoso.com\n"
+                "ATTENDEE;ROLE=REQ-PARTICIPANT;CN=S. Davis:mailto:s.davis@contoso.com\n"
+                "ATTENDEE;ROLE=REQ-PARTICIPANT;CN=J. Kim:mailto:j.kim@contoso.com\n"
+                "SUMMARY:Weekly Portfolio Review\n"
+                "DESCRIPTION:Join the meeting: "
+                "https://teams.microsoft.com/l/meetup-join/19:meeting_abc123\n"
+                "LOCATION:Teams Meeting\n"
+                "STATUS:CONFIRMED\n"
+                "END:VEVENT\n"
+                "END:VCALENDAR\n\n"
+                "When I click Join in Teams it says 'Sorry, we couldn't connect you "
+                "to the meeting. Please try again.' Error code: caa2000b. "
+                "I've tried from both the desktop app and the browser."
+            ),
+            reporter=Reporter(
+                name="Angela Park",
+                email="a.park@contoso.com",
+                department="Portfolio Management",
+            ),
+            created_at="2026-03-18T13:45:00Z",
+            channel="portal",
+            attachments=["meeting_invite.ics"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-5022",
+            category="Software & Applications",
+            priority="P3",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=["application_version"],
+            next_best_action=(
+                "Investigate Teams meeting join error (caa2000b) for the weekly "
+                "portfolio review — check the user's Teams cache and authentication "
+                "state."
+            ),
+            remediation_steps=[
+                "Clear the Microsoft Teams cache (AppData/Roaming/Microsoft/Teams).",
+                "Sign out and sign back into Teams to refresh the authentication token.",
+                "Check if the meeting organizer's mailbox has any calendar corruption.",
+                "Test joining a different Teams meeting to isolate the issue.",
+                "If the error persists, have the organizer recreate the recurring meeting.",
+            ],
+        ),
+        scenario_category="data_cleanup",
+        scenario_tag="calendar_invite_paste",
+        description=(
+            "Ticket contains a full iCalendar (ICS) specification pasted "
+            "into the description, including VCALENDAR headers, attendees, "
+            "and RRULE data. Tests extraction of the actual user issue."
+        ),
+    )
+
+
+def _build_sql_stack_trace_dump() -> Scenario:
+    """Ticket with raw SQL error and application stack trace."""
+    return Scenario(
+        ticket=Ticket(
+            ticket_id="INC-5023",
+            subject="Internal reporting app crashes with database error",
+            description=(
+                "The Contoso Reporting Portal keeps crashing when I try to run "
+                "the monthly P&L report. Here's the error I see on screen:\n\n"
+                "=== UNHANDLED EXCEPTION ===\n"
+                "System.Data.SqlClient.SqlException (0x80131904): "
+                "Timeout expired. The timeout period elapsed prior to completion "
+                "of the operation or the server is not responding.\n"
+                "   ---> System.ComponentModel.Win32Exception (258): "
+                "The wait operation timed out.\n\n"
+                "Microsoft.Data.SqlClient.SqlInternalConnection"
+                ".OnError(SqlException exception, Boolean breakConnection, "
+                "Action`1 wrapCloseInAction)\n"
+                "   at Microsoft.Data.SqlClient.SqlConnection"
+                ".OnError(SqlException exception, Boolean breakConnection, "
+                "Action`1 wrapCloseInAction)\n"
+                "   at Microsoft.Data.SqlClient.SqlCommand"
+                ".ExecuteReader(CommandBehavior behavior)\n"
+                "   at Contoso.Reporting.DataAccess.ReportRepository"
+                ".GetMonthlyPnL(DateTime startDate, DateTime endDate)\n"
+                "   at Contoso.Reporting.Services.ReportService"
+                ".GenerateMonthlyReport(ReportRequest request)\n"
+                "   at Contoso.Reporting.Controllers.ReportController"
+                ".RunReport(HttpContext context)\n\n"
+                "Connection String (sanitized): "
+                "Server=sql-prod-east.contoso.com;Database=ReportingDB;"
+                "Timeout=30;Encrypt=True;TrustServerCertificate=False\n\n"
+                "This worked fine last month. The report covers data from "
+                "2026-02-01 to 2026-02-28."
+            ),
+            reporter=Reporter(
+                name="Sandra Kim",
+                email="s.kim@contoso.com",
+                department="Finance",
+            ),
+            created_at="2026-03-18T10:00:00Z",
+            channel="portal",
+            attachments=["crash_log.txt"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-5023",
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=["application_version", "environment_details"],
+            next_best_action=(
+                "Investigate SQL timeout on the monthly P&L report in the Contoso "
+                "Reporting Portal — check database performance and query execution "
+                "plans on sql-prod-east.contoso.com."
+            ),
+            remediation_steps=[
+                "Check the SQL Server instance health and resource utilization on "
+                "sql-prod-east.contoso.com.",
+                "Review the execution plan for the GetMonthlyPnL stored procedure "
+                "to identify missing indexes or table scans.",
+                "Check if database statistics are up to date and run UPDATE STATISTICS "
+                "if needed.",
+                "Verify if any blocking queries or long-running transactions are holding locks.",
+                "Temporarily increase the command timeout to unblock the user while "
+                "investigating the root cause.",
+            ],
+        ),
+        scenario_category="data_cleanup",
+        scenario_tag="sql_stack_trace_dump",
+        description=(
+            "Ticket contains a full .NET SQL exception stack trace with "
+            "connection strings, namespace hierarchies, and error codes. "
+            "Tests extraction of the actual user problem from verbose technical output."
+        ),
+    )
+
+
+def _build_excessive_whitespace_formatting() -> Scenario:
+    """Ticket with excessive tabs, spaces, and alignment attempts."""
+    return Scenario(
+        ticket=Ticket(
+            ticket_id="INC-5024",
+            subject="Network drive access - intermittent failures",
+            description=(
+                "ISSUE SUMMARY:\n"
+                "\t\t\tNetwork drive mapping fails intermittently\n\n"
+                "DETAILS:\n"
+                "\t\t\tDrive letter:              Z:\\\n"
+                "\t\t\tServer:                    \\\\fs01.contoso.com\\shared\n"
+                "\t\t\tFrequency:                 3-4 times per day\n"
+                "\t\t\tDuration:                  5-10 minutes each time\n"
+                "\t\t\tAffected users:            Entire 8th floor\n"
+                "\t\t\tFirst noticed:             2026-03-15\n\n\n\n"
+                "ERROR MESSAGE:\n"
+                "\t\t\t\"Windows cannot access \\\\fs01.contoso.com\\shared.\n"
+                "\t\t\t Check the spelling of the name. Otherwise, there\n"
+                "\t\t\t might be a problem with your network.\"\n\n\n\n\n"
+                "STEPS TAKEN:\n"
+                "\t\t\t1.    Mapped drive manually    -->    works temporarily\n"
+                "\t\t\t2.    Ran     net use /delete   -->    re-mapped\n"
+                "\t\t\t3.    Checked DNS              -->    resolves OK\n"
+                "\t\t\t4.    Pinged server             -->    0% packet loss\n\n\n"
+                "\t\t\t\t\t\tPlease advise.\n\n\n\n\n"
+                "\t\t\t\t\t\tRegards,\n"
+                "\t\t\t\t\t\tOmar Hassan\n"
+                "\t\t\t\t\t\tSettlements\n"
+            ),
+            reporter=Reporter(
+                name="Omar Hassan",
+                email="o.hassan@contoso.com",
+                department="Settlements",
+            ),
+            created_at="2026-03-18T15:20:00Z",
+            channel="email",
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-5024",
+            category="Network & Connectivity",
+            priority="P2",
+            assigned_team="Network Operations",
+            needs_escalation=False,
+            missing_information=["network_location"],
+            next_best_action=(
+                "Investigate intermittent network drive mapping failures to "
+                "\\\\fs01.contoso.com\\shared affecting the entire 8th floor — "
+                "likely a file server or SMB session issue."
+            ),
+            remediation_steps=[
+                "Check the event logs on fs01.contoso.com for SMB connection errors "
+                "or session timeouts.",
+                "Review the network switch and port health for the 8th floor.",
+                "Verify that DFS (if in use) is properly replicating and referrals "
+                "are not stale.",
+                "Check if the file server is running low on SMB session capacity.",
+                "Monitor the issue during peak hours and correlate with server "
+                "resource utilization.",
+            ],
+        ),
+        scenario_category="data_cleanup",
+        scenario_tag="excessive_whitespace_formatting",
+        description=(
+            "Ticket uses excessive tabs, multiple spaces for alignment, "
+            "many consecutive blank lines, and heavy indentation. Tests "
+            "parsing through whitespace-heavy formatting to extract content."
+        ),
+    )
+
+
 def get_data_cleanup_scenarios() -> list[Scenario]:
     """Return all data cleanup evaluation scenarios."""
     return [
@@ -1136,4 +1715,12 @@ def get_data_cleanup_scenarios() -> list[Scenario]:
         _build_json_xml_dump(),
         _build_email_metadata_noise(),
         _build_base64_log_attachment(),
+        _build_zero_width_characters(),
+        _build_quoted_printable_encoding(),
+        _build_massive_wall_of_text(),
+        _build_rtf_formatting_artifacts(),
+        _build_multiple_inline_images(),
+        _build_calendar_invite_paste(),
+        _build_sql_stack_trace_dump(),
+        _build_excessive_whitespace_formatting(),
     ]

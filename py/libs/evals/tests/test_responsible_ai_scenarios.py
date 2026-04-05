@@ -58,7 +58,7 @@ class TestResponsibleAiScenariosStructure:
 
     def test_minimum_scenario_count(self) -> None:
         """Ensure we have a comprehensive set of RAI scenarios."""
-        assert len(_SCENARIOS) >= 15
+        assert len(_SCENARIOS) >= 23
 
 
 class TestResponsibleAiGoldAnswerIntegrity:
@@ -86,7 +86,17 @@ class TestResponsibleAiGoldAnswerIntegrity:
     def test_injection_scenarios_dont_use_injected_values(self) -> None:
         """Verify that prompt injection scenarios gold answers do NOT reflect
         the injected values from the attack payload."""
-        injection_tags = {"prompt_injection_ignore", "prompt_injection_json", "injection_via_subject"}
+        injection_tags = {
+            "prompt_injection_ignore",
+            "prompt_injection_json",
+            "injection_via_subject",
+            "chain_of_thought_manipulation",
+            "encoding_obfuscation",
+            "few_shot_poisoning",
+            "reward_hacking",
+            "recursive_prompt_override",
+            "dos_token_flooding",
+        }
         for scenario in _SCENARIOS:
             if scenario.scenario_tag in injection_tags:
                 gold = scenario.gold
@@ -94,6 +104,8 @@ class TestResponsibleAiGoldAnswerIntegrity:
                 assert gold.priority != "P0"
                 assert gold.assigned_team != "ROOT_ACCESS"
                 assert gold.assigned_team != "Penetration Testing Team"
+                assert gold.assigned_team != "Root Access Team"
+                assert gold.assigned_team != "System Admin Backdoor"
 
 
 class TestResponsibleAiScenarioCoverage:
@@ -131,3 +143,35 @@ class TestResponsibleAiScenarioCoverage:
     def test_has_multi_vector_attack(self) -> None:
         tags = {s.scenario_tag for s in _SCENARIOS}
         assert "multi_vector_attack" in tags
+
+    def test_has_chain_of_thought_manipulation(self) -> None:
+        tags = {s.scenario_tag for s in _SCENARIOS}
+        assert "chain_of_thought_manipulation" in tags
+
+    def test_has_encoding_obfuscation(self) -> None:
+        tags = {s.scenario_tag for s in _SCENARIOS}
+        assert "encoding_obfuscation" in tags
+
+    def test_has_few_shot_poisoning(self) -> None:
+        tags = {s.scenario_tag for s in _SCENARIOS}
+        assert "few_shot_poisoning" in tags
+
+    def test_has_reward_hacking(self) -> None:
+        tags = {s.scenario_tag for s in _SCENARIOS}
+        assert "reward_hacking" in tags
+
+    def test_has_emotional_manipulation(self) -> None:
+        tags = {s.scenario_tag for s in _SCENARIOS}
+        assert "emotional_manipulation" in tags
+
+    def test_has_cross_tenant_data_request(self) -> None:
+        tags = {s.scenario_tag for s in _SCENARIOS}
+        assert "cross_tenant_data_request" in tags
+
+    def test_has_recursive_prompt_override(self) -> None:
+        tags = {s.scenario_tag for s in _SCENARIOS}
+        assert "recursive_prompt_override" in tags
+
+    def test_has_dos_token_flooding(self) -> None:
+        tags = {s.scenario_tag for s in _SCENARIOS}
+        assert "dos_token_flooding" in tags
