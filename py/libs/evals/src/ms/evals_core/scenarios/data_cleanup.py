@@ -11604,4 +11604,847 @@ def get_scenarios() -> list[ScenarioDefinition]:
             tags=["data-cleanup", "interleaved-threads"],
             difficulty="hard",
         ),
+        # ── DC-171  Extremely long email with 50+ reply-all participants ──
+        ScenarioDefinition(
+            scenario_id="DC-171",
+            subject="RE: RE: RE: RE: RE: RE: ALL: Building access badges not working after security system upgrade",
+            description=(
+                "From: David Chen <david.chen@contoso.com>\n"
+                "Sent: Monday, March 24, 2026 7:12 AM\n"
+                "To: IT Support <itsupport@contoso.com>\n"
+                "CC: facilities@contoso.com; security-ops@contoso.com; "
+                "floor-3-all@contoso.com; floor-4-all@contoso.com; "
+                "building-mgmt@contoso.com; hr-ops@contoso.com; "
+                "exec-assistants@contoso.com; reception-team@contoso.com; "
+                "visitor-mgmt@contoso.com; parking-ops@contoso.com; "
+                "cafeteria-staff@contoso.com; janitorial@contoso.com; "
+                "mailroom@contoso.com; shipping@contoso.com; "
+                "conference-rooms@contoso.com; av-team@contoso.com; "
+                "print-services@contoso.com; hvac-ops@contoso.com; "
+                "electrical@contoso.com; plumbing@contoso.com; "
+                "landscaping@contoso.com; safety-committee@contoso.com; "
+                "fire-marshal@contoso.com; elevator-maint@contoso.com; "
+                "telecom@contoso.com; network-ops@contoso.com; "
+                "datacenter-ops@contoso.com; cloud-infra@contoso.com; "
+                "devops@contoso.com; sre-team@contoso.com; "
+                "platform-eng@contoso.com; security-team@contoso.com; "
+                "compliance@contoso.com; legal@contoso.com; "
+                "finance-ops@contoso.com; procurement@contoso.com; "
+                "vendor-mgmt@contoso.com; training@contoso.com; "
+                "wellness@contoso.com; diversity@contoso.com; "
+                "sustainability@contoso.com; innovation-lab@contoso.com; "
+                "research@contoso.com; analytics@contoso.com; "
+                "marketing-ops@contoso.com; sales-ops@contoso.com; "
+                "customer-success@contoso.com; partner-team@contoso.com\n\n"
+                "Hi everyone,\n\n"
+                "Adding more people to this thread in case anyone else is "
+                "affected. My badge still does not work on Floor 3 after the "
+                "weekend security system upgrade. I get a red light and three "
+                "beeps when I tap it. I have tried the main entrance, the side "
+                "door, and the parking garage — none work.\n\n"
+                "--- 47 reply-all messages below ---\n"
+                "From: Janet Wu <janet.wu@contoso.com>\n"
+                "Same problem on Floor 4.\n\n"
+                "From: Mike Torres <mike.torres@contoso.com>\n"
+                "Me too. Also Floor 3. This is ridiculous.\n\n"
+                "From: Linda Park <linda.park@contoso.com>\n"
+                "My badge works fine on Floor 2. Maybe it's only Floors 3 and 4?\n\n"
+                "From: Bob Anderson <bob.anderson@contoso.com>\n"
+                "Can someone please remove me from this thread?\n\n"
+                "From: Sarah Kim <sarah.kim@contoso.com>\n"
+                "Please stop replying all!\n\n"
+                "From: Tom Nguyen <tom.nguyen@contoso.com>\n"
+                "+1 on the badge issue. Floor 3 server room badge also fails.\n\n"
+                "From: Amy Patel <amy.patel@contoso.com>\n"
+                "Has anyone tried re-registering their badge at the security desk?\n\n"
+                "From: Carlos Mendez <carlos.mendez@contoso.com>\n"
+                "Yes, I went to security. They said their system shows my badge "
+                "as valid but the door readers on 3 and 4 are not synced.\n\n"
+                "From: Priya Sharma <priya.sharma@contoso.com>\n"
+                "Facilities confirmed the badge reader firmware was updated but "
+                "the certificate exchange with the central auth server failed "
+                "during the weekend maintenance window.\n\n"
+                "[... 38 more reply-all messages with unsubscribe requests, "
+                "me-too responses, vacation auto-replies, and off-topic "
+                "conversations about the cafeteria menu ...]"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P2,
+            team=Team.ENDPOINT,
+            needs_escalation=True,
+            missing_info=[MissingInfo.AFFECTED_USERS],
+            next_best_action=(
+                "Extract the core issue from a massive reply-all storm: badge "
+                "readers on Floors 3 and 4 are not authenticating after a "
+                "weekend security system upgrade. The root cause (per Priya "
+                "Sharma's reply) is a failed certificate exchange between the "
+                "door reader firmware and the central authentication server. "
+                "Ignore the 47 reply-all noise messages."
+            ),
+            remediation_steps=[
+                "Contact the facilities security team to re-initiate the "
+                "certificate exchange between the updated badge reader firmware "
+                "and the central authentication server.",
+                "Verify the Floors 3 and 4 badge readers are reaching the auth "
+                "server — check network connectivity and firewall rules for the "
+                "reader VLAN.",
+                "If the certificate exchange cannot be completed immediately, "
+                "roll back the badge reader firmware to the previous version to "
+                "restore access.",
+                "Send a targeted communication to Floors 3 and 4 occupants with "
+                "a status update and expected resolution time to prevent further "
+                "reply-all storms.",
+                "Set up a temporary manual sign-in process at affected entrances until badge readers are operational.",
+            ],
+            reporter_name="David Chen",
+            reporter_email="david.chen@contoso.com",
+            reporter_department="Platform Engineering",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "reply-all-storm", "massive-cc-list", "very-long-email"],
+            difficulty="hard",
+        ),
+        # ── DC-172  Base64-encoded screenshot flood in email body ──
+        ScenarioDefinition(
+            scenario_id="DC-172",
+            subject="Screenshots of Excel crash — URGENT",
+            description=(
+                "Hi IT,\n\n"
+                "Excel keeps crashing when I open our Q1 revenue model. I have "
+                "pasted the screenshots directly into this email.\n\n"
+                "Screenshot 1 (crash dialog):\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABkAAAASwCAYAAAB"
+                "k5LzFAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOwgAADsIBFShKgAAAABl0"
+                "RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAACAASURBVHic7N0H"
+                "fFTV2cfx/0x6Qg29Se9FUERRQUXs2MWuqNi7rl1XsYsNe1fsvSuiooiCIiI"
+                "gvffeQnrvvO8zd0ICJCQhIT/v53PvzNy5c+ecM5NM5jfnnNnFxcVqR5KkHU"
+                "EG+RdddJH69a9/rf79+ys2NlZRUVGhJkl7bIuJiVF+fr4iIyMVHh6u3Nxc"
+                "JSUl6YcfftD111+vX375JdTshx0L3gdP9k0fN/a7K+rTZ8tP7ty5U+np6U"
+                "pOTi6+1cfb27dv1/bt25Wdna2kpCStXLlSc+bM0cSJE0NJrLYuKiraxoUL"
+                "F+pf//qXLr/8cvXp00fnnHOOjj76aHXr1k1du3ZVly5d1LlzZ3Xq1Ekd//"
+                "/v/v/3u3fvrp49e6pXr17q06ePDjnkEB155JE67rjjdNJJJ+nUU0/VWWed"
+                "pfPPP18XXXSRhgwZoquvvlo33XSTbr75Zt1yyy269dZbdfvtt+vOO+/U3Xf"
+                "frfvuu08PPvig/vWvf+mJJ57Q008/rWeffVbPP/+8XnzxRb388st65ZVX9N"
+                "prr+mNN97QW2+9pbffflvvvvuuPvjgA3388cf69NNP9fnnn+vLL7/UV199p"
+                "W+++UbfffedRo0apZ9++kk///yzfvnlF40bN04TJkzQlClTNH36dM2aNUtz"
+                "587VwoULtXjxYi1dulTLly/XypUrtWbNGq1bt04bNmzQ5s2btW3bNm3fvl0"
+                "7d+5Uamqq0tLSlJGRoezsbOXm5qqgoEDFxcWhx6BWuweKiurWoHc5fxlbWl"
+                "qqNm7cqLlz52rixIkaPXq0Pv30U73xxht64YUX9K9//UuPPPKIHnjgAd17"
+                "772666679MQTT+jyyy/XiBEjdMwxxzjcRx99tAYOHKijjjpKRx55pA477DD"
+                "179+f4e7bt6969uypbt26qVOnTurYsaM6dOig9u3bq23btmrVqpVatmyp5s"
+                "2bq2nTpmrSpIkaN26shg0bqn79+qpXr55q164t47l58+YqKCgINR0dHS0rK"
+                "w8PV1hYmEJCQhQeHq5ffvlFjz76qI455hj17t1b3bt3V9euXdW5c2d16tRJ"
+                "HTt2VIcOHdS+fXu1a9dObdq0UevWrdWqVSu1bNlSLVq0UPPmzdW0aVM1ad"
+                "JEjRo1UsOGDdWgQQPVq1dP8fHxio2NVUxMjKKjoxUVFaXIyEhFREQoPDx"
+                "\n\n"
+                "Screenshot 2 (error details):\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAMgCAYAAA"
+                "B9FSwuAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOwgAADsIBFShKgAAAABl"
+                "0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAACAASURBVHic7N"
+                "0HeFTV2cfx35maTXrvkNC79N57FUQUe++99967YK+IqIi9dywoKCIiIIqCi"
+                "Fz587duYkISS9AOSWZ5P7nTJKBIE18P8+TuXPuvefec8/cmcm88567dOnS"
+                "KigocO7cuf3799f48eMVFRWlkJAQLVu2TJmZmcrMzFR2drZycnKUl5en/"
+                "Px8FRYWyuPxKCkpSSkpKUpLS1NGRoaysrKUk5Oj3Nxc5efnq6CgQIWF"
+                "hfJ4PMrPz1d2draysrKUmZmpjIwMpaenKy0tTampqUpJSVFycrKSkpK0"
+                "c+dOJSYmaseOHdq+fbu2bt2qLVu2aNOmTdqwYYPWrVuntWvXas2aNVq1"
+                "apVWrlyplStXasWKFVq+fLmWLVumJUuWaPHixVq0aJEWLlyo+fPna968"
+                "eZo7d65mz56tWbNmaebMmZo+fbqmTZumqVOnasqUKZo8ebImTZqkiRMn"
+                "asKECRo/frzGjRuncePG6ddff9Uvv/yin3/+WT/99JN++OEHjR07Vt9//"
+                "71Gjx6t0aNHa9SoUfrmm2/09ddf68svv9Tnn3+uzz77TJ988ok++ugj"
+                "vf/++3rvvff07rvv6p133tHbb7+tt956S2+++abeeOMNvf7663rttdf0"
+                "6quvavjw4XrllVf00ksv6cUXX9QLL7yg5557Ts8++6yeeeYZPf300/rX"
+                "v/6lJ598Uk888YT++c9/6rHHHtPDDz+shx56SA8++KDuv/9+3XffffrH"
+                "P/6he+65R3fffbfuuusu3X777brtttt0yy236KabbtINN9yga6+9Vtdc"
+                "c42uuuoqXXnllbr88st16aWX6uKLL9aFF16o888/X+eee67OOeccnX32"
+                "2TrrrLM0ePBgnXHGGTr99NM1aNAgnXrqqTrllFN00kkn6fjjj9exxx6r"
+                "Y445RkcddZQGDBig/v37q1+/furTp4969eqlHj16qHv37urWrZu6du2q"
+                "Ll26qHPnzurUqZM6duyo9u3bq127dmrbtq1at26tVq1aqUWLFmrevLma"
+                "NWumJk2aqHHjxmrUqJEaNGighg0bKi4uTnFxcYqJiVFMTIyio6MVFRWl"
+                "\n\n"
+                "Screenshot 3 (task manager):\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8AAAAMgCAYAAA"
+                "DPCz+xAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOwgAADsIBFShKgAAAAB"
+                "l0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAACAASURBVHic"
+                "7N0HfFTV+cfx30xm0nvSSxJ679179y6IKIoKKvYu7r2touLeC6IioigqIiI"
+                "gIoqCiIqCINLkz527cyeZEBJSgH+e58nce++59545c2cmk9+85y5fvlxBQY"
+                "HOnz+/X79+Gj9+vKKiouT3+7Vs2TJlZGQoIyND2dnZysnJUV5envLz81V"
+                "YWKiioiJ5PB4lJycrNTVV6enpysjIUFZWlnJycpSbm6v8/HwVFBSosLBQ"
+                "\n\n"
+                "Screenshot 4 (system info):\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACDAAAAMgCAYAAA"
+                "B+FjaaAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOwgAADsIBFShKgAAAAB"
+                "l0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAACAASURBVHic"
+                "7d0HfFTV+f/x79mZNBJSgFBCL733roh7L4goioqKqKjYe+u6do27K6IoKiI"
+                "iIiIiIqIoiKIgiv7MnTt3ZjIhJKQAKf7/zz33zpkkIYmJQP55nic599xz"
+                "\n\n"
+                "Screenshot 5 (event viewer):\n"
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABQAAAAMgCAYAAA"
+                "C1fRaaAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOwgAADsIBFShKgAAAAB"
+                "l0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAACAASURBVHic"
+                "7d0HfNXV/f/x97kryWYTIISE3nvvvYsoioqKoqKiolu7drW7drW2dmkXd1V"
+                "EUUREBEREBEFERET/5s6d+ycJSSkhIP/P8zzJvffeO+495557k3uT97nnni"
+                "\n\n"
+                "Please help, I need this fixed by end of day for the board "
+                "presentation.\n\n"
+                "Regards,\nAisha Patel\nFinance"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Triage the Excel crash report despite five large base64-encoded "
+                "image payloads embedded directly in the email body. The actual "
+                "issue is that Excel crashes when opening the Q1 revenue model "
+                "file. Request the Excel version, the exact error message from "
+                "the crash dialog, and the file size of the workbook."
+            ),
+            remediation_steps=[
+                "Request the Excel version number (File > Account) and whether "
+                "the user is on Microsoft 365 desktop or Office 2021.",
+                "Ask for the exact error code or message from the crash dialog "
+                "(the base64 screenshots are not viewable in a text triage).",
+                "Check if the Q1 revenue model workbook uses complex macros, "
+                "Power Query connections, or volatile functions that could cause "
+                "memory exhaustion.",
+                "Try opening the workbook in Excel Safe Mode (hold Ctrl while launching) to rule out add-in conflicts.",
+                "If the file is very large (>100 MB), suggest splitting it into "
+                "linked workbooks or migrating heavy calculations to Power BI.",
+            ],
+            reporter_name="Aisha Patel",
+            reporter_email="aisha.patel@contoso.com",
+            reporter_department="Finance",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "base64-flood", "image-heavy", "inline-image"],
+            difficulty="hard",
+        ),
+        # ── DC-173  Email with embedded SVG containing JavaScript ──
+        ScenarioDefinition(
+            scenario_id="DC-173",
+            subject="Dashboard widget rendering broken — see inline SVG",
+            description=(
+                "Hi IT Support,\n\n"
+                "Our internal analytics dashboard (https://dashboard.contoso.com) "
+                "is rendering the KPI widgets incorrectly. The SVG charts are "
+                "showing raw markup instead of the visual. Here is the SVG source "
+                "from the page:\n\n"
+                '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400"'
+                ' viewBox="0 0 800 400">\n'
+                "  <style>\n"
+                "    .axis { stroke: #333; stroke-width: 1; }\n"
+                "    .bar { fill: #0078d4; transition: fill 0.3s; }\n"
+                "    .bar:hover { fill: #005a9e; }\n"
+                '    .label { font-family: "Segoe UI", sans-serif; font-size:'
+                " 12px; fill: #666; }\n"
+                "  </style>\n"
+                "  <defs>\n"
+                '    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2='
+                '"100%">\n'
+                '      <stop offset="0%" style="stop-color:#0078d4;stop-opacity'
+                ':1" />\n'
+                '      <stop offset="100%" style="stop-color:#005a9e;stop-opacity'
+                ':1" />\n'
+                "    </linearGradient>\n"
+                "  </defs>\n"
+                '  <line class="axis" x1="50" y1="10" x2="50" y2="350" />\n'
+                '  <line class="axis" x1="50" y1="350" x2="780" y2="350" />\n'
+                '  <rect class="bar" x="80" y="120" width="60" height="230"'
+                ' fill="url(#grad1)" />\n'
+                '  <rect class="bar" x="160" y="80" width="60" height="270"'
+                ' fill="url(#grad1)" />\n'
+                '  <rect class="bar" x="240" y="200" width="60" height="150"'
+                ' fill="url(#grad1)" />\n'
+                '  <rect class="bar" x="320" y="50" width="60" height="300"'
+                ' fill="url(#grad1)" />\n'
+                '  <text class="label" x="95" y="370">Q1</text>\n'
+                '  <text class="label" x="175" y="370">Q2</text>\n'
+                '  <text class="label" x="255" y="370">Q3</text>\n'
+                '  <text class="label" x="335" y="370">Q4</text>\n'
+                '  <text class="label" x="10" y="125" transform="rotate(-90,'
+                '10,125)">Revenue ($M)</text>\n'
+                "</svg>\n\n"
+                "This used to render fine last week. We updated the dashboard "
+                "framework to React 19 on Friday and the SVG rendering broke "
+                "on Monday morning.\n\n"
+                "Browser: Edge 124.0.2478.80\n"
+                "OS: Windows 11 23H2\n\n"
+                "Thanks,\nRajesh Kumar\nBusiness Intelligence"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION],
+            next_best_action=(
+                "Triage the dashboard rendering issue despite the inline SVG "
+                "markup noise. The real issue is that KPI chart widgets on "
+                "dashboard.contoso.com stopped rendering after a React 19 "
+                "upgrade last Friday. The SVG source is diagnostic context, "
+                "not the problem itself."
+            ),
+            remediation_steps=[
+                "Check whether the React 19 upgrade changed the SVG rendering "
+                "pipeline — React 19 has stricter namespace handling for SVG "
+                "elements that can break inline SVG in JSX.",
+                "Verify the dashboard framework version and check its changelog "
+                "for breaking changes related to SVG or HTML rendering.",
+                "Test the dashboard in Chrome and Firefox to determine if the "
+                "issue is Edge-specific or framework-wide.",
+                "Roll back the React version to the last known working build as "
+                "an interim fix while the SVG rendering issue is investigated.",
+                "Review the dashboard's Content Security Policy headers — CSP "
+                "changes during the upgrade may block inline styles in SVGs.",
+            ],
+            reporter_name="Rajesh Kumar",
+            reporter_email="rajesh.kumar@contoso.com",
+            reporter_department="Business Intelligence",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "svg-inline", "html-noise", "code-paste"],
+            difficulty="medium",
+        ),
+        # ── DC-174  Ticket body is entirely a Kubernetes describe dump ──
+        ScenarioDefinition(
+            scenario_id="DC-174",
+            subject="Pod CrashLoopBackOff — payment-service",
+            description=(
+                "Name:         payment-service-7b9f8c6d4-x2kq9\n"
+                "Namespace:    prod-payments\n"
+                "Priority:     0\n"
+                "Node:         aks-nodepool1-38274610-vmss000004\n"
+                "Start Time:   Mon, 24 Mar 2026 03:14:22 +0000\n"
+                "Labels:       app=payment-service\n"
+                "              chart=payment-service-2.4.1\n"
+                "              heritage=Helm\n"
+                "              pod-template-hash=7b9f8c6d4\n"
+                "              release=prod-payments\n"
+                "              version=2.4.1\n"
+                "Annotations:  kubernetes.io/psp: restricted\n"
+                "              prometheus.io/port: 8080\n"
+                "              prometheus.io/scrape: true\n"
+                "Status:       Running\n"
+                "IP:           10.244.3.47\n"
+                "IPs:\n"
+                "  IP:           10.244.3.47\n"
+                "Controlled By:  ReplicaSet/payment-service-7b9f8c6d4\n"
+                "Containers:\n"
+                "  payment-service:\n"
+                "    Container ID:   containerd://a8f3e2d1c0b9...\n"
+                "    Image:          contoso.azurecr.io/payment-service:2.4.1\n"
+                "    Image ID:       contoso.azurecr.io/payment-service@sha256:"
+                "9a8b7c6d5e4f...\n"
+                "    Port:           8080/TCP\n"
+                "    Host Port:      0/TCP\n"
+                "    State:          Waiting\n"
+                "      Reason:       CrashLoopBackOff\n"
+                "    Last State:     Terminated\n"
+                "      Reason:       OOMKilled\n"
+                "      Exit Code:    137\n"
+                "    Ready:          False\n"
+                "    Restart Count:  47\n"
+                "    Limits:\n"
+                "      cpu:     500m\n"
+                "      memory:  256Mi\n"
+                "    Requests:\n"
+                "      cpu:     100m\n"
+                "      memory:  128Mi\n"
+                "    Liveness:   http-get http://:8080/healthz "
+                "delay=30s timeout=5s period=10s #success=1 #failure=3\n"
+                "    Readiness:  http-get http://:8080/readyz "
+                "delay=5s timeout=3s period=5s #success=1 #failure=3\n"
+                "    Environment:\n"
+                "      DB_HOST:              <set to the key 'host' in secret "
+                "'payment-db-creds'>  Optional: false\n"
+                "      DB_PORT:              5432\n"
+                "      DB_NAME:              payments_prod\n"
+                "      REDIS_URL:            redis://redis-master.prod-cache."
+                "svc.cluster.local:6379\n"
+                "      LOG_LEVEL:            info\n"
+                "      JAVA_OPTS:            -Xms128m -Xmx256m\n"
+                "    Mounts:\n"
+                "      /var/run/secrets/kubernetes.io/serviceaccount from "
+                "kube-api-access-x7k2m (ro)\n"
+                "Conditions:\n"
+                "  Type              Status\n"
+                "  Initialized       True\n"
+                "  Ready             False\n"
+                "  ContainersReady   False\n"
+                "  PodScheduled      True\n"
+                "Events:\n"
+                "  Type     Reason     Age                 From               "
+                "Message\n"
+                "  ----     ------     ----                ----               "
+                "-------\n"
+                "  Normal   Scheduled  52m                 default-scheduler  "
+                "Successfully assigned prod-payments/payment-service-7b9f8c6d4"
+                "-x2kq9 to aks-nodepool1-38274610-vmss000004\n"
+                "  Normal   Pulling    51m                 kubelet            "
+                "Pulling image contoso.azurecr.io/payment-service:2.4.1\n"
+                "  Normal   Pulled     51m                 kubelet            "
+                "Successfully pulled image\n"
+                "  Normal   Created    47m (x48 over 51m)  kubelet            "
+                "Created container payment-service\n"
+                "  Normal   Started    47m (x48 over 51m)  kubelet            "
+                "Started container payment-service\n"
+                "  Warning  BackOff    2m (x210 over 50m)  kubelet            "
+                "Back-off restarting failed container\n"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P1,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "The entire ticket body is a raw 'kubectl describe pod' dump "
+                "with no human summary. Extract the key facts: the "
+                "payment-service pod in prod-payments namespace is in "
+                "CrashLoopBackOff due to OOMKilled (exit code 137) after 47 "
+                "restarts. Memory limit is 256Mi with JAVA_OPTS -Xmx256m — "
+                "the JVM heap equals the container limit, leaving no room for "
+                "non-heap memory. This is a P1 production outage."
+            ),
+            remediation_steps=[
+                "Increase the container memory limit to at least 512Mi (or "
+                "better, 768Mi) since the JVM needs headroom above -Xmx for "
+                "metaspace, thread stacks, and native memory.",
+                "Adjust JAVA_OPTS to -Xms256m -Xmx384m to give the JVM proper "
+                "heap space while leaving room within the container limit.",
+                "Check if the payment-service 2.4.1 release introduced a memory "
+                "leak — compare heap usage patterns with the previous version.",
+                "Review recent traffic patterns to determine if a load spike "
+                "caused the OOM or if it occurs under normal load.",
+                "Set up a JVM heap dump on OOM (-XX:+HeapDumpOnOutOfMemoryError) "
+                "and configure a persistent volume for the dump file.",
+            ],
+            reporter_name="Ops Monitoring Bot",
+            reporter_email="ops-alerts@contoso.com",
+            reporter_department="Site Reliability Engineering",
+            channel=Channel.PORTAL,
+            tags=["data-cleanup", "k8s-describe", "machine-generated", "no-details"],
+            difficulty="hard",
+        ),
+        # ── DC-175  Voicemail transcription with speech-to-text errors ──
+        ScenarioDefinition(
+            scenario_id="DC-175",
+            subject="Voicemail from ext 4471 — transcribed",
+            description=(
+                "[Auto-transcribed voicemail — confidence: 62%]\n"
+                "[Duration: 2:14 | Received: 2026-03-24 08:47 EST]\n\n"
+                "Hey this is uh Marcus from the trading floor um so we have "
+                "a situation with the new broom bird terminal... no wait "
+                "Bloomberg terminal [laughs] sorry the speech thing... anyway "
+                "the bloom berg terminal on desk seven teen is showing stale "
+                "praises... prices for the fix income dashboard. It's been "
+                "stuck since about six thirty this moaning... morning and "
+                "the traders are going bal istic because they can't see real "
+                "time bond yields. We tried rebooting the terminal but it "
+                "just shows the same stale data from like mid night. The "
+                "other terminals on the floor seem fine, it's just desk "
+                "seven teen. Can someone come take a look? This is pretty "
+                "urgent because we have a big sov reign... sovereign bond "
+                "auction at ten AM and the traders need live pricing. My "
+                "extension is four four seven one and my cell is [REDACTED]. "
+                "Thanks.\n\n"
+                "[End of transcription]\n"
+                "[Original audio: voicemail_20260324_084700_ext4471.wav — "
+                "attached to ticket as .wav file, 3.2 MB]"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P1,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=True,
+            missing_info=[MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Parse through the noisy speech-to-text transcription to "
+                "extract the real issue: the Bloomberg terminal on desk 17 "
+                "of the trading floor is showing stale fixed-income prices "
+                "since approximately 06:30 AM. Only desk 17 is affected. "
+                "This is urgent due to a sovereign bond auction at 10 AM. "
+                "Rebooting did not resolve the issue."
+            ),
+            remediation_steps=[
+                "Check the Bloomberg B-PIPE data feed connection for desk 17's "
+                "terminal — the stale data suggests a feed subscription or "
+                "network issue specific to that workstation.",
+                "Verify the network connection on desk 17 — check for packet "
+                "loss or latency on the dedicated market data VLAN.",
+                "Compare the terminal configuration on desk 17 with a working "
+                "terminal to identify any differences in data subscriptions or "
+                "pricing sources.",
+                "Contact Bloomberg support with the terminal serial number to "
+                "check for any known service disruptions on the fixed-income "
+                "feed.",
+                "As a workaround, move the trader to a spare terminal or hot "
+                "desk before the 10 AM sovereign bond auction.",
+            ],
+            reporter_name="Marcus Rivera",
+            reporter_email="marcus.rivera@contoso.com",
+            reporter_department="Fixed Income Trading",
+            channel=Channel.PHONE,
+            tags=["data-cleanup", "voicemail", "speech-to-text", "transcription-errors", "bloomberg"],
+            difficulty="hard",
+        ),
+        # ── DC-176  Email with massive Windows Event Log XML dump ──
+        ScenarioDefinition(
+            scenario_id="DC-176",
+            subject="Server keeps blue-screening — event logs attached inline",
+            description=(
+                "Hi IT team,\n\n"
+                "Server YOURAPP-SQL-03 has blue-screened 4 times today. I exported "
+                "the relevant event log entries below.\n\n"
+                "<Events>\n"
+                "  <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/"
+                "event'>\n"
+                "    <System>\n"
+                "      <Provider Name='Microsoft-Windows-WER-SystemErrorReporting'"
+                " Guid='{ABCE23E7-DE45-4366-8631-84FA6C525952}'/>\n"
+                "      <EventID>1001</EventID>\n"
+                "      <Version>0</Version>\n"
+                "      <Level>2</Level>\n"
+                "      <Task>0</Task>\n"
+                "      <Opcode>0</Opcode>\n"
+                "      <Keywords>0x80000000000000</Keywords>\n"
+                "      <TimeCreated SystemTime='2026-03-24T06:14:22.0000000Z'/>\n"
+                "      <EventRecordID>784521</EventRecordID>\n"
+                "      <Correlation/>\n"
+                "      <Execution ProcessID='0' ThreadID='0'/>\n"
+                "      <Channel>System</Channel>\n"
+                "      <Computer>YOURAPP-SQL-03.contoso.local</Computer>\n"
+                "      <Security/>\n"
+                "    </System>\n"
+                "    <EventData>\n"
+                "      <Data Name='param1'>0x000000d1 "
+                "(DRIVER_IRQL_NOT_LESS_OR_EQUAL)</Data>\n"
+                "      <Data Name='param2'>fffff80e`4a2c1000</Data>\n"
+                "      <Data Name='param3'>storport.sys</Data>\n"
+                "      <Data Name='param4'>6.3.9600.21924</Data>\n"
+                "      <Data Name='param5'>C:\\Windows\\MEMORY.DMP</Data>\n"
+                "    </EventData>\n"
+                "  </Event>\n"
+                "  <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/"
+                "event'>\n"
+                "    <System>\n"
+                "      <Provider Name='Microsoft-Windows-WER-SystemErrorReporting'"
+                " Guid='{ABCE23E7-DE45-4366-8631-84FA6C525952}'/>\n"
+                "      <EventID>1001</EventID>\n"
+                "      <Version>0</Version>\n"
+                "      <Level>2</Level>\n"
+                "      <Task>0</Task>\n"
+                "      <TimeCreated SystemTime='2026-03-24T09:22:15.0000000Z'/>\n"
+                "      <EventRecordID>784522</EventRecordID>\n"
+                "      <Channel>System</Channel>\n"
+                "      <Computer>YOURAPP-SQL-03.contoso.local</Computer>\n"
+                "    </System>\n"
+                "    <EventData>\n"
+                "      <Data Name='param1'>0x000000d1 "
+                "(DRIVER_IRQL_NOT_LESS_OR_EQUAL)</Data>\n"
+                "      <Data Name='param2'>fffff80e`4a2c1000</Data>\n"
+                "      <Data Name='param3'>storport.sys</Data>\n"
+                "      <Data Name='param4'>6.3.9600.21924</Data>\n"
+                "      <Data Name='param5'>C:\\Windows\\MEMORY.DMP</Data>\n"
+                "    </EventData>\n"
+                "  </Event>\n"
+                "[... 47 more similar Event entries spanning 6 hours ...]\n"
+                "</Events>\n\n"
+                "This is a production SQL Server so downtime is critical.\n\n"
+                "Thanks,\nKevin O'Brien\nDatabase Administration"
+            ),
+            category=Category.HARDWARE,
+            priority=Priority.P1,
+            team=Team.ENDPOINT,
+            needs_escalation=True,
+            missing_info=[MissingInfo.DEVICE_INFO],
+            next_best_action=(
+                "Extract the critical signal from the verbose Windows Event Log "
+                "XML dump: server YOURAPP-SQL-03 is repeatedly blue-screening "
+                "with DRIVER_IRQL_NOT_LESS_OR_EQUAL (0xD1) caused by "
+                "storport.sys v6.3.9600.21924. This is a storage driver issue "
+                "on a production SQL Server. Four crashes in one day with 47 "
+                "event log entries of the same pattern."
+            ),
+            remediation_steps=[
+                "Update the storport.sys driver to the latest version — the "
+                "current version 6.3.9600.21924 has a known IRQL bug when "
+                "handling high IOPS on certain SAN controllers.",
+                "Check the storage controller (HBA) firmware and update to the vendor's latest recommended version.",
+                "Analyze the MEMORY.DMP crash dump using WinDbg to confirm the "
+                "exact call stack in storport.sys causing the bugcheck.",
+                "Review the SAN multipath configuration — MPIO path failover "
+                "under load can trigger storport IRQL violations.",
+                "Prepare a failover plan for YOURAPP-SQL-03 using the SQL "
+                "Always On availability group to minimize downtime during "
+                "driver updates.",
+            ],
+            reporter_name="Kevin O'Brien",
+            reporter_email="kevin.obrien@contoso.com",
+            reporter_department="Database Administration",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "xml-dump", "windows-events", "bsod-dump", "machine-generated"],
+            difficulty="hard",
+        ),
+        # ── DC-177  Ticket with only a forwarded newsletter chain ──
+        ScenarioDefinition(
+            scenario_id="DC-177",
+            subject="FW: FW: FW: Microsoft 365 Monthly Newsletter — March 2026",
+            description=(
+                "---------- Forwarded message ---------\n"
+                "From: Microsoft 365 Updates <no-reply@microsoft.com>\n"
+                "Date: Fri, Mar 21, 2026 at 2:00 PM\n"
+                "Subject: Microsoft 365 Monthly Newsletter — March 2026\n"
+                "To: all-employees@contoso.com\n\n"
+                "╔═══════════════════════════════════════════════════════╗\n"
+                "║  MICROSOFT 365 MONTHLY UPDATE — MARCH 2026          ║\n"
+                "╚═══════════════════════════════════════════════════════╝\n\n"
+                "🚀 WHAT'S NEW THIS MONTH:\n\n"
+                "• Teams: AI-powered meeting recaps now available in GCC High\n"
+                "• Excel: LAMBDA functions performance improved by 3x\n"
+                "• SharePoint: New page templates for project dashboards\n"
+                "• OneDrive: Increased file size limit to 500 GB\n"
+                "• Outlook: Smart scheduling suggestions in calendar\n\n"
+                "📋 UPCOMING CHANGES:\n\n"
+                "• April 1, 2026: Classic Teams desktop app retirement\n"
+                "• April 15, 2026: Azure AD renamed to Microsoft Entra ID in all UIs\n"
+                "• May 1, 2026: Legacy authentication protocols disabled\n\n"
+                "📞 SUPPORT:\n"
+                "For assistance, contact your IT help desk or visit "
+                "https://support.microsoft.com\n\n"
+                "──────────────────────────────────────\n"
+                "This email was sent to all-employees@contoso.com. "
+                "To unsubscribe, contact your Microsoft 365 admin.\n\n"
+                "---------- Forwarded by: Lisa Tran ---------\n"
+                "---------- Forwarded by: Mark Stevens ---------\n"
+                "---------- Forwarded by: Carol Wu ---------\n\n"
+                "Carol's note: 'Hey IT, I think the Teams thing is broken for "
+                "me. The new AI recap button doesn't show up in my meetings. "
+                "Can you check?'"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P4,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.APPLICATION_VERSION, MissingInfo.ENVIRONMENT_DETAILS],
+            next_best_action=(
+                "The real support request is buried at the bottom of a "
+                "triple-forwarded Microsoft 365 newsletter: Carol Wu reports "
+                "that the Teams AI meeting recap feature is not appearing in "
+                "her meetings. The rest of the email is newsletter content. "
+                "This is a low-priority feature availability inquiry."
+            ),
+            remediation_steps=[
+                "Check Carol Wu's Microsoft 365 license tier — the AI meeting "
+                "recap feature requires a Microsoft 365 Copilot license or "
+                "Teams Premium.",
+                "Verify Carol's Teams client version — the feature requires the new Teams client (not classic Teams).",
+                "Check the Microsoft 365 admin center for the feature rollout "
+                "status in the Contoso tenant — it may be in a staged rollout.",
+                "Confirm that Carol's meetings meet the requirements for AI "
+                "recaps (e.g., meeting recording must be enabled, minimum "
+                "participant count).",
+                "If the license and client are correct, check the Teams admin "
+                "center meeting policies to ensure AI features are enabled for "
+                "Carol's policy group.",
+            ],
+            reporter_name="Carol Wu",
+            reporter_email="carol.wu@contoso.com",
+            reporter_department="Marketing",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "newsletter", "forward-chain", "buried-issue"],
+            difficulty="medium",
+        ),
+        # ── DC-178  Ticket pasted from a terminal with ANSI escape codes ──
+        ScenarioDefinition(
+            scenario_id="DC-178",
+            subject="npm build failing on CI — see output",
+            description=(
+                "Build is broken. Here's what I see:\n\n"
+                "\x1b[1m\x1b[31m✗\x1b[39m\x1b[22m \x1b[1mBuild failed\x1b[22m"
+                " \x1b[2m(exit code 1)\x1b[22m\n\n"
+                "\x1b[36m❯\x1b[39m npm run build\n\n"
+                "\x1b[2m> contoso-portal@3.12.0 build\x1b[22m\n"
+                "\x1b[2m> next build\x1b[22m\n\n"
+                "\x1b[33m⚠\x1b[39m \x1b[1mCompiling...\x1b[22m\n"
+                "\x1b[31m\x1b[1mError:\x1b[22m\x1b[39m \x1b[1mType error:\x1b"
+                "[22m Property 'sessionId' does not exist on type "
+                "'IntrinsicAttributes & UserContextProps'.\n\n"
+                "  \x1b[90m  45 |\x1b[39m   return (\n"
+                "  \x1b[90m  46 |\x1b[39m     <UserProvider\n"
+                "  \x1b[90m\x1b[31m> 47 |\x1b[39m\x1b[22m       "
+                "\x1b[31msessionId={session.id}\x1b[39m\n"
+                "  \x1b[90m     |\x1b[39m       \x1b[31m^\x1b[39m\n"
+                "  \x1b[90m  48 |\x1b[39m       authToken={token}\n"
+                "  \x1b[90m  49 |\x1b[39m     >\n"
+                "  \x1b[90m  50 |\x1b[39m   );\n\n"
+                "\x1b[2mFile: src/components/Layout.tsx:47:7\x1b[22m\n\n"
+                "\x1b[2minfo\x1b[22m  - Build completed with \x1b[31m1 error"
+                "\x1b[39m\n"
+                "\x1b[2m\x1b[31mELINT: 0 warnings\x1b[39m\x1b[22m\n\n"
+                "This started happening after merging PR #1847 today. Can "
+                "someone take a look? It's blocking the release pipeline.\n\n"
+                "— Yuki Tanaka, Frontend Team"
+            ),
+            category=Category.SOFTWARE,
+            priority=Priority.P2,
+            team=Team.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_info=[],
+            next_best_action=(
+                "Strip the ANSI escape codes to extract the build error: "
+                "contoso-portal@3.12.0 Next.js build fails with a TypeScript "
+                "error — Property 'sessionId' does not exist on type "
+                "'IntrinsicAttributes & UserContextProps' at "
+                "src/components/Layout.tsx:47:7. The issue started after "
+                "merging PR #1847 and is blocking the release pipeline."
+            ),
+            remediation_steps=[
+                "Review PR #1847 for changes to the UserContextProps interface "
+                "— the 'sessionId' prop was likely removed or renamed.",
+                "Update src/components/Layout.tsx line 47 to use the correct "
+                "prop name from the updated UserContextProps interface.",
+                "Run 'npx tsc --noEmit' locally to verify the fix compiles before pushing.",
+                "If the sessionId prop was intentionally removed in PR #1847, "
+                "check all usages of UserProvider for the same breaking change.",
+                "Add the CI build status check as a required check on the main "
+                "branch to prevent similar breakages from being merged.",
+            ],
+            reporter_name="Yuki Tanaka",
+            reporter_email="yuki.tanaka@contoso.com",
+            reporter_department="Frontend Engineering",
+            channel=Channel.CHAT,
+            tags=["data-cleanup", "ansi-codes", "terminal-output", "ci-pipeline"],
+            difficulty="medium",
+        ),
+        # ── DC-179  Email with corrupted quoted-printable encoding ──
+        ScenarioDefinition(
+            scenario_id="DC-179",
+            subject="=?UTF-8?Q?Probl=C3=A8me_d=27acc=C3=A8s_VPN_=E2=80=94_URGENT?=",
+            description=(
+                "Content-Type: text/plain; charset=3Dutf-8\n"
+                "Content-Transfer-Encoding: quoted-printable\n\n"
+                "Bonjour =C3=A9quipe IT,\n\n"
+                "Je n=27arrive plus =C3=A0 me connecter au VPN depuis ce "
+                "matin. L=27application GlobalProtect affiche l=27erreur =\n"
+                "=C2=AB Gateway timed out =C2=BB apr=C3=A8s 30 secondes "
+                "d=27attente. J=27ai essay=C3=A9 =\n"
+                "les passerelles suivantes :\n\n"
+                "=E2=80=A2 vpn-east.contoso.com =E2=80=94 =C3=A9chec\n"
+                "=E2=80=A2 vpn-west.contoso.com =E2=80=94 =C3=A9chec\n"
+                "=E2=80=A2 vpn-eu.contoso.com =E2=80=94 =C3=A9chec\n\n"
+                "Mon coll=C3=A8gue =C3=A0 c=C3=B4t=C3=A9 de moi "
+                "(m=C3=AAme bureau, m=C3=AAme r=C3=A9seau Wi-Fi) n=27a "
+                "aucun probl=C3=A8me. Mon ordinateur est un ThinkPad T14s "
+                "sous Windows 11 23H2, GlobalProtect version 6.2.1.\n\n"
+                "C=27est urgent car j=27ai une pr=C3=A9sentation client =\n"
+                "=C3=A0 14h et j=27ai besoin d=27acc=C3=A9der aux fichiers "
+                "sur le serveur interne.\n\n"
+                "Merci,\n"
+                "=46ran=C3=A7ois Dumont\n"
+                "D=C3=A9partement : Ventes Internationales\n"
+                "T=C3=A9l : +33 1 42 68 53 00 poste 2847"
+            ),
+            category=Category.NETWORK,
+            priority=Priority.P2,
+            team=Team.NETWORK_OPS,
+            needs_escalation=False,
+            missing_info=[MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "Decode the quoted-printable encoded French email: François "
+                "Dumont cannot connect to VPN via GlobalProtect since this "
+                "morning. All three gateways (vpn-east, vpn-west, vpn-eu) "
+                "time out after 30 seconds. A colleague on the same Wi-Fi "
+                "network has no issues. ThinkPad T14s, Windows 11 23H2, "
+                "GlobalProtect 6.2.1. Urgent — client presentation at 2 PM."
+            ),
+            remediation_steps=[
+                "Check François Dumont's GlobalProtect client certificate — "
+                "if it expired or was revoked, all gateways would reject the "
+                "connection.",
+                "Verify the user's Active Directory account is not locked out "
+                "or flagged by Conditional Access policies.",
+                "Run 'nslookup vpn-east.contoso.com' and 'tracert "
+                "vpn-east.contoso.com' from his machine to check DNS "
+                "resolution and network routing.",
+                "Compare his GlobalProtect client configuration with his "
+                "colleague's — check for differences in portal address, "
+                "certificate store, or proxy settings.",
+                "As a temporary workaround, try connecting via the "
+                "GlobalProtect web portal (https://vpn-east.contoso.com) "
+                "using browser-based SSL VPN to unblock the 2 PM presentation.",
+            ],
+            reporter_name="François Dumont",
+            reporter_email="francois.dumont@contoso.com",
+            reporter_department="International Sales",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "quoted-printable-encoding", "multilingual", "encoding-corruption"],
+            difficulty="hard",
+        ),
+        # ── DC-180  Blank ticket with only auto-generated metadata ──
+        ScenarioDefinition(
+            scenario_id="DC-180",
+            subject="[ServiceNow AUTO] INC0847291 — Assigned to IT-Support-L1",
+            description=(
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "INCIDENT RECORD — AUTO-GENERATED\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "Incident Number:  INC0847291\n"
+                "State:            New\n"
+                "Priority:         3 — Moderate\n"
+                "Category:         Inquiry / Help\n"
+                "Subcategory:      (none)\n"
+                "Assignment Group: IT-Support-L1\n"
+                "Assigned To:      (unassigned)\n"
+                "Opened By:        sys_auto_import\n"
+                "Opened:           2026-03-24 07:00:03 UTC\n"
+                "Short Description: (blank)\n"
+                "Description:      (blank)\n"
+                "Additional Comments: (none)\n"
+                "Work Notes:       (none)\n"
+                "Contact Type:     Email\n"
+                "Caller:           jorge.martinez@contoso.com\n"
+                "Configuration Item: (none)\n"
+                "Business Service: (none)\n"
+                "Impact:           3 — Low\n"
+                "Urgency:          3 — Low\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "ATTACHMENT LIST:\n"
+                "  1. original_email.eml (42 KB)\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+                "This incident was auto-created by the ServiceNow Email "
+                "Inbound Action 'IT Support Inbox Parser v2.3'. The original "
+                "email could not be parsed. The raw email has been saved as "
+                "an attachment.\n"
+                "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            ),
+            category=Category.GENERAL_INQUIRY,
+            priority=Priority.P4,
+            team=Team.NONE,
+            needs_escalation=False,
+            missing_info=[MissingInfo.AFFECTED_SYSTEM, MissingInfo.STEPS_TO_REPRODUCE, MissingInfo.ERROR_MESSAGE],
+            next_best_action=(
+                "This ticket contains only auto-generated ServiceNow metadata "
+                "with blank description and short description fields. The "
+                "original email from jorge.martinez@contoso.com could not be "
+                "parsed and was saved as an .eml attachment. Contact the "
+                "caller to determine the actual issue, or retrieve and parse "
+                "the original_email.eml attachment."
+            ),
+            remediation_steps=[
+                "Open the original_email.eml attachment to retrieve the actual "
+                "support request content that the ServiceNow parser failed to "
+                "extract.",
+                "Contact Jorge Martinez at jorge.martinez@contoso.com to "
+                "confirm the issue if the .eml file is also unparseable.",
+                "Investigate why the ServiceNow Email Inbound Action failed to "
+                "parse the email — check for unusual MIME types, encoding, or "
+                "email client signatures.",
+                "Update the ServiceNow Inbound Action parser rules to handle "
+                "the email format that caused the parsing failure.",
+                "Add monitoring for blank-description incidents created by the "
+                "auto-import to catch parsing failures proactively.",
+            ],
+            reporter_name="Jorge Martinez",
+            reporter_email="jorge.martinez@contoso.com",
+            reporter_department="Unknown",
+            channel=Channel.EMAIL,
+            tags=["data-cleanup", "machine-generated", "servicenow-audit-trail", "no-details", "blank-lines"],
+            difficulty="medium",
+        ),
     ]

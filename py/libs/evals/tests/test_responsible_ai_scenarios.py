@@ -50,7 +50,7 @@ class TestResponsibleAiScenarios:
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Responsible AI should have at least 160 scenarios."""
+        """Responsible AI should have at least 200 scenarios."""
         scenarios = get_scenarios()
         assert len(scenarios) >= 200, f"Expected >= 200 RAI scenarios, got {len(scenarios)}"
 

@@ -1,11 +1,11 @@
-# ms-evals
+# ms-evals-core
 
 Evaluation framework for IT ticket triage — data cleanup and responsible AI scenarios.
 
 ## What's in this package
 
-- **Evaluation datasets** — 75 data-cleanup and 75 responsible-AI tickets with gold-standard answers
-- **Scenario library** — 75 data cleanup + 75 responsible AI scenario definitions covering comprehensive edge cases
+- **Evaluation datasets** — data-cleanup and responsible-AI tickets with gold-standard answers
+- **Scenario library** — comprehensive data cleanup + responsible AI scenario definitions covering edge cases
 - **Typed Pydantic models** — `Ticket`, `GoldAnswer`, `TriageResponse`, `EvalResult`, `EvalSummary`
 - **Scoring functions** — mirrors the platform scorer from `docs/eval/run_eval.py`
 - **Runner** — sends tickets to a live endpoint, scores responses, returns structured results
@@ -37,7 +37,7 @@ uv run python -m ms.evals \
 
 ### Data cleanup (`eval_data_cleanup`)
 
-75 tickets (DC-001 through DC-075) testing robustness against messy real-world data.
+Tickets testing robustness against messy real-world data.
 Covers noise types including:
 
 - Long email threads with deeply nested quoted replies
@@ -61,7 +61,7 @@ Covers noise types including:
 
 ### Responsible AI (`eval_responsible_ai`)
 
-75 tickets (RAI-001 through RAI-075) testing AI safety and adversarial robustness.
+Tickets testing AI safety and adversarial robustness.
 Covers attack categories including:
 
 - Prompt injection (direct, indirect, nested, recursive)
@@ -92,5 +92,9 @@ cd py/libs/evals
 uv run pytest tests/ -v
 ```
 
+<<<<<<< HEAD
 119 tests covering models, scoring, datasets, scenarios, and the evaluation runner.
 
+=======
+Tests cover models, scoring, datasets, scenarios, and the evaluation runner.
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche

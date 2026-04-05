@@ -50,7 +50,7 @@ class TestDataCleanupScenarios:
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Data cleanup should have at least 130 scenarios."""
+        """Data cleanup should have at least 160 scenarios."""
         scenarios = get_scenarios()
         assert len(scenarios) >= 160, f"Expected >= 160 DC scenarios, got {len(scenarios)}"
 
