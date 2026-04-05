@@ -92,9 +92,4 @@ cd py/libs/evals
 uv run pytest tests/ -v
 ```
 
-<<<<<<< HEAD
-119 tests covering models, scoring, datasets, scenarios, and the evaluation runner.
-
-=======
 Tests cover models, scoring, datasets, scenarios, and the evaluation runner.
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche

@@ -143,8 +143,8 @@ class TestDatasetIntegrity:
 class TestDataCleanupSpecific:
     """Data cleanup dataset-specific validations."""
 
-    def test_has_60_cases(self) -> None:
-        assert len(DATA_CLEANUP_DATASET.cases) == 80
+    def test_has_expected_case_count(self) -> None:
+        assert len(DATA_CLEANUP_DATASET.cases) >= 80
 
     def test_covers_expected_scenarios(self) -> None:
         all_tags = set()

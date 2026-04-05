@@ -1,264 +1,270 @@
 [
     {
-        "ticket_id": "INC-5001",
-        "category": "Data & Storage",
-        "priority": "P3",
-        "assigned_team": "Data Platform",
+        "ticket_id": "INC-DC-001",
+        "category": "Network & Connectivity",
+        "priority": "P2",
+        "assigned_team": "Network Operations",
         "needs_escalation": false,
-        "missing_information": [],
-        "next_best_action": "Check SharePoint site permissions for the Finance Q4 site. Verify whether the reporter's access was removed or modified during a recent migration or group membership change.",
+        "missing_information": [
+            "application_version"
+        ],
+        "next_best_action": "Investigate GlobalProtect error GP-ERR-4021 on the user's Dell Latitude 5540 running Windows 11 \u2014 likely caused by the Intune endpoint agent update pushed last Friday conflicting with the VPN client.",
         "remediation_steps": [
-            "Check the Finance Q4 SharePoint site permissions and group membership",
-            "Verify if the reporter was removed from any security groups during recent changes",
-            "Re-grant access to the Finance Q4 SharePoint site if permissions were inadvertently removed",
-            "Confirm the reporter can access the site and upload the quarterly report",
-            "Review recent permission changes to prevent recurrence"
+            "Check GlobalProtect gateway logs for GP-ERR-4021 correlated with the user's session.",
+            "Review the Intune endpoint agent update pushed Friday for known VPN compatibility issues.",
+            "Roll back the endpoint agent update on a test device to confirm the root cause.",
+            "If rollback resolves the issue, push a targeted fix or exemption via Intune.",
+            "Confirm VPN connectivity is stable and the user can access internal resources."
         ]
     },
     {
-        "ticket_id": "INC-5002",
+        "ticket_id": "INC-DC-002",
+        "category": "Hardware & Peripherals",
+        "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Troubleshoot Dell U2722D monitor flickering via Lenovo USB-C dock on ThinkPad X1 Carbon Gen 11 \u2014 likely a display driver regression from last week's Windows Update.",
+        "remediation_steps": [
+            "Check the installed Intel/NVIDIA display driver version and compare against the pre-update version.",
+            "Roll back the display driver to the previous version via Device Manager.",
+            "Test the monitor with a direct HDMI or DisplayPort connection bypassing the dock.",
+            "Update Lenovo USB-C dock firmware if a newer version is available.",
+            "If driver rollback resolves the issue, defer the problematic driver in WSUS."
+        ]
+    },
+    {
+        "ticket_id": "INC-DC-003",
         "category": "Software & Applications",
         "priority": "P3",
         "assigned_team": "Enterprise Applications",
         "needs_escalation": false,
         "missing_information": [
-            "application_version",
-            "environment_details"
+            "application_version"
         ],
-        "next_best_action": "Investigate Outlook attachment size limit configuration after the recent update. Verify the actual attachment size limit policy and whether the recent update changed the default settings.",
+        "next_best_action": "Diagnose Outlook desktop crash (0xc0000005 in mso40uiwin32client.dll) triggered by calendar invites from Legal \u2014 likely caused by Tuesday's Office update.",
         "remediation_steps": [
-            "Check the Outlook version and confirm which update was applied",
-            "Verify the Exchange Online attachment size limit policy for the user's mailbox",
-            "Test sending a 15MB attachment from a reference machine to isolate the issue",
-            "If the update changed attachment handling behavior, roll back or apply a fix",
-            "Suggest using OneDrive sharing links as a workaround for large files in the interim"
+            "Identify the specific Office update pushed Tuesday and check for known issues.",
+            "Run Outlook in safe mode to rule out add-in conflicts.",
+            "Attempt to open the problematic calendar invite via Outlook Web App to confirm it is client-specific.",
+            "Run Online Repair of the Office installation if safe mode does not resolve the crash.",
+            "If Online Repair fails, roll back to the previous Office build via the Office Deployment Tool."
         ]
     },
     {
-        "ticket_id": "INC-5003",
-        "category": "Hardware & Peripherals",
-        "priority": "P2",
-        "assigned_team": "Endpoint Engineering",
-        "needs_escalation": false,
-        "missing_information": [],
-        "next_best_action": "Dispatch a technician to Floor 5 to diagnose the HP LaserJet Pro M404n false paper jam error. Time-sensitive: 200 pages of compliance reports needed by 3 PM for a board meeting.",
-        "remediation_steps": [
-            "Dispatch technician to Floor 5 to inspect the HP LaserJet Pro M404n",
-            "Check for paper dust, torn paper fragments, or sensor obstructions causing the false jam error",
-            "Clean or replace paper feed sensors if necessary",
-            "Run a printer self-test to verify the fix",
-            "If the printer cannot be repaired quickly, redirect the print job to an alternate printer on the same floor"
-        ]
-    },
-    {
-        "ticket_id": "INC-5004",
-        "category": "Hardware & Peripherals",
-        "priority": "P4",
-        "assigned_team": "Endpoint Engineering",
-        "needs_escalation": false,
-        "missing_information": [
-            "affected_system",
-            "error_message",
-            "device_info",
-            "steps_to_reproduce",
-            "business_impact"
-        ],
-        "next_best_action": "Contact the reporter to gather basic details about the laptop issue: what is happening, what device model, what error messages are shown, and how it affects their work.",
-        "remediation_steps": [
-            "Contact Jake Morrison to gather specific details about the laptop issue",
-            "Determine the laptop model, the nature of the issue, and any error messages",
-            "Once the issue is understood, provide appropriate troubleshooting steps or schedule a repair",
-            "Update the ticket with the gathered information for proper triage"
-        ]
-    },
-    {
-        "ticket_id": "INC-5005",
+        "ticket_id": "INC-DC-004",
         "category": "Network & Connectivity",
-        "priority": "P3",
+        "priority": "P1",
         "assigned_team": "Network Operations",
+        "needs_escalation": true,
+        "missing_information": [
+            "network_location"
+        ],
+        "next_best_action": "Investigate complete WiFi outage on 4th floor, Building 2 Chicago affecting 12+ users in Structured Products \u2014 client presentation at 11:00 AM requires urgent resolution.",
+        "remediation_steps": [
+            "Check the wireless controller dashboard for AP status on Building 2, 4th floor.",
+            "Verify if the APs lost power, connectivity to the switch, or received a bad config push.",
+            "Restart the affected APs remotely via the controller if they appear offline.",
+            "If APs are up but clients cannot authenticate, check the RADIUS/NPS server for 4th-floor VLAN.",
+            "Dispatch on-site network technician if remote remediation does not restore service within 15 minutes."
+        ]
+    },
+    {
+        "ticket_id": "INC-DC-005",
+        "category": "Access & Authentication",
+        "priority": "P2",
+        "assigned_team": "Identity & Access Management",
         "needs_escalation": false,
         "missing_information": [
             "error_message"
         ],
-        "next_best_action": "Investigate VPN connectivity failure for the reporter. Check GlobalProtect client logs and VPN gateway status. Determine the specific error message being displayed.",
+        "next_best_action": "Restore access to the Compliance Reporting Portal for the user receiving 403 Forbidden \u2014 quarterly compliance report deadline is Friday EOD.",
         "remediation_steps": [
-            "Ask the reporter for the exact VPN error message or error code",
-            "Check the GlobalProtect VPN gateway status and recent changes",
-            "Verify the reporter's VPN credentials and certificate status",
-            "Test VPN connectivity from a reference Windows 11 machine with GlobalProtect",
-            "If the issue is server-side, escalate to network engineering for gateway investigation"
+            "Check the Compliance Reporting Portal's access control list for the user's account.",
+            "Verify the user's Azure AD group memberships include the Compliance-Portal-Users group.",
+            "If permissions were revoked, re-grant access and confirm with the user's manager Diane Chen.",
+            "Clear any cached 403 responses and have the user retry in an incognito browser.",
+            "Monitor for recurrence and check if a recent permission sync job removed the access."
         ]
     },
     {
-        "ticket_id": "INC-5006",
-        "category": "Software & Applications",
-        "priority": "P3",
-        "assigned_team": "Enterprise Applications",
+        "ticket_id": "INC-DC-006",
+        "category": "Security & Compliance",
+        "priority": "P2",
+        "assigned_team": "Security Operations",
         "needs_escalation": false,
         "missing_information": [
-            "application_version",
-            "affected_users"
+            "screenshot_or_attachment"
         ],
-        "next_best_action": "Investigate Outlook crash after Windows update for multiple users on Floor 3 in the London office. Check if the update introduced a compatibility issue with the installed Outlook version.",
+        "next_best_action": "Investigate phishing email from 'cont0so-financial.com' targeting the user \u2014 confirm no credentials were compromised and block the sender domain org-wide.",
         "remediation_steps": [
-            "Identify the specific Windows update that was applied and its compatibility with the current Outlook version",
-            "Check if other users in the London office Floor 3 are experiencing the same issue",
-            "If the update caused the issue, coordinate with Endpoint Engineering to roll back or patch",
-            "Clear the Outlook local cache and repair the Outlook installation as an immediate remediation",
-            "Confirm resolution with both affected users"
+            "Retrieve the original phishing email headers from the user's quarantine folder.",
+            "Block the sender domain cont0so-financial.com and the URL contoso-verify.xyz in the email gateway.",
+            "Run a mail trace to identify other recipients of the same phishing campaign within Contoso.",
+            "Confirm the user did not click the link by reviewing proxy logs for contoso-verify.xyz.",
+            "Send a phishing alert notification to all employees if the campaign is widespread."
         ]
     },
     {
-        "ticket_id": "INC-5007",
-        "category": "Access & Authentication",
+        "ticket_id": "INC-DC-007",
+        "category": "Data & Storage",
+        "priority": "P2",
+        "assigned_team": "Data Platform",
+        "needs_escalation": false,
+        "missing_information": [
+            "environment_details"
+        ],
+        "next_best_action": "Investigate OneDrive sync failure (error 0x8004de40) for the APAC Structured Finance SharePoint library affecting 8+ users in the Singapore office since Monday.",
+        "remediation_steps": [
+            "Check SharePoint admin center for throttling or service health issues on the APAC tenant.",
+            "Review OneDrive sync error 0x8004de40 \u2014 typically indicates a network or authentication problem.",
+            "Verify the Singapore office proxy and firewall allow OneDrive sync endpoints.",
+            "Check if the library size (14,000 files / 85 GB) exceeds any sync client limits.",
+            "Have one user reset the OneDrive sync client and re-sync to test after backend checks."
+        ]
+    },
+    {
+        "ticket_id": "INC-DC-008",
+        "category": "Hardware & Peripherals",
         "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Fix keyboard layout issue on ThinkPad T14s Gen 4 \u2014 Windows input method likely switched to a non-US layout after the external USB keyboard was connected.",
+        "remediation_steps": [
+            "Check Windows Settings > Time & Language > Language for extra keyboard layouts (DE, FR).",
+            "Remove any non-US English keyboard layouts that were auto-added.",
+            "Verify the input method in the system tray is set to 'ENG US' and not another language.",
+            "If the issue persists, update or reinstall the Lenovo keyboard driver via Lenovo Vantage.",
+            "Test all keys after the fix and confirm with the user."
+        ]
+    },
+    {
+        "ticket_id": "INC-DC-009",
+        "category": "Access & Authentication",
+        "priority": "P2",
         "assigned_team": "Identity & Access Management",
         "needs_escalation": false,
         "missing_information": [
             "authentication_method"
         ],
-        "next_best_action": "Manually reset the user's password and verify their self-service password reset security questions. The SSPR portal may have stale or incorrectly configured security questions.",
+        "next_best_action": "Investigate SAML assertion failure for HR Portal SSO \u2014 the 'department' claim is missing after the user's office transfer from London to New York in the HR system.",
         "remediation_steps": [
-            "Verify the account lockout status in Entra ID",
-            "Manually reset the password for the user",
-            "Review and update the self-service password reset security questions",
-            "Confirm the user can log in and access their workstation",
-            "Investigate why SSPR security questions are failing to identify if it's a broader issue"
+            "Check Azure AD SAML token claims configuration for the HR Portal enterprise app.",
+            "Verify the user's 'department' attribute is populated in Azure AD after the office transfer.",
+            "If the attribute is empty, update it in Azure AD or sync from the HR system.",
+            "Test SSO login to hr.contoso.com after the attribute is corrected.",
+            "Review the SAML claims mapping to ensure office transfers do not clear required attributes."
         ]
     },
     {
-        "ticket_id": "INC-5008",
+        "ticket_id": "INC-DC-010",
+        "category": "Data & Storage",
+        "priority": "P2",
+        "assigned_team": "Data Platform",
+        "needs_escalation": true,
+        "missing_information": [
+            "environment_details"
+        ],
+        "next_best_action": "Investigate I/O bottleneck on sql-prod-rpt-02 causing nightly ETL failure and stale risk dashboards for 30 portfolio managers \u2014 PAGEIOLATCH_SH waits indicate disk subsystem saturation.",
+        "remediation_steps": [
+            "Check the storage subsystem health and latency metrics for sql-prod-rpt-02.",
+            "Review SQL Server wait stats and identify the queries contributing to PAGEIOLATCH_SH waits.",
+            "Check for competing workloads or runaway queries that may be saturating disk I/O.",
+            "Restart the failed ADF_RiskLoad_Prod ETL pipeline once I/O performance is restored.",
+            "Notify portfolio management leads about the stale data and provide an ETA for the refresh."
+        ]
+    },
+    {
+        "ticket_id": "INC-DC-011",
+        "category": "Security & Compliance",
+        "priority": "P3",
+        "assigned_team": "Security Operations",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Generate access review reports for 5 SharePoint sites and 3 Azure resource groups for the Q1 2026 compliance audit \u2014 reports due by March 25 for audit committee meeting.",
+        "remediation_steps": [
+            "Run Azure AD access reviews for the 5 listed SharePoint sites and export user/permission reports.",
+            "Generate RBAC role assignment reports for the 3 Azure resource groups.",
+            "Include last-access timestamps from Azure AD sign-in logs for each user.",
+            "Compile the reports into the format specified in the Q1 Audit Checklist.",
+            "Deliver reports to the Chief Compliance Officer by March 25."
+        ]
+    },
+    {
+        "ticket_id": "INC-DC-012",
         "category": "Software & Applications",
         "priority": "P1",
         "assigned_team": "Enterprise Applications",
         "needs_escalation": true,
-        "missing_information": [],
-        "next_best_action": "Investigate the shared mailbox email delivery failure immediately. This is a trading desk missing client orders, which has direct revenue impact. Check Exchange Online mail flow rules and transport logs for the apac-trading shared mailbox.",
-        "remediation_steps": [
-            "Check Exchange Online transport logs for the apac-trading@contoso.com mailbox",
-            "Verify mail flow rules and connectors that handle external email delivery",
-            "Check if any recent changes to mail flow rules or spam filters are blocking external mail",
-            "Restore external email delivery to the shared mailbox",
-            "Monitor for 30 minutes to confirm stable delivery of external emails"
-        ]
-    },
-    {
-        "ticket_id": "INC-5009",
-        "category": "Data & Storage",
-        "priority": "P1",
-        "assigned_team": "Data Platform",
-        "needs_escalation": true,
-        "missing_information": [],
-        "next_best_action": "Investigate the blocked sessions on the production SQL Server immediately. Kill or analyze the long-running transaction (SPID 89) causing lock contention. ~500 client portal users are affected with 500 errors.",
-        "remediation_steps": [
-            "Connect to sql-prod-east and investigate SPID 89 to determine the blocking query",
-            "If safe, kill the blocking session (SPID 89) to release locks",
-            "Monitor the connection pool and blocked session count after intervention",
-            "Verify client portal functionality is restored by checking Application Insights error rates",
-            "Investigate root cause of the long-running transaction to prevent recurrence",
-            "Consider implementing query timeout policies and alerting for long-running transactions"
-        ]
-    },
-    {
-        "ticket_id": "INC-5010",
-        "category": "Network & Connectivity",
-        "priority": "P3",
-        "assigned_team": "Network Operations",
-        "needs_escalation": false,
         "missing_information": [
             "environment_details"
         ],
-        "next_best_action": "Investigate VPN error code 812 for users in the Dubai office. Check if there are regional VPN gateway issues or configuration changes affecting the Dubai site.",
+        "next_best_action": "Investigate multiple SAP transaction failures (VA01, ME21N, FB01) since 07:00 AM affecting 40 users \u2014 SQL_ERROR_502 suggests a database-level issue, possibly SAPSR3 tablespace exhaustion.",
         "remediation_steps": [
-            "Check VPN gateway logs for error code 812 from the Dubai office IP range",
-            "Verify the VPN configuration and NPS policies for the Dubai site",
-            "Check if any recent network or firewall changes affected VPN connectivity from that region",
-            "Test VPN connectivity from the Dubai office with a reference account",
-            "If the issue is regional, escalate to the network engineering team for gateway configuration review"
+            "Check SAP system logs (SM21) and database error logs for the root cause of SQL_ERROR_502.",
+            "Verify SAPSR3 tablespace utilization and extend if it is near capacity.",
+            "Review SAP work process status (SM50/SM66) for blocked or hung processes.",
+            "Restart affected SAP application servers if work processes are stuck.",
+            "Notify Sales, Finance, and Procurement teams once transactions are functional."
         ]
     },
     {
-        "ticket_id": "INC-5011",
-        "category": "Hardware & Peripherals",
-        "priority": "P3",
-        "assigned_team": "Endpoint Engineering",
-        "needs_escalation": false,
-        "missing_information": [],
-        "next_best_action": "Initiate a laptop screen replacement or full device replacement for the damaged ThinkPad X1 Carbon Gen 11. Check warranty status and begin RMA process if applicable.",
-        "remediation_steps": [
-            "Check the warranty status of the ThinkPad X1 Carbon Gen 11",
-            "If under warranty, initiate a Lenovo RMA for screen replacement",
-            "If out of warranty, assess whether screen replacement or full device replacement is more cost-effective",
-            "Ensure the user has a functional external monitor in the meantime",
-            "Schedule the repair or replacement and update the user on the timeline"
-        ]
-    },
-    {
-        "ticket_id": "INC-5012",
+        "ticket_id": "INC-DC-013",
         "category": "Access & Authentication",
-        "priority": "P3",
+        "priority": "P2",
         "assigned_team": "Identity & Access Management",
         "needs_escalation": false,
         "missing_information": [
             "device_info"
         ],
-        "next_best_action": "Investigate the Microsoft Authenticator app timeout issue on the new iPhone. This is likely related to device migration and re-registration of the authenticator account.",
+        "next_best_action": "Re-register Microsoft Authenticator MFA for the user who replaced their phone and wiped the old device \u2014 requires admin-initiated MFA reset since the old device is no longer available.",
         "remediation_steps": [
-            "Verify the user's MFA registration status in Entra ID",
-            "Remove the existing Authenticator app registration for the old device",
-            "Guide the user through re-registering Microsoft Authenticator on the new iPhone 16",
-            "Test push notification approval to confirm the issue is resolved",
-            "If the issue persists, check for known iOS 18 compatibility issues with the Authenticator app"
+            "Verify the user's identity with their manager Diana Ross in Portfolio Analytics.",
+            "Perform an admin MFA reset in Azure AD to clear the old Authenticator registration.",
+            "Guide the user through re-registering Microsoft Authenticator on the new iPhone 15.",
+            "Have the user test MFA sign-in to Outlook and Teams to confirm the new device works.",
+            "Recommend the user set up a backup MFA method (SMS or FIDO2 key) to avoid future lockouts."
         ]
     },
     {
-        "ticket_id": "INC-5013",
-        "category": "Network & Connectivity",
+        "ticket_id": "INC-DC-014",
+        "category": "Hardware & Peripherals",
         "priority": "P2",
-        "assigned_team": "Network Operations",
-        "needs_escalation": false,
-        "missing_information": [],
-        "next_best_action": "Investigate the intermittent network drops on Building 2, Floor 7. The reporter has identified a potentially misconfigured device causing broadcast storms via ARP table flip-flopping. Prioritize locating and isolating the offending device.",
-        "remediation_steps": [
-            "Review the provided packet captures and switch logs to confirm the broadcast traffic source",
-            "Locate and isolate the device at MAC address AA:BB:CC:DD:EE:FF causing ARP table issues",
-            "Check the switch port configuration for the offending device and apply storm control if needed",
-            "Verify network stability on Floor 7 after isolating the device",
-            "Investigate root cause of the device misconfiguration to prevent recurrence"
-        ]
-    },
-    {
-        "ticket_id": "INC-5014",
-        "category": "Software & Applications",
-        "priority": "P3",
-        "assigned_team": "Enterprise Applications",
+        "assigned_team": "Endpoint Engineering",
         "needs_escalation": false,
         "missing_information": [
-            "previous_ticket_id"
+            "error_message"
         ],
-        "next_best_action": "Process the Visio Professional installation request (REQ-2341 approved). Address the OneDrive storage quota question. The printer complaint (INC-4100) should be followed up separately. The SharePoint access request for a colleague needs its own ticket.",
+        "next_best_action": "Investigate HP LaserJet MFP M635 print spooler service failure on Level 22 Singapore \u2014 the printer responds to ping and shows 'Ready' but the spooler is unavailable, blocking ~30 users before an afternoon client meeting.",
         "remediation_steps": [
-            "Process the approved Visio Professional installation request for asset CT-L-4892",
-            "Check and potentially increase the user's OneDrive storage quota",
-            "Follow up on the existing printer issue ticket INC-4100 separately",
-            "Create a separate access request for sarah.chen@contoso.com for the Finance Reports SharePoint site",
-            "Redirect the coffee machine complaint to Facilities Management"
+            "Access the printer's web interface at http://10.65.22.40 and restart the print spooler service.",
+            "If the web interface restart fails, power-cycle the printer and wait for full initialization.",
+            "Check the print server for any stuck or corrupted jobs in the queue for this printer.",
+            "Clear and restart the Windows Print Spooler service on the print server managing this device.",
+            "Verify printing works from a test workstation before confirming resolution with the user."
         ]
     },
     {
-        "ticket_id": "INC-5015",
+        "ticket_id": "INC-DC-015",
         "category": "Access & Authentication",
-        "priority": "P2",
+        "priority": "P3",
         "assigned_team": "Identity & Access Management",
         "needs_escalation": false,
-        "missing_information": [],
-        "next_best_action": "Unlock the user's account immediately. The account was locked after 3 failed password attempts, and the user has a client call in 45 minutes. Verify no suspicious login activity before unlocking.",
+        "missing_information": [
+            "contact_info"
+        ],
+        "next_best_action": "Provision all accounts, licenses, and equipment for new hire Daniel Osei (Quantitative Analyst, Fixed Income Analytics) starting March 24 \u2014 everything must be ready by Friday March 21.",
         "remediation_steps": [
-            "Check for any suspicious login activity associated with the failed password attempts",
-            "Unlock the user's account in Entra ID",
-            "If needed, initiate a password reset for the user",
-            "Verify VPN connectivity is restored and the user can access CRM and shared drives",
-            "Confirm resolution with the user before their client call"
+            "Create Active Directory account and mailbox for daniel.osei@contoso.com.",
+            "Assign Microsoft 365 E5 license and configure Bloomberg Terminal B-PIPE access.",
+            "Grant access to Fixed Income SharePoint site, Teams channels, and \\\\fs-quant-01\\analytics.",
+            "Provision Dell Latitude 5550 laptop with standard image, docking station, and dual monitors.",
+            "Set up GlobalProtect VPN profile and request Building 3 physical badge from Facilities."
         ]
     }
 ]
