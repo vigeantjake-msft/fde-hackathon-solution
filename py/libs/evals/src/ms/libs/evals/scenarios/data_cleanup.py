@@ -3352,6 +3352,529 @@ def _vulnerability_scanner_dump() -> EvalScenario:
     )
 
 
+def _prometheus_metrics_flood() -> EvalScenario:
+    """Prometheus metrics pasted into a database performance ticket."""
+    description = (
+        "Hi team,\n\n"
+        "Our production Postgres cluster has been extremely slow since "
+        "yesterday morning. I grabbed some Prometheus metrics that might "
+        "help. Here they are:\n\n"
+        "# HELP pg_stat_activity_count Number of connections\n"
+        "# TYPE pg_stat_activity_count gauge\n"
+        "pg_stat_activity_count{datname=\"orders_db\",state=\"active\"} 487\n"
+        "pg_stat_activity_count{datname=\"orders_db\",state=\"idle\"} 312\n"
+        "pg_stat_activity_count{datname=\"orders_db\",state=\"idle_in_transaction\"} 74\n"
+        "pg_stat_activity_count{datname=\"inventory_db\",state=\"active\"} 23\n"
+        "pg_stat_activity_count{datname=\"inventory_db\",state=\"idle\"} 156\n\n"
+        "# HELP pg_locks_count Number of locks\n"
+        "# TYPE pg_locks_count gauge\n"
+        "pg_locks_count{datname=\"orders_db\",mode=\"AccessShareLock\"} 1024\n"
+        "pg_locks_count{datname=\"orders_db\",mode=\"RowExclusiveLock\"} 893\n"
+        "pg_locks_count{datname=\"orders_db\",mode=\"ExclusiveLock\"} 12\n\n"
+        "# HELP pg_replication_lag_seconds Replication lag in seconds\n"
+        "# TYPE pg_replication_lag_seconds gauge\n"
+        "pg_replication_lag_seconds{replica=\"pg-replica-01\"} 47.3\n"
+        "pg_replication_lag_seconds{replica=\"pg-replica-02\"} 112.8\n"
+        "pg_replication_lag_seconds{replica=\"pg-replica-03\"} 0.4\n\n"
+        "# HELP pg_stat_bgwriter_buffers_checkpoint Total buffers written during checkpoints\n"
+        "# TYPE pg_stat_bgwriter_buffers_checkpoint counter\n"
+        "pg_stat_bgwriter_buffers_checkpoint 9.284731e+06\n\n"
+        "# HELP pg_database_size_bytes Database size in bytes\n"
+        "# TYPE pg_database_size_bytes gauge\n"
+        "pg_database_size_bytes{datname=\"orders_db\"} 5.28934e+11\n"
+        "pg_database_size_bytes{datname=\"inventory_db\"} 1.73421e+10\n\n"
+        "# HELP node_cpu_seconds_total CPU time in seconds\n"
+        "# TYPE node_cpu_seconds_total counter\n"
+        "node_cpu_seconds_total{cpu=\"0\",mode=\"user\"} 4.82931e+05\n"
+        "node_cpu_seconds_total{cpu=\"0\",mode=\"system\"} 1.23847e+05\n"
+        "node_cpu_seconds_total{cpu=\"0\",mode=\"iowait\"} 8.7421e+04\n"
+        "node_cpu_seconds_total{cpu=\"1\",mode=\"user\"} 4.91283e+05\n"
+        "node_cpu_seconds_total{cpu=\"1\",mode=\"iowait\"} 9.1032e+04\n\n"
+        "The orders_db is the one causing problems. Queries that normally "
+        "take 200ms are now timing out after 30 seconds. The application "
+        "team is complaining about checkout failures.\n\n"
+        "Thanks,\nJorge"
+    )
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9236",
+            subject="Postgres cluster severe performance degradation",
+            description=description,
+            reporter=Reporter(
+                name="Jorge Delgado",
+                email="jorge.delgado@contoso.com",
+                department="Database Engineering",
+            ),
+            created_at="2026-03-18T09:15:00Z",
+            channel=TicketChannel.EMAIL,
+            attachments=["prometheus_snapshot.tar.gz"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9236",
+            category=TicketCategory.DATA_STORAGE,
+            priority=Priority.P2,
+            assigned_team=AssignedTeam.DATA_PLATFORM,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.TIMESTAMP,
+                MissingInfoField.ENVIRONMENT_DETAILS,
+            ],
+            next_best_action=(
+                "Investigate the high lock contention and replication "
+                "lag on the orders_db Postgres cluster causing query "
+                "timeouts and checkout failures."
+            ),
+            remediation_steps=[
+                "Identify and terminate long-running or blocked queries holding exclusive locks",
+                "Investigate root cause of replication lag on pg-replica-02",
+                "Review recent schema or query changes to orders_db",
+                "Consider increasing max_connections or implementing connection pooling",
+            ],
+        ),
+        tag=_TAG,
+        test_name="prometheus_metrics_flood",
+        test_description=(
+            "Tests extraction of a database performance issue from "
+            "a ticket flooded with raw Prometheus metrics exposition "
+            "format data including gauges, counters, and labels."
+        ),
+    )
+
+
+def _systeminfo_command_dump() -> EvalScenario:
+    """Windows systeminfo output dumped in laptop overheating ticket."""
+    description = (
+        "My laptop keeps overheating and shutting down randomly. Here is "
+        "my system info:\n\n"
+        "Host Name:                 DESKTOP-A4F8K2L\n"
+        "OS Name:                   Microsoft Windows 11 Enterprise\n"
+        "OS Version:                10.0.22631 N/A Build 22631\n"
+        "OS Manufacturer:           Microsoft Corporation\n"
+        "OS Configuration:          Member Workstation\n"
+        "OS Build Type:             Multiprocessor Free\n"
+        "Registered Owner:          Priya Nair\n"
+        "Registered Organization:   Contoso Ltd\n"
+        "Product ID:                00329-00000-00003-AA842\n"
+        "Original Install Date:     8/14/2025, 3:22:17 PM\n"
+        "System Boot Time:          3/17/2026, 8:01:53 AM\n"
+        "System Manufacturer:       Dell Inc.\n"
+        "System Model:              Latitude 5540\n"
+        "System Type:               x64-based PC\n"
+        "Processor(s):              1 Processor(s) Installed.\n"
+        "                           [01]: Intel64 Family 6 Model 186 "
+        "Stepping 3 GenuineIntel ~2419 Mhz\n"
+        "BIOS Version:              Dell Inc. 1.18.0, 6/12/2025\n"
+        "Windows Directory:         C:\\Windows\n"
+        "System Directory:          C:\\Windows\\system32\n"
+        "Boot Device:               \\Device\\HarddiskVolume1\n"
+        "System Locale:             en-us;English (United States)\n"
+        "Input Locale:              en-us;English (United States)\n"
+        "Time Zone:                 (UTC-05:00) Eastern Time (US & Canada)\n"
+        "Total Physical Memory:     16,157 MB\n"
+        "Available Physical Memory: 2,314 MB\n"
+        "Virtual Memory: Max Size:  18,589 MB\n"
+        "Virtual Memory: Available: 3,742 MB\n"
+        "Virtual Memory: In Use:    14,847 MB\n"
+        "Page File Location(s):     C:\\pagefile.sys\n"
+        "Domain:                    contoso.local\n"
+        "Logon Server:              \\\\DC-EAST-01\n"
+        "Hotfix(s):                 14 Hotfix(s) Installed.\n"
+        "                           [01]: KB5034765\n"
+        "                           [02]: KB5035853\n"
+        "                           [03]: KB5036212\n"
+        "                           [04]: KB5037019\n"
+        "                           [05]: KB5037591\n"
+        "                           [06]: KB5038002\n"
+        "                           [07]: KB5038517\n"
+        "                           [08]: KB5039103\n"
+        "                           [09]: KB5039628\n"
+        "                           [10]: KB5040174\n"
+        "                           [11]: KB5040689\n"
+        "                           [12]: KB5041231\n"
+        "                           [13]: KB5041784\n"
+        "                           [14]: KB5042306\n"
+        "Network Card(s):           2 NIC(s) Installed.\n"
+        "                           [01]: Intel(R) Ethernet I219-LM\n"
+        "                           [02]: Intel(R) Wi-Fi 6E AX211 160MHz\n"
+        "Hyper-V Requirements:      VM Monitor Mode Extensions: Yes\n\n"
+        "It gets very hot near the fan area and sometimes just shuts off "
+        "without warning during video calls. This has been happening for "
+        "about two weeks now. I already tried cleaning the vents with "
+        "compressed air but it did not help.\n\n"
+        "Regards,\nPriya"
+    )
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9237",
+            subject="Laptop overheating and random shutdowns",
+            description=description,
+            reporter=Reporter(
+                name="Priya Nair",
+                email="priya.nair@contoso.com",
+                department="Marketing",
+            ),
+            created_at="2026-03-18T11:30:00Z",
+            channel=TicketChannel.PORTAL,
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9237",
+            category=TicketCategory.HARDWARE,
+            priority=Priority.P3,
+            assigned_team=AssignedTeam.ENDPOINT_ENG,
+            needs_escalation=False,
+            missing_information=[MissingInfoField.DEVICE_INFO],
+            next_best_action=(
+                "Schedule a hardware inspection of the Dell Latitude "
+                "5540 to diagnose the overheating and unexpected "
+                "shutdowns during video calls."
+            ),
+            remediation_steps=[
+                "Run Dell built-in diagnostics to check thermal sensor readings",
+                "Inspect internal fan and heat sink for dust buildup or failure",
+                "Update BIOS and thermal management drivers to latest versions",
+                "If hardware fault confirmed, arrange replacement under warranty",
+            ],
+        ),
+        tag=_TAG,
+        test_name="systeminfo_command_dump",
+        test_description=(
+            "Tests extraction of a straightforward hardware overheating "
+            "issue buried under a full Windows systeminfo command dump "
+            "including hotfixes, NIC details, and memory statistics."
+        ),
+    )
+
+
+def _arm_template_noise() -> EvalScenario:
+    """ARM/Bicep IaC template pasted in deployment failure ticket."""
+    description = (
+        "Our nightly deployment to staging failed again last night. I am "
+        "pasting the ARM template we are using so you can see the config. "
+        "The error happens when the App Service tries to start.\n\n"
+        "{\n"
+        "  \"$schema\": \"https://schema.management.azure.com/schemas/"
+        "2019-04-01/deploymentTemplate.json#\",\n"
+        "  \"contentVersion\": \"1.0.0.0\",\n"
+        "  \"parameters\": {\n"
+        "    \"appServicePlanName\": {\n"
+        "      \"type\": \"string\",\n"
+        "      \"defaultValue\": \"asp-contoso-staging\"\n"
+        "    },\n"
+        "    \"webAppName\": {\n"
+        "      \"type\": \"string\",\n"
+        "      \"defaultValue\": \"app-contoso-orders-stg\"\n"
+        "    },\n"
+        "    \"location\": {\n"
+        "      \"type\": \"string\",\n"
+        "      \"defaultValue\": \"[resourceGroup().location]\"\n"
+        "    },\n"
+        "    \"skuName\": {\n"
+        "      \"type\": \"string\",\n"
+        "      \"defaultValue\": \"P1v3\"\n"
+        "    },\n"
+        "    \"linuxFxVersion\": {\n"
+        "      \"type\": \"string\",\n"
+        "      \"defaultValue\": \"DOTNETCORE|8.0\"\n"
+        "    }\n"
+        "  },\n"
+        "  \"resources\": [\n"
+        "    {\n"
+        "      \"type\": \"Microsoft.Web/serverfarms\",\n"
+        "      \"apiVersion\": \"2022-09-01\",\n"
+        "      \"name\": \"[parameters('appServicePlanName')]\",\n"
+        "      \"location\": \"[parameters('location')]\",\n"
+        "      \"sku\": {\n"
+        "        \"name\": \"[parameters('skuName')]\",\n"
+        "        \"capacity\": 2\n"
+        "      },\n"
+        "      \"kind\": \"linux\",\n"
+        "      \"properties\": {\n"
+        "        \"reserved\": true\n"
+        "      }\n"
+        "    },\n"
+        "    {\n"
+        "      \"type\": \"Microsoft.Web/sites\",\n"
+        "      \"apiVersion\": \"2022-09-01\",\n"
+        "      \"name\": \"[parameters('webAppName')]\",\n"
+        "      \"location\": \"[parameters('location')]\",\n"
+        "      \"dependsOn\": [\n"
+        "        \"[resourceId('Microsoft.Web/serverfarms', "
+        "parameters('appServicePlanName'))]\"\n"
+        "      ],\n"
+        "      \"properties\": {\n"
+        "        \"serverFarmId\": \"[resourceId('Microsoft.Web/"
+        "serverfarms', parameters('appServicePlanName'))]\",\n"
+        "        \"siteConfig\": {\n"
+        "          \"linuxFxVersion\": \"[parameters('linuxFxVersion')]\",\n"
+        "          \"alwaysOn\": true,\n"
+        "          \"appSettings\": [\n"
+        "            { \"name\": \"ASPNETCORE_ENVIRONMENT\", "
+        "\"value\": \"Staging\" },\n"
+        "            { \"name\": \"ConnectionStrings__Default\", "
+        "\"value\": \"Server=sql-contoso-stg.database.windows.net;"
+        "Database=orders;\" }\n"
+        "          ]\n"
+        "        }\n"
+        "      }\n"
+        "    }\n"
+        "  ]\n"
+        "}\n\n"
+        "The deployment pipeline shows: \"ERROR: The resource "
+        "Microsoft.Web/sites/app-contoso-orders-stg failed with status "
+        "CancelledByUser.\" But nobody cancelled it — it just timed out "
+        "after 20 minutes waiting for the app to become healthy. The app "
+        "logs show a connection string error but the connection string "
+        "looks correct in the template above.\n\n"
+        "Can someone help? This is blocking our release for Thursday.\n\n"
+        "— Rafael"
+    )
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9238",
+            subject="Staging deployment fails — App Service won't start",
+            description=description,
+            reporter=Reporter(
+                name="Rafael Costa",
+                email="rafael.costa@contoso.com",
+                department="DevOps",
+            ),
+            created_at="2026-03-18T07:45:00Z",
+            channel=TicketChannel.EMAIL,
+            attachments=["deploy-pipeline-log.txt"],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9238",
+            category=TicketCategory.SOFTWARE,
+            priority=Priority.P2,
+            assigned_team=AssignedTeam.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.ERROR_MESSAGE,
+                MissingInfoField.APPLICATION_VERSION,
+            ],
+            next_best_action=(
+                "Investigate the App Service startup failure and "
+                "connection string error that is causing the staging "
+                "deployment to time out."
+            ),
+            remediation_steps=[
+                "Review App Service application logs for the full connection string error",
+                "Verify the staging SQL database is accessible from the App Service subnet",
+                "Check if the managed identity or credentials for the database are configured correctly",
+                "Re-run the deployment pipeline after fixing the connection issue",
+            ],
+        ),
+        tag=_TAG,
+        test_name="arm_template_noise",
+        test_description=(
+            "Tests extraction of a deployment failure issue from a "
+            "ticket dominated by a pasted ARM JSON template with "
+            "parameters, resources, and nested properties."
+        ),
+    )
+
+
+def _codepage_mojibake_printer() -> EvalScenario:
+    """CP-1252/UTF-8 encoding corruption in a printer issue ticket."""
+    description = (
+        "Hi IT,\n\n"
+        "Iâ\x80\x99m having trouble with my printer. Every time I try to "
+        "print from the finance application the output comes out garbled. "
+        "The printer is an HP LaserJet Pro MFP M428fdn on the 3rd floor "
+        "near room 312.\n\n"
+        "Error message I see: â\x80\x9cPrint job failed â\x80\x93 "
+        "driver incompatible with current configurationâ\x80\x9d\n\n"
+        "I\xc2\xb4ve tried the following:\n"
+        "â\x80¢ Restarting the printer â\x80\x93 didnâ\x80\x99t help\n"
+        "â\x80¢ Reinstalling the driver â\x80\x93 same error\n"
+        "â\x80¢ Printing from another application â\x80\x93 works fine "
+        "for Word docs but not the finance app\n"
+        "â\x80¢ Tried a different printer (HP Color LaserJet on 2nd "
+        "floor) â\x80\x93 same issue from finance app\n\n"
+        "My colleague Fran\xc3\xa7ois also has the problem since the "
+        "update on March 15. Before that everything was fine. The print "
+        "jobs show in the queue as â\x80\x9cprintingâ\x80\x9d for about "
+        "30 seconds then change to â\x80\x9cerrorâ\x80\x9d.\n\n"
+        "This is affecting our month-end close process â\x80\x93 we need "
+        "to print invoices and reports for auditing purposes. About 12 "
+        "people in the finance department are affected.\n\n"
+        "PC info: Dell OptiPlex 7090, Windows 11, asset tag CT-PC-4418\n\n"
+        "Thanks for your help,\n"
+        "Mireille Dub\xc3\xa9"
+    )
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9239",
+            subject="Printer not working from finance application",
+            description=description,
+            reporter=Reporter(
+                name="Mireille Dubé",
+                email="mireille.dube@contoso.com",
+                department="Finance",
+            ),
+            created_at="2026-03-18T14:20:00Z",
+            channel=TicketChannel.EMAIL,
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9239",
+            category=TicketCategory.HARDWARE,
+            priority=Priority.P3,
+            assigned_team=AssignedTeam.ENDPOINT_ENG,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.APPLICATION_VERSION,
+                MissingInfoField.ERROR_MESSAGE,
+            ],
+            next_best_action=(
+                "Investigate the printer driver incompatibility with "
+                "the finance application that started after the "
+                "March 15 update affecting the finance department."
+            ),
+            remediation_steps=[
+                "Check which update was applied on March 15 and whether it changed print drivers",
+                "Test printing from the finance application with the latest HP Universal Print Driver",
+                "Verify print spooler service health and clear any stuck jobs",
+                "Roll back the problematic driver update if a compatible version is identified",
+            ],
+        ),
+        tag=_TAG,
+        test_name="codepage_mojibake_printer",
+        test_description=(
+            "Tests triage accuracy when the ticket body is riddled "
+            "with CP-1252/UTF-8 mojibake artifacts such as curly "
+            "quote replacements, broken bullet points, and mangled "
+            "accented characters."
+        ),
+    )
+
+
+def _recursive_forward_chain() -> EvalScenario:
+    """10+ levels of email forwarding burying a SharePoint issue."""
+    description = (
+        "---------- Forwarded message ----------\n"
+        "From: Hannah Kim <hannah.kim@contoso.com>\n"
+        "To: IT Help Desk <helpdesk@contoso.com>\n"
+        "Date: March 18, 2026 at 9:47 AM\n"
+        "Subject: FW: FW: FW: FW: FW: FW: FW: FW: FW: FW: SharePoint "
+        "site broken\n\n"
+        "Adding help desk.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: Tomás Herrera <tomas.herrera@contoso.com>\n"
+        "To: Hannah Kim <hannah.kim@contoso.com>\n"
+        "Date: March 18, 2026 at 9:38 AM\n"
+        "Subject: RE: FW: FW: FW: FW: FW: FW: FW: FW: FW: SharePoint "
+        "site broken\n\n"
+        "Hannah — can you loop in IT? I don't have the helpdesk email.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: Aisha Patel <aisha.patel@contoso.com>\n"
+        "To: Tomás Herrera <tomas.herrera@contoso.com>\n"
+        "Date: March 18, 2026 at 9:25 AM\n"
+        "Subject: RE: FW: FW: FW: FW: FW: FW: FW: FW: SharePoint "
+        "site broken\n\n"
+        "Same here. None of us on the project team can access it.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: David Okonkwo <david.okonkwo@contoso.com>\n"
+        "To: Aisha Patel <aisha.patel@contoso.com>\n"
+        "Date: March 18, 2026 at 9:14 AM\n"
+        "Subject: RE: FW: FW: FW: FW: FW: FW: FW: SharePoint "
+        "site broken\n\n"
+        "Confirming — I get a 403 Forbidden error too.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: Li Wei <li.wei@contoso.com>\n"
+        "To: David Okonkwo <david.okonkwo@contoso.com>\n"
+        "Date: March 18, 2026 at 9:02 AM\n"
+        "Subject: RE: FW: FW: FW: FW: FW: FW: SharePoint site broken\n\n"
+        "I forwarded to the site owner but she is on PTO.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: Emma Johansson <emma.johansson@contoso.com>\n"
+        "To: Li Wei <li.wei@contoso.com>\n"
+        "Date: March 18, 2026 at 8:48 AM\n"
+        "Subject: RE: FW: FW: FW: FW: FW: SharePoint site broken\n\n"
+        "Yep same issue. The whole project site is inaccessible.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: Marcus Johnson <marcus.johnson@contoso.com>\n"
+        "To: Emma Johansson <emma.johansson@contoso.com>\n"
+        "Date: March 18, 2026 at 8:32 AM\n"
+        "Subject: RE: FW: FW: FW: FW: SharePoint site broken\n\n"
+        "I asked our manager and he said to escalate.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: Fatima Al-Rashid <fatima.alrashid@contoso.com>\n"
+        "To: Marcus Johnson <marcus.johnson@contoso.com>\n"
+        "Date: March 18, 2026 at 8:21 AM\n"
+        "Subject: RE: FW: FW: FW: SharePoint site broken\n\n"
+        "Same for me. Can someone contact IT?\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: James Chen <james.chen@contoso.com>\n"
+        "To: Fatima Al-Rashid <fatima.alrashid@contoso.com>\n"
+        "Date: March 18, 2026 at 8:09 AM\n"
+        "Subject: RE: FW: FW: SharePoint site broken\n\n"
+        "Also getting 403. Started this morning.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: Nina Bergström <nina.bergstrom@contoso.com>\n"
+        "To: James Chen <james.chen@contoso.com>\n"
+        "Date: March 18, 2026 at 7:55 AM\n"
+        "Subject: RE: FW: SharePoint site broken\n\n"
+        "Me too! I need the Q1 budget spreadsheet from that site today.\n\n"
+        "---------- Forwarded message ----------\n"
+        "From: Carlos Rivera <carlos.rivera@contoso.com>\n"
+        "To: Project Phoenix Team <phoenix-team@contoso.com>\n"
+        "Date: March 18, 2026 at 7:41 AM\n"
+        "Subject: SharePoint site broken\n\n"
+        "Hey team — the Project Phoenix SharePoint site at "
+        "https://contoso.sharepoint.com/sites/ProjectPhoenix is giving "
+        "me a 403 Forbidden error when I try to access it. I was able "
+        "to get in yesterday with no problems. I need to upload the "
+        "weekly status report before 10 AM. Has anyone else noticed this?"
+    )
+    return EvalScenario(
+        ticket=Ticket(
+            ticket_id="INC-9240",
+            subject="FW: FW: FW: FW: FW: FW: FW: FW: FW: FW: SharePoint site broken",
+            description=description,
+            reporter=Reporter(
+                name="Hannah Kim",
+                email="hannah.kim@contoso.com",
+                department="Project Management",
+            ),
+            created_at="2026-03-18T09:52:00Z",
+            channel=TicketChannel.EMAIL,
+            attachments=[],
+        ),
+        gold=TriageDecision(
+            ticket_id="INC-9240",
+            category=TicketCategory.SOFTWARE,
+            priority=Priority.P3,
+            assigned_team=AssignedTeam.ENTERPRISE_APPS,
+            needs_escalation=False,
+            missing_information=[
+                MissingInfoField.AFFECTED_USERS,
+                MissingInfoField.TIMESTAMP,
+            ],
+            next_best_action=(
+                "Restore access to the Project Phoenix SharePoint site "
+                "which is returning 403 Forbidden for multiple team "
+                "members since this morning."
+            ),
+            remediation_steps=[
+                "Check SharePoint admin center for permission changes on the Project Phoenix site",
+                "Verify the site collection owner account status and permissions",
+                "Review audit logs for any recent permission or policy modifications",
+                "Restore site access for the project team and confirm accessibility",
+            ],
+        ),
+        tag=_TAG,
+        test_name="recursive_forward_chain",
+        test_description=(
+            "Tests extraction of a SharePoint access issue buried "
+            "under 10+ levels of email forwarding with repeated "
+            "headers, timestamps, and me-too replies from different "
+            "users."
+        ),
+    )
+
+
 def get_data_cleanup_scenarios() -> list[EvalScenario]:
     """Return all data cleanup evaluation scenarios."""
     return [
@@ -3405,4 +3928,9 @@ def get_data_cleanup_scenarios() -> list[EvalScenario]:
         _multilingual_legal_disclaimer(),
         _near_empty_ticket(),
         _vulnerability_scanner_dump(),
+        _prometheus_metrics_flood(),
+        _systeminfo_command_dump(),
+        _arm_template_noise(),
+        _codepage_mojibake_printer(),
+        _recursive_forward_chain(),
     ]
