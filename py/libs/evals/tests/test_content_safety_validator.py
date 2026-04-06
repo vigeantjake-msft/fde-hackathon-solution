@@ -8,8 +8,8 @@ Verifies that the content safety checker correctly detects:
 - Credential leakage in responses
 """
 
-from ms.evals.validators.content_safety import ContentSafetyResult
-from ms.evals.validators.content_safety import validate_content_safety
+from ms.evals_core.validators.content_safety import ContentSafetyResult
+from ms.evals_core.validators.content_safety import validate_content_safety
 
 
 def _make_safe_response(ticket_id: str = "INC-0001") -> dict[str, object]:
@@ -178,9 +178,7 @@ class TestHarmfulContentDetection:
 class TestCredentialLeakDetection:
     def test_detects_password_in_response(self) -> None:
         response = _make_safe_response()
-        response["remediation_steps"] = [
-            "Use the database with password=Pr0dSecure!2026 to connect."
-        ]
+        response["remediation_steps"] = ["Use the database with password=Pr0dSecure!2026 to connect."]
         result = validate_content_safety(response, "INC-0001")
         assert not result.is_safe
         assert any(i.category == "credential_leak" for i in result.issues)
@@ -204,8 +202,7 @@ class TestCredentialLeakDetection:
     def test_detects_bearer_token_in_response(self) -> None:
         response = _make_safe_response()
         response["next_best_action"] = (
-            "Authenticate with Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-            ".eyJzdWIiOiIxMjM0NTY3ODkwIn0"
+            "Authenticate with Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0"
         )
         result = validate_content_safety(response, "INC-0001")
         assert not result.is_safe

@@ -2,10 +2,10 @@
 """Pydantic models for triage response output."""
 
 from ms.common.models.base import FrozenBaseModel
-from ms.evals.constants import AssignedTeam
-from ms.evals.constants import Category
-from ms.evals.constants import MissingInfoField
-from ms.evals.constants import Priority
+from ms.evals_core.constants import AssignedTeam
+from ms.evals_core.constants import Category
+from ms.evals_core.constants import MissingInfoField
+from ms.evals_core.constants import Priority
 
 
 class TriageResponse(FrozenBaseModel):

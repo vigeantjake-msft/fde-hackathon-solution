@@ -146,5 +146,13 @@ FLOORS: list[str] = [
     "10th floor",
 ]
 
-# Alias for test compatibility — same enum, different name.
+# Aliases for API-facing naming conventions used in validators and models.
 MissingInfoField = MissingInfo
+AssignedTeam = Team
+
+# Frozen sets of all valid string values — used by validators for membership checks.
+ALL_CATEGORIES: frozenset[str] = frozenset(c.value for c in Category)
+ALL_PRIORITIES: frozenset[str] = frozenset(p.value for p in Priority)
+ALL_TEAMS: frozenset[str] = frozenset(t.value for t in Team)
+ALL_MISSING_INFO_FIELDS: frozenset[str] = frozenset(f.value for f in MissingInfo)
+ALL_CHANNELS: frozenset[str] = frozenset(c.value for c in Channel)

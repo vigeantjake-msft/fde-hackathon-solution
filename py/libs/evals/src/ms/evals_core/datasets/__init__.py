@@ -13,10 +13,19 @@ from pathlib import Path
 from ms.evals_core.eval_models import GoldAnswer
 from ms.evals_core.eval_models import Ticket
 
-# Resolve the ``docs/data/tickets/`` directory relative to the repo root.
-# The repo root is 6 levels up from this file:
-#   py/libs/evals/src/ms/evals_core/datasets.py  →  <repo>/
-_REPO_ROOT = Path(__file__).resolve().parents[6]
+
+# Resolve the ``docs/data/tickets/`` directory by finding the repository root.
+def _find_repo_root() -> Path:
+    """Walk up from this file to find the repo root (directory with ``.git``)."""
+    current = Path(__file__).resolve()
+    for parent in current.parents:
+        if (parent / ".git").exists():
+            return parent
+    msg = "could not locate repository root (.git directory)"
+    raise FileNotFoundError(msg)
+
+
+_REPO_ROOT = _find_repo_root()
 _TICKETS_DIR = _REPO_ROOT / "docs" / "data" / "tickets"
 
 

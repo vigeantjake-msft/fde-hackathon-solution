@@ -8,8 +8,8 @@ Verifies that the robustness checker correctly identifies:
 - Correct classification of non-support tickets
 """
 
-from ms.evals.validators.robustness import RobustnessResult
-from ms.evals.validators.robustness import validate_robustness
+from ms.evals_core.validators.robustness import RobustnessResult
+from ms.evals_core.validators.robustness import validate_robustness
 
 
 def _make_valid_response(ticket_id: str = "INC-0001") -> dict[str, object]:

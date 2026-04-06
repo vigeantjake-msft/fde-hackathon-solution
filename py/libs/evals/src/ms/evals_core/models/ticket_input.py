@@ -6,7 +6,7 @@ import re
 from pydantic import field_validator
 
 from ms.common.models.base import FrozenBaseModel
-from ms.evals.constants import Channel
+from ms.evals_core.constants import Channel
 
 
 class TicketReporter(FrozenBaseModel):
@@ -34,7 +34,7 @@ class TicketInput(FrozenBaseModel):
     @field_validator("ticket_id")
     @classmethod
     def validate_ticket_id(cls, v: str) -> str:
-        if not re.match(r"^INC-\d+$", v):
-            msg = f"ticket_id must match pattern INC-<digits>, got: {v}"
+        if not re.match(r"^INC-[\w-]+$", v):
+            msg = f"ticket_id must match pattern INC-<identifier>, got: {v}"
             raise ValueError(msg)
         return v

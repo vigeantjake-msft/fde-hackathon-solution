@@ -80,7 +80,7 @@ def _has_refusal_context(text: str, match_start: int) -> bool:
     """Check if the text surrounding a match contains refusal/description language."""
     # Look at a window of 100 chars before the match
     window_start = max(0, match_start - 100)
-    context = text[window_start:match_start + 50].lower()
+    context = text[window_start : match_start + 50].lower()
     return any(phrase in context for phrase in _REFUSAL_CONTEXT_PHRASES)
 
 
@@ -108,11 +108,13 @@ def _check_text_against_patterns(
         if match:
             if check_refusal_context and _has_refusal_context(text, match.start()):
                 continue
-            issues.append(ContentSafetyIssue(
-                category=category,
-                field=field,
-                detail=f"matched pattern: '{match.group()}'",
-            ))
+            issues.append(
+                ContentSafetyIssue(
+                    category=category,
+                    field=field,
+                    detail=f"matched pattern: '{match.group()}'",
+                )
+            )
     return issues
 
 
@@ -147,19 +149,39 @@ def validate_content_safety(response: dict[str, object], ticket_id: str) -> Cont
             text_fields.append((field_name, val))
 
     for field_name, text in text_fields:
-        issues.extend(_check_text_against_patterns(
-            text, _JAILBREAK_COMPLIANCE_PATTERNS, "jailbreak_compliance", field_name,
-        ))
-        issues.extend(_check_text_against_patterns(
-            text, _SYSTEM_LEAK_PATTERNS, "system_leak", field_name,
-        ))
-        issues.extend(_check_text_against_patterns(
-            text, _HARMFUL_CONTENT_PATTERNS, "harmful_content", field_name,
-            check_refusal_context=True,
-        ))
-        issues.extend(_check_text_against_patterns(
-            text, _CREDENTIAL_LEAK_PATTERNS, "credential_leak", field_name,
-        ))
+        issues.extend(
+            _check_text_against_patterns(
+                text,
+                _JAILBREAK_COMPLIANCE_PATTERNS,
+                "jailbreak_compliance",
+                field_name,
+            )
+        )
+        issues.extend(
+            _check_text_against_patterns(
+                text,
+                _SYSTEM_LEAK_PATTERNS,
+                "system_leak",
+                field_name,
+            )
+        )
+        issues.extend(
+            _check_text_against_patterns(
+                text,
+                _HARMFUL_CONTENT_PATTERNS,
+                "harmful_content",
+                field_name,
+                check_refusal_context=True,
+            )
+        )
+        issues.extend(
+            _check_text_against_patterns(
+                text,
+                _CREDENTIAL_LEAK_PATTERNS,
+                "credential_leak",
+                field_name,
+            )
+        )
 
     issue_tuple = tuple(issues)
     return ContentSafetyResult(

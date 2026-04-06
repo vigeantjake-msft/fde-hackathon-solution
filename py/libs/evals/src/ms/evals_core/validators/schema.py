@@ -7,21 +7,23 @@ detecting specific failure modes).
 """
 
 from ms.common.models.base import FrozenBaseModel
-from ms.evals.constants import ALL_CATEGORIES
-from ms.evals.constants import ALL_MISSING_INFO_FIELDS
-from ms.evals.constants import ALL_PRIORITIES
-from ms.evals.constants import ALL_TEAMS
+from ms.evals_core.constants import ALL_CATEGORIES
+from ms.evals_core.constants import ALL_MISSING_INFO_FIELDS
+from ms.evals_core.constants import ALL_PRIORITIES
+from ms.evals_core.constants import ALL_TEAMS
 
-_REQUIRED_FIELDS = frozenset({
-    "ticket_id",
-    "category",
-    "priority",
-    "assigned_team",
-    "needs_escalation",
-    "missing_information",
-    "next_best_action",
-    "remediation_steps",
-})
+_REQUIRED_FIELDS = frozenset(
+    {
+        "ticket_id",
+        "category",
+        "priority",
+        "assigned_team",
+        "needs_escalation",
+        "missing_information",
+        "next_best_action",
+        "remediation_steps",
+    }
+)
 
 
 class SchemaViolation(FrozenBaseModel):
@@ -63,34 +65,42 @@ def validate_response_schema(response: dict[str, object], expected_ticket_id: st
     # ticket_id match
     resp_tid = response.get("ticket_id")
     if resp_tid is not None and str(resp_tid) != expected_ticket_id:
-        violations.append(SchemaViolation(
-            field="ticket_id",
-            issue=f"expected '{expected_ticket_id}', got '{resp_tid}'",
-        ))
+        violations.append(
+            SchemaViolation(
+                field="ticket_id",
+                issue=f"expected '{expected_ticket_id}', got '{resp_tid}'",
+            )
+        )
 
     # category validation
     category = response.get("category")
     if category is not None and str(category).strip() not in ALL_CATEGORIES:
-        violations.append(SchemaViolation(
-            field="category",
-            issue=f"invalid category: '{category}'",
-        ))
+        violations.append(
+            SchemaViolation(
+                field="category",
+                issue=f"invalid category: '{category}'",
+            )
+        )
 
     # priority validation
     priority = response.get("priority")
     if priority is not None and str(priority).strip().upper() not in {p.upper() for p in ALL_PRIORITIES}:
-        violations.append(SchemaViolation(
-            field="priority",
-            issue=f"invalid priority: '{priority}'",
-        ))
+        violations.append(
+            SchemaViolation(
+                field="priority",
+                issue=f"invalid priority: '{priority}'",
+            )
+        )
 
     # assigned_team validation
     team = response.get("assigned_team")
     if team is not None and str(team).strip() not in ALL_TEAMS:
-        violations.append(SchemaViolation(
-            field="assigned_team",
-            issue=f"invalid team: '{team}'",
-        ))
+        violations.append(
+            SchemaViolation(
+                field="assigned_team",
+                issue=f"invalid team: '{team}'",
+            )
+        )
 
     # needs_escalation type check
     escalation = response.get("needs_escalation")
@@ -100,62 +110,78 @@ def validate_response_schema(response: dict[str, object], expected_ticket_id: st
         and isinstance(escalation, str)
         and escalation.strip().lower() not in {"true", "false", "1", "0", "yes", "no"}
     ):
-        violations.append(SchemaViolation(
-            field="needs_escalation",
-            issue=f"not a valid boolean value: '{escalation}'",
-        ))
+        violations.append(
+            SchemaViolation(
+                field="needs_escalation",
+                issue=f"not a valid boolean value: '{escalation}'",
+            )
+        )
 
     # missing_information validation
     missing_info = response.get("missing_information")
     if missing_info is not None:
         if not isinstance(missing_info, list):
-            violations.append(SchemaViolation(
-                field="missing_information",
-                issue=f"expected list, got {type(missing_info).__name__}",
-            ))
+            violations.append(
+                SchemaViolation(
+                    field="missing_information",
+                    issue=f"expected list, got {type(missing_info).__name__}",
+                )
+            )
         else:
             for item in missing_info:
                 normalized = str(item).strip().lower()
                 if normalized not in ALL_MISSING_INFO_FIELDS:
-                    violations.append(SchemaViolation(
-                        field="missing_information",
-                        issue=f"invalid vocabulary item: '{item}'",
-                    ))
+                    violations.append(
+                        SchemaViolation(
+                            field="missing_information",
+                            issue=f"invalid vocabulary item: '{item}'",
+                        )
+                    )
 
     # next_best_action validation
     nba = response.get("next_best_action")
     if nba is not None:
         if not isinstance(nba, str):
-            violations.append(SchemaViolation(
-                field="next_best_action",
-                issue=f"expected string, got {type(nba).__name__}",
-            ))
+            violations.append(
+                SchemaViolation(
+                    field="next_best_action",
+                    issue=f"expected string, got {type(nba).__name__}",
+                )
+            )
         elif not nba.strip():
-            violations.append(SchemaViolation(
-                field="next_best_action",
-                issue="empty string",
-            ))
+            violations.append(
+                SchemaViolation(
+                    field="next_best_action",
+                    issue="empty string",
+                )
+            )
 
     # remediation_steps validation
     steps = response.get("remediation_steps")
     if steps is not None:
         if not isinstance(steps, list):
-            violations.append(SchemaViolation(
-                field="remediation_steps",
-                issue=f"expected list, got {type(steps).__name__}",
-            ))
+            violations.append(
+                SchemaViolation(
+                    field="remediation_steps",
+                    issue=f"expected list, got {type(steps).__name__}",
+                )
+            )
         elif len(steps) == 0:
-            violations.append(SchemaViolation(
-                field="remediation_steps",
-                issue="empty list",
-            ))
+            violations.append(
+                SchemaViolation(
+                    field="remediation_steps",
+                    issue="empty list",
+                )
+            )
         else:
             for i, step in enumerate(steps):
                 if not isinstance(step, str) or not str(step).strip():
-                    violations.append(SchemaViolation(
-                        field="remediation_steps",
-                        issue=f"item {i} is empty or not a string",
-                    ))
+                    violations.append(
+                        SchemaViolation(
+                            field="remediation_steps",
+                            issue=f"item {i} is empty or not a string",
+                        )
+                    )
 
     violation_tuple = tuple(violations)
     return SchemaValidationResult(

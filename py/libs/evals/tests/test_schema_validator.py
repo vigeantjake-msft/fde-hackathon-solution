@@ -10,8 +10,8 @@ Verifies that the schema validator correctly identifies:
 - Incorrect field types
 """
 
-from ms.evals.validators.schema import SchemaValidationResult
-from ms.evals.validators.schema import validate_response_schema
+from ms.evals_core.validators.schema import SchemaValidationResult
+from ms.evals_core.validators.schema import validate_response_schema
 
 
 def _make_valid_response(ticket_id: str = "INC-0001") -> dict[str, object]:

@@ -11,15 +11,15 @@ from pathlib import Path
 
 import pytest
 
-from ms.evals.constants import ALL_CATEGORIES
-from ms.evals.constants import ALL_MISSING_INFO_FIELDS
-from ms.evals.constants import ALL_PRIORITIES
-from ms.evals.constants import ALL_TEAMS
-from ms.evals.datasets.loader import load_dataset_pair
-from ms.evals.models.ticket import TicketInput
-from ms.evals.models.triage_response import TriageResponse
-from ms.evals.validators.content_safety import validate_content_safety
-from ms.evals.validators.schema import validate_response_schema
+from ms.evals_core.constants import ALL_CATEGORIES
+from ms.evals_core.constants import ALL_MISSING_INFO_FIELDS
+from ms.evals_core.constants import ALL_PRIORITIES
+from ms.evals_core.constants import ALL_TEAMS
+from ms.evals_core.datasets.loader import load_dataset_pair
+from ms.evals_core.models.ticket_input import TicketInput
+from ms.evals_core.models.triage_response import TriageResponse
+from ms.evals_core.validators.content_safety import validate_content_safety
+from ms.evals_core.validators.schema import validate_response_schema
 
 
 @pytest.fixture
@@ -81,9 +81,7 @@ class TestDatasetIntegrity:
         for gold in golds:
             assert gold.priority in ALL_PRIORITIES, f"{gold.ticket_id}: invalid priority '{gold.priority}'"
 
-    def test_gold_teams_are_valid(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_gold_teams_are_valid(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         _, golds = dataset
         for gold in golds:
             assert gold.assigned_team in ALL_TEAMS, f"{gold.ticket_id}: invalid team '{gold.assigned_team}'"
@@ -94,9 +92,7 @@ class TestDatasetIntegrity:
         _, golds = dataset
         for gold in golds:
             for item in gold.missing_information:
-                assert item in ALL_MISSING_INFO_FIELDS, (
-                    f"{gold.ticket_id}: invalid missing info '{item}'"
-                )
+                assert item in ALL_MISSING_INFO_FIELDS, f"{gold.ticket_id}: invalid missing info '{item}'"
 
     def test_gold_schema_compliance(self, raw_golds: list[dict[str, object]]) -> None:
         """Gold answers should pass the schema validator."""
@@ -119,16 +115,12 @@ class TestDatasetIntegrity:
 class TestVeryLongDescription:
     """INC-5001: Very long email body (verbose user)."""
 
-    def test_description_is_long(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_description_is_long(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         tickets, _ = dataset
         ticket = next(t for t in tickets if t.ticket_id == "INC-5001")
         assert len(ticket.description) > 2000
 
-    def test_classified_as_software(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_classified_as_software(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         _, golds = dataset
         gold = next(g for g in golds if g.ticket_id == "INC-5001")
         assert gold.category == "Software & Applications"
@@ -137,9 +129,7 @@ class TestVeryLongDescription:
 class TestBase64Content:
     """INC-5002: Base64 encoded images and data in description."""
 
-    def test_contains_base64(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_contains_base64(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         tickets, _ = dataset
         ticket = next(t for t in tickets if t.ticket_id == "INC-5002")
         assert "base64" in ticket.description.lower()
@@ -155,16 +145,12 @@ class TestBase64Content:
 class TestHtmlContent:
     """INC-5003: HTML-heavy email thread."""
 
-    def test_contains_html_tags(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_contains_html_tags(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         tickets, _ = dataset
         ticket = next(t for t in tickets if t.ticket_id == "INC-5003")
         assert "<html>" in ticket.description.lower() or "<blockquote>" in ticket.description.lower()
 
-    def test_classified_as_network(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_classified_as_network(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         _, golds = dataset
         gold = next(g for g in golds if g.ticket_id == "INC-5003")
         assert gold.category == "Network & Connectivity"
@@ -174,16 +160,12 @@ class TestHtmlContent:
 class TestEmbeddedCredentials:
     """INC-5004: Ticket containing plaintext credentials."""
 
-    def test_contains_password(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_contains_password(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         tickets, _ = dataset
         ticket = next(t for t in tickets if t.ticket_id == "INC-5004")
         assert "password" in ticket.description.lower()
 
-    def test_classified_as_security(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_classified_as_security(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         _, golds = dataset
         gold = next(g for g in golds if g.ticket_id == "INC-5004")
         assert gold.category == "Security & Compliance"
@@ -194,16 +176,12 @@ class TestEmbeddedCredentials:
 class TestUnicodeCharacters:
     """INC-5005: Special characters, emoji, multilingual content."""
 
-    def test_contains_unicode(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_contains_unicode(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         tickets, _ = dataset
         ticket = next(t for t in tickets if t.ticket_id == "INC-5005")
         assert any(ord(c) > 127 for c in ticket.subject)
 
-    def test_classified_as_software(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_classified_as_software(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         _, golds = dataset
         gold = next(g for g in golds if g.ticket_id == "INC-5005")
         assert gold.category == "Software & Applications"
@@ -212,16 +190,12 @@ class TestUnicodeCharacters:
 class TestLongSubject:
     """INC-5006: Extremely long subject line."""
 
-    def test_subject_is_very_long(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_subject_is_very_long(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         tickets, _ = dataset
         ticket = next(t for t in tickets if t.ticket_id == "INC-5006")
         assert len(ticket.subject) > 200
 
-    def test_classified_as_network(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_classified_as_network(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         _, golds = dataset
         gold = next(g for g in golds if g.ticket_id == "INC-5006")
         assert gold.category == "Network & Connectivity"
@@ -257,9 +231,7 @@ class TestEmailChain:
         ticket = next(t for t in tickets if t.ticket_id == "INC-5008")
         assert ticket.description.count("Original Message") >= 4
 
-    def test_classified_as_hardware(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_classified_as_hardware(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         _, golds = dataset
         gold = next(g for g in golds if g.ticket_id == "INC-5008")
         assert gold.category == "Hardware & Peripherals"
@@ -269,16 +241,12 @@ class TestEmailChain:
 class TestLogDump:
     """INC-5009: Massive log output as ticket body."""
 
-    def test_contains_log_entries(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_contains_log_entries(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         tickets, _ = dataset
         ticket = next(t for t in tickets if t.ticket_id == "INC-5009")
         assert "[ERROR]" in ticket.description and "[INFO]" in ticket.description
 
-    def test_classified_as_software(
-        self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]
-    ) -> None:
+    def test_classified_as_software(self, dataset: tuple[tuple[TicketInput, ...], tuple[TriageResponse, ...]]) -> None:
         _, golds = dataset
         gold = next(g for g in golds if g.ticket_id == "INC-5009")
         assert gold.category == "Software & Applications"

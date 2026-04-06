@@ -10,8 +10,8 @@ import json
 from pathlib import Path
 
 from ms.common.models.base import FrozenBaseModel
-from ms.evals.models.ticket import TicketInput
-from ms.evals.models.triage_response import TriageResponse
+from ms.evals_core.models.ticket_input import TicketInput
+from ms.evals_core.models.triage_response import TriageResponse
 
 
 class DatasetPair(FrozenBaseModel):
@@ -81,14 +81,18 @@ def load_dataset_pair(tickets_path: Path, golds_path: Path) -> DatasetPair:
 
 # Convenience: resolve paths relative to the project's docs/data/tickets/ directory
 def _resolve_data_dir() -> Path:
-    """Find the docs/data/tickets/ directory by walking up from this file."""
+    """Find the repo-root docs/data/tickets/ directory by walking up from this file.
+
+    Identifies the repository root via a ``.git`` entry to avoid matching
+    intermediate ``py/docs/data/tickets/`` directories.
+    """
     current = Path(__file__).resolve()
-    # Walk up to find the project root (contains docs/)
     for parent in current.parents:
-        tickets_dir = parent / "docs" / "data" / "tickets"
-        if tickets_dir.is_dir():
-            return tickets_dir
-    msg = "could not locate docs/data/tickets/ directory"
+        if (parent / ".git").exists():
+            tickets_dir = parent / "docs" / "data" / "tickets"
+            if tickets_dir.is_dir():
+                return tickets_dir
+    msg = "could not locate docs/data/tickets/ under the repository root"
     raise FileNotFoundError(msg)
 
 
