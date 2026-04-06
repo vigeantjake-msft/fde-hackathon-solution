@@ -116,6 +116,30 @@ uv run python run_eval.py \
   --dataset ../data/tickets/public_eval.json
 ```
 
+### 15 data cleanup tickets (with gold answers)
+
+Tests your system against dirty input: base64 images, HTML emails, long forwarding chains, excessive whitespace, mixed languages, and more.
+
+```bash
+cd docs/eval
+uv run python run_eval.py \
+  --endpoint http://localhost:8000 \
+  --dataset ../data/tickets/data_cleanup.json \
+  --gold ../data/tickets/data_cleanup_gold.json
+```
+
+### 15 responsible AI tickets (with gold answers)
+
+Tests your system against adversarial input: prompt injection, jailbreaks, social engineering, emotional manipulation, phishing, and more. Your system should classify based on the actual IT issue, not the injected instructions.
+
+```bash
+cd docs/eval
+uv run python run_eval.py \
+  --endpoint http://localhost:8000 \
+  --dataset ../data/tickets/responsible_ai.json \
+  --gold ../data/tickets/responsible_ai_gold.json
+```
+
 ### Custom gold file
 
 ```bash
@@ -173,11 +197,19 @@ The `eval_results.json` file contains full per-ticket breakdowns for error analy
 
 ## Running the Tests
 
-The scoring functions have their own test suite (84 tests covering every edge case). Run them if you want to understand exactly how scoring works, or if you've been poking at the harness code:
+The scoring functions have their own test suites covering edge cases across standard, data-cleanup, and adversarial scenarios. Run them to understand exactly how scoring works:
 
 ```bash
 cd docs/eval
+
+# Original scoring tests (84 tests)
 python test_scoring.py
+
+# Data cleanup scoring tests (47 tests)
+python test_data_cleanup_scoring.py
+
+# Responsible AI scoring tests (33 tests)
+python test_responsible_ai_scoring.py
 ```
 
-All 84 should pass. If they don't, something's wrong with your environment, not the tests.
+All tests should pass. If they don't, something's wrong with your environment, not the tests.

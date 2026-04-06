@@ -1,0 +1,270 @@
+[
+    {
+        "ticket_id": "INC-5001",
+        "category": "Network & Connectivity",
+        "priority": "P3",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [
+            "environment_details"
+        ],
+        "next_best_action": "Investigate VPN connectivity issue from home network. Check GlobalProtect client logs and verify VPN gateway reachability from the user's location.",
+        "remediation_steps": [
+            "Request user to run GlobalProtect diagnostic log collection",
+            "Verify VPN gateway is reachable from external networks",
+            "Check if the user's ISP or home router is blocking VPN ports",
+            "Test with an alternate VPN connection method if available",
+            "If gateway is reachable, check user's VPN profile and certificate status"
+        ]
+    },
+    {
+        "ticket_id": "INC-5002",
+        "category": "Hardware & Peripherals",
+        "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Dispatch a technician to inspect the HP LaserJet on 5th floor east wing for recurring paper jams in Tray 2.",
+        "remediation_steps": [
+            "Inspect HP LaserJet printer on 5th floor east wing",
+            "Check Tray 2 rollers for wear or debris",
+            "Verify correct paper size and type is loaded",
+            "Clean paper path and pickup rollers",
+            "If hardware defect found, schedule replacement under warranty"
+        ]
+    },
+    {
+        "ticket_id": "INC-5003",
+        "category": "Software & Applications",
+        "priority": "P2",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "environment_details"
+        ],
+        "next_best_action": "Investigate SAP 403 Forbidden error after password change. Check if Entra ID password sync to SAP is functioning correctly.",
+        "remediation_steps": [
+            "Verify Entra ID password sync status for the user's account",
+            "Check SAP authorization objects for the user profile",
+            "Confirm the user's SAP account is not locked or expired",
+            "Test SAP login with the admin account to rule out system-wide issues",
+            "If sync issue confirmed, trigger manual password sync from Entra ID to SAP"
+        ]
+    },
+    {
+        "ticket_id": "INC-5004",
+        "category": "Data & Storage",
+        "priority": "P2",
+        "assigned_team": "Data Platform",
+        "needs_escalation": false,
+        "missing_information": [
+            "error_message",
+            "affected_system"
+        ],
+        "next_best_action": "Investigate SharePoint permissions issue preventing access to Q4 budget files. Check if recent permissions changes affected the user's access.",
+        "remediation_steps": [
+            "Verify the user's SharePoint permissions for the budget file library",
+            "Check if recent site collection or library permission changes occurred",
+            "Confirm the user's Entra ID group memberships include SharePoint access",
+            "If permissions are correct, check for conditional access policies blocking access",
+            "Restore access and verify the user can access Q4 budget files"
+        ]
+    },
+    {
+        "ticket_id": "INC-5005",
+        "category": "Hardware & Peripherals",
+        "priority": "P4",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info",
+            "error_message",
+            "steps_to_reproduce",
+            "affected_system"
+        ],
+        "next_best_action": "Contact user to gather more details about the laptop performance issue — model, age, specific symptoms, and what applications are running.",
+        "remediation_steps": [
+            "Contact user to gather specific symptoms and device details",
+            "Check device health in Intune for hardware diagnostics",
+            "Verify available disk space and RAM usage",
+            "Scan for malware or excessive startup programs",
+            "If hardware is aging, consider device refresh eligibility"
+        ]
+    },
+    {
+        "ticket_id": "INC-5006",
+        "category": "Hardware & Peripherals",
+        "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Investigate Dell 27-inch monitor DisplayPort connectivity issue in London office, 3rd floor.",
+        "remediation_steps": [
+            "Verify the DisplayPort cable is securely connected at both ends",
+            "Test with a known-working DisplayPort cable",
+            "Check display settings and ensure correct input source is selected",
+            "Test the monitor with a different laptop to isolate the issue",
+            "If monitor hardware is faulty, arrange replacement"
+        ]
+    },
+    {
+        "ticket_id": "INC-5007",
+        "category": "Data & Storage",
+        "priority": "P1",
+        "assigned_team": "Data Platform",
+        "needs_escalation": true,
+        "missing_information": [],
+        "next_best_action": "Immediately address critical disk usage (97.3%) on prod-db-replica-03 to prevent database outage. Follow the disk cleanup runbook.",
+        "remediation_steps": [
+            "Follow the runbook at wiki.contoso.internal/runbooks/disk-cleanup-postgres",
+            "Identify and remove or archive old WAL files consuming 98GB",
+            "Verify pg_stat_tmp can be cleaned (42GB)",
+            "Check if autovacuum and log rotation are functioning correctly",
+            "Add disk usage alerting at 85% threshold to prevent recurrence"
+        ]
+    },
+    {
+        "ticket_id": "INC-5008",
+        "category": "Software & Applications",
+        "priority": "P3",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "application_version"
+        ],
+        "next_best_action": "Investigate Outlook send failure (error 0x80040115) in Singapore office after recent update. Check Exchange connector status and Outlook profile configuration.",
+        "remediation_steps": [
+            "Check Exchange Online connector health for Singapore region",
+            "Verify Outlook profile integrity and recreate if needed",
+            "Clear Outlook cache and OST file",
+            "Check if the issue is specific to this user or affecting other Singapore users",
+            "If connector issue, escalate to Exchange Online team"
+        ]
+    },
+    {
+        "ticket_id": "INC-5009",
+        "category": "Data & Storage",
+        "priority": "P2",
+        "assigned_team": "Data Platform",
+        "needs_escalation": false,
+        "missing_information": [
+            "environment_details"
+        ],
+        "next_best_action": "Investigate Azure DevOps pipeline failure due to ACR ImagePullBackOff error. Verify service principal permissions and ACR credentials.",
+        "remediation_steps": [
+            "Verify the service principal used by AKS has the AcrPull role on contoso.azurecr.io",
+            "Check if the service principal credentials or secret have expired",
+            "Confirm the image contoso.azurecr.io/risk-dashboard:v2.4.1 exists in the registry",
+            "Rotate service principal credentials if expired",
+            "Re-run the Azure DevOps pipeline after fixing permissions"
+        ]
+    },
+    {
+        "ticket_id": "INC-5010",
+        "category": "Access & Authentication",
+        "priority": "P2",
+        "assigned_team": "Identity & Access Management",
+        "needs_escalation": true,
+        "missing_information": [],
+        "next_best_action": "Urgently provision contractor David Kim's accounts. This has been pending for over a week and the contractor has already started without access.",
+        "remediation_steps": [
+            "Create AD account for contractor David Kim immediately",
+            "Provision email and set up in Global Address List",
+            "Configure VPN access for remote work",
+            "Grant access to SharePoint project site 'Project Phoenix'",
+            "Set up SAP read-only access for finance reports",
+            "Send credentials and onboarding guide to the contractor's manager Sarah Mitchell"
+        ]
+    },
+    {
+        "ticket_id": "INC-5011",
+        "category": "Network & Connectivity",
+        "priority": "P3",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [
+            "network_location"
+        ],
+        "next_best_action": "Investigate intermittent WiFi disconnections in conference room B on the 4th floor, particularly during Teams video calls.",
+        "remediation_steps": [
+            "Check WiFi access point coverage and signal strength in conference room B",
+            "Verify if the AP serving that room is overloaded or has firmware issues",
+            "Check for wireless interference from other devices in the area",
+            "Test with a WiFi analyzer to identify channel congestion",
+            "If AP issue confirmed, reconfigure or add additional access point"
+        ]
+    },
+    {
+        "ticket_id": "INC-5012",
+        "category": "Access & Authentication",
+        "priority": "P2",
+        "assigned_team": "Identity & Access Management",
+        "needs_escalation": false,
+        "missing_information": [
+            "device_info"
+        ],
+        "next_best_action": "Help user re-register Microsoft Authenticator on new iPhone for MFA. Provide temporary access bypass if needed for the 2pm presentation.",
+        "remediation_steps": [
+            "Issue a temporary access pass (TAP) for the user to access OneDrive for the 2pm presentation",
+            "Guide user through re-registering Microsoft Authenticator on the new iPhone",
+            "Verify the old device's MFA registration is removed from Entra ID",
+            "Confirm all MFA methods are working correctly after re-registration",
+            "Recommend user set up backup MFA methods (phone number, FIDO2 key)"
+        ]
+    },
+    {
+        "ticket_id": "INC-5013",
+        "category": "Network & Connectivity",
+        "priority": "P2",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate high latency (450ms vs normal 180ms) and packet loss (2.3%) on the Singapore-NYC backbone link affecting all Singapore office users.",
+        "remediation_steps": [
+            "Check Singapore-NYC backbone link status with the ISP",
+            "Run traceroute and MTR diagnostics from Singapore to NYC endpoints",
+            "Verify no recent changes to routing or firewall rules",
+            "Contact ISP if issue is on their backbone",
+            "Consider activating backup link if available to reduce impact during investigation"
+        ]
+    },
+    {
+        "ticket_id": "INC-5014",
+        "category": "Software & Applications",
+        "priority": "P2",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": true,
+        "missing_information": [
+            "previous_ticket_id"
+        ],
+        "next_best_action": "Investigate recurring VDI session disconnection issue (error 0xC004F074) for London-based trader. This is the 3rd report — check tickets INC-4521 and INC-4487 for history.",
+        "remediation_steps": [
+            "Review previous tickets INC-4521 and INC-4487 for history and attempted fixes",
+            "Check VDI session broker logs for error code 0xC004F074",
+            "Verify KMS activation status of the VDI pool",
+            "Check if the VDI image has a licensing issue causing session drops",
+            "If licensing issue confirmed, reactivate the VDI host against the KMS server"
+        ]
+    },
+    {
+        "ticket_id": "INC-5015",
+        "category": "Security & Compliance",
+        "priority": "P1",
+        "assigned_team": "Security Operations",
+        "needs_escalation": true,
+        "missing_information": [],
+        "next_best_action": "Immediately address compliance audit finding — email archival purge job has been silently failing for 10 weeks, leaving 2.3TB of data in violation of GDPR and internal retention policies.",
+        "remediation_steps": [
+            "Fix permissions on EVault-AutoPurge-7Y job immediately",
+            "Validate the fix by running a test purge on a small batch",
+            "Schedule manual purge of 145,000 records from 2017-2019",
+            "Add deletion count validation to the monitoring dashboard",
+            "Notify the Data Protection Officer of potential GDPR exposure",
+            "Document all remediation steps for audit trail"
+        ]
+    }
+]

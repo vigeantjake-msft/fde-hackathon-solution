@@ -1,0 +1,202 @@
+[
+    {
+        "ticket_id": "INC-5001",
+        "subject": "VPN not connecting — see attached screenshot",
+        "description": "Hi IT Support,\n\nI've been having VPN issues since Monday morning. Here is a screenshot of the error:\n\ndata:image/png;base64,iVBORw0KGgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF8=\n\nThe error says 'Connection timed out — server unreachable'. I'm working from home in Brooklyn and need VPN to access the internal trading platform. This happens every time I try to connect using GlobalProtect. I've tried restarting my laptop and my router.\n\nThanks,\nAlex Kim\nTrading Desk",
+        "reporter": {
+            "name": "Alex Kim",
+            "email": "alex.kim@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-18T08:22:00Z",
+        "channel": "email",
+        "attachments": [
+            "vpn_error_screenshot.png"
+        ]
+    },
+    {
+        "ticket_id": "INC-5002",
+        "subject": "Fwd: Re: Fwd: Re: Fwd: Re: Original — Printer on floor 5 broken",
+        "description": "---------- Forwarded message ---------\nFrom: Rebecca Torres <rebecca.torres@contoso.com>\nDate: Fri, Mar 13, 2026 at 4:45 PM\nSubject: Re: Fwd: Re: Fwd: Re: Original — Printer on floor 5 broken\nTo: IT Help <it.help@contoso.com>\n\nAdding IT help desk to this thread. Can someone look into this?\n\n---------- Forwarded message ---------\nFrom: James Morton <james.morton@contoso.com>\nDate: Fri, Mar 13, 2026 at 4:32 PM\nSubject: Re: Fwd: Re: Original — Printer on floor 5 broken\nTo: Rebecca Torres <rebecca.torres@contoso.com>\n\nYeah, Rebecca mentioned it. The HP LaserJet on 5th floor east wing has been jamming all week. Print jobs get stuck in the queue and the display shows 'Paper Jam — Open Tray 2'. We've cleared the tray multiple times but it keeps happening.\n\n---------- Forwarded message ---------\nFrom: Patricia Nelson <patricia.nelson@contoso.com>\nDate: Wed, Mar 11, 2026 at 9:15 AM\nSubject: Fwd: Re: Original — Printer on floor 5 broken\nTo: James Morton <james.morton@contoso.com>\n\nJames, can you escalate this? Been broken for 3 days now.\n\n---------- Forwarded message ---------\nFrom: David Park <david.park@contoso.com>\nDate: Mon, Mar 9, 2026 at 2:00 PM\nSubject: Printer on floor 5 broken\nTo: Patricia Nelson <patricia.nelson@contoso.com>\n\nThe printer near the coffee machine on floor 5 is broken. Paper jam that won't clear.\n\n---\nDavid Park | Senior Analyst | Wealth Management\nContoso Financial Services\nOne World Financial Center, New York, NY 10281\nTel: +1 (212) 555-0134 | Fax: +1 (212) 555-0135\nCONFIDENTIALITY NOTICE: This email and any attachments are confidential and may be privileged. If you are not the intended recipient, please notify the sender immediately and delete this message. Any unauthorized copying, disclosure, or distribution of the material in this email is strictly prohibited.",
+        "reporter": {
+            "name": "Rebecca Torres",
+            "email": "rebecca.torres@contoso.com",
+            "department": "Wealth Management"
+        },
+        "created_at": "2026-03-18T16:50:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5003",
+        "subject": "SAP login issue <IMPORTANT>",
+        "description": "<html><head><style>body{font-family:Calibri,sans-serif;font-size:11pt;}.sig{color:#666;font-size:9pt;border-top:1px solid #ccc;margin-top:20px;padding-top:10px}</style></head><body><p>Hi Team,</p><p>I'm getting a <b>403 Forbidden</b> error when trying to log into SAP after changing my password yesterday. The login page loads fine but after entering credentials it shows:</p><blockquote style='border-left:3px solid #ccc;padding-left:10px;color:red'>Error 403: Access Denied. Your account does not have permission to access this resource. Contact your system administrator.</blockquote><p>I've tried:</p><ul><li>Clearing browser cache</li><li>Using incognito mode</li><li>Different browsers (Chrome, Edge)</li></ul><p>My old password still works for email but not SAP. I think the password sync between Entra ID and SAP might be broken.</p><div class='sig'><p><b>Mei Lin Wang</b><br/>Director, Financial Planning & Analysis<br/>Contoso Financial Services<br/><img src='cid:contoso_logo' alt='Contoso Logo'/><br/>&#9742; +1 (212) 555-0198 | &#9993; mei.wang@contoso.com</p><p style='font-size:7pt;color:#999'>This email is confidential &amp; intended solely for the addressee. If received in error, please delete &amp; notify sender.</p></div></body></html>",
+        "reporter": {
+            "name": "Mei Lin Wang",
+            "email": "mei.wang@contoso.com",
+            "department": "Finance"
+        },
+        "created_at": "2026-03-18T10:15:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5004",
+        "subject": "cant    access   sharepoint          !!!",
+        "description": "hi\n\n\n\n\ni     cant     access     sharepoint     since     this     morning\n\n\n\t\t\tit    says    something    about    permissions\n\n\n\ni need   the   Q4   budget   files    for   the   board   meeting    tomorrow\n\n\n\n\n\n\t\t\t\tplease     fix     asap\n\n\n\n\n\n\n\n\n\n\nthanks\n\n\n\n\n\n\nrobert\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "reporter": {
+            "name": "Robert Chen",
+            "email": "robert.chen@contoso.com",
+            "department": "Finance"
+        },
+        "created_at": "2026-03-18T09:00:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5005",
+        "subject": "",
+        "description": "laptop slow",
+        "reporter": {
+            "name": "Anonymous User",
+            "email": "anon.user@contoso.com",
+            "department": "HR"
+        },
+        "created_at": "2026-03-18T11:30:00Z",
+        "channel": "chat",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5006",
+        "subject": "Monitor not working Monitor not working Monitor not working Monitor not working",
+        "description": "My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. My monitor is not working. \n\nIt's the Dell 27-inch on the left side of my desk in London office, 3rd floor. Power light blinks but no display. External monitor works fine with HDMI but this one uses DisplayPort and shows nothing. Tried different cables.",
+        "reporter": {
+            "name": "Oliver Campbell",
+            "email": "oliver.campbell@contoso.com",
+            "department": "Compliance"
+        },
+        "created_at": "2026-03-18T14:20:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5007",
+        "subject": "ALERT: prod-db-replica-03 — disk usage critical",
+        "description": "{\"timestamp\":\"2026-03-18T03:45:12.847Z\",\"level\":\"CRITICAL\",\"source\":\"monitoring-agent-v4.2.1\",\"host\":\"prod-db-replica-03.internal.contoso.com\",\"alert_id\":\"ALR-98234\",\"metric\":\"disk.usage.percent\",\"value\":97.3,\"threshold\":90.0,\"message\":\"Disk usage on /data/postgres exceeded 97%. Immediate action required.\",\"labels\":{\"env\":\"production\",\"service\":\"postgres-replica\",\"region\":\"us-east-1\",\"team\":\"data-platform\",\"severity\":\"critical\"},\"context\":{\"filesystem\":\"/dev/sda1\",\"total_gb\":500,\"used_gb\":486.5,\"available_gb\":13.5,\"inode_usage_percent\":45.2,\"top_consumers\":[\"/data/postgres/base\":312,\"/data/postgres/pg_wal\":98,\"/data/postgres/pg_stat_tmp\":42]},\"runbook\":\"https://wiki.contoso.internal/runbooks/disk-cleanup-postgres\",\"previous_alerts\":[{\"timestamp\":\"2026-03-17T22:15:00Z\",\"value\":94.1},{\"timestamp\":\"2026-03-17T18:30:00Z\",\"value\":91.8}]}",
+        "reporter": {
+            "name": "Monitoring System",
+            "email": "alerts@contoso.com",
+            "department": "IT"
+        },
+        "created_at": "2026-03-18T03:45:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5008",
+        "subject": "Нужна помощь с Outlook / Need help with Outlook",
+        "description": "Здравствуйте, у меня проблема с Outlook. Он перестал синхронизировать после обновления.\n\nSorry, switching to English — my Outlook stopped syncing after the update yesterday. I get an error 0x80040115 when trying to send emails. Receiving works fine but outgoing messages stay in the Outbox forever. I'm in the Singapore office using Outlook 2024 on Windows 11. Already tried creating a new Outlook profile but same issue.\n\nCan someone help? The Singapore IT team said to contact global support.",
+        "reporter": {
+            "name": "Natasha Volkov",
+            "email": "natasha.volkov@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-18T04:15:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5009",
+        "subject": "Error report — copy paste from terminal",
+        "description": "Getting this error when deploying. Here's the full output:\n\nuser,department,access_level,last_login,status\njsmith,Trading,admin,2026-03-15T08:00:00Z,active\nmchen,Finance,read,2026-03-14T12:30:00Z,active\nkpatel,HR,write,2026-03-10T09:15:00Z,inactive\nlwilson,Compliance,admin,2026-03-16T14:45:00Z,active\nrbrown,IT,superadmin,2026-03-17T07:00:00Z,active\nagarcia,Trading,read,2026-02-28T11:20:00Z,locked\ntkim,Wealth Management,write,2026-03-15T16:00:00Z,active\ndnguyen,Finance,read,2026-03-12T10:00:00Z,active\npjones,Legal,admin,2026-03-16T13:30:00Z,active\nmwilliams,Trading,write,2026-03-17T09:45:00Z,active\n\nWait, sorry wrong paste. The actual error is: our Azure DevOps pipeline for the internal risk dashboard fails at the 'Deploy to AKS' stage with:\nError: ImagePullBackOff — unable to pull image 'contoso.azurecr.io/risk-dashboard:v2.4.1'. Access denied. Verify that the image exists and the service principal has AcrPull role.\n\nThe ACR credentials might have expired. Can Data Platform team check?",
+        "reporter": {
+            "name": "Sanjay Patel",
+            "email": "sanjay.patel@contoso.com",
+            "department": "IT"
+        },
+        "created_at": "2026-03-18T15:30:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5010",
+        "subject": "RE: RE: RE: RE: RE: RE: RE: Account access for new contractor",
+        "description": "Just following up again on this. This is my 7th email about this.\n\n> On Mar 17, 2026, Sarah wrote:\n> Still waiting on this. The contractor started on Monday and has no access.\n>\n> > On Mar 14, 2026, IT Help wrote:\n> > We have received your request and it is in the queue.\n> >\n> > > On Mar 14, 2026, Sarah wrote:\n> > > Following up on the below. Contractor David Kim needs:\n> > > - AD account\n> > > - Email\n> > > - VPN access\n> > > - Access to SharePoint project site 'Project Phoenix'\n> > > - SAP read-only for finance reports\n> > >\n> > > > On Mar 12, 2026, Sarah wrote:\n> > > > Hi, we have a new contractor starting March 17. Need full setup.\n> > > > Name: David Kim\n> > > > Role: Financial Analyst (Contractor)\n> > > > Department: Finance\n> > > > Manager: Sarah Mitchell\n> > > > Duration: 6 months\n> > > > Start date: March 17, 2026\n",
+        "reporter": {
+            "name": "Sarah Mitchell",
+            "email": "sarah.mitchell@contoso.com",
+            "department": "Finance"
+        },
+        "created_at": "2026-03-18T09:45:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5011",
+        "subject": "WiFi issue — see screenshot below",
+        "description": "Hi, I took a screenshot of the WiFi error but I'm not sure how to attach files so I'm pasting it here:\n\n[Inline Image: data:image/jpeg;base64,iVBORw0KGgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRf...]\n\n[Inline Image 2: data:image/png;base64,iVBORw0KGgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFHRV9DT05URU5UX0ZBS0VfSU1BR0VfQ09OVEVOVF9GQUtFX0lNQUdFX0NPTlRFTlRfRkFLRV9JTUFH...]\n\nBasically the WiFi keeps disconnecting in conference room B on the 4th floor. It works fine at my desk. During video calls on Teams, the connection drops every 10-15 minutes and I have to reconnect. Other people in the same room have the same problem.",
+        "reporter": {
+            "name": "Lisa Park",
+            "email": "lisa.park@contoso.com",
+            "department": "Marketing"
+        },
+        "created_at": "2026-03-18T13:10:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5012",
+        "subject": "MFA issue — emoji for reference: 🔐🚫📱❌",
+        "description": "Hey 👋\n\nMy MFA is totally broken 😤😤😤\n\nI got a new iPhone 📱 and now the Microsoft Authenticator app won't work ❌\nI tried scanning the QR code but it says 'invalid' 🤔\n\nI literally can't log into ANYTHING 🔒 — no email, no Teams, no VPN, nothing!!!\n\nThis is super urgent because I have a client presentation at 2pm 🕐 and all my slides are on OneDrive 📁\n\nPlease help ASAP 🙏🙏🙏\n\n— Jenny ✨",
+        "reporter": {
+            "name": "Jenny Liu",
+            "email": "jenny.liu@contoso.com",
+            "department": "Wealth Management"
+        },
+        "created_at": "2026-03-18T11:45:00Z",
+        "channel": "chat",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5013",
+        "subject": "Auto-reply: Out of Office — Fwd: Network latency Singapore",
+        "description": "I am currently out of the office from March 15-22 with no access to email. For urgent matters, please contact:\n• Technical issues: Kevin Tan (kevin.tan@contoso.com)\n• Administrative: Amy Wong (amy.wong@contoso.com)\n\nThank you,\nDr. Rajesh Krishnamurthy\nManaging Director, Asia-Pacific Operations\n\n---Original Message---\nFrom: Network Monitoring <netmon@contoso.com>\nSubject: Network latency Singapore\n\nALERT: High latency detected on Singapore-NYC backbone link.\nAverage latency: 450ms (normal: 180ms)\nPacket loss: 2.3%\nDuration: 45 minutes\nAffected: Singapore office, all users",
+        "reporter": {
+            "name": "Rajesh Krishnamurthy",
+            "email": "rajesh.k@contoso.com",
+            "department": "Executive Operations"
+        },
+        "created_at": "2026-03-18T06:30:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5014",
+        "subject": "Can’t access VDI — Error: «Session déconnectée» (was: “Re: Problème de connexion”)",
+        "description": "Hi,\n\nI’m getting a weird error on the VDI portal. The error is in French even though my system is in English:\n\n« Erreur: Session déconnectée. Veuillez réessayer. Code: 0xC004F074 »\n\nTranslated: “Error: Session disconnected. Please retry. Code: 0xC004F074”\n\nI’ve been working on our London VDI for 2 years and this just started today. I need VDI access to run Bloomberg terminal — it’s the only way to access it from home. Already tried different browsers and clearing cookies.\n\nThis is my 3² report of this issue (I filed tickets last week and two weeks ago). Ticket refs: INC-4521, INC-4487.\n\nRegards,\nFrançois Dubois\nÉquipe de Trading | Contoso Financial Services • London",
+        "reporter": {
+            "name": "François Dubois",
+            "email": "francois.dubois@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-18T07:20:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-5015",
+        "subject": "Compliance audit finding — data retention violation (LONG — full report attached inline)",
+        "description": "COMPLIANCE AUDIT REPORT\n========================\nReport ID: CA-2026-0342\nDate: March 18, 2026\nAuditor: Internal Compliance Team\nClassification: CONFIDENTIAL\n\nEXECUTIVE SUMMARY\n-----------------\nDuring the quarterly data retention audit, we discovered that the email archival system (Veritas Enterprise Vault) has not been purging emails older than 7 years as required by our data retention policy (DRP-2024-v3, Section 4.2). This affects approximately 2.3TB of email data dating back to 2017.\n\nFINDINGS\n--------\n1. CRITICAL: Email purge job 'EVault-AutoPurge-7Y' has been failing silently since January 2026 (10 weeks). The job runs nightly but exits with code 0 despite not deleting any records. Root cause appears to be a permissions change on the archive database.\n\n2. HIGH: Approximately 145,000 email records from 2017-2019 should have been purged but remain in the archive. This includes emails from former employees who have been offboarded.\n\n3. MEDIUM: The monitoring dashboard shows 'healthy' status because it only checks job exit code, not actual deletion count.\n\nREGULATORY IMPACT\n-----------------\nThis may constitute a violation of:\n- GDPR Article 5(1)(e) — Storage limitation principle\n- SEC Rule 17a-4 — Electronic record retention (though this rule requires retention, the retention beyond required period raises privacy concerns)\n- Internal DRP-2024-v3 — Section 4.2 (maximum retention period)\n\nRECOMMENDED ACTIONS\n-------------------\n1. Fix the EVault-AutoPurge-7Y job permissions immediately\n2. Run a manual purge of records older than 7 years\n3. Add deletion count validation to the monitoring dashboard\n4. Notify DPO of potential GDPR exposure\n5. Document remediation for audit trail\n\nPlease route this to Security Operations and Data Platform for immediate remediation. The DPO has been CC'd.\n\n---\nCompliance Team | Contoso Financial Services\nThis report is CONFIDENTIAL. Do not distribute outside authorized personnel.",
+        "reporter": {
+            "name": "Compliance Team",
+            "email": "compliance.team@contoso.com",
+            "department": "Compliance"
+        },
+        "created_at": "2026-03-18T08:00:00Z",
+        "channel": "email",
+        "attachments": [
+            "CA-2026-0342_full_report.pdf",
+            "data_retention_policy_DRP-2024-v3.pdf"
+        ]
+    }
+]
