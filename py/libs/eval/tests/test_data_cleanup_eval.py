@@ -17,21 +17,29 @@ from ms.eval.models import TicketInput
 from ms.eval.models import TriageDecision
 from ms.eval.scenarios.data_cleanup import get_all_data_cleanup_scenarios
 from ms.eval.scenarios.data_cleanup import scenario_ansi_terminal_output
+from ms.eval.scenarios.data_cleanup import scenario_auto_reply_loop
 from ms.eval.scenarios.data_cleanup import scenario_base64_attachment_flood
 from ms.eval.scenarios.data_cleanup import scenario_base64_image_in_description
+from ms.eval.scenarios.data_cleanup import scenario_binary_hex_dump
+from ms.eval.scenarios.data_cleanup import scenario_control_characters
 from ms.eval.scenarios.data_cleanup import scenario_csv_tabular_data
+from ms.eval.scenarios.data_cleanup import scenario_double_encoded_html_entities
 from ms.eval.scenarios.data_cleanup import scenario_email_thread_noise
 from ms.eval.scenarios.data_cleanup import scenario_empty_description
 from ms.eval.scenarios.data_cleanup import scenario_excessive_whitespace
 from ms.eval.scenarios.data_cleanup import scenario_extremely_long_subject
 from ms.eval.scenarios.data_cleanup import scenario_garbled_ocr_text
 from ms.eval.scenarios.data_cleanup import scenario_html_email_body
+from ms.eval.scenarios.data_cleanup import scenario_json_config_dump
 from ms.eval.scenarios.data_cleanup import scenario_markdown_formatted_ticket
 from ms.eval.scenarios.data_cleanup import scenario_massive_email_signature
+from ms.eval.scenarios.data_cleanup import scenario_minified_code_dump
 from ms.eval.scenarios.data_cleanup import scenario_mixed_languages
+from ms.eval.scenarios.data_cleanup import scenario_mojibake_encoding
 from ms.eval.scenarios.data_cleanup import scenario_multiple_issues_one_ticket
 from ms.eval.scenarios.data_cleanup import scenario_repeated_content
 from ms.eval.scenarios.data_cleanup import scenario_special_characters_and_encoding
+from ms.eval.scenarios.data_cleanup import scenario_stack_trace_flood
 from ms.eval.scenarios.data_cleanup import scenario_subject_description_mismatch
 from ms.eval.scenarios.data_cleanup import scenario_unicode_rtl_and_homoglyphs
 from ms.eval.scenarios.data_cleanup import scenario_url_heavy_description
@@ -94,7 +102,7 @@ class TestAllScenariosSchemaCompliance:
 
     def test_minimum_scenario_count(self) -> None:
         """Ensure we have a meaningful number of data cleanup scenarios."""
-        assert len(_ALL_SCENARIOS) >= 18
+        assert len(_ALL_SCENARIOS) >= 26
 
 
 # ── Scenario-specific tests ──────────────────────────────────────────
@@ -423,3 +431,143 @@ class TestSubjectDescriptionMismatch:
         assert gold.category == "Software & Applications"
         assert gold.priority == "P1"
         assert gold.needs_escalation is True
+
+
+# ── New data cleanup scenario tests ──────────────────────────────────
+
+
+class TestJsonConfigDump:
+    """Verify JSON config dump scenario."""
+
+    def test_contains_json_structure(self) -> None:
+        ticket, _ = scenario_json_config_dump()
+        assert '"appSettings"' in ticket.description
+        assert '"connectionString"' in ticket.description
+
+    def test_description_is_long(self) -> None:
+        ticket, _ = scenario_json_config_dump()
+        assert len(ticket.description) > 1000
+
+    def test_classified_as_software(self) -> None:
+        _, gold = scenario_json_config_dump()
+        assert gold.category == "Software & Applications"
+        assert gold.assigned_team == "Enterprise Applications"
+
+
+class TestStackTraceFlood:
+    """Verify stack trace flood scenario."""
+
+    def test_contains_stack_frames(self) -> None:
+        ticket, _ = scenario_stack_trace_flood()
+        assert "\tat " in ticket.description
+        assert "java.sql.SQLTransientConnectionException" in ticket.description
+
+    def test_description_is_very_long(self) -> None:
+        ticket, _ = scenario_stack_trace_flood()
+        assert len(ticket.description) > 3000
+
+    def test_classified_as_software_p1(self) -> None:
+        _, gold = scenario_stack_trace_flood()
+        assert gold.category == "Software & Applications"
+        assert gold.priority == "P1"
+        assert gold.needs_escalation is True
+
+
+class TestDoubleEncodedHtmlEntities:
+    """Verify double-encoded HTML entities scenario."""
+
+    def test_contains_double_encoded_entities(self) -> None:
+        ticket, _ = scenario_double_encoded_html_entities()
+        assert "&amp;apos;" in ticket.description
+        assert "&amp;quot;" in ticket.description
+        assert "&amp;amp;" in ticket.description
+
+    def test_classified_as_access(self) -> None:
+        _, gold = scenario_double_encoded_html_entities()
+        assert gold.category == "Access & Authentication"
+        assert gold.assigned_team == "Identity & Access Management"
+
+
+class TestAutoReplyLoop:
+    """Verify auto-reply loop scenario."""
+
+    def test_contains_repeated_auto_replies(self) -> None:
+        ticket, _ = scenario_auto_reply_loop()
+        count = ticket.description.count("--- Auto-Reply ---")
+        assert count >= 20
+
+    def test_actual_issue_is_present(self) -> None:
+        ticket, _ = scenario_auto_reply_loop()
+        assert "Accounts Payable" in ticket.description
+        assert "external emails" in ticket.description
+
+    def test_classified_as_software_p1(self) -> None:
+        _, gold = scenario_auto_reply_loop()
+        assert gold.category == "Software & Applications"
+        assert gold.priority == "P1"
+        assert gold.needs_escalation is True
+
+
+class TestBinaryHexDump:
+    """Verify binary hex dump scenario."""
+
+    def test_contains_hex_dump_format(self) -> None:
+        ticket, _ = scenario_binary_hex_dump()
+        assert "00000000" in ticket.description
+        assert "lsusb" in ticket.description
+
+    def test_classified_as_hardware(self) -> None:
+        _, gold = scenario_binary_hex_dump()
+        assert gold.category == "Hardware & Peripherals"
+        assert gold.assigned_team == "Endpoint Engineering"
+
+
+class TestControlCharacters:
+    """Verify control characters scenario."""
+
+    def test_contains_control_chars(self) -> None:
+        ticket, _ = scenario_control_characters()
+        assert "\x07" in ticket.description
+        assert "\x0c" in ticket.description
+
+    def test_classified_as_network_p1(self) -> None:
+        _, gold = scenario_control_characters()
+        assert gold.category == "Network & Connectivity"
+        assert gold.priority == "P1"
+        assert gold.needs_escalation is True
+
+
+class TestMinifiedCodeDump:
+    """Verify minified code dump scenario."""
+
+    def test_contains_minified_code(self) -> None:
+        ticket, _ = scenario_minified_code_dump()
+        assert "function(e,t)" in ticket.description
+        assert "module.exports" in ticket.description
+
+    def test_description_is_very_long(self) -> None:
+        ticket, _ = scenario_minified_code_dump()
+        assert len(ticket.description) > 2000
+
+    def test_classified_as_software_p1(self) -> None:
+        _, gold = scenario_minified_code_dump()
+        assert gold.category == "Software & Applications"
+        assert gold.priority == "P1"
+        assert gold.needs_escalation is True
+
+
+class TestMojibakeEncoding:
+    """Verify mojibake encoding scenario."""
+
+    def test_contains_mojibake_characters(self) -> None:
+        ticket, _ = scenario_mojibake_encoding()
+        assert "\u00c3" in ticket.description
+
+    def test_mentions_encoding_issue(self) -> None:
+        ticket, _ = scenario_mojibake_encoding()
+        assert "garbled" in ticket.description
+
+    def test_classified_as_software(self) -> None:
+        _, gold = scenario_mojibake_encoding()
+        assert gold.category == "Software & Applications"
+        assert gold.assigned_team == "Enterprise Applications"

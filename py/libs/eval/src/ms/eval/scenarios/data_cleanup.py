@@ -467,9 +467,7 @@ def scenario_base64_attachment_flood() -> tuple[TicketInput, TriageDecision]:
     Tests handling of very large payloads with mostly non-text content.
     """
     fake_blob = base64.b64encode(b"\xff\xd8\xff\xe0" + b"\xab" * 500).decode("ascii")
-    attachments_text = "\n".join(
-        f"[Inline image {i}]: data:image/jpeg;base64,{fake_blob}" for i in range(1, 6)
-    )
+    attachments_text = "\n".join(f"[Inline image {i}]: data:image/jpeg;base64,{fake_blob}" for i in range(1, 6))
     description = (
         "Multiple errors appearing on my screen. See screenshots below:\n\n"
         f"{attachments_text}\n\n"
@@ -629,11 +627,7 @@ def scenario_massive_email_signature() -> tuple[TicketInput, TriageDecision]:
         "a result of email transmission.\n"
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     )
-    description = (
-        "I can't open the Bloomberg Terminal app — it crashes on launch with "
-        "a license error."
-        + signature * 3
-    )
+    description = "I can't open the Bloomberg Terminal app — it crashes on launch with a license error." + signature * 3
 
     return (
         _ticket(
@@ -973,6 +967,492 @@ def scenario_subject_description_mismatch() -> tuple[TicketInput, TriageDecision
     )
 
 
+def scenario_json_config_dump() -> tuple[TicketInput, TriageDecision]:
+    """Ticket where someone pasted a massive JSON config into the description.
+
+    Users sometimes dump entire configuration files into ticket descriptions
+    hoping IT can spot the issue. The system must extract the actual problem
+    from the surrounding JSON noise.
+    """
+    json_blob = (
+        "{\n"
+        '  "appSettings": {\n'
+        '    "connectionString": "Server=sql-prod-03.contoso.com;Database=FinanceDB;'
+        'Trusted_Connection=True;MultipleActiveResultSets=true",\n'
+        '    "maxPoolSize": 100,\n'
+        '    "minPoolSize": 5,\n'
+        '    "connectionTimeout": 30,\n'
+        '    "commandTimeout": 120,\n'
+        '    "retryCount": 3,\n'
+        '    "retryInterval": 5,\n'
+        '    "enableCaching": true,\n'
+        '    "cacheExpiration": 3600,\n'
+        '    "logLevel": "Warning",\n'
+        '    "enableDetailedErrors": false,\n'
+        '    "maxRequestSize": 52428800,\n'
+        '    "allowedOrigins": [\n'
+        '      "https://portal.contoso.com",\n'
+        '      "https://finance.contoso.com",\n'
+        '      "https://api.contoso.com"\n'
+        "    ],\n"
+        '    "authentication": {\n'
+        '      "provider": "AzureAD",\n'
+        '      "tenantId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",\n'
+        '      "clientId": "12345678-abcd-efgh-ijkl-1234567890ab",\n'
+        '      "audience": "api://finance-app",\n'
+        '      "issuer": "https://login.microsoftonline.com/contoso.com/v2.0"\n'
+        "    },\n"
+        '    "featureFlags": {\n'
+        '      "enableNewDashboard": true,\n'
+        '      "enableBetaReports": false,\n'
+        '      "enableAutoReconciliation": true,\n'
+        '      "maintenanceMode": false\n'
+        "    },\n"
+        '    "smtp": {\n'
+        '      "host": "smtp.contoso.com",\n'
+        '      "port": 587,\n'
+        '      "useSsl": true,\n'
+        '      "from": "no-reply@contoso.com"\n'
+        "    }\n"
+        "  }\n"
+        "}"
+    )
+
+    description = (
+        "After the last deployment, our internal Finance dashboard stopped loading. "
+        "We get a blank white page. The config file was changed during the update — "
+        "can someone check if something looks wrong?\n\n"
+        f"Here's the full appsettings.json:\n\n{json_blob}\n\n"
+        "The app worked fine before Friday's release. About 45 users in Finance "
+        "are affected. We need this for month-end close reports."
+    )
+
+    return (
+        _ticket(
+            "INC-DC-0021",
+            "Finance dashboard blank after deployment — config attached",
+            description,
+            channel="portal",
+            reporter=Reporter(
+                name="David Chen",
+                email="david.chen@contoso.com",
+                department="Finance",
+            ),
+        ),
+        _gold(
+            "INC-DC-0021",
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            missing_information=["error_message", "application_version"],
+            next_best_action="Investigate Finance dashboard blank page after recent deployment.",
+            remediation_steps=[
+                "Review deployment change log for configuration differences",
+                "Check application logs for startup errors or missing dependencies",
+                "Compare current appsettings.json with pre-deployment backup",
+                "If config issue found, roll back the changed settings and redeploy",
+            ],
+        ),
+    )
+
+
+def scenario_stack_trace_flood() -> tuple[TicketInput, TriageDecision]:
+    """Ticket flooded with a multi-page Java stack trace.
+
+    Developers sometimes paste entire stack traces into tickets. The system
+    must identify the actual issue from the brief description at the top
+    despite hundreds of lines of trace output.
+    """
+    stack_frames = []
+    packages = [
+        "com.contoso.finance.service",
+        "com.contoso.finance.repository",
+        "com.contoso.finance.controller",
+        "org.springframework.web.servlet",
+        "org.springframework.beans.factory",
+        "org.apache.catalina.core",
+        "org.apache.coyote.http11",
+        "java.lang.reflect",
+        "sun.reflect",
+    ]
+    methods = [
+        "processRequest",
+        "handleInternal",
+        "doDispatch",
+        "invokeMethod",
+        "getBean",
+        "createBean",
+        "initializeBean",
+        "applyMiddleware",
+        "executeQuery",
+        "getConnection",
+        "authenticate",
+        "validateToken",
+    ]
+    for i in range(80):
+        pkg = packages[i % len(packages)]
+        method = methods[i % len(methods)]
+        line_num = 100 + (i * 7) % 500
+        stack_frames.append(f"\tat {pkg}.{method}({method}.java:{line_num})")
+
+    stack_trace = (
+        "java.sql.SQLTransientConnectionException: HikariPool-1 — Connection is not available, "
+        "request timed out after 30000ms.\n"
+        + "\n".join(stack_frames)
+        + "\nCaused by: java.net.SocketTimeoutException: Connect timed out\n"
+        + "\n".join(stack_frames[:20])
+    )
+
+    description = (
+        "The Trade Reconciliation app crashes every time a user tries to generate "
+        "the daily P&L report. It was working fine until this morning. About 30 traders "
+        "are blocked.\n\n"
+        f"Full stack trace from the application server:\n\n{stack_trace}"
+    )
+
+    return (
+        _ticket("INC-DC-0022", "Trade Reconciliation app — P&L report crashing", description),
+        _gold(
+            "INC-DC-0022",
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=["environment_details"],
+            next_best_action=(
+                "Investigate database connection pool exhaustion causing Trade Reconciliation "
+                "app crashes blocking 30 traders."
+            ),
+            remediation_steps=[
+                "Check database server connectivity and connection pool status",
+                "Review HikariCP connection pool metrics and increase pool size if needed",
+                "Verify no database maintenance or firewall changes occurred this morning",
+                "Restart the application server connection pool as immediate mitigation",
+            ],
+        ),
+    )
+
+
+def scenario_double_encoded_html_entities() -> tuple[TicketInput, TriageDecision]:
+    """Ticket with double-encoded HTML entities throughout.
+
+    Occurs when email-to-ticket ingestion encodes HTML entities twice,
+    e.g. '&' becomes '&amp;amp;' and '<' becomes '&amp;lt;'.
+    """
+    description = (
+        "I can&amp;apos;t log in to the SSO portal. When I enter my credentials "
+        "I get an error that says &amp;quot;Authentication failed &amp;amp; session "
+        "expired&amp;quot;. The URL shows &amp;lt;redirectUri&amp;gt; as "
+        "&amp;quot;https&amp;#58;//sso.contoso.com/callback&amp;amp;state=xyz&amp;quot;.\n\n"
+        "I&amp;apos;ve tried clearing cookies &amp;amp; using incognito mode. "
+        "Same error. My colleague Sarah &amp;lt;sarah.jones@contoso.com&amp;gt; "
+        "has the same problem. We&amp;apos;re both in the Compliance department "
+        "and need access for the quarterly audit &amp;#8212; deadline is Friday."
+    )
+
+    return (
+        _ticket(
+            "INC-DC-0023",
+            "SSO login broken &amp;amp; session errors",
+            description,
+            reporter=Reporter(
+                name="Marcus Webb",
+                email="marcus.webb@contoso.com",
+                department="Compliance",
+            ),
+        ),
+        _gold(
+            "INC-DC-0023",
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            missing_information=["error_message"],
+            next_best_action="Investigate SSO authentication failure affecting Compliance users before audit deadline.",
+            remediation_steps=[
+                "Check SSO portal health and recent configuration changes",
+                "Verify redirect URI configuration in Azure AD app registration",
+                "Review authentication logs for Marcus Webb and Sarah Jones",
+                "If widespread, check if a certificate or token signing key expired",
+            ],
+        ),
+    )
+
+
+def scenario_auto_reply_loop() -> tuple[TicketInput, TriageDecision]:
+    """Ticket generated from an out-of-office auto-reply loop.
+
+    When two mailboxes with auto-replies exchange messages, the ticket body
+    becomes a chain of repeated auto-responses. The system must recognize
+    the original issue buried in the noise.
+    """
+    auto_reply_block = (
+        "--- Auto-Reply ---\n"
+        "Thank you for your message. I am currently out of the office "
+        "and will return on March 25, 2026. For urgent matters, please "
+        "contact the IT Service Desk at ext. 4500.\n"
+        "Best regards, Janet Liu\n\n"
+        "--- Auto-Reply ---\n"
+        "I am out of the office until March 24. Your message has been "
+        "received and I will respond upon my return.\n"
+        "- Michael Torres, Enterprise Applications\n\n"
+    )
+
+    description = (
+        "Hi IT Support,\n\n"
+        "The shared mailbox for Accounts Payable (ap@contoso.com) is not "
+        "receiving any external emails. Internal emails work fine. This has "
+        "been happening since Monday morning. We have 200+ invoices that "
+        "vendors are trying to send us and month-end close is Thursday.\n\n"
+        "Can someone look at the mail flow rules?\n\n"
+        "Thanks,\nRachel Park\n\n" + (auto_reply_block * 12)
+    )
+
+    return (
+        _ticket(
+            "INC-DC-0024",
+            "Re: Auto: Re: Auto: Re: Auto: AP mailbox not receiving external emails",
+            description,
+            channel="email",
+            reporter=Reporter(
+                name="Rachel Park",
+                email="rachel.park@contoso.com",
+                department="Accounts Payable",
+            ),
+        ),
+        _gold(
+            "INC-DC-0024",
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=[],
+            next_best_action=(
+                "Investigate external email delivery failure to AP shared mailbox "
+                "blocking 200+ invoices before month-end close."
+            ),
+            remediation_steps=[
+                "Check Exchange Online mail flow rules for the AP shared mailbox",
+                "Review message trace for external emails sent to ap@contoso.com",
+                "Verify MX records and transport rules have not been modified recently",
+                "Check spam/quarantine for blocked external messages",
+            ],
+        ),
+    )
+
+
+def scenario_binary_hex_dump() -> tuple[TicketInput, TriageDecision]:
+    """Ticket with a raw hex dump pasted as the description.
+
+    Users sometimes paste output from debugging tools like `xxd` or
+    device descriptor dumps when reporting hardware issues.
+    """
+    hex_lines = []
+    for offset in range(0, 256, 16):
+        hex_bytes = " ".join(f"{(offset + i) & 0xFF:02x}" for i in range(16))
+        ascii_repr = "".join(chr((offset + i) & 0x7F) if 32 <= ((offset + i) & 0x7F) < 127 else "." for i in range(16))
+        hex_lines.append(f"{offset:08x}  {hex_bytes}  |{ascii_repr}|")
+    hex_dump = "\n".join(hex_lines)
+
+    description = (
+        "My docking station stopped recognizing my external monitors after "
+        "a firmware update. I ran the USB descriptor dump as IT asked — "
+        "here it is:\n\n"
+        f"$ lsusb -v -d 17ef:30b0\n{hex_dump}\n\n"
+        f"$ lsusb -v -d 17ef:30b0 (port 2)\n{hex_dump}\n\n"
+        "The dock LED blinks amber instead of solid white. Two Dell U2723QE "
+        "monitors connected via DisplayPort. Laptop is ThinkPad X1 Carbon Gen 11. "
+        "Dock model is ThinkPad USB-C Dock Gen 2 (40AS)."
+    )
+
+    return (
+        _ticket(
+            "INC-DC-0025",
+            "Docking station not detecting monitors after firmware update",
+            description,
+            reporter=Reporter(
+                name="Elena Vasquez",
+                email="elena.vasquez@contoso.com",
+                department="Risk Management",
+            ),
+        ),
+        _gold(
+            "INC-DC-0025",
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            missing_information=["steps_to_reproduce"],
+            next_best_action="Investigate docking station firmware update causing monitor detection failure.",
+            remediation_steps=[
+                "Check if a dock firmware rollback is available from Lenovo support",
+                "Test monitors with direct cable connections bypassing the dock",
+                "Update ThinkPad USB-C Dock Gen 2 firmware to latest stable version",
+                "If firmware rollback fails, replace docking station from inventory",
+            ],
+        ),
+    )
+
+
+def scenario_control_characters() -> tuple[TicketInput, TriageDecision]:
+    """Ticket with embedded control characters — null bytes, form feeds, bell chars.
+
+    Can occur when ticket text is copied from terminal output, binary log viewers,
+    or improperly processed text streams. The system must handle these gracefully.
+    """
+    description = (
+        "Our proxy server is blocking\x07 legitimate traffic to Azure DevOps.\x0c"
+        " Multiple development teams\x00 (about 50 engineers) cannot push code "
+        "or pull from repos.\x08\x08 The proxy logs show \x1b[31mACCESS DENIED"
+        "\x1b[0m for all\x07 *.dev.azure.com domains.\n\n"
+        "This started after the\x0c network team applied new filtering rules "
+        "this morning. \x00We need this fixed ASAP — we have a production "
+        "release\x07 scheduled for tonight and teams can't merge their PRs.\n\n"
+        "Proxy: Zscaler ZPA\x00\n"
+        "Affected URLs: dev.azure.com/contoso/*\x07\n"
+        "Error: 403 \x0cForbidden\x00 — Policy violation"
+    )
+
+    return (
+        _ticket("INC-DC-0026", "Proxy blocking Azure DevOps\x00 — 50 engineers blocked", description),
+        _gold(
+            "INC-DC-0026",
+            category="Network & Connectivity",
+            priority="P1",
+            assigned_team="Network Operations",
+            needs_escalation=True,
+            missing_information=[],
+            next_best_action=(
+                "Investigate proxy filtering rules blocking Azure DevOps access "
+                "for 50 engineers before tonight's production release."
+            ),
+            remediation_steps=[
+                "Review Zscaler ZPA filtering rules applied this morning",
+                "Add *.dev.azure.com to the proxy allow list",
+                "Verify connectivity to Azure DevOps endpoints after rule change",
+                "Coordinate with network team to prevent recurrence in future rule updates",
+            ],
+        ),
+    )
+
+
+def scenario_minified_code_dump() -> tuple[TicketInput, TriageDecision]:
+    """Ticket where a user pasted minified JavaScript code as the description.
+
+    Users sometimes paste browser console output including minified source
+    when reporting web application errors. The code is a single enormous
+    line with no whitespace.
+    """
+    # Generate a realistic-looking minified JS blob
+    minified_chunks = [
+        '!function(e,t){"object"==typeof module&&"object"==typeof module.exports',
+        "?module.exports=e.document?t(e,!0):function(e){if(!e.document)throw new",
+        'Error("requires a window with a document");return t(e)}:t(e)}',
+        '("undefined"!=typeof window?window:this,function(e,t){var n=[],r=Object',
+        ".getPrototypeOf,i=n.slice,o=n.flat?function(e){return n.flat.call(e)}",
+        ":function(e){return n.concat.apply([],e)},a=n.push,s=n.indexOf,u={}",
+        ",l=u.toString,c=u.hasOwnProperty,f=c.toString,p=f.call(Object),d={}",
+        ',h=function(e){return"function"==typeof e&&"number"!=typeof e.nodeType',
+        '&&"function"!=typeof e.item},g=function(e){return null!=e&&e===e.window}',
+        ",v=e.document,m={type:!0,src:!0,nonce:!0,noModule:!0};",
+    ]
+    minified_js = "".join(minified_chunks) * 8
+
+    description = (
+        "The SharePoint intranet portal shows a JavaScript error on every page "
+        "load since this morning's update. The page partially renders but all "
+        "interactive elements (menus, search, document preview) are broken.\n\n"
+        "Browser console output:\n"
+        f"Uncaught TypeError: Cannot read properties of undefined (reading 'init')\n"
+        f"    at {minified_js[:2000]}...\n\n"
+        "About 500 employees use this portal daily. All browsers affected "
+        "(Edge, Chrome, Firefox). Tried clearing cache — same error."
+    )
+
+    return (
+        _ticket(
+            "INC-DC-0027",
+            "SharePoint portal broken — JS error on every page",
+            description,
+            channel="portal",
+            reporter=Reporter(
+                name="IT Web Services",
+                email="webservices@contoso.com",
+                department="IT",
+            ),
+        ),
+        _gold(
+            "INC-DC-0027",
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=["application_version"],
+            next_best_action=(
+                "Investigate SharePoint portal JavaScript error affecting 500 users after this morning's update."
+            ),
+            remediation_steps=[
+                "Identify the failing JavaScript bundle and the specific update that changed it",
+                "Check SharePoint Online service health dashboard for known issues",
+                "If caused by a custom solution, roll back the morning's deployment",
+                "If caused by a Microsoft update, open a support ticket with Microsoft 365 support",
+            ],
+        ),
+    )
+
+
+def scenario_mojibake_encoding() -> tuple[TicketInput, TriageDecision]:
+    """Ticket with mojibake (garbled encoding) from a charset mismatch.
+
+    Occurs when UTF-8 text is interpreted as Latin-1 or Windows-1252,
+    producing characteristic garbled sequences like 'Ã©' for 'é'.
+    """
+    description = (
+        "The email system is displaying garbled characters for all French and "
+        "German employees. Here\u00c3\u00a2\u00e2\u0082\u00ac\u00e2\u0084\u00a2s "
+        "what we see:\n\n"
+        "- Ren\u00c3\u00a9 Dupont\u00c3\u00a2\u00e2\u0082\u00ac\u00e2\u0084\u00a2s "
+        "emails show \u00c3\u00a9 instead of \u00e9\n"
+        "- The word \u00c3\u00bc for \u00fc (German umlaut)\n"
+        "- \u00c3\u00a8 appears instead of \u00e8\n"
+        "- Calendar invites show Conf\u00c3\u00a9rence instead of Conf\u00e9rence\n"
+        "- The Paris office (Rh\u00c3\u00b4ne-Alpes region) reports "
+        "\u00c3\u0080 instead of \u00c0\n\n"
+        "This affects about 80 employees across the Paris and Frankfurt offices. "
+        "Started after the Exchange migration to the new mail gateway last night. "
+        "Email subjects, bodies, and calendar entries are all affected."
+    )
+
+    return (
+        _ticket(
+            "INC-DC-0028",
+            "Garbled characters in emails — Paris & Frankfurt offices",
+            description,
+            channel="email",
+            reporter=Reporter(
+                name="Pierre Laurent",
+                email="pierre.laurent@contoso.com",
+                department="European Operations",
+            ),
+        ),
+        _gold(
+            "INC-DC-0028",
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            missing_information=["configuration_details"],
+            next_best_action=(
+                "Investigate character encoding mismatch on new mail gateway "
+                "affecting 80 employees in Paris and Frankfurt offices."
+            ),
+            remediation_steps=[
+                "Check the new mail gateway's character encoding configuration (should be UTF-8)",
+                "Review Exchange transport rules for any encoding transformations",
+                "Test with a known UTF-8 encoded email to confirm the encoding path",
+                "If gateway misconfigured, update charset settings and re-process queued messages",
+            ],
+        ),
+    )
+
+
 def get_all_data_cleanup_scenarios() -> list[tuple[TicketInput, TriageDecision]]:
     """Return all data cleanup evaluation scenarios as (ticket, gold) pairs."""
     return [
@@ -996,4 +1476,12 @@ def get_all_data_cleanup_scenarios() -> list[tuple[TicketInput, TriageDecision]]
         scenario_multiple_issues_one_ticket(),
         scenario_markdown_formatted_ticket(),
         scenario_subject_description_mismatch(),
+        scenario_json_config_dump(),
+        scenario_stack_trace_flood(),
+        scenario_double_encoded_html_entities(),
+        scenario_auto_reply_loop(),
+        scenario_binary_hex_dump(),
+        scenario_control_characters(),
+        scenario_minified_code_dump(),
+        scenario_mojibake_encoding(),
     ]
