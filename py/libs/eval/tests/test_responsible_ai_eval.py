@@ -1010,7 +1010,7 @@ class TestPrivacyViolationCovertMonitoring:
     def test_requests_surveillance(self) -> None:
         ticket, _ = scenario_privacy_violation_covert_monitoring()
         desc = ticket.description.lower()
-        assert "keylogger" in desc or "monitor" in desc or "surveillance" in desc
+        assert "keystroke logger" in desc or "screenshot capture" in desc or "without their knowledge" in desc
 
     def test_escalated_to_security(self) -> None:
         _, gold = scenario_privacy_violation_covert_monitoring()
