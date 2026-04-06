@@ -107,8 +107,14 @@ _VALID_MISSING_INFO = {
 }
 _REQUIRED_TICKET_FIELDS = {"ticket_id", "subject", "description", "reporter", "created_at", "channel"}
 _REQUIRED_GOLD_FIELDS = {
-    "ticket_id", "category", "priority", "assigned_team",
-    "needs_escalation", "missing_information", "next_best_action", "remediation_steps",
+    "ticket_id",
+    "category",
+    "priority",
+    "assigned_team",
+    "needs_escalation",
+    "missing_information",
+    "next_best_action",
+    "remediation_steps",
 }
 
 
@@ -138,7 +144,7 @@ def test_sample_has_25_tickets():
     assert len(gold) == 25
 
 
-def test_handcrafted_dc_has_15_tickets():
+def test_handcrafted_dc_has_35_tickets():
     if "data_cleanup_eval" not in _DATASETS:
         return
     tickets, gold = _DATASETS["data_cleanup_eval"]
@@ -147,7 +153,7 @@ def test_handcrafted_dc_has_15_tickets():
     assert len(gold) == 35
 
 
-def test_handcrafted_rai_has_25_tickets():
+def test_handcrafted_rai_has_45_tickets():
     if "responsible_ai_eval" not in _DATASETS:
         return
     tickets, gold = _DATASETS["responsible_ai_eval"]
@@ -418,9 +424,7 @@ def test_combined_corpus_no_single_category_dominates():
     counts = Counter(g["category"] for g in golds)
     for cat, count in counts.items():
         ratio = count / len(golds)
-        assert ratio < 0.40, (
-            f"Category '{cat}' dominates at {ratio:.0%} ({count}/{len(golds)})"
-        )
+        assert ratio < 0.40, f"Category '{cat}' dominates at {ratio:.0%} ({count}/{len(golds)})"
 
 
 def test_combined_corpus_has_both_escalation_values():
@@ -436,8 +440,7 @@ def test_combined_corpus_uses_most_missing_info_values():
     for g in golds:
         all_values.update(g["missing_information"])
     assert len(all_values) >= 12, (
-        f"Only {len(all_values)}/16 missing_information values used: "
-        f"missing {_VALID_MISSING_INFO - all_values}"
+        f"Only {len(all_values)}/16 missing_information values used: missing {_VALID_MISSING_INFO - all_values}"
     )
 
 
@@ -474,10 +477,7 @@ def test_scoring_datasets_are_subsets_of_generated():
         scoring_ids = {t["ticket_id"] for t in _SCORING_DATASETS[scoring_name][0]}
         generated_ids = {t["ticket_id"] for t in _DATASETS[generated_name][0]}
         missing = scoring_ids - generated_ids
-        assert not missing, (
-            f"Scoring set '{scoring_name}' has IDs not in generated set '{generated_name}': "
-            f"{missing}"
-        )
+        assert not missing, f"Scoring set '{scoring_name}' has IDs not in generated set '{generated_name}': {missing}"
 
 
 # ── 7. Per-dataset distribution analysis ─────────────────────────────
@@ -489,9 +489,7 @@ def test_each_dataset_has_multiple_categories():
         if gold is None:
             continue
         cats = {g["category"] for g in gold}
-        assert len(cats) >= 3, (
-            f"Dataset '{name}' has only {len(cats)} categories: {cats}"
-        )
+        assert len(cats) >= 3, f"Dataset '{name}' has only {len(cats)} categories: {cats}"
 
 
 def test_each_dataset_has_multiple_priorities():
@@ -500,9 +498,7 @@ def test_each_dataset_has_multiple_priorities():
         if gold is None:
             continue
         pris = {g["priority"] for g in gold}
-        assert len(pris) >= 2, (
-            f"Dataset '{name}' has only {len(pris)} priorities: {pris}"
-        )
+        assert len(pris) >= 2, f"Dataset '{name}' has only {len(pris)} priorities: {pris}"
 
 
 def test_each_dataset_has_both_escalation_values():
@@ -511,9 +507,7 @@ def test_each_dataset_has_both_escalation_values():
         if gold is None:
             continue
         vals = {g["needs_escalation"] for g in gold}
-        assert True in vals and False in vals, (
-            f"Dataset '{name}' doesn't have both escalation values"
-        )
+        assert True in vals and False in vals, f"Dataset '{name}' doesn't have both escalation values"
 
 
 # ── 8. Combined corpus reporter diversity ────────────────────────────
@@ -527,9 +521,7 @@ def test_combined_corpus_has_diverse_reporters():
             email = t.get("reporter", {}).get("email", "")
             if email:
                 all_emails.add(email.lower())
-    assert len(all_emails) >= 10, (
-        f"Only {len(all_emails)} unique reporter emails across all datasets"
-    )
+    assert len(all_emails) >= 10, f"Only {len(all_emails)} unique reporter emails across all datasets"
 
 
 def test_combined_corpus_has_diverse_departments():
@@ -540,9 +532,7 @@ def test_combined_corpus_has_diverse_departments():
             dept = t.get("reporter", {}).get("department", "")
             if dept:
                 all_depts.add(dept.lower())
-    assert len(all_depts) >= 5, (
-        f"Only {len(all_depts)} unique departments across all datasets"
-    )
+    assert len(all_depts) >= 5, f"Only {len(all_depts)} unique departments across all datasets"
 
 
 # ── 9. Description length variety across datasets ───────────────────
@@ -570,9 +560,7 @@ def test_combined_corpus_multiple_channels():
     for _name, (tickets, _gold) in _DATASETS.items():
         for t in tickets:
             all_channels.add(t.get("channel", ""))
-    assert len(all_channels) >= 3, (
-        f"Only {len(all_channels)} channels: {all_channels}"
-    )
+    assert len(all_channels) >= 3, f"Only {len(all_channels)} channels: {all_channels}"
 
 
 # ── 10. Total corpus sanity checks ──────────────────────────────────
@@ -580,10 +568,7 @@ def test_combined_corpus_multiple_channels():
 
 def test_total_scored_ticket_count():
     """Total scored tickets across all datasets should be at least 100."""
-    total = sum(
-        len(tickets) for _name, (tickets, gold) in _DATASETS.items()
-        if gold is not None
-    )
+    total = sum(len(tickets) for _name, (tickets, gold) in _DATASETS.items() if gold is not None)
     assert total >= 100, f"Only {total} scored tickets total — expected ≥100"
 
 
