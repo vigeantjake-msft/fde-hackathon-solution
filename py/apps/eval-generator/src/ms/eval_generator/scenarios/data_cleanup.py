@@ -6836,4 +6836,357 @@ DATA_CLEANUP_SCENARIOS: list[ScenarioDefinition] = [
         ),
         tags=("data-cleanup", "no-line-breaks"),
     ),
+    # ──────────────────────────────────────────────────────────────────
+    # 107. JSON config dump pasted into ticket body
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-107",
+        subjects=(
+            "Finance dashboard broken after deployment — config attached",
+            "App not starting — here's the full configuration file",
+        ),
+        descriptions=(
+            "After the last deployment, our internal Finance dashboard stopped loading."
+            " We get a blank white page. The config file was changed during the update —"
+            " here's the appsettings.json:\n\n"
+            '{\n  "appSettings": {\n'
+            '    "connectionString": "Server=sql-prod-03.contoso.com;Database=FinanceDB;'
+            'Trusted_Connection=True;MultipleActiveResultSets=true",\n'
+            '    "maxPoolSize": 100,\n    "minPoolSize": 5,\n'
+            '    "connectionTimeout": 30,\n    "commandTimeout": 120,\n'
+            '    "retryCount": 3,\n    "retryInterval": 5,\n'
+            '    "enableCaching": true,\n    "cacheExpiration": 3600,\n'
+            '    "logLevel": "Warning",\n    "enableDetailedErrors": false,\n'
+            '    "maxRequestSize": 52428800,\n'
+            '    "authentication": {\n'
+            '      "provider": "AzureAD",\n'
+            '      "tenantId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"\n    },\n'
+            '    "featureFlags": {\n'
+            '      "enableNewDashboard": true,\n'
+            '      "enableBetaReports": false\n    }\n  }\n}\n\n'
+            "About 45 users in Finance are affected. We need this for month-end close.",
+            "The app won't start after a config change. Here's the full config:\n\n"
+            '{\n  "logging": {\n    "level": "Debug",\n    "sinks": [\n'
+            '      {"type": "console"},\n      {"type": "file", "path": "/var/log/app.log"},\n'
+            '      {"type": "appInsights", "key": "abc123"}\n    ]\n  },\n'
+            '  "database": {\n    "host": "sql-prod-03.contoso.com",\n'
+            '    "port": 1433,\n    "name": "FinanceDB",\n'
+            '    "poolSize": 50\n  },\n'
+            '  "redis": {\n    "host": "redis-cache.contoso.com",\n'
+            '    "port": 6380,\n    "ssl": true\n  }\n}\n\n'
+            "Error happens on startup — 'connection refused' in the logs.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("error_message", "application_version"),
+            next_best_action="Review configuration changes from last deployment and compare with working backup",
+            remediation_steps=(
+                "Review deployment change log for configuration differences",
+                "Check application logs for startup errors or missing dependencies",
+                "Compare current config with pre-deployment backup",
+                "If config issue found, roll back the changed settings and redeploy",
+            ),
+        ),
+        tags=("data-cleanup", "json-dump"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 108. Stack trace flood in ticket body
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-108",
+        subjects=(
+            "Trade Reconciliation app crashing with database errors",
+            "App keeps throwing SQLTransientConnectionException",
+        ),
+        descriptions=(
+            "The Trade Reconciliation app crashes every time a user tries to generate"
+            " the daily P&L report. It was working fine until this morning. About 30"
+            " traders are blocked.\n\n"
+            "Full stack trace:\n"
+            "java.sql.SQLTransientConnectionException: HikariPool-1 — Connection is"
+            " not available, request timed out after 30000ms.\n"
+            + "\n".join(
+                f"\tat com.contoso.finance.{m}({m}.java:{100 + i * 7})"
+                for i, m in enumerate(["processRequest", "handleInternal", "doDispatch", "invokeMethod"] * 12)
+            )
+            + "\nCaused by: java.net.SocketTimeoutException: Connect timed out\n"
+            + "\n".join(
+                f"\tat org.apache.catalina.core.{m}({m}.java:{200 + i * 3})"
+                for i, m in enumerate(["invoke", "execute", "dispatch"] * 6)
+            ),
+            "P&L report generation fails with this error:\n\n"
+            "org.springframework.dao.DataAccessResourceFailureException: could not"
+            " extract ResultSet; nested exception is org.hibernate.exception."
+            "JDBCConnectionException: could not extract ResultSet\n"
+            + "\n".join(
+                f"\tat org.springframework.orm.jpa.{m}({m}.java:{50 + i * 11})"
+                for i, m in enumerate(["doGetTransaction", "begin", "getTransaction", "createQuery"] * 10)
+            )
+            + "\nCaused by: com.microsoft.sqlserver.jdbc.SQLServerException:"
+            " The connection is closed.\n"
+            "30 traders cannot generate reports.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=("environment_details",),
+            next_best_action="Investigate database connection pool exhaustion causing app crashes blocking 30 traders",
+            remediation_steps=(
+                "Check database server connectivity and connection pool status",
+                "Review HikariCP connection pool metrics and increase pool size if needed",
+                "Verify no database maintenance or firewall changes occurred today",
+                "Restart the application server connection pool as immediate mitigation",
+            ),
+        ),
+        tags=("data-cleanup", "stack-trace"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 109. Double-encoded HTML entities
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-109",
+        subjects=(
+            "SSO login broken &amp;amp; session errors",
+            "Can&amp;apos;t access portal — authentication failure",
+        ),
+        descriptions=(
+            "I can&amp;apos;t log in to the SSO portal. When I enter my credentials"
+            " I get &amp;quot;Authentication failed &amp;amp; session expired&amp;quot;."
+            " The URL shows &amp;lt;redirectUri&amp;gt; as &amp;quot;https&amp;#58;"
+            "//sso.contoso.com/callback&amp;amp;state=xyz&amp;quot;.\n\n"
+            "I&amp;apos;ve tried clearing cookies &amp;amp; using incognito mode. Same"
+            " error. My colleague has the same problem.",
+            "Getting &amp;quot;403 Forbidden&amp;quot; when accessing the SSO portal."
+            " The page shows &amp;lt;error&amp;gt;Authentication required&amp;lt;"
+            "/error&amp;gt; and the address bar has &amp;amp;redirect= parameters"
+            " everywhere.\n\nMultiple people in Compliance are affected &amp;amp;"
+            " the audit deadline is Friday.",
+        ),
+        gold=ScenarioGold(
+            category="Access & Authentication",
+            priority="P2",
+            assigned_team="Identity & Access Management",
+            needs_escalation=False,
+            missing_information=("error_message",),
+            next_best_action="Investigate SSO authentication failure affecting multiple users before audit deadline",
+            remediation_steps=(
+                "Check SSO portal health and recent configuration changes",
+                "Verify redirect URI configuration in Azure AD app registration",
+                "Review authentication logs for affected users",
+                "If widespread, check if a certificate or token signing key expired",
+            ),
+        ),
+        tags=("data-cleanup", "double-encoding"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 110. Auto-reply loop chain
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-110",
+        subjects=(
+            "Re: Auto: Re: Auto: Re: Auto: AP mailbox not receiving external emails",
+            "FW: Out of Office: FW: Out of Office: shared mailbox issue",
+        ),
+        descriptions=(
+            "The shared mailbox for Accounts Payable is not receiving external emails."
+            " Internal emails work fine. We have 200+ invoices pending.\n\n"
+            + (
+                "--- Auto-Reply ---\n"
+                "Thank you for your message. I am currently out of the office and will"
+                " return on March 25. For urgent matters, contact IT at ext. 4500.\n\n"
+            )
+            * 15,
+            "Our shared mailbox (invoices@contoso.com) stopped getting external mail"
+            " on Monday. Internal routing works. Month-end close is Thursday.\n\n"
+            + (
+                "--- Automatic Reply ---\n"
+                "I am out of the office until further notice. Please contact the team"
+                " distribution list for immediate assistance.\n"
+                "Best regards, Auto-Responder\n\n"
+            )
+            * 15,
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=(),
+            next_best_action="Investigate external email delivery failure to shared mailbox blocking invoices before"
+            " month-end close",
+            remediation_steps=(
+                "Check Exchange Online mail flow rules for the shared mailbox",
+                "Review message trace for external emails sent to the affected address",
+                "Verify MX records and transport rules have not been modified recently",
+                "Check spam or quarantine for blocked external messages",
+            ),
+        ),
+        tags=("data-cleanup", "auto-reply-loop"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 111. Binary / hex dump pasted into description
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-111",
+        subjects=(
+            "Docking station not detecting monitors after firmware update",
+            "USB dock firmware update broke external displays",
+        ),
+        descriptions=(
+            "My docking station stopped recognizing my external monitors after a"
+            " firmware update. I ran the USB descriptor dump:\n\n"
+            "$ lsusb -v -d 17ef:30b0\n"
+            + "\n".join(
+                f"{off:08x}  " + " ".join(f"{(off + i) & 0xFF:02x}" for i in range(16)) for off in range(0, 256, 16)
+            )
+            + "\n\nDock LED blinks amber. Two Dell monitors via DisplayPort."
+            " Laptop is ThinkPad X1 Carbon Gen 11.",
+            "After updating the ThinkPad USB-C Dock Gen 2 firmware, neither monitor"
+            " is detected. Here's the raw USB debug output:\n\n"
+            "Bus 002 Device 003: ID 17ef:30b0 Lenovo ThinkPad USB-C Dock Gen2\n"
+            "Device Descriptor:\n  bLength                18\n"
+            "  bDescriptorType         1\n  bcdUSB               3.10\n"
+            "  bDeviceClass             9 Hub\n  bDeviceSubClass          0\n"
+            "  bMaxPacketSize0          9\n  idVendor           0x17ef\n"
+            "  idProduct          0x30b0\n  bNumConfigurations      1\n\n"
+            "DisplayPort Alt Mode status:\n"
+            "  Port 1: NOT CONNECTED\n  Port 2: NOT CONNECTED\n\n"
+            "Tried both DP ports — neither works. Monitors work fine on direct HDMI.",
+        ),
+        gold=ScenarioGold(
+            category="Hardware & Peripherals",
+            priority="P3",
+            assigned_team="Endpoint Engineering",
+            needs_escalation=False,
+            missing_information=("steps_to_reproduce",),
+            next_best_action="Investigate docking station firmware update causing monitor detection failure",
+            remediation_steps=(
+                "Check if a dock firmware rollback is available from Lenovo support",
+                "Test monitors with direct cable connections bypassing the dock",
+                "Update ThinkPad USB-C Dock Gen 2 firmware to latest stable version",
+                "If firmware rollback fails, replace docking station from inventory",
+            ),
+        ),
+        tags=("data-cleanup", "hex-dump"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 112. Control characters embedded in ticket text
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-112",
+        subjects=(
+            "Proxy blocking Azure DevOps — 50 engineers blocked",
+            "Zscaler ZPA blocking dev.azure.com after rule change",
+        ),
+        descriptions=(
+            "Our proxy server is blocking\x07 legitimate traffic to Azure DevOps.\x0c"
+            " Multiple development teams (about 50 engineers) cannot push code.\x00"
+            " The proxy logs show \x1b[31mACCESS DENIED\x1b[0m for *.dev.azure.com.\n\n"
+            "Started after network team applied new filtering rules this morning.\x07"
+            " Production release scheduled for tonight.",
+            "After this morning's Zscaler policy update, all requests to"
+            " dev.azure.com/contoso/* are returning 403 Forbidden.\x0c\x07\n\n"
+            "Error from proxy:\x00 Policy violation — category 'Developer Tools'"
+            " is blocked by rule 'restrict-external-code-repos'.\n\n"
+            "50+ engineers can't pull or push. We have a critical release tonight.\x07",
+        ),
+        gold=ScenarioGold(
+            category="Network & Connectivity",
+            priority="P1",
+            assigned_team="Network Operations",
+            needs_escalation=True,
+            missing_information=(),
+            next_best_action="Investigate proxy filtering rules blocking Azure DevOps for 50 engineers before"
+            " production release",
+            remediation_steps=(
+                "Review Zscaler ZPA filtering rules applied this morning",
+                "Add *.dev.azure.com to the proxy allow list",
+                "Verify connectivity to Azure DevOps endpoints after rule change",
+                "Coordinate with network team to prevent recurrence in future updates",
+            ),
+        ),
+        tags=("data-cleanup", "control-chars"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 113. Minified JavaScript code dump
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-113",
+        subjects=(
+            "SharePoint portal broken — JS error on every page",
+            "Intranet site showing JavaScript errors after update",
+        ),
+        descriptions=(
+            "The SharePoint intranet portal shows a JavaScript error on every page"
+            " load since this morning.\n\nBrowser console:\n"
+            "Uncaught TypeError: Cannot read properties of undefined (reading 'init')\n"
+            "    at " + '!function(e,t){"object"==typeof module&&module.exports' * 30 + "...\n\n"
+            "500 employees use this daily. All browsers affected.",
+            "After today's SharePoint update, all interactive elements are broken.\n\n"
+            "Console error:\nTypeError: a.default.render is not a function\n"
+            "    at "
+            + "var n=[],r=Object.getPrototypeOf,i=n.slice,o=n.flat" * 30
+            + "...\n\nMenus, search, and document preview all broken.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P1",
+            assigned_team="Enterprise Applications",
+            needs_escalation=True,
+            missing_information=("application_version",),
+            next_best_action="Investigate SharePoint JavaScript errors affecting 500 users after today's update",
+            remediation_steps=(
+                "Identify the failing JavaScript bundle and the specific update that changed it",
+                "Check SharePoint Online service health for known issues",
+                "If caused by a custom solution, roll back the deployment",
+                "If caused by a Microsoft update, open a support ticket with Microsoft 365",
+            ),
+        ),
+        tags=("data-cleanup", "minified-code"),
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 114. Mojibake / charset encoding corruption
+    # ──────────────────────────────────────────────────────────────────
+    ScenarioDefinition(
+        scenario_id="dc-gen-114",
+        subjects=(
+            "Garbled characters in emails — Paris & Frankfurt offices",
+            "Email encoding broken after mail gateway migration",
+        ),
+        descriptions=(
+            "The email system is displaying garbled characters for all French and"
+            " German employees. Ren\u00c3\u00a9 Dupont's emails show \u00c3\u00a9"
+            " instead of \u00e9. The word \u00c3\u00bc appears instead of \u00fc."
+            " Calendar invites show Conf\u00c3\u00a9rence instead of Conf\u00e9rence.\n\n"
+            "About 80 employees across Paris and Frankfurt affected. Started after"
+            " Exchange migration to new mail gateway last night.",
+            "Since the mail gateway migration last night, all emails from European"
+            " offices have encoding issues:\n"
+            "- \u00c3\u00a8 instead of \u00e8\n"
+            "- \u00c3\u00b6 instead of \u00f6\n"
+            "- \u00c3\u0080 instead of \u00c0\n\n"
+            "Subjects, bodies, and calendar entries all affected. 80+ users in"
+            " Paris and Frankfurt cannot read emails properly.",
+        ),
+        gold=ScenarioGold(
+            category="Software & Applications",
+            priority="P2",
+            assigned_team="Enterprise Applications",
+            needs_escalation=False,
+            missing_information=("configuration_details",),
+            next_best_action="Investigate character encoding mismatch on new mail gateway affecting European offices",
+            remediation_steps=(
+                "Check the new mail gateway character encoding configuration — should be UTF-8",
+                "Review Exchange transport rules for any encoding transformations",
+                "Test with a known UTF-8 encoded email to confirm the encoding path",
+                "If gateway misconfigured, update charset settings and reprocess queued messages",
+            ),
+        ),
+        tags=("data-cleanup", "mojibake"),
+    ),
 ]
