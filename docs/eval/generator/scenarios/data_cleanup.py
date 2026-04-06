@@ -1308,7 +1308,7 @@ SCENARIOS: list[Scenario] = [
         scenario_id="cleanup-speech-transcription-errors",
         category="Hardware & Peripherals",
         priority="P2",
-        assigned_team="Data Center Operations",
+        assigned_team="Endpoint Engineering",
         needs_escalation=False,
         missing_information=["device_info", "error_message", "environment_details"],
         subjects=[
@@ -1564,7 +1564,7 @@ SCENARIOS: list[Scenario] = [
         scenario_id="cleanup-docker-yaml-config",
         category="Software & Applications",
         priority="P2",
-        assigned_team="DevOps Engineering",
+        assigned_team="Enterprise Applications",
         needs_escalation=False,
         missing_information=["environment_details", "error_message"],
         subjects=[
@@ -5391,5 +5391,893 @@ SCENARIOS: list[Scenario] = [
             ],
         ],
         tags=["data-cleanup", "winrm-transcript"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 86. SQL query results pasted verbatim in ticket body
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-sql-query-results",
+        category="Data & Storage",
+        priority="P2",
+        assigned_team="Data Platform",
+        needs_escalation=False,
+        missing_information=["affected_system", "environment_details"],
+        subjects=[
+            "Database query returning wrong results — see output below",
+            "SQL report numbers don't match — pasting query output",
+        ],
+        descriptions=[
+            "The quarterly revenue report is showing incorrect totals. I ran the query "
+            "directly and the numbers are wrong. Here's the output:\n\n"
+            "```\n"
+            "SELECT department, SUM(revenue) as total_revenue, COUNT(*) as txn_count\n"
+            "FROM financial_transactions\n"
+            "WHERE transaction_date BETWEEN '2026-01-01' AND '2026-03-31'\n"
+            "GROUP BY department\n"
+            "ORDER BY total_revenue DESC;\n\n"
+            "+---------------------+---------------+-----------+\n"
+            "| department          | total_revenue | txn_count |\n"
+            "+---------------------+---------------+-----------+\n"
+            "| Wealth Management   |  12847293.42  |    42891  |\n"
+            "| Institutional Trade |   8293847.19  |    18472  |\n"
+            "| Retail Banking      |   4928371.83  |    89234  |\n"
+            "| Corporate Finance   |   3847291.57  |     7823  |\n"
+            "| Asset Management    |   2938471.28  |    12847  |\n"
+            "| NULL                |    482937.11  |     3291  |\n"
+            "+---------------------+---------------+-----------+\n"
+            "6 rows in set (4.82 sec)\n"
+            "```\n\n"
+            "The NULL department shouldn't exist and the Wealth Management total is way off "
+            "from what Finance is reporting. Looks like a data integrity issue.",
+            "I'm getting mismatched revenue numbers from the data warehouse. Query and "
+            "results attached:\n\n"
+            "EXEC sp_quarterly_revenue @year=2026, @quarter=1;\n\n"
+            "department | total_revenue | delta_pct\n"
+            "----------|--------------|----------\n"
+            "WM | 12847293.42 | +23.4%\n"
+            "IT | 8293847.19 | -2.1%\n"
+            "RB | 4928371.83 | +8.7%\n"
+            "(NULL) | 482937.11 | N/A\n\n"
+            "The NULL rows appeared after last week's ETL migration. Finance team says these "
+            "numbers don't reconcile with their GL system.",
+        ],
+        next_best_actions=[
+            "Investigate the NULL department entries in financial_transactions — likely an "
+            "ETL mapping issue from the recent migration that left department_id unmapped.",
+            "Check the ETL pipeline for the financial_transactions table — NULL department "
+            "values indicate a join failure or missing dimension mapping.",
+        ],
+        remediation_steps=[
+            [
+                "Query the source system for transactions with NULL department_id to identify the root cause",
+                "Check the ETL pipeline logs from the recent migration for mapping failures",
+                "Backfill the department_id for affected records from the source system",
+                "Add a NOT NULL constraint or validation check to the ETL pipeline",
+                "Re-run the quarterly revenue report and reconcile with Finance GL",
+            ],
+        ],
+        tags=["data-cleanup", "sql-output", "tabular-data"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 87. Windows Event Viewer XML blocks pasted
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-windows-event-log-xml",
+        category="Software & Applications",
+        priority="P2",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["affected_users", "reproduction_frequency"],
+        subjects=[
+            "Application crash — pasting Event Viewer log",
+            "SAP GUI crashing — Windows Event Log XML attached",
+        ],
+        descriptions=[
+            "SAP GUI keeps crashing every time I try to run a BW report. Here's what "
+            "Windows Event Viewer shows:\n\n"
+            "<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>\n"
+            "  <System>\n"
+            "    <Provider Name='Application Error' />\n"
+            "    <EventID>1000</EventID>\n"
+            "    <Level>2</Level>\n"
+            "    <TimeCreated SystemTime='2026-03-15T14:23:47.382Z' />\n"
+            "    <Computer>WS-FIN-4821.contoso.local</Computer>\n"
+            "  </System>\n"
+            "  <EventData>\n"
+            "    <Data Name='ApplicationName'>saplogon.exe</Data>\n"
+            "    <Data Name='ApplicationVersion'>7.70.5.0</Data>\n"
+            "    <Data Name='FaultingModule'>ntdll.dll</Data>\n"
+            "    <Data Name='FaultOffset'>0x000000000005bf3c</Data>\n"
+            "    <Data Name='ExceptionCode'>0xc0000005</Data>\n"
+            "  </EventData>\n"
+            "</Event>\n\n"
+            "<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>\n"
+            "  <System>\n"
+            "    <Provider Name='.NET Runtime' />\n"
+            "    <EventID>1026</EventID>\n"
+            "    <Level>2</Level>\n"
+            "    <TimeCreated SystemTime='2026-03-15T14:23:47.395Z' />\n"
+            "  </System>\n"
+            "  <EventData>\n"
+            "    <Data>Application: saplogon.exe\n"
+            "Framework Version: v4.0.30319\n"
+            "Description: The process was terminated due to an unhandled exception.\n"
+            "Exception Info: System.AccessViolationException</Data>\n"
+            "  </EventData>\n"
+            "</Event>\n\n"
+            "This happens every time I try to open transaction SE16 for table BSEG.",
+            "SAP GUI crash dump from Event Viewer. Application Error ID 1000 with "
+            "faulting module ntdll.dll. Exception code 0xc0000005 "
+            "(access violation). Started after the March patch Tuesday updates. "
+            "Multiple XML event entries — the key one is the .NET Runtime error 1026 "
+            "showing System.AccessViolationException in saplogon.exe 7.70.5.0.",
+        ],
+        next_best_actions=[
+            "Parse the Event Viewer XML — the crash is saplogon.exe 7.70.5.0 with an "
+            "access violation in ntdll.dll, likely triggered by March patches.",
+            "SAP GUI 7.70 crashing with AccessViolationException — check for SAP Note "
+            "regarding compatibility with recent Windows patches.",
+        ],
+        remediation_steps=[
+            [
+                "Check SAP Note database for known issues with SAP GUI 7.70.5.0 and recent Windows updates",
+                "Test with SAP GUI 8.00 (latest version) to see if the crash is resolved",
+                "If rollback is needed, uninstall the March cumulative update KB5034441",
+                "Clear SAP GUI local cache and user-specific configuration files",
+                "If issue persists, collect a full crash dump and open an SAP support incident",
+            ],
+        ],
+        tags=["data-cleanup", "event-log", "xml-dump", "application-crash"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 88. Malformed/corrupted email headers pasted
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-email-header-malformed",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["error_message", "affected_users"],
+        subjects=[
+            "Emails arriving with garbled headers — see raw headers below",
+            "Exchange email headers corrupted — authentication failures",
+        ],
+        descriptions=[
+            "I'm getting emails with corrupted headers. Our compliance team needs the "
+            "full header trace. Here's what I see in the raw source:\n\n"
+            "Received: from mail-yw1-xb49.google.com (mail-yw1-xb49.google.com "
+            "[2607:f8b0:4864:20::b49])\n"
+            "        by mx01.contoso.com (Postfix) with ESMTPS id 4R3bKv6Qz\xc3\xb8z\n"
+            "        for <trading@contoso.com>; Sat, 15 Mar 2026 09:14:22 +0000 (UTC)\n"
+            "DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\n"
+            "        d=gmail.com; s=20230601; t=171062\xef\xbf\xbd662;\n"
+            "        h=from:to:subject:date:message-id;\n"
+            "        bh=CORRUPT_HASH_BASE64==;\n"
+            "        b=TRUNCATED_SIGNATURE\n"
+            "Authentication-Results: mx01.contoso.com;\n"
+            "        dkim=temperror (key retrieval timeout);\n"
+            "        spf=none (no SPF record);\n"
+            "        dmarc=none (no DMARC policy found)\n"
+            "X-MS-Exchange-Organization-AuthAs: Anonymous\n"
+            "X-MS-Exchange-Organization-SCL: 5\n"
+            "X-Mailer: \xff\xfe<\x00n\x00u\x00l\x00l\x00>\n"
+            "Subject: =?UTF-8?B?CORRUPTED_BASE64_ENCODING==?=\n"
+            "Content-Type: multipart/mixed;\n"
+            "        boundary=\"----=_Part_BROKEN\n\n"
+            "The DKIM is failing with temperror and the SCL score is 5 which is high. "
+            "Several users in Trading are getting these daily.",
+            "Raw email headers from a message that failed Exchange transport rules. "
+            "Headers show DKIM temperror, missing SPF record, DMARC none, and SCL 5. "
+            "The X-Mailer header contains corrupt UTF-16LE bytes and the MIME boundary "
+            "is broken. Started after we migrated to Exchange Online last month.",
+        ],
+        next_best_actions=[
+            "Investigate the DKIM temperror and missing SPF/DMARC for the sending domain — "
+            "the SCL 5 score suggests the messages are borderline spam.",
+            "Check Exchange Online transport rules and connector configuration for DKIM "
+            "validation timeout issues after the migration.",
+        ],
+        remediation_steps=[
+            [
+                "Check the Exchange Online mail flow logs for DKIM validation timeout patterns",
+                "Verify DNS resolution from Exchange Online to the sender's DKIM key servers",
+                "Review the Exchange Online connector configuration for inbound mail",
+                "Adjust the SCL threshold or create a transport rule for the affected sender domain",
+                "If the corrupt headers are consistent, open a case with Microsoft support",
+            ],
+        ],
+        tags=["data-cleanup", "email-headers", "corrupted-encoding"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 89. References to attachments that don't exist
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-corrupted-attachment-ref",
+        category="Hardware & Peripherals",
+        priority="P3",
+        assigned_team="Endpoint Engineering",
+        needs_escalation=False,
+        missing_information=["screenshot_or_attachment", "device_info", "error_message"],
+        subjects=[
+            "Laptop screen flickering — see attached photos and video",
+            "Monitor display issue — screenshots attached (3 files)",
+        ],
+        descriptions=[
+            "My laptop screen has been flickering for the past two days. I've attached "
+            "the following files showing the issue:\n\n"
+            "- screen_flicker_video.mp4 (2.3 MB)\n"
+            "- error_screenshot_1.png (482 KB)\n"
+            "- error_screenshot_2.png (517 KB)\n"
+            "- device_manager_display.png (234 KB)\n\n"
+            "As you can see in the video, the flickering happens every 3-5 seconds "
+            "and gets worse when I'm on battery power. The Device Manager screenshot "
+            "shows the Intel UHD Graphics 770 driver version 31.0.101.4826. "
+            "Please review the attached evidence and let me know next steps.\n\n"
+            "[Note: The above files were referenced but no actual attachments are present "
+            "in this ticket submission.]",
+            "Display issues on my ThinkPad X1 Carbon Gen 11. See attached:\n\n"
+            "1) flicker_recording.mov — shows the 3-second flicker cycle\n"
+            "2) display_settings.png — current resolution and refresh rate\n"
+            "3) dxdiag_output.txt — full DirectX diagnostic report\n\n"
+            "The flicker started after updating to the latest Intel graphics driver. "
+            "Rolling back didn't help. Happens in both Windows and BIOS so it might "
+            "be hardware. Check the dxdiag for details.",
+        ],
+        next_best_actions=[
+            "Note that the referenced attachments are not present — request the user "
+            "re-submit the screenshots and video. The description suggests a display "
+            "driver or hardware issue on the laptop.",
+            "Attachments referenced but missing. Based on the description, investigate "
+            "Intel UHD Graphics driver compatibility on the ThinkPad X1 Carbon.",
+        ],
+        remediation_steps=[
+            [
+                "Request the user to re-attach the referenced files (video, screenshots, dxdiag)",
+                "Check if the Intel UHD Graphics 770 driver version 31.0.101.4826 has known flicker issues",
+                "Test with the Microsoft Basic Display Adapter driver to isolate hardware vs driver",
+                "If flickering persists with basic driver, schedule hardware inspection for display cable",
+                "Check Lenovo support for BIOS updates that address display issues on X1 Carbon Gen 11",
+            ],
+        ],
+        tags=["data-cleanup", "missing-attachments", "phantom-references"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 90. RTL Arabic text mixed with LTR IP addresses and numbers
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-rtl-numbers-mixed",
+        category="Network & Connectivity",
+        priority="P2",
+        assigned_team="Network Operations",
+        needs_escalation=False,
+        missing_information=["network_location", "error_message"],
+        subjects=[
+            "\u0645\u0634\u0643\u0644\u0629 \u0641\u064a \u0627\u0644\u0634\u0628\u0643\u0629 — VPN connection issue from Riyadh office",
+            "Network problem — \u0627\u062a\u0635\u0627\u0644 VPN \u0645\u0646 \u0645\u0643\u062a\u0628 \u0627\u0644\u0631\u064a\u0627\u0636",
+        ],
+        descriptions=[
+            "\u0645\u0631\u062d\u0628\u0627 \u0641\u0631\u064a\u0642 \u062a\u0643\u0646\u0648\u0644\u0648\u062c\u064a\u0627 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a,\n\n"
+            "\u0623\u0648\u0627\u062c\u0647 \u0645\u0634\u0643\u0644\u0629 \u0641\u064a \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0634\u0628\u0643\u0629 VPN \u0645\u0646 \u0645\u0643\u062a\u0628 \u0627\u0644\u0631\u064a\u0627\u0636. "
+            "\u0639\u0646\u0648\u0627\u0646 IP \u0627\u0644\u0645\u062d\u0644\u064a: 10.42.128.55 "
+            "\u0648\u0639\u0646\u0648\u0627\u0646 \u0627\u0644\u0628\u0648\u0627\u0628\u0629: 10.42.128.1\n\n"
+            "The VPN gateway at vpn-riyadh.contoso.com (203.0.113.47) is not responding "
+            "to connection attempts. Error code: 0x800704CF\n\n"
+            "\u0627\u0644\u0631\u062c\u0627\u0621 \u0627\u0644\u0645\u0633\u0627\u0639\u062f\u0629 \u0641\u064a \u0623\u0642\u0631\u0628 \u0648\u0642\u062a. "
+            "\u0641\u0631\u064a\u0642 \u0627\u0644\u062a\u062f\u0627\u0648\u0644 \u0628\u0627\u0644\u0643\u0627\u0645\u0644 \u063a\u064a\u0631 \u0642\u0627\u062f\u0631 \u0639\u0644\u0649 \u0627\u0644\u0648\u0635\u0648\u0644 "
+            "\u0625\u0644\u0649 \u0627\u0644\u0623\u0646\u0638\u0645\u0629 \u0627\u0644\u0645\u0631\u0643\u0632\u064a\u0629 \u0641\u064a New York.",
+            "VPN connection from Riyadh office failing. \u0627\u0644\u0645\u0634\u0643\u0644\u0629 \u0628\u062f\u0623\u062a \u0645\u0646\u0630 \u0627\u0644\u0635\u0628\u0627\u062d.\n"
+            "Local IP: 10.42.128.55\n"
+            "Gateway: 10.42.128.1\n"
+            "VPN server: vpn-riyadh.contoso.com (203.0.113.47)\n"
+            "Error: 0x800704CF — \u0627\u0644\u0634\u0628\u0643\u0629 \u063a\u064a\u0631 \u0645\u062a\u0627\u062d\u0629\n\n"
+            "\u0641\u0631\u064a\u0642 \u0627\u0644\u062a\u062f\u0627\u0648\u0644 \u0628\u0627\u0644\u0643\u0627\u0645\u0644 (\u0660\u0661\u0665 \u0645\u0633\u062a\u062e\u062f\u0645) \u0645\u062a\u0623\u062b\u0631. "
+            "\u0627\u0644\u0631\u062c\u0627\u0621 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646 \u062d\u0627\u0644\u0629 \u0627\u0644\u0628\u0648\u0627\u0628\u0629.",
+        ],
+        next_best_actions=[
+            "VPN gateway vpn-riyadh.contoso.com (203.0.113.47) not responding — check "
+            "gateway health and network path from the Riyadh office subnet 10.42.128.0/24.",
+            "Investigate VPN connectivity failure from Riyadh office. Error 0x800704CF "
+            "indicates network location unreachable.",
+        ],
+        remediation_steps=[
+            [
+                "Check the health of the VPN gateway at vpn-riyadh.contoso.com (203.0.113.47)",
+                "Verify network routing from the Riyadh office subnet (10.42.128.0/24) to the gateway",
+                "Test DNS resolution of vpn-riyadh.contoso.com from the Riyadh office network",
+                "Check if a firewall rule change or ISP issue is blocking the VPN tunnel",
+                "If the gateway is down, fail over to the backup VPN endpoint and notify NOC",
+            ],
+        ],
+        tags=["data-cleanup", "rtl-text", "arabic", "mixed-direction"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 91. APM/telemetry data dump pasted in ticket
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-apm-telemetry-dump",
+        category="Software & Applications",
+        priority="P2",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["affected_users", "business_impact"],
+        subjects=[
+            "App slow — Application Insights telemetry data dump",
+            "Performance degradation — pasting APM trace data",
+        ],
+        descriptions=[
+            "The CRM portal is extremely slow. I exported the Application Insights "
+            "traces:\n\n"
+            '{"timestamp":"2026-03-15T10:23:47.382Z","severityLevel":2,'
+            '"message":"Dependency call to sql-prod-east.database.windows.net exceeded '
+            'threshold","customDimensions":{"DependencyType":"SQL",'
+            '"DependencyTarget":"sql-prod-east.database.windows.net",'
+            '"Duration":"4823ms","Success":"False",'
+            '"ResultCode":"Timeout expired. The timeout period elapsed prior to '
+            'completion of the operation","OperationName":"GET /api/v2/accounts",'
+            '"CloudRoleName":"crm-api-prod","CloudRoleInstance":"crm-api-prod_3",'
+            '"AppId":"a8f3b2c1-4d5e-6f7a-8b9c-0d1e2f3a4b5c"}}\n'
+            '{"timestamp":"2026-03-15T10:23:48.104Z","severityLevel":3,'
+            '"message":"Request failed with status 504",'
+            '"customDimensions":{"Url":"/api/v2/accounts?page=1&size=50",'
+            '"Duration":"5001ms","StatusCode":"504","CloudRoleName":"crm-api-prod"}}\n'
+            '{"timestamp":"2026-03-15T10:23:48.207Z","severityLevel":2,'
+            '"message":"Circuit breaker opened for sql-prod-east",'
+            '"customDimensions":{"ConsecutiveFailures":"5",'
+            '"BreakDuration":"30s"}}\n\n'
+            "The SQL dependency is timing out at ~5 seconds and the circuit breaker "
+            "opened after 5 consecutive failures. This started about 30 minutes ago.",
+            "CRM API returning 504s. Application Insights shows SQL dependency "
+            "timeouts to sql-prod-east.database.windows.net with 4823ms average "
+            "duration. Circuit breaker opened after 5 failures. Affecting the "
+            "/api/v2/accounts endpoint on crm-api-prod instances.",
+        ],
+        next_best_actions=[
+            "SQL Server sql-prod-east.database.windows.net is timing out — check "
+            "Azure SQL Database metrics for DTU/CPU saturation or blocking queries.",
+            "Investigate the SQL dependency timeout causing CRM API 504 errors — "
+            "circuit breaker has opened on sql-prod-east.",
+        ],
+        remediation_steps=[
+            [
+                "Check Azure SQL Database metrics for sql-prod-east: DTU utilization, active sessions, deadlocks",
+                "Look for long-running or blocking queries in sys.dm_exec_requests",
+                "If DTU is saturated, scale up the database tier temporarily",
+                "Restart the crm-api-prod instances to reset the circuit breaker",
+                "Set up an Azure Monitor alert for SQL dependency duration > 2 seconds",
+            ],
+        ],
+        tags=["data-cleanup", "apm-telemetry", "json-traces", "application-insights"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 92. Git diff/patch content pasted in ticket
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-git-diff-paste",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["environment_details", "steps_to_reproduce"],
+        subjects=[
+            "Deployment broke production — here's the diff that caused it",
+            "Config change broke the app — pasting git diff",
+        ],
+        descriptions=[
+            "The last deployment broke the login flow. Here's the exact change:\n\n"
+            "```diff\n"
+            "diff --git a/config/auth.yaml b/config/auth.yaml\n"
+            "index 3a7b2c1..9f8e7d6 100644\n"
+            "--- a/config/auth.yaml\n"
+            "+++ b/config/auth.yaml\n"
+            "@@ -12,8 +12,8 @@ authentication:\n"
+            "   oauth2:\n"
+            "     provider: azure-ad\n"
+            "-    tenant_id: \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\n"
+            "-    client_id: \"12345678-abcd-efgh-ijkl-mnop12345678\"\n"
+            "+    tenant_id: \"PLACEHOLDER_TENANT_ID\"\n"
+            "+    client_id: \"PLACEHOLDER_CLIENT_ID\"\n"
+            "     redirect_uri: https://crm.contoso.com/auth/callback\n"
+            "     scopes:\n"
+            "       - openid\n"
+            "@@ -23,3 +23,5 @@ authentication:\n"
+            "   session:\n"
+            "     timeout: 3600\n"
+            "     secure: true\n"
+            "+  debug:\n"
+            "+    verbose_logging: true\n"
+            "```\n\n"
+            "Someone committed placeholder values instead of the actual Azure AD "
+            "credentials. The deployment pipeline didn't catch it because it only "
+            "validates YAML syntax, not content. All users are getting 401 errors.",
+            "Production login is broken. Git diff shows auth.yaml was changed to "
+            "use PLACEHOLDER_TENANT_ID and PLACEHOLDER_CLIENT_ID instead of real "
+            "Azure AD values. Also verbose debug logging was enabled in production. "
+            "Committed by the CI pipeline 2 hours ago. All /auth/callback requests "
+            "returning 401.",
+        ],
+        next_best_actions=[
+            "Revert the auth.yaml configuration change — placeholder values replaced "
+            "actual Azure AD credentials in the last deployment.",
+            "Roll back the config/auth.yaml change via git revert and redeploy "
+            "immediately to restore production login.",
+        ],
+        remediation_steps=[
+            [
+                "Revert the auth.yaml change via git revert and trigger an emergency deployment",
+                "Restore the correct Azure AD tenant_id and client_id from the secrets vault",
+                "Remove the debug verbose_logging setting from production config",
+                "Add a deployment gate that validates auth configuration values are not placeholders",
+                "Review the CI/CD pipeline to add content validation beyond YAML syntax checks",
+            ],
+        ],
+        tags=["data-cleanup", "git-diff", "configuration-change"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 93. Windows registry key export pasted
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-registry-key-dump",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["device_info", "affected_users"],
+        subjects=[
+            "Application won't start — registry export from affected machine",
+            "Software crash on launch — see registry dump below",
+        ],
+        descriptions=[
+            "Bloomberg Terminal won't start after the latest Intune policy push. "
+            "Here's the registry export from the affected machine:\n\n"
+            "Windows Registry Editor Version 5.00\n\n"
+            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Bloomberg L.P.\\Terminal]\n"
+            '"InstallDir"="C:\\\\blp\\\\DAPI"\n'
+            '"Version"="2024.3.15.1"\n'
+            '"LicenseKey"="XXXX-XXXX-XXXX-REDACTED"\n'
+            '"DataPath"="C:\\\\blp\\\\data"\n\n'
+            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Bloomberg L.P.\\Terminal\\Network]\n"
+            '"PrimaryServer"="bpipe-prod.contoso.com"\n'
+            '"Port"=dword:00001f40\n'
+            '"UseSSL"=dword:00000001\n'
+            '"ProxyEnabled"=dword:00000001\n'
+            '"ProxyServer"="proxy.contoso.com:8080"\n\n'
+            "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Bloomberg L.P.]\n"
+            '"RestrictedMode"=dword:00000001\n'
+            '"AllowExternalConnections"=dword:00000000\n\n'
+            "After the Intune push, the RestrictedMode key appeared and "
+            "AllowExternalConnections was set to 0. The terminal can't connect to "
+            "Bloomberg's data feed anymore.",
+            "Bloomberg Terminal broken after Intune policy change. Registry shows new "
+            "policy keys under HKLM\\SOFTWARE\\Policies\\Bloomberg L.P. that block "
+            "external connections. The AllowExternalConnections DWORD was set to 0 "
+            "and RestrictedMode to 1. Need these rolled back for the trading floor.",
+        ],
+        next_best_actions=[
+            "The Intune policy pushed RestrictedMode=1 and AllowExternalConnections=0 "
+            "to Bloomberg — roll back these policy keys or add an exception for Bloomberg.",
+            "Check the Intune configuration profile that modified Bloomberg registry keys "
+            "and either exclude Bloomberg or create an exception policy.",
+        ],
+        remediation_steps=[
+            [
+                "Identify the Intune configuration profile that set the Bloomberg policy keys",
+                "Create an exception in the Intune policy for Bloomberg Terminal's external connections",
+                "Deploy the updated policy to the affected workstations",
+                "Verify Bloomberg Terminal connects to the data feed after the policy update",
+                "Add Bloomberg Terminal to the approved external applications list in the security policy",
+            ],
+        ],
+        tags=["data-cleanup", "registry-dump", "policy-configuration"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 94. PEM certificate chain blocks embedded
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-pem-certificate-chain",
+        category="Security & Compliance",
+        priority="P2",
+        assigned_team="Security Operations",
+        needs_escalation=True,
+        missing_information=["affected_system", "business_impact"],
+        subjects=[
+            "SSL certificate expiring — pasting cert chain for review",
+            "Certificate error on internal portal — cert chain below",
+        ],
+        descriptions=[
+            "Users are getting certificate warnings on https://trading.contoso.com. "
+            "Here's the full certificate chain:\n\n"
+            "-----BEGIN CERTIFICATE-----\n"
+            "MIIFjTCCA3WgAwIBAgIUZ3h0ZXN0Y2VydGlmaWNhdGUwMB4XDTI2MDMxNTAwMDAw\n"
+            "MFoXDTI2MDMyMjAwMDAwMFowgYkxCzAJBgNVBAYTAlVTMREwDwYDVQQIDAhOZXcg\n"
+            "WW9yazERMA8GA1UEBwwITmV3IFlvcmsxHjAcBgNVBAoMFUNvbnRvc28gRmluYW5j\n"
+            "aWFsIFNlcnZpY2VzMRQwEgYDVQQLDAtJVCBTZWN1cml0eTEeMBwGA1UEAwwVdHJh\n"
+            "ZGluZy5jb250b3NvLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABFake=\n"
+            "-----END CERTIFICATE-----\n\n"
+            "-----BEGIN CERTIFICATE-----\n"
+            "MIIEtjCCAp6gAwIBAgIUY29udG9zby1pbnRlcm1lZGlhdGUwHhcNMjUwMTAxMDAw\n"
+            "MDAwWhcNMjcwMTAxMDAwMDAwWjBhMQswCQYDVQQGEwJVUzERMA8GA1UECAwITmV3\n"
+            "IFlvcmsxHjAcBgNVBAoMFUNvbnRvc28gRmluYW5jaWFsIFNlcnZpY2VzMR8wHQYD\n"
+            "VQQDDBZDb250b3NvIEludGVybWVkaWF0ZSBDQQ==\n"
+            "-----END CERTIFICATE-----\n\n"
+            "The leaf certificate expires on March 22, 2026 — that's in 7 days! "
+            "This is the trading platform used by all our institutional traders.",
+            "Certificate chain for trading.contoso.com shows leaf cert expiring "
+            "March 22, 2026. Intermediate CA cert is Contoso Internal CA. The "
+            "trading platform is critical for institutional operations — if the "
+            "cert expires, all HTTPS connections will fail.",
+        ],
+        next_best_actions=[
+            "URGENT: trading.contoso.com SSL certificate expires in 7 days. Initiate "
+            "emergency certificate renewal through the PKI team.",
+            "Renew the SSL certificate for trading.contoso.com before March 22 — "
+            "coordinate with the PKI team and trading platform operations.",
+        ],
+        remediation_steps=[
+            [
+                "Generate a new CSR for trading.contoso.com with the same subject and SANs",
+                "Submit the CSR to the internal CA or public CA for signing",
+                "Deploy the new certificate to the trading platform load balancer",
+                "Verify the full certificate chain including intermediate CA",
+                "Set up automated certificate expiry monitoring with 30-day advance alerts",
+            ],
+        ],
+        tags=["data-cleanup", "pem-certificate", "certificate-expiry"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 95. Markdown rendering artifacts in ticket
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-markdown-rendering-broken",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["application_version", "steps_to_reproduce"],
+        subjects=[
+            "Teams wiki page shows raw markdown instead of formatted text",
+            "SharePoint page rendering broken — showing markdown source",
+        ],
+        descriptions=[
+            "Our team's wiki page in Microsoft Teams is showing raw markdown instead "
+            "of formatted content. Here's what the page looks like:\n\n"
+            "# Q1 Trading Operations Runbook\n\n"
+            "## Pre-Market Checks\n\n"
+            "1. Verify [Bloomberg connectivity](https://bpipe.contoso.com/status)\n"
+            "2. Check [FIX engine status](http://fix-monitor.contoso.com:8080)\n"
+            "3. Confirm **all trading pairs** are active\n\n"
+            "| System | Status URL | Owner |\n"
+            "|--------|-----------|-------|\n"
+            "| Bloomberg | [link](https://bbg-status) | Trading Tech |\n"
+            "| FIX Engine | [link](http://fix-mon:8080) | \\*\\*OMS Team\\*\\* |\n"
+            "| Risk System | [link](https://risk.contoso.com) | Risk Ops |\n\n"
+            "## Emergency Procedures\n\n"
+            "> **IMPORTANT**: If Bloomberg feed drops during market hours, "
+            "immediately contact the NOC at ext. 4739\n\n"
+            "```\n"
+            "Emergency contacts:\n"
+            "- NOC: ext 4739\n"
+            "- Trading desk lead: ext 4201\n"
+            "```\n\n"
+            "The escaped asterisks (\\*\\*) and the raw table pipes are visible. "
+            "The links show as [text](url) instead of clickable links. This started "
+            "after the last Teams update.",
+            "Teams wiki rendering broken — all markdown is showing as raw text. "
+            "Tables with pipe characters, bold with double asterisks, links with "
+            "brackets, and code blocks with backticks are all visible as source. "
+            "The page was working fine before the March Teams desktop update.",
+        ],
+        next_best_actions=[
+            "Investigate the Teams wiki markdown rendering regression after the March "
+            "desktop update — check if it's a known issue with the Teams client version.",
+            "Check Microsoft 365 service health dashboard for known Teams wiki rendering "
+            "issues. May need to clear Teams cache or roll back the client update.",
+        ],
+        remediation_steps=[
+            [
+                "Check the Microsoft 365 Service Health Dashboard for known Teams rendering issues",
+                "Clear the Teams desktop cache (AppData/Roaming/Microsoft/Teams/Cache)",
+                "Test rendering in Teams web client to isolate desktop vs server-side issue",
+                "If desktop-only, check the Teams client version and roll back if needed",
+                "Report the issue to Microsoft support if it's not a known issue",
+            ],
+        ],
+        tags=["data-cleanup", "markdown-artifacts", "rendering-issue"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 96. Cron/syslog entries repeated hundreds of times
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-cron-syslog-flood",
+        category="Software & Applications",
+        priority="P2",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["affected_system", "business_impact"],
+        subjects=[
+            "Cron job flooding syslog — thousands of identical entries",
+            "Server syslog filled with repeated cron errors",
+        ],
+        descriptions=[
+            "The backup cron job on srv-db-prod-02 is generating thousands of "
+            "identical syslog entries. Here's a sample (this repeats 2,847 times "
+            "in the last hour):\n\n"
+            + "Mar 15 10:00:01 srv-db-prod-02 CRON[28491]: (backup_svc) CMD "
+            "(/opt/contoso/scripts/db_backup.sh --target=azure-blob "
+            "--container=sql-backups --retention=30d 2>&1 | logger -t db-backup)\n"
+            "Mar 15 10:00:01 srv-db-prod-02 db-backup: ERROR: Azure Blob Storage "
+            "connection failed: AuthenticationErrorDetail: HMAC signature mismatch. "
+            "Expected signature: [REDACTED]. Server used: [REDACTED]\n"
+            "Mar 15 10:00:01 srv-db-prod-02 db-backup: ERROR: Retry 1/3 failed. "
+            "Waiting 5s before next attempt.\n"
+            "Mar 15 10:00:06 srv-db-prod-02 db-backup: ERROR: Retry 2/3 failed.\n"
+            "Mar 15 10:00:11 srv-db-prod-02 db-backup: ERROR: Retry 3/3 failed. "
+            "Giving up. Exit code: 1\n"
+            * 5
+            + "\n[... 2,847 identical entries in the last hour ...]\n\n"
+            "The cron is set to run every minute (which is wrong — it should be "
+            "hourly) and each run generates 5 log lines. Syslog is at 98% capacity.",
+            "Backup script flooding syslog with Azure Blob auth failures. "
+            "HMAC signature mismatch error repeating every minute (should be hourly). "
+            "2,847 identical entries in the past hour. Syslog disk at 98%. "
+            "Server: srv-db-prod-02. Script: /opt/contoso/scripts/db_backup.sh.",
+        ],
+        next_best_actions=[
+            "Fix the cron schedule from every-minute to hourly, then investigate the "
+            "Azure Blob Storage HMAC authentication failure.",
+            "Immediately change the cron interval from * to 0 (hourly) to stop the "
+            "log flood, then rotate and fix the storage account key.",
+        ],
+        remediation_steps=[
+            [
+                "Change the cron schedule from '* * * * *' (every minute) to '0 * * * *' (hourly)",
+                "Rotate the Azure Blob Storage access key — the HMAC mismatch suggests the key was changed",
+                "Update the backup script configuration with the new storage account key",
+                "Rotate the syslog to reclaim disk space (logrotate --force /etc/logrotate.d/syslog)",
+                "Test the backup script manually to verify Azure Blob connectivity",
+            ],
+        ],
+        tags=["data-cleanup", "syslog-flood", "repeated-entries", "cron-misconfigured"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 97. Mixed CJK and Latin text
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-mixed-cjk-latin",
+        category="Software & Applications",
+        priority="P3",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["application_version", "environment_details"],
+        subjects=[
+            "\u30b7\u30b9\u30c6\u30e0\u30a8\u30e9\u30fc — SAP \u30ed\u30b0\u30a4\u30f3\u554f\u984c (Singapore office)",
+            "SAP login issue from Singapore — \u7cfb\u7edf\u767b\u5f55\u95ee\u9898",
+        ],
+        descriptions=[
+            "\u304a\u75b2\u308c\u69d8\u3067\u3059\u3002Singapore\u30aa\u30d5\u30a3\u30b9\u306e\u7530\u4e2d\u3067\u3059\u3002\n\n"
+            "SAP GUI\u306b\u30ed\u30b0\u30a4\u30f3\u3067\u304d\u307e\u305b\u3093\u3002\u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8:\n"
+            "\"Partner not reached (type=A, host=sap-prod-sg.contoso.com, service=3200)\"\n\n"
+            "\u4eca\u671d\u304b\u3089\u767a\u751f\u3057\u3066\u3044\u307e\u3059\u3002\u4ed6\u306e\u540c\u50da\u3082\u540c\u3058\u554f\u984c\u304c\u3042\u308b\u3068\u8a00\u3063\u3066\u3044\u307e\u3059\u3002\n"
+            "Network ping to sap-prod-sg.contoso.com: OK (12ms)\n"
+            "Telnet to port 3200: Connection refused\n\n"
+            "\u81f3\u6025\u5bfe\u5fdc\u3092\u304a\u9858\u3044\u3057\u307e\u3059\u3002\u8ca1\u52d9\u30c1\u30fc\u30e0\u306e\u6708\u672b\u51e6\u7406\u304c\u3067\u304d\u307e\u305b\u3093\u3002",
+            "\u4ece\u65b0\u52a0\u5761\u529e\u516c\u5ba4\u65e0\u6cd5\u767b\u5f55SAP\u7cfb\u7edf\u3002\n"
+            "Error: \"Partner not reached\" on sap-prod-sg.contoso.com:3200\n"
+            "Ping OK but port 3200 refused. \u53ef\u80fd\u662fSAP\u670d\u52a1\u505c\u6b62\u4e86\u3002\n"
+            "\u8d22\u52a1\u56e2\u961f\u7684\u6708\u672b\u5904\u7406\u53d7\u5f71\u54cd\u3002\u8bf7\u5c3d\u5feb\u5904\u7406\u3002",
+        ],
+        next_best_actions=[
+            "SAP application server sap-prod-sg.contoso.com port 3200 is refusing "
+            "connections — the SAP dispatcher service may be down. Check the instance.",
+            "Check SAP instance 00 on sap-prod-sg.contoso.com — port 3200 connection "
+            "refused suggests the dispatcher process has stopped.",
+        ],
+        remediation_steps=[
+            [
+                "Log into sap-prod-sg.contoso.com and check the SAP dispatcher process (disp+work)",
+                "Review the SAP system log (SM21) for crash or shutdown events",
+                "Restart the SAP instance if the dispatcher is down: startsap",
+                "Verify port 3200 is listening after restart: netstat -an | grep 3200",
+                "Confirm SAP login works from the Singapore office after recovery",
+            ],
+        ],
+        tags=["data-cleanup", "cjk-text", "japanese", "chinese", "mixed-language"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 98. Full MIME multipart email with base64 parts
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-base64-multipart-email",
+        category="Network & Connectivity",
+        priority="P3",
+        assigned_team="Network Operations",
+        needs_escalation=False,
+        missing_information=["network_location", "error_message"],
+        subjects=[
+            "Email forwarded with full MIME headers — Wi-Fi dropping",
+            "Raw MIME email forward — wireless connectivity issue",
+        ],
+        descriptions=[
+            "Forwarding the original email about our Wi-Fi issue. Sorry it came "
+            "through as raw MIME:\n\n"
+            "MIME-Version: 1.0\n"
+            "Content-Type: multipart/mixed; boundary=\"----=_Part_12345_6789.0123\"\n"
+            "From: Maria Santos <maria.santos@contoso.com>\n"
+            "To: helpdesk@contoso.com\n"
+            "Subject: Wi-Fi keeps dropping on 5th floor\n"
+            "Date: Sat, 15 Mar 2026 09:14:22 -0500\n\n"
+            "------=_Part_12345_6789.0123\n"
+            "Content-Type: text/plain; charset=UTF-8\n"
+            "Content-Transfer-Encoding: 7bit\n\n"
+            "The Wi-Fi on the 5th floor keeps dropping every 15-20 minutes. It's "
+            "been happening since Monday and affects everyone in the Wealth Management "
+            "area. We're on the 'Contoso-Corp-5G' SSID. When it drops, we have to "
+            "manually reconnect. It seems to happen more during peak hours (10am-2pm).\n\n"
+            "------=_Part_12345_6789.0123\n"
+            "Content-Type: image/png; name=\"wifi_signal_chart.png\"\n"
+            "Content-Transfer-Encoding: base64\n"
+            "Content-Disposition: attachment; filename=\"wifi_signal_chart.png\"\n\n"
+            "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVQYV2P8\n"
+            "z8BQDwADhQGAWjR9awAAAABJRU5ErkJggg==\n\n"
+            "------=_Part_12345_6789.0123--\n\n"
+            "Please ignore all the MIME gibberish — the actual issue is Wi-Fi "
+            "dropping on the 5th floor every 15-20 minutes.",
+            "Raw MIME multipart email about 5th floor Wi-Fi dropping. Strip the "
+            "MIME headers and base64 attachment data. Core issue: Contoso-Corp-5G "
+            "SSID drops every 15-20 minutes during peak hours (10am-2pm). Affects "
+            "the Wealth Management team. Started last Monday.",
+        ],
+        next_best_actions=[
+            "Investigate Wi-Fi drops on Contoso-Corp-5G SSID on the 5th floor — "
+            "likely an AP capacity or channel interference issue during peak hours.",
+            "Check the wireless controller for the 5th floor APs — intermittent drops "
+            "during peak hours suggest capacity or interference problems.",
+        ],
+        remediation_steps=[
+            [
+                "Check wireless controller dashboards for 5th floor AP health and client load",
+                "Review channel utilization and interference on the 5GHz band during peak hours",
+                "Verify AP firmware is current and check for known issues with 'Contoso-Corp-5G' SSID",
+                "If capacity issue, consider adding an AP or adjusting power levels",
+                "Monitor after changes to confirm drops stop during peak hours",
+            ],
+        ],
+        tags=["data-cleanup", "mime-multipart", "base64-attachment", "raw-email"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 99. PowerShell error stream output
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-powershell-error-stream",
+        category="Access & Authentication",
+        priority="P2",
+        assigned_team="Identity & Access Management",
+        needs_escalation=False,
+        missing_information=["affected_users", "environment_details"],
+        subjects=[
+            "AD sync failing — PowerShell error output below",
+            "Entra Connect sync errors — pasting PowerShell output",
+        ],
+        descriptions=[
+            "The Entra Connect (Azure AD Connect) sync is failing. Here's the "
+            "PowerShell output from the sync server:\n\n"
+            "PS C:\\> Start-ADSyncSyncCycle -PolicyType Delta\n"
+            "Start-ADSyncSyncCycle : Connected to localhost.\n"
+            "At line:1 char:1\n"
+            "+ Start-ADSyncSyncCycle -PolicyType Delta\n"
+            "+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+            "    + CategoryInfo          : InvalidOperation: (:) [Start-ADSyncSyncCycle], "
+            "SyncCycleInProgressException\n"
+            "    + FullyQualifiedErrorId : SyncCycleInProgress,Microsoft.IdentityManagement."
+            "PowerShell.Cmdlet.StartSyncCycleCmdlet\n\n"
+            "PS C:\\> Get-ADSyncScheduler\n\n"
+            "AllowedSyncCycleInterval     : 00:30:00\n"
+            "CurrentlyEffectiveSyncCycleInterval : 00:30:00\n"
+            "CustomizedSyncCycleInterval  : 00:30:00\n"
+            "NextSyncCyclePolicyType      : Delta\n"
+            "NextSyncCycleStartTimeInUTC  : 3/15/2026 10:30:00 AM\n"
+            "PurgeRunHistoryInterval      : 7.00:00:00\n"
+            "SyncCycleEnabled             : True\n"
+            "MaintenanceEnabled           : True\n"
+            "StagingModeEnabled           : False\n"
+            "SchedulerSuspended           : False\n"
+            "SyncCycleInProgress          : True\n\n"
+            "PS C:\\> Get-ADSyncRunProfileResult -RunProfileName 'Delta Synchronization' "
+            "| Select-Object -First 3 | Format-List\n\n"
+            "Result       : stopped-error\n"
+            "StartDate    : 3/15/2026 9:30:00 AM\n"
+            "EndDate      : 3/15/2026 9:45:12 AM\n"
+            "ErrorDetails : stopped-extension-dll-exception\n\n"
+            "The sync has been stuck for over an hour. New users provisioned in AD "
+            "this morning cannot access Microsoft 365 services.",
+            "Entra Connect sync stuck with stopped-extension-dll-exception. Sync "
+            "cycle shows SyncCycleInProgress=True for over an hour. New AD users "
+            "can't access M365. PowerShell shows the delta sync failing with "
+            "stopped-error status. Need IAM team to investigate.",
+        ],
+        next_best_actions=[
+            "Entra Connect sync is stuck with extension-dll-exception — restart the "
+            "sync service and investigate the DLL error.",
+            "Reset the stuck Entra Connect sync cycle and investigate the "
+            "stopped-extension-dll-exception error in the sync logs.",
+        ],
+        remediation_steps=[
+            [
+                "Stop the ADSync service: Stop-Service ADSync",
+                "Check the Entra Connect event log for extension-dll-exception details",
+                "Clear the sync run history if corrupted: Remove-ADSyncRunProfile",
+                "Restart the ADSync service and trigger a fresh delta sync",
+                "Verify new AD users appear in Entra ID within 30 minutes after successful sync",
+            ],
+        ],
+        tags=["data-cleanup", "powershell-output", "error-stream", "ad-sync"],
+    ),
+    # ──────────────────────────────────────────────────────────────────
+    # 100. Large JSON API response dump
+    # ──────────────────────────────────────────────────────────────────
+    Scenario(
+        scenario_id="cleanup-json-api-response-dump",
+        category="Software & Applications",
+        priority="P2",
+        assigned_team="Enterprise Applications",
+        needs_escalation=False,
+        missing_information=["steps_to_reproduce", "affected_users"],
+        subjects=[
+            "API returning error — full JSON response body attached",
+            "REST API 500 error — pasting full response payload",
+        ],
+        descriptions=[
+            "The internal portfolio API is returning 500 errors. Here's the full "
+            "response body:\n\n"
+            "```json\n"
+            "{\n"
+            '  "error": {\n'
+            '    "code": "InternalServerError",\n'
+            '    "message": "An error occurred while processing the request.",\n'
+            '    "target": "/api/v3/portfolios/12847/positions",\n'
+            '    "details": [\n'
+            '      {\n'
+            '        "code": "DatabaseConnectionPoolExhausted",\n'
+            '        "message": "Cannot obtain a connection from the pool. All pooled '
+            "connections are in use and the maximum pool size of 100 has been reached. "
+            'Timeout expired.",\n'
+            '        "innererror": {\n'
+            '          "type": "System.InvalidOperationException",\n'
+            '          "stacktrace": "at System.Data.Common.DbConnectionFactory.'
+            "TryGetConnection(DbConnectionFactory factory)\\n"
+            "at System.Data.SqlClient.SqlConnection.TryOpenInner()\\n"
+            "at Contoso.Portfolio.Api.Services.PositionService.GetPositions"
+            '(Int32 portfolioId)"\n'
+            "        }\n"
+            "      }\n"
+            "    ],\n"
+            '    "requestId": "a8f3b2c1-4d5e-6f7a-8b9c-0d1e2f3a4b5c",\n'
+            '    "timestamp": "2026-03-15T14:23:47.382Z"\n'
+            "  }\n"
+            "}\n"
+            "```\n\n"
+            "The connection pool is exhausted — max 100 connections are all in use. "
+            "This is blocking the trading desk from viewing portfolio positions.",
+            "Portfolio API returning 500 with DatabaseConnectionPoolExhausted error. "
+            "All 100 pooled connections are in use. Stack trace shows the issue is in "
+            "PositionService.GetPositions. Request ID: a8f3b2c1-4d5e-6f7a-8b9c. "
+            "Trading desk cannot view positions.",
+        ],
+        next_best_actions=[
+            "Database connection pool exhausted on the portfolio API — check for "
+            "connection leaks or long-running queries holding connections.",
+            "Investigate the connection pool exhaustion on the portfolio API. May need "
+            "to increase pool size or fix connection leak in PositionService.",
+        ],
+        remediation_steps=[
+            [
+                "Check the database for long-running queries or blocking sessions consuming connections",
+                "Review the PositionService code for connection leak (missing Dispose/using patterns)",
+                "Temporarily increase the connection pool size from 100 to 200 as a stopgap",
+                "Restart the portfolio API service to release stuck connections",
+                "Add connection pool monitoring and alerting to prevent future exhaustion",
+            ],
+        ],
+        tags=["data-cleanup", "json-response", "api-error", "connection-pool"],
     ),
 ]

@@ -348,3 +348,30 @@ python test_scoring.py && python test_data_cleanup.py && python test_responsible
 ```
 
 All 156 tests (84 + 34 + 38) should pass.
+
+### Generated dataset tests (40 + 45 tests)
+
+Validates the larger generated evaluation datasets (235+ data cleanup tickets, 305+ responsible AI tickets) for integrity, distribution coverage, data-quality characteristics, and safety properties:
+
+```bash
+cd docs/eval
+python test_data_cleanup_generated.py && python test_responsible_ai_generated.py
+```
+
+### Cross-dataset consistency tests (24 tests)
+
+Validates relationships between all eval datasets — no ID collisions, schema consistency, vocabulary validation, generator scenario correctness, and statistical balance:
+
+```bash
+cd docs/eval
+python test_cross_dataset.py
+```
+
+### Run everything
+
+```bash
+cd docs/eval
+python test_scoring.py && python test_data_cleanup.py && python test_responsible_ai.py && python test_data_cleanup_generated.py && python test_responsible_ai_generated.py && python test_cross_dataset.py
+```
+
+All 265+ tests should pass.
