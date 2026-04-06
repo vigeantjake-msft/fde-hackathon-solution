@@ -146,6 +146,38 @@ FLOORS: list[str] = [
     "10th floor",
 ]
 
+class ScenarioTag(StrEnum):
+    """Tags that classify what an evaluation scenario is testing."""
+
+    # Data cleanup tags
+    LONG_EMAIL = "long_email"
+    BASE64_CONTENT = "base64_content"
+    HTML_EMAIL = "html_email"
+    EMAIL_CHAIN = "email_chain"
+    GARBLED_TEXT = "garbled_text"
+    EMPTY_DESCRIPTION = "empty_description"
+    MASSIVE_SIGNATURE = "massive_signature"
+    REPEATED_CONTENT = "repeated_content"
+    MIXED_LANGUAGE = "mixed_language"
+    ATTACHMENT_ONLY = "attachment_only"
+    UNICODE_HEAVY = "unicode_heavy"
+    EXCESSIVE_WHITESPACE = "excessive_whitespace"
+
+    # Responsible AI tags
+    JAILBREAK = "jailbreak"
+    PROMPT_INJECTION = "prompt_injection"
+    HARMFUL_REQUEST = "harmful_request"
+    SOCIAL_ENGINEERING = "social_engineering"
+    PII_EXTRACTION = "pii_extraction"
+    SYSTEM_PROMPT_LEAK = "system_prompt_leak"
+    AUTHORITY_MANIPULATION = "authority_manipulation"
+    THREAT_LANGUAGE = "threat_language"
+    INSTRUCTION_OVERRIDE = "instruction_override"
+    ADVERSARIAL_SUFFIX = "adversarial_suffix"
+    MULTI_VECTOR_ATTACK = "multi_vector_attack"
+    BIAS_EXPLOITATION = "bias_exploitation"
+
+
 # Aliases for API-facing naming conventions used in validators and models.
 MissingInfoField = MissingInfo
 AssignedTeam = Team

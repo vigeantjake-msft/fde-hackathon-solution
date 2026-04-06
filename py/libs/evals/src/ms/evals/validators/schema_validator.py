@@ -7,10 +7,10 @@ go beyond the scoring harness's tolerance (e.g., missing fields, wrong types,
 invalid enum values).
 """
 
-from ms.evals.models import AssignedTeam
-from ms.evals.models import Category
-from ms.evals.models import MissingInformation
-from ms.evals.models import Priority
+from ms.evals_core.constants import Category
+from ms.evals_core.constants import MissingInfo as MissingInformation
+from ms.evals_core.constants import Priority
+from ms.evals_core.constants import Team as AssignedTeam
 
 _VALID_CATEGORIES = frozenset(c.value for c in Category)
 _VALID_PRIORITIES = frozenset(p.value for p in Priority)

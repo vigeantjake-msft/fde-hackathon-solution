@@ -21,8 +21,13 @@ Scenario categories:
 """
 
 import base64 as _b64
+from typing import Literal
 
+from ms.eval.models import Category
+from ms.eval.models import MissingInfoField
+from ms.eval.models import Priority
 from ms.eval.models import Reporter
+from ms.eval.models import Team
 from ms.eval.models import TicketInput
 from ms.eval.models import TriageDecision
 
@@ -40,7 +45,7 @@ def _ticket(
     subject: str,
     description: str,
     *,
-    channel: str = "email",
+    channel: Literal["email", "chat", "portal", "phone"] = "email",
     reporter: Reporter | None = None,
 ) -> TicketInput:
     """Build a TicketInput with sensible defaults for eval scenarios."""
@@ -58,11 +63,11 @@ def _ticket(
 def _gold(
     ticket_id: str,
     *,
-    category: str,
-    priority: str,
-    assigned_team: str,
+    category: Category,
+    priority: Priority,
+    assigned_team: Team,
     needs_escalation: bool = False,
-    missing_information: list[str] | None = None,
+    missing_information: list[MissingInfoField] | None = None,
     next_best_action: str = "Review the ticket and take appropriate action.",
     remediation_steps: list[str] | None = None,
 ) -> TriageDecision:
