@@ -1,0 +1,274 @@
+[
+    {
+        "ticket_id": "INC-2001",
+        "category": "Network & Connectivity",
+        "priority": "P3",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate GlobalProtect VPN disconnection pattern for this specific user. Check VPN gateway logs for session drops correlated with the reported 10-minute interval.",
+        "remediation_steps": [
+            "Check GlobalProtect VPN gateway logs for session drop events for sarah.chen@contoso.com from March 3-18.",
+            "Verify GlobalProtect client version 6.1 is the latest supported version; update if newer version available.",
+            "Review VPN split-tunnel configuration — intermittent drops may indicate MTU mismatch with home network.",
+            "Check if the user's VPN profile has an idle timeout set to 10 minutes.",
+            "Test VPN connectivity from a different home network to isolate the issue.",
+            "If issue persists, collect GlobalProtect client diagnostic logs and escalate to Palo Alto support."
+        ]
+    },
+    {
+        "ticket_id": "INC-2002",
+        "category": "Software & Applications",
+        "priority": "P3",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "error_message",
+            "application_version"
+        ],
+        "next_best_action": "Identify the specific SAP error message from the user (the base64 images in the ticket cannot be rendered). Check SAP GUI connectivity and SSO token status.",
+        "remediation_steps": [
+            "Contact the user to get the exact error message text since the embedded images cannot be processed.",
+            "Check SAP GUI connection settings and verify the application server is reachable.",
+            "Test SAP login with the user's credentials to reproduce the connection timeout.",
+            "Verify SAP GUI version and check for pending updates.",
+            "Review SAP application server health and connection pool status.",
+            "If connection timeout persists, check network path between user's workstation and SAP server."
+        ]
+    },
+    {
+        "ticket_id": "INC-2003",
+        "category": "Software & Applications",
+        "priority": "P3",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "application_version"
+        ],
+        "next_best_action": "Check Outlook connectivity status and Exchange Online service health. The user reports other M365 apps work, so investigate Outlook-specific profile corruption.",
+        "remediation_steps": [
+            "Check Microsoft 365 service health dashboard for any Exchange Online incidents.",
+            "Have the user run the Microsoft Support and Recovery Assistant (SaRA) for Outlook.",
+            "Clear the Outlook local cache and rebuild the OST file.",
+            "Verify Outlook profile configuration and recreate if corrupted.",
+            "Check if the user's mailbox has any transport rules or policies blocking connectivity.",
+            "Verify Outlook version and apply any pending updates."
+        ]
+    },
+    {
+        "ticket_id": "INC-2004",
+        "category": "Hardware & Peripherals",
+        "priority": "P2",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [
+            "error_message"
+        ],
+        "next_best_action": "Investigate recurring BSOD on Dell Latitude 5550. Collect crash dump files to identify the faulting driver or component. User has a presentation at 2 PM.",
+        "remediation_steps": [
+            "Access the user's machine and collect BSOD crash dump files from C:\\Windows\\Minidump.",
+            "Run Windows Event Viewer to check System log for critical errors around the crash times.",
+            "Run Dell SupportAssist hardware diagnostics (memory test, storage test).",
+            "Check for recently installed drivers or Windows updates that may correlate with the issue.",
+            "If hardware diagnostics pass, boot into Safe Mode to isolate software/driver issues.",
+            "If issue is time-critical for the 2 PM presentation, provide a loaner laptop as interim solution."
+        ]
+    },
+    {
+        "ticket_id": "INC-2005",
+        "category": "Network & Connectivity",
+        "priority": "P2",
+        "assigned_team": "Network Operations",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate WiFi access point health on 5th floor of NYC office. Multiple users affected with wired connections working fine points to wireless infrastructure issue.",
+        "remediation_steps": [
+            "Check wireless controller dashboard for 5th floor access points — look for AP failures or channel interference.",
+            "Verify all 5th floor APs are online and broadcasting both Contoso-Corp and Contoso-Guest SSIDs.",
+            "Check for RF interference sources — new equipment, microwave ovens, neighboring networks.",
+            "Review AP firmware versions and check for pending updates.",
+            "If specific APs are failing, restart them remotely from the wireless controller.",
+            "Monitor WiFi stability after remediation and coordinate with the affected users."
+        ]
+    },
+    {
+        "ticket_id": "INC-2006",
+        "category": "Software & Applications",
+        "priority": "P3",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "error_message",
+            "affected_system"
+        ],
+        "next_best_action": "Identify which compliance dashboard the user is trying to access and the specific error message encountered.",
+        "remediation_steps": [
+            "Contact the user to identify the specific compliance dashboard URL and any error messages.",
+            "Check if the dashboard application is up and accessible from other machines.",
+            "Verify the user's access permissions to the compliance dashboard haven't changed.",
+            "Check application logs for any errors related to the user's session.",
+            "If the dashboard is a web application, have the user clear browser cache and try in a private window.",
+            "Escalate to the application owner if the issue is server-side."
+        ]
+    },
+    {
+        "ticket_id": "INC-2007",
+        "category": "Software & Applications",
+        "priority": "P2",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate high CPU on prod-web-03 VM. The automated alert shows 94.7% CPU with elevated network ingress. Check for traffic spikes or runaway processes.",
+        "remediation_steps": [
+            "Connect to prod-web-03 and identify top CPU-consuming processes using top/htop.",
+            "Check if the elevated network ingress (145 MB/s) correlates with a traffic spike or potential DDoS.",
+            "Review application logs on the VM for error patterns or request queuing.",
+            "Check Azure Monitor metrics history to determine if this is a gradual increase or sudden spike.",
+            "If a specific process is runaway, restart the affected application service.",
+            "If traffic-related, verify auto-scaling is configured and consider adding capacity.",
+            "Follow the runbook at the SharePoint link provided in the alert."
+        ]
+    },
+    {
+        "ticket_id": "INC-2008",
+        "category": "Access & Authentication",
+        "priority": "P2",
+        "assigned_team": "Identity & Access Management",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Unlock the user's Active Directory / Entra ID account. The lockout was caused by multiple failed password attempts after a password change.",
+        "remediation_steps": [
+            "Unlock the user's account in Entra ID / Active Directory.",
+            "Verify the lockout was caused by legitimate failed attempts (not brute-force attack).",
+            "Check Entra ID sign-in logs for any suspicious activity from unfamiliar locations.",
+            "Confirm the user's new password is working after the account unlock.",
+            "Remind the user to update saved passwords in any apps or browsers.",
+            "If the lockout recurs, check for cached credentials on other devices."
+        ]
+    },
+    {
+        "ticket_id": "INC-2009",
+        "category": "Hardware & Peripherals",
+        "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate display flickering on Dell Latitude 5550 built-in screen. External monitor works fine, suggesting an issue with the laptop display or its cable.",
+        "remediation_steps": [
+            "Run Dell built-in display diagnostic (Fn+Power at boot) to test for hardware defects.",
+            "Update the display/graphics driver to the latest version from Dell Support.",
+            "Check if the issue occurs in Safe Mode to rule out software/driver conflicts.",
+            "Inspect the laptop for any physical damage to the screen or hinge area.",
+            "If the display diagnostic shows defects, initiate a warranty repair or replacement.",
+            "Provide an external monitor as a workaround while the repair is arranged."
+        ]
+    },
+    {
+        "ticket_id": "INC-2010",
+        "category": "Data & Storage",
+        "priority": "P2",
+        "assigned_team": "Data Platform",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Investigate SharePoint access revocation for multiple Wealth Management sites. The user had access last week, suggesting a permissions change or group membership removal.",
+        "remediation_steps": [
+            "Check the user's SharePoint permissions and group memberships for the Wealth Management sites.",
+            "Review SharePoint admin audit logs for recent permission changes on these sites.",
+            "Verify the user is still a member of the relevant security groups or M365 groups.",
+            "If permissions were accidentally removed, restore them to the previous state.",
+            "Check if a SharePoint admin or site owner made bulk permission changes recently.",
+            "Confirm access is restored and the user can access all required sites."
+        ]
+    },
+    {
+        "ticket_id": "INC-2011",
+        "category": "Data & Storage",
+        "priority": "P1",
+        "assigned_team": "Data Platform",
+        "needs_escalation": true,
+        "missing_information": [],
+        "next_best_action": "Immediately investigate database connection pool exhaustion on the primary SQL database. Client portal and trade execution are impacted — approximately 200 clients seeing errors.",
+        "remediation_steps": [
+            "Check the primary SQL database connection pool status and active connection count.",
+            "Identify and terminate any long-running or idle connections consuming pool resources.",
+            "Review application connection string settings for connection timeout and pool size configuration.",
+            "Check for any recent database changes (schema, queries, stored procedures) that may cause connection leaks.",
+            "Restart the affected application services to reset connection pools as immediate mitigation.",
+            "Monitor connection pool utilization after restart and implement connection pool alerting if not present.",
+            "Investigate root cause — possible connection leak in recent code deployment."
+        ]
+    },
+    {
+        "ticket_id": "INC-2012",
+        "category": "Hardware & Peripherals",
+        "priority": "P3",
+        "assigned_team": "Endpoint Engineering",
+        "needs_escalation": false,
+        "missing_information": [],
+        "next_best_action": "Troubleshoot video output from Dell WD22TB4 docking station. Dock charges laptop and connects peripherals but no video on either monitor.",
+        "remediation_steps": [
+            "Verify the Dell WD22TB4 docking station firmware is up to date using Dell Docking Station Update utility.",
+            "Check Display settings in Windows to see if the monitors are detected but not enabled.",
+            "Update the display/graphics drivers on the Dell Latitude 5550.",
+            "Test the monitors directly connected to the laptop (bypass the dock) to verify monitor functionality.",
+            "Try a different Thunderbolt/USB-C port on the laptop if available.",
+            "If issue persists, test with a known-working dock to isolate whether the issue is the dock or laptop."
+        ]
+    },
+    {
+        "ticket_id": "INC-2013",
+        "category": "General Inquiry",
+        "priority": "P4",
+        "assigned_team": "None",
+        "needs_escalation": false,
+        "missing_information": [
+            "affected_system",
+            "error_message",
+            "steps_to_reproduce"
+        ],
+        "next_best_action": "Reach out to the reporter to understand what issue they need help with. The ticket contains insufficient information to take any action.",
+        "remediation_steps": [
+            "Contact mike.turner@contoso.com via chat or email to clarify what issue they are experiencing.",
+            "Ask for the affected system, error messages, and steps to reproduce.",
+            "Once sufficient information is gathered, re-triage the ticket with the correct category and priority.",
+            "Update the ticket with the information collected."
+        ]
+    },
+    {
+        "ticket_id": "INC-2014",
+        "category": "Software & Applications",
+        "priority": "P2",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": false,
+        "missing_information": [
+            "error_message"
+        ],
+        "next_best_action": "Review the attached screenshot to identify the Bloomberg terminal error. The user reports the error occurs when submitting trade orders.",
+        "remediation_steps": [
+            "Review the attached bloomberg_error.png and error_details.docx to identify the specific error.",
+            "Check Bloomberg terminal connectivity and session status.",
+            "Verify the user's Bloomberg terminal permissions and entitlements.",
+            "Test trade order submission on a different Bloomberg terminal to isolate user-specific vs. system-wide issue.",
+            "If the error is a known Bloomberg issue, check Bloomberg support portal for advisories.",
+            "Escalate to Bloomberg vendor support if the issue cannot be resolved internally."
+        ]
+    },
+    {
+        "ticket_id": "INC-2015",
+        "category": "Software & Applications",
+        "priority": "P1",
+        "assigned_team": "Enterprise Applications",
+        "needs_escalation": true,
+        "missing_information": [],
+        "next_best_action": "Investigate CrashLoopBackOff on client portal v2.4.1 deployment. This release contains a critical security patch and is blocking remediation of a security vulnerability.",
+        "remediation_steps": [
+            "Check pod logs with kubectl logs to identify the crash reason.",
+            "Verify the readiness and liveness probe endpoints (/health, /ready) are correct for the new version.",
+            "Check if the container can start successfully locally with the same environment variables.",
+            "Verify the container image contosoacr.azurecr.io/client-portal:2.4.1 was built and pushed correctly.",
+            "Review Kubernetes events with kubectl describe pod for more context on the CrashLoopBackOff.",
+            "If the probe endpoint changed in v2.4.1, update the deployment manifest accordingly.",
+            "Roll back to the previous version if the fix cannot be applied quickly, but prioritize the security patch deployment."
+        ]
+    }
+]

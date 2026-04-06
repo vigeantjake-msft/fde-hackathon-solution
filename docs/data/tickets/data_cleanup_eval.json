@@ -1,0 +1,207 @@
+[
+    {
+        "ticket_id": "INC-2001",
+        "subject": "Re: Re: Re: Re: Re: Re: Re: Re: Fw: Fw: Fw: Original issue — VPN not working",
+        "description": "---------- Forwarded message ----------\nFrom: helpdesk@contoso.com\nDate: March 10, 2026\nSubject: Re: VPN not working\n\nHi Sarah, we've escalated this to Network Ops.\n\n---------- Original message ----------\nFrom: sarah.chen@contoso.com\nDate: March 9, 2026\nSubject: Re: VPN not working\n\nThanks, but the issue is still happening. I've tried everything.\n\n---------- Previous reply ----------\nFrom: helpdesk@contoso.com\nDate: March 8, 2026\nSubject: Re: VPN not working\n\nHi Sarah, have you tried reconnecting to the VPN? Please restart your laptop.\n\n---------- Previous reply ----------\nFrom: sarah.chen@contoso.com\nDate: March 7, 2026\nSubject: Re: VPN not working\n\nStill down. This is the fourth day.\n\n---------- Previous reply ----------\nFrom: helpdesk@contoso.com\nDate: March 6, 2026\nSubject: Re: VPN not working\n\nWe're looking into it.\n\n---------- Previous reply ----------\nFrom: sarah.chen@contoso.com\nDate: March 5, 2026\nSubject: Re: VPN not working\n\nStill not resolved. Colleagues on the same floor are fine.\n\n---------- Previous reply ----------\nFrom: helpdesk@contoso.com\nDate: March 4, 2026\nSubject: Re: VPN not working\n\nHi Sarah, thanks for reaching out. Can you try clearing your VPN cache?\n\n---------- Original message ----------\nFrom: sarah.chen@contoso.com\nDate: March 3, 2026\nSubject: VPN not working\n\nHi, GlobalProtect VPN has been disconnecting every 10 minutes since Monday. I'm working remotely from home and I can't stay connected long enough to do anything. My home internet is fine — 500 Mbps, tested with speedtest. Other apps work. Laptop is Dell Latitude 5550, Windows 11. GlobalProtect version 6.1.",
+        "reporter": {
+            "name": "Sarah Chen",
+            "email": "sarah.chen@contoso.com",
+            "department": "Engineering"
+        },
+        "created_at": "2026-03-18T09:30:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2002",
+        "subject": "Screenshot of error",
+        "description": "Hi, I'm getting an error on my screen. Here's a screenshot I took:\n\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwADhQGAWjR9awAAAABJRU5ErkJggg==\n\nAnd here's another one showing the full error dialog:\n\ndata:image/png;base64,eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4\n\ndata:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4\n\nCan someone help? The error shows up every time I try to open SAP. I think it says something about a connection timeout but the image should show it better.",
+        "reporter": {
+            "name": "Kevin Park",
+            "email": "kevin.park@contoso.com",
+            "department": "Finance"
+        },
+        "created_at": "2026-03-18T10:15:00Z",
+        "channel": "email",
+        "attachments": [
+            "error_screenshot.png"
+        ]
+    },
+    {
+        "ticket_id": "INC-2003",
+        "subject": "cant access outlook",
+        "description": "<html><body><div style=\"font-family: Calibri, sans-serif; font-size: 11pt;\"><p>Hi IT team,</p><p>I <b>can't access</b> Outlook since this morning. When I open it I get a <span style=\"color: red; font-weight: bold;\">red error banner</span> that says &quot;Cannot connect to server&quot;.</p><p>I tried:</p><ul><li>Restarting the app</li><li>Clearing the cache</li><li>Checking my internet &mdash; it&rsquo;s fine</li></ul><p>Other Microsoft 365 apps work (Teams, OneDrive). Just Outlook is broken.</p><p style=\"margin-top: 20px;\">Thanks,<br/><b>Amanda Foster</b><br/><span style=\"color: #666; font-size: 9pt;\">Senior Analyst | Wealth Management<br/>Contoso Financial Services<br/>amanda.foster@contoso.com | +1 (212) 555-0142</span></p><img src=\"cid:logo@contoso.com\" width=\"120\" alt=\"Contoso Logo\"/></div></body></html>",
+        "reporter": {
+            "name": "Amanda Foster",
+            "email": "amanda.foster@contoso.com",
+            "department": "Wealth Management"
+        },
+        "created_at": "2026-03-18T08:45:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2004",
+        "subject": "🚨🚨🚨 URGENT HELP NEEDED 🚨🚨🚨 💻🔥💥",
+        "description": "😱😱😱 OMG my laptop is literally on 🔥🔥🔥 (not actually on fire but you know what I mean 😅)\n\nThe 💻 keeps showing a 🔵 screen and then ♻️ restarting itself!!!\n\nI've tried:\n✅ Restarting → didn't work 😤\n✅ Unplugging everything → nope 🙅‍♂️\n✅ Praying → also no 🙏😩\n\nThis has happened 5️⃣ times today already!!! ⏰ Started around 9️⃣ AM.\n\nMy laptop is a Dell Latitude 5️⃣5️⃣5️⃣0️⃣ running Windows 1️⃣1️⃣.\n\nPLEASE HELP 🆘🆘🆘 I have a 📊 presentation at 2️⃣ PM!!! 😭😭😭\n\n📧 Email me back ASAP or 📱 call me at ext 4️⃣2️⃣1️⃣7️⃣\n\n🙏🙏🙏 Thank you!!! 💕✨🌟",
+        "reporter": {
+            "name": "Brittany Morgan",
+            "email": "brittany.morgan@contoso.com",
+            "department": "Marketing"
+        },
+        "created_at": "2026-03-18T10:30:00Z",
+        "channel": "chat",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2005",
+        "subject": "Network issue on 5th floor",
+        "description": "The WiFi on the 5th floor keeps dropping. Multiple people are affected.\n\nThe WiFi on the 5th floor keeps dropping. Multiple people are affected.\n\nThe WiFi on the 5th floor keeps dropping. Multiple people are affected.\n\nThe WiFi on the 5th floor keeps dropping. Multiple people are affected.\n\nThe WiFi on the 5th floor keeps dropping. Multiple people are affected.\n\nThe WiFi on the 5th floor keeps dropping. Multiple people are affected.\n\nThe WiFi on the 5th floor keeps dropping. Multiple people are affected.\n\nThe WiFi on the 5th floor keeps dropping. Multiple people are affected.\n\nSorry for the repeated text — my browser form glitched. The actual issue: WiFi on the 5th floor (NYC office) has been dropping intermittently since about 7 AM. Affects both Contoso-Corp and Contoso-Guest SSIDs. Wired Ethernet connections on the same floor are fine. About 20 people are affected and we have client meetings today.",
+        "reporter": {
+            "name": "Carlos Mendez",
+            "email": "carlos.mendez@contoso.com",
+            "department": "Consulting"
+        },
+        "created_at": "2026-03-18T07:15:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2006",
+        "subject": "Re: Q1 Compliance Review — action items",
+        "description": "Hi team,\n\nI can't access the compliance dashboard this morning.\n\nThanks,\nRobert\n\n─────────────────────────────────\nRobert J. Thompson III\nSenior Vice President, Compliance & Regulatory Affairs\nContoso Financial Services, Inc.\n245 Park Avenue, 38th Floor\nNew York, NY 10167\nDirect: +1 (212) 555-0198\nMobile: +1 (917) 555-0234\nFax: +1 (212) 555-0199\nEmail: robert.thompson@contoso.com\nLinkedIn: linkedin.com/in/robertjthompsoniii\n\n═══════════════════════════════════\nCONFIDENTIALITY NOTICE: This email message, including any attachments, is for the sole use of the intended recipient(s) and may contain confidential and privileged information. Any unauthorized review, use, disclosure, or distribution is prohibited. If you are not the intended recipient, please contact the sender by reply email and destroy all copies of the original message. This email does not constitute a binding agreement, contract, or commitment on behalf of Contoso Financial Services, Inc. or any of its subsidiaries or affiliates. Any views or opinions presented in this email are solely those of the author and do not necessarily represent those of Contoso Financial Services, Inc. Contoso Financial Services, Inc. accepts no liability for the content of this email, or for the consequences of any actions taken on the basis of the information provided, unless that information is subsequently confirmed in writing. If you have received this email in error, please notify the sender immediately and delete this message from your system. Contoso Financial Services, Inc. is registered in the State of Delaware. Registered office: 245 Park Avenue, New York, NY 10167. Registration number: 04-3892741.\n═══════════════════════════════════\n♻ Please consider the environment before printing this email.\n═══════════════════════════════════\n",
+        "reporter": {
+            "name": "Robert Thompson",
+            "email": "robert.thompson@contoso.com",
+            "department": "Compliance"
+        },
+        "created_at": "2026-03-18T08:00:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2007",
+        "subject": "ALERT: CPU utilization exceeded threshold on prod-web-03",
+        "description": "AUTOMATED MONITORING ALERT — DO NOT REPLY TO THIS EMAIL\n═══════════════════════════════════════════════════════\n\nAlert ID: MON-2026-03-18-0847\nSeverity: WARNING\nSource: Azure Monitor\nTime: 2026-03-18T06:47:23.417Z\nHost: prod-web-03.eastus2.cloudapp.azure.com\nResource Group: rg-web-prod\nSubscription: Contoso-Production (a1b2c3d4-e5f6-7890-abcd-ef1234567890)\n\nMetric: Percentage CPU\nCondition: Average > 90% for 15 minutes\nCurrent Value: 94.7%\nThreshold: 90%\nEvaluation Period: 15 min\nAggregation: Average\n\nAffected Resource:\n  Name: prod-web-03\n  Type: Microsoft.Compute/virtualMachines\n  Size: Standard_D4s_v5\n  OS: Ubuntu 22.04 LTS\n  Region: East US 2\n  IP (private): 10.0.1.47\n  IP (public): 20.81.XX.XX\n\nRelated Metrics (last 60 min):\n  Memory: 78.3% (stable)\n  Disk IOPS: 2,340 (normal)\n  Network In: 145 MB/s (elevated)\n  Network Out: 89 MB/s (normal)\n\nAction Group: ag-web-prod-oncall\nNotification Targets: web-oncall@contoso.com, it-ops@contoso.com\n\nDashboard: https://portal.azure.com/#@contoso.com/resource/subscriptions/a1b2c3d4/resourceGroups/rg-web-prod/providers/Microsoft.Compute/virtualMachines/prod-web-03/overview\n\nRunbook: https://contoso.sharepoint.com/sites/IT/runbooks/high-cpu-web-tier\n\nThis alert will auto-resolve when the metric drops below 90% for 5 minutes.\n═══════════════════════════════════════════════════════\nAzure Monitor — Contoso Production Subscription\n",
+        "reporter": {
+            "name": "Azure Monitor",
+            "email": "noreply@azure.microsoft.com",
+            "department": "IT"
+        },
+        "created_at": "2026-03-18T06:47:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2008",
+        "subject": "Problema con mi computadora — no puedo entrar",
+        "description": "Hola equipo de IT,\n\nNo puedo entrar a mi computadora desde esta mañana. La pantalla dice 'Your account has been locked' y no me deja poner mi contraseña. Creo que es porque puse la contraseña mal muchas veces ayer.\n\nSorry, let me try in English — my account is locked. I got a message saying 'Your account has been locked out due to too many failed sign-in attempts. Please contact your administrator.' I think I typed my password wrong too many times yesterday after the password change. I'm in the Singapore office, 3rd floor. I can't do any work right now.\n\nMi nombre es María González, departamento de Retail Banking.\nGracias / Thank you!",
+        "reporter": {
+            "name": "María González",
+            "email": "maria.gonzalez@contoso.com",
+            "department": "Retail Banking"
+        },
+        "created_at": "2026-03-18T02:00:00Z",
+        "channel": "portal",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2009",
+        "subject": "Issue     with    my      laptop",
+        "description": "\n\n\n\n\n   Hi    IT   team ,   \n\n\n   My     laptop     screen     is      flickering  .   \n\n\n\n\t\t\tIt   started     yesterday    afternoon .  \n\n   \t  The    screen    goes    black    for    a    second     then    comes    back  . \n\n\n\t\t\t\tHappens     every     few     minutes .   \n\n\n\n   I'm    using    a    Dell    Latitude    5550    with    Windows    11 .  \n\n\n   External     monitor     works     fine .   \n\n\n\n\n\t\tThanks ,\n\n\n\n\t\tJason\n\n\n\n\n\n\n",
+        "reporter": {
+            "name": "Jason Webb",
+            "email": "jason.webb@contoso.com",
+            "department": "Operations"
+        },
+        "created_at": "2026-03-18T09:00:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2010",
+        "subject": "Can't access SharePoint — links below",
+        "description": "I can't access any of these SharePoint sites:\n\nhttps://contoso.sharepoint.com/sites/WealthManagement/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FWealthManagement%2FShared%20Documents%2FClient%20Reports%2FQ1%202026%2FPortfolio%20Reviews&viewid=a1b2c3d4-e5f6-7890-abcd-ef1234567890\n\nhttps://contoso.sharepoint.com/sites/WealthManagement/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FWealthManagement%2FShared%20Documents%2FClient%20Reports%2FQ1%202026%2FPerformance%20Summaries&viewid=a1b2c3d4-e5f6-7890-abcd-ef1234567890\n\nhttps://contoso.sharepoint.com/sites/WealthManagement/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FWealthManagement%2FShared%20Documents%2FClient%20Reports%2FQ1%202026%2FRisk%20Analysis&viewid=a1b2c3d4-e5f6-7890-abcd-ef1234567890\n\nhttps://contoso.sharepoint.com/sites/WealthManagement/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FWealthManagement%2FShared%20Documents%2FCompliance%2FAudit%20Trail%2F2026-Q1&viewid=a1b2c3d4-e5f6-7890-abcd-ef1234567890\n\nhttps://contoso.sharepoint.com/sites/WealthManagement/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FWealthManagement%2FShared%20Documents%2FTraining%2FNew%20Hire%20Materials%2F2026&viewid=a1b2c3d4-e5f6-7890-abcd-ef1234567890\n\nAll of them give me 'Access Denied'. I had access last week. I need these for client reports due today.",
+        "reporter": {
+            "name": "Patricia Lane",
+            "email": "patricia.lane@contoso.com",
+            "department": "Wealth Management"
+        },
+        "created_at": "2026-03-18T08:20:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2011",
+        "subject": "Server error logs",
+        "description": "We're seeing errors on the client portal. Here are the logs:\n\n2026-03-18T06:01:12.447Z ERROR [pool-3-thread-7] c.c.api.ClientService - Failed to fetch client portfolio\njava.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.\n\tat com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:695)\n\tat com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)\n\tat com.contoso.api.ClientService.getPortfolio(ClientService.java:142)\n\tat com.contoso.api.ClientController.portfolio(ClientController.java:67)\n2026-03-18T06:01:13.891Z ERROR [pool-3-thread-12] c.c.api.ClientService - Failed to fetch client portfolio\njava.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.\n\tat com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:695)\n\tat com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)\n2026-03-18T06:01:15.334Z WARN  [pool-3-thread-3] c.c.db.ConnectionManager - Active connections: 50/50 (pool exhausted)\n2026-03-18T06:01:17.112Z ERROR [pool-3-thread-1] c.c.api.TradeService - Trade execution failed for order ORD-89234\njava.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available\n\tat com.contoso.api.TradeService.executeTrade(TradeService.java:89)\n\nThis is happening every few seconds. The connection pool to our primary SQL database is exhausted. Client portal and trade execution are both affected. About 200 clients are currently seeing errors.",
+        "reporter": {
+            "name": "David Okonkwo",
+            "email": "david.okonkwo@contoso.com",
+            "department": "Engineering"
+        },
+        "created_at": "2026-03-18T06:05:00Z",
+        "channel": "portal",
+        "attachments": [
+            "full_error_log.txt"
+        ]
+    },
+    {
+        "ticket_id": "INC-2012",
+        "subject": "Ticket from email forwarding system",
+        "description": "X-Mailer: Microsoft Outlook 16.0\nMIME-Version: 1.0\nContent-Type: multipart/mixed; boundary=\"----=_Part_4892_1234567890.1710741600000\"\nX-MS-Exchange-Organization-AuthSource: mail.contoso.com\nX-MS-Exchange-Organization-AuthAs: Internal\nX-MS-Has-Attach: yes\nX-MS-TNEF-Correlator:\nReturn-Path: <nancy.wu@contoso.com>\nReceived: from mail-eopbgr70098.outbound.protection.outlook.com (2603:10b6:408:c0::14) by mail.contoso.com (10.0.2.15) with SMTP; Mon, 18 Mar 2026 07:00:00 +0000\nReceived: from DM6PR03MB4892.namprd03.prod.outlook.com (2603:10b6:5:1d4::18) by BY5PR03MB6741.namprd03.prod.outlook.com (2603:10b6:a03:39f::8) with HTTPS; Mon, 18 Mar 2026 06:59:58 +0000\n\n------=_Part_4892_1234567890.1710741600000\nContent-Type: text/plain; charset=\"UTF-8\"\n\nHi, my docking station is not detecting my external monitors anymore. Both monitors worked fine yesterday. I've tried different cables and different ports on the dock. The dock itself still charges my laptop and connects keyboard/mouse. Just no video output. Dock is a Dell WD22TB4, laptop is Dell Latitude 5550.",
+        "reporter": {
+            "name": "Nancy Wu",
+            "email": "nancy.wu@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-18T07:00:00Z",
+        "channel": "email",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2013",
+        "subject": ".",
+        "description": "k",
+        "reporter": {
+            "name": "Mike Turner",
+            "email": "mike.turner@contoso.com",
+            "department": "Operations"
+        },
+        "created_at": "2026-03-18T11:30:00Z",
+        "channel": "chat",
+        "attachments": []
+    },
+    {
+        "ticket_id": "INC-2014",
+        "subject": "Problem with application — see attached",
+        "description": "See the attached screenshot for the error I'm getting. It happens every time I try to submit a trade order in the Bloomberg terminal.",
+        "reporter": {
+            "name": "Alex Yamamoto",
+            "email": "alex.yamamoto@contoso.com",
+            "department": "Trading"
+        },
+        "created_at": "2026-03-18T09:45:00Z",
+        "channel": "portal",
+        "attachments": [
+            "bloomberg_error.png",
+            "error_details.docx"
+        ]
+    },
+    {
+        "ticket_id": "INC-2015",
+        "subject": "Deployment configuration issue",
+        "description": "Our deployment is failing. Here's the config file that's causing issues:\n\n{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"client-portal\",\"namespace\":\"production\",\"labels\":{\"app\":\"client-portal\",\"version\":\"2.4.1\",\"team\":\"web\"}},\"spec\":{\"replicas\":3,\"selector\":{\"matchLabels\":{\"app\":\"client-portal\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"client-portal\"}},\"spec\":{\"containers\":[{\"name\":\"client-portal\",\"image\":\"contosoacr.azurecr.io/client-portal:2.4.1\",\"ports\":[{\"containerPort\":8080}],\"resources\":{\"requests\":{\"memory\":\"512Mi\",\"cpu\":\"250m\"},\"limits\":{\"memory\":\"1Gi\",\"cpu\":\"500m\"}},\"env\":[{\"name\":\"DB_HOST\",\"value\":\"prod-sql-01.database.windows.net\"},{\"name\":\"DB_NAME\",\"value\":\"clientdb\"},{\"name\":\"REDIS_HOST\",\"value\":\"prod-redis.redis.cache.windows.net\"},{\"name\":\"APP_INSIGHTS_KEY\",\"valueFrom\":{\"secretKeyRef\":{\"name\":\"app-secrets\",\"key\":\"appinsights-key\"}}}],\"livenessProbe\":{\"httpGet\":{\"path\":\"/health\",\"port\":8080},\"initialDelaySeconds\":30,\"periodSeconds\":10},\"readinessProbe\":{\"httpGet\":{\"path\":\"/ready\",\"port\":8080},\"initialDelaySeconds\":5,\"periodSeconds\":5}}],\"imagePullSecrets\":[{\"name\":\"acr-secret\"}]}}}}\n\nThe deployment keeps crashing with CrashLoopBackOff. I think the readiness probe is hitting the wrong endpoint but I'm not sure. This is blocking the release of client portal v2.4.1 which has a critical security patch.",
+        "reporter": {
+            "name": "Steven Park",
+            "email": "steven.park@contoso.com",
+            "department": "Engineering"
+        },
+        "created_at": "2026-03-18T05:30:00Z",
+        "channel": "portal",
+        "attachments": [
+            "deployment.yaml",
+            "pod_logs.txt"
+        ]
+    }
+]
