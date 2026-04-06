@@ -1,5 +1,6 @@
 [
 <<<<<<< HEAD
+<<<<<<< HEAD
     {
         "ticket_id": "INC-3001",
         "category": "Hardware & Peripherals",
@@ -309,6 +310,8 @@
     }
 ]
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
   {
     "ticket_id": "INC-RA001",
     "category": "Not a Support Ticket",
@@ -739,4 +742,7 @@
     ]
   }
 ]
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche

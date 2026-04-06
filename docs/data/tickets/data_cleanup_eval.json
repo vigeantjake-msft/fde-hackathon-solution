@@ -1,6 +1,7 @@
 [
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "ticket_id": "INC-2001",
         "subject": "Fwd: Fwd: Fwd: Re: Fwd: Re: VPN not working",
         "description": "---------- Forwarded message ----------\nFrom: james.wong@contoso.com\nDate: Mon, 17 Mar 2026 at 08:00\nTo: helpdesk@contoso.com\nSubject: Re: VPN not working\n\nCan someone please look into this?\n\n---------- Forwarded message ----------\nFrom: sarah.miller@contoso.com\nDate: Fri, 14 Mar 2026 at 16:30\nTo: james.wong@contoso.com\nSubject: Re: VPN not working\n\nJames, I'm forwarding this to you since IT hasn't responded. Original issue below.\n\n---------- Forwarded message ----------\nFrom: mike.patel@contoso.com\nDate: Thu, 13 Mar 2026 at 11:45\nTo: sarah.miller@contoso.com\nSubject: Re: VPN not working\n\nSame issue here. GlobalProtect keeps disconnecting.\n\n---------- Forwarded message ----------\nFrom: lisa.garcia@contoso.com\nDate: Wed, 12 Mar 2026 at 09:22\nTo: mike.patel@contoso.com, sarah.miller@contoso.com\nCc: operations-team@contoso.com\nSubject: VPN not working\n\nHi team,\n\nSince Wednesday morning, GlobalProtect VPN on my laptop disconnects every 15 minutes. I'm on the London office Wi-Fi, Floor 3. I've tried restarting the client and my laptop. The error message says 'Gateway timeout - connection reset'. This is blocking my work on the quarterly compliance report which is due Friday.\n\n---------- Forwarded message ----------\nFrom: auto-reply@contoso.com\nDate: Wed, 12 Mar 2026 at 09:23\nTo: lisa.garcia@contoso.com\nSubject: Ticket confirmation\n\nYour ticket has been received. Reference: INC-1847.\n\n---------- Forwarded message ----------\nFrom: it-notifications@contoso.com\nDate: Tue, 11 Mar 2026 at 22:00\nTo: all-staff@contoso.com\nSubject: Scheduled maintenance completed\n\nNetwork maintenance window has been completed successfully. All services should be operational.\n\nBest regards,\nIT Operations",
@@ -134,6 +135,8 @@
         },
         "created_at": "2026-03-17T08:00:00Z",
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "ticket_id": "INC-DC001",
         "subject": "VPN not connecting — very long email chain below",
         "description": "Hi IT team, I can't connect to the VPN from home since this morning. I get an error 'Connection timed out — unable to reach gateway'. I've tried restarting the client and my laptop. My internet is working fine otherwise. I need VPN to access the trade reconciliation system for end-of-day processing.\n\n--- On Jan 5, 2026, user0@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 0\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0100\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 6, 2026, user1@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 1\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0101\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 7, 2026, user2@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 2\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0102\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 8, 2026, user3@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 3\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0103\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 9, 2026, user4@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 4\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0104\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 10, 2026, user5@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 5\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0105\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 11, 2026, user6@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 6\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0106\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 12, 2026, user7@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 7\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0107\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 13, 2026, user8@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 8\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0108\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Jan 14, 2026, user9@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 9\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0109\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 1, 2026, user10@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 10\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0110\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 2, 2026, user11@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 11\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0111\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 3, 2026, user12@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 12\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0112\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 4, 2026, user13@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 13\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0113\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 5, 2026, user14@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 14\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0114\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 6, 2026, user15@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 15\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0115\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 7, 2026, user16@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 16\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0116\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 8, 2026, user17@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 17\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0117\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 9, 2026, user18@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 18\n> Department of Finance\n> Contoso Financial Services\n> Phone: +1-555-0118\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n\n--- On Feb 10, 2026, user19@contoso.com wrote:\n> Thanks for the update. Let me check with the team.\n> Regards,\n> User 19\n> Department of Operations\n> Contoso Financial Services\n> Phone: +1-555-0119\n> This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender immediately and delete this email from your system. Any unauthorized use, disclosure, or copying of this email or any part thereof is strictly prohibited.\n",
@@ -186,11 +189,15 @@
             "department": "Compliance"
         },
         "created_at": "2026-03-18T14:15:00Z",
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "channel": "phone",
         "attachments": []
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         "ticket_id": "INC-2011",
         "subject": "Wi-Fi issue",
@@ -202,6 +209,8 @@
         },
         "created_at": "2026-03-17T04:00:00Z",
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "ticket_id": "INC-DC005",
         "subject": "🚨🔥💻 HELPPP 😱😱😱",
         "description": "💻 my laptop 💀💀💀 it keeps 🔄 restarting 🔄 every few minutes ⏰\ni was just working on the 📊 quarterly report 📈 and BOOM 💥\nblue screen 🟦 with some error ❌ about memory 🧠\nthis has happened like 5️⃣ times today already 😤😤😤\nim on a Dell Latitude 🖥️ and i think its about 3️⃣ years old 📅\ncan someone PLEASE 🙏🙏🙏 look at this before i lose all my work ��\nim on the 2️⃣nd floor near the elevator 🛗\n\n☎️ call me at ext 4521 📞",
@@ -211,11 +220,15 @@
             "department": "Finance"
         },
         "created_at": "2026-03-18T11:30:00Z",
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "channel": "chat",
         "attachments": []
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         "ticket_id": "INC-2012",
         "subject": "Multiple issues - VPN, printer, and also Bloomberg",
@@ -294,6 +307,8 @@
         },
         "created_at": "2026-03-17T10:15:00Z",
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "ticket_id": "INC-DC006",
         "subject": "",
         "description": "",
@@ -355,6 +370,9 @@
             "department": "Retail Banking"
         },
         "created_at": "2026-03-18T09:20:00Z",
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "channel": "email",
         "attachments": [
@@ -362,6 +380,7 @@
         ]
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         "ticket_id": "INC-2018",
         "subject": "Need help",
@@ -373,6 +392,8 @@
         },
         "created_at": "2026-03-17T09:20:00Z",
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "ticket_id": "INC-DC011",
         "subject": "Database access request",
         "description": "I need access to the following databases:\n\n```\nServer: sql-prod-eastus2.database.windows.net\nDatabase: ClientPortfolio_Prod\nRole: db_datareader\nJustification: Need read access for quarterly compliance reporting\n```\n\nManager approval: David Liu (attached email confirmation)\n\nAlso need access to:\n```json\n{\n  \"server\": \"sql-analytics-eastus2.database.windows.net\",\n  \"database\": \"MarketData_Warehouse\",\n  \"role\": \"db_datareader\",\n  \"justification\": \"Cross-reference client portfolio data with market trends\"\n}\n```\n\nTimeline: need this by end of week. Previous ticket for similar access: INC-3201.",
@@ -425,11 +446,15 @@
             "department": "Finance"
         },
         "created_at": "2026-03-18T08:30:00Z",
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "channel": "email",
         "attachments": []
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         "ticket_id": "INC-2019",
         "subject": "SSL certificate renewal + performance degradation on prod",
@@ -461,6 +486,8 @@
     }
 ]
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "ticket_id": "INC-DC015",
         "subject": "Backup restore request     with   weird   characters",
         "description": "We need to restore a backup of the ClientReports SharePoint site from March 10, 2026. A user accidentally deleted the entire 'Q4-2025 Final Reports' document library containing approximately 200 files.\n\nSite URL: https://contoso.sharepoint.com/sites/ClientReports\nLibrary: Q4-2025 Final Reports\nDeletion timestamp: approximately 2026-03-17 at 16:30 UTC\nDeleted by: jamie.collins@contoso.com (accidental)\n\nWe've checked the SharePoint recycle bin — the files aren't there (second-stage recycle bin was emptied). Need an admin-level restore from backup.\n\nThis is needed before the client audit on March 22.",
@@ -474,4 +501,7 @@
         "attachments": []
     }
 ]
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche

@@ -1590,6 +1590,7 @@ def scenario_bias_religious_political() -> tuple[TicketInput, TriageDecision]:
     )
 
 
+<<<<<<< HEAD
 # ── Indirect injection ───────────────────────────────────────────────
 
 
@@ -2510,6 +2511,8 @@ def scenario_fake_internal_tooling_bypass() -> tuple[TicketInput, TriageDecision
     )
 
 
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
 def get_all_responsible_ai_scenarios() -> list[tuple[TicketInput, TriageDecision]]:
     """Return all responsible AI evaluation scenarios as (ticket, gold) pairs."""
     return [
@@ -2547,6 +2550,7 @@ def get_all_responsible_ai_scenarios() -> list[tuple[TicketInput, TriageDecision
         scenario_prompt_leaking_system_prompt(),
         scenario_pii_compliance_bypass(),
         scenario_bias_religious_political(),
+<<<<<<< HEAD
         # ── New scenarios (INC-RAI-0035 through INC-RAI-0050) ──
         scenario_indirect_injection_attachment_filenames(),
         scenario_output_formatting_attack(),
@@ -2564,4 +2568,6 @@ def get_all_responsible_ai_scenarios() -> list[tuple[TicketInput, TriageDecision
         scenario_token_limit_exploitation_buried_injection(),
         scenario_markdown_rendering_exploitation(),
         scenario_fake_internal_tooling_bypass(),
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
     ]

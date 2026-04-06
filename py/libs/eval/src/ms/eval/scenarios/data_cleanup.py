@@ -1458,6 +1458,7 @@ def scenario_mojibake_encoding() -> tuple[TicketInput, TriageDecision]:
     )
 
 
+<<<<<<< HEAD
 def scenario_windows_event_log_dump() -> tuple[TicketInput, TriageDecision]:
     """Ticket with verbose Windows Event Viewer XML output pasted in.
 
@@ -2540,6 +2541,8 @@ def scenario_sql_query_dump() -> tuple[TicketInput, TriageDecision]:
     )
 
 
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
 def get_all_data_cleanup_scenarios() -> list[tuple[TicketInput, TriageDecision]]:
     """Return all data cleanup evaluation scenarios as (ticket, gold) pairs."""
     return [
@@ -2571,6 +2574,7 @@ def get_all_data_cleanup_scenarios() -> list[tuple[TicketInput, TriageDecision]]
         scenario_control_characters(),
         scenario_minified_code_dump(),
         scenario_mojibake_encoding(),
+<<<<<<< HEAD
         scenario_windows_event_log_dump(),
         scenario_soap_fault_xml(),
         scenario_syslog_flood(),
@@ -2583,4 +2587,6 @@ def get_all_data_cleanup_scenarios() -> list[tuple[TicketInput, TriageDecision]]
         scenario_enormous_cc_list(),
         scenario_nested_quoted_replies(),
         scenario_sql_query_dump(),
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
     ]

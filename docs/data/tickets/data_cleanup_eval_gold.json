@@ -1,7 +1,11 @@
 [
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "ticket_id": "INC-2001",
+=======
+        "ticket_id": "INC-DC001",
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
 =======
         "ticket_id": "INC-DC001",
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
@@ -12,6 +16,7 @@
         "missing_information": [
             "device_info"
         ],
+<<<<<<< HEAD
 <<<<<<< HEAD
         "next_best_action": "Investigate GlobalProtect VPN disconnection issue on London office Floor 3 Wi-Fi, check for gateway timeout errors after recent network maintenance.",
         "remediation_steps": [
@@ -127,6 +132,8 @@
     {
         "ticket_id": "INC-2008",
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "next_best_action": "Investigate VPN gateway connectivity from the user's home network. The actual issue is buried in a very long email chain — the user cannot connect to VPN and gets a 'Connection timed out' error.",
         "remediation_steps": [
             "Verify VPN gateway health and availability",
@@ -138,6 +145,9 @@
     },
     {
         "ticket_id": "INC-DC002",
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "category": "Software & Applications",
         "priority": "P3",
@@ -146,6 +156,7 @@
         "missing_information": [
             "device_info"
         ],
+<<<<<<< HEAD
 <<<<<<< HEAD
         "next_best_action": "Investigate Outlook crash when opening attachments larger than 5MB following Office 365 update to Version 2402.",
         "remediation_steps": [
@@ -280,6 +291,8 @@
     {
         "ticket_id": "INC-2016",
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "next_best_action": "Investigate Bloomberg terminal license validation failure. The base64 image data in the ticket should be ignored — the actual error is 'License validation failed — contact administrator'.",
         "remediation_steps": [
             "Check Bloomberg terminal license status in the Bloomberg admin portal",
@@ -327,11 +340,15 @@
     },
     {
         "ticket_id": "INC-DC005",
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "category": "Hardware & Peripherals",
         "priority": "P2",
         "assigned_team": "Endpoint Engineering",
         "needs_escalation": false,
+<<<<<<< HEAD
 <<<<<<< HEAD
         "missing_information": [],
         "next_best_action": "Arrange a replacement laptop or loaner for the user whose Dell Latitude 7420 was damaged by liquid spill. Recover data if possible.",
@@ -363,6 +380,8 @@
     {
         "ticket_id": "INC-2018",
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "missing_information": [
             "error_message",
             "device_info"
@@ -474,12 +493,16 @@
     },
     {
         "ticket_id": "INC-DC012",
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "category": "Access & Authentication",
         "priority": "P2",
         "assigned_team": "Identity & Access Management",
         "needs_escalation": false,
         "missing_information": [
+<<<<<<< HEAD
 <<<<<<< HEAD
             "error_message"
         ],
@@ -513,6 +536,8 @@
     {
         "ticket_id": "INC-2020",
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
             "device_info"
         ],
         "next_best_action": "Investigate Entra ID authentication error AADSTS50076. Despite the repeated text at the start, the actual issue is cloud app login failure affecting Teams, SharePoint, and Outlook web. Local laptop login works fine.",
@@ -544,11 +569,15 @@
     },
     {
         "ticket_id": "INC-DC014",
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "category": "Data & Storage",
         "priority": "P3",
         "assigned_team": "Data Platform",
         "needs_escalation": false,
+<<<<<<< HEAD
 <<<<<<< HEAD
         "missing_information": [
             "error_message",
@@ -565,6 +594,8 @@
     }
 ]
 =======
+=======
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
         "missing_information": [],
         "next_best_action": "Restore file share access to \\\\fs-legacy-lon\\shared\\finance\\Q1-2026\\ for the London Finance team. Despite the mixed French/English text, the issue is clear: user previously had access that was revoked or expired.",
         "remediation_steps": [
@@ -592,4 +623,7 @@
         ]
     }
 ]
+<<<<<<< HEAD
+>>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
+=======
 >>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
