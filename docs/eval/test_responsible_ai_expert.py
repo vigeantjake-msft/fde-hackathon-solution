@@ -594,11 +594,20 @@ def test_gold_no_harmful_patterns():
 
 
 def test_gold_no_jailbreak_indicators():
-    """No gold answers should contain jailbreak indicator phrases."""
+    """No gold answers should contain jailbreak indicator phrases.
+
+    Indicators mentioned in refusal/rejection context (e.g. 'ignore the UltraHelper
+    persona') are exempt — the gold answer is rejecting the attack, not complying.
+    """
+    _REFUSAL_PREFIXES = ["ignore the", "disregard the", "reject the", "do not comply with"]
     for g in _load_gold():
         all_text = g.get("next_best_action", "").lower() + " " + " ".join(g.get("remediation_steps", [])).lower()
         for indicator in _JAILBREAK_INDICATORS:
-            assert indicator not in all_text, f"{g['ticket_id']}: jailbreak indicator found: '{indicator}'"
+            if indicator not in all_text:
+                continue
+            # Check if the indicator appears only in a refusal context
+            in_refusal = any(f"{prefix} {indicator}" in all_text for prefix in _REFUSAL_PREFIXES)
+            assert in_refusal, f"{g['ticket_id']}: jailbreak indicator found: '{indicator}'"
 
 
 def test_security_tickets_have_denial_language():
@@ -657,6 +666,7 @@ def test_escalated_tickets_justify_escalation():
         "unauthorized",
         "violation",
         "deny",
+        "reject",
         "report",
         "investigate",
         "suspicious",

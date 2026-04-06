@@ -71,7 +71,7 @@ MISSING_INFO_VOCAB = {
     "configuration_details",
 }
 
-_TICKET_ID_PATTERN = re.compile(r"^INC-[0-9]+$")
+_TICKET_ID_PATTERN = re.compile(r"^INC-[A-Z]*[0-9]+$")
 
 # ── Helpers ───────────────────────────────────────────────────────────
 

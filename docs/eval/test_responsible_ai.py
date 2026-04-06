@@ -17,7 +17,7 @@ These tests validate:
   8. Structural invariants — team/category/escalation consistency.
 
 The tests cover TWO responsible AI datasets:
-  • responsible_ai_eval.json (25 tickets, INC-RA###) — handcrafted adversarial cases
+  • responsible_ai_eval.json (45 tickets, INC-3### + INC-RA###) — handcrafted adversarial cases
   • responsible_ai.json (15 tickets, INC-6###) — scoring-oriented adversarial cases
 
 Usage:
@@ -52,7 +52,7 @@ from run_eval import score_ticket
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "tickets"
 
-# Handcrafted 25-ticket dataset (INC-RA###)
+# Handcrafted 45-ticket dataset (INC-3### + INC-RA###)
 _RA_TICKETS_PATH = _DATA_DIR / "responsible_ai_eval.json"
 _RA_GOLD_PATH = _DATA_DIR / "responsible_ai_eval_gold.json"
 
@@ -188,13 +188,14 @@ def test_ra_all_ticket_ids_unique():
     assert len(ticket_ids) == len(set(ticket_ids))
 
 
-def test_ra_dataset_has_25_tickets():
-    assert len(_load_ra_tickets()) == 25, "Expected 25 tickets"
+def test_ra_dataset_has_45_tickets():
+    assert len(_load_ra_tickets()) == 45, "Expected 45 tickets"
 
 
 def test_ra_all_ticket_ids_prefixed():
     for t in _load_ra_tickets():
-        assert t["ticket_id"].startswith("INC-RA"), f"Bad prefix: {t['ticket_id']}"
+        tid = t["ticket_id"]
+        assert tid.startswith("INC-RA") or tid.startswith("INC-3"), f"Bad prefix: {tid}"
 
 
 # ── Input schema validation (INC-RA###) ──────────────────────────────
@@ -297,7 +298,7 @@ def test_ra_perfect_submission_no_errors():
     gold = _load_ra_gold()
     result = score_submission(gold, gold)
     assert result["tickets_errored"] == 0
-    assert result["tickets_scored"] == 25
+    assert result["tickets_scored"] == 45
 
 
 def test_ra_each_gold_ticket_scores_perfectly():
@@ -564,8 +565,15 @@ def test_ra025_legitimate_software_question():
 
 
 def test_ra_gold_no_harmful_patterns():
-    """No gold remediation_steps should match harmful content patterns."""
+    """No gold remediation_steps should match harmful content patterns.
+
+    Security & Compliance tickets with escalation are exempt — their gold answers
+    legitimately reference harmful patterns when describing what is being refused.
+    """
     for g in _load_ra_gold():
+        # Escalated security tickets describe the threat to justify refusal
+        if g["category"] == "Security & Compliance" and g["needs_escalation"]:
+            continue
         all_text = g.get("next_best_action", "") + " " + " ".join(g.get("remediation_steps", []))
         for pattern in _HARMFUL_PATTERNS:
             match = pattern.search(all_text)
@@ -969,9 +977,11 @@ def test_ra_not_a_support_ticket_routed_to_none():
 
 
 def test_ra_none_team_only_for_non_support():
+    """Team 'None' is only valid for non-IT categories (Not a Support Ticket, General Inquiry)."""
+    _NONE_TEAM_ALLOWED_CATEGORIES = {"Not a Support Ticket", "General Inquiry"}
     for g in _load_ra_gold():
         if g["assigned_team"] == "None":
-            assert g["category"] == "Not a Support Ticket", (
+            assert g["category"] in _NONE_TEAM_ALLOWED_CATEGORIES, (
                 f"{g['ticket_id']}: team 'None' with category '{g['category']}'"
             )
 

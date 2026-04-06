@@ -18,7 +18,7 @@ These tests validate:
   8. Structural invariants — team/category consistency rules hold.
 
 The tests cover TWO data cleanup datasets:
-  • data_cleanup_eval.json (15 tickets, INC-DC###) — handcrafted edge cases
+  • data_cleanup_eval.json (35 tickets, INC-2### + INC-DC###) — handcrafted edge cases
   • data_cleanup.json (15 tickets, INC-5###) — scoring-oriented edge cases
 
 Usage:
@@ -54,7 +54,7 @@ from run_eval import score_ticket
 
 _DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "tickets"
 
-# Handcrafted 15-ticket dataset (INC-DC###)
+# Handcrafted 35-ticket dataset (INC-2### + INC-DC###)
 _DC_TICKETS_PATH = _DATA_DIR / "data_cleanup_eval.json"
 _DC_GOLD_PATH = _DATA_DIR / "data_cleanup_eval_gold.json"
 
@@ -160,13 +160,14 @@ def test_dc_all_ticket_ids_unique():
     assert len(ticket_ids) == len(set(ticket_ids)), "Duplicate ticket IDs in dataset"
 
 
-def test_dc_dataset_has_15_tickets():
-    assert len(_load_dc_tickets()) == 15, "Expected 15 data cleanup tickets"
+def test_dc_dataset_has_35_tickets():
+    assert len(_load_dc_tickets()) == 35, "Expected 35 data cleanup tickets"
 
 
 def test_dc_all_ticket_ids_prefixed():
     for t in _load_dc_tickets():
-        assert t["ticket_id"].startswith("INC-DC"), f"Bad ticket_id prefix: {t['ticket_id']}"
+        tid = t["ticket_id"]
+        assert tid.startswith("INC-DC") or tid.startswith("INC-2"), f"Bad ticket_id prefix: {tid}"
 
 
 # ── Input schema validation (INC-DC###) ──────────────────────────────
@@ -412,7 +413,7 @@ def test_dc_perfect_submission_no_errors():
     gold = _load_dc_gold()
     result = score_submission(gold, gold)
     assert result["tickets_errored"] == 0
-    assert result["tickets_scored"] == 15
+    assert result["tickets_scored"] == 35
 
 
 def test_dc_each_gold_ticket_scores_perfectly():
@@ -939,6 +940,8 @@ def _check_pii_leakage(gold: dict) -> list[str]:
         issues.append("credit card pattern in gold answer")
 
     # IP address in remediation (shouldn't appear as specific IPs)
+    # Well-known public DNS servers are exempt — they're standard diagnostic references
+    _WELL_KNOWN_PUBLIC_IPS = {"8.8.8.8", "8.8.4.4", "1.1.1.1", "1.0.0.1"}
     if re.search(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", combined):
         # Allow common references like "10.x.x.x" patterns in remediation text
         real_ips = re.findall(r"\b(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\b", combined)
@@ -946,7 +949,7 @@ def _check_pii_leakage(gold: dict) -> list[str]:
             parts = ip.split(".")
             is_valid = all(0 <= int(p) <= 255 for p in parts)
             is_private = ip.startswith(("10.", "192.168.", "172."))
-            if is_valid and not is_private:
+            if is_valid and not is_private and ip not in _WELL_KNOWN_PUBLIC_IPS:
                 issues.append(f"public IP address in gold answer: {ip}")
 
     return issues

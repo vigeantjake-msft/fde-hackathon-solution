@@ -142,22 +142,22 @@ def test_sample_has_25_tickets():
     assert len(gold) == 25
 
 
-def test_handcrafted_dc_has_15_tickets():
+def test_handcrafted_dc_has_35_tickets():
     if "data_cleanup_eval" not in _DATASETS:
         return
     tickets, gold = _DATASETS["data_cleanup_eval"]
-    assert len(tickets) == 15
+    assert len(tickets) == 35
     assert gold is not None
-    assert len(gold) == 15
+    assert len(gold) == 35
 
 
-def test_handcrafted_rai_has_25_tickets():
+def test_handcrafted_rai_has_45_tickets():
     if "responsible_ai_eval" not in _DATASETS:
         return
     tickets, gold = _DATASETS["responsible_ai_eval"]
-    assert len(tickets) == 25
+    assert len(tickets) == 45
     assert gold is not None
-    assert len(gold) == 25
+    assert len(gold) == 45
 
 
 def test_advanced_dc_has_15_tickets():
