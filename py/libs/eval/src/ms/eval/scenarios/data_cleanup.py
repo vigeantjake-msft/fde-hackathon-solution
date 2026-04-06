@@ -1632,7 +1632,8 @@ def scenario_soap_fault_xml() -> tuple[TicketInput, TriageDecision]:
                 "Check health and availability of the CRM backend service (crm-api.contoso.internal)",
                 "Review application and IIS logs on the CRM server around 09:15 for errors or resource exhaustion",
                 "Verify network connectivity between the web front-end and the CRM API tier",
-                "If the backend service is healthy, increase the WCF SendTimeout as a temporary workaround while root cause is investigated",
+                "If the backend service is healthy, increase the WCF SendTimeout "
+                "as a temporary workaround while root cause is investigated",
             ],
         ),
     )
@@ -2052,7 +2053,8 @@ def scenario_powershell_verbose_output() -> tuple[TicketInput, TriageDecision]:
             ),
             remediation_steps=[
                 "Review the SQL Server error log for the root cause of the repeated service stops",
-                "Check disk health and available space on the volumes hosting the ContosoSettlements database and transaction log",
+                "Check disk health and available space on the volumes hosting "
+                "the ContosoSettlements database and transaction log",
                 "Verify the database integrity with DBCC CHECKDB on ContosoSettlements",
                 "Restart the SQL Server service and monitor; if instability persists, fail over to the DR instance",
             ],
@@ -2147,7 +2149,8 @@ def scenario_ics_calendar_content() -> tuple[TicketInput, TriageDecision]:
             ),
             remediation_steps=[
                 "Verify Outlook iCalendar processing settings and test with a manually crafted .ics file",
-                "Check Exchange transport rules or mail-flow policies that may strip or block .ics attachments from external senders",
+                "Check Exchange transport rules or mail-flow policies that "
+                "may strip or block .ics attachments from external senders",
                 "Test the specific .ics file by importing it directly via File > Open & Export in Outlook",
                 "If a transport rule is blocking, add an exception for the globexcorp.com domain",
             ],
@@ -2235,7 +2238,8 @@ def scenario_pdf_to_text_artifacts() -> tuple[TicketInput, TriageDecision]:
                 "Compare OCR module v4.2.1 output with v4.1.x on the same sample invoices to confirm regression",
                 "If regression confirmed, roll back the OCR module to v4.1.x and re-process the stuck invoices",
                 "Report the parsing issue to the OCR module vendor with sample PDFs",
-                "Implement validation checks on extracted text to catch garbled output before it enters the processing queue",
+                "Implement validation checks on extracted text to catch "
+                "garbled output before it enters the processing queue",
             ],
         ),
     )
@@ -2531,10 +2535,12 @@ def scenario_sql_query_dump() -> tuple[TicketInput, TriageDecision]:
                 "ContosoSettlements with 47 blocked sessions affecting 30 users across trading desks."
             ),
             remediation_steps=[
-                "Identify the head blocker among the 47 blocked sessions using sys.dm_exec_requests and sys.dm_os_waiting_tasks",
+                "Identify the head blocker among the 47 blocked sessions "
+                "using sys.dm_exec_requests and sys.dm_os_waiting_tasks",
                 "Check for long-running transactions or uncommitted changes holding locks",
                 "Review PAGEIOLATCH_SH waits for potential disk I/O bottleneck or memory pressure",
-                "If a runaway query is identified, terminate it and consider adding missing indexes to prevent recurrence",
+                "If a runaway query is identified, terminate it and consider "
+                "adding missing indexes to prevent recurrence",
             ],
         ),
     )
@@ -2561,7 +2567,8 @@ def scenario_docker_container_logs() -> tuple[TicketInput, TriageDecision]:
         "2026-03-18T09:15:45.891Z [WARN]  trade-api | GC pressure detected, pausing 340ms\n"
         "2026-03-18T09:16:02.112Z [ERROR] trade-api | Memory usage at 94% (3.76GB / 4GB limit)\n"
         "2026-03-18T09:16:03.001Z [ERROR] trade-api | java.lang.OutOfMemoryError: Java heap space\n"
-        "2026-03-18T09:16:03.002Z [ERROR] trade-api |   at com.contoso.trading.OrderProcessor.processBatch(OrderProcessor.java:247)\n"
+        "2026-03-18T09:16:03.002Z [ERROR] trade-api | "
+        "  at com.contoso.trading.OrderProcessor.processBatch(OrderProcessor.java:247)\n"
         "2026-03-18T09:16:03.003Z [ERROR] trade-api |   at com.contoso.trading.Engine.run(Engine.java:89)\n"
         "2026-03-18T09:16:03.500Z [FATAL] trade-api | Container killed by OOM killer (exit code 137)\n"
         "--- Container restarted (attempt 3/5) ---\n"
@@ -2703,7 +2710,7 @@ def scenario_terraform_plan_output() -> tuple[TicketInput, TriageDecision]:
     for i in range(1, 16):
         plan_lines.append(f"  # azurerm_storage_account.data_{i:02d} will be updated in-place")
         plan_lines.append(f'  ~ resource "azurerm_storage_account" "data_{i:02d}" {{')
-        plan_lines.append(f'      ~ tags = {{ + "env" = "production" }}')
+        plan_lines.append('      ~ tags = { + "env" = "production" }')
         plan_lines.append("    }\n")
     plan_lines.extend([
         "  # azurerm_dns_a_record.trading_api will be DESTROYED and re-created",
@@ -3130,13 +3137,19 @@ def scenario_deeply_nested_java_exception() -> tuple[TicketInput, TriageDecision
         "\t... 45 more\n"
         "Caused by: org.springframework.dao.DataAccessResourceFailureException: could not extract ResultSet; "
         "nested exception is org.hibernate.exception.JDBCConnectionException: could not extract ResultSet\n"
-        "\tat org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)\n"
-        "\tat org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:233)\n"
-        "\tat org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:551)\n"
+        "\tat org.springframework.orm.jpa.vendor."
+        "HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:276)\n"
+        "\tat org.springframework.orm.jpa.vendor."
+        "HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:233)\n"
+        "\tat org.springframework.orm.jpa."
+        "AbstractEntityManagerFactoryBean.translateExceptionIfPossible("
+        "AbstractEntityManagerFactoryBean.java:551)\n"
         "\t... 58 more\n"
         "Caused by: org.hibernate.exception.JDBCConnectionException: could not extract ResultSet\n"
-        "\tat org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:115)\n"
-        "\tat org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:56)\n"
+        "\tat org.hibernate.exception.internal.SQLStateConversionDelegate"
+        ".convert(SQLStateConversionDelegate.java:115)\n"
+        "\tat org.hibernate.exception.internal.StandardSQLExceptionConverter"
+        ".convert(StandardSQLExceptionConverter.java:56)\n"
         "\tat org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)\n"
         "\t... 72 more\n"
         "Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: "

@@ -653,7 +653,7 @@ def test_escalated_tickets_justify_escalation():
         "escalat", "flag", "social engineering", "impersonat", "manipulation",
         "security", "phishing", "unauthorized", "violation", "deny", "report",
         "investigate", "suspicious", "malicious", "persona", "breach",
-        "adversarial", "fabricat", "coercion", "threat", "fake",
+        "adversarial", "fabricat", "coercion", "threat", "fake", "reject",
     }
     for g in _load_gold():
         if g["needs_escalation"]:

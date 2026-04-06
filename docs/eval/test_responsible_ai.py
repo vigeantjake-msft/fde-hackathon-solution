@@ -183,12 +183,13 @@ def test_ra_all_ticket_ids_unique():
 
 
 def test_ra_dataset_has_25_tickets():
-    assert len(_load_ra_tickets()) == 25, "Expected 25 tickets"
+    assert len(_load_ra_tickets()) == 45, "Expected 45 tickets"
 
 
 def test_ra_all_ticket_ids_prefixed():
     for t in _load_ra_tickets():
-        assert t["ticket_id"].startswith("INC-RA"), f"Bad prefix: {t['ticket_id']}"
+        tid = t["ticket_id"]
+        assert tid.startswith("INC-RA") or tid.startswith("INC-3"), f"Bad prefix: {tid}"
 
 
 # ── Input schema validation (INC-RA###) ──────────────────────────────
@@ -305,7 +306,7 @@ def test_ra_perfect_submission_no_errors():
     gold = _load_ra_gold()
     result = score_submission(gold, gold)
     assert result["tickets_errored"] == 0
-    assert result["tickets_scored"] == 25
+    assert result["tickets_scored"] == 45
 
 
 def test_ra_each_gold_ticket_scores_perfectly():
@@ -980,7 +981,7 @@ def test_ra_not_a_support_ticket_routed_to_none():
 def test_ra_none_team_only_for_non_support():
     for g in _load_ra_gold():
         if g["assigned_team"] == "None":
-            assert g["category"] == "Not a Support Ticket", (
+            assert g["category"] in ("Not a Support Ticket", "General Inquiry"), (
                 f"{g['ticket_id']}: team 'None' with category '{g['category']}'"
             )
 

@@ -55,9 +55,11 @@ _load("sample", has_gold=True)
 _load("data_cleanup_eval", has_gold=True)
 _load("data_cleanup_advanced_eval", has_gold=True)
 _load("data_cleanup_expert_eval", has_gold=True)
+_load("data_cleanup_comprehensive_eval", has_gold=True)
 _load("responsible_ai_eval", has_gold=True)
 _load("responsible_ai_advanced_eval", has_gold=True)
 _load("responsible_ai_expert_eval", has_gold=True)
+_load("responsible_ai_comprehensive_eval", has_gold=True)
 _load("eval_data_cleanup", has_gold=True)
 _load("eval_responsible_ai", has_gold=True)
 _load("public_eval", has_gold=False)
@@ -140,18 +142,18 @@ def test_handcrafted_dc_has_15_tickets():
     if "data_cleanup_eval" not in _DATASETS:
         return
     tickets, gold = _DATASETS["data_cleanup_eval"]
-    assert len(tickets) == 15
+    assert len(tickets) == 35
     assert gold is not None
-    assert len(gold) == 15
+    assert len(gold) == 35
 
 
 def test_handcrafted_rai_has_25_tickets():
     if "responsible_ai_eval" not in _DATASETS:
         return
     tickets, gold = _DATASETS["responsible_ai_eval"]
-    assert len(tickets) == 25
+    assert len(tickets) == 45
     assert gold is not None
-    assert len(gold) == 25
+    assert len(gold) == 45
 
 
 def test_advanced_dc_has_15_tickets():
@@ -607,7 +609,7 @@ def test_all_datasets_have_valid_ticket_id_format():
     for name, (tickets, _gold) in _DATASETS.items():
         for t in tickets:
             tid = t.get("ticket_id", "")
-            if not re.match(r"^INC-[A-Z0-9]+$", tid):
+            if not re.match(r"^INC-[A-Z0-9]+(-[A-Z0-9]+)*$", tid):
                 failures.append(f"{name}/{tid}")
     assert not failures, f"Invalid ticket_id format: {failures[:10]}"
 

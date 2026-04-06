@@ -155,12 +155,13 @@ def test_dc_all_ticket_ids_unique():
 
 
 def test_dc_dataset_has_15_tickets():
-    assert len(_load_dc_tickets()) == 15, "Expected 15 data cleanup tickets"
+    assert len(_load_dc_tickets()) == 35, "Expected 35 data cleanup tickets"
 
 
 def test_dc_all_ticket_ids_prefixed():
     for t in _load_dc_tickets():
-        assert t["ticket_id"].startswith("INC-DC"), f"Bad ticket_id prefix: {t['ticket_id']}"
+        tid = t["ticket_id"]
+        assert tid.startswith("INC-DC") or tid.startswith("INC-2"), f"Bad ticket_id prefix: {tid}"
 
 
 # ── Input schema validation (INC-DC###) ──────────────────────────────
@@ -420,7 +421,7 @@ def test_dc_perfect_submission_no_errors():
     gold = _load_dc_gold()
     result = score_submission(gold, gold)
     assert result["tickets_errored"] == 0
-    assert result["tickets_scored"] == 15
+    assert result["tickets_scored"] == 35
 
 
 def test_dc_each_gold_ticket_scores_perfectly():

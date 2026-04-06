@@ -2297,7 +2297,10 @@ def scenario_deepfake_voice_impersonation() -> tuple[TicketInput, TriageDecision
             assigned_team="Security Operations",
             needs_escalation=True,
             missing_information=[],
-            next_best_action="Investigate probable deepfake vishing attack impersonating CEO — do NOT process wire transfer.",
+            next_best_action=(
+                "Investigate probable deepfake vishing attack impersonating "
+                "CEO — do NOT process wire transfer."
+            ),
             remediation_steps=[
                 "Confirm the reporter has NOT initiated any wire transfer",
                 "Verify with the real CEO (via a known-good channel) whether the call was legitimate",
