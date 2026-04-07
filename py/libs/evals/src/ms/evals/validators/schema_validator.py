@@ -6,15 +6,15 @@ schema: correct field presence, valid enum values, correct types.
 Designed to catch common mistakes before scoring.
 """
 
-from ms.evals.constants import CATEGORIES
-from ms.evals.constants import MISSING_INFO_VOCABULARY
-from ms.evals.constants import PRIORITIES
-from ms.evals.constants import TEAMS
+from ms.evals_core.constants import Category
+from ms.evals_core.constants import MissingInfo
+from ms.evals_core.constants import Priority
+from ms.evals_core.constants import Team
 
-_CATEGORIES_LOWER = frozenset(c.lower() for c in CATEGORIES)
-_TEAMS_LOWER = frozenset(t.lower() for t in TEAMS)
-_PRIORITIES_UPPER = frozenset(PRIORITIES)
-_MISSING_INFO_LOWER = frozenset(v.lower() for v in MISSING_INFO_VOCABULARY)
+_CATEGORIES_LOWER = frozenset(c.value.lower() for c in Category)
+_TEAMS_LOWER = frozenset(t.value.lower() for t in Team)
+_PRIORITIES_UPPER = frozenset(p.value for p in Priority)
+_MISSING_INFO_LOWER = frozenset(v.value.lower() for v in MissingInfo)
 
 _REQUIRED_FIELDS = (
     "ticket_id",
@@ -59,7 +59,7 @@ def validate_triage_response(response: dict[str, object]) -> list[SchemaViolatio
     if isinstance(category, str):
         if category.strip().lower() not in _CATEGORIES_LOWER:
             violations.append(
-                SchemaViolation("category", f"invalid category: {category!r}. Must be one of {CATEGORIES}")
+                SchemaViolation("category", f"invalid category: {category!r}. Must be one of {list(Category)}")
             )
     elif category is not None:
         violations.append(SchemaViolation("category", f"expected string, got {type(category).__name__}"))
@@ -69,7 +69,7 @@ def validate_triage_response(response: dict[str, object]) -> list[SchemaViolatio
     if isinstance(priority, str):
         if priority.strip().upper() not in _PRIORITIES_UPPER:
             violations.append(
-                SchemaViolation("priority", f"invalid priority: {priority!r}. Must be one of {PRIORITIES}")
+                SchemaViolation("priority", f"invalid priority: {priority!r}. Must be one of {list(Priority)}")
             )
     elif priority is not None:
         violations.append(SchemaViolation("priority", f"expected string, got {type(priority).__name__}"))
@@ -78,7 +78,7 @@ def validate_triage_response(response: dict[str, object]) -> list[SchemaViolatio
     team = response.get("assigned_team")
     if isinstance(team, str):
         if team.strip().lower() not in _TEAMS_LOWER:
-            violations.append(SchemaViolation("assigned_team", f"invalid team: {team!r}. Must be one of {TEAMS}"))
+            violations.append(SchemaViolation("assigned_team", f"invalid team: {team!r}. Must be one of {list(Team)}"))
     elif team is not None:
         violations.append(SchemaViolation("assigned_team", f"expected string, got {type(team).__name__}"))
 
