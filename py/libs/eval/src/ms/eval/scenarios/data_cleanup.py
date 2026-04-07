@@ -1631,13 +1631,8 @@ def scenario_soap_fault_xml() -> tuple[TicketInput, TriageDecision]:
                 "Check health and availability of the CRM backend service (crm-api.contoso.internal)",
                 "Review application and IIS logs on the CRM server around 09:15 for errors or resource exhaustion",
                 "Verify network connectivity between the web front-end and the CRM API tier",
-<<<<<<< HEAD
                 "If the backend service is healthy, increase the WCF SendTimeout "
                 "as a temporary workaround while root cause is investigated",
-=======
-                "If the backend service is healthy, increase the WCF SendTimeout as a temporary"
-                " workaround while root cause is investigated",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
             ],
         ),
     )
@@ -2041,13 +2036,8 @@ def scenario_powershell_verbose_output() -> tuple[TicketInput, TriageDecision]:
             ),
             remediation_steps=[
                 "Review the SQL Server error log for the root cause of the repeated service stops",
-<<<<<<< HEAD
                 "Check disk health and available space on the volumes hosting "
                 "the ContosoSettlements database and transaction log",
-=======
-                "Check disk health and available space on the volumes hosting the"
-                " ContosoSettlements database and transaction log",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
                 "Verify the database integrity with DBCC CHECKDB on ContosoSettlements",
                 "Restart the SQL Server service and monitor; if instability persists, fail over to the DR instance",
             ],
@@ -2142,13 +2132,8 @@ def scenario_ics_calendar_content() -> tuple[TicketInput, TriageDecision]:
             ),
             remediation_steps=[
                 "Verify Outlook iCalendar processing settings and test with a manually crafted .ics file",
-<<<<<<< HEAD
                 "Check Exchange transport rules or mail-flow policies that "
                 "may strip or block .ics attachments from external senders",
-=======
-                "Check Exchange transport rules or mail-flow policies that may strip or"
-                " block .ics attachments from external senders",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
                 "Test the specific .ics file by importing it directly via File > Open & Export in Outlook",
                 "If a transport rule is blocking, add an exception for the globexcorp.com domain",
             ],
@@ -2236,13 +2221,8 @@ def scenario_pdf_to_text_artifacts() -> tuple[TicketInput, TriageDecision]:
                 "Compare OCR module v4.2.1 output with v4.1.x on the same sample invoices to confirm regression",
                 "If regression confirmed, roll back the OCR module to v4.1.x and re-process the stuck invoices",
                 "Report the parsing issue to the OCR module vendor with sample PDFs",
-<<<<<<< HEAD
                 "Implement validation checks on extracted text to catch "
                 "garbled output before it enters the processing queue",
-=======
-                "Implement validation checks on extracted text to catch garbled output"
-                " before it enters the processing queue",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
             ],
         ),
     )
@@ -2548,27 +2528,17 @@ def scenario_sql_query_dump() -> tuple[TicketInput, TriageDecision]:
                 "ContosoSettlements with 47 blocked sessions affecting 30 users across trading desks."
             ),
             remediation_steps=[
-<<<<<<< HEAD
                 "Identify the head blocker among the 47 blocked sessions "
                 "using sys.dm_exec_requests and sys.dm_os_waiting_tasks",
                 "Check for long-running transactions or uncommitted changes holding locks",
                 "Review PAGEIOLATCH_SH waits for potential disk I/O bottleneck or memory pressure",
                 "If a runaway query is identified, terminate it and consider "
                 "adding missing indexes to prevent recurrence",
-=======
-                "Identify the head blocker among the 47 blocked sessions using"
-                " sys.dm_exec_requests and sys.dm_os_waiting_tasks",
-                "Check for long-running transactions or uncommitted changes holding locks",
-                "Review PAGEIOLATCH_SH waits for potential disk I/O bottleneck or memory pressure",
-                "If a runaway query is identified, terminate it and consider adding"
-                " missing indexes to prevent recurrence",
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
             ],
         ),
     )
 
 
-<<<<<<< HEAD
 # ── New scenarios (INC-DC-5001 through INC-DC-5010) ──────────────────
 
 
@@ -2702,8 +2672,7 @@ def scenario_kubernetes_pod_yaml() -> tuple[TicketInput, TriageDecision]:
         assigned_team="Enterprise Applications",
         missing_information=["affected_users", "business_impact"],
         next_best_action=(
-            "Fix the container image tag in the Helm chart from "
-            "'v2.4.1-hotfix-typo' to 'v2.4.1-hotfix' and redeploy."
+            "Fix the container image tag in the Helm chart from 'v2.4.1-hotfix-typo' to 'v2.4.1-hotfix' and redeploy."
         ),
         remediation_steps=[
             "Correct the image tag in Helm values to 'v2.4.1-hotfix'",
@@ -2725,7 +2694,7 @@ def scenario_terraform_plan_output() -> tuple[TicketInput, TriageDecision]:
         "Terraform will perform the following actions:\n",
         "  # azurerm_resource_group.prod will be updated in-place",
         '  ~ resource "azurerm_resource_group" "prod" {',
-        '      ~ tags = {',
+        "      ~ tags = {",
         '          + "cost_center" = "CC-4521"',
         "        }",
         "    }\n",
@@ -2735,20 +2704,22 @@ def scenario_terraform_plan_output() -> tuple[TicketInput, TriageDecision]:
         plan_lines.append(f'  ~ resource "azurerm_storage_account" "data_{i:02d}" {{')
         plan_lines.append('      ~ tags = { + "env" = "production" }')
         plan_lines.append("    }\n")
-    plan_lines.extend([
-        "  # azurerm_dns_a_record.trading_api will be DESTROYED and re-created",
-        '  -/+ resource "azurerm_dns_a_record" "trading_api" {',
-        '      ~ name    = "api.trading" -> "api-v2.trading"',
-        '      ~ records = ["10.0.1.50"] -> ["10.0.2.100"]',
-        '      ~ ttl     = 300 -> 60',
-        "    }\n",
-        "  # azurerm_dns_cname_record.trading_web will be DESTROYED",
-        '  - resource "azurerm_dns_cname_record" "trading_web" {',
-        '      - name   = "trading.contoso.internal"',
-        '      - record = "api.trading.contoso.internal"',
-        "    }\n",
-        "Plan: 2 to add, 18 to change, 2 to destroy.\n",
-    ])
+    plan_lines.extend(
+        [
+            "  # azurerm_dns_a_record.trading_api will be DESTROYED and re-created",
+            '  -/+ resource "azurerm_dns_a_record" "trading_api" {',
+            '      ~ name    = "api.trading" -> "api-v2.trading"',
+            '      ~ records = ["10.0.1.50"] -> ["10.0.2.100"]',
+            "      ~ ttl     = 300 -> 60",
+            "    }\n",
+            "  # azurerm_dns_cname_record.trading_web will be DESTROYED",
+            '  - resource "azurerm_dns_cname_record" "trading_web" {',
+            '      - name   = "trading.contoso.internal"',
+            '      - record = "api.trading.contoso.internal"',
+            "    }\n",
+            "Plan: 2 to add, 18 to change, 2 to destroy.\n",
+        ]
+    )
     description = (
         "Hi team,\n\n"
         "We're about to apply this terraform plan for the Q2 infrastructure update. "
@@ -3000,39 +2971,41 @@ def scenario_dns_zone_file() -> tuple[TicketInput, TriageDecision]:
     Tests that the system identifies the DNS resolution failure from
     a dump of zone file records.
     """
-    zone_records = "\n".join([
-        "; Zone file for contoso.internal",
-        "$TTL 86400",
-        "$ORIGIN contoso.internal.",
-        "@       IN  SOA  ns1.contoso.internal. admin.contoso.internal. (",
-        "                 2026031801 ; Serial",
-        "                 3600       ; Refresh",
-        "                 900        ; Retry",
-        "                 604800     ; Expire",
-        "                 86400 )    ; Minimum TTL",
-        "",
-        "@           IN  NS   ns1.contoso.internal.",
-        "@           IN  NS   ns2.contoso.internal.",
-        "ns1         IN  A    10.0.0.10",
-        "ns2         IN  A    10.0.0.11",
-        "",
-        "; Production services",
-        "db-prod-01  IN  A    10.0.1.20",
-        "db-prod-02  IN  A    10.0.1.21",
-        "api-prod    IN  A    10.0.1.50",
-        "web-prod    IN  CNAME  api-prod.contoso.internal.",
-        "mail        IN  MX   10 mail.contoso.internal.",
-        "mail        IN  A    10.0.2.10",
-        "",
-        "; *** THESE RECORDS APPEAR CORRUPTED ***",
-        "trading     IN  A    0.0.0.0",
-        "settlement  IN  A    0.0.0.0",
-        "compliance  IN  A    0.0.0.0",
-        "",
-        "; Staging (should not resolve from prod network)",
-        "stg-api     IN  A    172.16.0.50",
-        "stg-web     IN  A    172.16.0.51",
-    ])
+    zone_records = "\n".join(
+        [
+            "; Zone file for contoso.internal",
+            "$TTL 86400",
+            "$ORIGIN contoso.internal.",
+            "@       IN  SOA  ns1.contoso.internal. admin.contoso.internal. (",
+            "                 2026031801 ; Serial",
+            "                 3600       ; Refresh",
+            "                 900        ; Retry",
+            "                 604800     ; Expire",
+            "                 86400 )    ; Minimum TTL",
+            "",
+            "@           IN  NS   ns1.contoso.internal.",
+            "@           IN  NS   ns2.contoso.internal.",
+            "ns1         IN  A    10.0.0.10",
+            "ns2         IN  A    10.0.0.11",
+            "",
+            "; Production services",
+            "db-prod-01  IN  A    10.0.1.20",
+            "db-prod-02  IN  A    10.0.1.21",
+            "api-prod    IN  A    10.0.1.50",
+            "web-prod    IN  CNAME  api-prod.contoso.internal.",
+            "mail        IN  MX   10 mail.contoso.internal.",
+            "mail        IN  A    10.0.2.10",
+            "",
+            "; *** THESE RECORDS APPEAR CORRUPTED ***",
+            "trading     IN  A    0.0.0.0",
+            "settlement  IN  A    0.0.0.0",
+            "compliance  IN  A    0.0.0.0",
+            "",
+            "; Staging (should not resolve from prod network)",
+            "stg-api     IN  A    172.16.0.50",
+            "stg-web     IN  A    172.16.0.51",
+        ]
+    )
     description = (
         "All internal DNS lookups for *.contoso.internal are intermittently failing. "
         "The trading, settlement, and compliance services have been unreachable since "
@@ -3148,7 +3121,7 @@ def scenario_deeply_nested_java_exception() -> tuple[TicketInput, TriageDecision
     spanning Spring, Hibernate, HikariCP, and JDBC layers.
     """
     exception_chain = (
-        "Exception in thread \"main\" org.springframework.web.util.NestedServletException: "
+        'Exception in thread "main" org.springframework.web.util.NestedServletException: '
         "Request processing failed; nested exception is "
         "org.springframework.dao.DataAccessResourceFailureException: could not extract ResultSet\n"
         "\tat org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)\n"
@@ -3189,7 +3162,7 @@ def scenario_deeply_nested_java_exception() -> tuple[TicketInput, TriageDecision
         "\t... 95 more\n"
         "Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: "
         "The connection to the host 10.0.1.20, named instance contosofinance has failed. "
-        "Error: \"java.net.SocketTimeoutException: connect timed out\"\n"
+        'Error: "java.net.SocketTimeoutException: connect timed out"\n'
         "\tat com.microsoft.sqlserver.jdbc.SQLServerConnection.connectHelper(SQLServerConnection.java:2568)\n"
         "\tat com.microsoft.sqlserver.jdbc.SQLServerConnection.login(SQLServerConnection.java:2234)\n"
         "\tat com.microsoft.sqlserver.jdbc.SQLServerConnection.connect(SQLServerConnection.java:1210)\n"
@@ -3316,8 +3289,6 @@ def scenario_spreadsheet_tab_paste() -> tuple[TicketInput, TriageDecision]:
     return ticket, gold
 
 
-=======
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
 def get_all_data_cleanup_scenarios() -> list[tuple[TicketInput, TriageDecision]]:
     """Return all data cleanup evaluation scenarios as (ticket, gold) pairs."""
     return [
@@ -3361,7 +3332,6 @@ def get_all_data_cleanup_scenarios() -> list[tuple[TicketInput, TriageDecision]]
         scenario_enormous_cc_list(),
         scenario_nested_quoted_replies(),
         scenario_sql_query_dump(),
-<<<<<<< HEAD
         # ── New scenarios (INC-DC-5001 through INC-DC-5010) ──
         scenario_docker_container_logs(),
         scenario_kubernetes_pod_yaml(),
@@ -3373,6 +3343,4 @@ def get_all_data_cleanup_scenarios() -> list[tuple[TicketInput, TriageDecision]]
         scenario_packet_capture_text(),
         scenario_deeply_nested_java_exception(),
         scenario_spreadsheet_tab_paste(),
-=======
->>>>>>> users/fde-platform-agent/fde-hiring-test-3/boyevche
     ]

@@ -7,7 +7,7 @@ Mirrors the output schema at docs/data/schemas/output.json.
 from typing import Literal
 
 from ms.common.models.base import FrozenBaseModel
-from ms.evals.constants import MISSING_INFO_VOCABULARY
+from ms.evals_core.constants import MissingInfo
 
 MissingInfoLiteral = Literal[
     "affected_system",
@@ -28,7 +28,7 @@ MissingInfoLiteral = Literal[
     "configuration_details",
 ]
 
-MISSING_INFO_VALUES: frozenset[str] = frozenset(MISSING_INFO_VOCABULARY)
+MISSING_INFO_VALUES: frozenset[str] = frozenset(m.value for m in MissingInfo)
 
 
 class TriageResponse(FrozenBaseModel):

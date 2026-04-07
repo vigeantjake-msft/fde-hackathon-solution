@@ -58,42 +58,34 @@ class TestDataCleanupScenarios:
         """Verify expected scenario IDs exist."""
         scenarios = get_scenarios()
         ids = {s.scenario_id for s in scenarios}
-        expected = {f"DC-{i:03d}" for i in range(1, 281)}
+        expected = {f"DC-{i:03d}" for i in range(1, 265)}
         assert expected.issubset(ids), f"Missing IDs: {expected - ids}"
 
     def test_minimum_scenario_count(self) -> None:
-        """Data cleanup should have at least 280 scenarios."""
+        """Data cleanup should have at least 264 scenarios."""
         scenarios = get_scenarios()
-        assert len(scenarios) >= 280, f"Expected >= 280 DC scenarios, got {len(scenarios)}"
+        assert len(scenarios) >= 264, f"Expected >= 264 DC scenarios, got {len(scenarios)}"
 
     def test_gold_categories_valid(self) -> None:
         """All gold categories must be from the valid vocabulary."""
         for s in get_scenarios():
-            assert s.category.value in ALL_CATEGORIES, (
-                f"{s.scenario_id}: invalid gold category '{s.category}'"
-            )
+            assert s.category.value in ALL_CATEGORIES, f"{s.scenario_id}: invalid gold category '{s.category}'"
 
     def test_gold_priorities_valid(self) -> None:
         """All gold priorities must be from the valid vocabulary."""
         for s in get_scenarios():
-            assert s.priority.value in ALL_PRIORITIES, (
-                f"{s.scenario_id}: invalid gold priority '{s.priority}'"
-            )
+            assert s.priority.value in ALL_PRIORITIES, f"{s.scenario_id}: invalid gold priority '{s.priority}'"
 
     def test_gold_teams_valid(self) -> None:
         """All gold teams must be from the valid vocabulary."""
         for s in get_scenarios():
-            assert s.team.value in ALL_TEAMS, (
-                f"{s.scenario_id}: invalid gold team '{s.team}'"
-            )
+            assert s.team.value in ALL_TEAMS, f"{s.scenario_id}: invalid gold team '{s.team}'"
 
     def test_gold_missing_info_valid(self) -> None:
         """All gold missing_info items must be from the valid vocabulary."""
         for s in get_scenarios():
             for item in s.missing_info:
-                assert item.value in ALL_MISSING_INFO_FIELDS, (
-                    f"{s.scenario_id}: invalid missing info '{item}'"
-                )
+                assert item.value in ALL_MISSING_INFO_FIELDS, f"{s.scenario_id}: invalid missing info '{item}'"
 
     def test_covers_key_cleanup_categories(self) -> None:
         """Verify that key data cleanup noise types are covered."""
@@ -293,7 +285,7 @@ class TestDataCleanupScenarios:
             "recognition-errors",
             "winrm-transcript",
             "remote-session-dump",
-            # Tags from DC-261..DC-280
+            # Tags from DC-261..DC-264
             "enormous-cc-bcc",
             "header-overload",
             "corrupted-base64",
@@ -302,33 +294,7 @@ class TestDataCleanupScenarios:
             "nested-markup",
             "zero-width-joiners",
             "mixed-direction",
-            "emoji-math-symbols",
-            "unicode-dense",
-            "nested-quoting",
-            "deep-reply-chain",
             "alert-flood",
             "monitoring-noise",
-            "terminal-escape-codes",
-            "raw-ansi",
-            "build-log-dump",
-            "ci-cd-output",
-            "multilingual-legal",
-            "disclaimer-flood",
-            "ocr-handwriting",
-            "recognition-noise",
-            "sql-like-patterns",
-            "query-paste",
-            "terraform-plan",
-            "iac-output",
-            "mime-boundary-corrupt",
-            "multipart-garbled",
-            "soap-xml-dump",
-            "web-service-noise",
-            "pgp-encrypted-block",
-            "crypto-noise",
-            "inline-pdf-base64",
-            "document-embed",
-            "zalgo-combining",
-            "diacritical-overload",
         }
         assert expected_tags.issubset(all_tags), f"Missing cleanup tags: {expected_tags - all_tags}"

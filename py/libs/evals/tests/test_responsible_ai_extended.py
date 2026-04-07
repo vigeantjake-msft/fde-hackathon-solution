@@ -8,13 +8,11 @@ response constraints, and have consistent expected triage values.
 
 import pytest
 
+# Ensure scenarios are registered before tests run.
+import ms.evals_core.framework.scenarios.responsible_ai  # noqa: F401
 from ms.evals_core.framework.models.scenario import EvalScenario
 from ms.evals_core.framework.models.scenario import ScenarioCategory
 from ms.evals_core.framework.scenarios.registry import default_registry
-
-# Ensure scenarios are registered before tests run.
-import ms.evals_core.framework.scenarios.responsible_ai  # noqa: F401
-
 
 VALID_CATEGORIES = {
     "Access & Authentication",
@@ -75,17 +73,11 @@ class TestExtendedRaiScenarioIntegrity:
                 continue
             triage = s.expected_triage
             if triage.category is not None:
-                assert triage.category in VALID_CATEGORIES, (
-                    f"{s.scenario_id}: invalid category '{triage.category}'"
-                )
+                assert triage.category in VALID_CATEGORIES, f"{s.scenario_id}: invalid category '{triage.category}'"
             if triage.priority is not None:
-                assert triage.priority in VALID_PRIORITIES, (
-                    f"{s.scenario_id}: invalid priority '{triage.priority}'"
-                )
+                assert triage.priority in VALID_PRIORITIES, f"{s.scenario_id}: invalid priority '{triage.priority}'"
             if triage.assigned_team is not None:
-                assert triage.assigned_team in VALID_TEAMS, (
-                    f"{s.scenario_id}: invalid team '{triage.assigned_team}'"
-                )
+                assert triage.assigned_team in VALID_TEAMS, f"{s.scenario_id}: invalid team '{triage.assigned_team}'"
 
     def test_all_have_tags(self, extended_rai_scenarios: list[EvalScenario]) -> None:
         for s in extended_rai_scenarios:
@@ -121,9 +113,7 @@ class TestExtendedRaiAdversarialContent:
         if s is None:
             pytest.skip("rai-237 not registered")
         desc = s.ticket.description.lower()
-        assert "context" in desc or "retrieved" in desc, (
-            "rai-237: expected RAG context markers"
-        )
+        assert "context" in desc or "retrieved" in desc, "rai-237: expected RAG context markers"
 
     def test_rai238_has_padding(self, extended_rai_scenarios: list[EvalScenario]) -> None:
         s = next((s for s in extended_rai_scenarios if s.scenario_id == "rai-238"), None)
@@ -138,9 +128,7 @@ class TestExtendedRaiAdversarialContent:
         if s is None:
             pytest.skip("rai-239 not registered")
         desc = s.ticket.description.lower()
-        assert "step" in desc or "reasoning" in desc or "think" in desc, (
-            "rai-239: expected chain-of-thought coercion"
-        )
+        assert "step" in desc or "reasoning" in desc or "think" in desc, "rai-239: expected chain-of-thought coercion"
 
     def test_rai241_has_recursive_injection(self, extended_rai_scenarios: list[EvalScenario]) -> None:
         s = next((s for s in extended_rai_scenarios if s.scenario_id == "rai-241"), None)
@@ -192,9 +180,7 @@ class TestExtendedRaiAdversarialContent:
         if s is None:
             pytest.skip("rai-257 not registered")
         desc = s.ticket.description
-        assert "<script>" in desc or "alert(" in desc or "document." in desc, (
-            "rai-257: expected XSS payload"
-        )
+        assert "<script>" in desc or "alert(" in desc or "document." in desc, "rai-257: expected XSS payload"
 
 
 # ── Constraint validation ────────────────────────────────────────────
@@ -234,8 +220,7 @@ class TestExtendedRaiConstraints:
         for s in extended_rai_scenarios:
             if s.scenario_id in real_issue_map and s.expected_triage is not None:
                 assert s.expected_triage.category == real_issue_map[s.scenario_id], (
-                    f"{s.scenario_id}: expected '{real_issue_map[s.scenario_id]}', "
-                    f"got '{s.expected_triage.category}'"
+                    f"{s.scenario_id}: expected '{real_issue_map[s.scenario_id]}', got '{s.expected_triage.category}'"
                 )
 
     def test_attack_scenarios_have_constraints(self, extended_rai_scenarios: list[EvalScenario]) -> None:
@@ -243,9 +228,9 @@ class TestExtendedRaiConstraints:
         ids_needing_constraints = {"rai-246", "rai-250", "rai-254", "rai-257", "rai-260"}
         for s in extended_rai_scenarios:
             if s.scenario_id in ids_needing_constraints:
-                assert len(s.constraints.must_not_contain) > 0 or len(s.constraints.must_not_contain_in_remediation) > 0, (
-                    f"{s.scenario_id}: expected must_not_contain constraints for dangerous content"
-                )
+                assert (
+                    len(s.constraints.must_not_contain) > 0 or len(s.constraints.must_not_contain_in_remediation) > 0
+                ), f"{s.scenario_id}: expected must_not_contain constraints for dangerous content"
 
 
 # ── Classification correctness ───────────────────────────────────────

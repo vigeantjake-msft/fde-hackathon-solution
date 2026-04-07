@@ -42,7 +42,7 @@ SCENARIOS: list[Scenario] = [
             '"pricing":null,"availability":null}}],"pageInfo":{'
             '"hasNextPage":false,"endCursor":"def456"}}},'
             '"errors":[{"message":"Cannot resolve field \'deprecated_sku\' on type '
-            "Product\",\"locations\":[{\"line\":12,\"column\":5}],"
+            'Product","locations":[{"line":12,"column":5}],'
             '"path":["products","edges",1,"node","deprecated_sku"],'
             '"extensions":{"code":"FIELD_NOT_FOUND"}}]}\n\n'
             "The second product node is coming back as all nulls, and there's a "
@@ -164,13 +164,13 @@ SCENARIOS: list[Scenario] = [
             '\\"features\\":{\\"newCheckout\\":true,'
             '\\"betaSearch\\":false}}"}\n\n'
             "When we try to parse config.database.host, we get undefined because the "
-            'entire config value is a string with escaped quotes instead of a proper '
+            "entire config value is a string with escaped quotes instead of a proper "
             "nested object. The old config service returned:\n\n"
             '{"config":{"database":{"host":"sqlprod-01.contoso.com",...}}}\n\n'
             "This broke after the config service was migrated to the new API gateway "
             "last week. Looks like the gateway is double-serializing the JSON response.",
             "Config API returning escaped JSON strings instead of proper nested objects. "
-            "The response body contains \\\" sequences throughout. Downstream apps get "
+            'The response body contains \\" sequences throughout. Downstream apps get '
             "parse errors. Started after API gateway migration. Need the gateway team "
             "to fix the serialization.",
         ],
@@ -301,12 +301,12 @@ SCENARIOS: list[Scenario] = [
         next_best_actions=[
             "Check if the ContosoAppSvc service was renamed or removed during the "
             "recent server configuration update, and verify deployment service account permissions.",
-            "Investigate the service name change and file permission issue on the "
-            "production deployment server.",
+            "Investigate the service name change and file permission issue on the production deployment server.",
         ],
         remediation_steps=[
             [
-                "Check the current service name on deploy-prod-01 using Get-Service | Where-Object {$_.DisplayName -like '*Contoso*'}",
+                "Check the current service name on deploy-prod-01 using"
+                " Get-Service | Where-Object {$_.DisplayName -like '*Contoso*'}",
                 "Update the deployment script with the correct service name",
                 "Verify the svc-deploy service account has write permissions to C:\\Program Files\\ContosoApp\\",
                 "Test the deployment script in a staging environment first",
@@ -362,8 +362,7 @@ SCENARIOS: list[Scenario] = [
         next_best_actions=[
             "Compare the current registry state against a known-good backup to "
             "identify which keys were modified or removed by the Windows Update.",
-            "Investigate if Windows Update KB5034441 has known compatibility issues "
-            "with the FinanceApp registry keys.",
+            "Investigate if Windows Update KB5034441 has known compatibility issues with the FinanceApp registry keys.",
         ],
         remediation_steps=[
             [
@@ -461,7 +460,7 @@ SCENARIOS: list[Scenario] = [
             "to database postgresql://db-prod-02:5432/reporting\n"
             "Mar 17 09:15:03 appserver-03 contoso-reporting[8842]: [ERROR] Failed to "
             "connect to database: FATAL: password authentication failed for user "
-            "\"svc_reporting\"\n"
+            '"svc_reporting"\n'
             "Mar 17 09:15:03 appserver-03 contoso-reporting[8842]: [ERROR] Retrying "
             "connection (attempt 1/3)...\n"
             "Mar 17 09:15:06 appserver-03 contoso-reporting[8842]: [ERROR] Retrying "
@@ -759,17 +758,17 @@ SCENARIOS: list[Scenario] = [
             "Terraform will perform the following actions:\n\n"
             "  # azurerm_storage_account.datalake will be updated in-place\n"
             '  ~ resource "azurerm_storage_account" "datalake" {\n'
-            "      ~ account_tier             = \"Standard\" -> \"Premium\"\n"
-            "      ~ account_replication_type = \"GRS\" -> \"LRS\"\n"
-            "        name                     = \"contosodatalake01\"\n"
-            "        resource_group_name      = \"rg-data-prod\"\n"
+            '      ~ account_tier             = "Standard" -> "Premium"\n'
+            '      ~ account_replication_type = "GRS" -> "LRS"\n'
+            '        name                     = "contosodatalake01"\n'
+            '        resource_group_name      = "rg-data-prod"\n'
             "    }\n\n"
             "  # azurerm_storage_data_lake_gen2_filesystem.main will be destroyed\n"
             "  # (because azurerm_storage_data_lake_gen2_filesystem.main is not in "
             "configuration)\n"
             '  - resource "azurerm_storage_data_lake_gen2_filesystem" "main" {\n'
-            "      - name               = \"analytics\"\n"
-            "      - storage_account_id = \"/subscriptions/abc123/resourceGroups/"
+            '      - name               = "analytics"\n'
+            '      - storage_account_id = "/subscriptions/abc123/resourceGroups/'
             'rg-data-prod/providers/Microsoft.Storage/storageAccounts/contosodatalake01"\n'
             "    }\n\n"
             "  # azurerm_synapse_workspace.analytics will be created\n"
