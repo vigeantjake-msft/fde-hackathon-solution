@@ -8074,19 +8074,21 @@ default_registry.register(
                 '{"type":"Microsoft.Compute/virtualMachines",'
                 '"apiVersion":"2023-09-01",'
                 '"name":"vm-contoso-trade-01",'
-                '"location":"[parameters('location')]",'
-                '"properties":{"hardwareProfile":{"vmSize":"[parameters('vmSize')]"},'
+                "\"location\":\"[parameters('location')]\","
+                "\"properties\":{\"hardwareProfile\":{\"vmSize\":\"[parameters('vmSize')]\"},"
                 '"storageProfile":{"imageReference":{"publisher":"MicrosoftWindowsServer",'
                 '"offer":"WindowsServer","sku":"2022-datacenter-g2","version":"latest"}},'
                 '"osProfile":{"computerName":"trade-01","adminUsername":"contosoadmin"},'
-                '"networkProfile":{"networkInterfaces":[{"id":"[resourceId('Microsoft.Network/networkInterfaces','nic-trade-01')]"}]}}},'
+                "\"networkProfile\":{\"networkInterfaces\":[{\"id\":\"[resourceId("
+                "'Microsoft.Network/networkInterfaces','nic-trade-01')]\"}]}}},"
                 '{"type":"Microsoft.Network/networkInterfaces",'
                 '"apiVersion":"2023-09-01",'
                 '"name":"nic-trade-01",'
-                '"location":"[parameters('location')]",'
+                "\"location\":\"[parameters('location')]\","
                 '"properties":{"ipConfigurations":[{"name":"ipconfig1",'
-                '"properties":{"subnet":{"id":"[resourceId('Microsoft.Network/virtualNetworks/subnets','
-                ''vnet-contoso-prod','snet-compute')]"}}}]}}]}\n\n'
+                "\"properties\":{\"subnet\":{\"id\":\"[resourceId("
+                "'Microsoft.Network/virtualNetworks/subnets',"
+                "'vnet-contoso-prod','snet-compute')]\"}}}]}}]}\n\n"
                 "Error: InsufficientQuota - Subscription does not have enough "
                 "Standard_D4s_v3 quota in eastus2 (requested: 4, available: 0).\n\n"
                 "We need this VM for the new trading platform.\n"
