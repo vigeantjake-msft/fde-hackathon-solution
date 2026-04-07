@@ -12,6 +12,7 @@ dirty input and returns potentially unusual responses.
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, ".")  # noqa: TID251
 
@@ -559,8 +560,9 @@ def test_routing_with_leading_dash():
 def test_missing_info_with_none_items_in_list():
     """API returns list with None items mixed in."""
     # None items will fail _normalize() since it calls .strip() on str
+    bad_input: Any = [None, "error_message"]
     try:
-        score_missing_info([None, "error_message"], ["error_message"])
+        score_missing_info(bad_input, ["error_message"])
         raised = False
     except AttributeError:
         raised = True
@@ -569,8 +571,9 @@ def test_missing_info_with_none_items_in_list():
 
 def test_missing_info_with_integer_items():
     """API returns list with integer items instead of strings."""
+    bad_input: Any = [42, "error_message"]
     try:
-        score_missing_info([42, "error_message"], ["error_message"])
+        score_missing_info(bad_input, ["error_message"])
         raised = False
     except AttributeError:
         raised = True
