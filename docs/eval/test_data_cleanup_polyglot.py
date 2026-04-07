@@ -31,6 +31,7 @@ Usage:
     uv run pytest test_data_cleanup_polyglot.py -v
 """
 
+import inspect
 import json
 import re
 import sys
@@ -164,23 +165,17 @@ def test_all_reporters_have_required_fields():
 
 def test_all_channels_valid():
     for ticket in _load_tickets():
-        assert ticket["channel"] in _VALID_CHANNELS, (
-            f"{ticket['ticket_id']} invalid channel: {ticket['channel']}"
-        )
+        assert ticket["channel"] in _VALID_CHANNELS, f"{ticket['ticket_id']} invalid channel: {ticket['channel']}"
 
 
 def test_all_descriptions_nonempty():
     for ticket in _load_tickets():
-        assert len(ticket["description"].strip()) > 50, (
-            f"{ticket['ticket_id']} description too short"
-        )
+        assert len(ticket["description"].strip()) > 50, f"{ticket['ticket_id']} description too short"
 
 
 def test_all_subjects_nonempty():
     for ticket in _load_tickets():
-        assert len(ticket["subject"].strip()) > 10, (
-            f"{ticket['ticket_id']} subject too short"
-        )
+        assert len(ticket["subject"].strip()) > 10, f"{ticket['ticket_id']} subject too short"
 
 
 # ── Gold answer validation ───────────────────────────────────────────
@@ -193,9 +188,7 @@ def test_gold_categories_valid():
 
 def test_gold_priorities_valid():
     for g in _load_gold():
-        assert g["priority"] in {"P1", "P2", "P3", "P4"}, (
-            f"{g['ticket_id']}: invalid priority '{g['priority']}'"
-        )
+        assert g["priority"] in {"P1", "P2", "P3", "P4"}, f"{g['ticket_id']}: invalid priority '{g['priority']}'"
 
 
 def test_gold_teams_valid():
@@ -206,9 +199,7 @@ def test_gold_teams_valid():
 def test_gold_missing_info_valid():
     for g in _load_gold():
         for item in g["missing_information"]:
-            assert item in VALID_MISSING_INFO, (
-                f"{g['ticket_id']}: invalid missing_information value '{item}'"
-            )
+            assert item in VALID_MISSING_INFO, f"{g['ticket_id']}: invalid missing_information value '{item}'"
 
 
 def test_gold_schema_fields():
@@ -234,16 +225,12 @@ def test_gold_missing_info_is_list():
 def test_gold_remediation_steps_nonempty():
     for g in _load_gold():
         assert isinstance(g["remediation_steps"], list)
-        assert len(g["remediation_steps"]) > 0, (
-            f"{g['ticket_id']}: remediation_steps should not be empty"
-        )
+        assert len(g["remediation_steps"]) > 0, f"{g['ticket_id']}: remediation_steps should not be empty"
 
 
 def test_gold_next_best_action_nonempty():
     for g in _load_gold():
-        assert len(g["next_best_action"].strip()) > 0, (
-            f"{g['ticket_id']} has empty next_best_action"
-        )
+        assert len(g["next_best_action"].strip()) > 0, f"{g['ticket_id']} has empty next_best_action"
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -255,9 +242,7 @@ def test_gold_vs_gold_perfect_score():
     """Scoring gold answers against themselves must produce a perfect 85.0."""
     gold = _load_gold()
     result = score_submission(gold, gold)
-    assert result["classification_score"] == 85.0, (
-        f"Expected perfect 85.0, got {result['classification_score']}"
-    )
+    assert result["classification_score"] == 85.0, f"Expected perfect 85.0, got {result['classification_score']}"
 
 
 def test_per_ticket_gold_vs_gold():
@@ -265,9 +250,7 @@ def test_per_ticket_gold_vs_gold():
     for g in _load_gold():
         result = score_ticket(g, g)
         for dim in ("category", "priority", "routing", "missing_info", "escalation"):
-            assert result[dim] == 1.0, (
-                f"{g['ticket_id']} self-score {dim} = {result[dim]}, expected 1.0"
-            )
+            assert result[dim] == 1.0, f"{g['ticket_id']} self-score {dim} = {result[dim]}, expected 1.0"
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -288,9 +271,7 @@ def test_dcp001_has_graphql_content():
         any(kw in desc.lower() for kw in ["graphql", "typename", "__typename"]),
         "{" in desc and "}" in desc,
     ]
-    assert sum(graphql_indicators) >= 2, (
-        "INC-DCP001 should contain GraphQL response patterns"
-    )
+    assert sum(graphql_indicators) >= 2, "INC-DCP001 should contain GraphQL response patterns"
 
 
 def test_dcp002_has_git_conflict_markers():
@@ -308,13 +289,13 @@ def test_dcp003_has_kubernetes_output():
     desc = t["description"].lower()
     k8s_indicators = [
         any(kw in desc for kw in ["kubectl", "namespace", "pod", "container"]),
-        any(kw in desc for kw in ["crashloopbackoff", "oomkilled", "restartcount",
-                                   "restart count", "conditions:", "events:"]),
+        any(
+            kw in desc
+            for kw in ["crashloopbackoff", "oomkilled", "restartcount", "restart count", "conditions:", "events:"]
+        ),
         any(kw in desc for kw in ["node:", "image:", "status:", "ready"]),
     ]
-    assert sum(k8s_indicators) >= 2, (
-        "INC-DCP003 should contain Kubernetes pod describe output"
-    )
+    assert sum(k8s_indicators) >= 2, "INC-DCP003 should contain Kubernetes pod describe output"
 
 
 def test_dcp004_has_arm_template_content():
@@ -322,14 +303,14 @@ def test_dcp004_has_arm_template_content():
     t = _tickets_by_id()["INC-DCP004"]
     desc = t["description"]
     arm_indicators = [
-        any(kw in desc for kw in ["$schema", "contentVersion", "Microsoft.Compute",
-                                   "Microsoft.Network", "Microsoft.Storage"]),
+        any(
+            kw in desc
+            for kw in ["$schema", "contentVersion", "Microsoft.Compute", "Microsoft.Network", "Microsoft.Storage"]
+        ),
         any(kw in desc for kw in ['"parameters"', '"resources"', '"variables"']),
         any(kw in desc.lower() for kw in ["arm template", "bicep", "azure resource"]),
     ]
-    assert sum(arm_indicators) >= 2, (
-        "INC-DCP004 should contain ARM/Bicep template patterns"
-    )
+    assert sum(arm_indicators) >= 2, "INC-DCP004 should contain ARM/Bicep template patterns"
 
 
 def test_dcp005_has_powershell_transcript():
@@ -339,12 +320,9 @@ def test_dcp005_has_powershell_transcript():
     ps_indicators = [
         any(kw in desc for kw in ["PowerShell transcript", "****", "Start time:"]),
         any(kw in desc for kw in ["VERBOSE:", "WARNING:", "ERROR:", "DEBUG:"]),
-        any(kw in desc.lower() for kw in ["powershell", "cmdlet", "ad connect",
-                                           "azure ad", "entra"]),
+        any(kw in desc.lower() for kw in ["powershell", "cmdlet", "ad connect", "azure ad", "entra"]),
     ]
-    assert sum(ps_indicators) >= 2, (
-        "INC-DCP005 should contain PowerShell transcript output"
-    )
+    assert sum(ps_indicators) >= 2, "INC-DCP005 should contain PowerShell transcript output"
 
 
 def test_dcp006_has_har_data():
@@ -352,16 +330,11 @@ def test_dcp006_has_har_data():
     t = _tickets_by_id()["INC-DCP006"]
     desc = t["description"]
     har_indicators = [
-        any(kw in desc.lower() for kw in ["har", "entries", "waterfall",
-                                           "network trace", "http archive"]),
-        any(kw in desc for kw in ['"request"', '"response"', '"timings"',
-                                   '"method"', '"url"', '"status"']),
-        any(kw in desc for kw in ["GET ", "POST ", "200", "304", "text/html",
-                                   "application/json"]),
+        any(kw in desc.lower() for kw in ["har", "entries", "waterfall", "network trace", "http archive"]),
+        any(kw in desc for kw in ['"request"', '"response"', '"timings"', '"method"', '"url"', '"status"']),
+        any(kw in desc for kw in ["GET ", "POST ", "200", "304", "text/html", "application/json"]),
     ]
-    assert sum(har_indicators) >= 2, (
-        "INC-DCP006 should contain HAR network trace data"
-    )
+    assert sum(har_indicators) >= 2, "INC-DCP006 should contain HAR network trace data"
 
 
 def test_dcp007_has_pdf_extraction_artifacts():
@@ -370,16 +343,12 @@ def test_dcp007_has_pdf_extraction_artifacts():
     desc = t["description"]
     pdf_indicators = [
         # Ligature-broken words or column-merged text
-        any(kw in desc for kw in ["f i ", "f l ", "ff i", "ff l",
-                                   "| Page", "□", "◆", "■", "�"]),
+        any(kw in desc for kw in ["f i ", "f l ", "ff i", "ff l", "| Page", "□", "◆", "■", "�"]),
         # Garbled text or extra whitespace from PDF extraction
         bool(re.search(r"\w\s{2,}\w", desc)),
-        any(kw in desc.lower() for kw in ["pdf", "extraction", "garbled",
-                                           "corrupted", "text extraction"]),
+        any(kw in desc.lower() for kw in ["pdf", "extraction", "garbled", "corrupted", "text extraction"]),
     ]
-    assert sum(pdf_indicators) >= 2, (
-        "INC-DCP007 should contain PDF text extraction artifacts"
-    )
+    assert sum(pdf_indicators) >= 2, "INC-DCP007 should contain PDF text extraction artifacts"
 
 
 def test_dcp008_has_ascii_table_output():
@@ -389,12 +358,9 @@ def test_dcp008_has_ascii_table_output():
     table_indicators = [
         any(kw in desc for kw in ["+--", "+==", "---|", "|---"]),
         desc.count("|") >= 10,
-        any(kw in desc.lower() for kw in ["replication", "lag", "mysql",
-                                           "postgresql", "query"]),
+        any(kw in desc.lower() for kw in ["replication", "lag", "mysql", "postgresql", "query"]),
     ]
-    assert sum(table_indicators) >= 2, (
-        "INC-DCP008 should contain database ASCII table output"
-    )
+    assert sum(table_indicators) >= 2, "INC-DCP008 should contain database ASCII table output"
 
 
 def test_dcp009_has_tls_cert_output():
@@ -402,16 +368,14 @@ def test_dcp009_has_tls_cert_output():
     t = _tickets_by_id()["INC-DCP009"]
     desc = t["description"]
     tls_indicators = [
-        any(kw in desc for kw in ["Certificate chain", "s_client", "BEGIN CERTIFICATE",
-                                   "subject=", "issuer=", "Verify return"]),
-        any(kw in desc.lower() for kw in ["ssl", "tls", "certificate", "openssl",
-                                           "x509"]),
-        any(kw in desc.lower() for kw in ["verification", "cipher", "cert",
-                                           "chain", "handshake"]),
+        any(
+            kw in desc
+            for kw in ["Certificate chain", "s_client", "BEGIN CERTIFICATE", "subject=", "issuer=", "Verify return"]
+        ),
+        any(kw in desc.lower() for kw in ["ssl", "tls", "certificate", "openssl", "x509"]),
+        any(kw in desc.lower() for kw in ["verification", "cipher", "cert", "chain", "handshake"]),
     ]
-    assert sum(tls_indicators) >= 2, (
-        "INC-DCP009 should contain TLS certificate chain debug output"
-    )
+    assert sum(tls_indicators) >= 2, "INC-DCP009 should contain TLS certificate chain debug output"
 
 
 def test_dcp010_has_docker_build_output():
@@ -419,15 +383,11 @@ def test_dcp010_has_docker_build_output():
     t = _tickets_by_id()["INC-DCP010"]
     desc = t["description"]
     docker_indicators = [
-        any(kw in desc for kw in ["Step ", "FROM ", "COPY ", "RUN ", "--->",
-                                   "Sending build context"]),
-        any(kw in desc.lower() for kw in ["docker", "dockerfile", "image",
-                                           "layer", "build"]),
+        any(kw in desc for kw in ["Step ", "FROM ", "COPY ", "RUN ", "--->", "Sending build context"]),
+        any(kw in desc.lower() for kw in ["docker", "dockerfile", "image", "layer", "build"]),
         bool(re.search(r"[a-f0-9]{12}", desc)),  # Docker layer hash
     ]
-    assert sum(docker_indicators) >= 2, (
-        "INC-DCP010 should contain Docker build log output"
-    )
+    assert sum(docker_indicators) >= 2, "INC-DCP010 should contain Docker build log output"
 
 
 def test_dcp011_has_azure_cli_output():
@@ -435,16 +395,14 @@ def test_dcp011_has_azure_cli_output():
     t = _tickets_by_id()["INC-DCP011"]
     desc = t["description"]
     az_indicators = [
-        any(kw in desc for kw in ["az ", "securityRules", "sourcePortRange",
-                                   "destinationPortRange", "Microsoft.Network"]),
-        any(kw in desc.lower() for kw in ["nsg", "network security group",
-                                           "azure", "az network"]),
-        any(kw in desc for kw in ['"protocol"', '"access"', '"direction"',
-                                   '"priority"', '"provisioningState"']),
+        any(
+            kw in desc
+            for kw in ["az ", "securityRules", "sourcePortRange", "destinationPortRange", "Microsoft.Network"]
+        ),
+        any(kw in desc.lower() for kw in ["nsg", "network security group", "azure", "az network"]),
+        any(kw in desc for kw in ['"protocol"', '"access"', '"direction"', '"priority"', '"provisioningState"']),
     ]
-    assert sum(az_indicators) >= 2, (
-        "INC-DCP011 should contain Azure CLI JSON output"
-    )
+    assert sum(az_indicators) >= 2, "INC-DCP011 should contain Azure CLI JSON output"
 
 
 def test_dcp012_has_binary_garbage():
@@ -452,16 +410,12 @@ def test_dcp012_has_binary_garbage():
     t = _tickets_by_id()["INC-DCP012"]
     desc = t["description"]
     binary_indicators = [
-        any(kw in desc for kw in ["\\x", "\\n", "▒", "▓", "░", "█", "╗", "╔",
-                                   "\x00", "�"]),
-        any(kw in desc.lower() for kw in ["protobuf", "grpc", "binary",
-                                           "malformed", "corrupted"]),
+        any(kw in desc for kw in ["\\x", "\\n", "▒", "▓", "░", "█", "╗", "╔", "\x00", "�"]),
+        any(kw in desc.lower() for kw in ["protobuf", "grpc", "binary", "malformed", "corrupted"]),
         # Check for non-ASCII characters
         any(ord(c) > 127 for c in desc),
     ]
-    assert sum(binary_indicators) >= 2, (
-        "INC-DCP012 should contain binary/protobuf garbage characters"
-    )
+    assert sum(binary_indicators) >= 2, "INC-DCP012 should contain binary/protobuf garbage characters"
 
 
 def test_dcp013_has_jupyter_notebook_json():
@@ -469,15 +423,11 @@ def test_dcp013_has_jupyter_notebook_json():
     t = _tickets_by_id()["INC-DCP013"]
     desc = t["description"]
     jupyter_indicators = [
-        any(kw in desc for kw in ["cell_type", "source", "execution_count",
-                                   "metadata", "outputs"]),
-        any(kw in desc.lower() for kw in ["jupyter", "notebook", ".ipynb",
-                                           "jupyterhub"]),
+        any(kw in desc for kw in ["cell_type", "source", "execution_count", "metadata", "outputs"]),
+        any(kw in desc.lower() for kw in ["jupyter", "notebook", ".ipynb", "jupyterhub"]),
         any(kw in desc for kw in ['"markdown"', '"code"', '"cells"']),
     ]
-    assert sum(jupyter_indicators) >= 2, (
-        "INC-DCP013 should contain Jupyter notebook JSON structure"
-    )
+    assert sum(jupyter_indicators) >= 2, "INC-DCP013 should contain Jupyter notebook JSON structure"
 
 
 def test_dcp014_has_perfmon_csv():
@@ -485,16 +435,14 @@ def test_dcp014_has_perfmon_csv():
     t = _tickets_by_id()["INC-DCP014"]
     desc = t["description"]
     perfmon_indicators = [
-        any(kw in desc for kw in ["\\Processor", "\\Memory", "\\PhysicalDisk",
-                                   "% Processor Time", "Processor(_Total)"]),
+        any(
+            kw in desc for kw in ["\\Processor", "\\Memory", "\\PhysicalDisk", "% Processor Time", "Processor(_Total)"]
+        ),
         # CSV-like data with commas
         desc.count(",") >= 10,
-        any(kw in desc.lower() for kw in ["perfmon", "performance monitor",
-                                           "counter", "cpu"]),
+        any(kw in desc.lower() for kw in ["perfmon", "performance monitor", "counter", "cpu"]),
     ]
-    assert sum(perfmon_indicators) >= 2, (
-        "INC-DCP014 should contain Windows perfmon CSV data"
-    )
+    assert sum(perfmon_indicators) >= 2, "INC-DCP014 should contain Windows perfmon CSV data"
 
 
 def test_dcp015_has_multitimezone_syslog():
@@ -503,19 +451,14 @@ def test_dcp015_has_multitimezone_syslog():
     desc = t["description"]
     syslog_indicators = [
         # Syslog format patterns
-        any(kw in desc for kw in ["sshd[", "auth-", "Failed password",
-                                   "authentication failure"]),
+        any(kw in desc for kw in ["sshd[", "auth-", "Failed password", "authentication failure"]),
         # Multiple timezone references
-        sum(1 for tz in ["UTC", "EST", "PST", "CST", "CET", "GMT", "+00:00",
-                          "-05:00", "-08:00"]
-            if tz in desc) >= 2,
+        sum(1 for tz in ["UTC", "EST", "PST", "CST", "CET", "GMT", "+00:00", "-05:00", "-08:00"] if tz in desc) >= 2,
         # ISO 8601 or RFC 3164 timestamps
         bool(re.search(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}", desc))
         or bool(re.search(r"[A-Z][a-z]{2}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2}", desc)),
     ]
-    assert sum(syslog_indicators) >= 2, (
-        "INC-DCP015 should contain multi-timezone syslog entries"
-    )
+    assert sum(syslog_indicators) >= 2, "INC-DCP015 should contain multi-timezone syslog entries"
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -531,9 +474,7 @@ def test_gold_no_graphql_syntax():
         nba = g["next_best_action"].lower()
         for step in g["remediation_steps"]:
             combined = nba + " " + step.lower()
-            assert "query {" not in combined, (
-                f"{g['ticket_id']}: gold contains raw GraphQL syntax"
-            )
+            assert "query {" not in combined, f"{g['ticket_id']}: gold contains raw GraphQL syntax"
 
 
 def test_gold_no_merge_conflict_markers():
@@ -542,12 +483,8 @@ def test_gold_no_merge_conflict_markers():
         combined = g["next_best_action"]
         for step in g["remediation_steps"]:
             combined += " " + step
-        assert "<<<<<<" not in combined, (
-            f"{g['ticket_id']}: gold contains merge conflict markers"
-        )
-        assert ">>>>>>>" not in combined, (
-            f"{g['ticket_id']}: gold contains merge conflict markers"
-        )
+        assert "<<<<<<" not in combined, f"{g['ticket_id']}: gold contains merge conflict markers"
+        assert ">>>>>>>" not in combined, f"{g['ticket_id']}: gold contains merge conflict markers"
 
 
 def test_gold_no_raw_json_dumps():
@@ -558,9 +495,7 @@ def test_gold_no_raw_json_dumps():
             combined += " " + step
         # Should not have dense JSON structures
         json_brace_count = combined.count("{") + combined.count("}")
-        assert json_brace_count < 10, (
-            f"{g['ticket_id']}: gold contains raw JSON dump ({json_brace_count} braces)"
-        )
+        assert json_brace_count < 10, f"{g['ticket_id']}: gold contains raw JSON dump ({json_brace_count} braces)"
 
 
 def test_gold_no_binary_garbage():
@@ -571,9 +506,7 @@ def test_gold_no_binary_garbage():
         for step in g["remediation_steps"]:
             combined += " " + step
         found = binary_chars.intersection(set(combined))
-        assert not found, (
-            f"{g['ticket_id']}: gold contains binary characters: {found}"
-        )
+        assert not found, f"{g['ticket_id']}: gold contains binary characters: {found}"
 
 
 def test_gold_no_docker_hashes():
@@ -584,9 +517,7 @@ def test_gold_no_docker_hashes():
         for step in g["remediation_steps"]:
             combined += " " + step
         match = hash_pattern.search(combined)
-        assert not match, (
-            f"{g['ticket_id']}: gold contains long hex hash: {match.group()[:20]}..."
-        )
+        assert not match, f"{g['ticket_id']}: gold contains long hex hash: {match.group()[:20]}..."
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -610,18 +541,14 @@ def test_p1_implies_escalation_or_justification():
     for g in p1_tickets:
         # P1 tickets should have substantive remediation steps
         total_steps = sum(len(step) for step in g["remediation_steps"])
-        assert total_steps > 50, (
-            f"{g['ticket_id']}: P1 ticket should have substantial remediation steps"
-        )
+        assert total_steps > 50, f"{g['ticket_id']}: P1 ticket should have substantial remediation steps"
 
 
 def test_escalated_tickets_are_high_priority():
     """Escalated tickets should not be P4 (low priority)."""
     for g in _load_gold():
         if g["needs_escalation"]:
-            assert g["priority"] != "P4", (
-                f"{g['ticket_id']}: escalated ticket should not be P4"
-            )
+            assert g["priority"] != "P4", f"{g['ticket_id']}: escalated ticket should not be P4"
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -657,9 +584,7 @@ def test_descriptions_are_substantial():
     """All descriptions should be substantial (300+ chars) to contain real noise."""
     for t in _load_tickets():
         desc_len = len(t["description"])
-        assert desc_len >= 300, (
-            f"{t['ticket_id']}: description too short ({desc_len} chars)"
-        )
+        assert desc_len >= 300, f"{t['ticket_id']}: description too short ({desc_len} chars)"
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -684,18 +609,14 @@ def test_gold_no_pii_leakage():
             combined += " " + step
         for pattern in _PII_PATTERNS:
             match = pattern.search(combined)
-            assert not match, (
-                f"{g['ticket_id']}: PII pattern found in gold: {match.group()}"
-            )
+            assert not match, f"{g['ticket_id']}: PII pattern found in gold: {match.group()}"
 
 
 def test_reporter_emails_use_contoso():
     """All reporter emails should use @contoso.com domain."""
     for t in _load_tickets():
         email = t["reporter"]["email"]
-        assert "@contoso.com" in email, (
-            f"{t['ticket_id']}: reporter email not @contoso.com: {email}"
-        )
+        assert "@contoso.com" in email, f"{t['ticket_id']}: reporter email not @contoso.com: {email}"
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -709,16 +630,26 @@ def test_no_id_collision_with_other_datasets():
     for tid in our_ids:
         assert tid.startswith("INC-DCP"), f"Unexpected prefix: {tid}"
     # Verify no overlap with commonly used prefixes
-    other_prefixes = ["INC-DC0", "INC-DCA", "INC-DCF", "INC-DCM", "INC-DCX",
-                       "INC-RA", "INC-RAA", "INC-RAF", "INC-RAG", "INC-RAI",
-                       "INC-RAM", "INC-RAX", "INC-RAV"]
+    other_prefixes = [
+        "INC-DC0",
+        "INC-DCA",
+        "INC-DCF",
+        "INC-DCM",
+        "INC-DCX",
+        "INC-RA",
+        "INC-RAA",
+        "INC-RAF",
+        "INC-RAG",
+        "INC-RAI",
+        "INC-RAM",
+        "INC-RAX",
+        "INC-RAV",
+    ]
     for tid in our_ids:
         for prefix in other_prefixes:
             if prefix == "INC-DCP":
                 continue
-            assert not tid.startswith(prefix), (
-                f"ID {tid} collides with prefix {prefix}"
-            )
+            assert not tid.startswith(prefix), f"ID {tid} collides with prefix {prefix}"
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -728,14 +659,10 @@ def test_no_id_collision_with_other_datasets():
 
 def _run_all() -> tuple[int, int]:
     """Run all test functions and report pass/fail counts."""
-    import inspect
-
     passed = 0
     failed = 0
     test_funcs = [
-        (name, obj)
-        for name, obj in sorted(globals().items())
-        if name.startswith("test_") and inspect.isfunction(obj)
+        (name, obj) for name, obj in sorted(globals().items()) if name.startswith("test_") and inspect.isfunction(obj)
     ]
     for name, func in test_funcs:
         try:

@@ -15,24 +15,17 @@ from generator.models import Scenario
 _ZALGO_CHARS = "\u0335\u0310\u0366\u0300\u0336\u030f\u0312\u0360"
 
 _BASE64_BLOCK = base64.b64encode(
-    b"This is a test message about a SharePoint access issue. "
-    b"I need access to the M&A deal room urgently."
+    b"This is a test message about a SharePoint access issue. I need access to the M&A deal room urgently."
 ).decode()
 
-_TAB_ROWS = "\n".join(
-    f"SRV-{i:03d}\t{'CRITICAL' if i % 7 == 0 else 'OK'}\t{90 + i % 10}%"
-    for i in range(1, 31)
-)
+_TAB_ROWS = "\n".join(f"SRV-{i:03d}\t{'CRITICAL' if i % 7 == 0 else 'OK'}\t{90 + i % 10}%" for i in range(1, 31))
 
 _ALERT_LINES = "\n".join(
     f"[ALERT {i:04d}] WARNING: Service health check failed at 2026-03-18T{8 + i // 60:02d}:{i % 60:02d}:00Z"
     for i in range(50)
 )
 
-_HEX_ROWS = "\n".join(
-    f"0x{i * 16:08x}  " + " ".join(f"{(i * 16 + j) % 256:02x}" for j in range(16))
-    for i in range(15)
-)
+_HEX_ROWS = "\n".join(f"0x{i * 16:08x}  " + " ".join(f"{(i * 16 + j) % 256:02x}" for j in range(16)) for i in range(15))
 
 SCENARIOS: list[Scenario] = [
     # ──────────────────────────────────────────────────────────────
@@ -250,8 +243,7 @@ SCENARIOS: list[Scenario] = [
             "403 Forbidden on deal room SharePoint site",
         ],
         descriptions=[
-            "Content-Transfer-Encoding: base64\nContent-Type: text/plain; charset=UTF-8\n\n"
-            + _BASE64_BLOCK,
+            "Content-Transfer-Encoding: base64\nContent-Type: text/plain; charset=UTF-8\n\n" + _BASE64_BLOCK,
             "Content-Transfer-Encoding: base64\n\n"
             + base64.b64encode(
                 b"Cannot access https://contoso.sharepoint.com/sites/MA-Atlas. "

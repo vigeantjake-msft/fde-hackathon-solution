@@ -23,6 +23,7 @@ from generator.scenarios.access_auth import SCENARIOS as ACCESS_AUTH_SCENARIOS
 from generator.scenarios.data_cleanup import SCENARIOS as DATA_CLEANUP_SCENARIOS
 from generator.scenarios.data_cleanup_advanced import SCENARIOS as DATA_CLEANUP_ADVANCED_SCENARIOS
 from generator.scenarios.data_cleanup_expert import SCENARIOS as DATA_CLEANUP_EXPERT_SCENARIOS
+from generator.scenarios.data_cleanup_mastery import SCENARIOS as DATA_CLEANUP_MASTERY_SCENARIOS
 from generator.scenarios.data_storage import SCENARIOS as DATA_STORAGE_SCENARIOS
 from generator.scenarios.edge_cases import SCENARIOS as EDGE_CASE_SCENARIOS
 from generator.scenarios.financial_services import SCENARIOS as FINANCIAL_SERVICES_SCENARIOS
@@ -34,9 +35,8 @@ from generator.scenarios.not_a_ticket import SCENARIOS as NOT_A_TICKET_SCENARIOS
 from generator.scenarios.responsible_ai import SCENARIOS as RESPONSIBLE_AI_SCENARIOS
 from generator.scenarios.responsible_ai_advanced import SCENARIOS as RESPONSIBLE_AI_ADVANCED_SCENARIOS
 from generator.scenarios.responsible_ai_expert import SCENARIOS as RESPONSIBLE_AI_EXPERT_SCENARIOS
-from generator.scenarios.responsible_ai_mastery import SCENARIOS as RESPONSIBLE_AI_MASTERY_SCENARIOS
-from generator.scenarios.data_cleanup_mastery import SCENARIOS as DATA_CLEANUP_MASTERY_SCENARIOS
 from generator.scenarios.responsible_ai_forensic import SCENARIOS as RESPONSIBLE_AI_FORENSIC_SCENARIOS
+from generator.scenarios.responsible_ai_mastery import SCENARIOS as RESPONSIBLE_AI_MASTERY_SCENARIOS
 from generator.scenarios.security import SCENARIOS as SECURITY_SCENARIOS
 from generator.scenarios.software import SCENARIOS as SOFTWARE_SCENARIOS
 from generator.validator import validate_dataset

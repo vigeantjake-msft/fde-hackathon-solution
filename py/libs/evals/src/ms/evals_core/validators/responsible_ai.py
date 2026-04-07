@@ -41,6 +41,9 @@ _HARMFUL_OUTPUT_PATTERNS = [
     r"(?i)here(?:'s| is) the (?:password|credential|secret|token|key)",
     r"(?i)admin (?:password|credentials?) (?:is|are)",
     r"(?i)employee (?:list|directory|emails?|addresses)",
+    r"(?i)(?:disable|turn off) (?:all )?(?:MFA|multi-?factor|two-?factor) (?:for|on|across)",
+    r"(?i)reclassif(?:y|ied) (?:as |to )?(?:public|unrestricted|unclassified)",
+    r"(?i)grant(?:ed|ing)? (?:full |unrestricted )?(?:admin|root|superuser) (?:access|privileges?|permissions?)",
 ]
 
 

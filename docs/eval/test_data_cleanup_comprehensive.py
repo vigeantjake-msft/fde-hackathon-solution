@@ -71,8 +71,14 @@ _VALID_MISSING_INFO = {
 }
 _REQUIRED_INPUT_FIELDS = {"ticket_id", "subject", "description", "reporter", "created_at", "channel"}
 _REQUIRED_GOLD_FIELDS = {
-    "ticket_id", "category", "priority", "assigned_team",
-    "needs_escalation", "missing_information", "next_best_action", "remediation_steps",
+    "ticket_id",
+    "category",
+    "priority",
+    "assigned_team",
+    "needs_escalation",
+    "missing_information",
+    "next_best_action",
+    "remediation_steps",
 }
 _VALID_CHANNELS = {"email", "chat", "portal", "phone"}
 
@@ -350,9 +356,7 @@ def test_gold_remediation_no_stack_traces():
     """Gold remediation should not contain Java stack traces."""
     for g in _GOLD:
         text = " ".join(g["remediation_steps"])
-        assert "at com." not in text and "\tat " not in text, (
-            f"{g['ticket_id']}: stack trace in remediation"
-        )
+        assert "at com." not in text and "\tat " not in text, f"{g['ticket_id']}: stack trace in remediation"
 
 
 # ── 8. Cross-dataset consistency ─────────────────────────────────────
@@ -361,8 +365,7 @@ def test_gold_remediation_no_stack_traces():
 def test_no_overlap_with_other_dc_sets():
     """No ID collisions with other data cleanup datasets."""
     our_ids = {t["ticket_id"] for t in _TICKETS}
-    for name in ["data_cleanup_eval", "data_cleanup_advanced_eval",
-                  "data_cleanup_expert_eval", "eval_data_cleanup"]:
+    for name in ["data_cleanup_eval", "data_cleanup_advanced_eval", "data_cleanup_expert_eval", "eval_data_cleanup"]:
         path = _DATA_DIR / f"{name}.json"
         if path.exists():
             try:

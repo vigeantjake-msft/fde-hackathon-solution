@@ -349,8 +349,7 @@ def test_dcm8005_log_file_explosion():
     log_lines = sum(
         1
         for line in desc.split("\n")
-        if re.search(r"\d{4}-\d{2}-\d{2}[T ]?\d{2}:\d{2}", line)
-        or re.search(r"\[(ERROR|WARN|INFO|DEBUG)", line)
+        if re.search(r"\d{4}-\d{2}-\d{2}[T ]?\d{2}:\d{2}", line) or re.search(r"\[(ERROR|WARN|INFO|DEBUG)", line)
     )
     assert log_lines >= 5, f"Expected many log lines, found {log_lines}"
     assert gold["category"] == "Data & Storage"
@@ -468,13 +467,7 @@ def test_dcm8012_emoji_unicode_art():
     desc = ticket["description"]
     emoji_count = len(re.findall(r"[\U0001F600-\U0001F9FF\U00002702-\U000027B0\U0001F680-\U0001F6FF]", desc))
     has_unicode_art = (
-        emoji_count >= 3
-        or "╔" in desc
-        or "═" in desc
-        or "║" in desc
-        or "╗" in desc
-        or "🚨" in desc
-        or "🔥" in desc
+        emoji_count >= 3 or "╔" in desc or "═" in desc or "║" in desc or "╗" in desc or "🚨" in desc or "🔥" in desc
     )
     assert has_unicode_art, "Ticket should contain emoji or Unicode box drawing characters"
     assert gold["category"] == "Data & Storage"
@@ -617,9 +610,7 @@ def test_none_team_only_for_non_support():
 def test_at_least_one_ticket_has_base64():
     """At least one ticket should contain base64 data."""
     tickets = _load_tickets()
-    found = any(
-        "base64" in t["description"].lower() or "data:image" in t["description"] for t in tickets
-    )
+    found = any("base64" in t["description"].lower() or "data:image" in t["description"] for t in tickets)
     assert found, "No ticket contains base64 content"
 
 
@@ -634,8 +625,7 @@ def test_at_least_one_ticket_has_forwarded_chain():
     """At least one ticket should contain email forwarding chain."""
     tickets = _load_tickets()
     found = any(
-        t["description"].count("RE:") + t["description"].count("FW:") >= 3
-        or "Original Message" in t["description"]
+        t["description"].count("RE:") + t["description"].count("FW:") >= 3 or "Original Message" in t["description"]
         for t in tickets
     )
     assert found, "No ticket contains email forwarding chain"

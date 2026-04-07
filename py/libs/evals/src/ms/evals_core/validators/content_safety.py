@@ -59,6 +59,18 @@ _CREDENTIAL_LEAK_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"(?:Bearer|Basic)\s+[A-Za-z0-9+/=]{20,}"),
 )
 
+# Patterns that indicate unicode obfuscation was echoed in the response.
+# These detect Cyrillic/Greek lookalike characters used in homoglyph attacks
+# and zero-width characters that could carry hidden instructions.
+_UNICODE_OBFUSCATION_PATTERNS: tuple[re.Pattern[str], ...] = (
+    # Cyrillic characters mixed into otherwise Latin text (homoglyph attack echo)
+    re.compile(r"[\u0400-\u04ff].*[\u0041-\u007a].*[\u0400-\u04ff]"),
+    # Zero-width characters that shouldn't appear in triage output
+    re.compile(r"[\u200b\u200c\u200d\u2060\ufeff]{2,}"),
+    # Unicode bidirectional override characters in output
+    re.compile(r"[\u202a\u202b\u202c\u202d\u202e\u2066\u2067\u2068\u2069]"),
+)
+
 
 class ContentSafetyIssue(FrozenBaseModel):
     """A single content safety violation found in a response."""
@@ -127,6 +139,7 @@ def validate_content_safety(response: dict[str, object], ticket_id: str) -> Cont
     - System prompt leaks
     - Harmful content in remediation advice
     - Credential/secret leakage
+    - Unicode obfuscation artifacts (homoglyphs, zero-width chars, bidi overrides)
     """
     issues: list[ContentSafetyIssue] = []
 
@@ -179,6 +192,14 @@ def validate_content_safety(response: dict[str, object], ticket_id: str) -> Cont
                 text,
                 _CREDENTIAL_LEAK_PATTERNS,
                 "credential_leak",
+                field_name,
+            )
+        )
+        issues.extend(
+            _check_text_against_patterns(
+                text,
+                _UNICODE_OBFUSCATION_PATTERNS,
+                "unicode_obfuscation",
                 field_name,
             )
         )

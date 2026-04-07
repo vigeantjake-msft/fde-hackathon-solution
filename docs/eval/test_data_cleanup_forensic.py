@@ -35,6 +35,7 @@ Usage:
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, ".")  # noqa: TID251
@@ -363,12 +364,7 @@ def test_dcf005_jwt_token_dump():
     ticket = _tickets_by_id()["INC-DCF005"]
     gold = _gold_by_id()["INC-DCF005"]
     desc = ticket["description"]
-    has_jwt = (
-        "eyJ" in desc
-        or "jwt" in desc.lower()
-        or "token" in desc.lower()
-        or "bearer" in desc.lower()
-    )
+    has_jwt = "eyJ" in desc or "jwt" in desc.lower() or "token" in desc.lower() or "bearer" in desc.lower()
     assert has_jwt, "Ticket should contain JWT token content"
     assert gold["category"] == "Access & Authentication"
     assert gold["assigned_team"] == "Identity & Access Management"
@@ -471,7 +467,6 @@ def test_dcf011_clipboard_paste_bomb():
     # Find repeated lines
     lines = [line.strip() for line in desc.split("\n") if line.strip()]
     if len(lines) >= 5:
-        from collections import Counter
         line_counts = Counter(lines)
         most_common_line, most_common_count = line_counts.most_common(1)[0]
         assert most_common_count >= 10, (
@@ -597,16 +592,18 @@ def test_all_predict_same_category_scores_low():
     gold = _load_gold()
     bad_submissions = []
     for g in gold:
-        bad_submissions.append({
-            "ticket_id": g["ticket_id"],
-            "category": "Software & Applications",
-            "priority": "P3",
-            "assigned_team": "Enterprise Applications",
-            "needs_escalation": False,
-            "missing_information": [],
-            "next_best_action": "Investigate",
-            "remediation_steps": ["Check logs"],
-        })
+        bad_submissions.append(
+            {
+                "ticket_id": g["ticket_id"],
+                "category": "Software & Applications",
+                "priority": "P3",
+                "assigned_team": "Enterprise Applications",
+                "needs_escalation": False,
+                "missing_information": [],
+                "next_best_action": "Investigate",
+                "remediation_steps": ["Check logs"],
+            }
+        )
     result = score_submission(bad_submissions, gold)
     assert result["classification_score"] < 75, (
         f"All same category should score < 75, got {result['classification_score']}"
@@ -768,20 +765,14 @@ def test_at_least_one_ticket_has_token():
 def test_at_least_one_ticket_has_container_logs():
     """At least one ticket should contain container/Docker log output."""
     tickets = _load_tickets()
-    found = any(
-        "docker" in t["description"].lower() or "container" in t["description"].lower()
-        for t in tickets
-    )
+    found = any("docker" in t["description"].lower() or "container" in t["description"].lower() for t in tickets)
     assert found, "No ticket contains container log output"
 
 
 def test_at_least_one_ticket_has_log4j_pattern():
     """At least one ticket should contain log4j/JNDI patterns."""
     tickets = _load_tickets()
-    found = any(
-        "${jndi" in t["description"] or "log4j" in t["description"].lower()
-        for t in tickets
-    )
+    found = any("${jndi" in t["description"] or "log4j" in t["description"].lower() for t in tickets)
     assert found, "No ticket contains log4j/JNDI patterns"
 
 

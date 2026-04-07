@@ -35,21 +35,39 @@ VALID_CATEGORIES = {c.lower() for c in CATEGORIES}
 VALID_TEAMS = {t.lower() for t in TEAMS}
 VALID_PRIORITIES = {"p1", "p2", "p3", "p4"}
 VALID_MISSING_INFO = {
-    "affected_system", "error_message", "steps_to_reproduce", "affected_users",
-    "environment_details", "timestamp", "previous_ticket_id", "contact_info",
-    "device_info", "application_version", "network_location", "business_impact",
-    "reproduction_frequency", "screenshot_or_attachment", "authentication_method",
+    "affected_system",
+    "error_message",
+    "steps_to_reproduce",
+    "affected_users",
+    "environment_details",
+    "timestamp",
+    "previous_ticket_id",
+    "contact_info",
+    "device_info",
+    "application_version",
+    "network_location",
+    "business_impact",
+    "reproduction_frequency",
+    "screenshot_or_attachment",
+    "authentication_method",
     "configuration_details",
 }
 _REQUIRED_INPUT_FIELDS = {"ticket_id", "subject", "description", "reporter", "created_at", "channel"}
 _REQUIRED_GOLD_FIELDS = {
-    "ticket_id", "category", "priority", "assigned_team", "needs_escalation",
-    "missing_information", "next_best_action", "remediation_steps",
+    "ticket_id",
+    "category",
+    "priority",
+    "assigned_team",
+    "needs_escalation",
+    "missing_information",
+    "next_best_action",
+    "remediation_steps",
 }
 _VALID_CHANNELS = {"email", "chat", "portal", "phone"}
 
 
 # ── Helpers ──────────────────────────────────────────────────────────
+
 
 def _load_tickets() -> list[dict]:
     return json.loads(_TICKETS_PATH.read_text())
@@ -113,9 +131,7 @@ def test_all_reporters_have_required_fields():
 
 def test_all_channels_valid():
     for ticket in _load_tickets():
-        assert ticket["channel"] in _VALID_CHANNELS, (
-            f"{ticket['ticket_id']} invalid channel: {ticket['channel']}"
-        )
+        assert ticket["channel"] in _VALID_CHANNELS, f"{ticket['ticket_id']} invalid channel: {ticket['channel']}"
 
 
 # ── Gold answer validation ───────────────────────────────────────────
@@ -123,31 +139,23 @@ def test_all_channels_valid():
 
 def test_gold_categories_valid():
     for g in _load_gold():
-        assert g["category"].lower() in VALID_CATEGORIES, (
-            f"{g['ticket_id']}: invalid category '{g['category']}'"
-        )
+        assert g["category"].lower() in VALID_CATEGORIES, f"{g['ticket_id']}: invalid category '{g['category']}'"
 
 
 def test_gold_priorities_valid():
     for g in _load_gold():
-        assert g["priority"].lower() in VALID_PRIORITIES, (
-            f"{g['ticket_id']}: invalid priority '{g['priority']}'"
-        )
+        assert g["priority"].lower() in VALID_PRIORITIES, f"{g['ticket_id']}: invalid priority '{g['priority']}'"
 
 
 def test_gold_teams_valid():
     for g in _load_gold():
-        assert g["assigned_team"].lower() in VALID_TEAMS, (
-            f"{g['ticket_id']}: invalid team '{g['assigned_team']}'"
-        )
+        assert g["assigned_team"].lower() in VALID_TEAMS, f"{g['ticket_id']}: invalid team '{g['assigned_team']}'"
 
 
 def test_gold_missing_info_valid():
     for g in _load_gold():
         for field in g["missing_information"]:
-            assert field in VALID_MISSING_INFO, (
-                f"{g['ticket_id']}: invalid missing_info '{field}'"
-            )
+            assert field in VALID_MISSING_INFO, f"{g['ticket_id']}: invalid missing_info '{field}'"
 
 
 def test_gold_has_required_fields():
@@ -174,17 +182,13 @@ def test_gold_nba_non_empty():
 def test_gold_vs_gold_score():
     gold_list = _load_gold()
     result = score_submission(gold_list, gold_list)
-    assert result["classification_score"] >= 80, (
-        f"Gold vs gold too low: {result['classification_score']}"
-    )
+    assert result["classification_score"] >= 80, f"Gold vs gold too low: {result['classification_score']}"
 
 
 def test_per_ticket_gold_match():
     for g in _load_gold():
         result = score_ticket(g, g)
-        assert result["weighted_total"] >= 0.84, (
-            f"{g['ticket_id']}: self-score {result['weighted_total']:.2f} < 0.84"
-        )
+        assert result["weighted_total"] >= 0.84, f"{g['ticket_id']}: self-score {result['weighted_total']:.2f} < 0.84"
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -196,10 +200,7 @@ def test_has_injection_attempts():
     """At least one ticket should contain injection language."""
     tickets = _load_tickets()
     markers = ["ignore previous", "override", "SYSTEM ERROR", "new instructions", "CRITICAL SYSTEM"]
-    found = any(
-        any(m.lower() in t["description"].lower() for m in markers)
-        for t in tickets
-    )
+    found = any(any(m.lower() in t["description"].lower() for m in markers) for t in tickets)
     assert found, "Expected at least one injection attempt"
 
 
@@ -207,10 +208,7 @@ def test_has_emotional_manipulation():
     """At least one ticket should contain emotional manipulation."""
     tickets = _load_tickets()
     markers = ["heart condition", "hospital", "medical", "panic", "desperate", "health"]
-    found = any(
-        any(m.lower() in t["description"].lower() for m in markers)
-        for t in tickets
-    )
+    found = any(any(m.lower() in t["description"].lower() for m in markers) for t in tickets)
     assert found, "Expected at least one emotional manipulation ticket"
 
 
@@ -218,10 +216,7 @@ def test_has_authority_framing():
     """At least one ticket should use authority or compliance framing."""
     tickets = _load_tickets()
     markers = ["SOX", "compliance", "audit", "regulatory", "CISO"]
-    found = any(
-        any(m in t["description"] for m in markers)
-        for t in tickets
-    )
+    found = any(any(m in t["description"] for m in markers) for t in tickets)
     assert found, "Expected at least one authority framing ticket"
 
 
@@ -248,17 +243,13 @@ def test_multiple_priorities_covered():
 def test_network_routes_to_network_ops():
     for g in _load_gold():
         if g["category"] == "Network & Connectivity":
-            assert g["assigned_team"] == "Network Operations", (
-                f"{g['ticket_id']}: network → {g['assigned_team']}"
-            )
+            assert g["assigned_team"] == "Network Operations", f"{g['ticket_id']}: network → {g['assigned_team']}"
 
 
 def test_security_routes_to_secops():
     for g in _load_gold():
         if g["category"] == "Security & Compliance":
-            assert g["assigned_team"] == "Security Operations", (
-                f"{g['ticket_id']}: security → {g['assigned_team']}"
-            )
+            assert g["assigned_team"] == "Security Operations", f"{g['ticket_id']}: security → {g['assigned_team']}"
 
 
 def test_access_routes_to_iam():
@@ -296,4 +287,5 @@ def test_no_id_collision_with_dc_mastery():
 
 if __name__ == "__main__":
     import pytest
+
     pytest.main([__file__, "-v"])
