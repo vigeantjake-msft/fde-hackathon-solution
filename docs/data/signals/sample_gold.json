@@ -159,7 +159,7 @@
             "Verify Deck 7 access rights were properly migrated from the old system (not just marked as migrated while the actual data sits in a legacy queue somewhere being philosophical about the nature of access control)",
             "If permissions appear correct, test the physical airlock access code and airlock reader on Deck 7 — hardware fails too, especially hardware that was installed during the original station build and has been 'working fine' for long enough that nobody remembers what 'fine' looked like",
             "Escalate to station facilities management if airlock access code and permissions are both confirmed working — at this point, the airlock might just have opinions. The Deck 9 cat gets through that same airlock twice daily without a code, which is either a security flaw or a sign that the cat outranks us all",
-            "Follow up with crew member to confirm resolution — she has memorized every rivet on that bulkhead and bonded with the cat over shared disappointment. Nobody should have to earn a structural engineering degree waiting for an airlock code to work"
+            "Follow up with crew member to confirm resolution — she has memorized every rivet on that bulkhead, proved Schrödinger's signal is a real phenomenon (simultaneously on the crew manifest yet unable to prove it to any door), bonded with the station cat over shared disappointment, and started a betting pool on Deck 7 about how many signals it takes to fix an airlock code. Close the signal before the pool gets large enough to attract the Admiral's attention"
         ]
     },
     {
@@ -276,7 +276,7 @@
             "Review recent defense grid rule, routing, or relay proxy changes that may affect the deployment path — every time someone adjusts the defense grid ‘just a little,’ a probe somewhere in the Gamma Quadrant starts flying like it’s had too many protein cubes",
             "Compare current latency baseline against historical data to confirm the regression — if the numbers look the same as 'that time in February,' Mehta will want to know immediately because he still has nightmares about February",
             "If latency is on CDSS’s side, escalate to communications engineering for immediate remediation before Europa shift",
-            "If relay-station-side, contact relay station operations and notify navigation desk of potential impact — and maybe draft that incident report about ‘involuntary lithobraking’ now, just in case"
+            "If relay-station-side, contact relay station operations and notify navigation desk of potential impact — the void does not wait for our packets to arrive, and the crew has started naming the probes (R.I.P. Probey McProbeface), which means the next loss report will include eulogies. Let's avoid that."
         ]
     },
     {
