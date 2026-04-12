@@ -151,9 +151,7 @@
         "missing_information": [
             "previous_signal_id"
         ],
-        "next_best_action": [
-            "Escalate airlock access code issue for Deck 7 — third report without resolution, crew member has been floating in corridors like a very annoyed balloon. Verify airlock access code permissions in the updated access management system and check whether the migration actually completed for this crew member or just claimed to. This is the kind of repeat failure that generates strongly worded memos."
-        ],
+        "next_best_action": "Escalate airlock access code issue for Deck 7 — third report without resolution, crew member has been floating in corridors like a very annoyed balloon. Verify airlock access code permissions in the updated access management system and check whether the migration actually completed for this crew member or just claimed to. This is the kind of repeat failure that generates strongly worded memos.",
         "remediation_steps": [
             "Check crew member's airlock access code permissions in the updated access management system — third time asking, so verify thoroughly",
             "Verify Deck 7 access rights were properly migrated from the old system (not just marked as migrated while the actual data sits in a legacy queue somewhere being philosophical)",
