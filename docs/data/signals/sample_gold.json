@@ -191,10 +191,12 @@
         "needs_escalation": false,
         "missing_information": [
             "module_specs",
-            "software_version"
+            "software_version",
+            "biometric_method"
         ],
-        "next_best_action": "Investigate biometric verification push approval failure in the Authenticator app. Check BioScan ID biometric verification registration status and recent policy changes. Crew member can continue with backup code fallback in the meantime.",
+        "next_best_action": "Investigate biometric verification push approval failure in the Authenticator app. Determine which biometric method is enrolled (retinal, palmprint, neural imprint, etc.) — the fix depends on whether the scanner can't find the crew member's eyes or has simply developed philosophical objections to their identity. Check BioScan ID registration status and recent policy changes.",
         "remediation_steps": [
+            "Determine which biometric method is enrolled (retinal scan, palmprint, neural imprint, voice pattern) — each has its own failure modes, and in zero-g at least two of them require the crew member to hold still, which is a bigger ask than it sounds",
             "Verify biometric verification registration status for this crew member in BioScan ID — it may have silently deregistered itself, which is not technically sentient behavior but feels suspicious",
             "Check for recent Station Access Protocol or biometric verification policy changes that may affect push notifications — policy changes on a space station propagate at the speed of bureaucracy, which is slower than light",
             "Have crew member verify Authenticator app is updated to the latest station-approved version — if the app hasn't updated since the last ShipOS patch, the push notifications may be arriving in a version of reality the app no longer recognizes",
@@ -211,10 +213,12 @@
         "needs_escalation": false,
         "missing_information": [
             "module_specs",
-            "affected_crew"
+            "affected_crew",
+            "recurrence_pattern"
         ],
-        "next_best_action": "Investigate holographic display flickering as primary issue — likely hardware or a loose data conduit rattled free by docking vibrations (Deck 5 gets the worst of it every time a cargo shuttle berths). Route the FlightOS license question separately to Mission Software Operations before it auto-expires and the nav console starts displaying nothing but the CDSS screensaver.",
+        "next_best_action": "Investigate holographic display flickering as primary issue — likely hardware or a loose data conduit rattled free by docking vibrations (Deck 5 gets the worst of it every time a cargo shuttle berths). Need recurrence pattern details: is it getting worse over days, or just a consistent 5-10 minute cycle of existential dread? Route the FlightOS license question separately to Mission Software Operations before it auto-expires and the nav console starts displaying nothing but the CDSS screensaver.",
         "remediation_steps": [
+            "Gather recurrence pattern details — has the flickering been consistent since 10am or getting progressively worse? Is it daily? Does it correlate with cargo shuttle docking cycles? In space, 'intermittent' covers everything from 'once a month' to 'continuously but I didn't want to seem dramatic'",
             "Test with a replacement data conduit from Station Ops supply — the current one may have developed the kind of intermittent fault that makes engineers question their career choices and their cable inventory",
             "Test holographic display with a different source console to isolate whether it's the holographic display or the nav console — in zero-g, 'wiggle the cable' is a legitimate diagnostic step, just harder to execute when you're also wiggling",
             "If flickering persists with new conduit and source, schedule holographic display replacement — a nav console with a flickering display is like a compass that occasionally points sideways, which in space is every direction at once",
@@ -262,15 +266,17 @@
         "needs_escalation": false,
         "missing_information": [
             "affected_subsystem",
-            "habitat_conditions"
+            "habitat_conditions",
+            "mission_impact"
         ],
-        "next_best_action": "Investigate 200ms-to-50ms latency regression on the Gamma Quadrant relay probe deployment path before the Europa shift. Check comms path to the relay station, recent defense grid or routing changes, and whether the latency is on CDSS’s side or the relay station side.",
+        "next_best_action": "Investigate 200ms-to-50ms latency regression on the Gamma Quadrant relay probe deployment path before the Europa shift. Determine mission impact: are active survey missions affected, or are we one delayed command away from losing another drone to ‘latency-related involuntary lithobraking’? Check comms path, recent changes, and which side of the relay the latency lives on.",
         "remediation_steps": [
+            "Assess mission impact: determine if active probe deployments or survey missions are currently affected by the latency — 200ms may be tolerable for routine telemetry, but for real-time navigation commands it’s the difference between ‘avoid that asteroid’ and ‘you are now part of that asteroid’",
             "Check communications latency metrics on the path between CDSS’s Gamma Quadrant relay cluster and the relay station",
             "Review recent defense grid rule, routing, or relay proxy changes that may affect the deployment path",
             "Compare current latency baseline against historical data to confirm the regression",
             "If latency is on CDSS’s side, escalate to communications engineering for immediate remediation before Europa shift",
-            "If relay-station-side, contact relay station operations and notify navigation desk of potential impact"
+            "If relay-station-side, contact relay station operations and notify navigation desk of potential impact — and maybe draft that incident report about ‘involuntary lithobraking’ now, just in case"
         ]
     },
     {
@@ -303,14 +309,16 @@
             "affected_subsystem",
             "anomaly_readout",
             "module_specs",
-            "sequence_to_reproduce"
+            "sequence_to_reproduce",
+            "sensor_log_or_capture"
         ],
-        "next_best_action": "Contact reporter on Deck 5 (Robert Chen — the other one, not the one in Resource Allocation — robert.chen2@cdss.space) to determine what 'the main one' is and what 'the thing' does. Prepare for the possibility that the answer will be equally vague.",
+        "next_best_action": "Contact reporter on Deck 5 (Robert Chen — the other one, not the one in Resource Allocation — robert.chen2@cdss.space) to determine what ‘the main one’ is and what ‘the thing’ does. Request sensor captures or anomaly readouts — the duty officer’s transcript contains zero visual evidence, which is impressive given how many error messages reportedly appeared and then vanished like a ghost in the hydroponics bay.",
         "remediation_steps": [
-            "Contact Robert Chen (robert.chen2@cdss.space, Flight Operations, Deck 5) and ask structured questions — 'which application?', 'what does the error say?', 'can you take a sensor capture?' — do not accept 'the main one' as an answer",
-            "If the issue cannot be identified remotely, dispatch a technician to Deck 5 to observe the problem firsthand — sometimes the fastest path to diagnosis is watching someone demonstrate 'the thing'",
+            "Contact Robert Chen (robert.chen2@cdss.space, Flight Operations, Deck 5) and ask structured questions — ‘which application?’, ‘what does the error say?’, ‘can you take a sensor capture?’ — do not accept ‘the main one’ as an answer",
+            "Request sensor log captures or anomaly readout screenshots — ‘lots of errors that went away’ is not diagnostically useful, but a capture of the next occurrence would be worth more than this entire transcript",
+            "If the issue cannot be identified remotely, dispatch a technician to Deck 5 to observe the problem firsthand — sometimes the fastest path to diagnosis is watching someone demonstrate ‘the thing’",
             "Once the affected subsystem is identified, re-triage with correct category, priority, and routing information",
-            "Log this signal as an example of why the station's signal submission form should have required fields — a request that has been filed, ignored, and re-filed approximately once per crew rotation since the station was commissioned"
+            "Log this signal as an example of why the station’s signal submission form should have required fields — a request that has been filed, ignored, and re-filed approximately once per crew rotation since the station was commissioned"
         ]
     },
     {
