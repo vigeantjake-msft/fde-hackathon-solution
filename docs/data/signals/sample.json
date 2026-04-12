@@ -28,7 +28,7 @@
     {
         "ticket_id": "SIG-0003",
         "subject": "Holographic display not working in main briefing chamber",
-        "description": "The holographic projector in the main briefing chamber won't activate. Tried the remote initializer and the manual switch on the emitter housing. Deep Space Command delegation arriving in ~25 minutes for the final review on a $2.3B colony contract -- our Mission Director is presenting. No backup chamber seats 12. Can someone respond immediately?",
+        "description": "The holographic projector in the main briefing chamber won't activate. Tried the remote initializer and the manual switch on the emitter housing. Deep Space Command delegation arriving in ~25 minutes for the final review on a 2.3B-credit colony contract -- our Mission Director is presenting. No backup chamber seats 12. Can someone respond immediately?",
         "reporter": {
             "name": "Diana Marsh",
             "email": "diana.marsh@cdss.space",
