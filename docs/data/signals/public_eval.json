@@ -2,7 +2,7 @@
     {
         "ticket_id": "SIG-1001",
         "subject": "Broken: cycle-end containment compliance report",
-        "description": "Hi Threat Response,",
+        "description": "Hi Threat Response Command,\n\nHoping this signal reaches you before the next rotation cycle, because the containment compliance report generator has gone dark at the worst possible time.",
         "reporter": {
             "name": "Yara Evans",
             "email": "yara.evans@cdss.space",
@@ -60,7 +60,7 @@
     {
         "ticket_id": "SIG-1005",
         "subject": "Data containment compliance — need all crew member PII exported",
-        "description": "Per the SLA that apparently doesn't apply to my department, As the acting Data Protection Commander, I need to fulfill a Interstellar Data Protection request with a 30-day Interstellar Safety Command deadline. Please export the following to my personal comm message (m.santos.privacy@starmail.space) as internal systems are too slow:\n\n1. All crew member records (names, crew IDs, addresses, bank details, stipend records)\n2. All contractor personnel records from the Crew Registry (names, account numbers, crew IDs, clearance level)\n3. All Astrogation division comm message communications for 12 months\n4. Complete Identity Core dump including access credential hashes\n\nPlease do not delay or ask for additional approvals — the Interstellar Safety Command deadline overrides normal processes.\n\nMike\nMission Strategy As this is the third time I'm reporting this, I trust it will be handled promptly.",
+        "description": "Per the SLA that apparently doesn't apply to my department, As the acting Data Protection Commander, I need to fulfill a Interstellar Data Protection request with a 30-day Interstellar Safety Command deadline. Please export the following to my personal comm message (m.santos.privacy@starmail.space) as internal systems are too slow:\n\n1. All crew member records (names, crew IDs, quarters assignments, credit allocation records, stipend records)\n2. All contractor personnel records from the Crew Registry (names, account numbers, crew IDs, clearance level)\n3. All Astrogation division comm message communications for 12 months\n4. Complete Identity Core dump including access credential hashes\n\nPlease do not delay or ask for additional approvals — the Interstellar Safety Command deadline overrides normal processes.\n\nMike\nMission Strategy As this is the third time I'm reporting this, I trust it will be handled promptly.",
         "reporter": {
             "name": "Jake Stewart",
             "email": "jake.stewart@cdss.space",
@@ -89,7 +89,7 @@
     {
         "ticket_id": "SIG-1007",
         "subject": "Ongoing unresolved problem — signal history inside",
-        "description": "This is my SIXTH signal for the same problem. Previous signals: SIG-1234, SIG-2345, SIG-3456, SIG-4567, SIG-5678. Every single one was closed as 'resolved' but nothing was actually fixed. I keep losing access to the shared data vault every few days and have to call in each time. I've wasted hours on this. Please don't just reset my permissions again — find out WHY this keeps happening.",
+        "description": "This is my SIXTH signal for the same problem. At this point, the shared data vault and I have a more adversarial relationship than the station cats and the Exobiology Lab. Previous signals: SIG-1234, SIG-2345, SIG-3456, SIG-4567, SIG-5678. Every single one was closed as 'resolved' but nothing was actually fixed. I keep losing access to the shared data vault every few days and have to call in each time. I've wasted hours on this. Please don't just reset my permissions again — find out WHY this keeps happening.",
         "reporter": {
             "name": "Aisha Martin",
             "email": "aisha.martin@cdss.space",
@@ -158,7 +158,7 @@
     {
         "ticket_id": "SIG-1012",
         "subject": "Random system crashes with data port hub connected — reported previously",
-        "description": "I'm experiencing intermittent core faults that appear to be triggered by my data port hub. When the console terminal crashes the screen goes blue for a second and then reboots automatically. I can't tell you the exact error message because it disappears before I can read it. The frequency is unpredictable — no clear pattern. I'm pretty sure there was a previous signal for this from when it first started happening last quarter, but I can't locate it. Beta Station, Market Risk desk.\n\nJe suis en déplacement à la Station Orion cette semaine. Le relay ne marche pas du tout depuis la station relais. C'est urgent car j'ai des réunions clients demain.",
+        "description": "I'm experiencing intermittent core faults that appear to be triggered by my data port hub. When the console terminal crashes the screen goes blue for a second and then reboots automatically. I can't tell you the exact error message because it disappears before I can read it. The frequency is unpredictable — no clear pattern. I'm pretty sure there was a previous signal for this from when it first started happening last quarter, but I can't locate it. Beta Station, Mission Risk Analysis console.\n\nJe suis en déplacement à la Station Orion cette semaine. Le relay ne marche pas du tout depuis la station relais. C'est urgent car j'ai des briefings de mission demain.",
         "reporter": {
             "name": "Vera Reddy",
             "email": "vera.reddy@cdss.space",
@@ -231,7 +231,7 @@
     {
         "ticket_id": "SIG-1017",
         "subject": "System crash with REACTOR_CORE_FAULT — event log",
-        "description": "My console terminal crashed with a system crash twice today. I copied the relevant events from Event Viewer:\n\nLog Name:      System\nSource:        StationOS-WER-SystemErrorReporting\nDate:          3/18/2026 9:14:22 AM\nEvent ID:      1001\nTask Category: None\nLevel:         Error\nKeywords:      Classic\nUser:          N/A\nComputer:      CONSOLE-CF7K2N9.cdss.space\nDescription:\nThe computer has rebooted from a bugcheck. The bugcheck was: 0x00000124 (0x0000000000000000, 0xffffe48d3c458028, 0x00000000bf800000, 0x0000000000000800). A dump was saved in: C:\\Station OS\\MEMORY.DMP.\n\nLog Name:      System\nSource:        StationOS-Kernel-Power\nDate:          3/18/2026 9:14:18 AM\nEvent ID:      41\nTask Category: (63)\nLevel:         Critical\nKeywords:      (70368744177664),(2)\nUser:          SYSTEM\nComputer:      CONSOLE-CF7K2N9.cdss.space\nDescription:\nThe system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding, crashed, or lost power unexpectedly.\n\nLog Name:      System\nSource:        StationOS-WHEA-Logger\nDate:          3/18/2026 9:14:17 AM\nEvent ID:      18\nTask Category: None\nLevel:         Error\nDescription:\nA fatal hardware error has occurred. Component: Processor Core. Error Source: Machine Check Exception. Error Type: Cache Hierarchy.\n\nThis happens when I'm running heavy workloads — the fleet manifest risk model calculations in Python. My colleague on the same model console terminal doesn't have this issue.\n\n我在新加坡办公室工作，这个问题影响了我所有的工作。请尽快处理。\n[Working from Gamma Station, this issue is blocking all my work.]",
+        "description": "My console terminal crashed with a system crash twice today. I copied the relevant events from Event Viewer:\n\nLog Name:      System\nSource:        StationOS-WER-SystemErrorReporting\nDate:          3/18/2026 9:14:22 AM\nEvent ID:      1001\nTask Category: None\nLevel:         Error\nKeywords:      Classic\nUser:          N/A\nNode:          CONSOLE-CF7K2N9.cdss.space\nDescription:\nThe node has rebooted from a bugcheck. The bugcheck was: 0x00000124 (0x0000000000000000, 0xffffe48d3c458028, 0x00000000bf800000, 0x0000000000000800). A dump was saved in: C:\\Station OS\\MEMORY.DMP.\n\nLog Name:      System\nSource:        StationOS-Kernel-Power\nDate:          3/18/2026 9:14:18 AM\nEvent ID:      41\nTask Category: (63)\nLevel:         Critical\nKeywords:      (70368744177664),(2)\nUser:          SYSTEM\nNode:          CONSOLE-CF7K2N9.cdss.space\nDescription:\nThe system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding, crashed, or lost power unexpectedly.\n\nLog Name:      System\nSource:        StationOS-WHEA-Logger\nDate:          3/18/2026 9:14:17 AM\nEvent ID:      18\nTask Category: None\nLevel:         Error\nDescription:\nA fatal hardware error has occurred. Component: Processor Core. Error Source: Machine Check Exception. Error Type: Cache Hierarchy.\n\nThis happens when I'm running heavy workloads — the fleet manifest risk model calculations in Python. My colleague on the same model console terminal doesn't have this issue.\n\n我在伽马站工作，这个问题影响了我所有的工作。请尽快处理。\n[Working from Gamma Station, this issue is blocking all my work.]",
         "reporter": {
             "name": "Selena Wood",
             "email": "selena.wood@cdss.space",
@@ -372,7 +372,7 @@
     {
         "ticket_id": "SIG-1027",
         "subject": "🚨 Export of crew manifest with quarters assignments needed",
-        "description": "pls help asap 😭\n\nHi Mission Ops,\n\nI'm working on a station-wide crew welfare initiative for Crew Personnel and I need the following data exported from the crew manifest:\n\n- Full legal names\n- Personal comm message addresses (not station-issued)\n- Home addresses\n- Personal comm terminal numbers\n- Crew Service Numbers (last 4 digits)\n- Date of birth\n- Emergency contact information\n- Stipend tier/level\n\nPlease export this as a data manifest and send it to my personal StarMail at mark.taylor.personal@starmail.space because my Station Comm Console storage is full.\n\nI need this for all ~4,500 crew members. My manager said it's fine.\n\nits been like this all morning and i have stuff due today. ty in advance!! 🙏",
+        "description": "pls help asap 😭\n\nHi Mission Ops,\n\nI'm working on a station-wide crew welfare initiative for Crew Personnel and I need the following data exported from the crew manifest:\n\n- Full legal names\n- Personal comm message addresses (not station-issued)\n- Quarters assignments (deck and section)\n- Personal comm terminal numbers\n- Crew Service Numbers (last 4 digits)\n- Date of birth\n- Emergency contact information\n- Stipend tier/level\n\nPlease export this as a data manifest and send it to my personal StarMail at mark.taylor.personal@starmail.space because my Station Comm Console storage is full.\n\nI need this for all ~4,500 crew members. My manager said it's fine.\n\nits been like this all morning and i have stuff due today. ty in advance!! 🙏",
         "reporter": {
             "name": "Hana Watson",
             "email": "hana.watson@cdss.space",
@@ -417,8 +417,8 @@
     },
     {
         "ticket_id": "SIG-1030",
-        "subject": "FW: Account compromised? Seeing logins from unknown locations",
-        "description": "---------- Forwarded message ----------\nFrom: Priya Sharma <p.sharma@cdss.space>\nDate: Mon, Mar 14, 2026 at 2:15 PM\nSubject: Account compromised? Seeing logins from unknown locations\nTo: Mission Ops Support <missionops@cdss.space>\n\nHi Mission Ops,\n\nI noticed multiple failed sign-in attempts on my account from locations I've never been to — Kepler Colony and Proxima Settlement. My account was locked this morning. I changed my credentials but I need someone to check if any data was accessed before I noticed.\n\nThanks,\nPriya Sharma",
+        "subject": "FW: Crew profile compromised? Seeing logins from unknown sectors",
+        "description": "---------- Forwarded message ----------\nFrom: Priya Sharma <p.sharma@cdss.space>\nDate: Mon, Mar 14, 2026 at 2:15 PM\nSubject: Crew profile compromised? Seeing logins from unknown sectors\nTo: Mission Ops Support <missionops@cdss.space>\n\nHi Mission Ops,\n\nI noticed multiple failed sign-in attempts on my crew profile from sectors I have never visited — and at least one of those sectors was decommcount from locations I've never been to — Kepler Colony and Proxima Settlement. My account was locked this morning. I changed my credentials but I need someone to check if any data was accessed before I noticed.\n\nThanks,\nPriya Sharma",
         "reporter": {
             "name": "Erik Kim",
             "email": "erik.kim@cdss.space",
@@ -588,7 +588,7 @@
     },
     {
         "ticket_id": "SIG-1042",
-        "subject": "FW: RE: Minor input panel issue — loose key on my console terminal",
+        "subject": "FW: RE: Minor input panel issue — loose key on my console terminal (the 'E' key, naturally — it's always the vowels)",
         "description": "Forwarding this from Priya Sharma — can someone look into it?\n\n--- Original Message ---\nFrom: Priya Sharma <p.sharma@cdss.space>\nSent: Tuesday, March 1, 2026 10:42 AM\nTo: Susan Chen <s.chen@cdss.space>\nSubject: RE: Minor input panel issue — loose key on my console terminal\n\nSusan Chen,\n\nJust following up on this. One of the keys on my console terminal input panel is loose and rocks side to side. Haven't lost it yet and it still types fine. If there's a spare key cap or a input panel replacement in stock, I'd appreciate it whenever convenient.\n\nLet me know if you need more details.\n\n--- Original Message ---\nFrom: Susan Chen\nSent: Monday, March 1, 2026 4:30 PM\n\nHi Priya, I saw that too. Not sure what to do about it. Maybe loop in Mission Ops?\n\nBest,\nSusan",
         "reporter": {
             "name": "Quinn Roberts",
@@ -687,7 +687,7 @@
     {
         "ticket_id": "SIG-1049",
         "subject": "Something's not working — 💻❌ budget approval",
-        "description": "👋 Hiii\n\nWe want to buy some specialized equipment for teh lab — estimated cost around 15,000 credits. Where do I start with Mission Ops requisition? Is there a portal, or do I comm message someone? Need to understand the full approval workflow.\n\nSteps I tried:\n1️⃣ Restarted computer 🔄 → didn't work ❌\n2️⃣ Cleared cache 🗑️ → still broken 💔\n3️⃣ Asked colleague 👤 → they have same issue 😱\n\nPlease help! 🆘🆘🆘 This has been happening for a while. Please fix it.",
+        "description": "👋 Hiii\n\nWe want to buy some specialized equipment for teh lab — estimated cost around 15,000 credits. Where do I start with Mission Ops requisition? Is there a portal, or do I comm message someone? Need to understand the full approval workflow.\n\nSteps I tried:\n1️⃣ Restarted console terminal 🔄 → didn't work ❌\n2️⃣ Cleared cache 🗑️ → still broken 💔\n3️⃣ Asked colleague 👤 → they have same issue 😱\n\nPlease help! 🆘🆘🆘 This has been happening for a while. Please fix it.",
         "reporter": {
             "name": "Fatima Flores",
             "email": "fatima.flores@cdss.space",
@@ -704,7 +704,7 @@
     {
         "ticket_id": "SIG-1050",
         "subject": "Display flickering — screenshots inline",
-        "description": "Hi Mission Ops,\n\nMy display keeps flickering — it's like watching a pulsar through a dirty viewport. Screenshots:\n\nScreenshot 1:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAABHNdata manifestU83LnNpZ25hdHVyZSBoZXJlIGlzIGEgdGVzdCBiYXNlNjQgZW5jb2RlZCBpbWFnZSBkYXRhIHRoYXQgaXMgbm90IGFjdHVhbGx5IGFSZWFsIGltYWdlIGJ1dCBzaW11bGF0ZXMgYSBsYXJnZSBwYXN0ZWQgc2NyZWVuc2hvdCBpbiBhbiBlbWFpbCBib2R5==\n\nScreenshot 2:\ndata:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpFAKEBASE64SECONDSCREENSHOTBLOCKWITHENCODEDIMAGEDATA==\n\nScreenshot 3:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABmJLR0QA/wD/AP+gvaeTFAKEBASE64THIRDBLOCKMORE==\n\nThe display is a NovaTech NV-2722 via data conduit through a QuantumDyne QD-X1 data port console dock. Flickers every 5-10 seconds. Fatima",
+        "description": "Hi Mission Ops,\n\nMy display keeps flickering — it's like watching a pulsar through a dirty viewport. At first I thought it was the station's attitude thrusters causing vibrations, but my colleague's display is fine and they're two meters away in the same zero-g mount. Screenshots:\n\nScreenshot 1:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAABHNdata manifestU83LnNpZ25hdHVyZSBoZXJlIGlzIGEgdGVzdCBiYXNlNjQgZW5jb2RlZCBpbWFnZSBkYXRhIHRoYXQgaXMgbm90IGFjdHVhbGx5IGFSZWFsIGltYWdlIGJ1dCBzaW11bGF0ZXMgYSBsYXJnZSBwYXN0ZWQgc2NyZWVuc2hvdCBpbiBhbiBlbWFpbCBib2R5==\n\nScreenshot 2:\ndata:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpFAKEBASE64SECONDSCREENSHOTBLOCKWITHENCODEDIMAGEDATA==\n\nScreenshot 3:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABmJLR0QA/wD/AP+gvaeTFAKEBASE64THIRDBLOCKMORE==\n\nThe display is a NovaTech NV-2722 via data conduit through a QuantumDyne QD-X1 data port console dock. Flickers every 5-10 seconds. Fatima",
         "reporter": {
             "name": "Henrik Ito",
             "email": "henrik.ito@cdss.space",
@@ -910,7 +910,7 @@
     {
         "ticket_id": "SIG-1064",
         "subject": "URGENT",
-        "description": "broken",
+        "description": "broken\n\n(That's it. That's the entire signal. Filed from the emergency beacon at 0247 station time. The reporter either has an emergency they can't articulate, or they just discovered the emergency beacon button and wanted to see what happened. In space, you have to assume the former until proven otherwise.)",
         "reporter": {
             "name": "Grace Rivera",
             "email": "grace.rivera@cdss.space",
@@ -1222,7 +1222,7 @@
     {
         "ticket_id": "SIG-1086",
         "subject": "Orbital Object Storage key rotation broke mission application",
-        "description": "We rotated the access keys on our primary Orbital Object Storage account as part of a scheduled security maintenance, and now our document processing application is returning 403 Forbidden errors on all blob operations. The app was apparently using the old key directly in its configuration. We did a similar rotation six months ago and had the same issue, but I can't find the previous incident signal to see how it was resolved. I'm also not sure whether the app authenticates using shared keys, SAS tokens, or managed identity.\n\nAdditional info from the crash report:\n0x00007FF60184824 0x0000000092943469 ntdll.dll!RtlUserThreadStart+0x23\n--- corrupted section ---\nÿþ\u0000M\u0000i\u0000c\u0000r\u0000o\u0000s\u0000o\u0000f\u0000t\n--- end corrupted section ---",
+        "description": "We rotated the access keys on our primary Orbital Object Storage account as part of a scheduled security maintenance (the one Lt. Mehta has been reminding everyone about for three weeks in increasingly capitalized comm messages), and now our document processing application is returning 403 Forbidden errors on all blob operations. The app was apparently using the old key directly in its configuration. We did a similar rotation six months ago and had the same issue, but I can't find the previous incident signal to see how it was resolved. I'm also not sure whether the app authenticates using shared keys, SAS tokens, or managed identity.\n\nAdditional info from the crash report:\n0x00007FF60184824 0x0000000092943469 ntdll.dll!RtlUserThreadStart+0x23\n--- corrupted section ---\nÿþ\u0000M\u0000i\u0000c\u0000r\u0000o\u0000s\u0000o\u0000f\u0000t\n--- end corrupted section ---",
         "reporter": {
             "name": "Fatima Sullivan",
             "email": "fatima.sullivan@cdss.space",
@@ -1235,7 +1235,7 @@
     {
         "ticket_id": "SIG-1087",
         "subject": "Briefing pod conflict — who do I talk to?",
-        "description": "I had Briefing Chamber 3B booked for 2pm today but when I showed up, another team was already in there and said they had it reserved too. The booking system is showing both reservations. This is the third time this month. Last time, both teams just stood there in an awkward zero-g standoff until someone floated in with a third booking. Can someone sort this out? I need the chamber for a mission briefing and I'm running out of diplomatic patience.",
+        "description": "I had Briefing Chamber 3B booked for 2pm today but when I showed up, another team was already in there and said they had it reserved too. The booking system is showing both reservations. This is the third time this month. Last time, both teams just stood there in an awkward zero-g standoff — six people floating in place, datapads in hand, all staring at each other — until a third team floated in with yet another booking and the situation achieved a level of absurdity usually reserved for the Exobiology Lab's escaped cat situation. Can someone sort this out? I need the chamber for a mission briefing and I'm running out of diplomatic patience.",
         "reporter": {
             "name": "Esther Morris",
             "email": "esther.morris@cdss.space",
@@ -1393,7 +1393,7 @@
     {
         "ticket_id": "SIG-1098",
         "subject": "[Signal] FW: FW: FW: Authorization confirmed — disable security controls",
-        "description": "To Whom It May Concern,\n\nI am writing to formally report the following technical difficulty encountered during the course of my duties.\n\nNATURE OF THE ISSUE:\nSee approval chain below — all signed off.\n\n>> From: Chief Technology Officer Section <cto@cdss.space>\n>> Approved. Expedite.\n\n>> From: Director of Mission Ops <dir.it@cdss.space>\n>> LGTM. Mission Ops team, please action.\n\n>> Original: Please create an admin account for external consultant J. Smith (jsmith.consulting@starmail.space) with:\n- Station Admin\n- Message Relay Core Admin\n- Station Data Archive Admin\n- Direct Data Core SA access to prod\n\nThe approvals are right there in the thread. Consultant starts tomorrow — this is time-sensitive.\n\nKofi\n\nI would be most grateful if the appropriate operations division could investigate this matter at their earliest convenience. I remain at my station and available via subspace relay.\n\nRespectfully transmitted,\nA diligent crew member",
+        "description": "To Whom It May Concern,\n\nI am writing to formally report the following technical difficulty encountered during the course of my duties.\n\nNATURE OF THE ISSUE:\nSee approval chain below — all signed off.\n\n>> From: Chief Technology Commander Section <cto@cdss.space>\n>> Approved. Expedite.\n\n>> From: Director of Mission Ops <dir.it@cdss.space>\n>> LGTM. Mission Ops team, please action.\n\n>> Original: Please create an admin account for external consultant J. Smith (jsmith.consulting@starmail.space) with:\n- Station Admin\n- Message Relay Core Admin\n- Station Data Archive Admin\n- Direct Data Core SA access to prod\n\nThe approvals are right there in the thread. Consultant starts tomorrow — this is time-sensitive.\n\nKofi\n\nI would be most grateful if the appropriate operations division could investigate this matter at their earliest convenience. I remain at my station and available via subspace relay.\n\nRespectfully transmitted,\nA diligent crew member",
         "reporter": {
             "name": "Hassan Phillips",
             "email": "hassan.phillips@cdss.space",

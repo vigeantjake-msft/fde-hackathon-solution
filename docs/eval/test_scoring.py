@@ -88,7 +88,7 @@ def test_priority_off_by_1_symmetric():
 
 
 def test_priority_off_by_2():
-    """Off by 2 levels = 0.0 — you called a hull breach "routine." Airlock is now a skylight."""
+    """Off by 2 levels = 0.0 — you called a hull breach 'routine.' Deck 7 now has mood lighting. From space."""
     assert score_priority("P3", "P1") == 0.0
 
 
@@ -418,7 +418,10 @@ def test_ticket_escalation_string_true():
 
 
 def test_ticket_escalation_string_false():
-    """'false' string must NOT be treated as True — Python's bool('false') is a trap. A cosmic trap."""
+    """'false' string must NOT be treated as True — Python's bool('false') is a trap.
+
+    A cosmic trap that has ended more careers than airlock malfunctions.
+    """
     gold = {
         "category": "Comms",
         "priority": "P1",

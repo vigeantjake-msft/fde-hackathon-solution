@@ -611,6 +611,16 @@ def main() -> int:
     print(f"  Signals scored: {n_valid}/{n_total}")
     if errors:
         print(f"  Signals lost to the void (scored as 0): {errors}")
+    # Dynamic verdict based on score
+    if classification_score >= 80:
+        verdict_line = "  │  🌟 The crew sleeps soundly. Outstanding triage, operator. │"
+    elif classification_score >= 65:
+        verdict_line = "  │  🛰️  Solid work. The crew mostly survives your decisions.  │"
+    elif classification_score >= 45:
+        verdict_line = "  │  ⚠️  The Admiral has questions. Several of them are loud.  │"
+    else:
+        verdict_line = "  │  🔥 Deck 7 is venting. The cats are floating. Do better.  │"
+
     print()
     print("  ┌─────────────────────────────────────────────────────────────┐")
     print("  │  Classification: up to 85 pts from 5 dimensions            │")
@@ -620,6 +630,7 @@ def main() -> int:
     print("  │                                                             │")
     print("  │  The scoring computer has rendered its verdict.             │")
     print("  │  Space doesn't grade on a curve. Neither do we. 🫡         │")
+    print(verdict_line)
     print("  └─────────────────────────────────────────────────────────────┘")
     print()
 
