@@ -47,11 +47,11 @@
         ],
         "next_best_action": "Dispatch immediate on-site support to Main War Room with a portable backup holographic projector. Time-critical: critical deep-space mining treaty review with the Meridian Sector delegation in 25 minutes.",
         "remediation_steps": [
-            "Dispatch on-site technician to Main War Room immediately",
-            "Bring portable backup holographic projector from Station Ops supply bay",
-            "Check holographic projector power source, data connections, and input source settings",
-            "If main holographic projector cannot be restored, set up portable unit before briefing starts",
-            "After briefing, schedule full diagnostic of the Main War Room holographic projector"
+            "Dispatch on-site technician to Main War Room immediately — the Meridian Sector delegation includes a Rigelian ambassador with atmospheric requirements that make 'find another room' approximately as practical as 'find another space station'",
+            "Bring portable backup holographic projector from Station Ops supply bay — if someone borrowed it for movie night again, Mehta will have words",
+            "Check holographic projector power source, data connections, and input source settings — the Main War Room projector has been known to enter a philosophical state where it technically has power but declines to project anything, like a very expensive mood lamp",
+            "If main holographic projector cannot be restored, set up portable unit before briefing starts — a 2.3M credit mining pact presentation on a backup projector is not ideal, but it's better than the Fleet Admiral performing the tactical overlay as interpretive dance",
+            "After briefing, schedule full diagnostic of the Main War Room holographic projector — and consider a backup-backup plan for future high-stakes presentations, because the universe has opinions about single points of failure"
         ]
     },
     {
@@ -323,11 +323,11 @@
         "missing_information": [],
         "next_best_action": "Dispatch support to Deck 8 command war room immediately. Fleet Admiral-level VIP signal — treat as one priority level higher. Investigate SubComm sharing policy blocking screen share for this crew member. Active command briefing with allied fleet commanders.",
         "remediation_steps": [
-            "Dispatch technician to the Deck 8 command war room immediately",
-            "Check Station Access Protocol and SubComm meeting policies applied to Carlos Martinez’s crew account",
-            "Verify whether the ‘Sharing is blocked by your station’s policy’ error is caused by a Data Loss Prevention Grid policy, SubComm admin policy, or Station Access Protocol restriction",
-            "As immediate workaround: have someone else share the tactical display on his behalf, or use the war room SubComm device with a different crew account",
-            "Once the briefing is unblocked, investigate and resolve the underlying policy conflict"
+            "Dispatch technician to the Deck 8 command war room immediately — Fleet Admiral-level VIP signal means 'move faster than you think you need to, then move faster than that'",
+            "Check Station Access Protocol and SubComm meeting policies applied to Carlos Martinez's crew account — a Fleet Admiral being told 'your station's policy blocks this' during an admiralty briefing is the kind of irony that generates incident reports",
+            "Verify whether the 'Sharing is blocked by your station's policy' error is caused by a Data Loss Prevention Grid policy, SubComm admin policy, or Station Access Protocol restriction — three possible causes, zero acceptable outcomes, negative time to investigate",
+            "As immediate workaround: have someone else share the tactical display on his behalf, or use the war room SubComm device with a different crew account — the admiralty board does not need to know about the workaround, they need to see the presentation, and the distinction is more important than your dignity",
+            "Once the briefing is unblocked, investigate and resolve the underlying policy conflict — because a Fleet Admiral filing a follow-up signal about the same issue would generate the kind of organizational stress that makes the atmospheric processor on Deck 7 look like a model of reliable engineering"
         ]
     },
     {
