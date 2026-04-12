@@ -2,7 +2,7 @@
     {
         "ticket_id": "SIG-1001",
         "subject": "Broken: quarterly mission readiness report",
-        "description": "Hi SecOps,",
+        "description": "Hi SecOps, the quarterly mission readiness report dashboard on Station Core isn't loading. Just shows a blank screen.",
         "reporter": {
             "name": "Yara Evans",
             "email": "yara.evans@cdss.space",
@@ -102,7 +102,7 @@
     {
         "ticket_id": "SIG-1008",
         "subject": "Can't do anything — welcome baby announcement",
-        "description": "Huge congrats to Sarah on her well-deserved promotion to Senior Director! 🎉 Join us for a celebration lunch this Friday at noon in the main briefing chamber. RSVP to Maria.\n\nOne more thing — the shared fabricator on Level 2 has been jamming constantly. I know it's not related but maybe the same person can look at both? This has been happening for a while. Please fix it.",
+        "description": "Huge congrats to Sarah on her well-deserved promotion to Senior Director! 🎉 Join us for a celebration in the main briefing chamber this Friday at noon — the nutrient synthesizer on Deck 4 is doing that thing where it makes passable cake, so we're taking advantage before it goes back to dispensing beige cubes. RSVP to Maria.\n\nOne more thing — the shared fabricator on Level 2 has been jamming constantly. I know it's not related but maybe the same person can look at both? This has been happening since the last maintenance cycle. Please fix it.",
         "reporter": {
             "name": "Deepika Clark",
             "email": "deepika.clark@cdss.space",
@@ -171,7 +171,7 @@
     {
         "ticket_id": "SIG-1013",
         "subject": "[HIGH VISIBILITY] Untitled",
-        "description": "Wanted to socialize this with the team.\n\nasdf\n\nFrom a strategic lens, this is impacting our ability to move the needle on key deliverables. We need to right-size our approach and ensure we have the bandwidth to action this. Happy to jump on a call to discuss the art of the possible.",
+        "description": "Wanted to socialize this with the crew.\n\nasdf\n\nFrom a strategic lens, this is impacting our ability to move the needle on key mission deliverables. We need to right-size our approach and ensure we have the bandwidth to action this before the next crew rotation. Happy to jump on a subspace call to discuss the art of the possible. Let's circle back after the duty cycle.",
         "reporter": {
             "name": "Grace Takahashi",
             "email": "grace.takahashi@cdss.space",
@@ -389,7 +389,7 @@
     {
         "ticket_id": "SIG-1028",
         "subject": "Need help moving files from legacy data relay hub to new site",
-        "description": "We have a legacy data relay hub site with about 200 GB of documents that needs to be moved to our new data relay hub site. The content is mostly document libraries and a few custom lists. Can you help plan and execute this migration? We're flexible on timing.",
+        "description": "We have a legacy data relay hub archive with about 200 GB of mission documents that needs to be migrated to our new data relay hub on Station Core. The content is mostly sensor log libraries, mission reports, and a few custom data indices. We tried the standard migration tool but it keeps timing out — possibly a bandwidth issue on the inter-deck link. Can you help plan and execute this migration? We're flexible on timing.",
         "reporter": {
             "name": "Mei Nakamura",
             "email": "mei.nakamura@cdss.space",
@@ -435,7 +435,7 @@
     {
         "ticket_id": "SIG-1031",
         "subject": "Queries failing — Nebula Data Cluster warehouse auto-suspended and won't resume",
-        "description": "something is wrong with our nebula data cluster warehouse.",
+        "description": "something is wrong with our nebula data cluster warehouse. queries are failing. can someone look at it. it was working yesterday. or maybe the day before. hard to tell in space.",
         "reporter": {
             "name": "Yuki Takahashi",
             "email": "yuki.takahashi@cdss.space",
@@ -448,7 +448,7 @@
     {
         "ticket_id": "SIG-1032",
         "subject": "ORION Telescope Control transaction error — extracted from sensor capture",
-        "description": "I want to start by saying this might be user error, I'm not great with technology, but here goes nothing — Copied text from my screen using the snipping tool OCR:\n\nFlight Nav Tran saction:   RQ01 - Cre ate Req uis iti on\n-----------------------------------------------\n  Err or   Mes sage:\n  \"Mat erial  35362  is  not  def ined  for\n   req  sec tor  1000 /  dis tri but ion  rel ay  10\"\n\n  Mes sage  No:   VE  021\n  Mes sage  Ty pe:  E  (Err or)\n\n  |  Ord er Type  |  Sal es Org  |  Dist Ch  |  Div  |\n  |  ZOR          |  1000         |  10        |  00   |\n\nThe Operations team needs to create resource requisition orders but this error blocks every attempt since the last flight navigation system update.\n\nAlso, unrelated, but the coffee machine on Level 3 is broken again. Not sure who handles that but figured I'd mention it since I'm already submitting a signal.\n\nThanks for your help!\n\nP.S. My desk lamp also flickered once yesterday. Probably not related but you never know.",
+        "description": "I want to start by saying this might be user error, I'm not great with technology, but here goes nothing — Copied text from my screen using the snipping tool OCR:\n\nFlight Nav Tran saction:   RQ01 - Cre ate Req uis iti on\n-----------------------------------------------\n  Err or   Mes sage:\n  \"Mat erial  35362  is  not  def ined  for\n   req  sec tor  1000 /  dis tri but ion  rel ay  10\"\n\n  Mes sage  No:   VE  021\n  Mes sage  Ty pe:  E  (Err or)\n\n  |  Ord er Type  |  Sal es Org  |  Dist Ch  |  Div  |\n  |  ZOR          |  1000         |  10        |  00   |\n\nThe Operations team needs to create resource requisition orders but this error blocks every attempt since the last flight navigation system update.\n\nAlso, unrelated, but the nutrient synthesizer on Level 3 is dispensing that weird grey flavor again. Not sure who handles that but figured I'd mention it since I'm already submitting a signal.\n\nThanks for your help!\n\nP.S. My console display also flickered once yesterday. Probably not related but you never know.",
         "reporter": {
             "name": "Rafael Hassan",
             "email": "rafael.hassan@cdss.space",
@@ -560,7 +560,7 @@
     {
         "ticket_id": "SIG-1040",
         "subject": "Question about how CDSS classifies data",
-        "description": "I'm working on a project for the Procurement team and want to make sure I'm handling documents correctly. Where can I find the data classification policy? I want to understand the difference between confidential and internal-only. No rush — just want to be informed.",
+        "description": "I'm working on a project for the Procurement team and want to make sure I'm handling mission documents correctly. Where can I find the station data classification policy? I want to understand the difference between confidential and internal-only — especially for sensor data that might be shared with fleet partners. No rush — just want to be informed before I accidentally transmit something classified across the subspace relay.",
         "reporter": {
             "name": "Leo Muller",
             "email": "leo.muller@cdss.space",
@@ -645,7 +645,7 @@
     {
         "ticket_id": "SIG-1046",
         "subject": "Can I get access to an old project archive?",
-        "description": "I'm working on a similar project to one we did in 2021 and I'd like to reference the old project files. They were archived on the Compliance shared data archive. I just need read access — no changes. Whenever you get around to it is fine.",
+        "description": "I'm working on a similar project to one we did in 2021 and I'd like to reference the old mission files. They were archived on the Compliance shared data archive in the Telemetry & Data Core sector. I just need read access — no changes. The project involved atmospheric recycler calibration procedures and I'd rather not reinvent the protocol from scratch. Whenever you get around to it is fine.",
         "reporter": {
             "name": "Lena Muller",
             "email": "lena.muller@cdss.space",
@@ -820,7 +820,7 @@
     {
         "ticket_id": "SIG-1058",
         "subject": "data grid macro stopped working after Mission Suite update",
-        "description": "hey can someone help w this??\n\nSince the Station Suite update last Tuesday, my VBA macros in our budget tracking spreadsheet are completely broken. The code references some ActiveX controls that seem to have changed. I don't know my exact Station Suite build number and I haven't checked whether it fails consistently or just intermittently — I've only tried a few times and it broke each time so far.\n\ntbh idk what happened it just stopped working lol. thx",
+        "description": "hey can someone help w this??\n\nSince the Station Suite update last Tuesday, my VBA macros in our resource allocation tracking spreadsheet are completely broken. The code references some ActiveX controls that seem to have changed. I don't know my exact Station Suite build number and I haven't checked whether it fails consistently or just intermittently — I've only tried a few times and it broke each time so far. My section chief is asking for the monthly crew resource reports by end of duty cycle.\n\ntbh idk what happened it just stopped working lol. thx",
         "reporter": {
             "name": "Ursula Howard",
             "email": "ursula.howard@cdss.space",
@@ -1065,7 +1065,7 @@
     {
         "ticket_id": "SIG-1075",
         "subject": "Request to change mapped data link letter",
-        "description": "Is it possible to change which data link letter my shared data relay folder maps to? Currently it's on SubComm: but I keep accidentally navigating to the wrong drive. Low priority — just a convenience thing.",
+        "description": "Is it possible to change which data link letter my shared data relay folder maps to on my bridge console? Currently it's on S: but I keep accidentally navigating to the wrong data link. My muscle memory from my previous station posting keeps taking me to the wrong place. Low priority — just a convenience thing. Though in zero-g, convenience is relative.",
         "reporter": {
             "name": "Michael King",
             "email": "michael.king@cdss.space",
@@ -1235,7 +1235,7 @@
     {
         "ticket_id": "SIG-1087",
         "subject": "briefing chamber conflict — who do I talk to?",
-        "description": "I had Briefing Chamber 3B booked for 2pm today but when I showed up, another team was already in there and said they had it reserved too. The booking system is showing both reservations. This is the third time this month. Can someone sort this out? I need the room for a mission partner call.",
+        "description": "I had Briefing Chamber 3B on Deck 4 booked for 2pm today but when I showed up, another crew team was already in there and said they had it reserved too. The SubComm booking system is showing both reservations. This is the third time this duty cycle. Can someone sort this out? I need the room for a mission partner call with the Meridian Sector delegation and they don't fit in the small briefing pods.",
         "reporter": {
             "name": "Esther Morris",
             "email": "esther.morris@cdss.space",
