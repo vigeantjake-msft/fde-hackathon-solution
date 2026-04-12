@@ -31,7 +31,7 @@
     {
         "ticket_id": "SIG-1003",
         "subject": "Networked fabricator won't send scans to comm message",
-        "description": "The networked fabricator on the 5th deck in Beta Station can fabricate fine, but the scan-to-comm message feature stopped working about a week ago — right around when they recalibrated the comm relay on that deck. When I scan a document and enter my comm message, it gives an error on the display but it disappears too fast to read. No scans have arrived in my inbox.\n\nWe have Interstellar Safety Inspectors arriving in 1 hour and they need access to these systems. This cannot wait.",
+        "description": "The networked fabricator on the 5th deck in Beta Station can fabricate fine, but the scan-to-comm message feature stopped working about a week ago — right around when they recalibrated the comm relay on that deck. When I scan a document and enter my comm message, it gives an error on the display but it disappears too fast to read. I've tried photographing the screen with my comm terminal but it's like the error knows and vanishes faster each time. No scans have arrived in my inbox.\n\nWe have Interstellar Safety Inspectors arriving in 1 hour and they need access to these systems. This cannot wait. The inspectors are already in a mood because someone accidentally fabricated their boarding passes upside down.",
         "reporter": {
             "name": "Carlos Novak",
             "email": "carlos.novak@cdss.space",
@@ -102,7 +102,7 @@
     {
         "ticket_id": "SIG-1008",
         "subject": "Can't do anything — welcome baby announcement",
-        "description": "Huge congrats to Sarah on her well-deserved promotion to Senior Director! 🎉 Join us for a celebration in the zero-g recreation lounge this Friday at noon — the nutrient synthesizer is doing its best impression of cake. RSVP to Maria.\n\nOne more thing — the shared fabricator on Deck 2 has been jamming constantly. I know it's not related but maybe the same person can look at both? This has been happening for a while. Please fix it.",
+        "description": "Huge congrats to Sarah on her well-deserved promotion to Senior Director! 🎉 Join us for a celebration in the zero-g recreation lounge this Friday at noon — the nutrient synthesizer is doing its best impression of cake. Last time it attempted confetti frosting, we had to evacuate Deck 4. RSVP to Maria. (Commander Kapoor has already RSVP'd, so attendance is technically voluntary but spiritually mandatory.)\n\nOne more thing — the shared fabricator on Deck 2 has been jamming constantly. Every time someone tries to print a mission report, it produces seventeen copies of page 47 and then makes a noise like a distressed dolphin. I know it's not related but maybe the same person can look at both? This has been happening for a while. Please fix it.",
         "reporter": {
             "name": "Deepika Clark",
             "email": "deepika.clark@cdss.space",
@@ -342,7 +342,7 @@
     {
         "ticket_id": "SIG-1025",
         "subject": "Search results missing new files in Station Data Archive",
-        "description": "Search on our data archive site isn't returning documents uploaded in the last week. I've tried searching by exact file name, keywords in the content, and metadata. Nothing shows up for recent uploads. The site is https://archive.cdss.space/sites/Telemetry Engineering. Not urgent but it's making it hard to find things.\n\nI took a photo of the screen with my comm terminal — see IMG_20260179_208998.jpg attached.",
+        "description": "Search on our data archive site isn't returning documents uploaded in the last week. I've tried searching by exact file name, keywords in the content, and metadata. Nothing shows up for recent uploads. At this point I've tried everything short of shouting the file name into the void and hoping the void shouts back. The site is https://archive.cdss.space/sites/Telemetry Engineering. Not urgent but it's making it hard to find things.\n\nI took a photo of the screen with my comm terminal — see IMG_20260179_208998.jpg attached.",
         "reporter": {
             "name": "Diana Hernandez",
             "email": "diana.hernandez@cdss.space",
@@ -389,7 +389,7 @@
     {
         "ticket_id": "SIG-1028",
         "subject": "Need help moving files from legacy Station Data Archive to new site",
-        "description": "We have a legacy Station Data Archive 2016 site with about 200 GB of documents that needs to be moved to our new Station Data Archive site. The content is mostly document libraries and a few custom lists. Some of these files predate the last station refit — I'm pretty sure there's a folder in there labeled \"DO NOT OPEN — SEE LT. MEHTA\" but Lt. Mehta claims he's never seen it. Can you help plan and execute this migration? We're flexible on timing.",
+        "description": "We have a legacy Station Data Archive 2016 site with about 200 GB of documents that needs to be moved to our new Station Data Archive site. The content is mostly document libraries and a few custom lists. Some of these files predate the last station refit — I'm pretty sure there's a folder in there labeled 'DO NOT OPEN — SEE LT. MEHTA' but Lt. Mehta claims he's never seen it, which is suspicious because the folder's last-modified-by field says 'Lt. Mehta.' There's also a subfolder called 'Definitely Not Secret Plans' which I have elected not to investigate. Can you help plan and execute this migration? We're flexible on timing.",
         "reporter": {
             "name": "Mei Nakamura",
             "email": "mei.nakamura@cdss.space",
@@ -435,7 +435,7 @@
     {
         "ticket_id": "SIG-1031",
         "subject": "Queries failing — Quantum Data Warehouse auto-suspended and won't resume",
-        "description": "something is wrong with our Quantum Data Warehouse.",
+        "description": "something is wrong with our Quantum Data Warehouse. it won't go. i pressed the button. the other button too. still won't go.",
         "reporter": {
             "name": "Yuki Takahashi",
             "email": "yuki.takahashi@cdss.space",
@@ -589,7 +589,7 @@
     {
         "ticket_id": "SIG-1042",
         "subject": "FW: RE: Minor input panel issue — loose key on my console terminal (the 'E' key, naturally — it's always the vowels)",
-        "description": "Forwarding this from Priya Sharma — can someone look into it?\n\n--- Original Message ---\nFrom: Priya Sharma <p.sharma@cdss.space>\nSent: Tuesday, March 1, 2026 10:42 AM\nTo: Susan Chen <s.chen@cdss.space>\nSubject: RE: Minor input panel issue — loose key on my console terminal\n\nSusan Chen,\n\nJust following up on this. One of the keys on my console terminal input panel is loose and rocks side to side. Haven't lost it yet and it still types fine. If there's a spare key cap or a input panel replacement in stock, I'd appreciate it whenever convenient.\n\nLet me know if you need more details.\n\n--- Original Message ---\nFrom: Susan Chen\nSent: Monday, March 1, 2026 4:30 PM\n\nHi Priya, I saw that too. Not sure what to do about it. Maybe loop in Mission Ops?\n\nBest,\nSusan",
+        "description": "Forwarding this from Priya Sharma — can someone look into it?\n\n--- Original Message ---\nFrom: Priya Sharma <p.sharma@cdss.space>\nSent: Tuesday, March 1, 2026 10:42 AM\nTo: Susan Chen <s.chen@cdss.space>\nSubject: RE: Minor input panel issue — loose key on my console terminal\n\nSusan Chen,\n\nJust following up on this. One of the keys on my console terminal input panel is loose and rocks side to side. It's the 'E' key, which is unfortunate because it turns out you need the letter E for approximately 47% of all words in the English language. Haven't lost it yet and it still types fine, though my status reports have started reading like avant-garde poetry. If there's a spare key cap or a input panel replacement in stock, I'd appreciate it whenever convenient.\n\nLet me know if you need more details.\n\n--- Original Message ---\nFrom: Susan Chen\nSent: Monday, March 1, 2026 4:30 PM\n\nHi Priya, I saw that too. Not sure what to do about it. Maybe loop in Mission Ops? I asked the Deck 3 repair bot but it just welded my mug to the desk.\n\nBest,\nSusan",
         "reporter": {
             "name": "Quinn Roberts",
             "email": "quinn.roberts@cdss.space",
@@ -661,7 +661,7 @@
     {
         "ticket_id": "SIG-1047",
         "subject": "transmission leak prevention alert: suspicious data exfiltration by departing crew member",
-        "description": "yo so heres the deal:\n\nOur Transmission Leak Prevention system flagged that an crew member in the resource allocation division downloaded over 15,000 asset records to a personal data crystal yesterday evening between 8 PM and 11 PM. This crew member submitted their resignation last Friday and their last day is next week. The data includes crew names, service records, mission clearances, and contact information. Crew Personnel has been notified. The crew member's badge access shows they were in the station alone on the 27th deck.\n\ntried restarting didn't help. anyone around to take a look? im at my desk rn",
+        "description": "yo so heres the deal:\n\nOur Transmission Leak Prevention system flagged that an crew member in the resource allocation division downloaded over 15,000 asset records to a personal data crystal yesterday evening between 8 PM and 11 PM station time. This crew member submitted their resignation last Friday and their last day is next week. The data includes crew names, service records, mission clearances, and contact information. Crew Personnel has been notified. The crew member's badge access shows they were in the station alone on the 27th deck, which is impressive because the 27th deck doesn't have lights after 6 PM and most people won't go there since the 'phantom footsteps' incident.\n\ntried restarting didn't help. anyone around to take a look? im at my desk rn",
         "reporter": {
             "name": "Ximena Gray",
             "email": "ximena.gray@cdss.space",
@@ -820,7 +820,7 @@
     {
         "ticket_id": "SIG-1058",
         "subject": "DataCalc automation script stopped working after Station Suite update",
-        "description": "hey can someone help w this??\n\nSince the Station Suite update last Tuesday, my automation scripts in our budget tracking data grid are completely broken. The code references some ActiveX controls that seem to have changed. I don't know my exact Station Suite build number and I haven't checked whether it fails consistently or just intermittently — I've only tried a few times and it broke each time so far.\n\ntbh idk what happened it just stopped working lol. thx",
+        "description": "hey can someone help w this??\n\nSince the Station Suite update last Tuesday, my automation scripts in our budget tracking data grid are completely broken. The code references some ActiveX controls that seem to have changed. I don't know my exact Station Suite build number and I haven't checked whether it fails consistently or just intermittently — I've only tried a few times and it broke each time so far. The script was originally written by someone who left the station three years ago, and the only documentation is a comment that says '// DO NOT TOUCH — I don't know why this works either.'\n\ntbh idk what happened it just stopped working lol. thx",
         "reporter": {
             "name": "Ursula Howard",
             "email": "ursula.howard@cdss.space",
@@ -833,7 +833,7 @@
     {
         "ticket_id": "SIG-1059",
         "subject": "FYI only — someone called claiming to be from ops and asked for my credentials",
-        "description": "I got a comm terminal call about 30 minutes ago from someone claiming to be from our Mission Ops Signal Desk. They said there was a security issue with my account and asked me to confirm my credentials and crew member ID. I gave them my crew member ID but not my credentials — it seemed suspicious. The caller ID showed an internal number but the person didn't know my manager's name when I asked. I'm a fleet asset manager in the Arcturus station.\n\n[The reporter says no action needed but the description clearly describes a system failure requiring attention.]",
+        "description": "I got a comm terminal call about 30 minutes ago from someone claiming to be from our Mission Ops Signal Desk. They said there was a security issue with my account and asked me to confirm my credentials and crew member ID. I gave them my crew member ID but not my credentials — it seemed suspicious, mainly because they pronounced 'Contoso' as 'Con-TOE-so' and referred to our station as a 'spaceship thingy.' The caller ID showed an internal number but the person didn't know my manager's name when I asked, and when I asked which deck they were on, they said 'the... normal one.' I'm a fleet asset manager in the Arcturus station.\n\n[The reporter says no action needed but the description clearly describes a system failure requiring attention.]",
         "reporter": {
             "name": "Julia Martin",
             "email": "julia.martin@cdss.space",
@@ -848,7 +848,7 @@
     {
         "ticket_id": "SIG-1060",
         "subject": "ops issue: not urgent —",
-        "description": "I'm on an away mission and teh relay station mesh network is blocking our encrypted relay. I can connect to the relay station mesh network fine but PerimeterShield can't establish a tunnel — it just times out. I think the relay station might be blocking certain ports. I have a critical mission briefing first thing tomorrow and need to acess our systmes tonight to prepare. I'm not sure what my transit quarters room comm terminal number is and my personal comm relay has weak signal from this sector. Comm message is the best way to reach me.\n\nUpdate: Actually this is affecting the entire Structural Integrity section. Several team members can't work. I'm not sure what else to tell you. It just doesn't work.",
+        "description": "I'm on an away mission and teh relay station mesh network is blocking our encrypted relay. I can connect to the relay station mesh network fine but PerimeterShield can't establish a tunnel — it just times out. I think the relay station might be blocking certain ports. I have a critical mission briefing first thing tomorrow and need to acess our systmes tonight to prepare. I'm typing this from a borrowed comm terminal with a cracked screen and a sticky spacebar, so apologies for any typos. I'm not sure what my transit quarters room comm terminal number is and my personal comm relay has weak signal from this sector. Comm message is the best way to reach me.\n\nUpdate: Actually this is affecting the entire Structural Integrity section. Several team members can't work. I'm not sure what else to tell you. It just doesn't work.",
         "reporter": {
             "name": "Aaliya Brooks",
             "email": "aaliya.brooks@cdss.space",
@@ -893,7 +893,7 @@
     {
         "ticket_id": "SIG-1063",
         "subject": "Personal fabricator won't connect — can you help?",
-        "description": "Hi, I'm having trouble setting up my personal fabricator in my quarters. It's not a station-issued device — I acquired it myself for hobby projects in the habitat ring. The fabricator won't pair with my quarters network and I figured the Mission Ops team might know how to fix it. Is this something you can help with? I can share the model number if needed.",
+        "description": "Hi, I'm having trouble setting up my personal fabricator in my quarters. It's not a station-issued device — I acquired it myself for hobby projects in the habitat ring. Specifically, I'm trying to fabricate custom chess pieces for the inter-deck tournament (I'm seeded third, no big deal). The fabricator won't pair with my quarters network and I figured the Mission Ops team might know how to fix it. Is this something you can help with? I can share the model number if needed. Also, before you ask: no, the chess pieces are not shaped like Commander Kapoor. Anymore.",
         "reporter": {
             "name": "Zach Johansson",
             "email": "zach.johansson@cdss.space",
@@ -910,7 +910,7 @@
     {
         "ticket_id": "SIG-1064",
         "subject": "URGENT",
-        "description": "broken\n\n(That's it. That's the entire signal. Filed from the emergency beacon at 0247 station time. The reporter either has an emergency they can't articulate, or they just discovered the emergency beacon button and wanted to see what happened. In space, you have to assume the former until proven otherwise.)",
+        "description": "broken\n\n(That's it. That's the entire signal. Filed from the emergency beacon at 0247 station time. The reporter either has an emergency they can't articulate, or they just discovered the emergency beacon button and wanted to see what happened. In space, you have to assume the former until proven otherwise. Legend has it the last time someone filed a one-word emergency beacon signal, it turned out to be a catastrophic coolant leak. The time before that, it was a vending machine. We treat all of them seriously now.)",
         "reporter": {
             "name": "Grace Rivera",
             "email": "grace.rivera@cdss.space",
@@ -940,7 +940,7 @@
     {
         "ticket_id": "SIG-1066",
         "subject": "Tactical Ops Console reports not loading — spinning wheel",
-        "description": "Tactical Ops Console reports have been failing to load all morning. I click on any report and it just shows a spinning wheel indefinitely. Dashboards are also affected. I can still navigate to individual records but any report or dashboard is broken. My team in Tactical Operations relies on these reports for daily threat assessment and patrol coordination — we've got a debris field approaching from the port bow and we're literally flying blind without our sensor summary dashboards.",
+        "description": "Tactical Ops Console reports have been failing to load all morning. I click on any report and it just shows a spinning wheel indefinitely. I've been staring at it so long it's become my screensaver. Dashboards are also affected. I can still navigate to individual records but any report or dashboard is broken. My team in Tactical Operations relies on these reports for daily threat assessment and patrol coordination — we've got a debris field approaching from the port bow and we're literally flying blind without our sensor summary dashboards. Commander Kapoor has asked me three times for the threat assessment and I've had to respond with 'vibes seem fine, sir' which is not the level of precision Tactical Operations is known for.",
         "reporter": {
             "name": "Diana White",
             "email": "diana.white@cdss.space",
@@ -1005,7 +1005,7 @@
     {
         "ticket_id": "SIG-1071",
         "subject": "data port hub causing core faults — had a signal before",
-        "description": "My console terminal keeps getting system crashes that I believe are caused by my data port hub. It only seems to happen when teh hub is connected, but I can't pin down how often — sometimes it's fine for days, other times it crashes twice in one morning. I reported this same issue a couple of months ago and someone looked at it but I don't have the signal number anymore. I didn't write down the exact error code from the system crash — it flashes too quickly — by the time I stop spinning from the crash reboot in zero-g, the error is gone. Alpha Station, Quantitative Research team.",
+        "description": "My console terminal keeps getting system crashes that I believe are caused by my data port hub. It only seems to happen when teh hub is connected, but I can't pin down how often — sometimes it's fine for days, other times it crashes twice in one morning. I reported this same issue a couple of months ago and someone looked at it but I don't have the signal number anymore. I didn't write down the exact error code from the system crash — it flashes too quickly — by the time I stop spinning from the crash reboot in zero-g, the error is gone. Last time the reboot launched me into the ceiling and I knocked over Dr. Vasquez's bonsai tree. She has not forgiven me. Alpha Station, Quantitative Research team.",
         "reporter": {
             "name": "Zachary Hall",
             "email": "zachary.hall@cdss.space",
@@ -1065,7 +1065,7 @@
     {
         "ticket_id": "SIG-1075",
         "subject": "Request to change linked data volume designator",
-        "description": "Is it possible to change which volume designator my shared network folder maps to? Currently it's mapped to volume designation V7 but I keep accidentally navigating to the wrong data partition and almost overwrote the entire Diplomatic Corps quarterly report with my personal recipe collection. Low priority — just a convenience thing. Though my crewmates say the recipes are better than the report.",
+        "description": "Is it possible to change which volume designator my shared network folder maps to? Currently it's mapped to volume designation V7 but I keep accidentally navigating to the wrong data partition and almost overwrote the entire Diplomatic Corps quarterly report with my personal recipe collection. The Diplomatic Corps was surprisingly upset about this, though several crew members have since requested my carbonara recipe. Low priority — just a convenience thing. Though my crewmates say the recipes are better than the report, and honestly, having read the report, I can't disagree.",
         "reporter": {
             "name": "Michael King",
             "email": "michael.king@cdss.space",
@@ -1078,7 +1078,7 @@
     {
         "ticket_id": "SIG-1076",
         "subject": "🚨 Console terminal fan noise — should I be worried?",
-        "description": "pls help asap 😭\n\nHi, this might be a silly question but my station-issued console terminal fan has been running really loud for the past few days, even when I only have Station Comm Console and Holocomm open. It didn't used to be this noisy. Is this normal or should I be concerned? I'm not sure if it's a hardware issue or just something that happens with these machines over time.\n\nits been like this all morning and i have stuff due today. ty in advance!! 🙏",
+        "description": "pls help asap 😭\n\nHi, this might be a silly question but my station-issued console terminal fan has been running really loud for the past few days, even when I only have Station Comm Console and Holocomm open. It didn't used to be this noisy. My quarters neighbor has filed a noise complaint and the station cat refuses to sit on it anymore, which is how you know it's serious — that cat will sit on literally anything, including the Commander's dress uniform during last month's inspection. Is this normal or should I be concerned? I'm not sure if it's a hardware issue or just something that happens with these machines over time.\n\nits been like this all morning and i have stuff due today. ty in advance!! 🙏",
         "reporter": {
             "name": "Miriam Cruz",
             "email": "miriam.cruz@cdss.space",
@@ -1125,7 +1125,7 @@
     {
         "ticket_id": "SIG-1079",
         "subject": "deck mesh network keeps dropping",
-        "description": "\n\n\n\t\t\tHello,\n\n\n\n\t\t\tI can't stay connected to the deck mesh network.\n\n\t\t\tIt drops every hour or so and I lose my encrypted relay.\n\n\n\n\t\t\tI'm on Station OS 10 and using the built-in deck mesh network adapter.\n\n\t\t\tThe signal seems to cut out whenever the gravity generators cycle.\n\n\n\n\n\t\t\tPlease help.\n\n\n\n\n",
+        "description": "\n\n\n\t\t\tHello,\n\n\n\n\t\t\tI can't stay connected to the deck mesh network.\n\n\t\t\tIt drops every hour or so and I lose my encrypted relay.\n\n\n\n\t\t\tI'm on Station OS 10 and using the built-in deck mesh network adapter.\n\n\t\t\tThe signal seems to cut out whenever the gravity generators cycle.\n\n\t\t\tWhich is a fun coincidence because I also fall out of my chair whenever\n\t\t\tthe gravity generators cycle.\n\n\n\n\t\t\tPlease help.\n\n\n\n\n",
         "reporter": {
             "name": "James Brown",
             "email": "james.brown@cdss.space",
@@ -1222,7 +1222,7 @@
     {
         "ticket_id": "SIG-1086",
         "subject": "Orbital Object Storage key rotation broke mission application",
-        "description": "We rotated the access keys on our primary Orbital Object Storage account as part of a scheduled security maintenance (the one Lt. Mehta has been reminding everyone about for three weeks in increasingly capitalized comm messages), and now our document processing application is returning 403 Forbidden errors on all blob operations. The app was apparently using the old key directly in its configuration. We did a similar rotation six months ago and had the same issue, but I can't find the previous incident signal to see how it was resolved. I'm also not sure whether the app authenticates using shared keys, SAS tokens, or managed identity.\n\nAdditional info from the crash report:\n0x00007FF60184824 0x0000000092943469 ntdll.dll!RtlUserThreadStart+0x23\n--- corrupted section ---\nÿþ\u0000M\u0000i\u0000c\u0000r\u0000o\u0000s\u0000o\u0000f\u0000t\n--- end corrupted section ---",
+        "description": "We rotated the access keys on our primary Orbital Object Storage account as part of a scheduled security maintenance (the one Lt. Mehta has been reminding everyone about for three weeks in increasingly capitalized comm messages — his last one was just the word 'KEYS' in 72-point font), and now our document processing application is returning 403 Forbidden errors on all blob operations. The app was apparently using the old key directly in its configuration, which is exactly the thing Lt. Mehta warned us about in the comm messages nobody read. We did a similar rotation six months ago and had the same issue, but I can't find the previous incident signal to see how it was resolved. I'm also not sure whether the app authenticates using shared keys, SAS tokens, or managed identity. At this point I'm afraid to ask Lt. Mehta.\n\nAdditional info from the crash report:\n0x00007FF60184824 0x0000000092943469 ntdll.dll!RtlUserThreadStart+0x23\n--- corrupted section ---\nÿþ M i c r o s o f t\n--- end corrupted section ---",
         "reporter": {
             "name": "Fatima Sullivan",
             "email": "fatima.sullivan@cdss.space",
@@ -1251,7 +1251,7 @@
     {
         "ticket_id": "SIG-1088",
         "subject": "Not urgent — automated reporting module failing — scheduled task output attached",
-        "description": "Hi team,\n\nOur nightly batch job on PROD-RPT-02 has been failing:\n\nStation Scheduler Log:\nTask: \\Contoso\\Reports\\DailyGeneration\nLast Run: 2026-03-17 02:00:00 — Result: 0x1 (Failed)\nPrevious: 2026-03-16 02:00:00 — Result: 0x1 (Failed)\nPrevious: 2026-03-15 02:00:00 — Result: 0x0 (Success)\n\nThe job connects to the Quantum Data Warehouse but the data retrieval protocol times out after 30 seconds. We need the daily Mission Resource Planning reports.\n\nWei\n\nUpdate: Actually this is affecting the resource exchange deck. Several analysts can't work.",
+        "description": "Hi team,\n\nOur nightly batch job on PROD-RPT-02 has been failing:\n\nStation Scheduler Log:\nTask: \\Contoso\\Reports\\DailyGeneration\nLast Run: 2026-03-17 02:00:00 — Result: 0x1 (Failed)\nPrevious: 2026-03-16 02:00:00 — Result: 0x1 (Failed)\nPrevious: 2026-03-15 02:00:00 — Result: 0x0 (Success)\n\nThe job connects to the Quantum Data Warehouse but the data retrieval protocol times out after 30 seconds. We need the daily Mission Resource Planning reports. Without them, Commander Kapoor has been making resource allocation decisions based on what he calls 'gut feel and the stars,' which is poetic but not ideal for a space station.\n\nWei\n\nUpdate: Actually this is affecting the resource exchange deck. Several analysts can't work.",
         "reporter": {
             "name": "Brendan Suzuki",
             "email": "brendan.suzuki@cdss.space",
@@ -1264,7 +1264,7 @@
     {
         "ticket_id": "SIG-1089",
         "subject": "station viewer freezes every time I access the station operations dashboard",
-        "description": "Our internal supply requisitioning portal crashes station viewer every time I try to submit a report. The page freezes, then the station viewer becomes unresponsive. This only happens on this specific portal — other websites work fine.\n\nThe diagnostic tool output (copied from terminal):\n[INFO] Starting diagnostics...\n[WARN] \\x1b[33mPartial connection established\\x1b[0m\n[ERROR] \\x1b[31mConnection reset by peer: ECONNRESET\\x1b[0m\n[FATAL] \\x1b[41m\\x1b[37mService unavailable — retry after 94s\\x1b[0m",
+        "description": "Our internal supply requisitioning portal crashes station viewer every time I try to submit a report. The page freezes, then the station viewer becomes unresponsive. I've learned to save my work every 30 seconds like it's 1995 and I'm writing a thesis during a thunderstorm. This only happens on this specific portal — other websites work fine.\n\nThe diagnostic tool output (copied from terminal):\n[INFO] Starting diagnostics...\n[WARN] \\x1b[33mPartial connection established\\x1b[0m\n[ERROR] \\x1b[31mConnection reset by peer: ECONNRESET\\x1b[0m\n[FATAL] \\x1b[41m\\x1b[37mService unavailable — retry after 94s\\x1b[0m",
         "reporter": {
             "name": "Ximena Anderson",
             "email": "ximena.anderson@cdss.space",
