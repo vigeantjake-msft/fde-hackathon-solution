@@ -158,7 +158,7 @@
     {
         "ticket_id": "SIG-1012",
         "subject": "Random system crashes with data port hub connected — reported previously",
-        "description": "I'm experiencing intermittent core faults that appear to be triggered by my data port hub. When the console terminal crashes the screen goes blue for a second and then reboots automatically. I can't tell you the exact error message because it disappears before I can read it — it's like the error code is camera-shy. The frequency is unpredictable, which is my way of saying 'it happens whenever it feels like it, possibly out of spite.' I reported this same problem two months ago and someone looked at it but I don't have the signal number. The previous tech said something about 'driver conflicts' and made a face that did not inspire confidence.",
+        "description": "I'm experiencing intermittent core faults that appear to be triggered by my data port hub. When the console terminal crashes the holographic display fragments into static for a second and then reboots automatically. Last time it happened during a hull pressure review and I lost 40 minutes of work into the void — literally and figuratively. I can't tell you the exact error message because it disappears before I can read it — it's like the error code is camera-shy. The frequency is unpredictable, which is my way of saying 'it happens whenever it feels like it, possibly out of spite.' I reported this same problem two months ago and someone looked at it but I don't have the signal number. The previous tech said something about 'driver conflicts' and made a face that did not inspire confidence.",
         "reporter": {
             "name": "Vera Reddy",
             "email": "vera.reddy@cdss.space",
@@ -1264,7 +1264,7 @@
     {
         "ticket_id": "SIG-1089",
         "subject": "station viewer freezes every time I access the station operations dashboard",
-        "description": "Our internal supply requisitioning portal crashes station viewer every time I try to submit a report. The page freezes, then the station viewer becomes unresponsive. I've learned to save my work every 30 seconds like it's 1995 and I'm writing a thesis during a thunderstorm. This only happens on this specific portal — other websites work fine.\n\nThe diagnostic tool output (copied from terminal):\n[INFO] Starting diagnostics...\n[WARN] \\x1b[33mPartial connection established\\x1b[0m\n[ERROR] \\x1b[31mConnection reset by peer: ECONNRESET\\x1b[0m\n[FATAL] \\x1b[41m\\x1b[37mService unavailable — retry after 94s\\x1b[0m",
+        "description": "Our internal supply requisitioning portal crashes station viewer every time I try to submit a report. The page freezes, then the station viewer becomes unresponsive. I've learned to save my work every 30 seconds like it's 1995 and I'm writing a thesis during a thunderstorm. This only happens on this specific portal — other station portals work fine.\n\nThe diagnostic tool output (copied from terminal):\n[INFO] Starting diagnostics...\n[WARN] \\x1b[33mPartial connection established\\x1b[0m\n[ERROR] \\x1b[31mConnection reset by peer: ECONNRESET\\x1b[0m\n[FATAL] \\x1b[41m\\x1b[37mService unavailable — retry after 94s\\x1b[0m",
         "reporter": {
             "name": "Ximena Anderson",
             "email": "ximena.anderson@cdss.space",
