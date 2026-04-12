@@ -674,10 +674,7 @@ def main() -> int:
         "escalation": {
             0.9: "Escalation calls: the Admiral sleeps soundly tonight. First time ever.",
             0.7: "Caught most escalations. Missed one or two. The Admiral is taking notes.",
-            0.5: (
-                "The Admiral found out about the hostile contact from the news."
-                " He is composing a memo."
-            ),
+            0.5: ("The Admiral found out about the hostile contact from the news. He is composing a memo."),
             0.0: "You let a containment breach slide. The paperwork will outlive you.",
         },
     }

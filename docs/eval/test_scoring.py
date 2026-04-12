@@ -639,8 +639,12 @@ def test_difficulty_breakdown_both_subsets():
         {**_make_signal("SIG-0001"), "difficulty": "standard"},
     ]
     adversarial_gold = [
-        {**_make_signal("SIG-0002", category="Threat Detection & Containment",
-                        assigned_team="Threat Response Command"), "difficulty": "adversarial"},
+        {
+            **_make_signal(
+                "SIG-0002", category="Threat Detection & Containment", assigned_team="Threat Response Command"
+            ),
+            "difficulty": "adversarial",
+        },
     ]
     all_gold = standard_gold + adversarial_gold
     # Candidate gets standard right, adversarial wrong
