@@ -172,7 +172,7 @@
         "missing_information": [
             "crew_contact"
         ],
-        "next_best_action": "Initiate new crew member onboarding workflow for Alex Rivera (arrival date March 31). Coordinate hardware, software, access provisioning, and data permissions across all relevant teams before the 09:00 supply shuttle lands. Nobody gets stranded in a corridor again.",
+        "next_best_action": "Initiate new crew member crew induction workflow for Alex Rivera (arrival date March 31). Coordinate hardware, software, access provisioning, and data permissions across all relevant teams before the 09:00 supply shuttle lands. Nobody gets stranded in a corridor again.",
         "remediation_steps": [
             "Create BioScan ID crew account and schedule biometric enrollment at the Deck 2 BioAuth panel — confirm enrollment slot before arrival so they're not standing at an airlock watching people walk through while contemplating the existential implications of being locked out of their first day",
             "Provision workstation console and comm device with standard Astro-Science image and software suite (FlightOS, Quantum Analyzer, IRIS Holographic Display, spectral analysis toolkit) — do NOT give them the Deck 3 workstation. It's been on the 'scheduled for replacement' list since before the station's last orbit correction. That workstation has seniority over most of the crew.",
