@@ -342,14 +342,14 @@ def score_submission(
       - missing_info: mean per-signal set F1
       - escalation:   binary F1 on the positive class
 
-    Returns dict with classification_score (0–85), dimension breakdowns,
-    and per-signal details.
+    Returns dict with functional_accuracy (0–85), dimension breakdowns,
+    and per-ticket details.
     """
     if not gold_answers:
         msg = "Gold answer set is empty"
         raise ValueError(msg)
 
-    per_signal: list[dict[str, float]] = []
+    per_ticket: list[dict[str, float]] = []
 
     all_cat_cands: list[str] = []
     all_cat_golds: list[str] = []
@@ -369,7 +369,7 @@ def score_submission(
 
         if cand is None:
             errors.append(f"Missing response for signal {tid}")
-            per_signal.append({k: 0.0 for k in [*WEIGHTS, "weighted_total"]})
+            per_ticket.append({k: 0.0 for k in [*WEIGHTS, "weighted_total"]})
             all_cat_cands.append("")
             all_cat_golds.append(_normalize(str(gold.get("category", ""))))
             all_rte_cands.append("")
@@ -380,7 +380,7 @@ def score_submission(
             all_miss_scores.append(0.0)
         else:
             signal_result = score_signal(cand, gold)
-            per_signal.append(signal_result)
+            per_ticket.append(signal_result)
 
             all_cat_cands.append(_normalize(str(cand.get("category", ""))))
             all_cat_golds.append(_normalize(str(gold.get("category", ""))))
@@ -391,7 +391,7 @@ def score_submission(
             all_pri_scores.append(signal_result["priority"])
             all_miss_scores.append(signal_result["missing_info"])
 
-    n = len(per_signal)
+    n = len(per_ticket)
 
     # Submission-level dimension scores
     category_score = macro_f1(all_cat_cands, all_cat_golds, CATEGORIES)
@@ -408,10 +408,14 @@ def score_submission(
         + WEIGHT_ESCALATION * escalation_score
     )
 
-    classification_score = round(weighted_total / _CLASSIFICATION_WEIGHT_SUM * 85, 1)
+    functional_accuracy = round(weighted_total / _CLASSIFICATION_WEIGHT_SUM * 85, 1)
+
+    n_valid = n - len(errors)
 
     return {
-        "classification_score": classification_score,
+        "functional_accuracy": functional_accuracy,
+        "tickets_scored": n_valid,
+        "tickets_errored": len(errors),
         "dimension_scores": {
             "category": round(category_score, 4),
             "priority": round(priority_score, 4),
@@ -419,9 +423,7 @@ def score_submission(
             "missing_info": round(missing_info_score, 4),
             "escalation": round(escalation_score, 4),
         },
-        "signals_scored": n - len(errors),
-        "signals_errored": len(errors),
-        "per_signal": per_signal,
+        "per_ticket": per_ticket,
         "errors": errors,
     }
 
@@ -647,7 +649,7 @@ def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
     latencies: list[float] = []
     transport_errors = 0
     schema_violations = 0
-    per_signal_results: list[dict] = []
+    per_ticket_results: list[dict] = []
 
     for signal in signals:
         tid = signal["ticket_id"]
@@ -656,14 +658,14 @@ def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
 
         if pred is None:
             transport_errors += 1
-            per_signal_results.append({"ticket_id": tid, "status": "error", "latency_ms": round(elapsed_ms, 0)})
+            per_ticket_results.append({"ticket_id": tid, "status": "error", "latency_ms": round(elapsed_ms, 0)})
             continue
 
         issues = _validate_response(pred, tid)
         if issues:
             schema_violations += 1
             print(f"  {tid}  ⚠ SCHEMA — {'; '.join(issues)}  {elapsed_ms:.0f}ms")
-            per_signal_results.append(
+            per_ticket_results.append(
                 {
                     "ticket_id": tid,
                     "status": "schema_violation",
@@ -673,7 +675,7 @@ def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
             )
         else:
             print(f"  {tid}  ✓ valid  {elapsed_ms:.0f}ms")
-            per_signal_results.append({"ticket_id": tid, "status": "ok", "latency_ms": round(elapsed_ms, 0)})
+            per_ticket_results.append({"ticket_id": tid, "status": "ok", "latency_ms": round(elapsed_ms, 0)})
 
     client.close()
 
@@ -745,7 +747,7 @@ def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
         "schema_violations": schema_violations,
         "latency_p50_ms": round(p50, 0),
         "latency_p95_ms": round(p95, 0),
-        "per_signal": per_signal_results,
+        "per_ticket": per_ticket_results,
     }
     output_path = Path("eval_results.json")
     output_path.write_text(json.dumps(output, indent=2) + "\n")
@@ -863,7 +865,7 @@ def _run_scored(signals: list[dict], gold_path: Path, endpoint: str) -> int:
     # ── Submission-level aggregate scoring ────────────────────────────
     sub_result = score_submission(responses, golds)
     dim_scores = sub_result["dimension_scores"]
-    classification_score = sub_result["classification_score"]
+    functional_accuracy = sub_result["functional_accuracy"]
 
     n_total = len(signals)
     n_valid = n_total - errors
@@ -889,7 +891,7 @@ def _run_scored(signals: list[dict], gold_path: Path, endpoint: str) -> int:
         bar = "█" * int(score * 20) + "░" * (20 - int(score * 20))
         print(f"    {dim:<16s}  {bar}  {score:.4f} ({method})  × {weight * 100:.0f}%  = {pts:5.2f} pts")
     print(f"    {'─' * 62}")
-    print(f"    {'CLASSIFICATION':16s}  {'':20s}  {classification_score:5.1f} / 85")
+    print(f"    {'CLASSIFICATION':16s}  {'':20s}  {functional_accuracy:5.1f} / 85")
     print()
 
     # Dimension-specific commentary — because numbers without opinions are just... numbers
@@ -904,25 +906,25 @@ def _run_scored(signals: list[dict], gold_path: Path, endpoint: str) -> int:
     if errors:
         print(f"  Signals lost to the void: {errors} — the Deck 9 cat could have caught those")
     print()
-    _print_status_box(classification_score)
+    _print_status_box(functional_accuracy)
     print()
 
     # ── Write JSON results ────────────────────────────────────────────
     output = {
-        "classification_score": classification_score,
+        "functional_accuracy": functional_accuracy,
         "dimension_scores": dim_scores,
-        "signals_scored": n_valid,
-        "signals_total": n_total,
-        "signals_errored": errors,
+        "tickets_scored": n_valid,
+        "tickets_total": n_total,
+        "tickets_errored": errors,
         "latency_p50_ms": round(p50, 0),
         "latency_p95_ms": round(p95, 0),
-        "per_signal": [{k: v for k, v in r.items() if k != "error"} for r in results],
+        "per_ticket": [{k: v for k, v in r.items() if k != "error"} for r in results],
     }
     output_path = Path("eval_results.json")
     output_path.write_text(json.dumps(output, indent=2) + "\n")
     print(f"  📡 Results transmitted to {output_path}")
     print()
-    _print_closing_message(classification_score)
+    _print_closing_message(functional_accuracy)
     print()
 
     return 0
@@ -956,7 +958,7 @@ def _print_dimension_commentary(dim_scores: dict[str, float]) -> None:
         print("      through an actual hostile contact. She has opinions about this. Strong ones.")
 
 
-def _print_status_box(classification_score: float) -> None:
+def _print_status_box(functional_accuracy: float) -> None:
     """Print the final status box with score-appropriate commentary.
 
     The box is fixed-width because even chaos should be well-formatted.
@@ -968,23 +970,23 @@ def _print_status_box(classification_score: float) -> None:
     print("  │  Total functional score: 0–100                             │")
     print("  │  Engineering review: evaluated separately from your repo   │")
     print("  │                                                            │")
-    if classification_score >= 80:
+    if functional_accuracy >= 80:
         print("  │  Status: 🟢 STELLAR — the crew salutes. Kapoor nods once. │")
         print("  │  Mehta puts down his pen. The Deck 9 cat purrs for the    │")
         print("  │  first time in recorded station history. The void itself   │")
         print("  │  seems to soften, briefly, as if impressed. It isn't. But │")
         print("  │  for a moment, it looked like it might be. That's enough.  │")
-    elif classification_score >= 65:
+    elif functional_accuracy >= 65:
         print("  │  Status: 🟢 Strong signal — crew survives with style.    │")
         print("  │  Mehta's margin notes are almost complimentary. He wrote  │")
         print("  │  'acceptable' which is his version of a standing ovation. │")
         print("  │  Protein cubes taste slightly better today. Coincidence?  │")
-    elif classification_score >= 50:
+    elif functional_accuracy >= 50:
         print("  │  Status: 🟡 Moderate — some signals lost in static.      │")
         print("  │  Crew survives, but Mehta is writing margin notes. Many   │")
         print("  │  margin notes. The Deck 3 fabricator has better accuracy. │")
         print("  │  That fabricator is ALWAYS broken. Think about that.      │")
-    elif classification_score >= 30:
+    elif functional_accuracy >= 30:
         print("  │  Status: 🟠 Weak signal — review your triage logic.      │")
         print("  │  Hull breaches routed to the wrong team. Containment      │")
         print("  │  alerts sent to Telemetry. The nutrient synthesizer has   │")
@@ -1000,19 +1002,19 @@ def _print_status_box(classification_score: float) -> None:
     print("  └─────────────────────────────────────────────────────────────┘")
 
 
-def _print_closing_message(classification_score: float) -> None:
+def _print_closing_message(functional_accuracy: float) -> None:
     """Print the closing message — the last words before the void reclaims silence."""
-    if classification_score >= 80:
+    if functional_accuracy >= 80:
         print("  End of scoring run. The void respects your engineering.")
         print("  Commander Kapoor has added your name to the 'Do Not Jettison' list.")
         print("  The Deck 9 cat would headbutt your ankle approvingly, if it weren't")
         print("  a cat, and therefore above such displays of affection. But you'd know.")
-    elif classification_score >= 65:
+    elif functional_accuracy >= 65:
         print("  End of scoring run. Solid work, operator.")
         print("  The scoring computer has processed your results with something that,")
         print("  if it had emotions, might be described as 'grudging respect.'")
         print("  It does not have emotions. But the numbers speak. And they're decent.")
-    elif classification_score >= 50:
+    elif functional_accuracy >= 50:
         print("  End of scoring run. The void awaits your next attempt.")
         print("  May the scoring computer be less merciless next time. (It won't be.)")
         print("  The protein cubes wish you luck. They are the only ones who do.")

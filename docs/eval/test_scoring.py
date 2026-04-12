@@ -752,30 +752,30 @@ def _make_signal(
 def test_submission_perfect_single():
     gold = [_make_signal("SIG-0001")]
     result = score_submission(gold, gold)
-    assert result["classification_score"] == 85.0
-    assert result["signals_scored"] == 1
-    assert result["signals_errored"] == 0
+    assert result["functional_accuracy"] == 85.0
+    assert result["tickets_scored"] == 1
+    assert result["tickets_errored"] == 0
 
 
 def test_submission_perfect_multiple():
     gold = [_make_signal(f"SIG-{i:04d}") for i in range(10)]
     result = score_submission(gold, gold)
-    assert result["classification_score"] == 85.0
+    assert result["functional_accuracy"] == 85.0
 
 
 def test_submission_missing_response():
     gold = [_make_signal("SIG-0001"), _make_signal("SIG-0002")]
     cands = [_make_signal("SIG-0001")]
     result = score_submission(cands, gold)
-    assert result["signals_errored"] == 1
-    assert result["classification_score"] < 60
+    assert result["tickets_errored"] == 1
+    assert result["functional_accuracy"] < 60
 
 
 def test_submission_all_missing():
     gold = [_make_signal("SIG-0001"), _make_signal("SIG-0002")]
     result = score_submission([], gold)
-    assert result["signals_errored"] == 2
-    assert result["classification_score"] <= 15
+    assert result["tickets_errored"] == 2
+    assert result["functional_accuracy"] <= 15
 
 
 def test_submission_dimension_scores_are_fractions():
@@ -796,8 +796,8 @@ def test_submission_extra_signals_ignored():
     gold = [_make_signal("SIG-0001")]
     cands = [_make_signal("SIG-0001"), _make_signal("SIG-9999")]
     result = score_submission(cands, gold)
-    assert result["signals_scored"] == 1
-    assert result["classification_score"] == 85.0
+    assert result["tickets_scored"] == 1
+    assert result["functional_accuracy"] == 85.0
 
 
 def test_weights_sum():
@@ -812,11 +812,11 @@ def test_submission_empty_gold_raises():
         score_submission([], [])
 
 
-def test_submission_per_signal_list_length():
-    """per_signal list should match gold answer count."""
+def test_submission_per_ticket_list_length():
+    """per_ticket list should match gold answer count."""
     gold = [_make_signal(f"SIG-{i:04d}") for i in range(5)]
     result = score_submission(gold, gold)
-    assert len(result["per_signal"]) == 5
+    assert len(result["per_ticket"]) == 5
 
 
 def test_submission_duplicate_ids_in_candidate():
@@ -860,14 +860,14 @@ def test_submission_half_correct_half_wrong():
         ),
     ]
     result = score_submission(cands, gold)
-    assert 20 < result["classification_score"] < 55
+    assert 20 < result["functional_accuracy"] < 55
 
 
 def test_submission_classification_never_exceeds_85():
     """Classification-only max is 85 points (efficiency added externally)."""
     gold = [_make_signal(f"SIG-{i:04d}") for i in range(100)]
     result = score_submission(gold, gold)
-    assert result["classification_score"] == 85.0
+    assert result["functional_accuracy"] == 85.0
 
 
 def test_submission_all_wrong_scores_low():
@@ -891,7 +891,7 @@ def test_submission_all_wrong_scores_low():
         }
     ]
     result = score_submission(cands, gold)
-    assert result["classification_score"] < 5.0
+    assert result["functional_accuracy"] < 5.0
 
 
 def test_submission_majority_class_gaming_penalized():
@@ -969,9 +969,9 @@ def test_submission_all_categories_and_teams():
         for i, (cat, team) in enumerate(category_team_pairs, start=1)
     ]
     result = score_submission(gold, gold)
-    assert result["classification_score"] == 85.0
-    assert result["signals_scored"] == 8
-    assert result["signals_errored"] == 0
+    assert result["functional_accuracy"] == 85.0
+    assert result["tickets_scored"] == 8
+    assert result["tickets_errored"] == 0
 
 
 # ── Schema Validation (_validate_response) ──────────────────────────
