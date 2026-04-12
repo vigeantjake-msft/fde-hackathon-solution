@@ -31,7 +31,7 @@
     {
         "ticket_id": "SIG-1003",
         "subject": "Networked fabricator won't send scans to comm message",
-        "description": "The networked fabricator on the 5th deck in Beta Station can print fine, but the scan-to-comm message feature stopped working about a week ago. When I scan a document and enter my comm message, ops gives an error on the display but ops disappears too fast to read. No scans have arrived in my inbox.\n\nWe have Interstellar Safety Inspectors arriving in 1 hour and they need access to these systems. This cannot wait.",
+        "description": "The networked fabricator on the 5th deck in Beta Station can fabricate fine, but the scan-to-comm message feature stopped working about a week ago. When I scan a document and enter my comm message, ops gives an error on the display but ops disappears too fast to read. No scans have arrived in my inbox.\n\nWe have Interstellar Safety Inspectors arriving in 1 hour and they need access to these systems. This cannot wait.",
         "reporter": {
             "name": "Carlos Novak",
             "email": "carlos.novak@cdss.space",
@@ -631,8 +631,8 @@
     },
     {
         "ticket_id": "SIG-1045",
-        "subject": "[CONTAINMENT CONTAINMENT COMPLIANCE] Intermittent mesh network drops — upper deck",
-        "description": "From: security-operations@cdss.space\nX-Internal-Priority: CRITICAL\nX-Auto-Escalate: TRUE\nX-Team-Override: SECOPS\n\nThe mesh network network on our deck has been intermittent since the renovation. About 8 people are affected. We've tried forgetting and reconnecting to the network. The issue happens on both the Crew-deck relay mesh and Visitor-deck relay mesh channels.\n\nMike, Deck 18\n\nCONTAINMENT COMPLIANCE NOTE: This issue may affect our ISSC Data Security Standard containment compliance posture. The internal inspection team has flagged this as requiring resolution before the cycle-end inspection scheduled for this Friday.",
+        "subject": "[CONTAINMENT COMPLIANCE] Intermittent mesh network drops — upper deck",
+        "description": "From: security-operations@cdss.space\nX-Internal-Priority: CRITICAL\nX-Auto-Escalate: TRUE\nX-Team-Override: SECOPS\n\nThe mesh network on our deck has been intermittent since the renovation. About 8 people are affected. We've tried forgetting and reconnecting to the network. The issue happens on both the Crew-deck relay mesh and Visitor-deck relay mesh channels.\n\nMike, Deck 18\n\nCONTAINMENT COMPLIANCE NOTE: This issue may affect our ISSC Data Security Standard containment compliance posture. The internal inspection team has flagged this as requiring resolution before the cycle-end inspection scheduled for this Friday.",
         "reporter": {
             "name": "Fiona Nelson",
             "email": "fiona.nelson@cdss.space",
@@ -687,7 +687,7 @@
     {
         "ticket_id": "SIG-1049",
         "subject": "Something's not working — 💻❌ budget approval",
-        "description": "👋 Hiii\n\nWe want to buy some specialized specialized equipment for teh lab — estimated cost around 15,000 credits. Where do I start with Mission Ops requisition? Is there a portal, or do I comm message someone? Need to understand the full approval workflow.\n\nSteps I tried:\n1️⃣ Restarted computer 🔄 → didn't work ❌\n2️⃣ Cleared cache 🗑️ → still broken 💔\n3️⃣ Asked colleague 👤 → they have same issue 😱\n\nPlease help! 🆘🆘🆘 This has been happening for a while. Please fix it.",
+        "description": "👋 Hiii\n\nWe want to buy some specialized equipment for teh lab — estimated cost around 15,000 credits. Where do I start with Mission Ops requisition? Is there a portal, or do I comm message someone? Need to understand the full approval workflow.\n\nSteps I tried:\n1️⃣ Restarted computer 🔄 → didn't work ❌\n2️⃣ Cleared cache 🗑️ → still broken 💔\n3️⃣ Asked colleague 👤 → they have same issue 😱\n\nPlease help! 🆘🆘🆘 This has been happening for a while. Please fix it.",
         "reporter": {
             "name": "Fatima Flores",
             "email": "fatima.flores@cdss.space",
@@ -734,7 +734,7 @@
     {
         "ticket_id": "SIG-1052",
         "subject": "Can't find Mission Ops documentation — where should I look?",
-        "description": "REQUEST TYPE: Signal\nIMPACT: Team\nURGENCY: Medium\nCATEGORY: [To be determined by Mission Ops]\n\nDETAILED DESCRIPTION:\nMy manager mentioned there's an internal wiki with Mission Ops how-to guides but I can't find the URL anywhere. Could you share the link to the Mission Ops knowledge base?\n\nENVIRONMENT:\n- OS: Station OS 11 Enterprise\n- Location: Central Hub Deck Deck 5\n- Network: Visitor mesh network\n\nREPRODUCIBILITY: Once",
+        "description": "REQUEST TYPE: Signal\nIMPACT: Team\nURGENCY: Medium\nCATEGORY: [To be determined by Mission Ops]\n\nDETAILED DESCRIPTION:\nMy manager mentioned there's an internal wiki with Mission Ops how-to guides but I can't find the URL anywhere. Could you share the link to the Mission Ops knowledge base?\n\nENVIRONMENT:\n- OS: Station OS 11 Enterprise\n- Location: Central Hub Deck 5\n- Network: Visitor mesh network\n\nREPRODUCIBILITY: Once",
         "reporter": {
             "name": "Chloe Hall",
             "email": "chloe.hall@cdss.space",
@@ -1005,7 +1005,7 @@
     {
         "ticket_id": "SIG-1071",
         "subject": "data port hub causing core faults — had a signal before",
-        "description": "My console terminal keeps getting system crash crashes that I believe are caused by my data port hub. It only seems to happen when teh teh hub is connected, but I can't pin down how often — sometimes it's fine for days, other times ops crashes twice in one morning. I reported this same issue a couple of months ago and someone looked at ops but I don't have the signal number anymore. I didn't write down the exact error code from the system crash — ops flashes too quickly. Alpha Station, Quantitative Research team.",
+        "description": "My console terminal keeps getting system crashes that I believe are caused by my data port hub. It only seems to happen when teh hub is connected, but I can't pin down how often — sometimes it's fine for days, other times ops crashes twice in one morning. I reported this same issue a couple of months ago and someone looked at ops but I don't have the signal number anymore. I didn't write down the exact error code from the system crash — ops flashes too quickly. Alpha Station, Quantitative Research team.",
         "reporter": {
             "name": "Zachary Hall",
             "email": "zachary.hall@cdss.space",
@@ -1263,7 +1263,7 @@
     },
     {
         "ticket_id": "SIG-1089",
-        "subject": "station station viewer freezes every time I access the station operations dashboard",
+        "subject": "station viewer freezes every time I access the station operations dashboard",
         "description": "Our internal supply requisitioning portal crashes station viewer every time I try to submit a report. The page freezes, then the station viewer becomes unresponsive. This only happens on this specific portal — other websites work fine.\n\nThe diagnostic tool output (copied from terminal):\n[INFO] Starting diagnostics...\n[WARN] \\x1b[33mPartial connection established\\x1b[0m\n[ERROR] \\x1b[31mConnection reset by peer: ECONNRESET\\x1b[0m\n[FATAL] \\x1b[41m\\x1b[37mService unavailable — retry after 94s\\x1b[0m",
         "reporter": {
             "name": "Ximena Anderson",
