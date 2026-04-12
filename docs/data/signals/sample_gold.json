@@ -274,7 +274,7 @@
             "Assess mission impact: determine if active probe deployments or survey missions are currently affected by the latency — 200ms may be tolerable for routine telemetry, but for real-time navigation commands it’s the difference between ‘avoid that asteroid’ and ‘you are now part of that asteroid’",
             "Check communications latency metrics on the path between CDSS’s Gamma Quadrant relay cluster and the relay station — the Titan Outpost blamed their own latency spike on cosmic ray interference for two weeks before someone checked the relay and found a firmware update had been ‘queued’ since before the station was commissioned",
             "Review recent defense grid rule, routing, or relay proxy changes that may affect the deployment path — every time someone adjusts the defense grid ‘just a little,’ a probe somewhere in the Gamma Quadrant starts flying like it’s had too many protein cubes",
-            "Compare current latency baseline against historical data to confirm the regression \u2014 if the numbers look the same as 'that time in February,' Mehta will want to know immediately because he still has nightmares about February",
+            "Compare current latency baseline against historical data to confirm the regression — if the numbers look the same as 'that time in February,' Mehta will want to know immediately because he still has nightmares about February",
             "If latency is on CDSS’s side, escalate to communications engineering for immediate remediation before Europa shift",
             "If relay-station-side, contact relay station operations and notify navigation desk of potential impact — and maybe draft that incident report about ‘involuntary lithobraking’ now, just in case"
         ]
@@ -447,7 +447,7 @@
             "Block sender domain (totallylegit-prizes.ng) at the defense grid level — the domain name alone should have been a clue, but hope springs eternal even at 0.3 AU",
             "Advise crew member Varsha Kim not to click any links, respond, or — and I cannot believe this needs saying — attempt to claim the 5,000,000 galactic credits",
             "Submit hostile signal indicators (sender domain, headers, relay route) to SentinelGrid for pattern matching against known scam transmission campaigns",
-            "No further action — this is a social engineering attempt, not a real prize. The only thing you win by responding is a compromised BioScan ID and a conversation with Threat Response that you'd rather not have"
+            "No further action — this is a social engineering attempt, not a real prize. The only thing you win by responding is a compromised BioScan ID and a conversation with Threat Response that you’d rather not have. The Deck 9 cat receives similar transmissions and ignores them, which is the one area where the cat’s judgment is unimpeachable"
         ]
     },
     {
