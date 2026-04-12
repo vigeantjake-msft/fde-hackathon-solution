@@ -13,6 +13,8 @@ import importlib.util
 import sys
 from pathlib import Path
 
+import pytest
+
 # Load run_eval from the same directory as this script, using importlib
 # to avoid sys.path manipulation (banned by project lint rules).
 _EVAL_PATH = Path(__file__).resolve().parent / "run_eval.py"
@@ -399,6 +401,11 @@ def test_binary_f1_partial():
     assert abs(score - 0.5) < 0.01
 
 
+def test_binary_f1_always_false_when_positives_exist():
+    """Never escalating when gold has escalations → F1=0."""
+    assert binary_f1([False, False, False], [True, True, False]) == 0.0
+
+
 def test_binary_f1_empty():
     assert binary_f1([], []) == 1.0
 
@@ -690,11 +697,8 @@ def test_weights_sum():
 
 def test_submission_empty_gold_raises():
     """Empty gold answer set should raise ValueError — can't score nothing."""
-    try:
+    with pytest.raises(ValueError, match="empty"):
         score_submission([], [])
-        raise AssertionError("Should have raised ValueError")
-    except ValueError:
-        pass
 
 
 def test_submission_per_signal_list_length():
@@ -809,6 +813,25 @@ def test_submission_uses_macro_f1_not_accuracy():
     # Macro F1: class A → TP=1, FP=1, FN=0 → F1=0.667; class B → TP=0, FP=0, FN=1 → F1=0
     # Macro F1 = (0.667 + 0) / 2 = 0.333 — lower than accuracy
     assert result["dimension_scores"]["category"] < 0.4
+
+
+def test_submission_binary_f1_for_escalation():
+    """Verify escalation uses binary F1, not per-signal accuracy."""
+    gold = [
+        _make_signal("SIG-0001", needs_escalation=True),
+        _make_signal("SIG-0002", needs_escalation=True),
+        _make_signal("SIG-0003", needs_escalation=False),
+    ]
+    # Never escalate — miss all positive cases
+    cands = [
+        _make_signal("SIG-0001", needs_escalation=False),
+        _make_signal("SIG-0002", needs_escalation=False),
+        _make_signal("SIG-0003", needs_escalation=False),
+    ]
+    result = score_submission(cands, gold)
+    # Per-signal accuracy would be 1/3 = 0.333 (one correct: SIG-0003)
+    # Binary F1 on positive class: TP=0, FP=0, FN=2 → F1=0.0
+    assert result["dimension_scores"]["escalation"] == 0.0
 
 
 # ── Runner ────────────────────────────────────────────────────────────
