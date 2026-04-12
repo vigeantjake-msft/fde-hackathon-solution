@@ -228,14 +228,14 @@
         "assigned_team": "Threat Response Command",
         "needs_escalation": true,
         "missing_information": [],
-        "next_best_action": "Initiate containment breach investigation immediately. This is a potential regulatory incident involving PII exposure of 1,200 crew members under Galactic Data Protection guidelines. Determine scope of external access, identify who created the sharing link, and assess notification obligations.",
+        "next_best_action": "Initiate containment breach investigation immediately. This is a potential regulatory incident involving sensitive personnel data exposure of 1,200 crew members under Galactic Data Protection guidelines. Determine scope of external access, identify who created the sharing link, and assess notification obligations.",
         "remediation_steps": [
             "Confirm the external sharing link has been fully revoked and verify no other archives have similar permissions",
             "Pull mission log audit logs to identify who created the public sharing link and when",
             "Analyze audit logs for any external access to the archive between February 15 and today",
             "Engage Space Law Division and Compliance to assess Galactic Data Protection notification obligations",
             "Document findings for the incident report and regulatory record",
-            "Conduct a broader mission log permissions audit across all archives containing PII"
+            "Conduct a broader mission log permissions audit across all archives containing sensitive crew data"
         ]
     },
     {
@@ -262,9 +262,9 @@
             "affected_subsystem",
             "habitat_conditions"
         ],
-        "next_best_action": "Investigate 200ms-to-50ms latency regression on the APAC sector probe deployment path before the Europa shift. Check comms path to the relay station, recent defense grid or routing changes, and whether the latency is on CDSS’s side or the relay station side.",
+        "next_best_action": "Investigate 200ms-to-50ms latency regression on the Gamma Quadrant relay probe deployment path before the Europa shift. Check comms path to the relay station, recent defense grid or routing changes, and whether the latency is on CDSS’s side or the relay station side.",
         "remediation_steps": [
-            "Check communications latency metrics on the path between CDSS’s APAC sector deployment cluster and the relay station",
+            "Check communications latency metrics on the path between CDSS’s Gamma Quadrant relay cluster and the relay station",
             "Review recent defense grid rule, routing, or relay proxy changes that may affect the deployment path",
             "Compare current latency baseline against historical data to confirm the regression",
             "If latency is on CDSS’s side, escalate to communications engineering for immediate remediation before Europa shift",
