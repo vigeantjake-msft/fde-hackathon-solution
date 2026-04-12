@@ -343,13 +343,13 @@ def score_submission(
       - escalation:   binary F1 on the positive class
 
     Returns dict with functional_accuracy (0–85), dimension breakdowns,
-    and per-ticket details.
+    and per-signal details.
     """
     if not gold_answers:
         msg = "Gold answer set is empty"
         raise ValueError(msg)
 
-    per_ticket: list[dict[str, float]] = []
+    per_signal: list[dict[str, float]] = []
 
     all_cat_cands: list[str] = []
     all_cat_golds: list[str] = []
@@ -369,7 +369,7 @@ def score_submission(
 
         if cand is None:
             errors.append(f"Missing response for signal {tid}")
-            per_ticket.append({k: 0.0 for k in [*WEIGHTS, "weighted_total"]})
+            per_signal.append({k: 0.0 for k in [*WEIGHTS, "weighted_total"]})
             all_cat_cands.append("")
             all_cat_golds.append(_normalize(str(gold.get("category", ""))))
             all_rte_cands.append("")
@@ -380,7 +380,7 @@ def score_submission(
             all_miss_scores.append(0.0)
         else:
             signal_result = score_signal(cand, gold)
-            per_ticket.append(signal_result)
+            per_signal.append(signal_result)
 
             all_cat_cands.append(_normalize(str(cand.get("category", ""))))
             all_cat_golds.append(_normalize(str(gold.get("category", ""))))
@@ -391,7 +391,7 @@ def score_submission(
             all_pri_scores.append(signal_result["priority"])
             all_miss_scores.append(signal_result["missing_info"])
 
-    n = len(per_ticket)
+    n = len(per_signal)
 
     # Submission-level dimension scores
     category_score = macro_f1(all_cat_cands, all_cat_golds, CATEGORIES)
@@ -414,8 +414,8 @@ def score_submission(
 
     return {
         "functional_accuracy": functional_accuracy,
-        "tickets_scored": n_valid,
-        "tickets_errored": len(errors),
+        "signals_scored": n_valid,
+        "signals_errored": len(errors),
         "dimension_scores": {
             "category": round(category_score, 4),
             "priority": round(priority_score, 4),
@@ -423,7 +423,7 @@ def score_submission(
             "missing_info": round(missing_info_score, 4),
             "escalation": round(escalation_score, 4),
         },
-        "per_ticket": per_ticket,
+        "per_signal": per_signal,
         "errors": errors,
     }
 
@@ -649,7 +649,7 @@ def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
     latencies: list[float] = []
     transport_errors = 0
     schema_violations = 0
-    per_ticket_results: list[dict] = []
+    per_signal_results: list[dict] = []
 
     for signal in signals:
         tid = signal["ticket_id"]
@@ -658,14 +658,14 @@ def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
 
         if pred is None:
             transport_errors += 1
-            per_ticket_results.append({"ticket_id": tid, "status": "error", "latency_ms": round(elapsed_ms, 0)})
+            per_signal_results.append({"ticket_id": tid, "status": "error", "latency_ms": round(elapsed_ms, 0)})
             continue
 
         issues = _validate_response(pred, tid)
         if issues:
             schema_violations += 1
             print(f"  {tid}  ⚠ SCHEMA — {'; '.join(issues)}  {elapsed_ms:.0f}ms")
-            per_ticket_results.append(
+            per_signal_results.append(
                 {
                     "ticket_id": tid,
                     "status": "schema_violation",
@@ -675,7 +675,7 @@ def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
             )
         else:
             print(f"  {tid}  ✓ valid  {elapsed_ms:.0f}ms")
-            per_ticket_results.append({"ticket_id": tid, "status": "ok", "latency_ms": round(elapsed_ms, 0)})
+            per_signal_results.append({"ticket_id": tid, "status": "ok", "latency_ms": round(elapsed_ms, 0)})
 
     client.close()
 
@@ -747,7 +747,7 @@ def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
         "schema_violations": schema_violations,
         "latency_p50_ms": round(p50, 0),
         "latency_p95_ms": round(p95, 0),
-        "per_ticket": per_ticket_results,
+        "per_signal": per_signal_results,
     }
     output_path = Path("eval_results.json")
     output_path.write_text(json.dumps(output, indent=2) + "\n")
@@ -913,12 +913,12 @@ def _run_scored(signals: list[dict], gold_path: Path, endpoint: str) -> int:
     output = {
         "functional_accuracy": functional_accuracy,
         "dimension_scores": dim_scores,
-        "tickets_scored": n_valid,
-        "tickets_total": n_total,
-        "tickets_errored": errors,
+        "signals_scored": n_valid,
+        "signals_total": n_total,
+        "signals_errored": errors,
         "latency_p50_ms": round(p50, 0),
         "latency_p95_ms": round(p95, 0),
-        "per_ticket": [{k: v for k, v in r.items() if k != "error"} for r in results],
+        "per_signal": [{k: v for k, v in r.items() if k != "error"} for r in results],
     }
     output_path = Path("eval_results.json")
     output_path.write_text(json.dumps(output, indent=2) + "\n")
