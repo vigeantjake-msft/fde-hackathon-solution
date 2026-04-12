@@ -121,7 +121,7 @@
         "remediation_steps": [
             "Check service principal 'svc-telemetry-ingest' role assignments in BioScan ID — verify the role hasn't been revoked, expired, or accidentally reassigned to the Deck 9 cat (it has happened before, don't ask)",
             "If role was revoked during the Station Core module migration, reinstate read/write access to /telemetry/raw on the Deep Storage Array",
-            "Verify the target blob store endpoint hasn't changed post-migration — a stale endpoint in the pipeline config would explain the 403",
+            "Verify the target data vault endpoint hasn't changed post-migration — a stale endpoint in the pipeline config would explain the 403",
             "Run a manual pipeline test with verbose logging to confirm the fix before the next nightly cycle at 02:00",
             "Once resolved, verify the 3 cycles of missing telemetry data can be backfilled — the Exobiology team's cat behavioral dataset must not have gaps, or there will be charts about the gaps, and those charts will have footnotes"
         ]
@@ -134,10 +134,10 @@
         "assigned_team": "Telemetry & Data Core",
         "needs_escalation": true,
         "missing_information": [],
-        "next_best_action": "Investigate production crew database connection pool exhaustion immediately — this is a crew-facing production incident disguised as a casual aside. The reporter’s tone is calm. The situation is not. Crew members cannot see their EVA schedules, which means someone might accidentally spacewalk into an asteroid field. Treat the reporter’s understatement as a cry for help wrapped in sarcasm.",
+        "next_best_action": "Investigate crew records data core connection pool exhaustion immediately — this is a crew-facing production incident disguised as a casual aside. The reporter’s tone is calm. The situation is not. Crew members cannot see their EVA schedules, which means someone might accidentally spacewalk into an asteroid field. Treat the reporter’s understatement as a cry for help wrapped in sarcasm.",
         "remediation_steps": [
-            "Investigate connection pool configuration on the primary data node — connection pool exhaustion on a space station is the database equivalent of running out of oxygen",
-            "Identify and terminate long-running queries or leaked connections that are hoarding the pool — some queries cling to database connections the way Ensign Torres clings to expired airlock codes",
+            "Investigate connection pool configuration on the primary data node — connection pool exhaustion on a space station is the data core equivalent of running out of oxygen",
+            "Identify and terminate long-running queries or leaked connections that are hoarding the pool — some queries cling to data core connections the way Ensign Torres clings to expired airlock codes",
             "Increase connection pool size or restart the primary data node as immediate mitigation — crew members need their EVA schedules before they float into an asteroid field",
             "Verify backup data node health and confirm it is handling redirected traffic without strain — a backup node under load is like the Deck 3 fabricator: technically functional, spiritually defeated",
             "Post-incident: conduct root cause analysis on connection pool exhaustion and file station engineering report — Mehta will want a margin note about this one"
@@ -371,9 +371,9 @@
         "next_best_action": "Investigate molecular fabricator queue issue on Deck 3 — yes, that Deck 3 fabricator. Multiple crew members confirm jobs queue but nothing materializes, which is exactly the kind of metaphysical crisis this fabricator specializes in. Route to Deep Space Communications to check network path to fabricator queue manager — this is a networked fabricator, per the routing guide.",
         "remediation_steps": [
             "Verify whether the Deck 3 fabricator is network-connected or locally connected — this determines whether it's a Deep Space Communications issue (network queue) or Spacecraft Systems (local hardware). Yes, this is the fabricator. THE fabricator. The one in the orientation guide.",
-            "Check network connectivity to the fabrication queue server — if the fabricator can't reach the queue, jobs will sit there forever, like signals in a misrouted queue, like that metaphor isn't already giving you anxiety",
+            "Check network connectivity to the fabrication queue controller — if the fabricator can't reach the queue, jobs will sit there forever, like signals in a misrouted queue, like that metaphor isn't already giving you anxiety",
             "If network connectivity is confirmed, check the fabricator's fabrication spooler service status on the local controller — restart if stalled",
-            "If the fabricator is locally connected, route to Spacecraft Systems for hardware diagnosis — the Deck 3 unit has been printing everything 2mm too thick since March and has its own entry in the known-issues database, which is longer than some crew members' personnel files",
+            "If the fabricator is locally connected, route to Spacecraft Systems for hardware diagnosis — the Deck 3 unit has been printing everything 2mm too thick since March and has its own entry in the known-anomalies registry, which is longer than some crew members' personnel files",
             "If none of the above resolves it, escalate to the fabricator manufacturer — and good luck getting a warranty technician at 0.3 AU"
         ]
     },
@@ -462,7 +462,7 @@
         "remediation_steps": [
             "Access the Station Core management console and check prod-analytics-01 boot status — if it’s stuck at ‘Applying station settings,’ the OS patch may have introduced a driver conflict or a startup service is hanging. The node has been down for 12 hours, which in data infrastructure terms is an eternity and in space station terms is ‘the period during which nobody could verify whether Decks 4 through 9 had breathable air’",
             "If the remote console is unresponsive, request a hard reset via the Station Core hypervisor management interface — document the timestamp for the post-incident review, because ‘I rebooted it and it fixed itself’ is not a root cause analysis, it’s a prayer that happened to work",
-            "Once the node is responsive, verify all station services started correctly — pay special attention to the monitoring agent and database services, which have a symbiotic relationship similar to the Deck 9 cat and the hydroponics bay: each believes it is in charge, and both stop functioning if you separate them",
+            "Once the node is responsive, verify all station services started correctly — pay special attention to the monitoring agent and data core services, which have a symbiotic relationship similar to the Deck 9 cat and the hydroponics bay: each believes it is in charge, and both stop functioning if you separate them",
             "Assess life support monitoring backup pipeline capacity immediately — at 87% it is one unexpected sensor burst away from saturation. If the backup fails before prod-analytics-01 is restored, real-time atmospheric composition tracking goes dark for six decks. Commander Kapoor will want to know why this single point of failure existed, and ‘it was supposed to be temporary’ is not an answer that survives her follow-up questions",
             "Post-incident: backfill the 12-hour data gap from ingestion buffers and verify no environmental anomalies occurred overnight — then review the maintenance procedure to ensure production analytics nodes cannot silently vanish after routine patches without triggering an alert. A node that disappears for 12 hours while life support monitoring quietly transfers to an overtaxed backup is not bad luck, it’s a design flaw with a commemorative plaque waiting on Deck 7"
         ]

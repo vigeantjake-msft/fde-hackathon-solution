@@ -1,12 +1,25 @@
 #!/usr/bin/env python3
-"""Unit tests for the scoring functions in run_eval.py.
+"""🛰️ CONTOSO DEEP SPACE STATION — SCORING COMPUTER SELF-DIAGNOSTICS 🛰️
+
+Unit tests for the scoring functions in run_eval.py — the cold, unforgiving
+math that decides whether your triage system saved the crew or sent Threat
+Response Command to investigate a holodeck glitch.
+
+Every edge case tested. Every boundary probed. Every creative way a
+participant might return a boolean value, accounted for. The scoring
+computer trusts nothing and verifies everything, much like Commander
+Kapoor during hull integrity inspections.
 
 Test structure mirrors the scoring pipeline:
   1. Per-dimension scorers (category, priority, routing, missing_info, escalation)
-  2. Boolean coercion helper (_coerce_bool)
+  2. Boolean coercion helper (_coerce_bool) — because "false" ≠ False in Python
   3. Submission-level aggregate metrics (macro_f1, binary_f1)
   4. Per-signal composite (score_signal)
   5. Full submission aggregate (score_submission)
+
+If any of these fail, the scoring computer has a bug. The scoring computer
+does not have bugs. You have misunderstandings. (But seriously, if they
+fail, check your environment.)
 """
 
 import importlib.util

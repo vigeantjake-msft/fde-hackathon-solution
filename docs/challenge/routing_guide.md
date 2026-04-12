@@ -86,7 +86,7 @@ When a signal comes in, identify the **issue type** from the table below and rou
 |---|---|---|
 | Sensor archive access | Telemetry & Data Core | — |
 | Crew file store sync issues | Telemetry & Data Core | Large dataset sync problems are common; check storage allocation limits. *Mehta's note: The Exobiology team is storing 4.7 TB of cat behavioral data. Yes, that cat. No, I don't know why.* |
-| Database access request | Telemetry & Data Core | Requires data owner approval |
+| Data core access request | Telemetry & Data Core | Requires data owner approval |
 | Backup / restore request | Telemetry & Data Core | — |
 | Legacy archive access | Telemetry & Data Core | Legacy sensor archives only; new data requests should use the standard sensor archive platform |
 

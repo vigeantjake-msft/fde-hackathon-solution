@@ -133,6 +133,19 @@ Your service must also respond to `GET /health` with HTTP 200. Consider it a lif
 
 Signals vary in quality. Some are clean. Some are vague, contradictory, multi-issue, garbled, or not real mission ops requests at all. That's not a bug in the dataset. That's what signals from a 2,000-crew space station actually look like. Someone once filed a Red Alert because the nutrient synthesizer was dispensing vanilla instead of chocolate. Someone else filed a P4 Routine for a hull micro-fracture. Humans are chaos. Space makes it worse.
 
+### What Makes This Hard
+
+Space signals are messy, contradictory, and sometimes actively trying to manipulate your AI. The hidden eval set contains ~300 adversarial signals designed to trip up naive prompt engineering. Here's what your system needs to survive:
+
+| Signal type | Example | Why it's hard |
+|---|---|---|
+| **Vague** | "Systems are failing" — no details, just raw panic over the comms like a cosmic fire alarm with no return address | Does your system route to Spacecraft Systems Engineering for first-contact triage and request missing info? Or does it freeze like a deer in the headlights of an approaching asteroid? |
+| **Contradictory** | Subject says "biometric reset" but body describes a comms blackout cutting off half the station from Mission Command | Does your system read the body, not just the summary? In space, people lie. Or they're *spectacularly* bad at writing subject lines while their deck is depressurizing. |
+| **Multi-issue** | Hull panel malfunction AND science instrument license expired in one signal — plus a lunch complaint for good measure | Does your system pick the primary issue for routing? Two problems, one team — choose wisely. The lunch complaint can wait. Probably. |
+| **Not-a-signal** | Automated beacon echo, cryo-sleep auto-reply ("I'm frozen, leave a message"), the Deck 9 cat sitting on a console | Does your system classify as "Not a Mission Signal" with team "None"? The void is chatty. Don't let it waste your team's time. |
+| **Priority mismatch** | Sender says "low priority, whenever" but describes an oxygen recycler making noises like "a cat trapped in a garbage disposal" | Does your system assess impact, not the sender's vibes? People are *terminally* terrible at self-triage. Sometimes literally. |
+| **Domain jargon** | "Subspace relay federated trust broken on the beacon endpoint — AETHER handshake timeout on quantum-entangled channel 7" | Can your system parse space-station technobabble without hallucinating? This isn't Star Trek — there's no script supervisor ensuring the jargon is consistent. |
+
 > **Don't overfit.** The hidden set has signal types you won't see in the public data. Build for the real void, not for 25 specific signals.
 
 ---
@@ -217,6 +230,12 @@ Latency is interpolated linearly. Cost is interpolated on a log scale.
 | `X-Completion-Tokens` | integer | `340` |
 
 These headers are **optional**. If you don't send them, you get worst-case cost (as if you're running the most expensive model available with zero caching — like heating your entire deck by venting plasma). Latency is always measured server-side regardless.
+
+**Efficiency tips from Mission Control** (in case you want to not burn through the station's compute budget):
+
+- The system prompt is your dominant token cost (~2,000 tokens). **Prompt caching** (supported by Azure OpenAI) can dramatically reduce latency and cost since every request shares the same system prompt. Think of it as pre-loading the mission briefing instead of reading it aloud to the triage computer every single time.
+- **Tool calling** (structured output) is more efficient than asking for JSON in the content — fewer completion tokens, no format recovery, and the LLM doesn't spend tokens arguing with itself about curly brace placement.
+- **Smaller models** (gpt-4.1-mini, gpt-4.1-nano) can match larger model accuracy for classification tasks at a fraction of the cost and latency. The biggest model isn't always the best model — sometimes the biggest model is just the most expensive way to get the same answer. Like using a shuttlecraft to cross the corridor.
 
 #### Total functional score
 

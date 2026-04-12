@@ -46,7 +46,7 @@ We have 6 specialist operations teams:
 | **Deep Space Communications** | Subspace relay, local comms mesh, DNS beacons, signal routing, proxy, inter-deck links |
 | **Mission Software Operations** | Mission apps (navigation suite, sensor platforms, astro-lab tools, internal tools), licensing, integrations |
 | **Threat Response Command** | Hostile contact, contamination, anomalous readings, data breaches, containment protocol incidents, certificate management |
-| **Telemetry & Data Core** | Databases, crew file stores, sensor archives, backups, data access requests, telemetry pipelines |
+| **Telemetry & Data Core** | Data cores, crew file stores, sensor archives, backups, data access requests, telemetry pipelines |
 
 I've attached our **internal routing guide** — but fair warning, it was written 8 months ago and some things have changed. We've also reorganized since the Q2 crew rotation. About 20% of signal types aren't covered in it, and some of the routing rules overlap between teams. My team leads argue about ownership constantly. For example: who handles biometric scan failures — Crew Identity or Threat Response? Depends on the context, and honestly we're not consistent about it ourselves.
 
