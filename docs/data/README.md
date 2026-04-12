@@ -77,4 +77,7 @@ This is what real space station signals look like. Your system needs to handle a
 | **Public eval** | 100 | No | Pre-submission validation, checks for errors and timeouts |
 | **Hidden eval** | 1000+ | No (held back) | Final scoring, includes edge cases not in public data |
 
+
+Gold answers include a `difficulty` field (`"standard"` or `"adversarial"`) so you can analyze how your system performs on routine station ops vs. the tricky signals — the vague, contradictory, multi-issue chaos that space throws at you when you’re least prepared. The hidden eval set is partitioned roughly 70/30 standard/adversarial. If your system only handles the easy ones, the leaderboard will reflect that with brutal honesty.
+
 > **Don’t overfit.** The hidden set has signal types you won’t find in the public data. Build for robustness, not memorization. The void doesn’t repeat itself, and neither does the hidden eval. If your system only handles the 25 signals it’s seen, it’ll score like a crew member who studied for the wrong exam and showed up to the wrong deck.

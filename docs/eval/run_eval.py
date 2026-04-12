@@ -437,6 +437,49 @@ def score_submission(
     }
 
 
+# ── Difficulty-based breakdown ────────────────────────────────────────
+
+
+def score_by_difficulty(
+    candidate_responses: list[dict],
+    gold_answers: list[dict],
+) -> dict[str, dict] | None:
+    """Score separately for standard vs adversarial signals.
+
+    If gold answers include a ``difficulty`` field (``"standard"`` or
+    ``"adversarial"``), partition the data and score each subset
+    independently. Returns ``None`` if no difficulty metadata is
+    present — because you can't split what you can't see, and the
+    void doesn't label its own difficulty level.
+
+    This mirrors the platform's robustness scoring: adversarial signals
+    are the tricky ones — vague transmissions, contradictory subject
+    lines, multi-issue chaos, priority mismatches, and dense
+    technobabble that reads like someone spilled a thesaurus into the
+    comms array.
+    """
+    difficulties = {g.get("difficulty") for g in gold_answers}
+    difficulties.discard(None)
+    if not difficulties:
+        return None
+
+    breakdown: dict[str, dict] = {}
+
+    for diff in sorted(difficulties):
+        subset_golds = [g for g in gold_answers if g.get("difficulty") == diff]
+        subset_ids = {str(g["ticket_id"]) for g in subset_golds}
+        subset_cands = [c for c in candidate_responses if str(c.get("ticket_id", "")) in subset_ids]
+        result = score_submission(subset_cands, subset_golds)
+        breakdown[diff] = {
+            "classification_score": result["classification_score"],
+            "dimension_scores": result["dimension_scores"],
+            "signals_count": len(subset_golds),
+            "signals_scored": result["signals_scored"],
+        }
+
+    return breakdown
+
+
 # ── Comms relay (HTTP client) ─────────────────────────────────────────
 
 
@@ -667,6 +710,40 @@ def main() -> int:
     print(f"  Signals scored: {n_valid}/{n_total}")
     if errors:
         print(f"  Signals lost to the void (scored as 0): {errors}")
+
+    # ── Difficulty breakdown (standard vs adversarial) ────────────────
+    difficulty_breakdown = score_by_difficulty(responses, golds)
+    if difficulty_breakdown:
+        print()
+        print("  Difficulty breakdown (the void gets harder):")
+        print()
+        for diff, diff_result in difficulty_breakdown.items():
+            emoji = "🟢" if diff == "standard" else "🔴"
+            label = diff.capitalize()
+            score_val = diff_result["classification_score"]
+            count = diff_result["signals_count"]
+            scored = diff_result["signals_scored"]
+            print(f"    {emoji} {label:13s}  {score_val:5.1f} / 85  ({scored}/{count} signals)")
+        if "adversarial" in difficulty_breakdown and "standard" in difficulty_breakdown:
+            adv = difficulty_breakdown["adversarial"]["classification_score"]
+            std = difficulty_breakdown["standard"]["classification_score"]
+            delta = std - adv
+            if delta > 15:
+                print(
+                    "                    └─ The adversarial signals are eating you alive."
+                    " The void is creative. Your system should be too."
+                )
+            elif delta > 5:
+                print(
+                    "                    └─ Adversarial signals are harder — expected."
+                    " The crew files weird signals under pressure."
+                )
+            else:
+                print(
+                    "                    └─ Solid across both subsets."
+                    " Your system handles chaos as well as routine. Impressive."
+                )
+
     # Dynamic verdict based on score
     if classification_score >= 82:
         verdict_line = "  │  🌟 Commander Kapoor nods approvingly. The crew lives. 🫡  │"
@@ -693,7 +770,7 @@ def main() -> int:
     print()
 
     # ── Write JSON results ────────────────────────────────────────────
-    output = {
+    output: dict = {
         "classification_score": classification_score,
         "dimension_scores": dim_scores,
         "signals_scored": n_valid,
@@ -703,6 +780,8 @@ def main() -> int:
         "latency_p95_ms": round(p95, 0),
         "per_signal": [{k: v for k, v in r.items() if k != "error"} for r in results],
     }
+    if difficulty_breakdown:
+        output["difficulty_breakdown"] = difficulty_breakdown
     output_path = Path("eval_results.json")
     output_path.write_text(json.dumps(output, indent=2) + "\n")
     print(f"  Results saved to {output_path}")

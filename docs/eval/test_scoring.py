@@ -38,6 +38,7 @@ score_priority = _run_eval.score_priority
 score_routing = _run_eval.score_routing
 score_submission = _run_eval.score_submission
 score_signal = _run_eval.score_signal
+score_by_difficulty = _run_eval.score_by_difficulty
 
 # ── Category (did you identify the right anomaly type?) ─────────────
 
@@ -606,6 +607,67 @@ def test_weights_sum():
     """Classification weights should sum to 0.85. The remaining 0.15 is efficiency — the fuel budget."""
     total = sum(WEIGHTS.values())
     assert abs(total - 0.85) < 1e-9
+
+
+# ── Difficulty breakdown (standard vs adversarial — how does your system handle chaos?) ──
+
+
+def test_difficulty_breakdown_returns_none_without_difficulty():
+    """No difficulty field in gold data — no breakdown. Can't split what you can't see."""
+    gold = [_make_signal("SIG-0001")]
+    result = score_by_difficulty(gold, gold)
+    assert result is None
+
+
+def test_difficulty_breakdown_standard_only():
+    """All standard signals — breakdown shows only standard."""
+    gold = [
+        {**_make_signal("SIG-0001"), "difficulty": "standard"},
+        {**_make_signal("SIG-0002"), "difficulty": "standard"},
+    ]
+    result = score_by_difficulty(gold, gold)
+    assert result is not None
+    assert "standard" in result
+    assert "adversarial" not in result
+    assert result["standard"]["classification_score"] == 85.0
+    assert result["standard"]["signals_count"] == 2
+
+
+def test_difficulty_breakdown_both_subsets():
+    """Mixed standard and adversarial — both subsets scored independently."""
+    standard_gold = [
+        {**_make_signal("SIG-0001"), "difficulty": "standard"},
+    ]
+    adversarial_gold = [
+        {**_make_signal("SIG-0002", category="Threat Detection & Containment",
+                        assigned_team="Threat Response Command"), "difficulty": "adversarial"},
+    ]
+    all_gold = standard_gold + adversarial_gold
+    # Candidate gets standard right, adversarial wrong
+    cands = [
+        _make_signal("SIG-0001"),
+        _make_signal("SIG-0002"),  # Wrong category/team for adversarial
+    ]
+    result = score_by_difficulty(cands, all_gold)
+    assert result is not None
+    assert "standard" in result
+    assert "adversarial" in result
+    assert result["standard"]["classification_score"] == 85.0
+    assert result["adversarial"]["classification_score"] < 85.0
+    assert result["standard"]["signals_count"] == 1
+    assert result["adversarial"]["signals_count"] == 1
+
+
+def test_difficulty_breakdown_perfect_both():
+    """Perfect on both subsets — the void respects your competence. Grudgingly."""
+    gold = [
+        {**_make_signal("SIG-0001"), "difficulty": "standard"},
+        {**_make_signal("SIG-0002"), "difficulty": "adversarial"},
+    ]
+    result = score_by_difficulty(gold, gold)
+    assert result is not None
+    assert result["standard"]["classification_score"] == 85.0
+    assert result["adversarial"]["classification_score"] == 85.0
 
 
 # ── Self-diagnostics runner ────────────────────────────────────────────

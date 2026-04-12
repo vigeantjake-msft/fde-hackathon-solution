@@ -95,6 +95,12 @@ Crew members return weird stuff from APIs. The scoring computer has seen things.
 
 `next_best_action` and `remediation_steps` must be in your response (the schema requires them), but the harness doesn't score them. We look at those when we review your repo. A system that says "investigate the anomaly" for every signal is telling us you phoned it in from a comfortable 1 AU away. Write remediation steps a Tier 1 controller could actually follow while alarm klaxons are blaring and the Admiral is making pointed remarks about "that AI system I was told would fix everything."
 
+### Difficulty breakdown (standard vs adversarial)
+
+When gold data includes a `difficulty` field (`"standard"` or `"adversarial"`), the harness shows a per-subset breakdown after the main score. This tells you whether your system handles routine station chaos as well as the tricky stuff — vague transmissions from panicking crew, contradictory subject lines, priority mismatches, and multi-issue signals where everything is on fire and the reporter threw in a lunch complaint for good measure.
+
+The sample gold set includes difficulty classifications. The hidden eval set is partitioned roughly 70/30 standard/adversarial. If your adversarial score is significantly lower than standard, it means the void's creative signals are eating you alive. The void doesn't label its own difficulty level, but we do — so you can prepare.
+
 ## Usage
 
 ### 25 sample signals (with gold answers)
@@ -168,6 +174,15 @@ Health check: ✓ OK
       latency           p50=320ms  p95=890ms  (10% weight)
       cost              from response headers  (5% weight)
 
+    Signals scored: 25/25
+
+    Difficulty breakdown (the void gets harder):
+
+      🟢 Standard       78.2 / 85  (17/17 signals)
+      🔴 Adversarial    62.1 / 85  (8/8 signals)
+                        └─ Adversarial signals are harder — expected.
+                           The crew files weird signals under pressure.
+
     ┌─────────────────────────────────────────────────────────────┐
     │  Classification: up to 85 pts from 5 dimensions            │
     │  Efficiency: up to 15 pts (latency + cost)                 │
@@ -186,11 +201,11 @@ The `eval_results.json` file contains full per-signal breakdowns for error analy
 
 ## Running the Tests
 
-The scoring functions have their own test suite (84 tests covering every edge case the void could conceivably throw at a triage system — the scoring computer's self-diagnostics, if you will). Run them if you want to understand exactly how scoring works, or if you've been poking at the harness code, or if you just enjoy watching 84 green checkmarks cascade down your terminal like stars outside the viewport:
+The scoring functions have their own test suite (88 tests covering every edge case the void could conceivably throw at a triage system — the scoring computer's self-diagnostics, if you will). Run them if you want to understand exactly how scoring works, or if you've been poking at the harness code, or if you just enjoy watching 88 green checkmarks cascade down your terminal like stars outside the viewport:
 
 ```bash
 cd docs/eval
 python test_scoring.py
 ```
 
-All 84 should pass. If they don’t, something’s wrong with your environment, not the tests. The scoring computer has been tested more thoroughly than your station’s life support. Probably. (Lt. Mehta would like the record to reflect that he has *also* tested life support. Recently. After an incident. He does not wish to discuss the incident. The cats were involved.)
+All 88 should pass. If they don’t, something’s wrong with your environment, not the tests. The scoring computer has been tested more thoroughly than your station’s life support. Probably. (Lt. Mehta would like the record to reflect that he has *also* tested life support. Recently. After an incident. He does not wish to discuss the incident. The cats were involved.)
