@@ -1,36 +1,45 @@
 #!/usr/bin/env python3
-"""Hackathon evaluation harness.
+"""🛰️ CONTOSO DEEP SPACE STATION — SCORING COMPUTER 🛰️
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Scores a participant's /triage endpoint against a gold-standard dataset.
-This script tests Part 1 (functional accuracy) only. Part 2 (engineering
-quality) is evaluated separately after submission.
+    "The scoring computer doesn't care about your feelings.
+     It doesn't care about your excuses. It doesn't care that
+     the LLM was 'pretty close.' Space doesn't grade on a curve."
+                                        — Admiral Chen, CDSS
+
+Evaluation harness for Signal Triage — the same cold, unforgiving
+math the platform uses to score your submission. Run it locally.
+See exactly how you'll be scored. No surprises on launch day.
 
 Usage:
-    uv run python run_eval.py \
-        --endpoint http://localhost:8000 \
-        --dataset ../data/tickets/sample.json \
-        --gold ../data/tickets/sample_gold.json
+    uv run python run_eval.py \\
+        --endpoint http://localhost:8000 \\
+        --dataset ../data/signals/sample.json \\
+        --gold ../data/signals/sample_gold.json
 
 Architecture:
-    The platform scores your submission on 7 dimensions:
+    The scoring computer evaluates your submission on 7 dimensions:
 
     5 classification dimensions (max 85 pts total):
-        0.20 × category      — macro F1 across 8 categories
+        0.20 × category      — macro F1 across 8 anomaly categories
         0.20 × priority      — mean ordinal partial credit (P1–P4)
-        0.20 × routing       — macro F1 across 7 teams
-        0.15 × missing_info  — mean per-ticket set F1
+        0.20 × routing       — macro F1 across 7 response divisions
+        0.15 × missing_info  — mean per-signal set F1
         0.10 × escalation    — binary F1 on the positive class
 
     2 efficiency dimensions (max 15 pts total):
         0.10 × latency       — normalized p50 response time
-        0.05 × cost          — normalized $/ticket from token usage
+        0.05 × cost          — normalized $/signal from token usage
 
     Total = classification (0–85) + efficiency (0–15) = 0–100.
 
     Why macro F1 instead of accuracy:
-        Accuracy lets a system game the score by always predicting the
-        majority class. Macro F1 computes F1 per class then averages, so
-        every class matters equally regardless of frequency.
+        Accuracy is gameable — always predicting the most common class
+        gets you high accuracy while the crew dies from an unrouted hull
+        breach. Macro F1 computes F1 per class then averages, so every
+        anomaly type matters equally. A system that ignores rare-but-critical
+        classes (e.g., "Threat Detection & Containment") gets a score as
+        cold as the void outside.
 
     On the leaderboard this counts as 50% of the final 0-100 score.
     The other 50% comes from engineering quality (evaluated after submission).
@@ -38,14 +47,18 @@ Architecture:
     Note: remediation_steps and next_best_action are still required in
     your API response (they are part of the output schema), but they are
     not deterministically scored. Quality of remediation is evaluated as
-    part of the engineering quality assessment.
+    part of the engineering quality assessment — because a system that says
+    "investigate the anomaly" for every signal is telling us you phoned it
+    in from a comfortable 1 AU away.
 
     Efficiency scoring: To participate in latency and cost scoring, your
     API should return these response headers:
         X-Model-Name:         model name (e.g., "gpt-4o-mini")
         X-Prompt-Tokens:      integer token count
         X-Completion-Tokens:  integer token count
-    These are optional — missing headers result in default cost scoring.
+    These are optional — missing headers result in worst-case cost scoring.
+    (As if you're burning GPT-4 with zero caching. The Admiral will have
+    questions about your fuel budget.)
 """
 
 import argparse
@@ -87,23 +100,23 @@ WEIGHTS = {
 # ── Closed label sets (must match the platform) ─────────────────────
 
 CATEGORIES = (
-    "Access & Authentication",
-    "Hardware & Peripherals",
-    "Network & Connectivity",
-    "Software & Applications",
-    "Security & Compliance",
-    "Data & Storage",
-    "General Inquiry",
-    "Not a Support Ticket",
+    "Crew Access & Biometrics",
+    "Hull & Structural Systems",
+    "Communications & Navigation",
+    "Flight Software & Instruments",
+    "Threat Detection & Containment",
+    "Telemetry & Data Banks",
+    "Mission Briefing Request",
+    "Not a Mission Signal",
 )
 
 TEAMS = (
-    "Identity & Access Management",
-    "Endpoint Engineering",
-    "Network Operations",
-    "Enterprise Applications",
-    "Security Operations",
-    "Data Platform",
+    "Crew Identity & Airlock Control",
+    "Spacecraft Systems Engineering",
+    "Deep Space Communications",
+    "Mission Software Operations",
+    "Threat Response Command",
+    "Telemetry & Data Core",
     "None",
 )
 
@@ -185,23 +198,32 @@ def binary_f1(candidates: Sequence[bool], golds: Sequence[bool]) -> float:
     return 2 * precision * recall / (precision + recall)
 
 
-# ── Per-ticket scoring functions ─────────────────────────────────────
+# ── Per-signal scoring functions ──────────────────────────────────────
+# Each function scores one dimension for one signal. Think of it as
+# the black-box recorder for each individual triage decision.
 
 
 def score_category(pred: str | None, gold: str) -> float:
-    """Exact match, case-insensitive. Returns 0.0 or 1.0."""
+    """Per-signal anomaly category match (0.0 or 1.0).
+
+    Misclassify and the wrong division scrambles — Threat Response Command
+    arrives at a fabricator jam while an actual hull breach goes unattended.
+    Congratulations, you've invented a new way to fail.
+    """
     if not pred:
         return 0.0
     return 1.0 if _normalize(pred) == _normalize(gold) else 0.0
 
 
 def score_priority(pred: str | None, gold: str) -> float:
-    """Priority match with partial credit for off-by-one only.
+    """Priority match with partial credit — because "close" only counts in asteroid dodging.
 
-    Same level     → 1.0
-    Off by 1 level → 0.67
-    Off by 2+      → 0.0
-    Invalid value  → 0.0
+    Returns:
+        1.0  — exact match (correct threat assessment, gold star, the crew lives)
+        0.67 — off by one level (wrong, but you're in the right solar system)
+        0.0  — off by two or more levels, or invalid (you called a hull breach
+               "routine" and now there's a new window in Deck 7 that wasn't
+               in the blueprints)
     """
     order = {"P1": 0, "P2": 1, "P3": 2, "P4": 3}
     p = order.get(pred.strip().upper() if pred else "", -1)
@@ -217,27 +239,32 @@ def score_priority(pred: str | None, gold: str) -> float:
 
 
 def score_routing(pred: str | None, gold: str) -> float:
-    """Exact match, case-insensitive. Returns 0.0 or 1.0."""
+    """Route-to-team match — send a signal to the wrong division and watch
+    chaos unfold in zero gravity. Case-insensitive exact match. 0.0 or 1.0.
+    """
     if not pred:
         return 0.0
     return 1.0 if _normalize(pred) == _normalize(gold) else 0.0
 
 
 def score_escalation(pred: bool | None, gold: bool) -> float:
-    """Binary match. Returns 0.0 or 1.0."""
+    """Escalation flag — did you correctly decide whether to wake up the
+    Station Commander at 0300 hours? Binary match. 0.0 or 1.0.
+    """
     if pred is None:
         return 0.0
     return 1.0 if bool(pred) == bool(gold) else 0.0
 
 
 def score_missing_info(pred_list: list[str] | None, gold_list: list[str]) -> float:
-    """Set F1 score using exact string match on the constrained vocabulary.
+    """Missing intel F1 — did you identify which sensor readings, crew data,
+    or system diagnostics are still needed before the signal can be resolved?
 
-    F1 = 2 × precision × recall / (precision + recall)
+    Uses set-based F1 over the constrained vocabulary.
 
-    Both empty → 1.0 (correctly identified nothing is missing).
-    Gold empty, pred non-empty → 0.0 (false positives).
-    Gold non-empty, pred empty → 0.0 (false negatives).
+    Both empty → 1.0 (signal is self-contained — proceed to fix).
+    Gold empty, pred non-empty → 0.0 (you're hallucinating missing data).
+    Gold non-empty, pred empty → 0.0 (you missed critical gaps).
     """
     pred_set = {_normalize(s) for s in (pred_list or [])}
     gold_set = {_normalize(s) for s in gold_list}
@@ -256,15 +283,15 @@ def score_missing_info(pred_list: list[str] | None, gold_list: list[str]) -> flo
     return 2.0 * precision * recall / (precision + recall)
 
 
-# ── Per-ticket scoring ────────────────────────────────────────────────
+# ── Per-signal scoring ────────────────────────────────────────────────
 
 
-def score_ticket(pred: dict, gold: dict) -> dict[str, float]:
-    """Score a single ticket prediction against gold. Returns per-dimension scores.
+def score_signal(pred: dict, gold: dict) -> dict[str, float]:
+    """Score a single signal prediction against gold. Returns per-dimension scores.
 
     Note: the submission-level score uses macro F1 for category and routing,
-    and binary F1 for escalation. The per-ticket total here is an
-    approximation useful for identifying which specific tickets were wrong.
+    and binary F1 for escalation. The per-signal total here is an
+    approximation useful for identifying which specific signals went sideways.
     """
     cat = score_category(pred.get("category"), gold["category"])
     pri = score_priority(pred.get("priority"), gold["priority"])
@@ -293,6 +320,10 @@ def score_ticket(pred: dict, gold: dict) -> dict[str, float]:
     return scores
 
 
+# Keep backward compatibility for tests that import by old name
+score_ticket = score_signal
+
+
 # ── Submission-level scoring ──────────────────────────────────────────
 
 
@@ -303,16 +334,16 @@ def score_submission(
     """Score a full submission using the same metrics as the platform.
 
     Dimension scoring methods (submission level):
-      - category:     macro F1 across 8 category labels
-      - priority:     mean per-ticket ordinal partial credit
-      - routing:      macro F1 across 7 team labels
-      - missing_info: mean per-ticket set F1
+      - category:     macro F1 across 8 anomaly-category labels
+      - priority:     mean per-signal ordinal partial credit
+      - routing:      macro F1 across 7 division labels
+      - missing_info: mean per-signal set F1
       - escalation:   binary F1 on the positive class
 
     Returns dict with classification_score (0–85), dimension breakdowns,
-    and per-ticket details.
+    and per-signal details.
     """
-    per_ticket: list[dict[str, float]] = []
+    per_signal: list[dict[str, float]] = []
 
     all_cat_cands: list[str] = []
     all_cat_golds: list[str] = []
@@ -331,8 +362,8 @@ def score_submission(
         cand = cand_by_id.get(tid)
 
         if cand is None:
-            errors.append(f"Missing response for ticket {tid}")
-            per_ticket.append({k: 0.0 for k in [*WEIGHTS, "weighted_total"]})
+            errors.append(f"Missing response for signal {tid}")
+            per_signal.append({k: 0.0 for k in [*WEIGHTS, "weighted_total"]})
             all_cat_cands.append("")
             all_cat_golds.append(_normalize(str(gold.get("category", ""))))
             all_rte_cands.append("")
@@ -342,8 +373,8 @@ def score_submission(
             all_pri_scores.append(0.0)
             all_miss_scores.append(0.0)
         else:
-            ticket_result = score_ticket(cand, gold)
-            per_ticket.append(ticket_result)
+            signal_result = score_signal(cand, gold)
+            per_signal.append(signal_result)
 
             all_cat_cands.append(_normalize(str(cand.get("category", ""))))
             all_cat_golds.append(_normalize(str(gold.get("category", ""))))
@@ -351,10 +382,10 @@ def score_submission(
             all_rte_golds.append(_normalize(str(gold.get("assigned_team", ""))))
             all_esc_cands.append(_coerce_bool(cand.get("needs_escalation")))
             all_esc_golds.append(_coerce_bool(gold.get("needs_escalation")))
-            all_pri_scores.append(ticket_result["priority"])
-            all_miss_scores.append(ticket_result["missing_info"])
+            all_pri_scores.append(signal_result["priority"])
+            all_miss_scores.append(signal_result["missing_info"])
 
-    n = len(per_ticket)
+    n = len(per_signal)
 
     # Submission-level dimension scores
     category_score = macro_f1(all_cat_cands, all_cat_golds, CATEGORIES)
@@ -382,9 +413,9 @@ def score_submission(
             "missing_info": round(missing_info_score, 4),
             "escalation": round(escalation_score, 4),
         },
-        "tickets_scored": n - len(errors),
-        "tickets_errored": len(errors),
-        "per_ticket": per_ticket,
+        "signals_scored": n - len(errors),
+        "signals_errored": len(errors),
+        "per_signal": per_signal,
         "errors": errors,
     }
 
@@ -392,18 +423,18 @@ def score_submission(
 # ── HTTP client ───────────────────────────────────────────────────────
 
 
-def call_endpoint(client: httpx.Client, endpoint: str, ticket: dict) -> tuple[dict | None, float]:
-    """POST a ticket to /triage. Returns (parsed JSON or None, latency_ms)."""
+def call_endpoint(client: httpx.Client, endpoint: str, signal: dict) -> tuple[dict | None, float]:
+    """POST a signal to /triage. Returns (parsed JSON or None, latency_ms)."""
     url = urljoin(endpoint.rstrip("/") + "/", "triage")
     start = time.monotonic()
     try:
-        resp = client.post(url, json=ticket, timeout=30.0)
+        resp = client.post(url, json=signal, timeout=30.0)
         elapsed_ms = (time.monotonic() - start) * 1000
         resp.raise_for_status()
         return resp.json(), elapsed_ms
     except Exception as e:
         elapsed_ms = (time.monotonic() - start) * 1000
-        print(f"  ✗ {ticket['ticket_id']}: {e}")
+        print(f"  ✗ {signal['ticket_id']}: {e}")
         return None, elapsed_ms
 
 
@@ -421,7 +452,7 @@ def check_health(client: httpx.Client, endpoint: str) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Score a /triage endpoint against gold-standard ticket data.")
+    parser = argparse.ArgumentParser(description="Score a /triage endpoint against gold-standard signal data.")
     parser.add_argument(
         "--endpoint",
         required=True,
@@ -430,7 +461,7 @@ def main() -> int:
     parser.add_argument(
         "--dataset",
         required=True,
-        help="Path to the ticket dataset JSON file",
+        help="Path to the signal dataset JSON file",
     )
     parser.add_argument(
         "--gold",
@@ -446,7 +477,7 @@ def main() -> int:
         print(f"Error: dataset file not found: {dataset_path}")
         return 1
 
-    tickets = json.loads(dataset_path.read_text())
+    signals = json.loads(dataset_path.read_text())
 
     # Resolve gold file
     if args.gold:
@@ -466,15 +497,15 @@ def main() -> int:
     golds = json.loads(gold_path.read_text())
     gold_by_id = {g["ticket_id"]: g for g in golds}
 
-    # Validate ticket/gold alignment
-    ticket_ids = [t["ticket_id"] for t in tickets]
+    # Validate signal/gold alignment
+    signal_ids = [t["ticket_id"] for t in signals]
     gold_ids = set(gold_by_id.keys())
-    missing_gold = [tid for tid in ticket_ids if tid not in gold_ids]
+    missing_gold = [tid for tid in signal_ids if tid not in gold_ids]
     if missing_gold:
-        print(f"Error: {len(missing_gold)} tickets have no gold answer: {missing_gold[:5]}")
+        print(f"Error: {len(missing_gold)} signals have no gold answer: {missing_gold[:5]}")
         return 1
 
-    print(f"Loaded {len(tickets)} tickets, {len(golds)} gold answers")
+    print(f"Loaded {len(signals)} signals, {len(golds)} gold answers")
     print(f"Endpoint: {args.endpoint}")
     print()
 
@@ -486,17 +517,17 @@ def main() -> int:
         print("Warning: GET /health did not return 200. Continuing with scoring...")
     print()
 
-    # ── Score each ticket ─────────────────────────────────────────────
+    # ── Score each signal ─────────────────────────────────────────────
     results: list[dict] = []
     responses: list[dict] = []
     latencies: list[float] = []
     errors = 0
 
-    for ticket in tickets:
-        tid = ticket["ticket_id"]
+    for signal in signals:
+        tid = signal["ticket_id"]
         gold = gold_by_id[tid]
 
-        pred, elapsed_ms = call_endpoint(client, args.endpoint, ticket)
+        pred, elapsed_ms = call_endpoint(client, args.endpoint, signal)
         latencies.append(elapsed_ms)
 
         if pred is None:
@@ -506,12 +537,12 @@ def main() -> int:
             continue
 
         responses.append(pred)
-        scores = score_ticket(pred, gold)
+        scores = score_signal(pred, gold)
         scores["ticket_id"] = tid
         scores["latency_ms"] = round(elapsed_ms, 0)
         results.append(scores)
 
-        # Per-ticket output
+        # Per-signal output
         marks = {k: "✓" if scores[k] >= 0.99 else ("~" if scores[k] >= 0.5 else "✗") for k in WEIGHTS}
         print(
             f"  {tid}  [{scores['weighted_total'] * 100:5.1f}]  "
@@ -528,7 +559,7 @@ def main() -> int:
     dim_scores = sub_result["dimension_scores"]
     classification_score = sub_result["classification_score"]
 
-    n_total = len(tickets)
+    n_total = len(signals)
     n_valid = n_total - errors
 
     # Latency stats
@@ -558,7 +589,7 @@ def main() -> int:
     print(f"    latency           p50={p50:.0f}ms  p95={p95:.0f}ms  (10% weight)")
     print("    cost              from response headers     (5% weight)")
     print()
-    print(f"  Tickets scored: {n_valid}/{n_total}")
+    print(f"  Signals scored: {n_valid}/{n_total}")
     if errors:
         print(f"  Errors (scored as 0): {errors}")
     print()
@@ -574,12 +605,12 @@ def main() -> int:
     output = {
         "classification_score": classification_score,
         "dimension_scores": dim_scores,
-        "tickets_scored": n_valid,
-        "tickets_total": n_total,
-        "tickets_errored": errors,
+        "signals_scored": n_valid,
+        "signals_total": n_total,
+        "signals_errored": errors,
         "latency_p50_ms": round(p50, 0),
         "latency_p95_ms": round(p95, 0),
-        "per_ticket": [{k: v for k, v in r.items() if k != "error"} for r in results],
+        "per_signal": [{k: v for k, v in r.items() if k != "error"} for r in results],
     }
     output_path = Path("eval_results.json")
     output_path.write_text(json.dumps(output, indent=2) + "\n")
