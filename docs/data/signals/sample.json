@@ -180,7 +180,7 @@
     {
         "ticket_id": "SIG-0014",
         "subject": "thanks!",
-        "description": "got it working, appreciate the quick turnaround. you folks are the best!! 🎉",
+        "description": "got it working, appreciate the quick turnaround. you folks are the best!! 🎉 honestly faster than the nutrient synthesizer makes coffee and infinitely more reliable. safe travels through the void!",
         "reporter": {
             "name": "Mike Torres",
             "email": "mike.torres@cdss.space",
@@ -262,7 +262,7 @@
     {
         "ticket_id": "SIG-0020",
         "subject": "Molecular fabricator on Deck 3 not working",
-        "description": "The large molecular fabricator near the mess hall on Deck 3 stopped fabricating. Jobs go to the queue but nothing materializes. I tried from my console and from the workstation next to it — same result. The fabricator display shows ‘Ready’ and material hoppers are full. Other crew on the deck are having the same issue. We need it for diplomatic gift packages that ship out today.",
+        "description": "The large molecular fabricator near the mess hall on Deck 3 stopped fabricating. Jobs go to the queue but nothing materializes. I tried from my console and from the workstation next to it — same result. The fabricator display shows 'Ready' and material hoppers are full. Other crew on the deck are having the same issue. And yes, I know the Deck 3 fabricator has a 'reputation.' But this time it was actually working for three whole days before it decided to remind us all that it hates us. We need it for diplomatic gift packages that ship out today.",
         "reporter": {
             "name": "Sam Williams",
             "email": "sam.williams@cdss.space",
@@ -275,7 +275,7 @@
     {
         "ticket_id": "SIG-0021",
         "subject": "How do I book a briefing room?",
-        "description": "Hi, I just arrived on station last week and I need to book the large briefing room on Deck 4 for a crew gathering on Friday. I looked in SubComm but I can’t figure out how to reserve it. Is there a special calendar or something? Also, do I need to order catering through Station Operations or is that a different team? Thanks!",
+        "description": "Hi, I just arrived on station last week and I need to book the large briefing room on Deck 4 for a crew gathering on Friday. I looked in SubComm but I can't figure out how to reserve it. Is there a special calendar or something? The crew orientation didn't cover this — though it did spend 45 minutes on 'what to do if you accidentally vent an airlock,' which I appreciate but doesn't help me right now. Also, do I need to order catering through Station Operations or is that a different team? Thanks!",
         "reporter": {
             "name": "Chris Taylor",
             "email": "chris.taylor@cdss.space",

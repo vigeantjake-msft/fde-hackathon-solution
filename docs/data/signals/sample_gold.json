@@ -281,11 +281,11 @@
         "missing_information": [
             "habitat_conditions"
         ],
-        "next_best_action": "Investigate unified crew authentication token invalidation after passphrase rotation. Likely the FlightOS unified crew authentication ticket needs to be reissued after the station passphrase change. Time-sensitive due to month-end resource reconciliation deadline.",
+        "next_best_action": "Investigate unified crew authentication token invalidation after passphrase rotation. Likely the FlightOS unified crew authentication token needs to be reissued after the station passphrase change. Time-sensitive due to month-end resource reconciliation deadline.",
         "remediation_steps": [
-            "Verify the crew member’s BioScan ID session and quantum auth ticket are refreshed after the passphrase change",
+            "Verify the crew member’s BioScan ID session and quantum auth token are refreshed after the passphrase change",
             "Check FlightOS unified crew authentication configuration — confirm whether FlightOS GUI uses quantum auth or SAML-based unified crew authentication",
-            "Reissue the FlightOS unified crew authentication logon ticket or have the crew member authenticate to FlightOS with explicit biometric credentials as a workaround",
+            "Reissue the FlightOS unified crew authentication logon token or have the crew member authenticate to FlightOS with explicit biometric credentials as a workaround",
             "If unified crew authentication token regeneration doesn’t resolve it, check whether the passphrase policy change affected the FlightOS SNC configuration",
             "Confirm FlightOS access is restored and the crew member can complete month-end resource reconciliation"
         ]
@@ -396,7 +396,7 @@
         ],
         "next_best_action": "Renew or replace the quantum encryption certificate on crew-api.cdss.space before it expires on March 20. This is a production-facing API gateway — expiry will break all external fleet integrations. Treat as P1 given 3-day window and the fact that the original provisioner transferred off-station.",
         "remediation_steps": [
-            "Identify the current certificate authority and certificate type (public CA, internal PKI, or Let’s Encrypt)",
+            "Identify the current certificate authority and certificate type (station PKI, external fleet CA, or automated quantum cert provisioner)",
             "Determine whether auto-renewal was configured or if the cert was manually provisioned",
             "If auto-renewal exists, trigger a manual renewal cycle and verify the new cert is issued",
             "If manual, generate a CSR, obtain a new certificate from the CA, and install it on the API gateway",
