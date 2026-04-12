@@ -526,13 +526,13 @@ def main() -> int:
     client = httpx.Client()
     healthy = check_health(client, args.endpoint)
     if healthy:
-        status = "✓ LIFE SIGNS DETECTED — the station breathes"
+        status = "✓ LIFE SIGNS DETECTED — the station breathes. The Deck 9 cat approves."
     else:
-        status = "✗ NO LIFE SIGNS — FLATLINE — check the reactor"
+        status = "✗ NO LIFE SIGNS — FLATLINE — your service is as responsive as a frozen crewmate"
     print(f"  Health check: {status}")
     if not healthy:
         print("  ⚠ Warning: GET /health did not return 200. Proceeding with scoring anyway...")
-        print("  (The scoring computer is brave. Or indifferent. Same thing in space.)")
+        print("  (The scoring computer is brave. Or indifferent. Like the nutrient synthesizer.)")
     print()
 
     # ── Score each signal ─────────────────────────────────────────────
@@ -612,7 +612,7 @@ def main() -> int:
     print()
     print(f"  Signals processed: {n_valid}/{n_total}")
     if errors:
-        print(f"  Signals lost to the void: {errors}")
+        print(f"  Signals lost to the void: {errors} — the Deck 9 cat could have caught those")
     print()
     print("  ┌─────────────────────────────────────────────────────────────┐")
     print("  │  Classification:  up to 85 pts from 5 scoring dimensions   │")
@@ -620,18 +620,26 @@ def main() -> int:
     print("  │  Total functional score: 0–100                             │")
     print("  │  Engineering review: evaluated separately from your repo   │")
     print("  │                                                            │")
-    if classification_score >= 75:
-        print("  │  Status: 🟢 Strong signal — the crew salutes you.         │")
-        print("  │  Commander Kapoor nods approvingly. This is rare.          │")
-    elif classification_score >= 55:
+    if classification_score >= 80:
+        print("  │  Status: 🟢 Stellar — the crew salutes you.               │")
+        print("  │  Commander Kapoor nods. Mehta stops writing margin notes.  │")
+        print("  │  The Deck 9 cat purrs. The void itself seems less hostile. │")
+    elif classification_score >= 65:
+        print("  │  Status: 🟢 Strong signal — the crew survives with style. │")
+        print("  │  Mehta's margin notes about your system are complimentary. │")
+        print("  │  The protein cubes taste slightly better today. Probably.  │")
+    elif classification_score >= 50:
         print("  │  Status: 🟡 Moderate — some signals lost in static.       │")
         print("  │  The crew survives, but Mehta is writing margin notes.     │")
+        print("  │  The Deck 3 fabricator works better than this. Barely.     │")
     elif classification_score >= 30:
         print("  │  Status: 🟠 Weak signal — review your triage logic.       │")
         print("  │  Hull breaches going to the wrong team. People notice.     │")
+        print("  │  The nutrient synthesizer has better accuracy. Ouch.       │")
     else:
         print("  │  Status: 🔴 Critical — Commander Kapoor has been notified.│")
         print("  │  She is 0.3 AU away and she is not patient.               │")
+        print("  │  Even the Deck 9 cat is judging you. It has no thumbs.    │")
     print("  └─────────────────────────────────────────────────────────────┘")
     print()
 
@@ -650,8 +658,15 @@ def main() -> int:
     output_path.write_text(json.dumps(output, indent=2) + "\n")
     print(f"  📡 Results transmitted to {output_path}")
     print()
-    print("  End of scoring run. The void awaits your submission.")
-    print("  May the scoring computer be less merciless next time. (It won't be.)")
+    if classification_score >= 80:
+        print("  End of scoring run. The void respects your engineering.")
+        print("  Commander Kapoor has added your name to the 'Do Not Jettison' list.")
+    elif classification_score >= 50:
+        print("  End of scoring run. The void awaits your submission.")
+        print("  May the scoring computer be less merciless next time. (It won't be.)")
+    else:
+        print("  End of scoring run. The void has opinions about your submission.")
+        print("  Mehta recommends re-reading the routing guide. All of it. Twice.")
     print()
 
     return 0

@@ -147,7 +147,7 @@ Each signal shows its per-signal classification score (max 85 pts):
   Gold answers:      25
   Target endpoint:   http://localhost:8000
 
-  Health check: ✓ LIFE SIGNS DETECTED — the station breathes
+  Health check: ✓ LIFE SIGNS DETECTED — the station breathes. The Deck 9 cat approves.
 
   Transmitting signals to triage endpoint... stand by for contact.
 
@@ -185,6 +185,7 @@ Each signal shows its per-signal classification score (max 85 pts):
   │                                                            │
   │  Status: 🟡 Moderate — some signals lost in static.       │
   │  The crew survives, but Mehta is writing margin notes.     │
+  │  The Deck 3 fabricator works better than this. Barely.     │
   └─────────────────────────────────────────────────────────────┘
 
   📡 Results transmitted to eval_results.json

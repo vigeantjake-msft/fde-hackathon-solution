@@ -102,10 +102,10 @@
         ],
         "next_best_action": "Initiate security incident investigation immediately — unauthorized BioScan ID access attempts from the Tau Ceti relay station are not normal space weather. Review authentication logs, check personal data vault audit trail for document access, and verify the passphrase change neutralized the threat vector.",
         "remediation_steps": [
-            "Review authentication logs for the crew member's account over the past 48 hours — six sign-in attempts from Tau Ceti is three too many to ignore",
+            "Review authentication logs for the crew member's account over the past 48 hours — six sign-in attempts from Tau Ceti is three too many to ignore and five too many for Mehta to sleep through",
             "Check data vault audit trail for any unauthorized file access or downloads of diplomatic treaties and classified sensor archives",
             "Verify passphrase change was successful and biometric verification is active — the attacker may have cached old credentials",
-            "If unauthorized access is confirmed, escalate to incident response and notify station containment officer — diplomatic treaties in hostile hands is a P1 waiting to happen",
+            "If unauthorized access is confirmed, escalate to incident response and notify station containment officer — diplomatic treaties in hostile hands is a P1 waiting to happen, and the Admiral will want to know why we let an intergalactic identity theft play out while we filed paperwork",
             "Brief crew member on interim security measures and monitor the account for further anomalies from any relay station"
         ]
     },
@@ -137,9 +137,9 @@
         "next_best_action": "Investigate production crew database connection pool exhaustion immediately — this is a crew-facing production incident disguised as a casual aside. The reporter’s tone is calm. The situation is not. Crew members cannot see their EVA schedules, which means someone might accidentally spacewalk into an asteroid field. Treat the reporter’s understatement as a cry for help wrapped in sarcasm.",
         "remediation_steps": [
             "Investigate connection pool configuration on the primary data node — connection pool exhaustion on a space station is the database equivalent of running out of oxygen",
-            "Identify and terminate long-running queries or leaked connections that are hoarding the pool",
+            "Identify and terminate long-running queries or leaked connections that are hoarding the pool — some queries cling to database connections the way Ensign Torres clings to expired airlock codes",
             "Increase connection pool size or restart the primary data node as immediate mitigation — crew members need their EVA schedules before they float into an asteroid field",
-            "Verify backup data node health and confirm it is handling redirected traffic without strain",
+            "Verify backup data node health and confirm it is handling redirected traffic without strain — a backup node under load is like the Deck 3 fabricator: technically functional, spiritually defeated",
             "Post-incident: conduct root cause analysis on connection pool exhaustion and file station engineering report — Mehta will want a margin note about this one"
         ]
     },
@@ -272,9 +272,9 @@
         "next_best_action": "Investigate 200ms-to-50ms latency regression on the Gamma Quadrant relay probe deployment path before the Europa shift. Determine mission impact: are active survey missions affected, or are we one delayed command away from losing another drone to 'latency-related involuntary lithobraking'? The last drone that experienced this became a permanent geological feature of an asteroid. Check comms path, recent changes, and which side of the relay the latency lives on.",
         "remediation_steps": [
             "Assess mission impact: determine if active probe deployments or survey missions are currently affected by the latency — 200ms may be tolerable for routine telemetry, but for real-time navigation commands it’s the difference between ‘avoid that asteroid’ and ‘you are now part of that asteroid’",
-            "Check communications latency metrics on the path between CDSS’s Gamma Quadrant relay cluster and the relay station",
-            "Review recent defense grid rule, routing, or relay proxy changes that may affect the deployment path",
-            "Compare current latency baseline against historical data to confirm the regression",
+            "Check communications latency metrics on the path between CDSS’s Gamma Quadrant relay cluster and the relay station — the Titan Outpost blamed their own latency spike on cosmic ray interference for two weeks before someone checked the relay and found a firmware update had been ‘queued’ since before the station was commissioned",
+            "Review recent defense grid rule, routing, or relay proxy changes that may affect the deployment path — every time someone adjusts the defense grid ‘just a little,’ a probe somewhere in the Gamma Quadrant starts flying like it’s had too many protein cubes",
+            "Compare current latency baseline against historical data to confirm the regression \u2014 if the numbers look the same as 'that time in February,' Mehta will want to know immediately because he still has nightmares about February",
             "If latency is on CDSS’s side, escalate to communications engineering for immediate remediation before Europa shift",
             "If relay-station-side, contact relay station operations and notify navigation desk of potential impact — and maybe draft that incident report about ‘involuntary lithobraking’ now, just in case"
         ]
@@ -318,7 +318,7 @@
             "Request sensor log captures or anomaly readout screenshots — ‘lots of errors that went away’ is not diagnostically useful, but a capture of the next occurrence would be worth more than this entire transcript",
             "If the issue cannot be identified remotely, dispatch a technician to Deck 5 to observe the problem firsthand — sometimes the fastest path to diagnosis is watching someone demonstrate ‘the thing’",
             "Once the affected subsystem is identified, re-triage with correct category, priority, and routing information",
-            "Log this signal as an example of why the station’s signal submission form should have required fields — a request that has been filed, ignored, and re-filed approximately once per crew rotation since the station was commissioned"
+            "Log this signal as an example of why the station’s signal submission form should have required fields — a request that has been filed, ignored, and re-filed approximately once per crew rotation since the station was commissioned, making it the second most persistent recurring event after the Deck 7 atmospheric processor and significantly less fragrant"
         ]
     },
     {
@@ -331,9 +331,9 @@
         "missing_information": [],
         "next_best_action": "Dispatch support to Deck 8 command war room immediately. Fleet Admiral-level VIP signal — treat as one priority level higher. Investigate SubComm sharing policy blocking screen share for this crew member. Active command briefing with allied fleet commanders.",
         "remediation_steps": [
-            "Dispatch technician to the Deck 8 command war room immediately — Fleet Admiral-level VIP signal means 'move faster than you think you need to, then move faster than that'",
-            "Check Station Access Protocol and SubComm briefing policies applied to Carlos Martinez's crew account — a Fleet Admiral being told 'your station's policy blocks this' during an admiralty briefing is the kind of irony that generates incident reports",
-            "Verify whether the 'Sharing is blocked by your station's policy' error is caused by a Data Loss Prevention Grid policy, SubComm admin policy, or Station Access Protocol restriction — three possible causes, zero acceptable outcomes, negative time to investigate",
+            "Dispatch technician to the Deck 8 command war room immediately — Fleet Admiral-level VIP signal means 'move faster than you think you need to, then move faster than that.' Commander Kapoor's patience is already at 0.3 AU from depletion and dropping fast",
+            "Check Station Access Protocol and SubComm briefing policies applied to Carlos Martinez's crew account — a Fleet Admiral being told 'your station's policy blocks this' during an admiralty briefing is the kind of irony that generates incident reports and margin notes from Mehta that survive longer than the careers involved",
+            "Verify whether the 'Sharing is blocked by your station's policy' error is caused by a Data Loss Prevention Grid policy, SubComm admin policy, or Station Access Protocol restriction — three possible causes, zero acceptable outcomes, negative time to investigate. The Titan Outpost lost a defense contract because of a similar policy misconfiguration during a live demo; their technician's memoir is available in the station library under 'Cautionary Tales'",
             "As immediate workaround: have someone else share the tactical display on his behalf, or use the war room SubComm device with a different crew account — the admiralty board does not need to know about the workaround, they need to see the presentation, and the distinction is more important than your dignity",
             "Once the briefing is unblocked, investigate and resolve the underlying policy conflict — because a Fleet Admiral filing a follow-up signal about the same issue would generate the kind of organizational stress that makes the atmospheric processor on Deck 7 look like a model of reliable engineering"
         ]
@@ -346,15 +346,15 @@
         "assigned_team": "Crew Identity & Airlock Control",
         "needs_escalation": false,
         "missing_information": [],
-        "next_best_action": "Initiate crew member transfer workflow for Jessica Palmer (last duty cycle March 21). Coordinate across Crew Identity, Spacecraft Systems Engineering, and Telemetry & Data Core for crew account disable, console wipe, file transfer, and message archival. Note: sensitive threat investigation files require special handling.",
+        "next_best_action": "Initiate crew member transfer workflow for Jessica Palmer (last duty cycle March 21). Coordinate across Crew Identity, Spacecraft Systems Engineering, and Telemetry & Data Core for crew account disable, console wipe, file transfer, and message archival. Note: sensitive threat investigation files require special handling — the last crew transfer that skipped this step resulted in classified containment protocols arriving at Tau Ceti labeled 'miscellaneous.'",
         "remediation_steps": [
-            "Schedule BioScan ID crew account disable for 1800 station time on March 21",
-            "Prepare warp tunnel and remote access revocation to trigger simultaneously with crew account disable",
-            "Coordinate with Spacecraft Systems Engineering for console wipe of OrbitalCore Console 5540 (asset tag CT-L-4892)",
+            "Schedule BioScan ID crew account disable for 1800 station time on March 21 — timing is critical, because a disabled account at 1200 means Jessica spends her last six hours locked out of her own lab, and the last time that happened to a departing crew member they spent the afternoon narrating a dramatic goodbye to the Deck 9 cat",
+            "Prepare warp tunnel and remote access revocation to trigger simultaneously with crew account disable — staggered revocation leads to ghost sessions, and ghost sessions on a space station are unnerving enough without adding digital ones",
+            "Coordinate with Spacecraft Systems Engineering for console wipe of OrbitalCore Console 5540 (asset tag CT-L-4892) — verify all personal files are backed up first, because 'we wiped your console before you left' is a worse farewell than the protein cubes the nutrient synthesizer would have offered",
             "Transfer data vault and mission log file ownership to David Liu (david.liu@cdss.space)",
             "Remove from all comm channels, SubComm groups, and crew distribution lists — the last thing a departing crew member needs is 47 unread briefing notifications bouncing off a relay station at Tau Ceti",
             "Archive comm message history per 7-cycle archival protocol — Threat Detection correspondence requires separate encrypted archival per station containment policy, which means yes, you have to do it twice",
-            "Ensure sensitive threat investigation files are preserved in a secured location and access is revoked"
+            "Ensure sensitive threat investigation files are preserved in a secured location and access is revoked — Threat Detection files that leave the station without proper handling become everyone's problem, and 'everyone' includes the Admiral"
         ]
     },
     {
@@ -372,7 +372,7 @@
         "remediation_steps": [
             "Verify whether the Deck 3 fabricator is network-connected or locally connected — this determines whether it's a Deep Space Communications issue (network queue) or Spacecraft Systems (local hardware). Yes, this is the fabricator. THE fabricator. The one in the orientation guide.",
             "Check network connectivity to the fabrication queue server — if the fabricator can't reach the queue, jobs will sit there forever, like signals in a misrouted queue, like that metaphor isn't already giving you anxiety",
-            "If network connectivity is confirmed, check the fabricator's print spooler service status on the local controller — restart if stalled",
+            "If network connectivity is confirmed, check the fabricator's fabrication spooler service status on the local controller — restart if stalled",
             "If the fabricator is locally connected, route to Spacecraft Systems for hardware diagnosis — the Deck 3 unit has been printing everything 2mm too thick since March and has its own entry in the known-issues database, which is longer than some crew members' personnel files",
             "If none of the above resolves it, escalate to the fabricator manufacturer — and good luck getting a warranty technician at 0.3 AU"
         ]
