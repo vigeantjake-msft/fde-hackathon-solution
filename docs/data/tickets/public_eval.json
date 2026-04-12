@@ -31,7 +31,7 @@
     {
         "ticket_id": "SIG-1003",
         "subject": "Networked fabricator won't send scans to comm message",
-        "description": "The networked fabricator on the 5th deck in Beta Station can fabricate fine, but the scan-to-comm message feature stopped working about a week ago. When I scan a document and enter my comm message, it gives an error on the display but it disappears too fast to read. No scans have arrived in my inbox.\n\nWe have Interstellar Safety Inspectors arriving in 1 hour and they need access to these systems. This cannot wait.",
+        "description": "The networked fabricator on the 5th deck in Beta Station can fabricate fine, but the scan-to-comm message feature stopped working about a week ago — right around when they recalibrated the comm relay on that deck. When I scan a document and enter my comm message, it gives an error on the display but it disappears too fast to read. No scans have arrived in my inbox.\n\nWe have Interstellar Safety Inspectors arriving in 1 hour and they need access to these systems. This cannot wait.",
         "reporter": {
             "name": "Carlos Novak",
             "email": "carlos.novak@cdss.space",
@@ -102,7 +102,7 @@
     {
         "ticket_id": "SIG-1008",
         "subject": "Can't do anything — welcome baby announcement",
-        "description": "Huge congrats to Sarah on her well-deserved promotion to Senior Director! 🎉 Join us for a celebration lunch this Friday at noon in the main briefing chamber. RSVP to Maria.\n\nOne more thing — the shared fabricator on Deck 2 has been jamming constantly. I know it's not related but maybe the same person can look at both? This has been happening for a while. Please fix it.",
+        "description": "Huge congrats to Sarah on her well-deserved promotion to Senior Director! 🎉 Join us for a celebration in the zero-g recreation lounge this Friday at noon — the nutrient synthesizer is doing its best impression of cake. RSVP to Maria.\n\nOne more thing — the shared fabricator on Deck 2 has been jamming constantly. I know it's not related but maybe the same person can look at both? This has been happening for a while. Please fix it.",
         "reporter": {
             "name": "Deepika Clark",
             "email": "deepika.clark@cdss.space",
@@ -270,7 +270,7 @@
     {
         "ticket_id": "SIG-1020",
         "subject": "Issue with my same login error",
-        "description": "This is the third time I've had this authentication issue. There's a previous signal somewhere in the system — the last tech said it was a known problem with my account. I keep getting 'Authentication failed' but no details about what specifically is failing. Can someone look up my history and figure out the root cause this time? I'm not sure what else to tell you. It just doesn't work.",
+        "description": "This is the third time I've had this authentication issue. There's a previous signal somewhere in the system — the last tech said it was a known problem with my account. I keep getting 'Authentication failed' but no details about what specifically is failing. I've been locked out for two hours now and had to ask a colleague to badge me through the airlock to Mission Planning because my biometric scan won't even open the corridor hatch anymore. Can someone look up my history and figure out the root cause this time? I'm not sure what else to tell you. It just doesn't work.",
         "reporter": {
             "name": "Yara Ito",
             "email": "yara.ito@cdss.space",
@@ -515,7 +515,7 @@
     {
         "ticket_id": "SIG-1037",
         "subject": "relay token not being cached — need to log in repeatedly",
-        "description": "Every time I open my console terminal lid or switch networks, the encrypted relay disconnects and asks me to re-enter my full credentials including biometric verification. Before the recent policy change it used to remember me for the whole day. This is happening to others on my team too.\n\nAttached:\n- error_log_90.txt\n- screenshot_before.png\n- screenshot_after.png\n\nThe screenshots show the state before and after the error occurs.",
+        "description": "Every time I open my console terminal lid or switch networks, the encrypted relay disconnects and asks me to re-enter my full credentials including biometric verification. Before the recent policy change it used to remember me for the whole day. This is happening to others on my team too. Typing a 24-character passphrase while floating in zero-g every 30 minutes is not my idea of productivity.\n\nAttached:\n- error_log_90.txt\n- screenshot_before.png\n- screenshot_after.png\n\nThe screenshots show the state before and after the error occurs.",
         "reporter": {
             "name": "Miriam Rodriguez",
             "email": "miriam.rodriguez@cdss.space",
@@ -704,7 +704,7 @@
     {
         "ticket_id": "SIG-1050",
         "subject": "Display flickering — screenshots inline",
-        "description": "Hi Mission Ops,\n\nMy display keeps flickering. Screenshots:\n\nScreenshot 1:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAABHNdata manifestU83LnNpZ25hdHVyZSBoZXJlIGlzIGEgdGVzdCBiYXNlNjQgZW5jb2RlZCBpbWFnZSBkYXRhIHRoYXQgaXMgbm90IGFjdHVhbGx5IGFSZWFsIGltYWdlIGJ1dCBzaW11bGF0ZXMgYSBsYXJnZSBwYXN0ZWQgc2NyZWVuc2hvdCBpbiBhbiBlbWFpbCBib2R5==\n\nScreenshot 2:\ndata:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpFAKEBASE64SECONDSCREENSHOTBLOCKWITHENCODEDIMAGEDATA==\n\nScreenshot 3:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABmJLR0QA/wD/AP+gvaeTFAKEBASE64THIRDBLOCKMORE==\n\nThe display is a NovaTech NV-2722 via data conduit through a QuantumDyne QD-X1 data port console dock. Flickers every 5-10 seconds. Fatima",
+        "description": "Hi Mission Ops,\n\nMy display keeps flickering — it's like watching a pulsar through a dirty viewport. Screenshots:\n\nScreenshot 1:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAABHNdata manifestU83LnNpZ25hdHVyZSBoZXJlIGlzIGEgdGVzdCBiYXNlNjQgZW5jb2RlZCBpbWFnZSBkYXRhIHRoYXQgaXMgbm90IGFjdHVhbGx5IGFSZWFsIGltYWdlIGJ1dCBzaW11bGF0ZXMgYSBsYXJnZSBwYXN0ZWQgc2NyZWVuc2hvdCBpbiBhbiBlbWFpbCBib2R5==\n\nScreenshot 2:\ndata:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpFAKEBASE64SECONDSCREENSHOTBLOCKWITHENCODEDIMAGEDATA==\n\nScreenshot 3:\ndata:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABmJLR0QA/wD/AP+gvaeTFAKEBASE64THIRDBLOCKMORE==\n\nThe display is a NovaTech NV-2722 via data conduit through a QuantumDyne QD-X1 data port console dock. Flickers every 5-10 seconds. Fatima",
         "reporter": {
             "name": "Henrik Ito",
             "email": "henrik.ito@cdss.space",
@@ -940,7 +940,7 @@
     {
         "ticket_id": "SIG-1066",
         "subject": "Tactical Ops Console reports not loading — spinning wheel",
-        "description": "Tactical Ops Console reports have been failing to load all morning. I click on any report and it just shows a spinning wheel indefinitely. Dashboards are also affected. I can still navigate to individual records but any report or dashboard is broken. My team in Tactical Operations relies on these reports for daily tactical coordination.",
+        "description": "Tactical Ops Console reports have been failing to load all morning. I click on any report and it just shows a spinning wheel indefinitely. Dashboards are also affected. I can still navigate to individual records but any report or dashboard is broken. My team in Tactical Operations relies on these reports for daily threat assessment and patrol coordination — we've got a debris field approaching from the port bow and we're literally flying blind without our sensor summary dashboards.",
         "reporter": {
             "name": "Diana White",
             "email": "diana.white@cdss.space",
@@ -1005,7 +1005,7 @@
     {
         "ticket_id": "SIG-1071",
         "subject": "data port hub causing core faults — had a signal before",
-        "description": "My console terminal keeps getting system crashes that I believe are caused by my data port hub. It only seems to happen when teh hub is connected, but I can't pin down how often — sometimes it's fine for days, other times it crashes twice in one morning. I reported this same issue a couple of months ago and someone looked at it but I don't have the signal number anymore. I didn't write down the exact error code from the system crash — it flashes too quickly. Alpha Station, Quantitative Research team.",
+        "description": "My console terminal keeps getting system crashes that I believe are caused by my data port hub. It only seems to happen when teh hub is connected, but I can't pin down how often — sometimes it's fine for days, other times it crashes twice in one morning. I reported this same issue a couple of months ago and someone looked at it but I don't have the signal number anymore. I didn't write down the exact error code from the system crash — it flashes too quickly — by the time I stop spinning from the crash reboot in zero-g, the error is gone. Alpha Station, Quantitative Research team.",
         "reporter": {
             "name": "Zachary Hall",
             "email": "zachary.hall@cdss.space",
@@ -1125,7 +1125,7 @@
     {
         "ticket_id": "SIG-1079",
         "subject": "deck mesh network keeps dropping",
-        "description": "\n\n\n\t\t\tHello,\n\n\n\n\n\t\t\tI can't stay connected to the deck mesh network.\n\n\n\t\t\tIt drops every hour or so and I lose my encrypted relay.\n\n\n\n\n\n\t\t\tI'm on Station OS 10 and using the built-in deck mesh network adapter.\n\n\n\n\n\n\n\t\t\tPlease help.\n\n\n\n\n",
+        "description": "\n\n\n\t\t\tHello,\n\n\n\n\t\t\tI can't stay connected to the deck mesh network.\n\n\t\t\tIt drops every hour or so and I lose my encrypted relay.\n\n\n\n\t\t\tI'm on Station OS 10 and using the built-in deck mesh network adapter.\n\n\t\t\tThe signal seems to cut out whenever the gravity generators cycle.\n\n\n\n\n\t\t\tPlease help.\n\n\n\n\n",
         "reporter": {
             "name": "James Brown",
             "email": "james.brown@cdss.space",
