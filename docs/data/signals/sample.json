@@ -180,7 +180,7 @@
     {
         "ticket_id": "SIG-0014",
         "subject": "thanks!",
-        "description": "got it working, appreciate the quick turnaround. you folks are the best!! 🎉 honestly faster than the nutrient synthesizer makes coffee and infinitely more reliable — the synthesizer has been dispensing what it calls 'coffee' but what the crew calls 'warm brown sadness' since the last firmware update. safe travels through the void! if I could give you a protein cube I would, but you'd probably prefer not to receive one.",
+        "description": "got it working, appreciate the quick turnaround. you folks are the best!! 🎉 honestly faster than the nutrient synthesizer makes coffee and infinitely more reliable. the synthesizer is still dispensing what it claims is 'mocha' but tastes like someone dissolved a datapad battery in warm water and added a prayer. anyway, the BioAuth panel on Deck 4 is working perfectly now. you fixed it so fast the Deck 9 cat didn't even have time to sit on the console and take credit. which it would have. it ALWAYS takes credit.",
         "reporter": {
             "name": "Mike Torres",
             "email": "mike.torres@cdss.space",
@@ -273,7 +273,7 @@
     {
         "ticket_id": "SIG-0021",
         "subject": "How do I book a briefing room?",
-        "description": "Hi, I just arrived on station last week and I need to book the large briefing room on Deck 4 for a crew gathering on Friday. I looked in SubComm but I can't figure out how to reserve it. Is there a specific system or do I need to challenge the current occupant to zero-g combat? (That was a joke. Mostly.) Also, is there a way to arrange catering through the station? Not from the nutrient synthesizer — real food, if such a thing exists at 0.3 AU. The orientation guide mentioned a catering service but the page it linked to just showed a picture of a protein cube with the caption 'improvise, adapt, overcome.' I'm hoping that's outdated.",
+        "description": "Hi, I just arrived on station last week and I need to book the large briefing room on Deck 4 for a crew gathering on Friday. I looked in SubComm but I can't find a room booking feature anywhere. My section chief said 'use the room booking system' but couldn't tell me where it is or what it's called, which is exactly the kind of helpful guidance that keeps Mission Ops signals flowing. Is there a specific tool or portal I should be using? I've checked the station wiki but the wiki's search function returns results with the confidence of a Stellar Cartography intern plotting a course through an asteroid field blindfolded. Any pointers appreciated — and by 'pointers' I mean actual directions, not the floating laser pointer from the War Room that everyone's been trying to catch for three weeks.",
         "reporter": {
             "name": "Chris Taylor",
             "email": "chris.taylor@cdss.space",

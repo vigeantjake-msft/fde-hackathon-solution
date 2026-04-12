@@ -800,6 +800,7 @@ def _run_scored(signals: list[dict], gold_path: Path, endpoint: str) -> int:
     print("  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     print("  « All stations — scoring run initiated. This is not a drill. »")
     print("  « The math is real. The void is watching. The cat is judging. »")
+    print("  « Titan Outpost's last scoring run is why we have this system. »")
     print()
     print(f"  Incoming signals:  {len(signals)}")
     print(f"  Gold answers:      {len(golds)}")
@@ -823,8 +824,8 @@ def _run_scored(signals: list[dict], gold_path: Path, endpoint: str) -> int:
     # ── Score each signal ─────────────────────────────────────────────
     print("  ⚡ Transmitting signals to triage endpoint... stand by for contact.")
     print("  (Every signal is a life-or-death decision. Or a protein cube complaint.")
-    print("   The scoring computer doesn't know which until it reads the gold answer.")
-    print("   It processes both with equal, terrifying precision.)")
+    print("   Or the Deck 9 cat sitting on a console again. The scoring computer")
+    print("   processes all three with equal, terrifying mathematical precision.)")
     print()
     results: list[dict] = []
     responses: list[dict] = []
@@ -936,23 +937,47 @@ def _print_dimension_commentary(dim_scores: dict[str, float]) -> None:
     Because numbers without opinions are just... numbers floating
     in the void, signifying nothing.
     """
-    if dim_scores["category"] < 0.5:
+    if dim_scores["category"] >= 0.9:
+        print("    ✦ Category: Anomaly classification is surgical. Your system distinguishes")
+        print("      hull breaches from protein cube complaints like Mehta distinguishes")
+        print("      genuine emergencies from Ensign Torres's weekly lockout drama.")
+    elif dim_scores["category"] < 0.5:
         print("    ⚠ Category: Your system confuses anomaly types like a cadet who thinks")
         print("      every warning light means 'hull breach.' Threat Response just got")
         print("      dispatched to a nutrient synthesizer jam. They are armed. And annoyed.")
-    if dim_scores["priority"] < 0.5:
+
+    if dim_scores["priority"] >= 0.9:
+        print("    ✦ Priority: Threat assessment is on point. You correctly identified that")
+        print("      'URGENT!!!' usually means 'mild inconvenience' and 'probably nothing'")
+        print("      means 'the deck is depressurizing.' Exclamation points: decoded.")
+    elif dim_scores["priority"] < 0.5:
         print("    ⚠ Priority: You rated a hull breach as Routine and a protein cube shortage")
         print("      as Red Alert. The crew is evacuating Deck 3 over a seasoning error while")
         print("      actual vacuum seeps through Deck 7. Recalibrate your threat model.")
-    if dim_scores["routing"] < 0.5:
+
+    if dim_scores["routing"] >= 0.9:
+        print("    ✦ Routing: Signals reaching the right teams like a precision-guided probe.")
+        print("      Deep Space Comms gets comms issues. Threat Response gets threats. Nobody")
+        print("      is staring at a fabricator jam wondering why Security was summoned.")
+    elif dim_scores["routing"] < 0.5:
         print("    ⚠ Routing: Signals arriving at the wrong teams like a malfunctioning")
         print("      turbolift that exclusively visits decks where the problem isn't. Deep")
         print("      Space Comms just received a containment breach. They have questions.")
-    if dim_scores["missing_info"] < 0.5:
+
+    if dim_scores["missing_info"] >= 0.9:
+        print("    ✦ Missing info: Intel requests are precise. You ask for exactly what's")
+        print("      missing — no more, no less. The crew appreciates not being interrogated")
+        print("      about things they already told you. Their patience is finite. So is oxygen.")
+    elif dim_scores["missing_info"] < 0.5:
         print("    ⚠ Missing info: Either demanding data the signal already provided (the crew")
         print("      can hear you asking their name from 0.3 AU away, and they are not amused)")
         print("      or missing critical gaps like 'which deck is currently on fire.'")
-    if dim_scores["escalation"] < 0.5:
+
+    if dim_scores["escalation"] >= 0.9:
+        print("    ✦ Escalation: Commander Kapoor sleeps through the night undisturbed by")
+        print("      false alarms, and wakes precisely when actual threats materialize.")
+        print("      This is the dream. The Admiral is satisfied. Mehta almost smiles.")
+    elif dim_scores["escalation"] < 0.5:
         print("    ⚠ Escalation: Missing real emergencies or crying wolf on routine maintenance.")
         print("      Commander Kapoor was woken at 0300 for a font rendering issue, and slept")
         print("      through an actual hostile contact. She has opinions about this. Strong ones.")
@@ -1009,16 +1034,22 @@ def _print_closing_message(functional_accuracy: float) -> None:
         print("  Commander Kapoor has added your name to the 'Do Not Jettison' list.")
         print("  The Deck 9 cat would headbutt your ankle approvingly, if it weren't")
         print("  a cat, and therefore above such displays of affection. But you'd know.")
+        print("  Somewhere on Deck 7, the atmospheric processor smells slightly less")
+        print("  like burnt toast. Correlation is not causation, but we're taking it.")
     elif functional_accuracy >= 65:
         print("  End of scoring run. Solid work, operator.")
         print("  The scoring computer has processed your results with something that,")
         print("  if it had emotions, might be described as 'grudging respect.'")
         print("  It does not have emotions. But the numbers speak. And they're decent.")
+        print("  Mehta will review these results with the kind of careful attention")
+        print("  he usually reserves for margin notes about the Deck 3 fabricator.")
     elif functional_accuracy >= 50:
         print("  End of scoring run. The void awaits your next attempt.")
         print("  May the scoring computer be less merciless next time. (It won't be.)")
         print("  The protein cubes wish you luck. They are the only ones who do.")
         print("  Mehta has left a sticky note on your file: 'shows promise, needs work.'")
+        print("  The Deck 9 cat has seen better scores. The Deck 9 cat has PRODUCED")
+        print("  better scores, by walking across a console at the right moment.")
     else:
         print("  End of scoring run. The void has formed opinions about your submission.")
         print("  Mehta recommends re-reading the routing guide. All of it. Twice. Out loud.")
@@ -1026,6 +1057,8 @@ def _print_closing_message(functional_accuracy: float) -> None:
         print("  of the observation deck, contemplating the cosmic indifference of F1 scores,")
         print("  before trying again. The Titan Outpost had better scores. They're an")
         print("  asteroid field now, but at least they could route a hull breach correctly.")
+        print("  The escaped Exobiology specimen in hydroponics is judging you. It's a plant.")
+        print("  It's judging you. Let that sink in. Then fix your system.")
 
 
 if __name__ == "__main__":

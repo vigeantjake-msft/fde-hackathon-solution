@@ -28,11 +28,11 @@
         ],
         "next_best_action": "Investigate whether SubComm crash and phantom calendar entries are related to the console migration — in zero-g, data migration issues tend to float around until someone pins them down. Verify that crew profile and application data were properly transferred.",
         "remediation_steps": [
-            "Verify console provisioning and station data migration completed successfully — check for orphaned profiles from the old hardware",
-            "Clear SubComm cache and reinstall if the crash persists after clearing — ghost calendar entries from 2024 shouldn't survive a fresh install",
-            "Check SubComm profile migration status and force calendar resync to purge phantom briefings (especially the Deck 9 Cat Containment Protocol — that one's been resolved)",
-            "Confirm application versions match the station's supported standard image",
-            "If issues persist after cache clear and resync, re-provision applications on the new console — sometimes a clean slate is the only cure for haunted software"
+            "Verify console provisioning and station data migration completed successfully — check for orphaned profiles from the old hardware. In zero-g, orphaned data tends to drift between systems like a confused crew member who forgot which deck they're assigned to",
+            "Clear SubComm cache and reinstall if the crash persists after clearing — ghost calendar entries from 2024 shouldn't survive a fresh install. If they do, the software may be haunted. Station Ops does not officially acknowledge haunted software, but we all know about the Deck 11 thermostat",
+            "Check SubComm profile migration status and force calendar resync to purge phantom briefings — especially the 'Emergency: Deck 9 Cat Containment Protocol' which was resolved when Exobiology caught all six escapees. Five of the six. We caught five. The sixth one adapted. It's a long story",
+            "Confirm application versions match the station's supported standard image — version mismatches in space are like wearing the wrong spacesuit to an EVA: technically you're dressed, but things will go wrong in surprising and uncomfortable ways",
+            "If issues persist after cache clear and resync, re-provision applications on the new console — sometimes a clean slate is the only cure for haunted software, much like how the only cure for the Deck 7 atmospheric processor smell is 'patience and denial'"
         ]
     },
     {
@@ -69,10 +69,10 @@
         ],
         "next_best_action": "Contact crew member to gather specifics: which subsystems are inaccessible, what anomaly readouts appear, what console they are using, and when the issue started. Cannot triage effectively without more detail. The protein cube complaint is noted but falls outside our jurisdiction.",
         "remediation_steps": [
-            "Contact crew member to gather specific details — 'nothing works' and 'everything is down' are statements of emotion, not diagnostic data",
-            "Determine which subsystems and applications are actually affected (vs. which are being blamed by a distressed crew member who hasn't had correctly flavored protein cubes)",
-            "Check if the issue is isolated to this crew member or affecting others in Stellar Cartography",
-            "Once root cause is identified, route to the appropriate specialist team — and maybe mention the protein cube issue to Station Facilities, separately"
+            "Contact crew member to gather specific details — 'nothing works' and 'everything is down' are statements of existential crisis, not diagnostic data. In space, existential crises are common. Diagnostic data is not. We need the second one",
+            "Determine which subsystems and applications are actually affected vs. which are being blamed by a distressed crew member who hasn't had correctly flavored protein cubes — the gravitational pull of frustration distorts all perception, especially at 0.3 AU from the nearest competent café",
+            "Check if the issue is isolated to this crew member or affecting others in Stellar Cartography — if the whole department is down, it's a systems issue; if it's just this crew member, they may have achieved a previously theoretical state of 'maximum user error in zero-g'",
+            "Once root cause is identified, route to the appropriate specialist team — and diplomatically mention the protein cube situation to Station Facilities, separately, because the nutrient synthesizer dispensing exclusively lime is a morale hazard that the void itself would find excessive"
         ]
     },
     {
