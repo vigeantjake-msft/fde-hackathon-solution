@@ -475,7 +475,8 @@ def main() -> int:
         "--gold",
         default=None,
         help="Path to the gold answers JSON file. If not provided, "
-        "looks for a file named <dataset>_gold.json next to the dataset.",
+        "looks for a file named <dataset>_gold.json next to the dataset. "
+        "If no gold file is found, runs in smoke-test mode (no scoring).",
     )
     args = parser.parse_args()
 
@@ -487,21 +488,272 @@ def main() -> int:
 
     signals = json.loads(dataset_path.read_text())
 
-    # Resolve gold file
+    # Resolve gold file — if no gold answers exist, run in smoke-test mode
+    gold_path: Path | None = None
     if args.gold:
         gold_path = Path(args.gold)
-    else:
-        stem = dataset_path.stem
-        gold_path = dataset_path.parent / f"{stem}_gold.json"
         if not gold_path.exists():
             print(f"  ✗ Gold answer archive not found: {gold_path}")
-            print("  Provide --gold explicitly or ensure <dataset>_gold.json exists.")
             return 1
+    else:
+        candidate = dataset_path.parent / f"{dataset_path.stem}_gold.json"
+        if candidate.exists():
+            gold_path = candidate
 
-    if not gold_path.exists():
-        print(f"  ✗ Gold answer archive not found: {gold_path}")
-        return 1
+    if gold_path is not None:
+        return _run_scored(signals, gold_path, args.endpoint)
+    return _run_smoke_test(signals, args.endpoint)
 
+
+# ── Smoke-test mode (no gold answers) ────────────────────────────────
+# When no gold file is available, we still send every signal to the
+# endpoint and validate that responses come back intact, correctly
+# shaped, and without the kind of explosions that make the Admiral
+# write memos. No scoring — just survival checks.
+
+_CATEGORY_SET = {_normalize(c) for c in CATEGORIES}
+_TEAM_SET = {_normalize(t) for t in TEAMS}
+_PRIORITY_SET = {"p1", "p2", "p3", "p4"}
+_MISSING_INFO_SET = {
+    "affected_subsystem",
+    "anomaly_readout",
+    "sequence_to_reproduce",
+    "affected_crew",
+    "habitat_conditions",
+    "stardate",
+    "previous_signal_id",
+    "crew_contact",
+    "module_specs",
+    "software_version",
+    "sector_coordinates",
+    "mission_impact",
+    "recurrence_pattern",
+    "sensor_log_or_capture",
+    "biometric_method",
+    "system_configuration",
+}
+_REQUIRED_FIELDS = {
+    "ticket_id",
+    "category",
+    "priority",
+    "assigned_team",
+    "needs_escalation",
+    "missing_information",
+    "next_best_action",
+    "remediation_steps",
+}
+
+
+def _validate_response(pred: dict, signal_id: str) -> list[str]:
+    """Validate a triage response against the output schema.
+
+    Returns a list of schema violations. Empty list = all clear.
+    The void demands compliance. The schema demands completeness.
+    """
+    issues: list[str] = []
+
+    missing_fields = _REQUIRED_FIELDS - set(pred.keys())
+    if missing_fields:
+        issues.append(f"missing fields: {', '.join(sorted(missing_fields))}")
+
+    if "category" in pred and _normalize(str(pred["category"])) not in _CATEGORY_SET:
+        issues.append(f"invalid category: '{pred['category']}'")
+
+    if "priority" in pred:
+        p = str(pred["priority"]).strip().lower()
+        if p not in _PRIORITY_SET:
+            issues.append(f"invalid priority: '{pred['priority']}'")
+
+    if "assigned_team" in pred and _normalize(str(pred["assigned_team"])) not in _TEAM_SET:
+        issues.append(f"invalid team: '{pred['assigned_team']}'")
+
+    if "needs_escalation" in pred and not isinstance(pred["needs_escalation"], (bool, str, int)):
+        issues.append(f"needs_escalation not boolean-coercible: {type(pred['needs_escalation']).__name__}")
+
+    if "missing_information" in pred:
+        mi = pred["missing_information"]
+        if not isinstance(mi, list):
+            issues.append(f"missing_information not a list: {type(mi).__name__}")
+        else:
+            invalid_terms = [t for t in mi if _normalize(str(t)) not in _MISSING_INFO_SET]
+            if invalid_terms:
+                issues.append(f"invalid missing_info terms: {invalid_terms[:3]}")
+
+    if "remediation_steps" in pred:
+        rs = pred["remediation_steps"]
+        if not isinstance(rs, list):
+            issues.append(f"remediation_steps not a list: {type(rs).__name__}")
+        elif not rs:
+            issues.append("remediation_steps is empty")
+
+    if "ticket_id" in pred and str(pred["ticket_id"]) != signal_id:
+        issues.append(f"ticket_id mismatch: expected '{signal_id}', got '{pred['ticket_id']}'")
+
+    return issues
+
+
+def _run_smoke_test(signals: list[dict], endpoint: str) -> int:
+    """Run in smoke-test mode — no gold answers, just survival checks.
+
+    Like a hull integrity scan: no score, but you'll know exactly
+    where the cracks are before the void finds them for you.
+    """
+    print()
+    print("  🛰️  CONTOSO DEEP SPACE STATION — SMOKE TEST  🛰️")
+    print("  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print()
+    print(f"  Incoming signals:  {len(signals)}")
+    print("  Gold answers:      — (smoke test — no scoring, just survival)")
+    print(f"  Target endpoint:   {endpoint}")
+    print()
+    print("  ⚠ No gold file detected. Running in SMOKE TEST mode.")
+    print("  This checks for crashes, timeouts, and schema violations —")
+    print("  the kind of problems that turn a promising triage system into")
+    print("  a cautionary tale whispered between decks at 0300 station time.")
+    print()
+
+    client = httpx.Client()
+    healthy = check_health(client, endpoint)
+    if healthy:
+        status = "✓ LIFE SIGNS DETECTED — the station breathes. The Deck 9 cat approves."
+    else:
+        status = "✗ NO LIFE SIGNS — FLATLINE — your service is as responsive as a frozen crewmate"
+    print(f"  Health check: {status}")
+    if not healthy:
+        print("  ⚠ Warning: GET /health did not return 200. Proceeding anyway...")
+        print("  (The smoke test is brave. Or indifferent. Like the nutrient synthesizer.)")
+    print()
+
+    print("  Transmitting signals... stand by for contact.")
+    print("  (No scoring — just checking if your system survives first contact")
+    print("   with signals it's never seen. Like a hull integrity test, but for code.)")
+    print()
+
+    latencies: list[float] = []
+    transport_errors = 0
+    schema_violations = 0
+    per_signal_results: list[dict] = []
+
+    for signal in signals:
+        tid = signal["ticket_id"]
+        pred, elapsed_ms = call_endpoint(client, endpoint, signal)
+        latencies.append(elapsed_ms)
+
+        if pred is None:
+            transport_errors += 1
+            per_signal_results.append({"ticket_id": tid, "status": "error", "latency_ms": round(elapsed_ms, 0)})
+            continue
+
+        issues = _validate_response(pred, tid)
+        if issues:
+            schema_violations += 1
+            print(f"  {tid}  ⚠ SCHEMA — {'; '.join(issues)}  {elapsed_ms:.0f}ms")
+            per_signal_results.append(
+                {
+                    "ticket_id": tid,
+                    "status": "schema_violation",
+                    "issues": issues,
+                    "latency_ms": round(elapsed_ms, 0),
+                }
+            )
+        else:
+            print(f"  {tid}  ✓ valid  {elapsed_ms:.0f}ms")
+            per_signal_results.append({"ticket_id": tid, "status": "ok", "latency_ms": round(elapsed_ms, 0)})
+
+    client.close()
+
+    n_total = len(signals)
+    n_ok = n_total - transport_errors - schema_violations
+
+    # Latency stats
+    sorted_latencies = sorted(latencies)
+    p50 = sorted_latencies[len(sorted_latencies) // 2] if sorted_latencies else 0
+    p95_idx = min(int(len(sorted_latencies) * 0.95), len(sorted_latencies) - 1) if sorted_latencies else 0
+    p95 = sorted_latencies[p95_idx] if sorted_latencies else 0
+
+    print()
+    print("  ╔═══════════════════════════════════════════════════════════╗")
+    print("  ║  🛰️  SMOKE TEST REPORT — HULL INTEGRITY SCAN            ║")
+    print("  ╚═══════════════════════════════════════════════════════════╝")
+    print()
+    print(f"  Signals transmitted:     {n_total}")
+    print(f"  Valid responses:         {n_ok}")
+    if transport_errors:
+        print(f"  Transport errors:        {transport_errors}  ← signals lost to the void")
+    if schema_violations:
+        print(f"  Schema violations:       {schema_violations}  ← responses the scoring computer would reject")
+    print()
+    print(f"  Latency:  p50={p50:.0f}ms   p95={p95:.0f}ms")
+    if p50 > 2000:
+        print("    ⚠ p50 > 2000ms — your system responds slower than a cryo-sleep wake-up.")
+        print("      The scoring run uses 30s timeouts. At this pace, the void will time you out.")
+    elif p50 > 200:
+        print(f"    ⚠ p50={p50:.0f}ms — above the 200ms ideal. The crew is tapping their boots.")
+    else:
+        print("    ✓ Latency looking sharp. The crew barely has time to worry.")
+    print()
+
+    print("  ┌─────────────────────────────────────────────────────────────┐")
+    print("  │  This was a SMOKE TEST — no classification scores.         │")
+    print("  │  To see scores, run against sample.json with gold answers. │")
+    print("  │                                                            │")
+    if transport_errors == 0 and schema_violations == 0:
+        print("  │  Status: 🟢 All clear — hull integrity confirmed.         │")
+        print("  │  Every signal got a valid response. No crashes, no schema  │")
+        print("  │  violations, no mysterious explosions. The Deck 9 cat is   │")
+        print("  │  cautiously optimistic. Mehta is cautiously Mehta.         │")
+    elif transport_errors == 0 and schema_violations <= n_total * 0.1:
+        print("  │  Status: 🟡 Minor hull stress — a few schema issues.      │")
+        print("  │  No crashes, but some responses don't match the schema.    │")
+        print("  │  Fix these before submission or the scoring computer will  │")
+        print("  │  score them as zeroes. It has no sympathy. Like asteroids. │")
+    elif transport_errors <= n_total * 0.1:
+        print("  │  Status: 🟠 Hull damage detected — errors found.          │")
+        print("  │  Some signals didn't survive first contact. The hidden     │")
+        print("  │  set has 1000+ signals. Multiply these problems by 10x.   │")
+        print("  │  The Admiral notices patterns. Especially bad patterns.    │")
+    else:
+        print("  │  Status: 🔴 Critical hull failure — major errors.         │")
+        print("  │  Your system is venting atmosphere. Figuratively. But the  │")
+        print("  │  scoring run will be even less forgiving. Recommend full   │")
+        print("  │  system diagnostic before submission. The Titan Outpost    │")
+        print("  │  had better uptime. And they're a debris field now.        │")
+    print("  └─────────────────────────────────────────────────────────────┘")
+    print()
+
+    # Write results
+    output = {
+        "mode": "smoke_test",
+        "signals_total": n_total,
+        "signals_ok": n_ok,
+        "transport_errors": transport_errors,
+        "schema_violations": schema_violations,
+        "latency_p50_ms": round(p50, 0),
+        "latency_p95_ms": round(p95, 0),
+        "per_signal": per_signal_results,
+    }
+    output_path = Path("eval_results.json")
+    output_path.write_text(json.dumps(output, indent=2) + "\n")
+    print(f"  📡 Results transmitted to {output_path}")
+    print()
+    if transport_errors == 0 and schema_violations == 0:
+        print("  Smoke test complete. All systems nominal.")
+        print("  Now run against sample.json with gold answers for actual scores.")
+        print("  The scoring computer awaits. It is patient. It is eternal. It is math.")
+    else:
+        print("  Smoke test complete. Issues detected.")
+        print("  Fix the errors above, then re-run. The void is patient,")
+        print("  but the submission deadline is not.")
+    print()
+
+    return 0
+
+
+# ── Scored mode (with gold answers) ──────────────────────────────────
+
+
+def _run_scored(signals: list[dict], gold_path: Path, endpoint: str) -> int:
+    """Run full scoring against gold answers — the real deal."""
     golds = json.loads(gold_path.read_text())
     gold_by_id = {g["ticket_id"]: g for g in golds}
 
@@ -519,12 +771,12 @@ def main() -> int:
     print()
     print(f"  Incoming signals:  {len(signals)}")
     print(f"  Gold answers:      {len(golds)}")
-    print(f"  Target endpoint:   {args.endpoint}")
+    print(f"  Target endpoint:   {endpoint}")
     print()
 
     # ── Health check ──────────────────────────────────────────────────
     client = httpx.Client()
-    healthy = check_health(client, args.endpoint)
+    healthy = check_health(client, endpoint)
     if healthy:
         status = "✓ LIFE SIGNS DETECTED — the station breathes. The Deck 9 cat approves."
     else:
@@ -549,7 +801,7 @@ def main() -> int:
         tid = signal["ticket_id"]
         gold = gold_by_id[tid]
 
-        pred, elapsed_ms = call_endpoint(client, args.endpoint, signal)
+        pred, elapsed_ms = call_endpoint(client, endpoint, signal)
         latencies.append(elapsed_ms)
 
         if pred is None:
@@ -609,6 +861,47 @@ def main() -> int:
     print()
 
     # Dimension-specific commentary — because numbers without opinions are just... numbers
+    _print_dimension_commentary(dim_scores)
+    print()
+    print("  Efficiency dimensions (max 15 pts, scored by platform):")
+    print()
+    print(f"    latency           p50={p50:.0f}ms  p95={p95:.0f}ms  (10% weight)")
+    print("    cost              from response headers     (5% weight)")
+    print()
+    print(f"  Signals processed: {n_valid}/{n_total}")
+    if errors:
+        print(f"  Signals lost to the void: {errors} — the Deck 9 cat could have caught those")
+    print()
+    _print_status_box(classification_score)
+    print()
+
+    # ── Write JSON results ────────────────────────────────────────────
+    output = {
+        "classification_score": classification_score,
+        "dimension_scores": dim_scores,
+        "signals_scored": n_valid,
+        "signals_total": n_total,
+        "signals_errored": errors,
+        "latency_p50_ms": round(p50, 0),
+        "latency_p95_ms": round(p95, 0),
+        "per_signal": [{k: v for k, v in r.items() if k != "error"} for r in results],
+    }
+    output_path = Path("eval_results.json")
+    output_path.write_text(json.dumps(output, indent=2) + "\n")
+    print(f"  📡 Results transmitted to {output_path}")
+    print()
+    _print_closing_message(classification_score)
+    print()
+
+    return 0
+
+
+def _print_dimension_commentary(dim_scores: dict[str, float]) -> None:
+    """Print dimension-specific tactical advice.
+
+    Because numbers without opinions are just... numbers floating
+    in the void, signifying nothing.
+    """
     if dim_scores["category"] < 0.5:
         print("    ⚠ Category: Your system is misidentifying anomaly types like a crew member")
         print("      who calls every problem 'the holodeck is broken' regardless of what broke.")
@@ -624,16 +917,14 @@ def main() -> int:
     if dim_scores["escalation"] < 0.5:
         print("    ⚠ Escalation: Missing escalations or false alarms. One gets people hurt.")
         print("      The other wakes Commander Kapoor at 0300. Both have consequences.")
-    print()
-    print("  Efficiency dimensions (max 15 pts, scored by platform):")
-    print()
-    print(f"    latency           p50={p50:.0f}ms  p95={p95:.0f}ms  (10% weight)")
-    print("    cost              from response headers     (5% weight)")
-    print()
-    print(f"  Signals processed: {n_valid}/{n_total}")
-    if errors:
-        print(f"  Signals lost to the void: {errors} — the Deck 9 cat could have caught those")
-    print()
+
+
+def _print_status_box(classification_score: float) -> None:
+    """Print the final status box with score-appropriate commentary.
+
+    The box is fixed-width because even chaos should be well-formatted.
+    Commander Kapoor insists on presentation standards.
+    """
     print("  ┌─────────────────────────────────────────────────────────────┐")
     print("  │  Classification:  up to 85 pts from 5 scoring dimensions   │")
     print("  │  Efficiency:      up to 15 pts (latency + cost)            │")
@@ -661,23 +952,10 @@ def main() -> int:
         print("  │  She is 0.3 AU away and she is not patient.               │")
         print("  │  Even the Deck 9 cat is judging you. It has no thumbs.    │")
     print("  └─────────────────────────────────────────────────────────────┘")
-    print()
 
-    # ── Write JSON results ────────────────────────────────────────────
-    output = {
-        "classification_score": classification_score,
-        "dimension_scores": dim_scores,
-        "signals_scored": n_valid,
-        "signals_total": n_total,
-        "signals_errored": errors,
-        "latency_p50_ms": round(p50, 0),
-        "latency_p95_ms": round(p95, 0),
-        "per_signal": [{k: v for k, v in r.items() if k != "error"} for r in results],
-    }
-    output_path = Path("eval_results.json")
-    output_path.write_text(json.dumps(output, indent=2) + "\n")
-    print(f"  📡 Results transmitted to {output_path}")
-    print()
+
+def _print_closing_message(classification_score: float) -> None:
+    """Print the closing message — the last words before the void reclaims silence."""
     if classification_score >= 80:
         print("  End of scoring run. The void respects your engineering.")
         print("  Commander Kapoor has added your name to the 'Do Not Jettison' list.")
@@ -690,9 +968,6 @@ def main() -> int:
         print("  End of scoring run. The void has opinions about your submission.")
         print("  Mehta recommends re-reading the routing guide. All of it. Twice.")
         print("  The Titan Outpost had better scores. And they don't exist anymore.")
-    print()
-
-    return 0
 
 
 if __name__ == "__main__":

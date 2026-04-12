@@ -40,6 +40,7 @@ WEIGHTS = _mod.WEIGHTS
 CATEGORIES = _mod.CATEGORIES
 TEAMS = _mod.TEAMS
 _coerce_bool = _mod._coerce_bool
+_validate_response = _mod._validate_response
 binary_f1 = _mod.binary_f1
 macro_f1 = _mod.macro_f1
 score_category = _mod.score_category
@@ -971,6 +972,169 @@ def test_submission_all_categories_and_teams():
     assert result["classification_score"] == 85.0
     assert result["signals_scored"] == 8
     assert result["signals_errored"] == 0
+
+
+# ── Schema Validation (_validate_response) ──────────────────────────
+
+# The schema validator — the last line of defence before a garbled
+# triage response gets logged as "mission-critical" and wakes up
+# Threat Response Command at 0300 station time.
+
+
+def _make_valid_response(signal_id: str = "SIG-0001") -> dict:
+    """Build a fully-compliant triage response for validation tests."""
+    return {
+        "ticket_id": signal_id,
+        "category": "Crew Access & Biometrics",
+        "priority": "P2",
+        "assigned_team": "Crew Identity & Airlock Control",
+        "needs_escalation": False,
+        "missing_information": ["affected_subsystem"],
+        "next_best_action": "Run biometric recalibration",
+        "remediation_steps": ["Recalibrate scanner", "Log incident"],
+    }
+
+
+def test_validate_perfect_response():
+    """A textbook triage response should pass with zero issues."""
+    issues = _validate_response(_make_valid_response(), "SIG-0001")
+    assert issues == []
+
+
+def test_validate_missing_required_fields():
+    """Omitting required fields — the schema does not tolerate voids."""
+    pred = {"ticket_id": "SIG-0001", "category": "Crew Access & Biometrics"}
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("missing fields" in i for i in issues)
+
+
+def test_validate_invalid_category():
+    """Made-up anomaly types don't fly on this station."""
+    pred = _make_valid_response()
+    pred["category"] = "Space Hamster Containment"
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("invalid category" in i for i in issues)
+
+
+def test_validate_valid_category_case_insensitive():
+    """Category matching should be case-insensitive — the void doesn't care about caps."""
+    pred = _make_valid_response()
+    pred["category"] = "crew access & biometrics"
+    issues = _validate_response(pred, "SIG-0001")
+    assert not any("invalid category" in i for i in issues)
+
+
+def test_validate_invalid_priority():
+    """P5 is not a thing. P0 is not a thing. The schema says P1–P4."""
+    pred = _make_valid_response()
+    pred["priority"] = "P5"
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("invalid priority" in i for i in issues)
+
+
+@pytest.mark.parametrize("priority", ["P1", "P2", "P3", "P4"])
+def test_validate_all_valid_priorities(priority):
+    """All four priority levels should pass validation — no surprises."""
+    pred = _make_valid_response()
+    pred["priority"] = priority
+    issues = _validate_response(pred, "SIG-0001")
+    assert not any("invalid priority" in i for i in issues)
+
+
+def test_validate_invalid_team():
+    """Routing to a team that doesn't exist — classic rookie mistake."""
+    pred = _make_valid_response()
+    pred["assigned_team"] = "Deck 9 Cat Wrangling Division"
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("invalid team" in i for i in issues)
+
+
+def test_validate_escalation_non_coercible():
+    """A list for needs_escalation — creative, but wrong."""
+    pred = _make_valid_response()
+    pred["needs_escalation"] = [True, False]
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("not boolean-coercible" in i for i in issues)
+
+
+def test_validate_escalation_string_accepted():
+    """'true' as a string should not trigger a validation error — coercion handles it."""
+    pred = _make_valid_response()
+    pred["needs_escalation"] = "true"
+    issues = _validate_response(pred, "SIG-0001")
+    assert not any("not boolean-coercible" in i for i in issues)
+
+
+def test_validate_escalation_int_accepted():
+    """Integer 1 for escalation — pragmatic, accepted."""
+    pred = _make_valid_response()
+    pred["needs_escalation"] = 1
+    issues = _validate_response(pred, "SIG-0001")
+    assert not any("not boolean-coercible" in i for i in issues)
+
+
+def test_validate_missing_info_not_list():
+    """String instead of list for missing_information — the schema demands arrays."""
+    pred = _make_valid_response()
+    pred["missing_information"] = "affected_subsystem"
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("not a list" in i for i in issues)
+
+
+def test_validate_missing_info_invalid_terms():
+    """Invented vocabulary items — the lexicon is closed, participant."""
+    pred = _make_valid_response()
+    pred["missing_information"] = ["warp_core_flux", "dilithium_levels"]
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("invalid missing_info terms" in i for i in issues)
+
+
+def test_validate_missing_info_valid_terms():
+    """Known missing_information terms should pass without complaint."""
+    pred = _make_valid_response()
+    pred["missing_information"] = ["affected_subsystem", "anomaly_readout"]
+    issues = _validate_response(pred, "SIG-0001")
+    assert not any("missing_info" in i for i in issues)
+
+
+def test_validate_remediation_not_list():
+    """Remediation steps as a string — not a list, not acceptable."""
+    pred = _make_valid_response()
+    pred["remediation_steps"] = "Fix everything"
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("remediation_steps not a list" in i for i in issues)
+
+
+def test_validate_remediation_empty():
+    """Empty remediation steps — you can't fix nothing by doing nothing."""
+    pred = _make_valid_response()
+    pred["remediation_steps"] = []
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("remediation_steps is empty" in i for i in issues)
+
+
+def test_validate_ticket_id_mismatch():
+    """Returning a different signal ID than requested — identity crisis."""
+    pred = _make_valid_response("SIG-9999")
+    issues = _validate_response(pred, "SIG-0001")
+    assert any("ticket_id mismatch" in i for i in issues)
+
+
+def test_validate_multiple_issues():
+    """A truly botched response should accumulate multiple issues."""
+    pred = {
+        "ticket_id": "SIG-WRONG",
+        "category": "Imaginary Department",
+        "priority": "P99",
+        "needs_escalation": [1, 2, 3],
+        "missing_information": "not_a_list",
+        "remediation_steps": "not_a_list_either",
+    }
+    issues = _validate_response(pred, "SIG-0001")
+    # Should have at least: missing fields, invalid category, invalid priority,
+    # invalid team (missing), not boolean-coercible, missing_info not list,
+    # remediation not list, ticket_id mismatch
+    assert len(issues) >= 5
 
 
 # ── Runner ────────────────────────────────────────────────────────────
