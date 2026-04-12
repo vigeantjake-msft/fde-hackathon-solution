@@ -195,7 +195,7 @@
         "next_best_action": "Investigate biometric verification push approval failure in the Authenticator app. Check BioScan ID biometric verification registration status and recent policy changes. Crew member can continue with backup code fallback in the meantime.",
         "remediation_steps": [
             "Verify biometric verification registration status for this crew member in BioScan ID",
-            "Check for recent Conditional Access or biometric verification policy changes that may affect push notifications",
+            "Check for recent Station Access Protocol or biometric verification policy changes that may affect push notifications",
             "Have crew member verify Authenticator app is updated to the latest station-approved version",
             "If issue persists, remove and re-register the biometric verification method in BioScan ID",
             "Confirm push approval works after re-registration and test with a routine station authentication"
@@ -322,8 +322,8 @@
         "next_best_action": "Dispatch support to Deck 8 command war room immediately. Fleet Admiral-level VIP signal — treat as one priority level higher. Investigate SubComm sharing policy blocking screen share for this crew member. Active command briefing with allied fleet commanders.",
         "remediation_steps": [
             "Dispatch technician to the Deck 8 command war room immediately",
-            "Check Conditional Access and SubComm meeting policies applied to Carlos Martinez’s crew account",
-            "Verify whether the ‘Sharing is blocked by your station’s policy’ error is caused by a DLP policy, SubComm admin policy, or Conditional Access restriction",
+            "Check Station Access Protocol and SubComm meeting policies applied to Carlos Martinez’s crew account",
+            "Verify whether the ‘Sharing is blocked by your station’s policy’ error is caused by a Data Loss Prevention Grid policy, SubComm admin policy, or Station Access Protocol restriction",
             "As immediate workaround: have someone else share the tactical display on his behalf, or use the war room SubComm device with a different crew account",
             "Once the briefing is unblocked, investigate and resolve the underlying policy conflict"
         ]
@@ -363,7 +363,7 @@
             "Identify the fabricator model and check whether it is network-attached or connected via fabricator server",
             "Check fabricator server spooler service status and restart if necessary",
             "Verify network connectivity between the fabricator and the fabricator server or direct network path",
-            "If network-connected, check the fabricator’s IP address and network interface status",
+            "If network-connected, check the fabricator’s comms address and relay interface status",
             "Clear stuck fabrication queue and test with a fresh job"
         ]
     },
@@ -418,8 +418,8 @@
         "next_best_action": "Investigate workstation console performance degradation. Symptoms (slow performance, fans running, pop-ups about ‘updating system components’) are more consistent with a stuck ShipOS update or background ShipOS MDM policy compliance than malicious code, especially since SentinelGrid found nothing. Check update history and system resource usage.",
         "remediation_steps": [
             "Check ShipOS update history — verify whether recent updates completed or are stuck retrying",
-            "Review Task Manager for high CPU/disk processes (likely ShipOS Update or ShipOS MDM compliance)",
-            "If updates are stuck, run ShipOS Update troubleshooter or manually reset the update components",
+            "Review Console Process Monitor for high compute/storage load (likely ShipOS Update or ShipOS MDM compliance)",
+            "If updates are stuck, run ShipOS Update diagnostic suite or manually reset the update components",
             "Verify SentinelGrid definitions are current and run a quick scan to confirm no threats",
             "If the crew member opened a suspicious subspace message, forward the message to threats@cdss.space and notify Threat Response Command as a precaution"
         ]
