@@ -1,33 +1,33 @@
 # Dataset
 
-Synthetic tickets modeled on real enterprise IT support. They're messy on purpose.
+Synthetic signals modeled on deep-space station operations. They're messy on purpose.
 
 ## Structure
 
 ```
 data/
 ├── README.md                  # This file
-├── tickets/
-│   ├── sample.json            # 25 tickets for local development
+├── signals/
+│   ├── sample.json            # 25 signals for local development
 │   ├── sample_gold.json       # Gold-standard triage outputs for the sample set
-│   └── public_eval.json       # 100 tickets for pre-submission testing
+│   └── public_eval.json       # 100 signals for pre-submission testing
 └── schemas/
-    ├── input.json             # JSON Schema for ticket input
+    ├── input.json             # JSON Schema for signal input
     └── output.json            # JSON Schema for expected triage output
 ```
 
-## Ticket Format (Input)
+## Signal Format (Input)
 
-Each ticket has these fields:
+Each signal has these fields:
 
 | Field | Type | Description |
 |---|---|---|
-| `ticket_id` | string | Unique ID (e.g., `INC-4829`) |
+| `ticket_id` | string | Unique ID (e.g., `SIG-4829`) |
 | `subject` | string | Short summary. May be vague or misleading. |
-| `description` | string | Full ticket body. Quality varies wildly. |
+| `description` | string | Full signal body. Quality varies wildly. |
 | `reporter` | object | `{ name, email, department }` |
 | `created_at` | datetime | ISO 8601 timestamp |
-| `channel` | enum | `email`, `chat`, `portal`, or `phone` |
+| `channel` | enum | `subspace_relay`, `holodeck_comm`, `bridge_terminal`, or `emergency_beacon` |
 | `attachments` | string[] | Filenames mentioned (not actual files) |
 
 See [schemas/input.json](schemas/input.json) for the formal JSON Schema.
@@ -53,26 +53,26 @@ See [schemas/output.json](schemas/output.json) for the formal JSON Schema with a
 
 ## What to Expect
 
-The tickets include:
+The signals include:
 
-- **Clean tickets**: well-written, clear, all the details you need
-- **Vague tickets**: "system is down" with zero specifics
-- **Multi-issue tickets**: "can't login AND my monitor is flickering" (good luck picking one category)
-- **Hidden urgency**: no "URGENT" flag, but the body describes a production outage
+- **Clean signals**: well-written, clear, all the details you need
+- **Vague signals**: "reactor offline" with zero specifics
+- **Multi-issue signals**: "biometric scanner rejected me AND viewport display glitching" (good luck picking one category)
+- **Hidden urgency**: no "URGENT" flag, but the body describes a life support failure
 - **Missing info**: half the context you need isn't there
-- **Contradictions**: subject says "low priority", body says revenue is impacted
-- **Noise**: auto-replies, "thanks" messages, out-of-office, spam (these are "Not a Support Ticket", routed to "None")
-- **Jargon**: dense technical language that requires actually understanding IT support
-- **Ambiguous routing**: is an MFA issue Identity or Security? Depends on the context. (Sound familiar? Read the routing guide.)
+- **Contradictions**: subject says "low priority", body says hull integrity is compromised
+- **Noise**: auto-acknowledgments, "thanks" pings, cryo-sleep notices, solar noise (these are "Not a Mission Signal", routed to "None")
+- **Jargon**: dense technical language that requires actually understanding deep-space operations
+- **Ambiguous routing**: is an airlock biometric issue—Crew Identity or Threat Response? Depends on the context. (Sound familiar? Read the routing guide.)
 
-This is what real enterprise tickets look like. Your system needs to handle all of it.
+This is what real deep-space signals look like. Your system needs to handle all of it.
 
 ## Dataset Splits
 
-| Set | Tickets | Gold answers? | Purpose |
+| Set | Signals | Gold answers? | Purpose |
 |---|---|---|---|
 | **Sample** | 25 | Yes | Primary development loop, score locally |
 | **Public eval** | 100 | No | Pre-submission validation, checks for errors and timeouts |
 | **Hidden eval** | 1000+ | No (held back) | Final scoring, includes edge cases not in public data |
 
-> **Don't overfit.** The hidden set has ticket types you won't find in the public data. Build for robustness, not memorization.
+> **Don't overfit.** The hidden set has signal types you won't find in the public data. Build for robustness, not memorization.
