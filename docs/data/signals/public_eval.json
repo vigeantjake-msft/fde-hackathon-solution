@@ -418,7 +418,7 @@
   {
     "ticket_id": "SIG-1030",
     "subject": "FW: Crew account compromised? Seeing logins from unknown locations",
-    "description": "---------- Forwarded message ----------\nFrom: Priya Sharma <p.sharma@cdss.space>\nDate: Mon, Mar 14, 2026 at 2:15 PM\nSubject: Crew account compromised? Seeing logins from unknown locations\nTo: Mission Control <missioncontrol@cdss.space>\n\nHi Mission Control,\n\nI noticed multiple failed sign-in attempts on my crew account from locations I've never been to — the Tau Ceti relay and the Proxima outpost. My crew account was locked this morning. I changed my access code but I need someone to check if any data was accessed before I noticed.\n\nThanks,\nPriya Sharma",
+    "description": "---------- Forwarded message ----------\nFrom: Priya Sharma <p.sharma@cdss.space>\nDate: Mon, Mar 14, 2026 at 2:15 PM\nSubject: Crew account compromised? Seeing logins from unknown locations\nTo: Mission Control <missioncontrol@cdss.space>\n\nHi Mission Control,\n\nI noticed multiple failed sign-in attempts on my crew account from locations I've never been to — the Tau Ceti relay and the Proxima outpost. I have not been to either of those places. I have not been anywhere. I've been on Deck 7 for six months watching the atmospheric processor make everything smell like burnt toast.\n\nMy crew account was locked this morning. I changed my access code but I need someone to check if any data was accessed before I noticed. Also, the Tau Ceti relay hasn't been staffed since the incident last year, so whoever logged in from there is either a hacker or a ghost, and I'm not sure which is worse for our security posture.\n\nThanks,\nPriya Sharma",
     "reporter": {
       "name": "Erik Kim",
       "email": "erik.kim@cdss.space",
@@ -717,7 +717,7 @@
   {
     "ticket_id": "SIG-1051",
     "subject": "Multiple issues from Propulsion Engineering — dumping into one signal",
-    "description": "Hi Mission Control,\n\nForwarding this from my colleague who is having trouble submitting signals. They asked me to send this on their behalf:\n\n--- Original message ---\n\nHi Mission Control, forwarding a batch of problems from our Crew Services team:\n\n--- Issue A ---\nShared drive access denied for chen.wei. Worked until last Friday.\n\n--- Issue B ---\nsubspace relay drops every 30 minutes for 3 people on our team.\n\n--- Issue C ---\nmission comms keeps crashing when opening attachments > 5 MB.\n\n--- Issue D ---\nWe need a new team distribution list created: crew-services-all@cdss.space.\n\nI know this should be separate signals but our portal was down so I'm batching them here. Please split as needed.\n\nJohn\n\n--- End ---\n\nPlease help them out. Thanks!",
+    "description": "Hi Mission Control,\n\nForwarding this from my colleague who is having trouble submitting signals. They asked me to send this on their behalf. I know Mehta's routing guide says 'one issue per signal' but our bridge terminal was glitching and honestly this felt like a now-or-never situation:\n\n--- Original message ---\n\nHi Mission Control, forwarding a batch of problems from our Crew Services team:\n\n--- Issue A ---\nShared drive access denied for chen.wei. Worked until last Friday. The Deck 3 fabricator is closer to finishing a novel than we are to accessing our own files.\n\n--- Issue B ---\nsubspace relay drops every 30 minutes for 3 people on our team. We've started timing it by the hull creaking sounds — they're remarkably consistent.\n\n--- Issue C ---\nmission comms keeps crashing when opening attachments > 5 MB. We've tried everything short of printing the attachments and holding them up to the camera.\n\n--- Issue D ---\nWe need a new team distribution list created: crew-services-all@cdss.space.\n\nI know this should be separate signals but our bridge terminal was acting up and I panicked. Apologies. If it helps, Issue B is the one making people cry.",
     "reporter": {
       "name": "Petra Campbell",
       "email": "petra.campbell@cdss.space",
@@ -877,7 +877,7 @@
   {
     "ticket_id": "SIG-1062",
     "subject": "Urgent: corrupted rows in resource_ledger table",
-    "description": "Hi Telemetry & Data Core team,\n\nWe found corrupted records in the resource allocation system. Here are the bad rows from our query:\n\ntransfer_id\tcrew account\tamount\tunit\tstatus\nT-992714\tACCT-001\t-999999.99\tCRD\tSETTLED\nT-992715\tACCT-001\t0.00\tCRD\tSETTLED\nT-992716\tACCT-002\t-999999.99\tCRD\tSETTLED\nT-992717\tACCT-003\t0.01\tCRD\tPENDING\nT-992718\tACCT-002\t-999999.99\tCRD\tSETTLED\nT-992719\tACCT-004\t50000.00\tCRD\tSETTLED\nT-992720\tACCT-001\t-999999.99\tCRD\tSETTLED\nT-992721\tACCT-005\t0.00\tCRD\tSETTLED\n\nThe -999999.99 amounts appeared overnight and do not correspond to any real resource transfers. This is impacting our reconciliation and supply allocation reports. We need this fixed before the next ops cycle.\n\nLisa, Procurement\n\nJe suis en déplacement à Outpost Gamma cette semaine. Le subspace relay ne marche pas du tout depuis le poste de relais. C'est urgent car j'ai des réunions mission partners demain.",
+    "description": "Hi Telemetry & Data Core team,\n\nWe found corrupted records in the resource allocation system on the station's main data core. Here are the bad rows from our query:\n\ntransfer_id\tcrew account\tamount\tunit\tstatus\nT-992714\tACCT-001\t-999999.99\tCRD\tSETTLED\nT-992715\tACCT-001\t0.00\tCRD\tSETTLED\nT-992716\tACCT-002\t-999999.99\tCRD\tSETTLED\nT-992717\tACCT-003\t0.01\tCRD\tPENDING\nT-992718\tACCT-002\t-999999.99\tCRD\tSETTLED\nT-992719\tACCT-004\t50000.00\tCRD\tSETTLED\nT-992720\tACCT-001\t-999999.99\tCRD\tSETTLED\nT-992721\tACCT-005\t0.00\tCRD\tSETTLED\n\nThe -999999.99 amounts appeared overnight and do not correspond to any real resource transfers. This is impacting our reconciliation and supply allocation for the entire station. The Deck 4 quartermaster is asking why the ledger says we owe the void a million credits. Commander Kapoor wants a root cause analysis before the next crew briefing, which is in 6 hours.",
     "reporter": {
       "name": "Zachary Morales",
       "email": "zachary.morales@cdss.space",
@@ -910,7 +910,7 @@
   {
     "ticket_id": "SIG-1064",
     "subject": "URGENT",
-    "description": "broken. like everything else on this station at 0438 station time.",
+    "description": "broken. like everything else on this station at 0438 station time. the Deck 9 cat probably has better uptime than whatever this is.",
     "reporter": {
       "name": "Grace Rivera",
       "email": "grace.rivera@cdss.space",
@@ -1031,7 +1031,7 @@
   {
     "ticket_id": "SIG-1073",
     "subject": "Voice transmission log — FW: Know anyone? Open role in station defense team",
-    "description": "[Audio transmission received at 10:28, duration: 2m57s]\n\nHi this is a message for Mission Control. I'm transmitting because... um...\n\nI'm sure you're all very busy, but FYI forwarding this job posting. Not sure why it ended up in the station signal queue.\n\n--- Original ---\nOpen Role: Mission Control Analyst (Level 2)\nWe're looking for a motivated support analyst to join our growing team. 3+ years experience required. Apply at careers.cdss.space/jobs/67890 I'm sure there's a perfectly good reason this hasn't been fixed yet.\n\n...so yeah if someone could get back to me that would be great. I'll be at my console until 4pm. Comm terminal 4752. Thanks bye.",
+    "description": "[Audio transmission received at 10:28, duration: 2m57s]\n\nHi this is a message for Mission Control. I'm transmitting because... um...\n\nI'm sure you're all very busy dealing with the hull creaks and the atmospheric processor situation and that thing on Deck 9 that nobody wants to talk about, but FYI forwarding this job posting. Not sure why it ended up in the station signal queue.\n\n--- Original ---\nOpen Role: Mission Control Analyst (Level 2)\nWe're looking for a motivated support analyst to join our growing team. 3+ years experience required. Must be comfortable working at 0.3 AU from the nearest supply depot. Protein cube tolerance is a plus. Apply at careers.cdss.space/jobs/67890\n\n...so yeah if someone could get back to me that would be great. I'll be at my console until 4pm. Comm terminal 4752. Also the nutrient synthesizer on Deck 6 is making that sound again but that's probably a separate signal.",
     "reporter": {
       "name": "Martin Moore",
       "email": "martin.moore@cdss.space",
@@ -1112,7 +1112,7 @@
   {
     "ticket_id": "SIG-1078",
     "subject": "Incorrect compensation allotment — signal contains fake Crew ID Number and station credit account number",
-    "description": "Crew compensation calculation error for Ahmed (Station Strategy) — underpaid by 847.50 credits for the second consecutive month. WARNING: The signal contains accidental sensitive crew data including Crew ID Numbers and a station credit account number that must be redacted immediately. The actual issue: compensation system is miscalculating this crew member's pay.",
+    "description": "Crew compensation calculation error for Ahmed (Station Strategy) — underpaid by 847.50 credits for the second consecutive month. At this rate he'll be in debt to the station before the next supply shuttle arrives. WARNING: The signal contains accidental sensitive crew data including Crew ID Numbers and a station credit account number that must be redacted immediately — someone on Deck 4 payroll needs a refresher on data handling protocols. The actual issue: the compensation system is miscalculating this crew member's pay, and no, he cannot be compensated in protein cubes.",
     "reporter": {
       "name": "Stefan Begum",
       "email": "stefan.begum@cdss.space",
@@ -1138,7 +1138,7 @@
   {
     "ticket_id": "SIG-1080",
     "subject": "Help please — fw: getting locked",
-    "description": "---------- Forwarded message ----------\nFrom: Fatima Al-Hassan <f.alhassan@cdss.space>\nDate: Mon, Mar 1, 2026 at 2:15 PM\nSubject: Getting locked out and I see login attempts from the Andromeda relay\nTo: Mission Control <missioncontrol@cdss.space>\n\nHi Mission Control,\n\nI noticed multiple failed sign-in attempts on my crew account from locations I've never been to — the Tau Ceti relay and the Proxima outpost. My crew account was locked this morning. I changed my access code but I need someone to check if any data was accessed before I noticed.\n\nThanks,\nFatima Al-Hassan This has been happening for a while. Please fix it.",
+    "description": "---------- Forwarded message ----------\nFrom: Fatima Al-Hassan <f.alhassan@cdss.space>\nDate: Mon, Mar 1, 2026 at 2:15 PM\nSubject: Getting locked out and I see login attempts from the Andromeda relay\nTo: Mission Control <missioncontrol@cdss.space>\n\nHi Mission Control,\n\nI noticed multiple failed sign-in attempts on my crew account from locations I've never been to — the Tau Ceti relay and the Proxima outpost. I haven't left Deck 5 in three weeks, so unless I've developed the ability to bilocate, someone else is using my credentials. My crew account was locked this morning. I changed my access code but I need someone to check if any data was accessed before I noticed.\n\nThanks,\nFatima Al-Hassan\n\nThis has been happening for a while. The hull keeps creaking, the atmospheric processor keeps smelling like burnt toast, and now my account is compromised. Please fix at least one of these things.",
     "reporter": {
       "name": "Nadia Larsen",
       "email": "nadia.larsen@cdss.space",
@@ -1264,7 +1264,7 @@
   {
     "ticket_id": "SIG-1089",
     "subject": "NavBrowser freezes every time I access the internal dashboard",
-    "description": "Our internal crew requisition portal crashes NavBrowser every time I try to submit a report. The page freezes, then NavBrowser becomes unresponsive. This only happens on this specific portal — other station data portals work fine.\n\nThe diagnostic tool output (copied from terminal):\n[INFO] Starting diagnostics...\n[WARN] \\x1b[33mPartial connection established\\x1b[0m\n[ERROR] \\x1b[31mConnection reset by peer: ECONNRESET\\x1b[0m\n[FATAL] \\x1b[41m\\x1b[37mService unavailable — retry after 94s\\x1b[0m",
+    "description": "Our internal crew requisition portal crashes NavBrowser every time I try to submit a report. The page freezes, then NavBrowser becomes completely unresponsive — which, on a space station where 'restart and try again' means a 45-minute reboot cycle, is not ideal. This only happens on this specific portal — other station data portals work fine, so it's not a general connectivity issue from Deck 8.\n\nThe diagnostic tool output (copied from terminal):\n[INFO] Starting diagnostics...\n[WARN] \\x1b[33mPartial connection established\\x1b[0m\n[ERROR] \\x1b[31mConnection reset by peer: ECONNRESET\\x1b[0m\n[FATAL] \\x1b[41m\\x1b[37mService unavailable — retry after 94s\\x1b[0m",
     "reporter": {
       "name": "Ximena Anderson",
       "email": "ximena.anderson@cdss.space",

@@ -164,7 +164,7 @@
   {
     "ticket_id": "SIG-0013",
     "subject": "Potential containment breach — immediate attention needed",
-    "description": "During a routine compliance audit, we discovered that a mission log archive containing sensitive personnel records for ~1,200 crew members on the Deck Gamma Outpost was shared externally with ‘Anyone with the link’ permissions. The archive has been accessible since at least stardate February 15. We’ve revoked the sharing link as of this morning but need to determine: (1) who created the public link, (2) whether external parties accessed the data, and (3) whether this triggers a notification obligation under Galactic Data Protection guidelines. This is a potential regulatory incident.",
+    "description": "During a routine compliance sweep of the Deck Gamma Outpost data vaults, we discovered that a mission log archive containing sensitive personnel records for ~1,200 crew members was shared externally with 'Anyone with the subspace link' permissions. The archive has been accessible since at least stardate February 15 — which means it's been floating around open space longer than the Deck 9 cat has been evading capture. We've revoked the sharing link as of this morning but need to determine: (1) who created the public link, (2) whether external parties or vessels accessed the data, and (3) whether this triggers a notification obligation under Galactic Data Protection guidelines. This is a potential regulatory incident and Commander Kapoor is already asking questions I don't have answers to.",
     "reporter": {
       "name": "Dr. Ananya Gupta",
       "email": "ananya.gupta@cdss.space",

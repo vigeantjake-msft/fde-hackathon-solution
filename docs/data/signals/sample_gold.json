@@ -213,12 +213,12 @@
       "module_specs",
       "affected_crew"
     ],
-    "next_best_action": "Investigate holographic display flickering as primary issue — likely hardware or cable fault. Route the FlightOS license question separately to Mission Software Operations.",
+    "next_best_action": "Investigate holographic display flickering as primary issue — likely hardware or a loose data conduit rattled free by docking vibrations (Deck 5 gets the worst of it every time a cargo shuttle berths). Route the FlightOS license question separately to Mission Software Operations before it auto-expires and the nav console starts displaying nothing but the CDSS screensaver.",
     "remediation_steps": [
-      "Test with a replacement data conduit from Station Ops supply",
-      "Test holographic display with a different source console to isolate whether it’s the holographic display or the nav console",
-      "If flickering persists with new conduit and source, schedule holographic display replacement",
-      "Create a separate signal for the FlightOS license expiry and route to Mission Software Operations"
+      "Test with a replacement data conduit from Station Ops supply — the Deck 5 conduits have a known tendency to work themselves loose, especially near the docking pylons",
+      "Test holographic display with a different source console to isolate whether the flickering originates from the display unit or the nav console's output module",
+      "If flickering persists with new conduit and alternate source, schedule holographic display replacement through Spacecraft Systems Engineering — submit a hull maintenance request so it doesn't get lost in the cargo requisition queue",
+      "Create a separate signal for the FlightOS license expiry and route to Mission Software Operations — these are two distinct issues and Mehta's routing guide is very clear about not bundling unrelated problems into one signal"
     ]
   },
   {
@@ -229,14 +229,14 @@
     "assigned_team": "Threat Response Command",
     "needs_escalation": true,
     "missing_information": [],
-    "next_best_action": "Initiate containment breach investigation immediately. This is a potential regulatory incident involving sensitive personnel data exposure of 1,200 crew members under Galactic Data Protection guidelines. Determine scope of external access, identify who created the sharing link, and assess notification obligations.",
+    "next_best_action": "Initiate containment breach investigation immediately. This is a potential regulatory incident involving sensitive personnel data exposure of 1,200 crew members under Galactic Data Protection guidelines. Determine scope of external access, identify who created the sharing link, and assess notification obligations. Commander Kapoor will want a full briefing — have answers ready before she finds you in the corridor.",
     "remediation_steps": [
-      "Confirm the external sharing link has been fully revoked and verify no other archives have similar permissions",
-      "Pull mission log audit logs to identify who created the public sharing link and when",
-      "Analyze audit logs for any external access to the archive between February 15 and today",
-      "Engage Space Law Division and Compliance to assess Galactic Data Protection notification obligations",
-      "Document findings for the station incident report and galactic regulatory record",
-      "Conduct a broader mission log permissions audit across all archives containing sensitive crew data"
+      "Confirm the external sharing link has been fully revoked and verify no other archives in the Deck Gamma data vaults have similar 'Anyone with the subspace link' permissions",
+      "Pull mission log audit trails to identify who created the public sharing link and when — cross-reference with docking records in case this was an external actor with temporary station access",
+      "Analyze audit logs for any external access to the archive between stardate February 15 and today — flag any access from unrecognized vessel transponder codes",
+      "Engage Space Law Division and Station Compliance to assess Galactic Data Protection notification obligations — if the data includes biometric records, the timeline is shorter",
+      "Document findings for the station incident report and galactic regulatory record — Commander Kapoor's standing order is that containment breaches get full write-ups, not summaries",
+      "Conduct a broader mission log permissions audit across all archives containing sensitive crew data — if one vault was misconfigured, assume others might be too"
     ]
   },
   {
