@@ -267,11 +267,11 @@
         "missing_information": [
             "habitat_conditions"
         ],
-        "next_best_action": "Investigate SSO token invalidation after credential rotation. FlightOS apparently does not handle credential changes gracefully — it takes them personally. Likely the FlightOS authentication ticket needs to be reissued after the station credential change. Time-sensitive: end-of-cycle trajectory calculation deadline today, and the orbital window for the resupply corridor is not going to wait for SSO to sort out its feelings.",
+        "next_best_action": "Investigate SSO token invalidation after credential rotation. FlightOS apparently does not handle credential changes gracefully — it takes them personally. Likely the FlightOS authentication token needs to be reissued after the station credential change. Time-sensitive: end-of-cycle trajectory calculation deadline today, and the orbital window for the resupply corridor is not going to wait for SSO to sort out its feelings.",
         "remediation_steps": [
-            "Verify the crew member's station session and authentication ticket are refreshed after the credential rotation",
+            "Verify the crew member's station session and authentication token are refreshed after the credential rotation",
             "Check FlightOS SSO configuration -- confirm whether FlightOS uses token-based or certificate-based SSO",
-            "Reissue the FlightOS SSO logon ticket or have the crew member log into FlightOS with explicit credentials as a workaround",
+            "Reissue the FlightOS SSO logon token or have the crew member log into FlightOS with explicit credentials as a workaround",
             "If SSO token regeneration doesn't resolve it, check whether the rotation protocol affected the FlightOS secure channel configuration",
             "Confirm FlightOS access is restored and the crew member can complete end-of-cycle trajectory calculations"
         ]
