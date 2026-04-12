@@ -45,7 +45,7 @@
         "missing_information": [
             "module_specs"
         ],
-        "next_best_action": "Dispatch immediate on-site support to Main War Room with a portable backup holographic projector. Time-critical: critical deep-space mining treaty review with the Meridian Sector delegation in 25 minutes.",
+        "next_best_action": "Dispatch immediate on-site support to Main War Room with a portable backup holographic projector. Time-critical: critical deep-space mining treaty review with the Meridian Sector delegation in 25 minutes. The Fleet Admiral presenting via interpretive pointing at a blank wall would be a diplomatic incident that makes the protein cube disaster look like a minor scheduling hiccup.",
         "remediation_steps": [
             "Dispatch on-site technician to Main War Room immediately — the Meridian Sector delegation includes a Rigelian ambassador with atmospheric requirements that make 'find another room' approximately as practical as 'find another space station.' Time is measured in minutes and diplomatic patience is measured in less than that",
             "Bring portable backup holographic projector from Station Ops supply bay — if someone borrowed it for movie night again, Mehta will have words. He will also have a margin note. The margin note will be preserved for future generations as a cautionary tale about requisition protocols",
@@ -117,7 +117,7 @@
         "assigned_team": "Telemetry & Data Core",
         "needs_escalation": false,
         "missing_information": [],
-        "next_best_action": "Check service principal biometric credentials and access control role assignments on the Deep Storage Array in telemetry-core-prod. Restore the Telemetry Data Contributor role if it was removed during the station security audit.",
+        "next_best_action": "Check service principal biometric credentials and access control role assignments on the Deep Storage Array in telemetry-core-prod. Restore the Telemetry Data Contributor role if it was removed during the station security audit. 4.2 TB of sensor data per cycle is not being archived — the Exobiology team's cat behavioral charts are at stake, and those charts have charts. Mehta's margin notes about this will have margin notes.",
         "remediation_steps": [
             "Check service principal 'svc-telemetry-ingest' role assignments in BioScan ID — verify the role hasn't been revoked, expired, or accidentally reassigned to the Deck 9 cat (it has happened before, don't ask)",
             "If role was revoked during the Station Core module migration, reinstate read/write access to /telemetry/raw on the Deep Storage Array",
@@ -251,10 +251,11 @@
         "assigned_team": "None",
         "needs_escalation": false,
         "missing_information": [],
-        "next_best_action": "Close — this is a thank-you message, not a mission signal. Rare evidence of crew member satisfaction, which on this station is rarer than a fabricator that works on the first try. Savor it.",
+        "next_best_action": "Close — this is a thank-you message, not a mission signal. Rare evidence of crew member satisfaction, which on this station is rarer than a fabricator that works on the first try, a nutrient synthesizer that dispenses the correct flavor, and the Deck 9 cat not being somewhere it shouldn't be — all on the same day. Savor it. Frame it. Show it to Mehta.",
         "remediation_steps": [
             "Close signal — no action required beyond basking in the warm glow of crew gratitude, which is the closest thing to sunlight you'll get at 0.3 AU from the nearest star that isn't trying to irradiate you",
-            "If the original signal referenced is still open, verify it's resolved and close that too — a crew member saying 'you're the best' is rare enough to warrant a moment of quiet reflection, like spotting a comet. Document and appreciate before it vanishes into the void"
+            "If the original signal referenced is still open, verify it's resolved and close that too — a crew member saying 'you're the best' is rare enough to warrant a moment of quiet reflection, like spotting a comet. Document and appreciate before it vanishes into the void",
+            "Note: the crew member also mentioned the nutrient synthesizer dispensing 'lime' flavor — this is a separate issue (if it's even an issue — some consider lime an improvement over the default 'existential dread' flavor). Do NOT route a fabrication request for the nutrient synthesizer based on a thank-you message. Mehta has a margin note about this. The margin note has a margin note."
         ]
     },
     {

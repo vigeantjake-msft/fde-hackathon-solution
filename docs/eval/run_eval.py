@@ -537,6 +537,8 @@ def main() -> int:
 
     # ── Score each signal ─────────────────────────────────────────────
     print("  Transmitting signals to triage endpoint... stand by for contact.")
+    print("  (The scoring computer has no feelings. It has no mercy. It does,")
+    print("   however, have excellent handwriting. For a computer.)")
     print()
     results: list[dict] = []
     responses: list[dict] = []
@@ -605,6 +607,24 @@ def main() -> int:
     print(f"    {'─' * 62}")
     print(f"    {'CLASSIFICATION':16s}  {'':20s}  {classification_score:5.1f} / 85")
     print()
+
+    # Dimension-specific commentary — because numbers without opinions are just... numbers
+    if dim_scores["category"] < 0.5:
+        print("    ⚠ Category: Your system is misidentifying anomaly types like a crew member")
+        print("      who calls every problem 'the holodeck is broken' regardless of what broke.")
+    if dim_scores["priority"] < 0.5:
+        print("    ⚠ Priority: Hull breaches rated as Routine. Protein cube complaints rated")
+        print("      as Red Alert. Your priority assessment needs recalibration, not coffee.")
+    if dim_scores["routing"] < 0.5:
+        print("    ⚠ Routing: Signals going to the wrong teams like a turbolift with a sense")
+        print("      of humor. Threat Response does not want to fix fabricators.")
+    if dim_scores["missing_info"] < 0.5:
+        print("    ⚠ Missing info: Either asking for intel the signal already provided (the")
+        print("      crew is 0.3 AU from patience) or missing critical gaps entirely.")
+    if dim_scores["escalation"] < 0.5:
+        print("    ⚠ Escalation: Missing escalations or false alarms. One gets people hurt.")
+        print("      The other wakes Commander Kapoor at 0300. Both have consequences.")
+    print()
     print("  Efficiency dimensions (max 15 pts, scored by platform):")
     print()
     print(f"    latency           p50={p50:.0f}ms  p95={p95:.0f}ms  (10% weight)")
@@ -661,12 +681,15 @@ def main() -> int:
     if classification_score >= 80:
         print("  End of scoring run. The void respects your engineering.")
         print("  Commander Kapoor has added your name to the 'Do Not Jettison' list.")
+        print("  The Deck 9 cat would purr in your general direction if it could be bothered.")
     elif classification_score >= 50:
         print("  End of scoring run. The void awaits your submission.")
         print("  May the scoring computer be less merciless next time. (It won't be.)")
+        print("  The protein cubes wish you luck. They are the only ones who do.")
     else:
         print("  End of scoring run. The void has opinions about your submission.")
         print("  Mehta recommends re-reading the routing guide. All of it. Twice.")
+        print("  The Titan Outpost had better scores. And they don't exist anymore.")
     print()
 
     return 0

@@ -377,17 +377,25 @@ Not directly. They are required by the schema, but they are reviewed as part of 
 # 1. Read the mission briefing and routing guide first. Seriously. It matters.
 #    People who skip the brief misroute signals. People who misroute signals
 #    end up in the Admiral's memos. You don't want to be in the Admiral's memos.
+#    The Admiral's memos are where career trajectories go to experience
+#    involuntary lithobraking.
 open docs/challenge/customer_brief.md
 open docs/challenge/routing_guide.md
 
 # 2. Look at the sample signals and gold answers
+#    25 signals from the deep-space chaos of CDSS. Some are clear.
+#    Some are... not. The Deck 9 cat probably wrote a few of them.
 python -m json.tool docs/data/signals/sample.json | head -50
 python -m json.tool docs/data/signals/sample_gold.json | head -50
 
 # 3. Build something
+#    An API. One endpoint. JSON in, JSON out.
+#    Simple as docking procedure. (Docking procedure is not simple.)
 # ... your code ...
 
 # 4. Score it against the 25 sample signals
+#    The scoring computer awaits. It has no mercy. It has no feelings.
+#    It does, however, have extremely precise floating-point arithmetic.
 cd docs/eval
 uv run python run_eval.py \
   --endpoint http://localhost:8000 \
@@ -395,12 +403,13 @@ uv run python run_eval.py \
   --gold ../data/signals/sample_gold.json
 
 # 5. Stress-test against the 100 public eval signals
+#    No gold answers. You're on your own, like the crew at 0300 station time.
 uv run python run_eval.py \
   --endpoint http://localhost:8000 \
   --dataset ../data/signals/public_eval.json
 
 # 6. Deploy, write your docs, submit at aka.ms/fde/hackathon
-# See docs/submission/
+#    See docs/submission/ — and may the protein cubes be in your favor.
 ```
 
 ## Submission
