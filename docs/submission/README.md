@@ -4,7 +4,7 @@
 
 1. **Fork** this repo (your fork must be **public**)
 2. **Build** your solution
-3. **Deploy** it somewhere callable via HTTPS
+3. **Deploy** it somewhere callable via HTTPS — not localhost, not your quarters terminal
 4. **Test** with the eval harness: sample set for scoring, public eval for smoke testing
 5. **Write** your three docs: `docs/architecture.md`, `docs/methodology.md`, `docs/evals.md`
 6. **Create** `submission.json` at the root (see below)
@@ -24,7 +24,7 @@ your-repo/
 └── ...                      # Your code, tests, infrastructure
 ```
 
-**All three docs are mandatory.** Missing one is a big hit in engineering review.
+**All three docs are mandatory.** Missing one is a big hit in engineering review. Like showing up to a mission briefing without your flight plan.
 
 Important nuance: the hidden signals are for the **0-100 functional score**. Engineering review happens separately from what is in your repo after you submit.
 
@@ -63,15 +63,15 @@ See [challenge README: Engineering Review](../challenge/README.md#engineering-re
 | `docs/methodology.md` | How you approached it, what you tried, what failed, how you spent your time |
 | `docs/evals.md` | Your actual numbers, which signals you got wrong and why, where your system breaks |
 
-> **Seriously:** a clean, simple solution with honest error analysis beats a complex system with no explanation. Every single time.
+> **Real talk:** a clean, simple solution with honest error analysis beats a complex system with no explanation. Every single time. In space, clarity saves lives. On the leaderboard, clarity saves scores.
 
 ## Before You Submit
 
 - [ ] `GET /health` returns HTTP 200
 - [ ] `POST /triage` returns valid JSON matching the [output schema](../data/schemas/output.json)
 - [ ] All 8 response fields are present: `ticket_id`, `category`, `priority`, `assigned_team`, `needs_escalation`, `missing_information`, `next_best_action`, `remediation_steps`
-- [ ] `category` values are from the 8 valid categories
-- [ ] `assigned_team` values are from the 7 valid teams (including `"None"`)
+- [ ] `category` values are from the 8 valid anomaly categories
+- [ ] `assigned_team` values are from the 7 valid response divisions (including `"None"`)
 - [ ] `missing_information` values are from the 16-value constrained vocabulary
 - [ ] Your API handles **10 concurrent requests** without errors or timeouts
 - [ ] Each request responds in **under 30 seconds** (that's the timeout, aim for well under)

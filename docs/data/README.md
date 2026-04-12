@@ -6,7 +6,7 @@ Synthetic signals modeled on real deep-space station operations. They're messy o
 
 ```
 data/
-├── README.md                  # This file
+├── README.md                  # This file (you are here, operator)
 ├── tickets/
 │   ├── sample.json            # 25 signals for local development
 │   ├── sample_gold.json       # Gold-standard triage outputs for the sample set
@@ -47,7 +47,7 @@ Your `/triage` endpoint must return **all 8 fields**:
 | `next_best_action` | string | No* | Required but not deterministically scored |
 | `remediation_steps` | string[] | No* | Required but not deterministically scored |
 
-*Remediation quality is assessed during the separate engineering review.
+*Remediation quality is assessed during the separate engineering review. A system that says "investigate the anomaly" for every signal is telling us you phoned it in from 1 AU away.
 
 See [schemas/output.json](schemas/output.json) for the formal JSON Schema with all valid enum values.
 

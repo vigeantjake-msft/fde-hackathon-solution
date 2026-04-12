@@ -1,4 +1,4 @@
-# Customer Brief
+# Mission Briefing
 
 > Operational memo from the Contoso Deep Space Station (CDSS) — shared with the FDE team during discovery.
 
@@ -33,11 +33,11 @@ We want to **automate first-pass triage** for every incoming signal. Specificall
 4. **Flag what's missing** — half our signals don't include basic info we need. We waste time pinging the reporter back over subspace to ask "which system?" or "what error code?"
 5. **Give our Mission Ops team a head start on remediation** — even if a human still resolves the issue, tell them what to try first before suiting up
 
-## Our teams
+## Our divisions
 
 We have 6 specialist operations teams:
 
-| Team | What they handle |
+| Division | What they handle |
 |---|---|
 | **Crew Identity & Airlock Control** | Biometric access, crew authentication, airlock provisioning, identity core sync, crew profile management |
 | **Spacecraft Systems Engineering** | Hull integrity, life support systems, fabricators, consoles, structural repairs, EVA suit maintenance |
@@ -50,7 +50,7 @@ I've attached our **internal routing guide** — but fair warning, it was writte
 
 ## What "good" looks like to us
 
-- **Reduce misrouting from 42% to under 15%** in the first month
+- **Reduce misrouting from 42% to under 15%** in the first cycle
 - **Time-to-route under 5 minutes** (from 3.4 hours)
 - **Catch missing information proactively** so we stop playing subspace ping-pong with reporters three sectors away
 - **Actionable remediation steps** — not generic "investigate the anomaly" but specific things an operator can actually try before escalating to EVA

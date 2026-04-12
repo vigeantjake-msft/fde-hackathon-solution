@@ -80,9 +80,9 @@ Your system must use **exactly** these values. The scoring is deterministic: any
 | `Mission Briefing Request` | Questions, how-tos, or signals that don't fit other categories |
 | `Not a Mission Signal` | Automated echoes, noise, acknowledgment messages, cryo-sleep auto-replies |
 
-**Teams** (7 values):
+**Response Divisions** (7 values):
 
-| Team | When to route |
+| Division | When to route |
 |---|---|
 | `Crew Identity & Airlock Control` | Biometric access, crew authentication, airlock provisioning, identity core |
 | `Spacecraft Systems Engineering` | Hull, life support, fabricators, consoles, structural repairs |
@@ -92,7 +92,7 @@ Your system must use **exactly** these values. The scoring is deterministic: any
 | `Telemetry & Data Core` | Data banks, sensor archives, telemetry pipelines, backups, data access |
 | `None` | Use when the signal is not a real mission signal |
 
-**Priorities** (4 values): `P1` (Critical), `P2` (High), `P3` (Medium), `P4` (Low)
+**Priorities** (4 values): `P1` (🔴 Red Alert), `P2` (🟡 Yellow Alert), `P3` (🟠 Caution), `P4` (🟢 Routine)
 
 ### Missing Information Vocabulary
 
@@ -251,7 +251,7 @@ We're looking for: clean code, good tests, sensible architecture, infrastructure
 
 In practice, the strongest submissions usually do these things well:
 
-- Thin API layer, with business logic separated from route handlers
+- Thin API layer, with triage logic separated from route handlers
 - Typed models and schema validation on both input and output
 - Async external calls with explicit timeouts
 - Clear error handling instead of generic 500s everywhere
@@ -304,40 +304,40 @@ We also look at: code quality, test coverage, error handling, infrastructure, CI
 
 #### Is engineering review another hidden test suite?
 
-No. The hidden eval set applies to the **functional score**. Engineering review happens separately based on your repo, docs, code structure, tests, deployment readiness, and the quality of the system you built.
+No. The hidden eval set applies to the **functional score**. Engineering review happens separately based on your repo, docs, code structure, tests, deployment readiness, and the quality of the system you built. Think of it this way: the scoring computer judges your *decisions*; the engineering review judges your *judgment*.
 
 #### If engineering review happens separately, what should I optimize for?
 
 Optimize for trust. A reviewer should be able to open your repo and quickly see:
 
-- how requests flow through the system
+- how signals flow through the system
 - where the LLM or rules logic lives
 - how failures are handled
 - how to run and test the service
 - what you tried, what failed, and what tradeoffs you made
 
-If your repo is hard to follow, missing tests, or only works with undocumented setup magic, that will show up here.
+If your repo is hard to follow, missing tests, or only works with undocumented setup magic, that will show up here. Imagine a new operator joining Mission Control at 0300 during a hull breach — can they clone your repo and understand what's happening? If not, redesign.
 
 #### Do I need a complicated multi-agent system to score well?
 
-No. A simple system with good judgment, good validation, solid tests, and honest writeups is a stronger submission than an overbuilt pipeline you can't explain.
+No. A simple system with good judgment, good validation, solid tests, and honest writeups is a stronger submission than an overbuilt pipeline you can't explain. In space, the simplest system that works is the one that keeps working when things go sideways. And things *always* go sideways. Usually at 0300. During a hull breach.
 
 #### Are `next_best_action` and `remediation_steps` part of the hidden functional score?
 
-Not directly. They are required by the schema, but they are reviewed as part of the engineering-quality half. If those fields are vague, generic, or obviously low effort, that hurts you.
+Not directly. They are required by the schema, but they are reviewed as part of the engineering-quality half. If those fields are vague, generic, or obviously low effort, that hurts you. "Investigate the anomaly" is not remediation — it's a shrug in JSON form. Write steps a Tier 1 controller could actually follow while alarm klaxons are going off and the Admiral is asking pointed questions.
 
 #### What usually makes an engineering submission look weak?
 
-- Business logic buried in one route file
-- No timeouts or retry handling around model calls
-- No tests beyond a happy path
-- Missing docs or docs that only describe the final state
-- Hardcoded config, secrets, or localhost-only assumptions
-- README that does not let someone run the project quickly
+- Triage logic buried in one route file — like hiding the helm controls inside the mess hall refrigerator
+- No timeouts or retry handling around model calls — your system freezes while the crew waits
+- No tests beyond a happy path — happy paths don't exist in deep space
+- Missing docs or docs that only describe the final state — "it works" is not documentation
+- Hardcoded config, secrets, or localhost-only assumptions — your quarters terminal is not a production environment
+- README that does not let someone run the project quickly — if it takes more than 5 minutes, the hull breach won
 
 #### What makes a submission feel strong in an FDE way?
 
-- The design is simple, but clearly intentional
+- The design is simple, but clearly intentional — elegant like a well-plotted orbital trajectory
 - The API contract is treated seriously, with validation and predictable errors
 - Latency and cost are managed as engineering constraints, not ignored until the end
 - Tests cover weird signals, failure cases, and non-happy paths

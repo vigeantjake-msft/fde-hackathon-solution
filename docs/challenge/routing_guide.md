@@ -6,7 +6,7 @@
 
 ---
 
-## How to use this guide
+## How to use this protocol
 
 When a signal comes in, identify the **issue type** from the table below and route to the listed **owning team**. If you're unsure, escalate to the Operations Desk Lead.
 
@@ -27,7 +27,7 @@ When a signal comes in, identify the **issue type** from the table below and rou
 
 ### Crew Identity & Airlock Control
 
-| Issue type | Route to | Notes |
+| Anomaly type | Route to | Notes |
 |---|---|---|
 | Biometric reset | Crew Identity & Airlock Control | Self-service terminal handles most; only escalate if self-service fails |
 | Crew lockout | Crew Identity & Airlock Control | Check for brute-force indicators first — if suspicious, also alert Threat Response Command |
@@ -38,7 +38,7 @@ When a signal comes in, identify the **issue type** from the table below and rou
 
 ### Spacecraft Systems Engineering
 
-| Issue type | Route to | Notes |
+| Anomaly type | Route to | Notes |
 |---|---|---|
 | Hull damage | Spacecraft Systems Engineering | Assess severity immediately — potential P1 if breach detected |
 | Life support malfunction | Spacecraft Systems Engineering | Automatic P1 if atmospheric systems affected |
@@ -49,7 +49,7 @@ When a signal comes in, identify the **issue type** from the table below and rou
 
 ### Deep Space Communications
 
-| Issue type | Route to | Notes |
+| Anomaly type | Route to | Notes |
 |---|---|---|
 | Subspace relay | Deep Space Communications | Check if crew member's credentials are expired first (→ Crew Identity & Airlock Control if so) |
 | Comm array alignment | Deep Space Communications | — |
@@ -60,7 +60,7 @@ When a signal comes in, identify the **issue type** from the table below and rou
 
 ### Mission Software Operations
 
-| Issue type | Route to | Notes |
+| Anomaly type | Route to | Notes |
 |---|---|---|
 | Flight planning errors | Mission Software Operations | — |
 | Nav computer issues | Mission Software Operations | Physical hardware issues go to Spacecraft Systems Engineering |
@@ -70,7 +70,7 @@ When a signal comes in, identify the **issue type** from the table below and rou
 
 ### Threat Response Command
 
-| Issue type | Route to | Notes |
+| Anomaly type | Route to | Notes |
 |---|---|---|
 | Hostile contact detected | Threat Response Command | Log contact signature and alert command staff immediately |
 | Containment breach | Threat Response Command | Isolate affected section from station network immediately — mandatory P1 |
@@ -80,7 +80,7 @@ When a signal comes in, identify the **issue type** from the table below and rou
 
 ### Telemetry & Data Core
 
-| Issue type | Route to | Notes |
+| Anomaly type | Route to | Notes |
 |---|---|---|
 | Data bank access | Telemetry & Data Core | Requires data owner approval |
 | Sensor archive sync | Telemetry & Data Core | Large data sync problems are common; check capacity limits |
@@ -90,7 +90,7 @@ When a signal comes in, identify the **issue type** from the table below and rou
 
 ---
 
-## Known gaps in this guide
+## Known gaps in this protocol
 
 > **Raj's note:** The following areas still need to be sorted out. For now, use your best judgment or escalate to the Operations Desk Lead.
 
