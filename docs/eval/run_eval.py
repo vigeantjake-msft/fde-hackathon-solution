@@ -349,6 +349,10 @@ def score_submission(
     Returns dict with classification_score (0–85), dimension breakdowns,
     and per-signal details.
     """
+    if not gold_answers:
+        msg = "Gold answer set is empty"
+        raise ValueError(msg)
+
     per_signal: list[dict[str, float]] = []
 
     all_cat_cands: list[str] = []
