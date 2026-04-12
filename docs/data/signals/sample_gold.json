@@ -175,10 +175,10 @@
         "next_best_action": "Initiate new crew member onboarding workflow for Alex Rivera (arrival date March 31). Coordinate hardware, software, access provisioning, and data permissions across all relevant teams before the 09:00 supply shuttle lands. Nobody gets stranded in a corridor again.",
         "remediation_steps": [
             "Create BioScan ID crew account and schedule biometric enrollment at the Deck 2 BioAuth panel — confirm enrollment slot before arrival so they're not standing at an airlock watching people walk through while contemplating the existential implications of being locked out of their first day",
-            "Provision workstation console and comm device with standard Astro-Science image and software suite (FlightOS, Quantum Analyzer, IRIS Holographic Display, spectral analysis toolkit)",
-            "Configure data access to Exobiology and Dark Matter shared sensor archives on Station Core — verify access scopes with the Astro-Science section chief",
-            "Set up SubComm profile with briefing room booking access and station distribution list membership",
-            "Assign ShipOS MDM enrollment for the new comm device and verify automatic policy push on first activation",
+            "Provision workstation console and comm device with standard Astro-Science image and software suite (FlightOS, Quantum Analyzer, IRIS Holographic Display, spectral analysis toolkit) — do NOT give them the Deck 3 workstation. It's been on the 'scheduled for replacement' list since before the station's last orbit correction. That workstation has seniority over most of the crew.",
+            "Configure data access to Exobiology and Dark Matter shared sensor archives on Station Core — verify access scopes with the Astro-Science section chief, and for the love of all that is pressurized, do not grant write access to the sensor calibration datasets. The last new hire accidentally overwrote three months of dark matter readings with their test data. The Astro-Science team still brings it up at every briefing.",
+            "Set up SubComm profile with briefing room booking access and station distribution list membership — add them to the 'Station Announcements' list but NOT the 'Deck 7 Atmospheric Processor Updates' list. Nobody needs that. Nobody has ever needed that. The processor sends its own updates whether you want them or not.",
+            "Assign ShipOS MDM enrollment for the new comm device and verify automatic policy push on first activation — if MDM enrollment fails silently (and it does, with the quiet dignity of a dying star), the crew member will spend their first week wondering why none of the station apps work while everyone else wonders why the new person keeps asking questions that have obvious answers",
             "Confirm all provisioning will be ready before March 31 09:00 shuttle arrival — the corridor-wandering incident from last rotation must not be repeated. Three new crew members floating aimlessly through Deck 5 for two hours remains the station's most preventable navigational disaster since the Deck 9 cat redirected a cargo drone into the mess hall"
         ]
     },
@@ -404,14 +404,14 @@
             "system_configuration",
             "habitat_conditions"
         ],
-        "next_best_action": "Renew or replace the quantum encryption certificate on crew-api.cdss.space before it expires on March 20. This is a production-facing API gateway — expiry will break all external fleet integrations. Treat as P1 given 3-day window and the fact that the original provisioner transferred off-station.",
+        "next_best_action": "Renew or replace the quantum encryption certificate on crew-api.cdss.space before it expires on March 20. This is a production-facing API gateway — expiry will sever all external fleet integrations, and 'our certificates expired' is not something you want to explain to the Admiral while the fleet command channel goes dark. The original provisioner transferred off-station, so this is now everyone's problem and nobody's specialty. Classic space station operations.",
         "remediation_steps": [
-            "Identify the current certificate authority and certificate type (station PKI, external fleet CA, or automated quantum cert provisioner)",
-            "Determine whether auto-renewal was configured or if the cert was manually provisioned",
-            "If auto-renewal exists, trigger a manual renewal cycle and verify the new cert is issued",
-            "If manual, generate a CSR, obtain a new certificate from the CA, and install it on the fleet API gateway",
-            "Verify the new certificate is correctly installed and all fleet connections work without TLS errors",
-            "Configure auto-renewal and bridge monitoring alerts to prevent recurrence"
+            "Identify the current certificate authority and certificate type (station PKI, external fleet CA, or automated quantum cert provisioner) — the original provisioner left for the Tau Ceti outpost and apparently took the documentation with them, or more likely never wrote any, because nobody documents certificate infrastructure until it's on fire. In space, 'on fire' is not always a metaphor.",
+            "Determine whether auto-renewal was configured or if the cert was manually provisioned — manually provisioned certificates are the landmines of station infrastructure: they sit there quietly for exactly as long as you forget about them, then detonate at the worst possible moment, like during the Admiral's fleet-wide briefing",
+            "If auto-renewal exists, trigger a manual renewal cycle and verify the new cert is issued — if the auto-renewal agent is itself authenticated via a certificate that has expired, congratulations, you've discovered a certification paradox. The station has several. They are not charming.",
+            "If manual, generate a CSR, obtain a new certificate from the CA, and install it on the fleet API gateway — the fleet CA's turnaround time is 'anywhere between 30 minutes and heat death of the universe,' so submit the request immediately and consider preparing a backup plan that doesn't involve the phrase 'self-signed'",
+            "Verify the new certificate is correctly installed and all fleet connections are handshaking without TLS errors — test from multiple relay stations, not just the local console, because 'it works from my terminal' is not a valid certificate validation strategy at 0.3 AU from Earth",
+            "Configure auto-renewal, set up bridge monitoring alerts at 30-day and 7-day thresholds, and update the station runbook — because the next person to deal with this will be equally unprepared, equally stressed, and equally likely to curse the name of whoever set this up originally. That person is you now. Write the docs."
         ]
     },
     {
@@ -460,10 +460,10 @@
         "missing_information": [],
         "next_best_action": "Investigate Station Core node prod-analytics-01 stuck at 'Applying station settings' after scheduled OS patching reboot. Command analytics dashboard depends on this node and Commander Kapoor's 0900 briefing is in 2 hours. Failure to restore this node will result in a briefing without data, which is the operational equivalent of navigating an asteroid field blindfolded. Commander Kapoor without her morning data is a force of nature. Act accordingly.",
         "remediation_steps": [
-            "Access the Station Core management console and check prod-analytics-01 boot status — if it's stuck at 'Applying station settings', the OS patch may have introduced a driver conflict or a startup service is hanging",
-            "If the remote console is unresponsive, request a hard reset via the Station Core hypervisor management interface — document the timestamp for the post-incident review",
-            "Once the node is responsive, check OS patch installation logs for errors and verify all station services started correctly — pay special attention to the monitoring agent and database services",
-            "Verify the 12-hour data gap in the analytics pipeline — determine if the upstream data can be replayed from the ingestion buffer or if manual backfill is needed",
+            "Access the Station Core management console and check prod-analytics-01 boot status — if it's stuck at 'Applying station settings,' the OS patch may have introduced a driver conflict or a startup service is hanging. In either case, the node is experiencing the server equivalent of staring at the ceiling after waking up and deciding it doesn't want to go to work today",
+            "If the remote console is unresponsive, request a hard reset via the Station Core hypervisor management interface — document the timestamp for the post-incident review, because 'I rebooted it and it fixed itself' is not a root cause analysis, it's a prayer that worked once",
+            "Once the node is responsive, check OS patch installation logs for errors and verify all station services started correctly — pay special attention to the monitoring agent and database services, which have a symbiotic relationship similar to the Deck 9 cat and the hydroponics bay: each believes it is in charge, and both stop functioning if you separate them",
+            "Verify the 12-hour data gap in the analytics pipeline — determine if the upstream data can be replayed from the ingestion buffer or if manual backfill is needed. Commander Kapoor's briefing requires accurate analytics. Presenting her with a 12-hour data void is like showing up to a navigation briefing with a map that says 'here be dragons' across the sector she's asking about",
             "Post-incident: review the OS patching procedure to prevent unattended reboot failures — a production node that silently disappears for 12 hours after a 'routine' patch is the kind of failure mode that gets its own section in the station incident report. And possibly its own commemorative plaque on Deck 7, next to the one about the protein cube incident"
         ]
     }
