@@ -27,8 +27,8 @@
     },
     {
         "ticket_id": "SIG-0003",
-        "subject": "Holographic holographic projector offline in Main War Room — delegation arriving in 25 minutes",
-        "description": "The holographic holographic projector in the Main War Room won’t power on. Tried the neural interface and the manual override panel. The Meridian Sector delegation arrives in ~25 minutes for the final treaty review on a critical deep-space mining pact worth 2.3M credits — our Fleet Admiral is presenting the tactical overlay. No backup chamber fits 12 species representatives (especially not with the Rigelian ambassador’s atmospheric requirements). Can someone beam over immediately?",
+        "subject": "Holographic projector offline in Main War Room — delegation arriving in 25 minutes",
+        "description": "The holographic projector in the Main War Room won’t power on. Tried the neural interface and the manual override panel. The Meridian Sector delegation arrives in ~25 minutes for the final treaty review on a critical deep-space mining pact worth 2.3M credits — our Fleet Admiral is presenting the tactical overlay. No backup chamber fits 12 species representatives (especially not with the Rigelian ambassador’s atmospheric requirements). Can someone beam over immediately?",
         "reporter": {
             "name": "Diana Marsh",
             "email": "diana.marsh@cdss.space",
@@ -111,7 +111,7 @@
     },
     {
         "ticket_id": "SIG-0009",
-        "subject": "Re: SIG-2834 — Airlock airlock access code still broken, Deck 7",
+        "subject": "Re: SIG-2834 — Airlock access code still broken, Deck 7",
         "description": "Following up on SIG-2834 from last week. Airlock access code still doesn’t work for Deck 7 after the access system migration. Was told it’d be fixed by Friday — it’s Monday and I still can’t get in. Have to wait for someone to cycle the airlock every morning. Third time reporting this.",
         "reporter": {
             "name": "Elena Vasquez",
@@ -125,7 +125,7 @@
     {
         "ticket_id": "SIG-0010",
         "subject": "New crew member March 31 — full setup needed",
-        "description": "New senior astro-data scientist (Alex Rivera) arriving on station March 31. Needs:\n- Workstation console (Quantum Pro M4, 32GB)\n- Standard software + Python/Conda/Jupyter\n- Station Core ML workspace access (rg-ml-prod)\n- Sensor catalog read access\n- Deck 3 airlock airlock access code\n- Added to analytics-team DL and SubComm channel\n\nReports to me. Please have everything ready by March 28 for a walkthrough.",
+        "description": "New senior astro-data scientist (Alex Rivera) arriving on station March 31. Needs:\n- Workstation console (Quantum Pro M4, 32GB)\n- Standard software + Python/Conda/Jupyter\n- Station Core ML workspace access (rg-ml-prod)\n- Sensor catalog read access\n- Deck 3 airlock access code\n- Added to analytics-team DL and SubComm channel\n\nReports to me. Please have everything ready by March 28 for a walkthrough.",
         "reporter": {
             "name": "Dr. Yuki Tanaka",
             "email": "yuki.tanaka@cdss.space",

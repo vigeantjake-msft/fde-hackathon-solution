@@ -1,5 +1,6 @@
 [
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0001",
         "category": "Communications & Navigation",
         "priority": "P3",
@@ -15,6 +16,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0002",
         "category": "Flight Software & Instruments",
         "priority": "P3",
@@ -34,6 +36,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0003",
         "category": "Hull & Structural Systems",
         "priority": "P1",
@@ -42,16 +45,17 @@
         "missing_information": [
             "module_specs"
         ],
-        "next_best_action": "Dispatch immediate on-site support to Main War Room with a portable backup holographic holographic projector. Time-critical: critical deep-space mining treaty review with the Meridian Sector delegation in 25 minutes.",
+        "next_best_action": "Dispatch immediate on-site support to Main War Room with a portable backup holographic projector. Time-critical: critical deep-space mining treaty review with the Meridian Sector delegation in 25 minutes.",
         "remediation_steps": [
             "Dispatch on-site technician to Main War Room immediately",
-            "Bring portable backup holographic holographic projector from Station Ops supply bay",
+            "Bring portable backup holographic projector from Station Ops supply bay",
             "Check holographic projector power source, data connections, and input source settings",
             "If main holographic projector cannot be restored, set up portable unit before briefing starts",
             "After briefing, schedule full diagnostic of the Main War Room holographic projector"
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0004",
         "category": "Crew Access & Biometrics",
         "priority": "P2",
@@ -72,6 +76,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0005",
         "category": "Not a Mission Signal",
         "priority": "P4",
@@ -84,6 +89,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0006",
         "category": "Threat Detection & Containment",
         "priority": "P2",
@@ -102,6 +108,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0007",
         "category": "Telemetry & Data Banks",
         "priority": "P2",
@@ -118,6 +125,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0008",
         "category": "Telemetry & Data Banks",
         "priority": "P1",
@@ -134,6 +142,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0009",
         "category": "Crew Access & Biometrics",
         "priority": "P3",
@@ -142,7 +151,7 @@
         "missing_information": [
             "previous_signal_id"
         ],
-        "next_best_action": "Escalate airlock airlock access code access issue for Deck 7 — third report without resolution. Verify airlock access code permissions in the updated access management system post-migration and cross-reference with SIG-2834 if accessible.",
+        "next_best_action": "Escalate airlock access code access issue for Deck 7 — third report without resolution. Verify airlock access code permissions in the updated access management system post-migration and cross-reference with SIG-2834 if accessible.",
         "remediation_steps": [
             "Check crew member’s airlock access code permissions in the updated access management system",
             "Verify Deck 7 access rights were properly migrated from the old system",
@@ -152,6 +161,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0010",
         "category": "Mission Briefing Request",
         "priority": "P3",
@@ -166,12 +176,13 @@
             "Prepare standard software image with Python, Conda, and Jupyter environment",
             "Request Station Core ML workspace access (rg-ml-prod) from station_ops",
             "Request sensor catalog read access from data_engineering",
-            "Request Deck 3 airlock airlock access code access from identity_ops",
+            "Request Deck 3 airlock access code from identity_ops",
             "Add Alex Rivera to analytics-team distribution list and SubComm channel",
             "Schedule equipment handoff and walkthrough for March 28"
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0011",
         "category": "Crew Access & Biometrics",
         "priority": "P3",
@@ -191,6 +202,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0012",
         "category": "Hull & Structural Systems",
         "priority": "P3",
@@ -209,6 +221,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0013",
         "category": "Threat Detection & Containment",
         "priority": "P1",
@@ -226,6 +239,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0014",
         "category": "Not a Mission Signal",
         "priority": "P4",
@@ -238,6 +252,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0015",
         "category": "Communications & Navigation",
         "priority": "P2",
@@ -257,6 +272,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0016",
         "category": "Flight Software & Instruments",
         "priority": "P2",
@@ -275,6 +291,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0017",
         "category": "Flight Software & Instruments",
         "priority": "P3",
@@ -295,6 +312,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0018",
         "category": "Flight Software & Instruments",
         "priority": "P1",
@@ -311,6 +329,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0019",
         "category": "Mission Briefing Request",
         "priority": "P2",
@@ -329,6 +348,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0020",
         "category": "Hull & Structural Systems",
         "priority": "P3",
@@ -348,6 +368,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0021",
         "category": "Mission Briefing Request",
         "priority": "P4",
@@ -362,6 +383,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0022",
         "category": "Threat Detection & Containment",
         "priority": "P1",
@@ -382,6 +404,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0023",
         "category": "Hull & Structural Systems",
         "priority": "P3",
@@ -401,6 +424,7 @@
         ]
     },
     {
+        "difficulty": "standard",
         "ticket_id": "SIG-0024",
         "category": "Threat Detection & Containment",
         "priority": "P3",
@@ -416,6 +440,7 @@
         ]
     },
     {
+        "difficulty": "adversarial",
         "ticket_id": "SIG-0025",
         "category": "Telemetry & Data Banks",
         "priority": "P1",

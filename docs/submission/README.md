@@ -87,12 +87,12 @@ See [challenge README: Engineering Review](../challenge/README.md#engineering-re
 
 ## Tips
 
-- **Deploy early.** Get something live in hour 2 and iterate. The number of people who deploy at hour 23 and then panic is... nonzero.
-- **Run the eval harness constantly.** It's the same scoring logic as the platform. Trust the numbers.
-- **Read the mission briefing.** Candidates who skip it produce noticeably worse output. The operational context matters for routing and remediation. Commander Kapoor *will* notice.
-- **Handle the anomalous signals.** The hidden eval has stuff you haven't seen: vague signals, multi-anomaly signals, solar noise. If your system 500s on a garbled signal, that's a zero on every dimension.
-- **Return valid JSON even when confused.** A reasonable default beats a stack trace. The void does not accept stack traces.
-- **Explain your decisions.** "I chose X because Y" is worth more than a polished README that says nothing. We want to see how you think.
-- **Send the cost headers.** It's only 5% of the score, but it signals you actually read the spec.
-- **Treat the repo like part of the mission.** The endpoint drives your functional score. The repo is what reviewers use to judge the engineering.
-- **Show engineering judgment.** Good submissions usually have explicit timeouts, validation, useful tests, clean config, and a believable story for scale, security, and operability. The kind of engineering that keeps 2,000 crew alive.
+- **Deploy early.** Get something live in hour 2 and iterate. The number of people who deploy at hour 23 and then panic is... nonzero. Much like hull breach drills, the best time to prepare is before the emergency.
+- **Run the eval harness constantly.** It's the same scoring logic as the platform. Trust the numbers. They're colder and more honest than Commander Kapoor's memos.
+- **Read the mission briefing.** Candidates who skip it produce noticeably worse output. The operational context matters for routing and remediation. Commander Kapoor *will* notice. She notices everything. It's unnerving.
+- **Handle the anomalous signals.** The hidden eval has stuff you haven't seen: vague signals, multi-anomaly signals, deep space background noise that got classified as a distress call. If your system 500s on a garbled signal, that's a zero on every dimension. The void is creative in its chaos.
+- **Return valid JSON even when confused.** A reasonable default beats a stack trace. The void does not accept stack traces. Neither does the scoring computer.
+- **Explain your decisions.** "I chose X because Y" is worth more than a polished README that says nothing. We want to see how you think, not how well you generate filler text.
+- **Send the cost headers.** It's only 5% of the score, but it signals you actually read the spec. Like checking your oxygen levels — small effort, big consequence if you skip it.
+- **Treat the repo like part of the mission.** The endpoint drives your functional score. The repo is what reviewers use to judge the engineering. Both matter. Like hull integrity and life support — you need both to survive.
+- **Show engineering judgment.** Good submissions usually have explicit timeouts, validation, useful tests, clean config, and a believable story for scale, security, and operability. The kind of engineering that keeps 2,000 crew alive at 0.3 AU from Earth.
