@@ -2,7 +2,7 @@
     {
         "ticket_id": "SIG-0001",
         "subject": "Comms relay drops when switching between antenna arrays",
-        "description": "Every time I switch from the hardline uplink to the RF mesh antenna, the comms relay disconnects and I have to re-establish the link manually. Started after last Tuesday's station firmware update. Using SubComm v3.2 on Deck 4.",
+        "description": "Every time I switch from the hardline uplink to the RF mesh antenna, the comms relay drops like it's personally offended. Have to re-establish the link manually each time, which involves staring at a progress bar for 45 seconds while the entire Gamma Sector sits in radio silence wondering if something ate the antenna. Started after last Tuesday's station firmware update — you know, the one nobody asked for and nobody was warned about and nobody has been held accountable for. Using SubComm v3.2 on Deck 4. The old version worked fine. I'm just saying.",
         "reporter": {
             "name": "Sarah Chen",
             "email": "sarah.chen@cdss.space",
@@ -82,7 +82,7 @@
     {
         "ticket_id": "SIG-0007",
         "subject": "Nightly telemetry sync failing -- 403 on station data archive",
-        "description": "Telemetry pipeline 'prod-sensor-ingest' failing since 03:00 UTC with 403 Forbidden on the station data archive. Service credential may have expired or the Data Contributor role got removed during last week's archive cleanup. Feeds the daily mission briefing report used for the Monday command review. Pipeline runs in Sector Alpha, data-core-prod. Last successful run Saturday 03:00 UTC.",
+        "description": "Telemetry pipeline 'prod-sensor-ingest' has been failing since 03:00 UTC with 403 Forbidden on the station data archive. The service credential either expired or lost its Data Contributor role during last week's archive cleanup — which was supposed to be 'routine maintenance' and instead became 'routine destruction of everything that relies on those credentials.' Feeds the daily mission briefing report used for the Monday command review — you know, the one where the Commander asks 'why don't we have telemetry data?' and everyone looks at their boots and wishes the floor would open up into the vacuum of space. Pipeline runs in Sector Alpha, data-core-prod. Last successful run Saturday 03:00 UTC. That's 48 hours of telemetry we're not ingesting, for anyone keeping score. The Commander is. She has a spreadsheet.",
         "reporter": {
             "name": "Raj Patel",
             "email": "raj.patel@cdss.space",
@@ -164,7 +164,7 @@
     {
         "ticket_id": "SIG-0013",
         "subject": "Potential data breach -- classified crew records exposed",
-        "description": "During a routine security audit, we discovered that a data archive containing classified PII for ~1,200 crew personnel across the Kepler Station was shared with unsecured 'anyone with the link' permissions. The archive has been accessible since at least February 15. We've revoked the sharing permissions as of this morning but need to determine: (1) who created the public link, (2) whether unauthorized parties accessed the data, and (3) whether this triggers a notification obligation under Space Authority data protection regulations. This is a potential regulatory incident.",
+        "description": "During a routine security audit — you know, the kind of audit that starts with 'let's just double-check something' and ends with someone saying 'oh no' very quietly — we discovered that a data archive containing classified PII for ~1,200 crew personnel across the Kepler Station was shared with unsecured 'anyone with the link' permissions. 'Anyone with the link' means anyone. In space. Where signals bounce between relay satellites and get cached in places we've never heard of. The archive has been accessible since at least February 15. We've revoked the sharing permissions as of this morning but need to determine: (1) who created the public link (I have theories, none of them flattering), (2) whether unauthorized parties accessed the data, and (3) whether this triggers a notification obligation under Space Authority data protection regulations. If the answer to (3) is yes, I need to know before the Commander does, because she finds out about these things approximately 12 seconds after they happen through means I have not been able to identify. This is a potential regulatory incident. It is also potentially my last day as Data Protection Commander if I don't handle it correctly.",
         "reporter": {
             "name": "Dr. Ananya Gupta",
             "email": "ananya.gupta@cdss.space",
@@ -193,7 +193,7 @@
     {
         "ticket_id": "SIG-0015",
         "subject": "Slight delay in navigation calculations -- may be nothing",
-        "description": "Noticing about a 200ms delay in navigation calculations on the Gamma Sector relay this morning. Normally we're at ~50ms. Latency seems to spike right around 09:00 SST and hasn't recovered. Not sure if it's on our side or the relay beacon. The helm officers haven't complained yet but if this gets to 500ms during the Centauri transit window we'll have a real problem. Just flagging early.",
+        "description": "Noticing about a 200ms delay in navigation calculations on the Gamma Sector relay this morning. Normally we're at ~50ms — which is already not great, but at least the helm officers don't visibly twitch. Latency seems to spike right around 09:00 SST and hasn't recovered. Not sure if it's on our side or the relay beacon. The helm officers haven't complained yet but that's because they haven't noticed yet, and the moment they do, I will receive approximately 47 signals simultaneously, all marked URGENT, all saying slightly different things, and all CC'ing the Commander. If this gets to 500ms during the Centauri transit window, we'll have a real problem — specifically the kind of problem where a starship misses its insertion burn by 0.003 degrees and ends up in a progressively deteriorating orbit around nothing in particular. Just flagging early. You're welcome.",
         "reporter": {
             "name": "James Okafor",
             "email": "james.okafor@cdss.space",

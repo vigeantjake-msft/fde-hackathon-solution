@@ -595,11 +595,58 @@ def main() -> int:
     print()
     print("  Classification dimensions (max 85 pts):")
     print()
+
+    # Per-dimension space-themed color commentary
+    _dim_commentary = {
+        "category": {
+            0.9: "Anomaly classification: exemplary. The crew trusts you.",
+            0.7: "Decent anomaly reads, but some signals slipped by.",
+            0.5: "Crew Identity got a hull breach. Threat Response got a lunch order.",
+            0.0: "You're classifying anomalies like a malfunctioning sensor array.",
+        },
+        "priority": {
+            0.9: "Priority calls: surgeon-precise. No one died unnecessarily.",
+            0.7: "Mostly right — a few Red Alerts that should've been Routine.",
+            0.5: "You called a hull breach 'Routine' and a jammed fabricator 'Red Alert.'",
+            0.0: "Deck 7 now has mood lighting. From space. Through the new hole.",
+        },
+        "routing": {
+            0.9: "Routing: every signal reached the right team. First try.",
+            0.7: "Most teams got the right signals. A few are confused.",
+            0.5: "Deep Space Comms is staring at a biometric scanner. Again.",
+            0.0: "You routed a containment breach to catering. Impressive, in a way.",
+        },
+        "missing_info": {
+            0.9: "Intel requests: precise. No wasted subspace bandwidth.",
+            0.7: "Mostly asked for the right follow-up data. A few misfires.",
+            0.5: "Asking for sensor logs on a 'thanks' message. Questionable.",
+            0.0: "Either asking for everything or nothing. The crew is not amused.",
+        },
+        "escalation": {
+            0.9: "Escalation calls: the Admiral sleeps soundly tonight.",
+            0.7: "Caught most escalations. Missed one or two. The Admiral noticed.",
+            0.5: "The Admiral found out about the hostile contact from the news.",
+            0.0: "You let a containment breach slide. The paperwork will outlive you.",
+        },
+    }
+
     for dim, weight in WEIGHTS.items():
         score = dim_scores[dim]
         pts = score * weight / _CLASSIFICATION_WEIGHT_SUM * 85
         method = "macro F1" if dim in ("category", "routing") else ("binary F1" if dim == "escalation" else "mean")
+        # Select commentary based on score thresholds
+        commentary_map = _dim_commentary.get(dim, {})
+        comment = ""
+        for threshold in sorted(commentary_map.keys(), reverse=True):
+            if score >= threshold:
+                comment = commentary_map[threshold]
+                break
+        if not comment and commentary_map:
+            comment = commentary_map[min(commentary_map.keys())]
+
         print(f"    {dim:<16s}  {score:.4f} ({method})  × {weight * 100:.0f}% weight  = {pts:5.2f} pts")
+        if comment:
+            print(f"                    └─ {comment}")
     print(f"    {'─' * 52}")
     print(f"    {'CLASSIFICATION':16s}  {classification_score:5.1f} / 85")
     print()
@@ -612,14 +659,16 @@ def main() -> int:
     if errors:
         print(f"  Signals lost to the void (scored as 0): {errors}")
     # Dynamic verdict based on score
-    if classification_score >= 80:
+    if classification_score >= 82:
         verdict_line = "  │  🌟 The crew sleeps soundly. Outstanding triage, operator. │"
-    elif classification_score >= 65:
+    elif classification_score >= 70:
         verdict_line = "  │  🛰️  Solid work. The crew mostly survives your decisions.  │"
-    elif classification_score >= 45:
+    elif classification_score >= 55:
         verdict_line = "  │  ⚠️  The Admiral has questions. Several of them are loud.  │"
-    else:
+    elif classification_score >= 35:
         verdict_line = "  │  🔥 Deck 7 is venting. The cats are floating. Do better.  │"
+    else:
+        verdict_line = "  │  💀 You have been relieved of command. Report to airlock.  │"
 
     print()
     print("  ┌─────────────────────────────────────────────────────────────┐")

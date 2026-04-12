@@ -43,26 +43,32 @@ score_ticket = _run_eval.score_ticket
 
 
 def test_category_exact():
+    """Exact anomaly classification — gold star, the right team scrambles."""
     assert score_category("Crew Access & Biometrics", "Crew Access & Biometrics") == 1.0
 
 
 def test_category_case_insensitive():
+    """Case doesn't matter in space — the void doesn't care about capitalization."""
     assert score_category("crew access & biometrics", "Crew Access & Biometrics") == 1.0
 
 
 def test_category_mismatch():
+    """Wrong category — Threat Response is now staring at a biometric scanner. Someone else is on fire."""
     assert score_category("Communications & Navigation", "Crew Access & Biometrics") == 0.0
 
 
 def test_category_none():
+    """No answer is not an answer. The crew is waiting. The void is patient. You should not be."""
     assert score_category(None, "Crew Access & Biometrics") == 0.0
 
 
 def test_category_empty():
+    """Empty string — you had one job and you returned nothing. Even the cats on Deck 9 judge you."""
     assert score_category("", "Crew Access & Biometrics") == 0.0
 
 
 def test_category_whitespace_trimmed():
+    """Extra whitespace is forgiven — the scoring computer is strict, not petty."""
     assert score_category("  Crew Access & Biometrics  ", "Crew Access & Biometrics") == 1.0
 
 
@@ -124,27 +130,32 @@ def test_priority_numeric_string():
 
 
 def test_routing_exact():
+    """Right team, first try — no bouncing signals across the station like a zero-g pinball."""
     assert score_routing("Threat Response Command", "Threat Response Command") == 1.0
 
 
 def test_routing_case():
+    """Case insensitive — the scoring computer doesn't care if you whisper or shout the team name."""
     assert score_routing("threat response command", "Threat Response Command") == 1.0
 
 
 def test_routing_mismatch():
+    """Wrong team — Telemetry & Data Core is now responding to a hostile contact report. Awkward."""
     assert score_routing("Telemetry & Data Core", "Threat Response Command") == 0.0
 
 
 def test_routing_none_team():
-    """'None' is a valid team for non-mission signals."""
+    """'None' is a valid team for non-mission signals. The void gets routed to no one. As it should."""
     assert score_routing("None", "None") == 1.0
 
 
 def test_routing_empty():
+    """No team assigned — the signal floats in the queue like debris in orbit. Forever."""
     assert score_routing("", "Threat Response Command") == 0.0
 
 
 def test_routing_whitespace_trimmed():
+    """Whitespace around team names is trimmed — we're lenient about formatting, not about routing."""
     assert score_routing("  Threat Response Command  ", "Threat Response Command") == 1.0
 
 
@@ -152,18 +163,22 @@ def test_routing_whitespace_trimmed():
 
 
 def test_escalation_true_true():
+    """Hostile contact flagged, Admiral notified — you saved careers today."""
     assert score_escalation(True, True) == 1.0
 
 
 def test_escalation_false_false():
+    """No escalation needed, none triggered — the rare art of correctly doing nothing."""
     assert score_escalation(False, False) == 1.0
 
 
 def test_escalation_mismatch():
+    """False alarm pulled — Threat Response Command mobilized for a fabricator jam. They're not happy."""
     assert score_escalation(True, False) == 0.0
 
 
 def test_escalation_none():
+    """No answer on escalation — the Admiral found out from the news. You're in trouble."""
     assert score_escalation(None, True) == 0.0
 
 
@@ -171,22 +186,27 @@ def test_escalation_none():
 
 
 def test_missing_both_empty():
+    """Both empty — signal was complete, you recognized it. Don't waste subspace bandwidth asking for more."""
     assert score_missing_info([], []) == 1.0
 
 
 def test_missing_false_positive():
+    """Asked for intel that wasn't needed — you asked for more. They're annoyed."""
     assert score_missing_info(["module_specs"], []) == 0.0
 
 
 def test_missing_false_negative():
+    """Needed intel but didn't ask — now you're flying blind. The void doesn't volunteer information."""
     assert score_missing_info([], ["module_specs"]) == 0.0
 
 
 def test_missing_perfect():
+    """Asked for exactly what was missing — precise, efficient, no wasted subspace relay capacity."""
     assert score_missing_info(["module_specs"], ["module_specs"]) == 1.0
 
 
 def test_missing_perfect_different_order():
+    """Order doesn't matter — ask the right questions and the scoring computer is satisfied."""
     assert score_missing_info(["module_specs", "anomaly_readout"], ["anomaly_readout", "module_specs"]) == 1.0
 
 
@@ -525,6 +545,7 @@ def _make_ticket(
 
 
 def test_submission_perfect_single():
+    """One signal, perfect triage — even a broken clock gets one right. But you earned this one."""
     gold = [_make_ticket("SIG-0001")]
     result = score_submission(gold, gold)
     assert result["classification_score"] == 85.0
@@ -533,12 +554,14 @@ def test_submission_perfect_single():
 
 
 def test_submission_perfect_multiple():
+    """Ten signals, all perfect — the crew is naming a corridor after you. Or at least thinking about it."""
     gold = [_make_ticket(f"SIG-{i:04d}") for i in range(10)]
     result = score_submission(gold, gold)
     assert result["classification_score"] == 85.0
 
 
 def test_submission_missing_response():
+    """One signal went unanswered — somewhere on Deck 7, someone is still waiting. The cats are watching."""
     gold = [_make_ticket("SIG-0001"), _make_ticket("SIG-0002")]
     cands = [_make_ticket("SIG-0001")]
     result = score_submission(cands, gold)
@@ -547,6 +570,7 @@ def test_submission_missing_response():
 
 
 def test_submission_all_missing():
+    """No responses at all — you built a triage system that triages nothing. The void approves. The crew does not."""
     gold = [_make_ticket("SIG-0001"), _make_ticket("SIG-0002")]
     result = score_submission([], gold)
     assert result["tickets_errored"] == 2
@@ -554,6 +578,7 @@ def test_submission_all_missing():
 
 
 def test_submission_dimension_scores_are_fractions():
+    """All dimension scores should be 0-1 fractions — not percentages, not credits, not decibels."""
     gold = [_make_ticket("SIG-0001")]
     result = score_submission(gold, gold)
     for v in result["dimension_scores"].values():
@@ -561,6 +586,7 @@ def test_submission_dimension_scores_are_fractions():
 
 
 def test_submission_has_five_dimensions():
+    """Exactly 5 dimensions — like the 5 decks between you and the nearest airlock if you get these wrong."""
     gold = [_make_ticket("SIG-0001")]
     result = score_submission(gold, gold)
     expected = {"category", "priority", "routing", "missing_info", "escalation"}
@@ -568,6 +594,7 @@ def test_submission_has_five_dimensions():
 
 
 def test_submission_extra_tickets_ignored():
+    """Signals you answered that weren't in the gold set — ignored. The scoring computer does not reward enthusiasm."""
     gold = [_make_ticket("SIG-0001")]
     cands = [_make_ticket("SIG-0001"), _make_ticket("SIG-9999")]
     result = score_submission(cands, gold)

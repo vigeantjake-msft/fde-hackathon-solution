@@ -151,10 +151,15 @@ Health check: ✓ OK
     Classification dimensions (max 85 pts):
 
       category          0.8200 (macro F1)   × 20% weight  = 16.40 pts
+                        └─ Decent anomaly reads, but some signals slipped by.
       priority          0.9100 (mean)        × 20% weight  = 18.20 pts
+                        └─ Priority calls: surgeon-precise. No one died unnecessarily.
       routing           0.7500 (macro F1)   × 20% weight  = 15.00 pts
+                        └─ Most teams got the right signals. A few are confused.
       missing_info      0.6800 (mean)        × 15% weight  = 10.20 pts
+                        └─ Mostly asked for the right follow-up data. A few misfires.
       escalation        0.9000 (binary F1)  × 10% weight  =  9.00 pts
+                        └─ Escalation calls: the Admiral sleeps soundly tonight.
       ────────────────────────────────────────────────────────
       CLASSIFICATION     72.5 / 85
 
@@ -171,6 +176,7 @@ Health check: ✓ OK
     │                                                             │
     │  The scoring computer has rendered its verdict.             │
     │  Space doesn't grade on a curve. Neither do we. 🫡         │
+    │  🛰️  Solid work. The crew mostly survives your decisions.  │
     └─────────────────────────────────────────────────────────────┘
 
   Results saved to eval_results.json
