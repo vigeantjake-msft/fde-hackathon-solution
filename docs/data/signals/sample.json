@@ -1,8 +1,8 @@
 [
     {
         "ticket_id": "SIG-0001",
-        "subject": "Warp tunnel drops when switching from hardline to station-wide mesh comms",
-        "description": "Every time I undock my bridge terminal and move to station-wide mesh comms, the warp tunnel disconnects and I have to reconnect manually. Started after last Tuesday’s ShipOS update. Using WarpShield v3.2 on the Alpha Station mesh, Deck 4. I’d file this under ‘mildly infuriating’ except last time it happened I was mid-transmission to Station Epsilon and they got half a cargo manifest spliced with half of Lt. Mehta’s personal log. Commander Kapoor was NOT amused. Station Epsilon now thinks we’re shipping 400 kilograms of ‘existential dread and navigational charts.’ The Deck 9 cat has better connectivity than this, and it doesn’t even have thumbs.",
+        "subject": "Long-range subspace transmissions fragmenting during solar activity window",
+        "description": "Since about 0600 station time, our long-range subspace transmissions to Station Epsilon and the Meridian relay have been fragmenting mid-burst. Data packets arrive at the destination out of sequence and roughly 15% are corrupted beyond error correction. Started right when the local star entered the predicted coronal mass ejection window. Short-range comms (inter-deck, local mesh) are completely fine — it’s only the deep-space links beyond 0.05 AU that are affected. I ran a full diagnostic sweep on the Deck 4 subspace antenna array and everything checks out locally — signal strength, emitter alignment, power output all nominal. Station Epsilon confirmed they received yesterday’s cargo manifest as a garbled mess: half shipping weights, half of what appears to be Lt. Mehta’s personal fitness log, which is both a data integrity failure and an unintentional privacy breach. Honestly, the real scandal is that Mehta logs his zero-g calisthenics as ‘extreme athletics.’ Using WarpShield v3.2 on the Alpha Station subspace relay, Deck 4. The Deck 9 cat has been sitting on the secondary relay console all morning, which either means it senses electromagnetic disturbance or it’s just warm up there. Both are equally plausible at this point.",
         "reporter": {
             "name": "Sarah Chen",
             "email": "sarah.chen@cdss.space",
@@ -205,18 +205,16 @@
     },
     {
         "ticket_id": "SIG-0016",
-        "subject": "FlightOS won’t load after passphrase rotation",
-        "description": "Changed my station passphrase this morning per the quarterly rotation policy. Now FlightOS GUI gives me 'unified crew authentication token invalid — contact your system administrator'. Tried logging out and back in to the station console, same issue. Other apps (SubComm, mission logs) work fine — it's specifically FlightOS that has decided my new passphrase is a personal affront. I need FlightOS to process month-end resource reconciliation — close of shift today is the deadline. If I miss this deadline, the supply chain team won't know how many replacement air filters to request on the next cargo shuttle, and I'll be personally responsible for Deck 7's respiratory adventure. Again.",
+        "subject": "FlightOS trajectory plotter showing reference frame drift after patch 7.4.2",
+        "description": "After the overnight FlightOS patch to 7.4.2, the trajectory plotter is computing courses that are subtly wrong. I noticed during routine pre-flight verification this morning — plotted a standard transit to the Jupiter relay and the arrival coordinates were 0.003 AU off from Jupiter’s actual ephemeris position. Ran it three times, same drift every time. The star catalogue timestamps look correct, but the reference frame transformation appears to be applying an outdated precession model. Short-range plots (station-to-station within 0.1 AU) look fine — the error only becomes visible on long-range calculations where the angular discrepancies compound over distance. Nobody has flown one of these bad courses yet — I caught it during pre-flight verification, which is why we do pre-flight verification and why I will never stop reminding people that we do pre-flight verification. In space, 0.003 AU is about 450,000 kilometers, which is roughly the distance between ‘arriving at Jupiter’ and ‘arriving at a very expensive conversation with the Admiral about why the cargo shuttle is now orbiting Io.’ Other apps (SubComm, mission logs) work fine. Month-end resource reconciliation requires accurate transit plots by Thursday and I can’t certify any of these routes.",
         "reporter": {
-            "name": "Linda Park",
-            "email": "linda.park@cdss.space",
-            "department": "Resource Allocation"
+            "name": "Michael Torres",
+            "email": "michael.torres@cdss.space",
+            "department": "Flight Operations"
         },
-        "created_at": "2026-03-17T10:30:00Z",
+        "created_at": "2026-03-17T09:30:00Z",
         "channel": "bridge_terminal",
-        "attachments": [
-            "flightos_error_capture.png"
-        ]
+        "attachments": []
     },
     {
         "ticket_id": "SIG-0017",
@@ -328,18 +326,18 @@
     },
     {
         "ticket_id": "SIG-0025",
-        "subject": "Station Core VM ‘prod-analytics-01’ unreachable since reboot",
-        "description": "Compute node prod-analytics-01 (CoreSpec-E16, Sector Delta, analytics-core-prod) became unreachable after a scheduled reboot at 05:00 UTC for OS patching. Remote console and secure shell both timeout. Station Core portal shows the node status as 'Running' but boot diagnostics show it stuck at 'Applying station settings' — which is the computer equivalent of staring blankly into the void while everyone waits for you to do something. The void stares back, as always, but unlike the void this particular stare is costing us actual mission data. Defense grid rules haven't changed. This node runs the analytics dashboard that the command staff uses for the morning briefing at 0900 station time. Commander Kapoor does not enjoy briefings without data. Commander Kapoor without data is like a hull breach without sound — silent, but you know something terrible is happening. We have about 2 hours before that briefing. Last time the dashboard was down for a briefing, Mehta's margin note about it was three pages long. Three. Pages. Please advise with extreme urgency.",
+        "subject": "Probably nothing — analytics node rebooted, some dashboards stale, life support feed on backup",
+        "description": "Hey, quick one. The prod-analytics-01 node in Station Core (CoreSpec-E16, analytics-core-prod, Sector Delta) was rebooted at 05:00 for routine OS patching and hasn’t come back online. Remote console and secure shell both timeout. The Station Core portal shows it as ‘Running’ but boot diagnostics show it stuck at ‘Applying station settings’ — which is the server equivalent of staring at the ceiling after waking up and deciding it doesn’t want to go to work today. It’s been 12 hours now.\n\nThe downstream impact is... broader than I initially realized. The command analytics dashboard pulls from this node, so Commander Kapoor’s 0900 briefing showed ‘DATA UNAVAILABLE’ across six panels. She noticed. She always notices. The life support trend monitoring pipeline was ALSO running through this node’s secondary interface — it’s on a backup feed now but the backup is at 87% capacity and was never designed to be a primary. If the backup saturates, we lose real-time atmospheric composition tracking for Decks 4 through 9. That includes the deck where the Deck 9 cat lives, so if nothing else motivates urgency, that might.\n\nThe 12-hour data gap in the analytics pipeline means we can’t verify whether any environmental anomalies occurred overnight. We are, technically, flying partially blind. I’m marking this as ‘probably fine’ because I’ve been told to stop catastrophizing. I have not stopped catastrophizing. I have merely stopped vocalizing it. The Exobiology team’s 4.7 TB cat behavioral dataset is also on this node and currently inaccessible. They are not handling this well. They have charts about how they’re not handling this well.",
         "reporter": {
-            "name": "Alex Petrov",
-            "email": "alex.petrov@cdss.space",
-            "department": "Station Operations"
+            "name": "Raj Patel",
+            "email": "raj.patel@cdss.space",
+            "department": "Propulsion Engineering"
         },
-        "created_at": "2026-03-17T05:30:00Z",
+        "created_at": "2026-03-18T17:15:00Z",
         "channel": "bridge_terminal",
         "attachments": [
-            "boot_diagnostics_capture.png",
-            "defense grid_rules_export.json"
+            "node_boot_diagnostic.log",
+            "backup_pipeline_capacity.png"
         ]
     }
 ]
