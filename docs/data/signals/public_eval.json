@@ -180,7 +180,7 @@
         "created_at": "2026-04-01T15:57:00Z",
         "channel": "holodeck_comm",
         "attachments": [
-            "teams_log.txt"
+            "comms_log.txt"
         ]
     },
     {
@@ -209,7 +209,7 @@
         "channel": "bridge_terminal",
         "attachments": [
             "adf_anomaly_log.txt",
-            "browser_console.log"
+            "station_viewer_console.log"
         ]
     },
     {
@@ -280,7 +280,7 @@
         "channel": "subspace_relay",
         "attachments": [
             "config_export.xml",
-            "wireshark_capture.pcapng"
+            "subspace_capture.pcapng"
         ]
     },
     {
@@ -524,7 +524,7 @@
         "created_at": "2026-03-25T08:43:00Z",
         "channel": "subspace_relay",
         "attachments": [
-            "defender_alert.json"
+            "sentinelgrid_alert.json"
         ]
     },
     {
@@ -552,7 +552,7 @@
         "created_at": "2026-04-11T09:15:00Z",
         "channel": "emergency_beacon",
         "attachments": [
-            "defender_alert.json",
+            "sentinelgrid_alert.json",
             "network_trace.pcap",
             "event_log.evtx"
         ]
@@ -654,7 +654,7 @@
         "created_at": "2026-03-30T15:29:00Z",
         "channel": "subspace_relay",
         "attachments": [
-            "teams_log.txt",
+            "comms_log.txt",
             "central_command_report.csv"
         ]
     },
@@ -784,7 +784,7 @@
         "created_at": "2026-03-30T17:43:00Z",
         "channel": "subspace_relay",
         "attachments": [
-            "defender_alert.json",
+            "sentinelgrid_alert.json",
             "event_log.evtx"
         ]
     },
@@ -1058,8 +1058,8 @@
         "channel": "subspace_relay",
         "attachments": [
             "inspection_report.log",
-            "browser_console.log",
-            "wireshark_capture.pcapng"
+            "station_viewer_console.log",
+            "subspace_capture.pcapng"
         ]
     },
     {
@@ -1106,7 +1106,7 @@
         "attachments": [
             "system_telemetry.txt",
             "device_report.log",
-            "wireshark_capture.pcapng"
+            "subspace_capture.pcapng"
         ]
     },
     {
@@ -1216,7 +1216,7 @@
         "created_at": "2026-03-17T17:13:00Z",
         "channel": "bridge_terminal",
         "attachments": [
-            "teams_log.txt"
+            "comms_log.txt"
         ]
     },
     {
@@ -1273,7 +1273,7 @@
         "created_at": "2026-04-05T16:29:00Z",
         "channel": "subspace_relay",
         "attachments": [
-            "defender_alert.json",
+            "sentinelgrid_alert.json",
             "adf_anomaly_log.txt",
             "config_export.xml"
         ]
@@ -1316,7 +1316,7 @@
         "created_at": "2026-03-23T14:19:00Z",
         "channel": "holodeck_comm",
         "attachments": [
-            "teams_log.txt",
+            "comms_log.txt",
             "comm_console_trace.etl",
             "patch_list.xlsx"
         ]
