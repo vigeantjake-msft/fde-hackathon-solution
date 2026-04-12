@@ -18,21 +18,26 @@ Test structure mirrors the scoring pipeline:
   5. Full submission aggregate (score_submission)
 """
 
+import importlib.util
 import sys
+from pathlib import Path
 
-sys.path.insert(0, ".")  # noqa: TID251
+_spec = importlib.util.spec_from_file_location("run_eval", Path(__file__).resolve().parent / "run_eval.py")
+assert _spec and _spec.loader, "Failed to locate run_eval.py — is it in the same directory as this test?"
+_run_eval = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_run_eval)
 
-from run_eval import WEIGHTS
-from run_eval import _coerce_bool
-from run_eval import binary_f1
-from run_eval import macro_f1
-from run_eval import score_category
-from run_eval import score_escalation
-from run_eval import score_missing_info
-from run_eval import score_priority
-from run_eval import score_routing
-from run_eval import score_submission
-from run_eval import score_ticket
+WEIGHTS = _run_eval.WEIGHTS
+_coerce_bool = _run_eval._coerce_bool
+binary_f1 = _run_eval.binary_f1
+macro_f1 = _run_eval.macro_f1
+score_category = _run_eval.score_category
+score_escalation = _run_eval.score_escalation
+score_missing_info = _run_eval.score_missing_info
+score_priority = _run_eval.score_priority
+score_routing = _run_eval.score_routing
+score_submission = _run_eval.score_submission
+score_ticket = _run_eval.score_ticket
 
 # ── Category (did you identify the right anomaly type?) ─────────────
 

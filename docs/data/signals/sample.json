@@ -193,7 +193,7 @@
     {
         "ticket_id": "SIG-0015",
         "subject": "Slight delay in navigation calculations -- may be nothing",
-        "description": "Noticing about a 200ms delay in navigation calculations on the APAC sector relay this morning. Normally we're at ~50ms. Latency seems to spike right around 09:00 SGT and hasn't recovered. Not sure if it's on our side or the relay beacon. The helm officers haven't complained yet but if this gets to 500ms during the Centauri transit window we'll have a real problem. Just flagging early.",
+        "description": "Noticing about a 200ms delay in navigation calculations on the Gamma Sector relay this morning. Normally we're at ~50ms. Latency seems to spike right around 09:00 SST and hasn't recovered. Not sure if it's on our side or the relay beacon. The helm officers haven't complained yet but if this gets to 500ms during the Centauri transit window we'll have a real problem. Just flagging early.",
         "reporter": {
             "name": "James Okafor",
             "email": "james.okafor@cdss.space",
