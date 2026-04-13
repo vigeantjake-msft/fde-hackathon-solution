@@ -1,64 +1,182 @@
 # Evaluation Results
 
-> *Your actual numbers, which signals you got wrong and why, and where your system breaks. Real scores, real analysis — not "the system performed well" with no evidence.*
+Use this file to record the output of the local eval harness at [py/apps/eval/run_eval.py](../py/apps/eval/run_eval.py). Fill in the numbers from your latest run, then add concise analysis.
 
-## Sample Set Results (25 signals)
+## Run Configuration
 
-<!-- Run the eval harness against the sample set and paste your actual scores here. -->
+| Field | Value |
+|---|---|
+| Endpoint | |
+| Command | `python py/apps/eval/run_eval.py --endpoint ...` |
+| Run date | |
+| Models used | |
+| Notes | |
 
-### Overall Score
+## Local Runner Summary
 
-<!-- What was your total functional score out of 100? -->
+These fields map directly to the top-level runner output.
 
-### Classification Breakdown
+| Metric | Score |
+|---|---|
+| FDEBench Composite | |
+| Resolution (avg) | |
+| Efficiency (avg) | |
+| Robustness (avg) | |
 
-| Dimension | Score | Notes |
+## Per-Task Summary
+
+These rows mirror the task summary block printed by the local runner.
+
+| Task | Tier 1 Score | Resolution | Efficiency | Robustness | Items scored | Items errored |
+|---|---|---|---|---|---|---|
+| Signal Triage | | | | | | |
+| Document Extraction | | | | | | |
+| Workflow Orchestration | | | | | | |
+
+## Task 1: Signal Triage
+
+### Resolution Dimensions
+
+| Dimension | Weight | Score | Notes |
+|---|---|---|---|
+| `category` | 24% | | |
+| `priority` | 24% | | |
+| `routing` | 24% | | |
+| `missing_info` | 17% | | |
+| `escalation` | 11% | | |
+
+### Operational Metrics
+
+| Metric | Value |
+|---|---|
+| Tier 1 Score | |
+| Resolution | |
+| Efficiency | |
+| Robustness | |
+| Latency (P95) | |
+| Latency score | |
+| Model | |
+| Cost tier score | |
+| Adversarial accuracy | |
+| API resilience | |
+| Items scored | |
+| Items errored | |
+
+### Probe Results
+
+| Probe | Pass/Fail | Notes |
 |---|---|---|
-| Category (macro F1) | | |
-| Priority (mean partial credit) | | |
-| Routing / assigned_team (macro F1) | | |
-| Missing information (mean set F1) | | |
-| Needs escalation (binary F1) | | |
+| malformed_json | | |
+| empty_body | | |
+| missing_fields | | |
+| huge_payload | | |
+| wrong_content_type | | |
+| concurrent_burst | | |
+| cold_start | | |
 
-### Efficiency
+### Error Analysis
 
-| Metric | Value | Score |
+<!-- Which signal types failed? Where did routing, priority, or missing_info break down? -->
+
+## Task 2: Document Extraction
+
+### Resolution Dimensions
+
+| Dimension | Weight | Score | Notes |
+|---|---|---|---|
+| `drug_name` | 15% | | |
+| `indications` | 15% | | |
+| `dosage_forms` | 15% | | |
+| `warnings` | 5% | | |
+| `contraindications` | 15% | | |
+| `adverse_reactions` | 20% | | |
+| `active_ingredients` | 10% | | |
+| `metadata` | 5% | | |
+
+### Operational Metrics
+
+| Metric | Value |
+|---|---|
+| Tier 1 Score | |
+| Resolution | |
+| Efficiency | |
+| Robustness | |
+| Latency (P95) | |
+| Latency score | |
+| Model | |
+| Cost tier score | |
+| Adversarial accuracy | |
+| API resilience | |
+| Items scored | |
+| Items errored | |
+
+### Probe Results
+
+| Probe | Pass/Fail | Notes |
 |---|---|---|
-| Latency (p50) | | |
-| Cost ($/signal) | | |
+| malformed_json | | |
+| empty_body | | |
+| missing_fields | | |
+| huge_payload | | |
+| wrong_content_type | | |
+| concurrent_burst | | |
+| cold_start | | |
 
-## Public Eval Results (100 signals)
+### Error Analysis
 
-<!-- Run the eval harness against the public eval set. No gold answers, but note any errors, timeouts, or unexpected behavior. -->
+<!-- Which document types, fields, or PDF cases failed? Where did normalization help or hurt? -->
 
-## Error Analysis
+## Task 3: Workflow Orchestration
 
-<!-- Which signals did you get wrong? Why? Group errors by type if possible. -->
+### Resolution Dimensions
 
-### Common Misclassifications
+| Dimension | Weight | Score | Notes |
+|---|---|---|---|
+| `goal_completion` | 20% | | |
+| `tool_selection` | 15% | | |
+| `parameter_accuracy` | 5% | | |
+| `ordering_correctness` | 20% | | |
+| `constraint_compliance` | 40% | | |
 
-<!-- Which categories or teams did your system confuse? Are there patterns? -->
+### Operational Metrics
 
-### Priority Errors
+| Metric | Value |
+|---|---|
+| Tier 1 Score | |
+| Resolution | |
+| Efficiency | |
+| Robustness | |
+| Latency (P95) | |
+| Latency score | |
+| Model | |
+| Cost tier score | |
+| Adversarial accuracy | |
+| API resilience | |
+| Items scored | |
+| Items errored | |
 
-<!-- Where did your system over- or under-prioritize? What signals tripped it up? -->
+### Probe Results
 
-### Missing Information Gaps
+| Probe | Pass/Fail | Notes |
+|---|---|---|
+| malformed_json | | |
+| empty_body | | |
+| missing_fields | | |
+| huge_payload | | |
+| wrong_content_type | | |
+| concurrent_burst | | |
+| cold_start | | |
 
-<!-- Did your system over-predict or under-predict missing fields? Which ones? -->
+### Error Analysis
 
-### Escalation Errors
+<!-- Which workflow types failed? Were failures caused by tool choice, parameters, ordering, or constraint handling? -->
 
-<!-- False positives or false negatives on escalation? What caused them? -->
+## Cross-Task Takeaways
 
-## Edge Cases
+### What Improved The Score
 
-<!-- How does your system handle the hard cases? Vague signals, contradictory info, multi-issue signals, prompt injection attempts, "Not a Mission Signal" detection? -->
+<!-- Which changes moved the needle across multiple tasks? Better prompts, validation, retries, model changes, caching, etc. -->
 
-## Known Limitations
+### Known Limitations
 
-<!-- Be honest about where your system breaks. What types of signals would it fail on? What would you need to fix for production? -->
-
-## Confidence Assessment
-
-<!-- How confident are you in your solution's performance on the hidden eval set? What's your expected score range? Why? -->
+<!-- Where does the system still break? Be concrete about likely failure modes per task and what you would fix next. -->

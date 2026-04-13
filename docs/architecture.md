@@ -1,42 +1,38 @@
 # Architecture
 
-> *Describe your system design, data flow, AI pipeline, and key tradeoffs. Commander Kapoor reads this — make it count.*
-
 ## System Overview
 
-<!-- High-level description of your solution architecture. What components does your system have? How do they interact? -->
+<!-- High-level description of your solution. What components does your system have? How do they interact? Diagram encouraged. -->
 
-## AI Pipeline
-
-<!-- How does your triage logic work? What models do you use? How do you structure prompts? Do you use chain-of-thought, few-shot examples, or multi-step reasoning? -->
-
-## Data Flow
-
-<!-- Walk through what happens from the moment a signal hits `POST /triage` to when the response is returned. Include any preprocessing, model calls, postprocessing, and validation steps. -->
-
-## API Design
-
-<!-- How did you structure your FastAPI (or other framework) application? What middleware, error handling, and validation do you use? -->
-
-### Endpoints
+## Endpoints
 
 | Endpoint | Method | Description |
 |---|---|---|
 | `/health` | GET | Health check — returns 200 if the service is alive |
-| `/triage` | POST | Accepts a signal, returns a triage decision |
+| `/triage` | POST | Task 1: Classify a spacecraft signal across 5 dimensions |
+| `/extract` | POST | Task 2: Extract structured data from a drug label |
+| `/orchestrate` | POST | Task 3: Plan and execute a multi-step workflow |
 
-### Response Headers
+## Task 1: Signal Triage — AI Pipeline
 
-<!-- Do you include X-Model-Name, X-Prompt-Tokens, X-Completion-Tokens for cost tracking? -->
+<!-- How does the triage logic work? What model, what prompt strategy? Tool calling or content parsing? How is the system prompt structured? -->
+
+## Task 2: Document Extraction — AI Pipeline
+
+<!-- How does extraction work? Single-pass or section-by-section? How do you handle PDFs vs. text? What normalization steps run after the LLM call? -->
+
+## Task 3: Workflow Orchestration — AI Pipeline
+
+<!-- How does the planner work? Single upfront plan or iterative re-planning? How do you handle tool failures? Parallel vs. sequential execution? -->
+
+## Cross-Task Design Decisions
+
+<!-- What is shared across tasks? Model selection, error handling, response header generation, configuration? What is task-specific? -->
 
 ## Infrastructure
 
-<!-- How is your solution deployed? What cloud services, containers, or platforms do you use? Include a deployment diagram if helpful. -->
+<!-- How is your solution deployed? What cloud services, containers, or platforms? -->
 
 ## Key Tradeoffs
 
-<!-- What decisions did you make and why? Model size vs. latency? Accuracy vs. cost? Complexity vs. maintainability? What would you change if this were going to production for real? -->
-
-## What I'd Change for Production
-
-<!-- If Commander Kapoor called tomorrow and said "ship it to all 6 teams," what would you change? Caching? Rate limiting? Monitoring? Multi-region? Be honest. -->
+<!-- What decisions did you make and why? Model size vs. latency? Accuracy vs. cost? Single model vs. model-per-task? What would you change for production? -->
