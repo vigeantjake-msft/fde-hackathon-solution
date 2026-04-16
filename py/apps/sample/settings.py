@@ -87,7 +87,7 @@ class AzureSettings:
 
     endpoint: str = field(default_factory=_primary_backend_endpoint)
     api_version: str = field(
-        default_factory=lambda: _str("AZURE_OPENAI_API_VERSION", "2025-01-01-preview")
+        default_factory=lambda: _str("AZURE_OPENAI_API_VERSION", "2024-12-01-preview")
     )
     # Per-task model deployments — platform sets TRIAGE_MODEL etc. in Container Apps
     triage_deployment: str = field(
