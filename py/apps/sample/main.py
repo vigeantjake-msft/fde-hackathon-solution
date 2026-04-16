@@ -10,6 +10,7 @@ Run:
 
 import logging
 
+import httpx
 from client import get_client
 from exceptions import FDEBenchError
 from extract import run_extract
@@ -17,6 +18,7 @@ from fastapi import FastAPI
 from fastapi import Request
 from fastapi import Response
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from models import ExtractRequest
 from models import ExtractResponse
@@ -31,6 +33,15 @@ from triage import run_triage
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="FDEBench Solution", version="1.0.0")
+
+# ── CORS ─────────────────────────────────────────────────────────────────────
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type", "Authorization", "X-Model-Name"],
+)
 
 
 # ── Exception handlers ───────────────────────────────────────────────────────
@@ -78,7 +89,34 @@ def _set_model_header(response: Response) -> None:
 
 @app.get("/health")
 async def health() -> dict[str, str]:
+    """Liveness check — returns 200 if the process is running."""
     return {"status": "ok"}
+
+
+@app.get("/health/ready")
+async def health_ready() -> dict[str, str]:
+    """Readiness check — verifies Azure AI Foundry is reachable.
+
+    Returns 200 when the upstream model endpoint responds to a lightweight
+    HTTP probe.  Returns 503 when the service is not ready to handle traffic.
+    """
+    endpoint = settings.azure.endpoint.rstrip("/")
+    try:
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            resp = await client.get(f"{endpoint}/openai/models?api-version=2024-02-01")
+            # 200 or 401 both mean the endpoint is reachable
+            if resp.status_code in (200, 401, 403):
+                return {"status": "ready", "upstream": endpoint}
+            return JSONResponse(  # type: ignore[return-value]
+                status_code=503,
+                content={"status": "unavailable", "upstream": endpoint, "code": resp.status_code},
+            )
+    except Exception as exc:
+        logger.warning("readiness_probe_failed endpoint=%s error=%s", endpoint, exc)
+        return JSONResponse(  # type: ignore[return-value]
+            status_code=503,
+            content={"status": "unavailable", "upstream": endpoint, "error": str(exc)},
+        )
 
 
 @app.post("/triage")

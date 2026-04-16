@@ -44,8 +44,19 @@ async def chat_with_retry(
 
     for attempt in range(max_retries):
         try:
-            return await client.chat.completions.create(**kwargs)
-        except Exception as exc:
+            return await asyncio.wait_for(
+                client.chat.completions.create(**kwargs),
+                timeout=settings.ops.llm_call_timeout_s,
+            )
+        except TimeoutError as exc:
+            last_exc = exc
+            logger.warning(
+                "azure_openai_timeout attempt=%d/%d timeout_s=%.1f",
+                attempt + 1,
+                max_retries,
+                settings.ops.llm_call_timeout_s,
+            )
+        except Exception as exc:  # noqa: BLE001  # re-raised as LLMError
             last_exc = exc
             if attempt == max_retries - 1:
                 break
@@ -57,7 +68,7 @@ async def chat_with_retry(
                 exc,
                 wait,
             )
-            await asyncio.sleep(wait)
+        await asyncio.sleep(2**attempt)
 
     raise LLMError(f"LLM call failed after {max_retries} attempts: {last_exc}") from last_exc
 

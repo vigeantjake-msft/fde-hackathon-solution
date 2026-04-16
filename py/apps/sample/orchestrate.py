@@ -1,3 +1,4 @@
+import asyncio
 """Task 3 — Workflow Orchestration.
 
 Executes multi-step business workflows by driving an LLM agent that calls
@@ -404,46 +405,52 @@ async def run_orchestrate(
                 logger.debug("orchestrate_no_tool_calls turn=%d task=%s", turn, req.task_id)
                 break
 
-            turn_results: list[ToolCallRecord] = []
+            # Separate finish call (if any) from real tool calls so we can
+            # execute real tool calls concurrently and only then check done.
+            finish_tc = next((tc for tc in tool_calls if tc.function.name == _FINISH_TOOL_NAME), None)
+            action_tcs = [tc for tc in tool_calls if tc.function.name != _FINISH_TOOL_NAME]
 
-            for tc in tool_calls:
-                fn_name = tc.function.name
+            async def _execute(tc: Any) -> tuple[Any, dict[str, Any]]:
+                """Execute a single tool call and return (tc, result)."""
                 try:
-                    fn_args: dict[str, Any] = json.loads(tc.function.arguments)
+                    args: dict[str, Any] = json.loads(tc.function.arguments)
                 except json.JSONDecodeError:
-                    fn_args = {}
+                    args = {}
+                result = await call_tool(mock_url, req.task_id, tc.function.name, args, http_client)
+                return tc, args, result
 
-                if fn_name == _FINISH_TOOL_NAME:
-                    finish_args: FinishWorkflowArgs = fn_args  # type: ignore[assignment]
-                    final_status = finish_args.get("status", "completed")
-                    constraints_satisfied = list(finish_args.get("constraints_satisfied", []))
-                    turn_results.append(_tool_result(tc.id, {"acknowledged": True}))
-                    done = True
+            # Run all non-finish tool calls in parallel.
+            action_results = await asyncio.gather(*[_execute(tc) for tc in action_tcs])
 
-                else:
-                    step_num += 1
-                    result = await call_tool(
-                        mock_url, req.task_id, fn_name, fn_args, http_client
+            turn_results: list[ToolCallRecord] = []
+            for tc, fn_args, result in action_results:
+                step_num += 1
+                success = "error" not in result
+                steps_executed.append(
+                    StepExecuted(
+                        step=step_num,
+                        tool=tc.function.name,
+                        parameters=fn_args,
+                        result_summary=json.dumps(result)[:500],
+                        success=success,
                     )
-                    success = "error" not in result
+                )
+                if tc.function.name == "email_send":
+                    if success:
+                        emails_sent = (emails_sent or 0) + 1
+                    else:
+                        emails_skipped = (emails_skipped or 0) + 1
+                turn_results.append(_tool_result(tc.id, result))
 
-                    steps_executed.append(
-                        StepExecuted(
-                            step=step_num,
-                            tool=fn_name,
-                            parameters=fn_args,
-                            result_summary=json.dumps(result)[:500],
-                            success=success,
-                        )
-                    )
-
-                    if fn_name == "email_send":
-                        if success:
-                            emails_sent = (emails_sent or 0) + 1
-                        else:
-                            emails_skipped = (emails_skipped or 0) + 1
-
-                    turn_results.append(_tool_result(tc.id, result))
+            if finish_tc is not None:
+                try:
+                    finish_args: FinishWorkflowArgs = json.loads(finish_tc.function.arguments)  # type: ignore[assignment]
+                except json.JSONDecodeError:
+                    finish_args = {}  # type: ignore[assignment]
+                final_status = finish_args.get("status", "completed")
+                constraints_satisfied = list(finish_args.get("constraints_satisfied", []))
+                turn_results.append(_tool_result(finish_tc.id, {"acknowledged": True}))
+                done = True
 
             messages.extend(turn_results)  # type: ignore[arg-type]
 

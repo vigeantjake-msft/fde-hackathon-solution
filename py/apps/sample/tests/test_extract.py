@@ -103,7 +103,7 @@ class TestBuildUserMessage:
         first = msg["content"][0]
         assert first["type"] == "image_url"
         assert first["image_url"]["url"] == "data:image/png;base64,abc"
-        assert first["image_url"]["detail"] == "high"
+        assert first["image_url"]["detail"] == "auto"
 
     def test_second_part_is_text_with_extract_instruction(self):
         msg = _build_user_message("data:image/png;base64,abc", "")
@@ -171,7 +171,7 @@ class TestRunExtract:
         text_block = next(p for p in user_content if p["type"] == "text")
         assert "name" in text_block["text"]
 
-    async def test_uses_high_detail_vision(self):
+    async def test_uses_auto_detail_vision(self):
         client = AsyncMock()
         client.chat.completions.create.return_value = _llm_response("{}")
 
@@ -180,7 +180,7 @@ class TestRunExtract:
         call_kwargs = client.chat.completions.create.call_args.kwargs
         user_content = call_kwargs["messages"][1]["content"]
         image_block = next(p for p in user_content if p["type"] == "image_url")
-        assert image_block["image_url"]["detail"] == "high"
+        assert image_block["image_url"]["detail"] == "auto"
 
     async def test_returns_only_document_id_when_llm_returns_empty(self):
         client = AsyncMock()

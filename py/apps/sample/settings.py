@@ -19,6 +19,9 @@ import os
 from dataclasses import dataclass
 from dataclasses import field
 
+# Avoid a circular import: exceptions depends on nothing, so this is safe.
+from exceptions import ConfigurationError
+
 
 def _str(key: str, default: str) -> str:
     return os.environ.get(key, default)
@@ -60,7 +63,13 @@ def _primary_backend_endpoint() -> str:
                 return backends[0]["endpoint"]
         except (json.JSONDecodeError, KeyError, IndexError):
             pass
-    return _str("AZURE_OPENAI_ENDPOINT", "https://foundry-scus6r6osf.cognitiveservices.azure.com/")
+    endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT", "")
+    if not endpoint:
+        raise ConfigurationError(
+            "AZURE_OPENAI_ENDPOINT (or AZURE_OPENAI_BACKENDS) must be set. "
+            "See .env.example for required environment variables."
+        )
+    return endpoint
 
 
 # ---------------------------------------------------------------------------
@@ -125,6 +134,11 @@ class OperationalSettings:
     #: Per-call timeout in seconds for tool HTTP calls during orchestration.
     tool_call_timeout_s: float = field(
         default_factory=lambda: _float("TOOL_CALL_TIMEOUT_S", 30.0)
+    )
+    #: Hard timeout in seconds for each LLM API call (includes model inference).
+    #: Set higher than expected P95 to avoid thrashing on slow models.
+    llm_call_timeout_s: float = field(
+        default_factory=lambda: _float("LLM_CALL_TIMEOUT_S", 120.0)
     )
 
 

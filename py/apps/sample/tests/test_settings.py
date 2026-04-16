@@ -3,6 +3,9 @@
 import os
 from unittest.mock import patch
 
+import pytest
+
+from exceptions import ConfigurationError
 from settings import AzureSettings
 from settings import OperationalSettings
 from settings import ScoringSettings
@@ -10,19 +13,38 @@ from settings import Settings
 
 
 class TestAzureSettingsDefaults:
-    """Azure settings fall back to sensible defaults when no env vars are set."""
+    """Azure settings read from the env; no hardcoded prod endpoint defaults."""
 
-    def test_default_endpoint(self):
-        s = AzureSettings()
-        assert s.endpoint == "https://foundry-scus6r6osf.cognitiveservices.azure.com/"
+    def test_endpoint_raises_without_env(self):
+        """AZURE_OPENAI_ENDPOINT is required — no default to prevent misconfiguration."""
+        with patch.dict(os.environ, {}, clear=True):
+            # Remove all relevant env vars
+            env_without = {
+                k: v for k, v in os.environ.items()
+                if k not in ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_BACKENDS")
+            }
+            with patch.dict(os.environ, env_without, clear=True):
+                with pytest.raises(ConfigurationError, match="AZURE_OPENAI_ENDPOINT"):
+                    AzureSettings()
 
     def test_default_api_version(self):
         s = AzureSettings()
         assert s.api_version == "2025-01-01-preview"
 
-    def test_default_deployment(self):
-        s = AzureSettings()
-        assert s.deployment == "gpt-5.4"
+    def test_triage_deployment_reads_triage_model(self):
+        with patch.dict(os.environ, {"TRIAGE_MODEL": "gpt-5.4"}):
+            s = AzureSettings()
+            assert s.triage_deployment == "gpt-5.4"
+
+    def test_extract_deployment_reads_extract_model(self):
+        with patch.dict(os.environ, {"EXTRACT_MODEL": "gpt-4-1-mini"}):
+            s = AzureSettings()
+            assert s.extract_deployment == "gpt-4-1-mini"
+
+    def test_orchestrate_deployment_reads_orchestrate_model(self):
+        with patch.dict(os.environ, {"ORCHESTRATE_MODEL": "gpt-4-1-mini"}):
+            s = AzureSettings()
+            assert s.orchestrate_deployment == "gpt-4-1-mini"
 
 
 class TestAzureSettingsEnvOverrides:
@@ -33,10 +55,14 @@ class TestAzureSettingsEnvOverrides:
             s = AzureSettings()
             assert s.endpoint == "https://custom.azure.com/"
 
-    def test_deployment_override(self):
-        with patch.dict(os.environ, {"AZURE_OPENAI_DEPLOYMENT": "gpt-4.1"}):
+    def test_backends_takes_priority_over_endpoint(self):
+        backends = '[{"endpoint": "https://from-backends.com/", "deployment": "gpt-test"}]'
+        with patch.dict(os.environ, {
+            "AZURE_OPENAI_BACKENDS": backends,
+            "AZURE_OPENAI_ENDPOINT": "https://should-not-use.com/",
+        }):
             s = AzureSettings()
-            assert s.deployment == "gpt-4.1"
+            assert s.endpoint == "https://from-backends.com/"
 
     def test_api_version_override(self):
         with patch.dict(os.environ, {"AZURE_OPENAI_API_VERSION": "2024-02-01"}):
@@ -45,14 +71,21 @@ class TestAzureSettingsEnvOverrides:
 
 
 class TestScoringSettingsDefaults:
-    def test_default_model_header(self):
-        s = ScoringSettings()
-        assert s.model_header == "gpt-5.4"
+    def test_model_header_reads_triage_model(self):
+        with patch.dict(os.environ, {"TRIAGE_MODEL": "gpt-5.4"}):
+            s = ScoringSettings()
+            assert s.model_header == "gpt-5.4"
 
     def test_model_header_override(self):
-        with patch.dict(os.environ, {"MODEL_HEADER": "gpt-4.1-mini"}):
+        with patch.dict(os.environ, {"TRIAGE_MODEL": "gpt-4-1-mini"}):
             s = ScoringSettings()
-            assert s.model_header == "gpt-4.1-mini"
+            assert s.model_header == "gpt-4-1-mini"
+
+    def test_explicit_model_header_env_var(self):
+        with patch.dict(os.environ, {"MODEL_HEADER": "gpt-4-1-nano", "TRIAGE_MODEL": "gpt-5.4"}):
+            # TRIAGE_MODEL takes precedence (read first in the chain)
+            s = ScoringSettings()
+            assert s.model_header == "gpt-5.4"
 
 
 class TestOperationalSettingsDefaults:
@@ -68,28 +101,30 @@ class TestOperationalSettingsDefaults:
         s = OperationalSettings()
         assert s.tool_call_timeout_s == 30.0
 
+    def test_default_llm_call_timeout(self):
+        s = OperationalSettings()
+        assert s.llm_call_timeout_s == 120.0
+
     def test_max_retries_override(self):
         with patch.dict(os.environ, {"AI_MAX_RETRIES": "5"}):
             s = OperationalSettings()
             assert s.ai_max_retries == 5
 
-    def test_max_turns_override(self):
-        with patch.dict(os.environ, {"ORCHESTRATE_MAX_TURNS": "20"}):
+    def test_llm_timeout_override(self):
+        with patch.dict(os.environ, {"LLM_CALL_TIMEOUT_S": "60.0"}):
             s = OperationalSettings()
-            assert s.orchestrate_max_turns == 20
+            assert s.llm_call_timeout_s == 60.0
 
 
 class TestSettingsIsFrozen:
     """Settings objects are frozen — mutation should raise."""
 
     def test_azure_settings_is_frozen(self):
-        import pytest
         s = AzureSettings()
         with pytest.raises(Exception):
-            s.deployment = "other-model"  # type: ignore[misc]
+            s.api_version = "other"  # type: ignore[misc]
 
     def test_top_level_settings_is_frozen(self):
-        import pytest
         s = Settings()
         with pytest.raises(Exception):
-            s.azure = AzureSettings()  # type: ignore[misc]
+            s.ops = OperationalSettings()  # type: ignore[misc]
