@@ -1,86 +1,99 @@
-"""Minimal FDEBench starter — stub endpoints that pass schema validation.
+"""FDEBench solution — FastAPI application entry point.
+
+Intentionally thin: HTTP routing, exception handling, and the model-name
+response header.  All AI logic lives in the task modules.
 
 Run:
-    cd py
-    make setup     # once — install deps
-    make run       # start on :8000
-
-Score:
-    make eval      # score all 3 tasks (in a second terminal)
-
-Every endpoint returns valid stub JSON. The eval harness will run
-end-to-end and show you the full scoring breakdown. Replace the stub
-logic with your LLM calls to improve the scores.
+    cd py && make run     # start on :8000
+    cd py && make eval    # score all 3 tasks (second terminal)
 """
 
+import logging
+
+from client import get_client
+from exceptions import FDEBenchError
+from extract import run_extract
 from fastapi import FastAPI
+from fastapi import Request
 from fastapi import Response
-from models import Category
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from models import ExtractRequest
 from models import ExtractResponse
 from models import OrchestrateRequest
 from models import OrchestrateResponse
-from models import Team
 from models import TriageRequest
 from models import TriageResponse
+from orchestrate import run_orchestrate
+from settings import settings
+from triage import run_triage
 
-app = FastAPI(title="FDEBench Starter")
+logger = logging.getLogger(__name__)
 
-MODEL_NAME = "gpt-4.1-mini"  # Change to whatever model you use
-
-
-def _add_headers(response: Response) -> None:
-    """Add cost-tracking headers. The platform reads X-Model-Name for cost scoring."""
-    response.headers["X-Model-Name"] = MODEL_NAME
+app = FastAPI(title="FDEBench Solution", version="1.0.0")
 
 
-# ── Health ───────────────────────────────────────────────────────────
+# ── Exception handlers ───────────────────────────────────────────────────────
+
+
+@app.exception_handler(RequestValidationError)
+async def _on_validation_error(
+    _request: Request,
+    exc: RequestValidationError,
+) -> JSONResponse:
+    """Return 422 for malformed or schema-invalid request bodies."""
+    return JSONResponse(status_code=422, content={"detail": str(exc)})
+
+
+@app.exception_handler(FDEBenchError)
+async def _on_app_error(
+    _request: Request,
+    exc: FDEBenchError,
+) -> JSONResponse:
+    """Map domain exceptions to their declared HTTP status codes."""
+    logger.error("app_error type=%s message=%s", type(exc).__name__, exc.message)
+    return JSONResponse(status_code=exc.http_status, content={"detail": exc.message})
+
+
+@app.exception_handler(Exception)
+async def _on_unexpected_error(
+    request: Request,
+    exc: Exception,
+) -> JSONResponse:
+    """Catch-all for unhandled exceptions — log full traceback, return 500."""
+    logger.exception("unhandled_error path=%s", request.url.path)
+    return JSONResponse(status_code=500, content={"detail": "Internal server error"})
+
+
+# ── Response header ──────────────────────────────────────────────────────────
+
+
+def _set_model_header(response: Response) -> None:
+    """Set the X-Model-Name header required by FDEBench cost-tier scoring."""
+    response.headers["X-Model-Name"] = settings.scoring.model_header
+
+
+# ── Routes ───────────────────────────────────────────────────────────────────
 
 
 @app.get("/health")
-async def health() -> dict:
+async def health() -> dict[str, str]:
     return {"status": "ok"}
-
-
-# ── Task 1: Signal Triage ────────────────────────────────────────────
 
 
 @app.post("/triage")
 async def triage(req: TriageRequest, response: Response) -> TriageResponse:
-    _add_headers(response)
-    # TODO: replace with LLM classification
-    return TriageResponse(
-        ticket_id=req.ticket_id,
-        category=Category.BRIEFING,
-        priority="P3",
-        assigned_team=Team.SYSTEMS,
-        needs_escalation=False,
-        missing_information=[],
-        next_best_action="Investigate the reported issue.",
-        remediation_steps=["Review the signal details.", "Route to the appropriate team."],
-    )
-
-
-# ── Task 2: Document Extraction ─────────────────────────────────────
+    _set_model_header(response)
+    return await run_triage(req, get_client())
 
 
 @app.post("/extract")
 async def extract(req: ExtractRequest, response: Response) -> ExtractResponse:
-    _add_headers(response)
-    # TODO: replace with vision model extraction using req.json_schema
-    return ExtractResponse(document_id=req.document_id)
-
-
-# ── Task 3: Workflow Orchestration ───────────────────────────────────
+    _set_model_header(response)
+    return await run_extract(req, get_client())
 
 
 @app.post("/orchestrate")
 async def orchestrate(req: OrchestrateRequest, response: Response) -> OrchestrateResponse:
-    _add_headers(response)
-    # TODO: replace with LLM planning + tool execution
-    return OrchestrateResponse(
-        task_id=req.task_id,
-        status="completed",
-        steps_executed=[],
-        constraints_satisfied=[],
-    )
+    _set_model_header(response)
+    return await run_orchestrate(req, get_client())

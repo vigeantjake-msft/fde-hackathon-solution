@@ -1,21 +1,33 @@
 [project]
 name = "sample"
-version = "0.0.0"
-description = "FDEBench starter — stub endpoints for all 3 tasks"
+version = "1.0.0"
+description = "FDEBench solution — AI-powered API for signal triage, document extraction, and workflow orchestration"
 requires-python = ">=3.12"
 dependencies = [
+    # Web framework
     "fastapi>=0.115.0",
-    "uvicorn>=0.34.0",
+    "uvicorn[standard]>=0.34.0",
+    # Data validation
     "pydantic>=2.11.0",
     "email-validator>=2.0.0",
+    # Azure AI Foundry — keyless auth via DefaultAzureCredential
+    "azure-identity>=1.21.0",
+    # OpenAI SDK v2 (Azure-hosted gpt-4o)
+    # Must be >=2.0.0; the v2 SDK changed the azure_ad_token_provider interface
+    "openai>=2.0.0",
+    # HTTP client used by the Task 3 orchestration loop for tool calls
+    "httpx>=0.28.1",
 ]
 
 [dependency-groups]
 dev = [
-    "httpx>=0.28.1",
     "pytest>=9.0.1",
     "pytest-asyncio>=1.2.0",
+    "pytest-mock>=3.14.0",
 ]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
 
 [build-system]
 requires = ["hatchling"]
