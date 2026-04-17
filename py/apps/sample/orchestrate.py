@@ -1,4 +1,3 @@
-import asyncio
 """Task 3 — Workflow Orchestration.
 
 Executes multi-step business workflows by driving an LLM agent that calls
@@ -22,13 +21,15 @@ Also exported for unit testing (pure functions, no I/O):
   hint_for_constraint(constraint) -> str
 """
 
+import asyncio
 import json
-from prompts import load_prompt
 import logging
+from functools import lru_cache
 from typing import Any
 from typing import TypedDict
 
 import httpx
+from prompts import load_prompt
 from models import OrchestrateRequest
 from models import OrchestrateResponse
 from models import StepExecuted
@@ -208,6 +209,29 @@ def build_openai_tools(available_tools: list[ToolDefinition]) -> list[dict[str, 
 
 
 # ---------------------------------------------------------------------------
+# Shared HTTP client for tool calls
+# ---------------------------------------------------------------------------
+
+
+@lru_cache(maxsize=1)
+def _tool_http_client() -> httpx.AsyncClient:
+    """Return a shared httpx client for mock-service tool calls.
+
+    Cached so the TCP connection pool is reused across requests and turns,
+    eliminating per-request TCP+TLS handshake overhead.  The mock service
+    is a local container so connections are cheap, but reuse still saves
+    ~1-5 ms per turn and avoids exhausting ephemeral ports under load.
+    """
+    return httpx.AsyncClient(
+        limits=httpx.Limits(
+            max_connections=50,
+            max_keepalive_connections=20,
+            keepalive_expiry=60,
+        ),
+    )
+
+
+# ---------------------------------------------------------------------------
 # HTTP tool executor
 # ---------------------------------------------------------------------------
 
@@ -353,7 +377,8 @@ async def run_orchestrate(
     emails_skipped: int | None = None
     done = False
 
-    async with httpx.AsyncClient() as http_client:
+    http_client = _tool_http_client()
+    if True:  # scope matches original `async with` block
         for turn in range(settings.ops.orchestrate_max_turns):
             ai_resp = await chat_with_retry(
                 client,
