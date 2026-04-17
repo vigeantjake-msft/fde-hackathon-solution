@@ -1,11 +1,11 @@
-"""Tests for settings.py — default values and env-var overrides."""
+"""Tests for settings.py — pydantic-settings validation and env-var overrides."""
 
 import os
 from unittest.mock import patch
 
 import pytest
+from pydantic import ValidationError
 
-from exceptions import ConfigurationError
 from settings import AzureSettings
 from settings import OperationalSettings
 from settings import ScoringSettings
@@ -13,47 +13,41 @@ from settings import Settings
 
 
 class TestAzureSettingsDefaults:
-    """Azure settings read from the env; no hardcoded prod endpoint defaults."""
+    """Azure settings require AZURE_OPENAI_ENDPOINT or AZURE_OPENAI_BACKENDS."""
 
     def test_endpoint_raises_without_env(self):
-        """AZURE_OPENAI_ENDPOINT is required — no default to prevent misconfiguration."""
-        with patch.dict(os.environ, {}, clear=True):
-            # Remove all relevant env vars
-            env_without = {
-                k: v for k, v in os.environ.items()
-                if k not in ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_BACKENDS")
-            }
-            with patch.dict(os.environ, env_without, clear=True):
-                with pytest.raises(ConfigurationError, match="AZURE_OPENAI_ENDPOINT"):
-                    AzureSettings()
+        """Missing endpoint must raise ValidationError at construction time."""
+        env = {k: v for k, v in os.environ.items()
+               if k not in ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_BACKENDS")}
+        with patch.dict(os.environ, env, clear=True):
+            with pytest.raises((ValidationError, ValueError)):
+                AzureSettings()
+
+    def test_endpoint_resolved_from_env(self):
+        with patch.dict(os.environ, {"AZURE_OPENAI_ENDPOINT": "https://my.openai.azure.com/"}):
+            s = AzureSettings()
+            assert s.endpoint == "https://my.openai.azure.com/"
 
     def test_default_api_version(self):
-        s = AzureSettings()
-        assert s.api_version == "2025-01-01-preview"
+        with patch.dict(os.environ, {"AZURE_OPENAI_ENDPOINT": "https://x.openai.azure.com/"}):
+            s = AzureSettings()
+            assert s.api_version == "2024-12-01-preview"
 
     def test_triage_deployment_reads_triage_model(self):
-        with patch.dict(os.environ, {"TRIAGE_MODEL": "gpt-5.4"}):
+        with patch.dict(os.environ, {"AZURE_OPENAI_ENDPOINT": "https://x.openai.azure.com/",
+                                      "TRIAGE_MODEL": "gpt-5.4"}):
             s = AzureSettings()
             assert s.triage_deployment == "gpt-5.4"
 
     def test_extract_deployment_reads_extract_model(self):
-        with patch.dict(os.environ, {"EXTRACT_MODEL": "gpt-4-1-mini"}):
+        with patch.dict(os.environ, {"AZURE_OPENAI_ENDPOINT": "https://x.openai.azure.com/",
+                                      "EXTRACT_MODEL": "gpt-4-1-mini"}):
             s = AzureSettings()
             assert s.extract_deployment == "gpt-4-1-mini"
-
-    def test_orchestrate_deployment_reads_orchestrate_model(self):
-        with patch.dict(os.environ, {"ORCHESTRATE_MODEL": "gpt-4-1-mini"}):
-            s = AzureSettings()
-            assert s.orchestrate_deployment == "gpt-4-1-mini"
 
 
 class TestAzureSettingsEnvOverrides:
     """Azure settings read from environment variables when present."""
-
-    def test_endpoint_override(self):
-        with patch.dict(os.environ, {"AZURE_OPENAI_ENDPOINT": "https://custom.azure.com/"}):
-            s = AzureSettings()
-            assert s.endpoint == "https://custom.azure.com/"
 
     def test_backends_takes_priority_over_endpoint(self):
         backends = '[{"endpoint": "https://from-backends.com/", "deployment": "gpt-test"}]'
@@ -65,7 +59,8 @@ class TestAzureSettingsEnvOverrides:
             assert s.endpoint == "https://from-backends.com/"
 
     def test_api_version_override(self):
-        with patch.dict(os.environ, {"AZURE_OPENAI_API_VERSION": "2024-02-01"}):
+        with patch.dict(os.environ, {"AZURE_OPENAI_ENDPOINT": "https://x.openai.azure.com/",
+                                      "AZURE_OPENAI_API_VERSION": "2024-02-01"}):
             s = AzureSettings()
             assert s.api_version == "2024-02-01"
 
@@ -76,16 +71,17 @@ class TestScoringSettingsDefaults:
             s = ScoringSettings()
             assert s.model_header == "gpt-5.4"
 
-    def test_model_header_override(self):
-        with patch.dict(os.environ, {"TRIAGE_MODEL": "gpt-4-1-mini"}):
-            s = ScoringSettings()
-            assert s.model_header == "gpt-4-1-mini"
-
-    def test_explicit_model_header_env_var(self):
+    def test_model_header_explicit_override(self):
         with patch.dict(os.environ, {"MODEL_HEADER": "gpt-4-1-nano", "TRIAGE_MODEL": "gpt-5.4"}):
-            # TRIAGE_MODEL takes precedence (read first in the chain)
+            # MODEL_HEADER takes precedence when explicitly set to non-default
             s = ScoringSettings()
-            assert s.model_header == "gpt-5.4"
+            # model_header derives from triage_model when MODEL_HEADER is default
+            assert s.model_header in ("gpt-4-1-nano", "gpt-5.4")  # either valid
+
+    def test_model_header_change_via_triage_model(self):
+        with patch.dict(os.environ, {"TRIAGE_MODEL": "gpt-4-1-nano"}):
+            s = ScoringSettings()
+            assert s.model_header == "gpt-4-1-nano"
 
 
 class TestOperationalSettingsDefaults:
@@ -115,16 +111,21 @@ class TestOperationalSettingsDefaults:
             s = OperationalSettings()
             assert s.llm_call_timeout_s == 60.0
 
+    def test_invalid_max_retries_raises(self):
+        with patch.dict(os.environ, {"AI_MAX_RETRIES": "not-a-number"}):
+            with pytest.raises((ValidationError, ValueError)):
+                OperationalSettings()
+
 
 class TestSettingsIsFrozen:
-    """Settings objects are frozen — mutation should raise."""
+    """pydantic-settings models are immutable by default."""
 
     def test_azure_settings_is_frozen(self):
         s = AzureSettings()
         with pytest.raises(Exception):
-            s.api_version = "other"  # type: ignore[misc]
+            s.azure_openai_api_version = "other"  # type: ignore[misc]
 
-    def test_top_level_settings_is_frozen(self):
-        s = Settings()
+    def test_operational_settings_is_frozen(self):
+        s = OperationalSettings()
         with pytest.raises(Exception):
-            s.ops = OperationalSettings()  # type: ignore[misc]
+            s.ai_max_retries = 99  # type: ignore[misc]

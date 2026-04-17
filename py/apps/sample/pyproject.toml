@@ -15,6 +15,8 @@ dependencies = [
     # OpenAI SDK v2 (Azure-hosted gpt-4o)
     # Must be >=2.0.0; the v2 SDK changed the azure_ad_token_provider interface
     "openai>=2.0.0",
+    "pydantic-settings>=2.7.0",
+    "pyyaml>=6.0.0",
     # HTTP client used by the Task 3 orchestration loop for tool calls
     "httpx>=0.28.1",
 ]
