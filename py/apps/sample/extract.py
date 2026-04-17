@@ -19,6 +19,7 @@ from models import ExtractRequest
 from models import ExtractResponse
 from openai import AsyncAzureOpenAI
 from settings import settings
+from prompts import load_prompt
 from utils import chat_with_retry
 from utils import detect_media_type
 from utils import extract_json
@@ -30,14 +31,7 @@ logger = logging.getLogger(__name__)
 # System prompt
 # ---------------------------------------------------------------------------
 
-_SYSTEM_PROMPT = (
-    "You are a precise document data extraction AI. "
-    "Extract structured data from document images exactly as shown. "
-    "Numbers: omit currency symbols and commas (1234.56 not $1,234.56). "
-    "Booleans: true or false. "
-    "Missing or illegible fields: null. "
-    "Respond with ONLY a valid JSON object — no markdown, no explanation."
-)
+_SYSTEM_PROMPT = load_prompt("extract")  # loaded from prompts/extract.yaml
 
 
 # ---------------------------------------------------------------------------

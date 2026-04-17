@@ -23,6 +23,7 @@ Also exported for unit testing (pure functions, no I/O):
 """
 
 import json
+from prompts import load_prompt
 import logging
 from typing import Any
 from typing import TypedDict
@@ -71,41 +72,7 @@ class AssistantMessage(TypedDict, total=False):
 # System prompt
 # ---------------------------------------------------------------------------
 
-_SYSTEM_PROMPT = """\
-You are a workflow orchestration AI. Execute the goal step by step using the available tools.
-
-## Execution rules:
-1. Call tools in dependency order: search/query tools first, then action tools based on results.
-2. Call each lookup tool EXACTLY ONCE per item (subscription_check, inventory_query, etc.).
-3. ALWAYS execute action tools (notification_send, email_send, audit_log) for qualifying items
-   even if they return 404 — test environment behaviour, calls are still scored.
-4. Use notification_send (not email_send) for routing to internal teams.
-5. After ALL steps, ALWAYS call finish_workflow with status='completed'.
-
-## CRITICAL: Notification routing — use EXACT user_id values:
-- 'retention team' -> notification_send(user_id='lead_retention', channel='slack')
-- 'customer success team' -> notification_send(user_id='lead_customer_success', channel='slack')
-- 'finance approver / discount approval' -> notification_send(user_id='finance_approver', channel='slack')
-- 'on-call engineer' -> notification_send(user_id='oncall_engineer', channel='sms')
-- 'engineering manager' -> notification_send(user_id='engineering_manager', channel='slack')
-- 'sales team' -> notification_send(user_id='sales_team', channel='slack')
-- warehouse manager for region -> notification_send(user_id='warehouse_mgr_{REGION}', channel='slack')
-
-## Audit log — call ONCE per triggered action:
-- Churn risk: audit_log(action='churn_risk_flagged', details={'account_id': '...', 'risk': 'high/medium'})
-- Contract renewal: audit_log(action='renewal_initiated', details={'account_id': '...', 'plan': '...', 'discount': 0.0})
-- Incident: audit_log(action='incident_response', details={'product': '...', 'severity': '...', 'warehouses': [...]})
-- Re-engagement email: audit_log(action='email_sent', details={'account_id': '...', 'template': '...'})
-- Onboarding: audit_log(action='onboarding_started' or 'onboarding_blocked', details={...})
-- Meeting: audit_log(action='meeting_scheduled' or 'meeting_blocked', details={...})
-
-## Email templates:
-- email_send(template='renewal_quote', variables={'plan': '...', 'discount': '0%'})
-- email_send(template='welcome') / email_send(template='kickoff_invite') for onboarding
-- email_send(template='meeting_invite') for scheduling
-- email_send(template='re_engagement') for win-back campaigns
-
-finish_workflow constraints_satisfied: list the EXACT constraint strings you satisfied."""
+_SYSTEM_PROMPT = load_prompt("orchestrate")  # loaded from prompts/orchestrate.yaml
 
 # ---------------------------------------------------------------------------
 # Constraint-to-hint mapping
