@@ -1,0 +1,43 @@
+# Local development compose — starts the FDEBench solution + mock tool service.
+#
+# Usage:
+#   docker compose up          # start both services
+#   docker compose up solution # start only the API
+#
+# Prerequisites:
+#   cp py/apps/sample/.env.example .env  # fill in AZURE_OPENAI_ENDPOINT + models
+#   docker compose build
+
+services:
+  solution:
+    build:
+      context: ./py
+      dockerfile: apps/sample/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      mock-tools:
+        condition: service_healthy
+
+  mock-tools:
+    build:
+      context: ./py
+      dockerfile: apps/eval/Dockerfile.mock
+    ports:
+      - "9090:9090"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s

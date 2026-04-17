@@ -38,7 +38,13 @@ app = FastAPI(title="FDEBench Solution", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        # Hackathon portal
+        "https://cr-hackathon-ui-dev-35d72d.greenriver-5afbd8ce.eastus2.azurecontainerapps.io",
+        # Local development
+        "http://localhost:5173",
+        "http://localhost:8000",
+    ],
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type", "Authorization", "X-Model-Name"],
 )
