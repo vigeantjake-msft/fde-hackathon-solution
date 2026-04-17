@@ -82,7 +82,7 @@ def _build_user_message(data_url: str, schema_instruction: str) -> dict[str, Any
         "content": [
             {
                 "type": "image_url",
-                "image_url": {"url": data_url, "detail": "auto"},
+                "image_url": {"url": data_url, "detail": "low"},
             },
             {
                 "type": "text",
